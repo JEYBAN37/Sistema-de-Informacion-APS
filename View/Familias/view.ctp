@@ -4,9 +4,9 @@ echo $this->Html->script('validationFamilia'); ?>
 <?php
 // IMPORTANTE: Cambiar la informacion de datos de conexion
 $serv = 'localhost';
-$port = '3307';
+$port = '3306';
 $userS = 'root';
-$passS = '20166';
+$passS = '';
 $bd = 'fichafamiliar';
 ?>
 

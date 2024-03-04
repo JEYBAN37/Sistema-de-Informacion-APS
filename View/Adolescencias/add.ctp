@@ -19,6 +19,76 @@ echo $this->Html->script('validationAdolescencia'); // 'validation' es el nombre
 
 
     }
+
+	/* Estilo para el fondo oscuro cuando se muestra el modal */
+	.overlay {
+		display: none;
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		background-color: rgba(0, 0, 0, 0.5);
+		z-index: 1;
+	}
+
+	/* Estilo para el cuadro modal */
+	.modal {
+		overflow: auto;
+
+
+
+		
+		display: none;
+		position: fixed;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		width: 80%;
+		/* Ajusta el ancho del modal según tus necesidades */
+		max-width: 400px;
+		/* Ancho máximo para pantallas más grandes */
+		padding: 20px;
+		background-color: #fff;
+		border: 1px solid #ccc;
+		border-radius: 5px;
+		z-index: 1;
+	}
+
+	.button-one {
+		display: block;
+		width: 100%;
+		height: 34px;
+		padding: 6px 12px;
+		font-size: 14px;
+		line-height: 1.42857143;
+		color: #555;
+		background-color: #fff;
+		background-image: none;
+		border: 1px solid #ccc;
+		border-radius: 4px;
+		-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+		box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+		-webkit-transition: border-color ease-in-out 0.15s, -webkit-box-shadow ease-in-out 0.15s;
+		-o-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+		transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+		text-align: left;
+		height: 35px;
+		font-size: 15px;
+		width: 100%;
+		margin-top: 10px;
+		font-weight: 700;
+	}
+
+	/* Estilo para el texto y checkboxes dentro del modal */
+	.modal p {
+		text-align: left;
+	}
+
+	.modal label {
+		display: block;
+		margin-bottom: 10px;
+	}
 </style>
 
 <body style="font-size: 14px;">
@@ -486,19 +556,51 @@ echo $this->Html->script('validationAdolescencia'); // 'validation' es el nombre
                                 'SD' => 'Sin dato',
                             );
 
+							?>
+							<label style="height:30px; font-size: 15px; width:100% ; display: inline-block; margin-bottom: .5rem;font-weight: 700;font-size: 110%; ">¿Presenta alguna de las siguientes enfermedades crónicas?</label>
+							<button type="button" style="" class="button-one" onclick="mostrarModal()">Elegir</button>
+						</div>
+
+
+						<!-- Fondo oscuro y cuadro modal -->
+						<div id="overlay" class="overlay">
+							<div class="form-group col-md-12" style="margin-top: 5px;">
+								<div id="modal" class="modal">
+									<p class="form-group col-md-12" style="margin-top: 20px;">
+										<label><input type="checkbox" value="No" onclick="actualizarInput()">No</label>
+										<label><input type="checkbox" value="Neurológica" onclick="actualizarInput()"> Neurologica</label>
+										<label><input type="checkbox" value="Cardiovascular" onclick="actualizarInput()"> Cardiovascular</label>
+										<label><input type="checkbox" value="Respiratoria" onclick="actualizarInput()">Respiratoria</label>
+										<label><input type="checkbox" value="Metabolica" onclick="actualizarInput()"> Metabólica</label>
+										<label><input type="checkbox" value="Endocrinologica" onclick="actualizarInput()"> Endocrinológica</label>
+										<label><input type="checkbox" value="Gastrointestinal" onclick="actualizarInput()">Gastrointestinal</label>
+										<label><input type="checkbox" value="renal o de otro tipo" onclick="actualizarInput()"> renal o de otro tipo</label>
+										<label><input type="checkbox" value="No informa" onclick="actualizarInput()"> Desconoce la información</label>
+									</p>
+									<?php
+
                             echo $this->Form->input('condicioncronica', array(
-                                'label' => '¿Presenta alguna de las siguientes enfermedades crónicas?',
+                                'label' => 'Condiciones Cronicas',
                                 'class' => 'form-control',
-                                'placeholder' => '',
-                                'type' => 'select',
-                                'options' => $optionCronica,
-                                'style' => 'height:30px;  font-size: 15px ; width:100%',
-                                'id' => 'condicioncronica',
-                                'onChange' => 'cronica(this.value);',
+                                'type' => 'text',
+                                'style' => 'height:30px; font-size: 15px; width:100%',
+                                'id' => 'opcionesSeleccionadas', 'readonly'
+									));
+									?>
+									<button class="my-button" type="button" onclick="cerrarModal()">Cerrar</button>
+								</div>
+							</div>
+						</div>
+						<div class="form-group col-md-6" style="margin-top: 20px;">
+							<label for="opcionesSeleccionadas">Opciones Seleccionadas:</label>
+							<input type="text" name="opcionesSeleccionadasCondicionCronica" id="opcionesSeleccionadasCondicionCronica" class="form-control">
+						</div>
+
+						<!-- Añade un campo oculto para condicioncronica -->
+				
 
 
-                            )); ?>
-                        </div>
+
                         <div class="form-group col-md-6" style="margin-top: 20px;">
                             <?php
                             echo $this->Form->input('desparasitacion', array(
@@ -1344,6 +1446,42 @@ $this->Html->script([
 ], ['block' => 'script']);
 ?>
 <script type="text/javascript">
+// Función para mostrar el modal
+	function mostrarModal() {
+		document.getElementById("overlay").style.display = "block";
+		document.getElementById("modal").style.display = "block";
+	}
+
+	// Función para cerrar el modal
+	function cerrarModal() {
+		document.getElementById("overlay").style.display = "none";
+		document.getElementById("modal").style.display = "none";
+	}
+
+	// Función para actualizar el campo de entrada con las opciones seleccionadas
+	function actualizarInput() {
+		var checkboxes = document.querySelectorAll('#modal input[type="checkbox"]');
+		var opcionesSeleccionadas = Array.from(checkboxes)
+			.filter(checkbox => checkbox.checked)
+			.map(checkbox => checkbox.value)
+			.join(', ');
+
+		document.getElementById("opcionesSeleccionadas").value = opcionesSeleccionadas;
+	}
+
+	// Función para mostrar el modal
+	function mostrarModal() {
+		document.getElementById("overlay").style.display = "block";
+		document.getElementById("modal").style.display = "block";
+	}
+
+	// Función para cerrar el modal
+	function cerrarModal() {
+		document.getElementById("overlay").style.display = "none";
+		document.getElementById("modal").style.display = "none";
+	}
+
+
     $(document).ready(function() {
 
         $('#ayudaButton').on('click', function() {
