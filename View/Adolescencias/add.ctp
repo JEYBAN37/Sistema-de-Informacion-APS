@@ -568,17 +568,9 @@ echo $this->Html->script('validationAdolescencia'); // 'validation' es el nombre
                         <span aria-hidden="true" style="font-size: 30px;" >&times;</span>
                     </button>
                 </div>
-								<p class="form-group col-md-12"  style="margin-top: 20px;">
-										<label><input type="checkbox" value="No" onclick="actualizarInput()">No</label>
-										<label><input type="checkbox" value="Neurológica" onclick="actualizarInput()"> Neurologica</label>
-										<label><input type="checkbox" value="Cardiovascular" onclick="actualizarInput()"> Cardiovascular</label>
-										<label><input type="checkbox" value="Respiratoria" onclick="actualizarInput()">Respiratoria</label>
-										<label><input type="checkbox" value="Metabolica" onclick="actualizarInput()"> Metabólica</label>
-										<label><input type="checkbox" value="Endocrinologica" onclick="actualizarInput()"> Endocrinológica</label>
-										<label><input type="checkbox" value="Gastrointestinal" onclick="actualizarInput()">Gastrointestinal</label>
-										<label><input type="checkbox" value="renal o de otro tipo" onclick="actualizarInput()"> renal o de otro tipo</label>
-										<label><input type="checkbox" value="No informa" onclick="actualizarInput()"> Desconoce la información</label>
-									</p>
+								<div id="miContenedor" class="form-group col-md-12"  style="margin-top: 20px;">
+										
+						</div>
 
 									<button class="my-button" type="button" onclick="cerrarModal()">Cerrar</button>
 								</div>
@@ -1437,6 +1429,7 @@ $this->Html->script([
 ], ['block' => 'script']);
 ?>
 <script type="text/javascript">
+
 	// Función para mostrar el Box
 	function mostrarModal() {
 		document.getElementById("overlay").style.display = "block";
@@ -1670,4 +1663,19 @@ $this->Html->script([
 	$(function() {
 		$('#ayudaButton3').popover();
 	});
+
+	function generarCheckboxes(opciones) {
+    let resultHTML = '';
+
+    opciones.forEach(opcion => {
+        resultHTML += `<label><input type="checkbox" value="${opcion}" onclick="actualizarInput()">${opcion}</label>`;
+    });
+
+    return resultHTML;
+}
+
+
+const opciones = ["No", "Neurológica", "Cardiovascular", "Respiratoria", "Metabólica", "Endocrinológica", "Gastrointestinal", "Renal o de otro tipo", "Desconoce la información"];
+// Generar los checkboxes y agregarlos al contenedor
+document.getElementById('miContenedor').innerHTML = generarCheckboxes(opciones);
 </script>
