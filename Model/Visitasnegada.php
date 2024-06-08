@@ -6,13 +6,14 @@ App::uses('AppModel', 'Model');
  * @property Ubicacion $Ubicacion
  * @property Responsable $Responsable
  */
-class Visitasnegada extends AppModel {
+class Visitasnegada extends AppModel
+{
 
-/**
- * Validation rules
- *
- * @var array
- */
+	/**
+	 * Validation rules
+	 *
+	 * @var array
+	 */
 	public $validate = array(
 		'ubicacion_id' => array(
 			'numeric' => array(
@@ -46,9 +47,31 @@ class Visitasnegada extends AppModel {
 			),
 		),
 
-		
+
 
 		'direccion' => array(
+			'notEmpty' => array(
+				'rule' => array('notEmpty'),
+				//'message' => 'Your custom message here',
+				//'allowEmpty' => false,
+				//'required' => false,
+				//'last' => false, // Stop validation after this rule
+				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+			),
+		),
+
+		'latitud' => array(
+			'notEmpty' => array(
+				'rule' => array('notEmpty'),
+				//'message' => 'Your custom message here',
+				//'allowEmpty' => false,
+				//'required' => false,
+				//'last' => false, // Stop validation after this rule
+				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+			),
+		),
+
+		'longitud' => array(
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),
 				//'message' => 'Your custom message here',
@@ -99,11 +122,11 @@ class Visitasnegada extends AppModel {
 
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
 
-/**
- * belongsTo associations
- *
- * @var array
- */
+	/**
+	 * belongsTo associations
+	 *
+	 * @var array
+	 */
 	public $belongsTo = array(
 		'Ubicacion' => array(
 			'className' => 'Ubicacion',

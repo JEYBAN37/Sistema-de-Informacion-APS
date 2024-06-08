@@ -22,7 +22,8 @@ class SociambientalsController extends AppController
 	 * @return void
 	 */
 	public function index()
-	{$this->Sociambiental->recursive = 0;
+	{
+		$this->Sociambiental->recursive = 0;
 
 		$count = $this->Sociambiental->find('count');
 		$this->Paginator->settings['limit'] = $count;
@@ -74,7 +75,6 @@ class SociambientalsController extends AppController
 				}
 			} else {
 				$this->Session->setFlash('El registro fue guardado o esta pendiente un campo del formulario', 'default', array('class' => 'alert alert-danger'));
-
 			}
 		}
 		$responsables = $this->Sociambiental->Responsable->find('list');
@@ -98,8 +98,6 @@ class SociambientalsController extends AppController
 			if ($this->Sociambiental->save($this->request->data)) {
 				$this->Session->setFlash('Registro se guradado con exito', 'default', array('class' => 'alert alert-success'));
 				return $this->redirect(array('controller' => 'Sociambientals', 'action' => 'index'));
-
-				$this->Session->setFlash('Registro no se guradado, por favor revisar la información', 'default', array('class' => 'alert alert-danger'));
 			}
 		} else {
 			$options = array('conditions' => array('Sociambiental.' . $this->Sociambiental->primaryKey => $id));

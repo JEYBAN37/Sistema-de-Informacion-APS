@@ -73,7 +73,7 @@ class DATABASE_CONFIG
 		'login' => 'root',
 		'password' => '',
 		//'database' => 'bienestarmarzo15pic2018',
-		'database' => 'fichafamiliar',
+		'database' => 'fichafamiliar2024',
 
 		'prefix' => '',
 		'encoding' => 'utf8',

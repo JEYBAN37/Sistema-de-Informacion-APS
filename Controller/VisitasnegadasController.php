@@ -6,21 +6,23 @@ App::uses('AppController', 'Controller');
  * @property Visitasnegada $Visitasnegada
  * @property PaginatorComponent $Paginator
  */
-class VisitasnegadasController extends AppController {
+class VisitasnegadasController extends AppController
+{
 
-/**
- * Components
- *
- * @var array
- */
+	/**
+	 * Components
+	 *
+	 * @var array
+	 */
 	public $components = array('Paginator');
 
-/**
- * index method
- *
- * @return void
- */
-	public function index() {
+	/**
+	 * index method
+	 *
+	 * @return void
+	 */
+	public function index()
+	{
 		$this->Visitasnegada->recursive = 0;
 
 		$count = $this->Visitasnegada->find('count');
@@ -32,14 +34,15 @@ class VisitasnegadasController extends AppController {
 		);
 	}
 
-/**
- * view method
- *
- * @throws NotFoundException
- * @param string $id
- * @return void
- */
-	public function view($id = null) {
+	/**
+	 * view method
+	 *
+	 * @throws NotFoundException
+	 * @param string $id
+	 * @return void
+	 */
+	public function view($id = null)
+	{
 		if (!$this->Visitasnegada->exists($id)) {
 			throw new NotFoundException(__('Invalid visitasnegada'));
 		}
@@ -47,12 +50,13 @@ class VisitasnegadasController extends AppController {
 		$this->set('visitasnegada', $this->Visitasnegada->find('first', $options));
 	}
 
-/**
- * add method
- *
- * @return void
- */
-	public function add() {
+	/**
+	 * add method
+	 *
+	 * @return void
+	 */
+	public function add()
+	{
 		if ($this->request->is('post')) {
 			$this->Visitasnegada->create();
 			if ($this->Visitasnegada->save($this->request->data)) {
@@ -67,14 +71,15 @@ class VisitasnegadasController extends AppController {
 		$this->set(compact('ubicaciones', 'responsables'));
 	}
 
-/**
- * edit method
- *
- * @throws NotFoundException
- * @param string $id
- * @return void
- */
-	public function edit($id = null) {
+	/**
+	 * edit method
+	 *
+	 * @throws NotFoundException
+	 * @param string $id
+	 * @return void
+	 */
+	public function edit($id = null)
+	{
 		if (!$this->Visitasnegada->exists($id)) {
 			throw new NotFoundException(__('Invalid visitasnegada'));
 		}
@@ -94,14 +99,15 @@ class VisitasnegadasController extends AppController {
 		$this->set(compact('ubicaciones', 'responsables'));
 	}
 
-/**
- * delete method
- *
- * @throws NotFoundException
- * @param string $id
- * @return void
- */
-	public function delete($id = null) {
+	/**
+	 * delete method
+	 *
+	 * @throws NotFoundException
+	 * @param string $id
+	 * @return void
+	 */
+	public function delete($id = null)
+	{
 		$this->Visitasnegada->id = $id;
 		if (!$this->Visitasnegada->exists()) {
 			throw new NotFoundException(__('Invalid visitasnegada'));

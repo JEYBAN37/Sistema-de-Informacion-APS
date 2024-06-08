@@ -63,6 +63,27 @@ class Sociambiental extends AppModel
 			),
 		),
 
+		'latitud' => array(
+			'notEmpty' => array(
+				'rule' => array('notEmpty'),
+				'message' => 'Ingrese latitud',
+				//'allowEmpty' => false,
+				//'required' => false,
+				//'last' => false, // Stop validation after this rule
+				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+			),
+		),
+		'longitud' => array(
+			'notEmpty' => array(
+				'rule' => array('notEmpty'),
+				'message' => 'Ingrese longitud',
+				//'allowEmpty' => false,
+				//'required' => false,
+				//'last' => false, // Stop validation after this rule
+				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+			),
+		),
+
 
 		'estrato' => array(
 			'numeric' => array(
@@ -175,16 +196,7 @@ class Sociambiental extends AppModel
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
 		),
-		'otroriesgo' => array(
-			'notEmpty' => array(
-				'rule' => array('notEmpty'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			),
-		),
+
 		'actividad' => array(
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),

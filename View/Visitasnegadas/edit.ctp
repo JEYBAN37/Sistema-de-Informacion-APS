@@ -1,112 +1,146 @@
 <?php $this->layout = 'default_familia' ?>
 
 
-<?php
-// Enlaza el archivo JavaScript desde la carpeta webroot/js
-echo $this->Html->script('validationSocioAmbiental'); // 'validation' es el nombre del archivo sin la extensión .js
-?>
+
 
 <body style="font-size: 14px;">
 
-
-	<div>
-		<?php echo $this->Form->create('Visitasnegada'); ?>
-		<div class="form-group col-sm-12 center">
-
-			<fieldset>
-
-				<div class="col-12 text-center">
-					<h1 class="title-general-forms">No Encuestadas
-					</h1>
-				</div>
+    <div class="modal fade" id="mostrarmodal" tabindex="-1" role="dialog" aria-labelledby="basicModal"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 style="margin-left: 80px;" class="modal-title" id="myModalLabel">Estado de novedad</h3>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
 
 
 
+                </div>
+                <div class="modal-body">
+                    <!--div>
+                        <img src="../img/logoescudopasto.jpg" alt="Imagen de marcador genérico" width="199px" height="auto">
+                    </div-->
+                    <h4 style=" text-align: justify; margin: 20px;">Estado de la casa</h4>
 
-				<h2 class="subtitle-general-forms">Datos Básicos</h2>
-				<hr style=" border:0.1px solid rgba(0,0,0,.125);">
+                    <p style=" text-align: justify; margin: 20px;"> <strong>Cerrada:</strong> No atienden pero se
+                        reconoce que si habitan en la residencia.
+                        <strong>Vacia:</strong> La residencia esta desocupada o no habita nadie.
+                        <strong>No aceptó ficha:</strong> La persona manifiesta que no desea participar.
+                        <strong>Local Comercial: </strong>Vivienda de uso comercial(Taller, tienda, bodega)
+                        donde no habitan famlias.
+                    </p>
 
-				<div class="grow justify-content-center" display="none" style="margin-top:20px; ">
-					<div class="card " style=" font-size:15px;  border:1.5px solid rgba(0,0,0,.125);">
-						<div class="form-group row">
 
 
-							<div class="form-group col-md-6" style="margin-top: 20px;">
-								<?php echo $this->Form->input('id')
+
+                </div>
+                <div class="modal-footer">
+                    <a href="#" style="margin-top:-5px; background-color: #449D45;" data-dismiss="modal"
+                        class="my-button">Salir</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div>
+        <?php echo $this->Form->create('Visitasnegada'); ?>
+        <div class="form-group col-sm-12 center">
+
+            <fieldset>
+
+                <div class="col-12 text-center">
+                    <h1 class="title-general-forms">No Encuestadas
+                    </h1>
+                </div>
+
+
+
+
+                <h2 class="subtitle-general-forms">Datos Básicos</h2>
+                <hr style=" border:0.1px solid rgba(0,0,0,.125);">
+
+                <div class="grow justify-content-center" display="none" style="margin-top:20px; ">
+                    <div class="card " style=" font-size:15px;  border:1.5px solid rgba(0,0,0,.125);">
+                        <div class="form-group row">
+
+
+                            <div class="form-group col-md-6" style="margin-top: 20px;">
+                                <?php echo $this->Form->input('id')
 								?>
-								<?php echo $this->Form->input('responsable_id', array(
+                                <?php echo $this->Form->input('responsable_id', array(
 									'label' => 'Responsable diligenciamiento Encuesta',
 									'style' => 'height:30px;  font-size: 15px ; width:100%',
 									'type' => 'select',
 									'class' => 'select-search'
 								)); ?>
-							</div>
+                            </div>
 
-							<div class="form-group col-md-6" style="margin-top: 20px;">
-								<?php echo $this->Form->input('ubicacion_id', array(
+                            <div class="form-group col-md-6" style="margin-top: 20px;">
+                                <?php echo $this->Form->input('ubicacion_id', array(
 									'label' => 'Territorio',
 									'style' => 'height:30px;  font-size: 15px ; width:100%',
 									'type' => 'select',
 									'class' => 'select-search col-md-12'
 								)); ?>
 
-								<p class="help-block">Los dos últimos codigos del hacen referencia al numero de la torre
-								</p>
-							</div>
-							<div class="form-group col-md-6" style="margin-top: 20px;">
-								<?php
+                                <p class="help-block">Los tres últimos codigos del hacen referencia al numero de la
+                                    manzana
+                                </p>
+                            </div>
+                            <div class="form-group col-md-6" style="margin-top: 20px;">
+                                <?php
 								$numapartamento = array(
 									'' => 'Elegir',
-									'1' => '1',
-									'2' => '2',
-									'3' => '3',
-									'4' => '4',
-									'5' => '5',
-									'6' => '6',
-									'7' => '7',
-									'8' => '8',
-									'9' => '9',
-									'10' => '10',
-									'11' => '11',
-									'12' => '12',
-									'13' => '13',
-									'14' => '14',
-									'15' => '15',
-									'16' => '16',
-									'17' => '17',
-									'18' => '18',
-									'19' => '19',
-									'20' => '20',
-									'21' => '21',
-									'22' => '22',
-									'23' => '23',
-									'24' => '24',
-									'25' => '25',
-									'26' => '26',
-									'27' => '27',
-									'28' => '28',
-									'29' => '29',
-									'30' => '30',
-									'31' => '31',
-									'32' => '32',
-									'33' => '33',
-									'34' => '34',
-									'35' => '35',
-									'36' => '36',
-									'37' => '37',
-									'38' => '38',
-									'39' => '39',
-									'40' => '40',
-									'41' => '41',
-									'42' => '42',
-									'43' => '43',
-									'44' => '44',
-									'45' => '45',
-									'46' => '46',
-									'47' => '47',
-									'48' => '48',
-									'49' => '49',
-									'50' => '50',
+									'N/A' => 'No aplica',
+									'101S' => '101Sub',
+									'102S' => '102Sub',
+									'103S' => '103Sub',
+									'104S' => '104Sub',
+									'101' => '101',
+									'101' => '101',
+									'102' => '102',
+									'103' => '103',
+									'104' => '104',
+									'105' => '105',
+									'106' => '106',
+									'107' => '107',
+									'108' => '108',
+									'201' => '201',
+									'202' => '202',
+									'203' => '203',
+									'204' => '204',
+									'205' => '205',
+									'206' => '206',
+									'207' => '207',
+									'208' => '208',
+									'301' => '301',
+									'302' => '302',
+									'303' => '303',
+									'304' => '304',
+									'305' => '305',
+									'306' => '306',
+									'307' => '307',
+									'308' => '308',
+									'401' => '401',
+									'402' => '402',
+									'403' => '403',
+									'404' => '404',
+									'405' => '405',
+									'406' => '406',
+									'407' => '407',
+									'408' => '408',
+									'501' => '501',
+									'502' => '502',
+									'503' => '503',
+									'504' => '504',
+									'505' => '505',
+									'506' => '506',
+									'507' => '507',
+									'508' => '508'
+
 
 								);
 
@@ -116,29 +150,55 @@ echo $this->Html->script('validationSocioAmbiental'); // 'validation' es el nomb
 									'style' => 'height:30px;  font-size: 15px',
 									'options' => $numapartamento,
 								)); ?>
-							</div>
+                            </div>
 
-							<div class="form-group col-md-6" style="margin-top: 20px;">
-								<?php
+                            <div class="form-group col-md-6" style="margin-top: 20px;">
+                                <?php
 								echo $this->Form->input('direccion', array(
 									'label' => 'Dirección',
 									'class' => 'form-control',
 									'style' => 'height:30px;  font-size: 15px',
 								)); ?>
-							</div>
+                                <p class="help-block">Colocar la nomenclatura de un recibo de servicio publico del
+                                    domicilio
+                                </p>
+                            </div>
+
+                            <div class="form-group col-md-6" style="margin-top: 20px;">
+                                <?php echo $this->Form->input('latitud', array(
+									'label' => 'Geopunto latitud',
+									'class' => 'form-control',
+									'style' => 'height:30px;  font-size: 15px',
+								)); ?>
+                                <p class="help-block">Coordenada de latitud en la ubicación geográfica. Ej.: 0.670348
+                                    Valor numérico con decimales, separador punto. Acepta valores negativos
+                                </p>
+                            </div>
+
+                            <div class="form-group col-md-6" style="margin-top: 20px;">
+                                <?php echo $this->Form->input('longitud', array(
+									'label' => 'Geopunto longitud',
+									'class' => 'form-control',
+									'style' => 'height:30px;  font-size: 15px',
+								)); ?>
+                                <p class="help-block">Coordenada de longitud en la ubicación geográfica . Ejemplo:
+                                    -70.240149
+                                    Valor numérico con decimales, separador punto. Acepta valores negativos
+                                </p>
+                            </div>
 
 
 
-							<div class="form-group col-md-6" style="margin-top: 20px;">
-								<?php echo $this->Form->input('nombreshabitante', array(
+                            <div class="form-group col-md-6" style="margin-top: 20px;">
+                                <?php echo $this->Form->input('nombreshabitante', array(
 									'label' => 'Nombre de la Persona Presente',
 									'class' => 'form-control',
 									'style' => 'height:30px;  font-size: 15px',
 								)); ?>
-							</div>
+                            </div>
 
-							<div class="form-group col-md-6" style="margin-top: 20px;">
-								<?php
+                            <div class="form-group col-md-6" style="margin-top: 20px;">
+                                <?php
 								$TipoDeDocumentoOptions = array(
 									'' => 'Elegir',
 									'CC' => 'Cedula de ciudadania',
@@ -157,18 +217,18 @@ echo $this->Html->script('validationSocioAmbiental'); // 'validation' es el nomb
 									//'empty' => true, // Establecer el campo como vacío
 								));
 								?>
-							</div>
+                            </div>
 
-							<div class="form-group col-md-6" style="margin-top: 20px;">
-								<?php echo $this->Form->input('numerodocumento', [
+                            <div class="form-group col-md-6" style="margin-top: 20px;">
+                                <?php echo $this->Form->input('numerodocumento', [
 									'label' => 'N° de documento',
 									'class' => 'form-control',
 									'style' => 'height:30px;  font-size: 15px ; width:100%',
 								]);  ?>
-							</div>
+                            </div>
 
-							<div class="form-group col-md-6" style="margin-top: 20px;">
-								<?php
+                            <div class="form-group col-md-6" style="margin-top: 20px;">
+                                <?php
 								echo $this->Form->input('telefono', array(
 									'label' => 'telefono de contacto:',
 									'class' => 'form-control',
@@ -176,16 +236,17 @@ echo $this->Html->script('validationSocioAmbiental'); // 'validation' es el nomb
 
 								));
 								?>
-							</div>
+                            </div>
 
-							<div class="form-group col-md-6" style="margin-top: 20px;">
-								<?php
+                            <div class="form-group col-md-6" style="margin-top: 20px;">
+                                <?php
 								$EstateHome = array(
 									'' => 'Elegir',
 									'Cerrada' => 'Cerrada',
 									'Vacia' => 'Vacia',
 									'No aceptó ficha' => 'No aceptó ficha',
 									'Renuente' => 'Renuente',
+									'Local Comercial' => 'Local Comercial',
 
 								);
 								echo $this->Form->input('estadocasa', array(
@@ -195,10 +256,16 @@ echo $this->Html->script('validationSocioAmbiental'); // 'validation' es el nomb
 									'options' => $EstateHome,
 								));
 								?>
-							</div>
 
-							<div class="form-group col-md-12" style="margin-top: 20px;">
-								<?php
+
+
+                            </div>
+
+
+
+
+                            <div class="form-group col-md-12" style="margin-top: 20px;">
+                                <?php
 								$numhogaresOptions = array('' => 'Elegir', '1' => '1', '2' => '2', '3' => '3', '4' => '4', '5' => '5', '6' => '6');
 								echo $this->Form->input('observacion', array(
 									'label' => 'Observación',
@@ -207,27 +274,27 @@ echo $this->Html->script('validationSocioAmbiental'); // 'validation' es el nomb
 								));
 								?>
 
-							</div>
-
-							<?php echo $this->Form->input('fecha', array(
+                            </div>
+                            <?php echo $this->Form->input('fecha', array(
 								'hidden',
 							)); ?>
 
 
-						</div>
-					</div>
-					<?php //echo $this->Form->end(__('Guardar y Listar')); 
+
+                        </div>
+                    </div>
+                    <?php //echo $this->Form->end(__('Guardar y Listar')); 
 					?>
-					<?php echo $this->Form->submit('Guardar', [
+                    <?php echo $this->Form->submit('Guardar', [
 						'name' => 'btn',
 						'class' => 'my-button',
 					]);
 					?>
-				</div>
-			</fieldset>
+                </div>
+            </fieldset>
 
-		</div>
-	</div>
+        </div>
+    </div>
 
 </body>
 <?php
@@ -241,50 +308,54 @@ $this->Html->script([
 ], ['block' => 'script']);
 ?>
 <script type="text/javascript">
-	$(document).ready(function() {
-		$('.select-search').select2();
-		agregarOpcionSeleccion();
-	});
+$(document).ready(function() {
+    $("#mostrarmodal").modal("show");
+});
+$(document).ready(function() {
+    $('.select-search').select2();
+    agregarOpcionSeleccion();
+});
 
 
 
-	function agregarOpcionSeleccion() {
-		$("#VisitasnegadaUbicacionId").prepend("<option value='' selected='selected'>Seleccione</option>");
-		$("#VisitasnegadaResponsableId").prepend("<option value='' selected='selected'>Seleccione</option>");
-	}
+function agregarOpcionSeleccion() {
 
-	$("#switch-label").change(function() {
-		var switchValue = this.checked ? "si" : "no";
-		mostrar(switchValue);
-	});
+}
 
-	$("#switch-label-initial").change(function() {
-		var switchValue = this.checked ? "yes" : "nope";
-		mostrar(switchValue);
-	});
+$("#switch-label").change(function() {
+    var switchValue = this.checked ? "si" : "no";
+    mostrar(switchValue);
+});
+
+$("#switch-label-initial").change(function() {
+    var switchValue = this.checked ? "yes" : "nope";
+    mostrar(switchValue);
+});
 
 
-	function mostrar(id) {
-		if (id == "si") {
-			$("#si").show();
-			$("#no").hide();
+function mostrar(id) {
+    if (id == "si") {
+        $("#si").show();
+        $("#no").hide();
 
-		} else if (id == "no") {
-			$("#si").hide();
-			$("#no").show();
+    } else if (id == "no") {
+        $("#si").hide();
+        $("#no").show();
 
-		}
+    }
 
-		if (id == "yes") {
-			$("#yes").show();
-			$("#nope").hide();
-			$("#validacion").val("si acepto");
+    if (id == "yes") {
+        $("#yes").show();
+        $("#nope").hide();
+        $("#validacion").val("si acepto");
 
-		} else if (id == "nope") {
-			$("#yes").hide();
-			$("#nope").show();
-			$("#validacion").val(" ");
+    } else if (id == "nope") {
+        $("#yes").hide();
+        $("#nope").show();
+        $("#validacion").val(" ");
 
-		}
-	}
+    }
+
+
+}
 </script>

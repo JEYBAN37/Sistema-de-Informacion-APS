@@ -232,6 +232,29 @@ class PrimerainfanciasController extends AppController
 		return number_format($anosTotales, 1);
 	}
 
+	public function edit1($id = null)
+	{
+		if (!$this->Primerainfancia->exists($id)) {
+			throw new NotFoundException(__('Invalid primerainfancia'));
+		}
+		if ($this->request->is(array('post', 'put'))) {
+			if ($this->Primerainfancia->save($this->request->data)) {
+				$this->Session->setFlash('Se ha guardado correctamente', 'default', array('class' => 'alert alert-success'));
+				return $this->redirect(array('action' => 'index'));
+			} else {
+				$this->Session->setFlash('No se ha guardado, por favor revisar campos', 'default', array('class' => 'alert alert-danger'));
+			}
+		} else {
+			$options = array('conditions' => array('Primerainfancia.' . $this->Primerainfancia->primaryKey => $id));
+			$this->request->data = $this->Primerainfancia->find('first', $options);
+		}
+
+		$familias = $this->Primerainfancia->Familia->find('list');
+		$canalizaciones = $this->Primerainfancia->Canalizacion->find('list');
+		$this->set(compact('familias', 'canalizaciones'));
+	}
+
+
 
 
 
