@@ -47,9 +47,9 @@ echo $this->Html->script('validation2'); // 'validation' es el nombre del archiv
 		transform: translate(-50%, -50%);
 		width: 80%;
 		/* Ajusta el ancho del modal según tus necesidades */
-
+		max-width: 400px;
 		/* Ancho máximo para pantallas más grandes */
-
+		padding: 20px;
 		background-color: #fff;
 		border: 1px solid #ccc;
 		border-radius: 5px;
@@ -779,7 +779,7 @@ echo $this->Html->script('validation2'); // 'validation' es el nombre del archiv
 							'No aplica ' => 'Elegir',
 							'No' => 'No',
 							'Tramite de autorización de servicios de salud' => 'Tramite de autorización de servicios de salud',
-							'Vacunacion' => 'Vacunación ',
+							'Vacunacion ' => 'Vacunación ',
 							'Atencion de PyM Medico' => 'Atención en salud de PyM por médico',
 							'Atencion de PyM Enfermera' => 'Atención en salud de PyM por enfermeria',
 							'Atencion medicina general' => ' Atención en salud por medicina general',
@@ -792,34 +792,15 @@ echo $this->Html->script('validation2'); // 'validation' es el nombre del archiv
 
 						echo $this->Form->input('canalizacionuno', array(
 							'label' => 'Canalización 1',
-							'style' => 'height:30px; font-size: 15px; width:100%',
+
+							'style' => 'height:30px;  font-size: 15px ; width:100%',
 							'placeholder' => '',
-							'class' => 'select-search',
+							'class' => ' select-search',
 							'options' => $optionCanlizacion,
 							'type' => 'select',
-							'id' => 'canalizacionuno', // Cambiado de 'status' a 'canalizacionuno'
-							'onChange' => 'capturarValorSeleccionado();' // Llama a la función 'capturarValorSeleccionado()' cuando cambia el valor
-						));
-						?>
-					</div>
-
-
-					<!-- Fondo oscuro y cuadro modal -->
-					<div id="canalizationSpecific" class="overlay">
-						<div class="form-group col-md-12" style="margin-top: 5px;">
-							<div id="modalvacunancion" class="modal">
-								<div class="d-flex  justify-content-end vh-100">
-									<button type="button" class="close" onclick="cerrarModal('modalvacunancion','canalizationSpecific')">
-										<span aria-hidden="true" style="font-size: 30px;">&times;</span>
-									</button>
-								</div>
-								<ul id="dataTuning" class="list-group">
-								</ul>
-								<div class="d-flex justify-content-center vh-100 ">
-									<button class=" my-button" type="button" onclick="cerrarModal('modalvacunancion','canalizationSpecific')">Aceptar</button>
-								</div>
-							</div>
-						</div>
+							'id' => 'status', // Agrega el atributo id para que coincida con el select en JavaScript
+							'onChange' => 'canalizacion(this.value);', // Agrega el atributo onChange para llamar a la función JavaScript
+						)); ?>
 					</div>
 
 					<div id="Canalizacion">
@@ -878,28 +859,15 @@ echo $this->Html->script('validation2'); // 'validation' es el nombre del archiv
 						</div>
 					</div>
 
-					<div class="form-group col-md-6" style="margin-top: 20px;">
-						<?php
-						echo $this->Form->input('remisionEspecifica', array(
-							'label' => 'Canalizaciones Especificas',
-							'type' => 'textarea', // Cambiado a 'textarea'
-							'class' => 'form-control',
-							'style' => 'height:100px;  font-size: 15px ; width:100%', // Ajustado el estilo para un área de texto más grande
-							'id' => 'remisionEspecifica',
-							'readonly' => true // Utilizando '=> true' en lugar de solo 'readonly'
-						));
-						?>
-
-
-					</div>
-
 
 					<div class="form-group col-md-6" style="margin-top: 20px;">
+
 						<?php
 						echo $this->Form->input('educacionuno', array(
 							'label' => 'Refiera el tipo de actividad desarrollada',
 							'class' => 'form-control',
 							'style' => 'height:30px;  font-size: 15px ; width:100%',
+							'value' => 'Elegir',
 							'id' => 'opcionesSeleccionadas', 'readonly', 'onclick' => 'mostrarModal()'
 
 						)); ?>
@@ -911,15 +879,12 @@ echo $this->Html->script('validation2'); // 'validation' es el nombre del archiv
 						<div class="form-group col-md-12" style="margin-top: 5px;">
 							<div id="modal" class="modal">
 								<div class="modal-header-native" style="text-align: center;">
-									<button type="button" class="close" onclick="cerrarModal('overlay','modal')">
+									<button type="button" class="close" onclick="cerrarModal()">
 										<span aria-hidden="true" style="font-size: 30px;">&times;</span>
 									</button>
 								</div>
 								<div id="miContenedor" class="form-group col-md-12" style="margin-top: 20px;">
 
-								</div>
-								<div class="d-flex justify-content-center vh-100">
-									<button class=" my-button" type="button" onclick="cerrarModal('overlay','modal')">Cerrar</button>
 								</div>
 
 								<button class="my-button" type="button" onclick="cerrarModal()">Cerrar</button>
@@ -951,16 +916,19 @@ echo $this->Html->script('validation2'); // 'validation' es el nombre del archiv
 
 						)); ?>
 					</div>
+
+
 				</div>
-			</div>
+
+
+
 
 		</fieldset>
 		<button class="my-button">
 			Guardar<?php echo $this->Form->end(); ?>
 		</button>
-
 	</div>
-
+	</div>
 
 
 </body>
@@ -980,6 +948,7 @@ $this->Html->script([
 ], ['block' => 'script']);
 ?>
 
+
 <script type="text/javascript">
 	// Función para mostrar el Box
 	function mostrarModal() {
@@ -987,11 +956,10 @@ $this->Html->script([
 		document.getElementById("modal").style.display = "block";
 	}
 
-
 	// Función para cerrar el modal
-	function cerrarModal(divaleatory, divSecond) {
-		document.getElementById(divaleatory).style.display = "none";
-		document.getElementById(divSecond).style.display = "none ";
+	function cerrarModal() {
+		document.getElementById("overlay").style.display = "none";
+		document.getElementById("modal").style.display = "none";
 	}
 
 	// Función para actualizar el campo de entrada con las opciones seleccionadas
@@ -1102,7 +1070,8 @@ $this->Html->script([
 	function agregarOpcionSeleccion() {
 
 
-		$("#PrimerainfanciaCanalizacionId").prepend(
+
+		$("#InfantilCanalizacionId").prepend(
 			"<option value='' selected='selected'>Seleccione</option>");
 
 
@@ -1147,15 +1116,12 @@ $this->Html->script([
 		$('#ayudaButton').popover();
 	});
 
-	function generarCheckboxes(opciones, id, result) {
-		let resultHTML = ''
+	function generarCheckboxes(opciones) {
+		let resultHTML = '';
 
 		opciones.forEach(opcion => {
 			resultHTML +=
-				`<li class="list-group-item d-flex  align-items-center h-100" style="margin-bottom: 0em;">
-            <input type="checkbox" value="${opcion}" onclick="actualizarInput('${id}', '${result}')" class="d-flex justify-content-center">
-            <label>${opcion}</label>
-        </li>`;
+				`<label><input type="checkbox" value="${opcion}" onclick="actualizarInput()">${opcion}</label>`;
 		});
 
 		return resultHTML;
@@ -1176,61 +1142,5 @@ $this->Html->script([
 		'Remision a urgencias',
 	];
 	// Generar los checkboxes y agregarlos al contenedor
-	document.getElementById('miContenedor').innerHTML = generarCheckboxes(opciones, 'modal', 'opcionesSeleccionadas');
-
-
-
-	const dataGuardada = ''
-	const opcionesVacunancion = opcionesActividades = [
-		'9 A 11 AÑOS Vacuna recombinante tetravalente contra el Virus del Papiloma Humano - VPH Unica Dosis ',
-		'9 AÑOS Vacuna recombinante tetravalente contra el Virus del Papiloma Humano - VPH Unica Dosis',
-		'9,10,11 AÑOS Vacuna contra COVID 19 ',
-	];
-
-	// Función para actualizar el campo de entrada con las opciones selecciona
-	function actualizarInput(elementId, result) {
-		var checkboxes = document.querySelectorAll('#' + elementId + ' input[type="checkbox"]');
-		var opcionesSeleccionadas = Array.from(checkboxes)
-			.filter(checkbox => checkbox.checked)
-			.map(checkbox => checkbox.value)
-			.join(', ');
-
-		document.getElementById(result).value = opcionesSeleccionadas;
-	}
-	//Optienen el valor de los campos del checkbox solo llama
-	//el array que quieres mostrar introduce el id de la etiqueta que hiciste
-	//para vizualizar la checkbox y el result es en la variable que guardara
-
-	function generarCheckboxes(opciones, id, result) {
-		let resultHTML = ''
-
-		opciones.forEach(opcion => {
-			resultHTML +=
-				`<li class="list-group-item d-flex  align-items-center h-100" style="margin-bottom: 0em;">
-            <input type="checkbox" value="${opcion}" onclick="actualizarInput('${id}', '${result}')" class="d-flex justify-content-center">
-            <label>${opcion}</label>
-        </li>`;
-		});
-
-		return resultHTML;
-	}
-
-	//Captura el valor igresar los casos encesarion en el switch
-	function capturarValorSeleccionado() {
-		var valorSeleccionado = document.getElementById("canalizacionuno").value; //Obtener el valor de la canalizacion
-		var otraAseguradoraDiv = document.getElementById('overlay');
-
-
-		switch (valorSeleccionado) {
-			case "Vacunacion":
-				console.log(valorSeleccionado)
-				document.getElementById('dataTuning').innerHTML = generarCheckboxes(opcionesVacunancion, 'modalvacunancion',
-					'remisionEspecifica');
-				document.getElementById("canalizationSpecific").style.display = "block";
-				document.getElementById("modalvacunancion").style.display = "block";
-				break;
-
-
-		}
-	}
+	document.getElementById('miContenedor').innerHTML = generarCheckboxes(opcionesActividades);
 </script>
