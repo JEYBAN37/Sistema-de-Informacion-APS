@@ -1052,10 +1052,24 @@ echo $this->Html->script('validation'); // 'validation' es el nombre del archivo
 								'placeholder' => '',
 								'type' => 'select',
 								'options' => $optionOcupacion,
-								'style' => 'height:30px;  font-size: 15px ; width:100%',
-								'class' => 'form-control select-search'
+								'style' => 'height:30px;  font-size: 15px ; width:100%',	
+								'id' => 'ocupacion'							
 							));
 							?></div>
+
+					<div class="form-group col-md-6" style="margin-top: 20px; display: none;" id="otraOcupacionDiv">
+							<?php
+							echo $this->Form->input('ocupacion', [
+								'label' => 'Descripcion especifica de Ocupacion',
+								'class' => 'form-control',
+								'style' => 'height:30px; font-size: 15px; width:100%',
+								// Inicialmente deshabilitado
+								'id' => 'otraocupacion', // Añade un ID único
+							]);
+							?>
+						</div>
+
+	
 
 						<div class="form-group col-md-6" style="margin-top: 20px;">
 							<?php
@@ -1481,13 +1495,29 @@ $this->Html->script([
 	});
 
 
+
 	document.addEventListener('DOMContentLoaded', function() {
 		var aseguradoraSelect = document.getElementById('aseguradora');
 		var otraAseguradoraDiv = document.getElementById('otraAseguradoraDiv');
+		var trabajoSelect = document.getElementById('ocupacion')
+		var otraOcupacionDiv = document.getElementById('otraOcupacionDiv');
+		
+		trabajoSelect.addEventListener('change', function() {
+			
+			var selectedOption = trabajoSelect.value;
+			if (selectedOption === '9510.Trabajo informal') {
+				otraOcupacionDiv.style.display = 'block';
+				document.getElementById('otraOcupacion').removeAttribute('disabled');
+			
+			} else {
+				otraOcupacionDiv.style.display = 'none';
+				document.getElementById('otraOcupacion').setAttribute('disabled', 'disabled');
+			}
+		});
 
 		aseguradoraSelect.addEventListener('change', function() {
+			console.log(aseguradoraSelect.value)
 			var selectedOption = aseguradoraSelect.value;
-
 			if (selectedOption === 'otra') {
 				otraAseguradoraDiv.style.display = 'block';
 				document.getElementById('otraAseguradora').removeAttribute('disabled');
@@ -1506,7 +1536,20 @@ $this->Html->script([
 			document.getElementById('otraAseguradora').setAttribute('disabled', 'disabled');
 		}
 
+		if (trabajoSelect.value === '9510.Trabajo informal') {
+			otraOcupacionDiv.style.display = 'block';
+			document.getElementById('otraOcupacion').removeAttribute('disabled');
+		} else {
+			otraOcupacionDiv.style.display = 'none';
+			document.getElementById('otraOcupacion').setAttribute('disabled', 'disabled');
+		}
+
 	});
+
+
+
+
+
 
 
 	function agregarOpcionSeleccion() {
@@ -1671,4 +1714,8 @@ $this->Html->script([
 
 		}
 	}
+
+
+
+
 </script>
