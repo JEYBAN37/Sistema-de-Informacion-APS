@@ -11,7 +11,7 @@
 <div style="margin: 20px;">
 
     <!-- Formulario para filtrar registros -->
-    <?php echo $this->Form->create('Sociambiental', array('url' => array('action' => 'index' ))); ?>
+    <?php echo $this->Form->create('Sociambiental', array('url' => array('action' => 'viewFilter' ))); ?>
 
     <div class="d-flex row">
         <div class="col-md-6" style="margin-bottom: -2px;">

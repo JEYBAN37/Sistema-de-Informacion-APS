@@ -1,5 +1,6 @@
 <?php
 App::uses('AppModel', 'Model');
+
 /**
  * Responsable Model
  *
@@ -7,6 +8,14 @@ App::uses('AppModel', 'Model');
  */
 class Responsable extends AppModel
 {
+
+    public function getResponsablesList() {
+        return $this->find('list', [
+            'fields' => ['id', 'nombres'], // Cambia 'nombre_completo' por el campo correcto de nombre en tu modelo
+            'order' => ['nombres']
+        ]);
+    }
+
 	public $virtualFields = array(
 		'encuestador' => 'CONCAT(responsable.nombres)'
 	);

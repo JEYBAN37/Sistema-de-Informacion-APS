@@ -130,34 +130,7 @@ echo $this->Html->script('validation2'); // 'validation' es el nombre del archiv
 						]);
 						?>
 
-						<div class="form-group col-md-6" style="margin-top: 20px;">
-							<?php
-							$TipoDeDocumentoOptions = array(
-								'' => 'Elegir',
-
-								'RC' => 'Registro Civil',
-								'PPT' => 'Permiso Protección Temporal',
-								'RNV' => 'Registro nacido vivo'
-
-							);
-							echo $this->Form->input('tipodocumento', array(
-								'label' => 'Tipo de Documento:',
-								'class' => 'form-control',
-								'style' => 'height:30px;  font-size: 15px ; width:100%',
-								'placeholder' => '',
-								'type' => 'select',
-								'options' => $TipoDeDocumentoOptions
-							));
-							?>
-						</div>
-
-						<!--div class="form-group col-md-6" style="margin-top: 20px;">
-                            <?php echo $this->Form->input('numerodoc', [
-								'label' => 'N° de documento',
-								'class' => 'form-control',
-								'style' => 'height:30px;  font-size: 15px ; width:100%',
-							]);  ?>
-                        </div-->
+					
 
 						<div class="form-group col-md-6" style="margin-top: 20px;">
 							<?php echo $this->Form->input('primerapellido', [
@@ -929,10 +902,10 @@ echo $this->Html->script('validation2'); // 'validation' es el nombre del archiv
 								'type' => 'select',
 
 							)); ?>
-
-						</div>
-
-						<div class="form-group col-md-6" style="margin-top: 20px;">
+						
+					</div>
+					
+					<div class="form-group col-md-6" style="margin-top: 20px;">
 							<?php
 							$optionEstadoCanalizacion = [
 								'No aplica' => 'Elegir',
@@ -970,63 +943,63 @@ echo $this->Html->script('validation2'); // 'validation' es el nombre del archiv
 						?>
 
 
-					</div>
+						</div>
 
 
-					<div class="form-group col-md-6" style="margin-top: 20px;">
-						<?php
-						echo $this->Form->input('educacionuno', array(
-							'label' => 'Refiera el tipo de actividad desarrollada',
-							'class' => 'form-control',
-							'style' => 'height:30px;  font-size: 15px ; width:100%',
-							'id' => 'opcionesSeleccionadas', 'readonly', 'onclick' => 'mostrarModal()'
+                    	<div class="form-group col-md-6" style="margin-top: 20px;">
+					<?php
+					echo $this->Form->input('educacionuno', array(
+						'label' => 'Refiera el tipo de actividad desarrollada',
+						'class' => 'form-control',
+						'style' => 'height:30px;  font-size: 15px ; width:100%',
+						'id' => 'opcionesSeleccionadas', 'readonly', 'onclick' => 'mostrarModal()'
 
-						)); ?>
+					)); ?>
 
-					</div>
+				</div>
 
-					<!-- Fondo oscuro y cuadro modal -->
-					<div id="overlay" class="overlay">
-						<div class="form-group col-md-12" style="margin-top: 5px;">
-							<div id="modal" class="modal">
-								<div class="modal-header-native" style="text-align: center;">
+				<!-- Fondo oscuro y cuadro modal -->
+				<div id="overlay" class="overlay">
+					<div class="form-group col-md-12" style="margin-top: 5px;">
+						<div id="modal" class="modal">
+							<div class="modal-header-native" style="text-align: center;">
 									<button type="button" class="close" onclick="cerrarModal('overlay','modal')">
-										<span aria-hidden="true" style="font-size: 30px;">&times;</span>
-									</button>
-								</div>
-								<div id="miContenedor" class="form-group col-md-12" style="margin-top: 20px;">
+									<span aria-hidden="true" style="font-size: 30px;">&times;</span>
+								</button>
+							</div>
+							<div id="miContenedor" class="form-group col-md-12" style="margin-top: 20px;">
 
-								</div>
+							</div>
 								<div class="d-flex justify-content-center vh-100">
 									<button class=" my-button" type="button" onclick="cerrarModal('overlay','modal')">Cerrar</button>
 								</div>
 
-								<button class="my-button" type="button" onclick="cerrarModal()">Cerrar</button>
-							</div>
+							<button class="my-button" type="button" onclick="cerrarModal()">Cerrar</button>
 						</div>
 					</div>
+				</div>
 
 
 
-					<!-- Coloca el campo en una mitad de la pantalla en dispositivos medianos y grandes -->
+				<!-- Coloca el campo en una mitad de la pantalla en dispositivos medianos y grandes -->
 
 
 
+				<?php
+				echo $this->Form->input('fechaRegistro', array(
+
+					'hidden',
+				)); ?>
+				<div class="form-group col-md-6" style="margin-top: 20px;">
 					<?php
-					echo $this->Form->input('fechaRegistro', array(
+					echo $this->Form->input('canalizacion_id', array(
+						'label' => 'Enlace de canalizacion',
+						'style' => 'height:30px;  font-size: 15px ; width:100%',
+						'class' => 'form-control select-search',
+						'type' => 'select',
 
-						'hidden',
 					)); ?>
-					<div class="form-group col-md-6" style="margin-top: 20px;">
-						<?php
-						echo $this->Form->input('canalizacion_id', array(
-							'label' => 'Enlace de canalizacion',
-							'style' => 'height:30px;  font-size: 15px ; width:100%',
-							'class' => 'form-control select-search',
-							'type' => 'select',
-
-						)); ?>
-					</div>
+				</div>
 				</div>
 			</div>
 

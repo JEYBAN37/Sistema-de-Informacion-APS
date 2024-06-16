@@ -1,13 +1,6 @@
 <?php $this->layout = 'default_familia';
 echo $this->Html->script('validationFamilia'); ?>
-<?php
-// IMPORTANTE: Cambiar la informacion de datos de conexion
-$serv = 'localhost';
-$port = '3307';
-$userS = 'root';
-$passS = '';
-$bd = 'fichafamiliar2024';
-?>
+
 <style>
     .negrilla {
         font-size: small;

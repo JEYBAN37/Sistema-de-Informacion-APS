@@ -15,6 +15,41 @@ class Sociambiental extends AppModel
 	);
 	public $displayField = 'apellidosfamilia';
 
+
+	public function getFamiliaSocioambientalFilter($conditions = array()) {
+		// Definir las opciones para la consulta
+		$options = array(
+			'fields' => array(
+				'Sociambiental.id', 
+				'Sociambiental.direccion', 
+				'Sociambiental.apellidosfamilia', 
+				'Sociambiental.fecha',
+				'Sociambiental.numerohogares',
+				'Sociambiental.numerohabitantes',
+				'Ubicacion.id',
+				'Ubicacion.microterritorio',
+				'Responsable.nombres'
+
+			),
+			'conditions' => $conditions,
+			'Familia' => array(
+                'fields' => array('id', 'nombres') // Ajusta estos campos según los necesarios
+            ),
+            'Ubicacion' => array(
+                'fields' => array('id', 'microterritorio') // Ajusta estos campos según los necesarios
+            ),
+			'Responsable' => array(
+                'fields' => array('nombres') // Ajusta estos campos según los necesarios
+            ),
+        );
+    
+
+	
+		// Realizar la consulta y retornar los resultados
+		return $this->find('all', $options);
+	}
+	
+	
 	/**
 	 * Validation rules
 	 *
@@ -446,4 +481,21 @@ class Sociambiental extends AppModel
 			'order' => ''
 		)
 	);
+
+
+
+	   public $hasMany = array(
+		   'Familia' => array(
+			   'className' => 'Familia',
+			   'foreignKey' => 'sociambiental_id',
+			   'conditions' => '',
+			   'fields' => '',
+			   'order' => '',
+			   'limit' => '',
+			   'offset' => '',
+			   'exclusive' => '',
+			   'finderQuery' => '',
+			   'counterQuery' => ''
+		   )
+	   );
 }

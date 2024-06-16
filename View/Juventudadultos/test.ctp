@@ -1057,15 +1057,14 @@ echo $this->Html->script('validation'); // 'validation' es el nombre del archivo
 							));
 							?></div>
 
-					<div class="form-group col-md-6" style="margin-top: 20px;" id="otraOcupacionDiv">
+					<div class="form-group col-md-6" style="margin-top: 20px; display: none;" id="otraOcupacionDiv">
 							<?php
 							echo $this->Form->input('ocupacion', [
 								'label' => 'Descripcion especifica de Ocupacion',
 								'class' => 'form-control',
 								'style' => 'height:30px; font-size: 15px; width:100%',
-								'id' => 'otraOcupacion',
-								'disabled',
-
+								// Inicialmente deshabilitado
+								'id' => 'otraocupacion', // Añade un ID único
 							]);
 							?>
 						</div>
@@ -1496,42 +1495,57 @@ $this->Html->script([
 	});
 
 
+
 	document.addEventListener('DOMContentLoaded', function() {
-    var aseguradoraSelect = document.getElementById('aseguradora');
-    var otraAseguradoraDiv = document.getElementById('otraAseguradoraDiv');
-    var trabajoSelect = document.getElementById('ocupacion');
-    var otraOcupacionDiv = document.getElementById('otraOcupacionDiv');
-    var otraOcupacionInput = document.getElementById('otraOcupacion');
+		var aseguradoraSelect = document.getElementById('aseguradora');
+		var otraAseguradoraDiv = document.getElementById('otraAseguradoraDiv');
+		var trabajoSelect = document.getElementById('ocupacion')
+		var otraOcupacionDiv = document.getElementById('otraOcupacionDiv');
+		
+		trabajoSelect.addEventListener('change', function() {
+			
+			var selectedOption = trabajoSelect.value;
+			if (selectedOption === '9510.Trabajo informal') {
+				otraOcupacionDiv.style.display = 'block';
+				document.getElementById('otraOcupacion').removeAttribute('disabled');
+			
+			} else {
+				otraOcupacionDiv.style.display = 'none';
+				document.getElementById('otraOcupacion').setAttribute('disabled', 'disabled');
+			}
+		});
 
-    function toggleOtraOcupacion() {
-        var selectedOption = trabajoSelect.value;
-        if (selectedOption === '9510.Trabajo informal') {
-            otraOcupacionDiv.style.display = 'block';
+		aseguradoraSelect.addEventListener('change', function() {
+			console.log(aseguradoraSelect.value)
+			var selectedOption = aseguradoraSelect.value;
+			if (selectedOption === 'otra') {
+				otraAseguradoraDiv.style.display = 'block';
+				document.getElementById('otraAseguradora').removeAttribute('disabled');
+			} else {
+				otraAseguradoraDiv.style.display = 'none';
+				document.getElementById('otraAseguradora').setAttribute('disabled', 'disabled');
+			}
+		});
+
+		// Verifica el estado inicial
+		if (aseguradoraSelect.value === 'otra') {
+			otraAseguradoraDiv.style.display = 'block';
+			document.getElementById('otraAseguradora').removeAttribute('disabled');
+		} else {
+			otraAseguradoraDiv.style.display = 'none';
+			document.getElementById('otraAseguradora').setAttribute('disabled', 'disabled');
+		}
+
+		if (trabajoSelect.value === '9510.Trabajo informal') {
+			otraOcupacionDiv.style.display = 'block';
 			document.getElementById('otraOcupacion').removeAttribute('disabled');
-        } else {
-            otraOcupacionDiv.style.display = 'none';
-            otraOcupacionInput.setAttribute('enable', 'enable');
-        }
-    }
+		} else {
+			otraOcupacionDiv.style.display = 'none';
+			document.getElementById('otraOcupacion').setAttribute('disabled', 'disabled');
+		}
 
-    function toggleOtraAseguradora() {
-        var selectedOption = aseguradoraSelect.value;
-        if (selectedOption === 'otra') {
-            otraAseguradoraDiv.style.display = 'block';
-            document.getElementById('otraAseguradora').removeAttribute('disabled');
-        } else {
-            otraAseguradoraDiv.style.display = 'none';
-            document.getElementById('otraAseguradora').setAttribute('disabled', 'disabled');
-        }
-    }
+	});
 
-    trabajoSelect.addEventListener('change', toggleOtraOcupacion);
-    aseguradoraSelect.addEventListener('change', toggleOtraAseguradora);
-
-    // Verifica el estado inicial
-    toggleOtraOcupacion();
-    toggleOtraAseguradora();
-});
 
 
 
@@ -1543,6 +1557,9 @@ $this->Html->script([
 
     $("#JuventudadultoCanalizacionId").prepend(
         "<option value='' selected='selected'>Seleccione</option>");
+
+
+
 	}
 
 

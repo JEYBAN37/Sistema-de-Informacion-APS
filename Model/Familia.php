@@ -14,6 +14,21 @@ App::uses('AppModel', 'Model');
  */
 class Familia extends AppModel
 {
+	public function getFamiliaSocioambientalFiltered($encuestadorId = null, $ubicacionId = null)
+    {
+        $query = $this->find('all')
+                      ->contain(['Sociambiental']);
+
+        if ($encuestadorId !== null) {
+            $query->where(['Sociambiental.responsable_id' => $encuestadorId]);
+        }
+
+        if ($ubicacionId !== null) {
+            $query->where(['Sociambiental.ubicacion_id' => $ubicacionId]);
+        }
+
+        return $query;
+    }
 
 	public function getFamiliaDatos($contain) {
 		try {
@@ -28,6 +43,34 @@ class Familia extends AppModel
 		}
 	}
 	
+	public function getFamiliaSocioambientalFilter($conditions = array()) {
+		$options = array(
+			'fields' => array(
+				'Familia.id', 
+				'Familia.nombres', 
+				'Familia.apellidos',
+				'Sociambiental.id', 
+				'Sociambiental.direccion', 
+				'Sociambiental.apellidosfamilia', 
+				'Sociambiental.fecha',
+				'Sociambiental.responsable_id'
+			),
+			'conditions' => $conditions,
+				'Sociambiental' => array(
+					'fields' => array(
+						'id', 
+						'direccion', 
+						'apellidosfamilia', 
+						'fecha',
+						'responsable_id'
+					)
+				), 
+		);
+		return $this->find('all', $options);
+	}
+	
+	
+
 	public function getFamiliaResponsable() {
 		$contain = [
 			'Sociambiental' => [
@@ -53,6 +96,8 @@ class Familia extends AppModel
 
 		return $this->getFamiliaDatos($contain);
 	}
+
+
 	
 	public function getUbicaciones() {
 		$contain = [
@@ -539,7 +584,7 @@ class Familia extends AppModel
 	 *
 	 * @var array
 	 */
-	public $hasMany = array(
+public $hasMany = array(
 		'Adolescencia' => array(
 			'className' => 'Adolescencia',
 			'foreignKey' => 'familia_id',

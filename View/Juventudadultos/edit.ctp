@@ -46,9 +46,9 @@ echo $this->Html->script('validation'); // 'validation' es el nombre del archivo
         transform: translate(-50%, -50%);
         width: 80%;
         /* Ajusta el ancho del modal según tus necesidades */
-        max-width: 400px;
+
         /* Ancho máximo para pantallas más grandes */
-        padding: 20px;
+
         background-color: #fff;
         border: 1px solid #ccc;
         border-radius: 5px;
@@ -1028,29 +1028,42 @@ echo $this->Html->script('validation'); // 'validation' es el nombre del archivo
                             )); ?>
                         </div>
                         <div class="form-group col-md-6" style="margin-top: 20px;">
-                            <?php
-                            $optionOcupacion = [
-                                '' => 'Elegir',
-                                '9998.Estudia' => 'Estudia',
-                                '9998.Oficios Hogar y cuidado' => 'Oficios del hogar y/o de cuidado',
-                                '5169.Trabajo formal' => 'Trabajo formal',
-                                '9510.Trabajo informal' => 'Trabajo informal',
-                                '9622.Independiente' => 'Independiente/microempresario',
-                                'Sin ocupación' => 'Sin ocupación',
-                                '9999.No informa' => 'No informa',
-                                '9999.No aplica' => 'No aplica',
-                                '9999.SD' => 'Sin dato'
-                            ];
-                            echo $this->Form->input('ocupacion', array(
-                                'label' => '¿Cúal es la ocupación actual?',
-                                'class' => 'form-control',
-                                'placeholder' => '',
-                                'type' => 'select',
-                                'options' => $optionOcupacion,
-                                'style' => 'height:30px;  font-size: 15px ; width:100%',
-                                'class' => 'form-control select-search'
-                            ));
-                            ?></div>
+    <?php
+    $optionOcupacion = [
+        '' => 'Elegir',
+        '9998.Estudia' => 'Estudia',
+        '9998.Oficios Hogar y cuidado' => 'Oficios del hogar y/o de cuidado',
+        '5169.Trabajo formal' => 'Trabajo formal',
+        '9510.Trabajo informal' => 'Trabajo informal',
+        '9622.Independiente' => 'Independiente/microempresario',
+        'Sin ocupación' => 'Sin ocupación',
+        '9999.No informa' => 'No informa',
+        '9999.No aplica' => 'No aplica',
+        '9999.SD' => 'Sin dato'
+    ];
+    echo $this->Form->input('ocupacion', array(
+        'label' => '¿Cúal es la ocupación actual?',
+        'class' => 'form-control',
+        'placeholder' => '',
+        'type' => 'select',
+        'options' => $optionOcupacion,
+        'style' => 'height:30px; font-size: 15px; width:100%',
+        'id' => 'ocupacion'
+    ));
+    ?>
+</div>
+
+<div class="form-group col-md-6" style="margin-top: 20px; display: none;" id="otraOcupacionDiv">
+    <?php
+    echo $this->Form->input('ocupacion', [
+        'label' => 'Descripción específica de ocupación',
+        'class' => 'form-control',
+        'style' => 'height:30px; font-size: 15px; width:100%',
+        'id' => 'otraOcupacion'
+    ]);
+    ?>
+</div>
+	
 
                         <div class="form-group col-md-6" style="margin-top: 20px;">
                             <?php
@@ -1101,7 +1114,6 @@ echo $this->Html->script('validation'); // 'validation' es el nombre del archivo
                                 'Violencias de género' => 'Violencias de género',
                                 'Problemas o Transtornos mentales diagnosticados' => 'Problemas o Transtornos mentales diagnosticados',
                                 'Consumo de alcohol o psicoactivos' => 'Consumo de alcohol o psicoactivos',
-
                                 'SD' => 'Sin dato'
                             ];
 
@@ -1194,7 +1206,7 @@ echo $this->Html->script('validation'); // 'validation' es el nombre del archivo
                             'No aplica ' => 'Elegir',
                             'No' => 'No',
                             'Tramite de autorización de servicios de salud' => 'Tramite de autorización de servicios de salud',
-                            'Vacunacion ' => 'Vacunación ',
+							'Vacunacion' => 'Vacunación ',
                             'Atencion de PyM Medico' => 'Atención en salud de promoción y mantenimiento por médico',
                             'Atencion medicina general' => ' Atención en salud por medicina general',
                             'Atencion  Urgencias ' => 'Atención en salud en un servicio de Urgencias ',
@@ -1218,19 +1230,36 @@ echo $this->Html->script('validation'); // 'validation' es el nombre del archivo
                         ];
 
                         echo $this->Form->input('canalizacionuno', array(
-                            'label' => 'Canalización',
-                            'class' => 'form-control',
-                            'style' => 'height:30px;  font-size: 15px ; width:100%',
+							'label' => 'Canalización 1',
+							'style' => 'height:30px; font-size: 15px; width:100%',
                             'placeholder' => '',
-                            'class' => 'form-control select-search',
+							'class' => 'select-search',
                             'options' => $optionCanlizacion,
                             'type' => 'select',
-                            'style' => 'height:30px;  font-size: 15px ; width:100%',
-                            'id' => 'status', // Agrega el atributo id para que coincida con el select en JavaScript
-                            'onChange' => 'canalizacion(this.value);', // Agrega el atributo onChange para llamar a la función JavaScript
-                        )); ?>
+							'id' => 'canalizacionuno', // Cambiado de 'status' a 'canalizacionuno'
+							'onChange' => 'capturarValorSeleccionado();' // Llama a la función 'capturarValorSeleccionado()' cuando cambia el valor
+						));
+						?>
                     </div>
 
+
+					<!-- Fondo oscuro y cuadro modal -->
+					<div id="canalizationSpecific" class="overlay">
+						<div class="form-group col-md-12" style="margin-top: 5px;">
+							<div id="modalvacunancion" class="modal">
+								<div class="d-flex  justify-content-end vh-100">
+									<button type="button" class="close" onclick="cerrarModal('modalvacunancion','canalizationSpecific')">
+										<span aria-hidden="true" style="font-size: 30px;">&times;</span>
+									</button>
+								</div>
+								<ul id="dataTuning" class="list-group">
+								</ul>
+								<div class="d-flex justify-content-center vh-100 ">
+									<button class=" my-button" type="button" onclick="cerrarModal('modalvacunancion','canalizationSpecific')">Aceptar</button>
+								</div>
+							</div>
+						</div>
+					</div>
 
                     <div id="Canalizacion">
                         <div class="form-group col-md-6" style="margin-top: 20px;">
@@ -1291,12 +1320,26 @@ echo $this->Html->script('validation'); // 'validation' es el nombre del archivo
                         )); ?>
                     </div>
 
-
                     <div class="form-group col-md-6" style="margin-top: 20px;">
                         <?php
+						echo $this->Form->input('remisionEspecifica', array(
+							'label' => 'Canalizaciones Especificas',
+							'type' => 'textarea', // Cambiado a 'textarea'
+							'class' => 'form-control',
+							'style' => 'height:100px;  font-size: 15px ; width:100%', // Ajustado el estilo para un área de texto más grande
+							'id' => 'remisionEspecifica',
+							'readonly' => true // Utilizando '=> true' en lugar de solo 'readonly'
+						));
+						?>
 
 
-                        echo $this->Form->input('educacion', array(
+					</div>
+
+
+					<div class="form-group col-md-6" style="margin-top: 20px;">
+
+						<?php
+						echo $this->Form->input('educacionuno', array(
                             'label' => 'Refiera el tipo de actividad desarrollada',
                             'class' => 'form-control',
                             'style' => 'height:30px;  font-size: 15px ; width:100%',
@@ -1312,15 +1355,18 @@ echo $this->Html->script('validation'); // 'validation' es el nombre del archivo
                         <div class="form-group col-md-12" style="margin-top: 5px;">
                             <div id="modal" class="modal">
                                 <div class="modal-header-native" style="text-align: center;">
-                                    <button type="button" class="close" onclick="cerrarModal()">
+									<button type="button" class="close" onclick="cerrarModal('overlay','modal')">
                                         <span aria-hidden="true" style="font-size: 30px;">&times;</span>
                                     </button>
                                 </div>
                                 <div id="miContenedor" class="form-group col-md-12" style="margin-top: 20px;">
 
                                 </div>
+								<div class="d-flex justify-content-center vh-100">
+									<button class=" my-button" type="button" onclick="cerrarModal('overlay','modal')">Cerrar</button>
+								</div>
 
-                                <button class="my-button" type="button" onclick="cerrarModal()">Cerrar</button>
+
                             </div>
                         </div>
                     </div>
@@ -1386,22 +1432,10 @@ $this->Html->script([
     }
 
     // Función para cerrar el modal
-    function cerrarModal() {
-        document.getElementById("overlay").style.display = "none";
-        document.getElementById("modal").style.display = "none";
-    }
-
-    // Función para actualizar el campo de entrada con las opciones seleccionadas
-    function actualizarInput() {
-        var checkboxes = document.querySelectorAll('#modal input[type="checkbox"]');
-        var opcionesSeleccionadas = Array.from(checkboxes)
-            .filter(checkbox => checkbox.checked)
-            .map(checkbox => checkbox.value)
-            .join(', ');
-
-        document.getElementById("opcionesSeleccionadas").value = opcionesSeleccionadas;
-        document.getElementById("ponerOpcion").value = opcionesSeleccionadas;
-    }
+	function cerrarModal(divaleatory, divSecond) {
+		document.getElementById(divaleatory).style.display = "none";
+		document.getElementById(divSecond).style.display = "none ";
+	}
 
 
 
@@ -1451,53 +1485,24 @@ $this->Html->script([
         });
 
 
+	});
 
 
 
 
-    });
-
-    function agregarOpcionSeleccion() {
-
-
-
-        $("#JuventudadultoCanalizacionId").prepend(
-            "<option value='' selected='selected'>Seleccione</option>");
-
-    }
-
-
-
-    document.addEventListener('DOMContentLoaded', function() {
-        var aseguradoraSelect = document.getElementById('aseguradora');
-        var otraAseguradoraDiv = document.getElementById('otraAseguradoraDiv');
-
-        aseguradoraSelect.addEventListener('change', function() {
-            var selectedOption = aseguradoraSelect.value;
-
-            if (selectedOption === 'otra') {
-                otraAseguradoraDiv.style.display = 'block';
-                document.getElementById('otraAseguradora').removeAttribute('disabled');
-            } else {
-                otraAseguradoraDiv.style.display = 'none';
-                document.getElementById('otraAseguradora').setAttribute('disabled', 'disabled');
-            }
-        });
-
-        // Verifica el estado inicial
-        if (aseguradoraSelect.value === 'otra') {
-            otraAseguradoraDiv.style.display = 'block';
-            document.getElementById('otraAseguradora').removeAttribute('disabled');
-        } else {
-            otraAseguradoraDiv.style.display = 'none';
-            document.getElementById('otraAseguradora').setAttribute('disabled', 'disabled');
-        }
-
-    });
 
 
 
 
+	function agregarOpcionSeleccion() {
+
+
+    $("#JuventudadultoCanalizacionId").prepend(
+        "<option value='' selected='selected'>Seleccione</option>");
+
+
+
+	}
 
 
 
@@ -1564,12 +1569,15 @@ $this->Html->script([
         $('#ayudaButton3').popover();
     });
 
-    function generarCheckboxes(opciones) {
-        let resultHTML = '';
+	function generarCheckboxes(opciones, id, result) {
+		let resultHTML = ''
 
         opciones.forEach(opcion => {
             resultHTML +=
-                `<label><input type="checkbox" value="${opcion}" onclick="actualizarInput()">${opcion}</label>`;
+				`<li class="list-group-item d-flex  align-items-center h-100" style="margin-bottom: 0em;">
+            <input type="checkbox" value="${opcion}" onclick="actualizarInput('${id}', '${result}')" class="d-flex justify-content-center">
+            <label>${opcion}</label>
+        </li>`;
         });
 
         return resultHTML;
@@ -1590,5 +1598,86 @@ $this->Html->script([
         'Remision a urgencias',
     ];
     // Generar los checkboxes y agregarlos al contenedor
-    document.getElementById('miContenedor').innerHTML = generarCheckboxes(opcionesActividades);
+	document.getElementById('miContenedor').innerHTML = generarCheckboxes(opciones, 'modal', 'opcionesSeleccionadas');
+
+
+
+	const dataGuardada = ''
+	const opcionesVacunancion = opcionesActividades = [
+
+		'Gestantes	Influenza Gestacional 	1 dosis a partir de la Semana 14 de Gestación ',
+		'Gestantes	TdaP (Tetanos, Difteria, Tosferina Acelular)	Dosis Única a partir de semana 26 de gestación',
+		'Adultos de 60 ños y mas 	Vacuna de influenza estacional	una dosis cada año ',
+
+	];
+
+	// Función para actualizar el campo de entrada con las opciones selecciona
+	function actualizarInput(elementId, result) {
+		var checkboxes = document.querySelectorAll('#' + elementId + ' input[type="checkbox"]');
+		var opcionesSeleccionadas = Array.from(checkboxes)
+			.filter(checkbox => checkbox.checked)
+			.map(checkbox => checkbox.value)
+			.join(', ');
+
+		document.getElementById(result).value = opcionesSeleccionadas;
+	}
+	//Optienen el valor de los campos del checkbox solo llama
+	//el array que quieres mostrar introduce el id de la etiqueta que hiciste
+	//para vizualizar la checkbox y el result es en la variable que guardara
+
+	function generarCheckboxes(opciones, id, result) {
+		let resultHTML = ''
+
+		opciones.forEach(opcion => {
+			resultHTML +=
+				`<li class="list-group-item d-flex  align-items-center h-100" style="margin-bottom: 0em;">
+            <input type="checkbox" value="${opcion}" onclick="actualizarInput('${id}', '${result}')" class="d-flex justify-content-center">
+            <label>${opcion}</label>
+        </li>`;
+		});
+
+		return resultHTML;
+	}
+
+	//Captura el valor igresar los casos encesarion en el switch
+	function capturarValorSeleccionado() {
+		var valorSeleccionado = document.getElementById("canalizacionuno").value; //Obtener el valor de la canalizacion
+		var otraAseguradoraDiv = document.getElementById('overlay');
+
+
+		switch (valorSeleccionado) {
+			case "Vacunacion":
+				console.log(valorSeleccionado)
+				document.getElementById('dataTuning').innerHTML = generarCheckboxes(opcionesActividades, 'modalvacunancion',
+					'remisionEspecifica');
+				document.getElementById("canalizationSpecific").style.display = "block";
+				document.getElementById("modalvacunancion").style.display = "block";
+				break;
+
+
+		}
+	}
+
+    document.getElementById('ocupacion').addEventListener('change', function() {
+        var otraOcupacionDiv = document.getElementById('otraOcupacionDiv');
+        var otraOcupacion = document.getElementById('otraOcupacion');
+        
+        if (this.value === '9510.Trabajo informal') {
+            otraOcupacionDiv.style.display = 'block';
+            otraOcupacion.disabled = false;
+        } else {
+            otraOcupacionDiv.style.display = 'none';
+            otraOcupacion.disabled = true;
+            otraOcupacion.value = '';
+        }
+    });
+
+    document.getElementById('otraOcupacion').addEventListener('input', function() {
+        var ocupacion = document.getElementById('ocupacion');
+        if (ocupacion.value === '9510.Trabajo informal') {
+            ocupacion.value = ocupacion.value.split('.')[0] + '.' + this.value;
+        }
+    });
+
+
 </script>
