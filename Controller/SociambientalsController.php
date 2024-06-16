@@ -54,6 +54,7 @@ class SociambientalsController extends AppController
 	
 			// Obtener los datos filtrados del modelo Sociambiental
 			$sociambientals = $this->Sociambiental->getFamiliaSocioambientalFilter($conditions);
+			
 		} else {
 			$sociambientals = array(); // Inicializar como array vacío
 		}
