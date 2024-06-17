@@ -66,7 +66,7 @@ echo $this->Html->script('validationSocioAmbiental'); // 'validation' es el nomb
 
 
     <div>
-        <?php echo $this->Form->create(); ?>
+        <?php echo $this->Form->create('Sociambiental'); ?>
         <div class="form-group col-sm-12 center">
 
             <fieldset>
@@ -76,7 +76,8 @@ echo $this->Html->script('validationSocioAmbiental'); // 'validation' es el nomb
                     </h1>
                 </div>
 
-
+                <h2 style="color: #3366CC;  font-size:30px ; margin-top: 25px; ">Datos Básicos</h2>
+                <hr style=" border:0.1px solid rgba(0,0,0,.125);">
                 <div class="grow justify-content-center" display="none" style="margin-top:20px; ">
                     <div class="card " style=" font-size:15px;  border:1.5px solid rgba(0,0,0,.125);">
                         <div class="form-group row">
@@ -106,69 +107,44 @@ echo $this->Html->script('validationSocioAmbiental'); // 'validation' es el nomb
                                     'class' => 'select-search col-md-12'
                                 )); ?>
 
-                                <p class="help-block">Los tres últimos codigos del hacen referencia al numero de la
-                                    manzana
+                            </div>
+
+                            <div class="form-group col-md-6" style="margin-top: 20px;">
+                                <?php echo $this->Form->input('numMicroterritorio', array(
+                                    'label' => 'Numero de microterritorio',
+                                    'style' => 'height:30px;  font-size: 15px ; width:100%',
+
+                                )); ?>
                                 </p>
                             </div>
 
                             <div class="form-group col-md-6" style="margin-top: 20px;">
+                                <?php echo $this->Form->input('barriovereda', array(
+                                    'label' => 'Barrio/sector/vereda',
+                                    'style' => 'height:30px;  font-size: 15px ; width:100%',
+
+                                )); ?>
+                                </p>
+                            </div>
+
+                            <div class="form-group col-md-6" style="margin-top: 20px;">
+                                <?php echo $this->Form->input('manzana', array(
+                                    'label' => 'N.Cuadra o Manzana',
+                                    'style' => 'height:30px;  font-size: 15px ; width:100%',
+
+
+                                )); ?>
+
+                            </div>
+
+                            <div class="form-group col-md-6" style="margin-top: 20px;">
                                 <?php
-                                $numapartamento = array(
-                                    '' => 'Elegir',
-                                    'NA' => 'No aplica',
-                                    '101S' => '101Sub',
-                                    '102S' => '102Sub',
-                                    '103S' => '103Sub',
-                                    '104S' => '104Sub',
-                                    '101' => '101',
-                                    '102' => '102',
-                                    '103' => '103',
-                                    '104' => '104',
-                                    '105' => '105',
-                                    '106' => '106',
-                                    '107' => '107',
-                                    '108' => '108',
-                                    '201' => '201',
-                                    '202' => '202',
-                                    '203' => '203',
-                                    '204' => '204',
-                                    '205' => '205',
-                                    '206' => '206',
-                                    '207' => '207',
-                                    '208' => '208',
-                                    '301' => '301',
-                                    '302' => '302',
-                                    '303' => '303',
-                                    '304' => '304',
-                                    '305' => '305',
-                                    '306' => '306',
-                                    '307' => '307',
-                                    '308' => '308',
-                                    '401' => '401',
-                                    '402' => '402',
-                                    '403' => '403',
-                                    '404' => '404',
-                                    '405' => '405',
-                                    '406' => '406',
-                                    '407' => '407',
-                                    '408' => '408',
-                                    '501' => '501',
-                                    '502' => '502',
-                                    '503' => '503',
-                                    '504' => '504',
-                                    '505' => '505',
-                                    '506' => '506',
-                                    '507' => '507',
-                                    '508' => '508'
 
-
-                                );
 
                                 echo $this->Form->input('apartamento', array(
                                     'label' => 'Num. Apartamento',
                                     'class' => 'form-control',
                                     'style' => 'height:30px;  font-size: 15px',
-                                    'options' => $numapartamento,
                                 )); ?>
                             </div>
 
@@ -189,7 +165,8 @@ echo $this->Html->script('validationSocioAmbiental'); // 'validation' es el nomb
                                     'class' => 'form-control',
                                     'style' => 'height:30px;  font-size: 15px',
                                 )); ?>
-                                <p class="help-block">Coordenada de latitud en la ubicación geográfica. Ej.: 0.670348
+                                <p class="help-block">Coordenada de latitud en la ubicación geográfica. Ej.:
+                                    0.670348
                                     Valor numérico con decimales, separador punto. Acepta valores negativos
                                 </p>
                             </div>

@@ -254,6 +254,37 @@ class PrimerainfanciasController extends AppController
 		$this->set(compact('familias', 'canalizaciones'));
 	}
 
+	public function seguimiento($id = null)
+	{
+		if (!$this->Primerainfancia->exists($id)) {
+			throw new NotFoundException(__('Invalid Primerainfancia'));
+		}
+
+		if ($this->request->is(array('post', 'put'))) {
+			// Obtener el valor de canalizacion_id del formulario
+			$canalizacionId = $this->request->data['Primerainfancia']['canalizacion_id'];
+
+			if ($this->Primerainfancia->save($this->request->data)) {
+				$this->Session->setFlash('Se ha guardado correctamente', 'default', array('class' => 'alert alert-success'));
+
+				// Redirigir a la vista de la Canalizacion
+				return $this->redirect(array(
+					'controller' => 'canalizacions',
+					'action' => 'view',
+					$canalizacionId
+				));
+			} else {
+				$this->Session->setFlash('No se ha guardado, por favor revisar campos', 'default', array('class' => 'alert alert-danger'));
+			}
+		} else {
+			$options = array('conditions' => array('Primerainfancia.' . $this->Primerainfancia->primaryKey => $id));
+			$this->request->data = $this->Primerainfancia->find('first', $options);
+		}
+
+		$familias = $this->Primerainfancia->Familia->find('list');
+		$canalizaciones = $this->Primerainfancia->Canalizacion->find('list');
+		$this->set(compact('familias', 'canalizaciones'));
+	}
 
 
 

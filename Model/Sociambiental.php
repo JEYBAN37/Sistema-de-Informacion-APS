@@ -16,13 +16,14 @@ class Sociambiental extends AppModel
 	public $displayField = 'apellidosfamilia';
 
 
-	public function getFamiliaSocioambientalFilter($conditions = array()) {
+	public function getFamiliaSocioambientalFilter($conditions = array())
+	{
 		// Definir las opciones para la consulta
 		$options = array(
 			'fields' => array(
-				'Sociambiental.id', 
-				'Sociambiental.direccion', 
-				'Sociambiental.apellidosfamilia', 
+				'Sociambiental.id',
+				'Sociambiental.direccion',
+				'Sociambiental.apellidosfamilia',
 				'Sociambiental.fecha',
 				'Sociambiental.numerohogares',
 				'Sociambiental.numerohabitantes',
@@ -33,23 +34,23 @@ class Sociambiental extends AppModel
 			),
 			'conditions' => $conditions,
 			'Familia' => array(
-                'fields' => array('id', 'nombres') // Ajusta estos campos según los necesarios
-            ),
-            'Ubicacion' => array(
-                'fields' => array('id', 'microterritorio') // Ajusta estos campos según los necesarios
-            ),
+				'fields' => array('id', 'nombres') // Ajusta estos campos según los necesarios
+			),
+			'Ubicacion' => array(
+				'fields' => array('id', 'microterritorio') // Ajusta estos campos según los necesarios
+			),
 			'Responsable' => array(
-                'fields' => array('nombres') // Ajusta estos campos según los necesarios
-            ),
-        );
-    
+				'fields' => array('nombres') // Ajusta estos campos según los necesarios
+			),
+		);
 
-	
+
+
 		// Realizar la consulta y retornar los resultados
 		return $this->find('all', $options);
 	}
-	
-	
+
+
 	/**
 	 * Validation rules
 	 *
@@ -453,6 +454,63 @@ class Sociambiental extends AppModel
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
 		),
+		'vector' => array(
+			'notEmpty' => array(
+				'rule' => array('notEmpty'),
+				//'message' => 'Your custom message here',
+				//'allowEmpty' => false,
+				//'required' => false,
+				//'last' => false, // Stop validation after this rule
+				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+			),
+		),
+		'numMicroterritorio' => array(
+			'notEmpty' => array(
+				'rule' => array('notEmpty'),
+				//'message' => 'Your custom message here',
+				//'allowEmpty' => false,
+				//'required' => false,
+				//'last' => false, // Stop validation after this rule
+				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+			),
+		),
+		'barriovereda' => array(
+			'notEmpty' => array(
+				'rule' => array('notEmpty'),
+				//'message' => 'Your custom message here',
+				//'allowEmpty' => false,
+				//'required' => false,
+				//'last' => false, // Stop validation after this rule
+				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+			),
+		),
+		'manzana' => array(
+			'notEmpty' => array(
+				'rule' => array('notEmpty'),
+				//'message' => 'Your custom message here',
+				//'allowEmpty' => false,
+				//'required' => false,
+				//'last' => false, // Stop validation after this rule
+				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+			),
+		),
+		'manzana' => array(
+			'notEmpty' => array(
+				'rule' => array('notEmpty'),
+				//'message' => 'Your custom message here',
+				//'allowEmpty' => false,
+				//'required' => false,
+				//'last' => false, // Stop validation after this rule
+				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+			),
+		),
+
+
+
+
+
+
+
 
 
 	);
@@ -484,18 +542,18 @@ class Sociambiental extends AppModel
 
 
 
-	   public $hasMany = array(
-		   'Familia' => array(
-			   'className' => 'Familia',
-			   'foreignKey' => 'sociambiental_id',
-			   'conditions' => '',
-			   'fields' => '',
-			   'order' => '',
-			   'limit' => '',
-			   'offset' => '',
-			   'exclusive' => '',
-			   'finderQuery' => '',
-			   'counterQuery' => ''
-		   )
-	   );
+	public $hasMany = array(
+		'Familia' => array(
+			'className' => 'Familia',
+			'foreignKey' => 'sociambiental_id',
+			'conditions' => '',
+			'fields' => '',
+			'order' => '',
+			'limit' => '',
+			'offset' => '',
+			'exclusive' => '',
+			'finderQuery' => '',
+			'counterQuery' => ''
+		)
+	);
 }

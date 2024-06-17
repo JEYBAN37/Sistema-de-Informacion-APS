@@ -118,7 +118,7 @@ class UsersController extends AppController
                             // return $this->redirect('controller' => 'orders', 'action' => 'thanks');
                             //$this->redirect("home");
                             return $this->redirect(
-                                array('controller' => 'familias', 'action' => 'index')
+                                array('controller' => 'sociambientals', 'action' => 'index')
                             );
                         }
                     } else {
