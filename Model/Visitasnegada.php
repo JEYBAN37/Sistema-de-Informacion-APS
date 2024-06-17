@@ -8,7 +8,34 @@ App::uses('AppModel', 'Model');
  */
 class Visitasnegada extends AppModel
 {
+	public function getFamiliaNegadasFilter($conditions = array()) {
+		// Definir las opciones para la consulta
+		$options = array(
+			'fields' => array(
+				'visitasnegada.id', 
+				'visitasnegada.direccion', 
+				'visitasnegada.observacion', 
+				'visitasnegada.estadocasa',
+				'visitasnegada.fecha',
+				'visitasnegada.nombreshabitante',
+				'Ubicacion.id',
+				'Ubicacion.microterritorio',
+				'Responsable.nombres'
+			),
+			'conditions' => $conditions,
+            'Ubicacion' => array(
+                'fields' => array('id', 'microterritorio') // Ajusta estos campos según los necesarios
+            ),
+			'Responsable' => array(
+                'fields' => array('nombres') // Ajusta estos campos según los necesarios
+            ),
+        );
+    
 
+	
+		// Realizar la consulta y retornar los resultados
+		return $this->find('all', $options);
+	}
 	/**
 	 * Validation rules
 	 *
