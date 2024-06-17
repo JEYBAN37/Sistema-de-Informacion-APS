@@ -23,15 +23,42 @@ class VisitasnegadasController extends AppController
 	 */
 	public function index()
 	{
-		$this->Visitasnegada->recursive = 0;
+		$this->loadModel('Responsable'); // Cargar el modelo Responsable
+		$this->loadModel('Ubicacion'); // Cargar el modelo Ubicacion
+	
+		// Obtener listado de responsables (para mostrar en un select)
+		$responsablesList = $this->Responsable->find('list', array(
+			'fields' => array('id', 'nombres'), // Ajusta los campos según tu modelo Responsable
+			'order' => 'nombres'
+		));
+	
+		// Obtener listado de ubicaciones (si aplica)
+		$ubicacionesList = $this->Ubicacion->find('list', array(
+			'fields' => array('id', 'microterritorio'), // Ajusta los campos según tu modelo de Ubicación
+			'order' => 'microterritorio'
+		));
+	
+		$conditions = array();
+	
+		if ($this->request->is(['post', 'put'])) {
+			$encuestadorId = $this->request->data['Visitasnegada']['encuestador_id'];
+	
+			if (!empty($encuestadorId)) {
+				$conditions['visitasnegada.responsable_id'] = $encuestadorId;
+			}
+	
+			$ubicacionId = $this->request->data['Visitasnegada']['ubicacion_id'];
+			if (!empty($ubicacionId)) {
+				$conditions['visitasnegada.ubicacion_id'] = $ubicacionId;
+			}
 
-		$count = $this->Visitasnegada->find('count');
-		$this->Paginator->settings['limit'] = $count;
-
-		$this->set(
-			"visitasnegadas",
-			$this->paginate()
-		);
+			// Obtener los datos filtrados del modelo Sociambiental
+			$visitasNegadas = $this->Visitasnegada->getFamiliaNegadasFilter($conditions);
+		} else {
+			$visitasNegadas = array(); // Inicializar como array vacío
+		}
+		// Pasar las variables a la vista
+		$this->set(compact('visitasNegadas', 'ubicacionesList', 'responsablesList'));
 	}
 
 	/**
