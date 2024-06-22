@@ -8,13 +8,14 @@ App::uses('AppModel', 'Model');
  */
 class Visitasnegada extends AppModel
 {
-	public function getFamiliaNegadasFilter($conditions = array()) {
+	public function getFamiliaNegadasFilter($conditions = array())
+	{
 		// Definir las opciones para la consulta
 		$options = array(
 			'fields' => array(
-				'visitasnegada.id', 
-				'visitasnegada.direccion', 
-				'visitasnegada.observacion', 
+				'visitasnegada.id',
+				'visitasnegada.direccion',
+				'visitasnegada.observacion',
 				'visitasnegada.estadocasa',
 				'visitasnegada.fecha',
 				'visitasnegada.nombreshabitante',
@@ -23,16 +24,16 @@ class Visitasnegada extends AppModel
 				'Responsable.nombres'
 			),
 			'conditions' => $conditions,
-            'Ubicacion' => array(
-                'fields' => array('id', 'microterritorio') // Ajusta estos campos según los necesarios
-            ),
+			'Ubicacion' => array(
+				'fields' => array('id', 'microterritorio') // Ajusta estos campos según los necesarios
+			),
 			'Responsable' => array(
-                'fields' => array('nombres') // Ajusta estos campos según los necesarios
-            ),
-        );
-    
+				'fields' => array('nombres') // Ajusta estos campos según los necesarios
+			),
+		);
 
-	
+
+
 		// Realizar la consulta y retornar los resultados
 		return $this->find('all', $options);
 	}
@@ -141,6 +142,37 @@ class Visitasnegada extends AppModel
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
 		),*/
+
+		'numMicroterritorio' => array(
+			'notEmpty' => array(
+				'rule' => array('notEmpty'),
+				//'message' => 'Your custom message here',
+				//'allowEmpty' => false,
+				//'required' => false,
+				//'last' => false, // Stop validation after this rule
+				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+			),
+		),
+		'barriovereda' => array(
+			'notEmpty' => array(
+				'rule' => array('notEmpty'),
+				//'message' => 'Your custom message here',
+				//'allowEmpty' => false,
+				//'required' => false,
+				//'last' => false, // Stop validation after this rule
+				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+			),
+		),
+		'manzana' => array(
+			'notEmpty' => array(
+				'rule' => array('notEmpty'),
+				//'message' => 'Your custom message here',
+				//'allowEmpty' => false,
+				//'required' => false,
+				//'last' => false, // Stop validation after this rule
+				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+			),
+		),
 
 
 

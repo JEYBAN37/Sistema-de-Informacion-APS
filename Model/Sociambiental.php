@@ -494,7 +494,8 @@ class Sociambiental extends AppModel
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
 		),
-		'manzana' => array(
+
+		'fechaRegistro' => array(
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),
 				//'message' => 'Your custom message here',
@@ -504,6 +505,7 @@ class Sociambiental extends AppModel
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
 		),
+
 
 
 

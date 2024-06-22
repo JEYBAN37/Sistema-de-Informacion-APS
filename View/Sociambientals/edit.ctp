@@ -7,12 +7,12 @@ echo $this->Html->script('validationSocioAmbiental'); // 'validation' es el nomb
 ?>
 
 <style>
-    .modal-header-native {
-        padding: 1rem;
-        border-bottom: 1px solid #e9ecef;
-        border-top-left-radius: .3rem;
-        border-top-right-radius: .3rem;
-    }
+.modal-header-native {
+    padding: 1rem;
+    border-bottom: 1px solid #e9ecef;
+    border-top-left-radius: .3rem;
+    border-top-right-radius: .3rem;
+}
 </style>
 
 
@@ -42,6 +42,25 @@ echo $this->Html->script('validationSocioAmbiental'); // 'validation' es el nomb
                 <div class="grow justify-content-center" display="none" style="margin-top:20px; ">
                     <div class="card " style=" font-size:15px;  border:1.5px solid rgba(0,0,0,.125);">
                         <div class="form-group row">
+
+
+
+
+
+
+                            <div class="form-group col-md-6" style="margin-top: 20px;">
+
+                                <!-- Campo de fecha de nacimiento -->
+                                <?php echo $this->Form->input('fechaRegistro', [
+                                    'label' => 'Fecha de registro:',
+                                    'type' => 'date',
+                                    'minYear' => date('Y') - 12,
+                                    'maxYear' => date('Y') - 7,
+                                    'style' => 'height:30px;  font-size: 15px ;',
+                                    'id' => 'fechanac', // Agrega este identificador al campo de fecha de nacimiento
+                                    'empty' => true, // Establecer el campo como vacío
+                                ]); ?>
+                            </div>
 
                             <div class="form-group col-md-6" style="margin-top: 20px;">
                                 <?php
@@ -726,7 +745,8 @@ echo $this->Html->script('validationSocioAmbiental'); // 'validation' es el nomb
 
                 </div>
                 <div class="grow justify-content-center" display="none" style="margin-top:20px">
-                    <div id="si" class="panel panel-default form-group col-md-12" style="font-size:15px; display: none;">
+                    <div id="si" class="panel panel-default form-group col-md-12"
+                        style="font-size:15px; display: none;">
 
                         <div class="form-group row">
 
@@ -863,56 +883,56 @@ $this->Html->script([
 ], ['block' => 'script']);
 ?>
 <script type="text/javascript">
-    $(document).ready(function() {
-        $('.select-search').select2();
-        agregarOpcionSeleccion();
-    });
+$(document).ready(function() {
+    $('.select-search').select2();
+    agregarOpcionSeleccion();
+});
 
 
 
 
-    function agregarOpcionSeleccion() {
-        //  $("#SociambientalUbicacionId").prepend("<option value='' selected='selected'>Seleccione</option>");
+function agregarOpcionSeleccion() {
+    //  $("#SociambientalUbicacionId").prepend("<option value='' selected='selected'>Seleccione</option>");
+
+}
+
+$("#switch-label").change(function() {
+    var switchValue = this.checked ? "si" : "no";
+    mostrar(switchValue);
+});
+
+$("#switch-label-initial").change(function() {
+    var switchValue = this.checked ? "yes" : "nope";
+    mostrar(switchValue);
+});
+
+
+function mostrar(id) {
+    if (id == "si") {
+        $("#si").show();
+        $("#no").hide();
+
+    } else if (id == "no") {
+        $("#si").hide();
+        $("#no").show();
 
     }
 
-    $("#switch-label").change(function() {
-        var switchValue = this.checked ? "si" : "no";
-        mostrar(switchValue);
-    });
+    if (id == "yes") {
+        $("#yes").show();
+        $("#nope").hide();
+        $("#validacion").val("si acepto");
 
-    $("#switch-label-initial").change(function() {
-        var switchValue = this.checked ? "yes" : "nope";
-        mostrar(switchValue);
-    });
+    } else if (id == "nope") {
+        $("#yes").hide();
+        $("#nope").show();
+        $("#validacion").val(" ");
 
-
-    function mostrar(id) {
-        if (id == "si") {
-            $("#si").show();
-            $("#no").hide();
-
-        } else if (id == "no") {
-            $("#si").hide();
-            $("#no").show();
-
-        }
-
-        if (id == "yes") {
-            $("#yes").show();
-            $("#nope").hide();
-            $("#validacion").val("si acepto");
-
-        } else if (id == "nope") {
-            $("#yes").hide();
-            $("#nope").show();
-            $("#validacion").val(" ");
-
-        }
     }
+}
 
 
-    $(document).ready(function() {
-        $("#mostrarmodal").modal("show");
-    });
+$(document).ready(function() {
+    $("#mostrarmodal").modal("show");
+});
 </script>
