@@ -24,7 +24,14 @@ class InfantilsController extends AppController
 	public function index()
 	{
 		$this->Infantil->recursive = 0;
-		$this->set('infantils', $this->Paginator->paginate());
+
+		$count = $this->Infantil->find('count');
+		$this->Paginator->settings['limit'] = $count;
+
+		$this->set(
+			"infantils",
+			$this->paginate()
+		);
 	}
 
 	/**
@@ -42,6 +49,8 @@ class InfantilsController extends AppController
 		$options = array('conditions' => array('Infantil.' . $this->Infantil->primaryKey => $id));
 		$this->set('infantil', $this->Infantil->find('first', $options));
 	}
+
+
 
 	/**
 	 * add method
@@ -116,9 +125,9 @@ class InfantilsController extends AppController
 			$this->request->data = $this->Infantil->find('first', $options);
 		}
 		$familias = $this->Infantil->Familia->find('list');
-		$canalizacions = $this->Infantil->Canalizacion->find('list');
+		$canalizaciones = $this->Infantil->Canalizacion->find('list');
 		$personas = $this->Infantil->Persona->find('list');
-		$this->set(compact('familias', 'personas', 'canalizacions'));
+		$this->set(compact('familias', 'personas', 'canalizaciones'));
 	}
 
 	public function canalizacion($id = null)
@@ -138,9 +147,63 @@ class InfantilsController extends AppController
 			$this->request->data = $this->Infantil->find('first', $options);
 		}
 		$familias = $this->Infantil->Familia->find('list');
-		$canalizacions = $this->Infantil->Canalizacion->find('list');
+		$canalizaciones = $this->Infantil->Canalizacion->find('list');
 		$personas = $this->Infantil->Persona->find('list');
-		$this->set(compact('familias', 'personas', 'canalizacions'));
+		$this->set(compact('familias', 'personas', 'canalizaciones'));
+	}
+
+	public function edit1($id = null)
+	{
+		if (!$this->Infantil->exists($id)) {
+			throw new NotFoundException(__('Invalid infantil'));
+		}
+		if ($this->request->is(array('post', 'put'))) {
+			if ($this->Infantil->save($this->request->data)) {
+				$this->Session->setFlash('Se ha guardado correctamente', 'default', array('class' => 'alert alert-success'));
+				return $this->redirect(array('action' => 'index'));
+			} else {
+				$this->Session->setFlash('No se ha guardado, por favor revisar campos', 'default', array('class' => 'alert alert-danger'));
+			}
+		} else {
+			$options = array('conditions' => array('Infantil.' . $this->Infantil->primaryKey => $id));
+			$this->request->data = $this->Infantil->find('first', $options);
+		}
+
+		$familias = $this->Infantil->Familia->find('list');
+		$canalizaciones = $this->Infantil->Canalizacion->find('list');
+		$this->set(compact('familias', 'canalizaciones'));
+	}
+
+	public function seguimiento($id = null)
+	{
+		if (!$this->Infantil->exists($id)) {
+			throw new NotFoundException(__('Invalid infantil'));
+		}
+
+		if ($this->request->is(array('post', 'put'))) {
+			// Obtener el valor de canalizacion_id del formulario
+			$canalizacionId = $this->request->data['Infantil']['canalizacion_id'];
+
+			if ($this->Infantil->save($this->request->data)) {
+				$this->Session->setFlash('Se ha guardado correctamente', 'default', array('class' => 'alert alert-success'));
+
+				// Redirigir a la vista de la Canalizacion
+				return $this->redirect(array(
+					'controller' => 'canalizacions',
+					'action' => 'view',
+					$canalizacionId
+				));
+			} else {
+				$this->Session->setFlash('No se ha guardado, por favor revisar campos', 'default', array('class' => 'alert alert-danger'));
+			}
+		} else {
+			$options = array('conditions' => array('Infantil.' . $this->Infantil->primaryKey => $id));
+			$this->request->data = $this->Infantil->find('first', $options);
+		}
+
+		$familias = $this->Infantil->Familia->find('list');
+		$canalizaciones = $this->Infantil->Canalizacion->find('list');
+		$this->set(compact('familias', 'canalizaciones'));
 	}
 
 	/**

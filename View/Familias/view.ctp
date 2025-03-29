@@ -7,7 +7,7 @@ $serv = 'localhost';
 $port = '3306';
 $userS = 'root';
 $passS = '';
-$bd = 'fichafamiliar';
+$bd = 'fichafamiliar2024';
 ?>
 
 <style>
@@ -31,7 +31,8 @@ $bd = 'fichafamiliar';
                         <div class="col-lg-12">
 
                             <table width="100%" class="table table-responsive table-striped table-bordered  " style="margin-top: 30px;">
-                                <td colspan="6" style="text-align: center; color: #3366CC;"><strong>DATOS GENERALES</strong>
+                                <td colspan="6" style="text-align: center; color: #3366CC;"><strong>DATOS
+                                        GENERALES</strong>
                                     <tr>
                                         <td>
                                             <strong>Fecha Registro:</strong>
@@ -130,7 +131,8 @@ $bd = 'fichafamiliar';
 
                             <table id="miTabla" style="display: none; margin-top: 20px;" width="100%" class="table table-responsive table-striped table-bordered  ">
                                 <tr>
-                                    <td colspan="6" style="text-align: center; color: #3366CC;"><strong>VIVIENDA</strong>
+                                    <td colspan="6" style="text-align: center; color: #3366CC;">
+                                        <strong>VIVIENDA</strong>
 
                                     </td>
 
@@ -237,7 +239,8 @@ $bd = 'fichafamiliar';
 
 
                                 <tr>
-                                    <td colspan="6" style="text-align: center; color: #3366CC;"><strong>HABITABILIDAD</strong>
+                                    <td colspan="6" style="text-align: center; color: #3366CC;">
+                                        <strong>HABITABILIDAD</strong>
 
                                     </td>
 
@@ -312,7 +315,8 @@ $bd = 'fichafamiliar';
                                 </tr>
 
                                 <tr>
-                                    <td colspan="6" style="text-align: center; color: #3366CC;"><strong>MASCOTAS EN EL HOGAR</strong>
+                                    <td colspan="6" style="text-align: center; color: #3366CC;"><strong>MASCOTAS EN EL
+                                            HOGAR</strong>
 
                                     </td>
 
@@ -448,33 +452,33 @@ $bd = 'fichafamiliar';
                                         Menores de 0 a 5 años
                                     </h3>
                                     <button class="my-button" style="margin-top: 30px; width: 270px;"> <?php
-                                                                                            echo $this->Html->link(('Agregar menor de 2 años'),
-                                                                                                array(
-                                                                                                    'controller' => 'Primerainfancias',
-                                                                                                    'action' => 'add?primerainfancia=' . $familia['Familia']['id']
-                                                                                                ),
-                                                                                                array(
-                                                                                                    'onclick' => "return confirm('¿Estás seguro de agregar un menor de 2 años en el hogar de " .  $familia['Familia']['nombres'] .  $familia['Familia']['apellidos'] . "?');",
-                                                                                                    'style' => 'color: white; font-size: 16px; font-weight: bold;',
-                                                                                                    
-                                                                                                )
-                                                                                            ); ?>
+                                                                                                        echo $this->Html->link(('Agregar menor de 2 años'),
+                                                                                                            array(
+                                                                                                                'controller' => 'Primerainfancias',
+                                                                                                                'action' => 'add?primerainfancia=' . $familia['Familia']['id']
+                                                                                                            ),
+                                                                                                            array(
+                                                                                                                'onclick' => "return confirm('¿Estás seguro de agregar un menor de 2 años en el hogar de " .  $familia['Familia']['nombres'] .  $familia['Familia']['apellidos'] . "?');",
+                                                                                                                'style' => 'color: white; font-size: 16px; font-weight: bold;',
+
+                                                                                                            )
+                                                                                                        ); ?>
                                     </button>
 
 
 
 
                                     <button class="my-button" style="width: 270px;"> <?php
-                                                                echo $this->Html->link(('Agregar menor entre 2 a 5 años'),
-                                                                    array(
-                                                                        'controller' => 'Primerainfancias',
-                                                                        'action' => 'add2_5?primerainfancia=' . $familia['Familia']['id']
-                                                                    ),
-                                                                    array(
-                                                                        'onclick' => "return confirm('¿Estás seguro de agregar un menor entre 2 a 5 años en el hogar de " .  $familia['Familia']['nombres'] .  $familia['Familia']['apellidos'] . "?');",
-                                                                        'style' => 'color: white; font-size: 16px; font-weight: bold; '
-                                                                    )
-                                                                ); ?>
+                                                                                        echo $this->Html->link(('Agregar menor entre 2 a 5 años'),
+                                                                                            array(
+                                                                                                'controller' => 'Primerainfancias',
+                                                                                                'action' => 'add2_5?primerainfancia=' . $familia['Familia']['id']
+                                                                                            ),
+                                                                                            array(
+                                                                                                'onclick' => "return confirm('¿Estás seguro de agregar un menor entre 2 a 5 años en el hogar de " .  $familia['Familia']['nombres'] .  $familia['Familia']['apellidos'] . "?');",
+                                                                                                'style' => 'color: white; font-size: 16px; font-weight: bold; '
+                                                                                            )
+                                                                                        ); ?>
                                     </button>
 
                                 </div>
@@ -562,6 +566,18 @@ $bd = 'fichafamiliar';
                                                                                             <?php echo $this->Html->link(('Editar'),
                                                                                                 "../primerainfancias/edit/" . $primerainfancia['id'],
                                                                                                 array('action' => 'edit', $primerainfancia['id']),
+                                                                                                array(
+                                                                                                    'style' => 'font-size: 14px;'
+                                                                                                )
+                                                                                            ); ?>
+
+
+                                                                                        </li>
+                                                                                        <li>
+
+                                                                                            <?php echo $this->Html->link(('Canalización'),
+                                                                                                "../primerainfancias/edit1/" . $primerainfancia['id'],
+                                                                                                array('action' => 'edit1', $primerainfancia['id']),
                                                                                                 array(
                                                                                                     'style' => 'font-size: 14px;'
                                                                                                 )
@@ -1217,6 +1233,18 @@ $bd = 'fichafamiliar';
                                             )
                                         ); ?>
                                     </button>
+                                    <button class="my-button">
+                                        <?php echo $this->Html->link(('Agregar Familograma '),
+                                            array(
+                                                'controller' => 'Observacions',
+                                                'action' => 'addanexo?observaciones=' . $familia['Familia']['id']
+                                            ),
+                                            array(
+                                                'onclick' => "return confirm('¿Estás seguro de agregar el familiograma en el hogar de " .  $familia['Familia']['nombres'] . " " .  $familia['Familia']['apellidos'] . "?');",
+                                                'style' => 'color: white; font-size: 16px; font-weight: bold;'
+                                            )
+                                        ); ?>
+                                    </button>
                                 </div>
 
 
@@ -1269,6 +1297,8 @@ $bd = 'fichafamiliar';
                                                                                         <li><?php echo $this->Html->link("Ver", "../observacions/view/" . $observacion['id'], array('target' => '_blank')); ?>
                                                                                         </li>
                                                                                         <li><?php echo $this->Html->link("Editar ", "../observacions/edit/" . $observacion['id'], array('target' => '_blank')); ?>
+                                                                                        </li>
+                                                                                        <li><?php echo $this->Html->link("Editar Anexo", "../observacions/editanexo/" . $observacion['id'], array('target' => '_blank')); ?>
                                                                                         </li>
                                                                                         <li><?php echo $this->Form->postLink(
                                                                                                 __('Borrar'),

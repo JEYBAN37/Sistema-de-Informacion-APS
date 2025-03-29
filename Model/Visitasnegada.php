@@ -6,13 +6,42 @@ App::uses('AppModel', 'Model');
  * @property Ubicacion $Ubicacion
  * @property Responsable $Responsable
  */
-class Visitasnegada extends AppModel {
+class Visitasnegada extends AppModel
+{
+	public function getFamiliaNegadasFilter($conditions = array())
+	{
+		// Definir las opciones para la consulta
+		$options = array(
+			'fields' => array(
+				'visitasnegada.id',
+				'visitasnegada.direccion',
+				'visitasnegada.observacion',
+				'visitasnegada.estadocasa',
+				'visitasnegada.fecha',
+				'visitasnegada.nombreshabitante',
+				'Ubicacion.id',
+				'Ubicacion.microterritorio',
+				'Responsable.nombres'
+			),
+			'conditions' => $conditions,
+			'Ubicacion' => array(
+				'fields' => array('id', 'microterritorio') // Ajusta estos campos según los necesarios
+			),
+			'Responsable' => array(
+				'fields' => array('nombres') // Ajusta estos campos según los necesarios
+			),
+		);
 
-/**
- * Validation rules
- *
- * @var array
- */
+
+
+		// Realizar la consulta y retornar los resultados
+		return $this->find('all', $options);
+	}
+	/**
+	 * Validation rules
+	 *
+	 * @var array
+	 */
 	public $validate = array(
 		'ubicacion_id' => array(
 			'numeric' => array(
@@ -46,9 +75,31 @@ class Visitasnegada extends AppModel {
 			),
 		),
 
-		
+
 
 		'direccion' => array(
+			'notEmpty' => array(
+				'rule' => array('notEmpty'),
+				//'message' => 'Your custom message here',
+				//'allowEmpty' => false,
+				//'required' => false,
+				//'last' => false, // Stop validation after this rule
+				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+			),
+		),
+
+		'latitud' => array(
+			'notEmpty' => array(
+				'rule' => array('notEmpty'),
+				//'message' => 'Your custom message here',
+				//'allowEmpty' => false,
+				//'required' => false,
+				//'last' => false, // Stop validation after this rule
+				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+			),
+		),
+
+		'longitud' => array(
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),
 				//'message' => 'Your custom message here',
@@ -92,6 +143,37 @@ class Visitasnegada extends AppModel {
 			),
 		),*/
 
+		'numMicroterritorio' => array(
+			'notEmpty' => array(
+				'rule' => array('notEmpty'),
+				//'message' => 'Your custom message here',
+				//'allowEmpty' => false,
+				//'required' => false,
+				//'last' => false, // Stop validation after this rule
+				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+			),
+		),
+		'barriovereda' => array(
+			'notEmpty' => array(
+				'rule' => array('notEmpty'),
+				//'message' => 'Your custom message here',
+				//'allowEmpty' => false,
+				//'required' => false,
+				//'last' => false, // Stop validation after this rule
+				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+			),
+		),
+		'manzana' => array(
+			'notEmpty' => array(
+				'rule' => array('notEmpty'),
+				//'message' => 'Your custom message here',
+				//'allowEmpty' => false,
+				//'required' => false,
+				//'last' => false, // Stop validation after this rule
+				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+			),
+		),
+
 
 
 
@@ -99,11 +181,11 @@ class Visitasnegada extends AppModel {
 
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
 
-/**
- * belongsTo associations
- *
- * @var array
- */
+	/**
+	 * belongsTo associations
+	 *
+	 * @var array
+	 */
 	public $belongsTo = array(
 		'Ubicacion' => array(
 			'className' => 'Ubicacion',

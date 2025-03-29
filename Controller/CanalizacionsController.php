@@ -23,7 +23,6 @@ class CanalizacionsController extends AppController {
 	public function index() {
 		$count = $this->Canalizacion->find('count');
 		$this->Paginator->settings['limit'] = $count;
-
 		$this->set(
 			"canalizacions",
 			$this->paginate()

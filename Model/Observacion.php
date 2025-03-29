@@ -84,7 +84,27 @@ class Observacion extends AppModel
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
 		),
-		
+
+		'resultadoEcomapa' => array(
+			'notEmpty' => array(
+				'rule' => array('notEmpty'),
+				//'message' => 'Your custom message here',
+				//'allowEmpty' => false,
+				//'required' => false,
+				//'last' => false, // Stop validation after this rule
+				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+			),
+		),
+		'resultadofamiliograma' => array(
+			'notEmpty' => array(
+				'rule' => array('notEmpty'),
+				//'message' => 'Your custom message here',
+				//'allowEmpty' => false,
+				//'required' => false,
+				//'last' => false, // Stop validation after this rule
+				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+			),
+		),
 
 		'familiograma' => array(
 			'uploadError' => array(
@@ -108,12 +128,12 @@ class Observacion extends AppModel
 			/*'isValidExtension' => array(
 				'rule' => array('isValidExtension', array('jpg', 'png'), false),
 				'message' => 'La imagen no tiene la extension jpg o png'
-			),*/
+			),
 			'checkUniqueName' => array(
 				'rule' => array('checkUniqueName'),
 				'message' => 'Ya existe un archivo con el mismo nombre',
 				'on' => 'update'
-			),
+			),*/
 		),
 
 	);
@@ -125,7 +145,7 @@ class Observacion extends AppModel
 				),
 				'thumbnailMethod' => 'php',
 
-				'deleteOnUpdate' => true,
+				'deleteOnUpdate' => false,
 				'deleteFolderOndelete' => true
 			),
 
@@ -168,7 +188,7 @@ class Observacion extends AppModel
 
 function checkUniqueName($data)
 {
-	$isUnique = $this->find('first', array('fields' => array('Acta.anexo'), 'conditions' => array('Acta.anexo' => $data['anexo'])));
+	$isUnique = $this->find('first', array('fields' => array('Observacion.familiograma'), 'conditions' => array('Observacion.familiograma' => $data['familiograma'])));
 	if (!empty($isUnique)) {
 		return false;
 	} else {

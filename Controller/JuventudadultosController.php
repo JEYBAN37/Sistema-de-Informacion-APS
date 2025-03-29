@@ -126,6 +126,60 @@ class JuventudadultosController extends AppController
 		$this->set(compact('familias', 'personas', 'canalizaciones'));
 	}
 
+	public function edit1($id = null)
+	{
+		if (!$this->Juventudadulto->exists($id)) {
+			throw new NotFoundException(__('Invalid juventudadulto'));
+		}
+		if ($this->request->is(array('post', 'put'))) {
+			if ($this->Juventudadulto->save($this->request->data)) {
+				$this->Session->setFlash('Se ha guardado correctamente', 'default', array('class' => 'alert alert-success'));
+				return $this->redirect(array('action' => 'index'));
+			} else {
+				$this->Session->setFlash('No se ha guardado, por favor revisar campos', 'default', array('class' => 'alert alert-danger'));
+			}
+		} else {
+			$options = array('conditions' => array('Juventudadulto.' . $this->Juventudadulto->primaryKey => $id));
+			$this->request->data = $this->Juventudadulto->find('first', $options);
+		}
+
+		$familias = $this->Juventudadulto->Familia->find('list');
+		$canalizaciones = $this->Juventudadulto->Canalizacion->find('list');
+		$this->set(compact('familias', 'canalizaciones'));
+	}
+
+	public function seguimiento($id = null)
+	{
+		if (!$this->Juventudadulto->exists($id)) {
+			throw new NotFoundException(__('Invalid juventudadulto'));
+		}
+
+		if ($this->request->is(array('post', 'put'))) {
+			// Obtener el valor de canalizacion_id del formulario
+			$canalizacionId = $this->request->data['Juventudadulto']['canalizacion_id'];
+
+			if ($this->Juventudadulto->save($this->request->data)) {
+				$this->Session->setFlash('Se ha guardado correctamente', 'default', array('class' => 'alert alert-success'));
+
+				// Redirigir a la vista de la Canalizacion
+				return $this->redirect(array(
+					'controller' => 'canalizacions',
+					'action' => 'view',
+					$canalizacionId
+				));
+			} else {
+				$this->Session->setFlash('No se ha guardado, por favor revisar campos', 'default', array('class' => 'alert alert-danger'));
+			}
+		} else {
+			$options = array('conditions' => array('Juventudadulto.' . $this->Juventudadulto->primaryKey => $id));
+			$this->request->data = $this->Juventudadulto->find('first', $options);
+		}
+
+		$familias = $this->Juventudadulto->Familia->find('list');
+		$canalizaciones = $this->Juventudadulto->Canalizacion->find('list');
+		$this->set(compact('familias', 'canalizaciones'));
+	}
+
 	/**
 	 * delete method
 	 *

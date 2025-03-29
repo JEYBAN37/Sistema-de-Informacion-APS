@@ -36,7 +36,8 @@ echo $this->Html->script('validationSocioAmbiental'); // 'validation' es el nomb
                     </div-->
                     <h4 style=" text-align: justify; margin: 20px;">Cordial saludo.</h4>
 
-                    <p style=" text-align: justify; margin: 20px;"> Con el diligenciamiento del presente formulario <strong>autorizo libre y expresamente</strong> a
+                    <p style=" text-align: justify; margin: 20px;"> Con el diligenciamiento del presente formulario
+                        <strong>autorizo libre y expresamente</strong> a
                         la Secretaría de
                         Salud de Pasto para que realice el tratamiento de los datos personales registrados y
                         recolectados, de igual manera manifiesto que <strong>he sido informado</strong> sobre la
@@ -65,7 +66,7 @@ echo $this->Html->script('validationSocioAmbiental'); // 'validation' es el nomb
 
 
     <div>
-        <?php echo $this->Form->create(); ?>
+        <?php echo $this->Form->create('Sociambiental'); ?>
         <div class="form-group col-sm-12 center">
 
             <fieldset>
@@ -75,7 +76,8 @@ echo $this->Html->script('validationSocioAmbiental'); // 'validation' es el nomb
                     </h1>
                 </div>
 
-
+                <h2 style="color: #3366CC;  font-size:30px ; margin-top: 25px; ">Datos Básicos</h2>
+                <hr style=" border:0.1px solid rgba(0,0,0,.125);">
                 <div class="grow justify-content-center" display="none" style="margin-top:20px; ">
                     <div class="card " style=" font-size:15px;  border:1.5px solid rgba(0,0,0,.125);">
                         <div class="form-group row">
@@ -88,6 +90,24 @@ echo $this->Html->script('validationSocioAmbiental'); // 'validation' es el nomb
                             <?php echo $this->Form->input('fecha', array(
                                 'type' => 'hidden',
                             )); ?>
+
+
+                            <div class="form-group col-md-6" style="margin-top: 20px;">
+
+                                <!-- Campo de fecha de nacimiento -->
+                                <?php echo $this->Form->input('fechaRegistro', [
+                                    'label' => 'Fecha de registro:',
+                                    'type' => 'date',
+                                    'minYear' => date('Y'),
+                                    'maxYear' => date('Y'),
+
+                                    'style' => 'height:30px;  font-size: 15px ;',
+                                    'empty' => true, // Establecer el campo como vacío
+                                ]); ?>
+                            </div>
+
+
+
                             <div class="form-group col-md-6" style="margin-top: 20px;">
                                 <?php echo $this->Form->input('responsable_id', array(
                                     'label' => 'Responsable diligenciamiento Encuesta',
@@ -105,82 +125,83 @@ echo $this->Html->script('validationSocioAmbiental'); // 'validation' es el nomb
                                     'class' => 'select-search col-md-12'
                                 )); ?>
 
-                                <p class="help-block">Los dos últimos codigos del hacen referencia al numero de la torre
+                            </div>
+
+                            <div class="form-group col-md-6" style="margin-top: 20px;">
+                                <?php echo $this->Form->input('numMicroterritorio', array(
+                                    'label' => 'Numero de microterritorio',
+                                    'style' => 'height:30px;  font-size: 15px ; width:100%',
+
+                                )); ?>
                                 </p>
                             </div>
 
                             <div class="form-group col-md-6" style="margin-top: 20px;">
-                                <?php
-                                $numapartamento = array(
-                                    '' => 'Elegir',
-                                    '1' => '1',
-                                    '2' => '2',
-                                    '3' => '3',
-                                    '4' => '4',
-                                    '5' => '5',
-                                    '6' => '6',
-                                    '7' => '7',
-                                    '8' => '8',
-                                    '9' => '9',
-                                    '10' => '10',
-                                    '11' => '11',
-                                    '12' => '12',
-                                    '13' => '13',
-                                    '14' => '14',
-                                    '15' => '15',
-                                    '16' => '16',
-                                    '17' => '17',
-                                    '18' => '18',
-                                    '19' => '19',
-                                    '20' => '20',
-                                    '21' => '21',
-                                    '22' => '22',
-                                    '23' => '23',
-                                    '24' => '24',
-                                    '25' => '25',
-                                    '26' => '26',
-                                    '27' => '27',
-                                    '28' => '28',
-                                    '29' => '29',
-                                    '30' => '30',
-                                    '31' => '31',
-                                    '32' => '32',
-                                    '33' => '33',
-                                    '34' => '34',
-                                    '35' => '35',
-                                    '36' => '36',
-                                    '37' => '37',
-                                    '38' => '38',
-                                    '39' => '39',
-                                    '40' => '40',
-                                    '41' => '41',
-                                    '42' => '42',
-                                    '43' => '43',
-                                    '44' => '44',
-                                    '45' => '45',
-                                    '46' => '46',
-                                    '47' => '47',
-                                    '48' => '48',
-                                    '49' => '49',
-                                    '50' => '50',
+                                <?php echo $this->Form->input('barriovereda', array(
+                                    'label' => 'Barrio/sector/vereda',
+                                    'style' => 'height:30px;  font-size: 15px ; width:100%',
 
-                                );
+                                )); ?>
+                                </p>
+                            </div>
+
+                            <div class="form-group col-md-6" style="margin-top: 20px;">
+                                <?php echo $this->Form->input('manzana', array(
+                                    'label' => 'N.Cuadra o Manzana',
+                                    'style' => 'height:30px;  font-size: 15px ; width:100%',
+
+
+                                )); ?>
+
+                            </div>
+
+                            <div class="form-group col-md-6" style="margin-top: 20px;">
+                                <?php
+
 
                                 echo $this->Form->input('apartamento', array(
                                     'label' => 'Num. Apartamento',
                                     'class' => 'form-control',
                                     'style' => 'height:30px;  font-size: 15px',
-                                    'options' => $numapartamento,
                                 )); ?>
                             </div>
 
                             <div class="form-group col-md-6" style="margin-top: 20px;">
                                 <?php echo $this->Form->input('direccion', array(
-                                    'label' => 'Dirección',
+                                    'label' => 'Nomenclatura de la Dirección',
                                     'class' => 'form-control',
                                     'style' => 'height:30px;  font-size: 15px',
                                 )); ?>
+
+                                <p class="help-block">Colocar la nomenclatura de un recibo de servicio publico del
+                                    domicilio
+                                </p>
                             </div>
+                            <div class="form-group col-md-6" style="margin-top: 20px;">
+                                <?php echo $this->Form->input('latitud', array(
+                                    'label' => 'Geopunto latitud',
+                                    'class' => 'form-control',
+                                    'style' => 'height:30px;  font-size: 15px',
+                                )); ?>
+                                <p class="help-block">Coordenada de latitud en la ubicación geográfica. Ej.:
+                                    0.670348
+                                    Valor numérico con decimales, separador punto. Acepta valores negativos
+                                </p>
+                            </div>
+
+                            <div class="form-group col-md-6" style="margin-top: 20px;">
+                                <?php echo $this->Form->input('longitud', array(
+                                    'label' => 'Geopunto longitud',
+                                    'class' => 'form-control',
+                                    'style' => 'height:30px;  font-size: 15px',
+                                )); ?>
+                                <p class="help-block">Coordenada de longitud en la ubicación geográfica . Ejemplo:
+                                    -70.240149
+                                    Valor numérico con decimales, separador punto. Acepta valores negativos
+                                </p>
+                            </div>
+
+
 
                             <div class="form-group col-md-6" style="margin-top: 20px;">
                                 <?php echo $this->Form->input('apellidosfamilia', array(
@@ -194,13 +215,13 @@ echo $this->Html->script('validationSocioAmbiental'); // 'validation' es el nomb
                                 <?php
                                 $viviendaOptions = array(
                                     '' => 'Elegir',
-                                    'Casa' => 'Casa',
-                                    'Apartamento' => 'Apartamento',
-                                    'Pieza' => 'Pieza',
-                                    'Cuarto improvisado' => 'Cuarto improvisado',
-                                    'Cuarto en inquilinato' => 'Cuarto en inquilinato',
-                                    'Cuevas' => 'Cuevas',
-                                    'En calle' => 'En calle',
+                                    '1.Casa' => 'Casa',
+                                    '4.Apartamento' => 'Apartamento',
+                                    '5.Pieza' => 'Pieza',
+                                    '3.Cuarto improvisado' => 'Cuarto improvisado',
+                                    '5.Cuarto en inquilinato' => 'Cuarto en inquilinato',
+                                    '10.Cuevas' => 'Cuevas',
+                                    '11.En calle' => 'En calle, puente, rio, parque',
                                 );
                                 echo $this->Form->input('vivienda', array(
                                     'label' => 'Tipo de vivienda:',
@@ -215,7 +236,7 @@ echo $this->Html->script('validationSocioAmbiental'); // 'validation' es el nomb
 
                             <div class="form-group col-md-6" style="margin-top: 20px;">
                                 <?php
-                                $estratoOptions = array('' => 'Elegir', '1' => '1', '2' => '2', '3' => '3', '4' => '4');
+                                $estratoOptions = array('' => 'Elegir', '1' => '1', '2' => '2', '3' => '3', '4' => '4', '5' => '5', '6' => '6');
                                 echo $this->Form->input('estrato', array(
                                     'label' => 'Estrato:',
                                     'class' => 'form-control',
@@ -271,12 +292,12 @@ echo $this->Html->script('validationSocioAmbiental'); // 'validation' es el nomb
                                 <?php
                                 $optionMaterialPared = array(
                                     '' => 'Elegir',
-                                    'Bloque, cemento, ladrillo' => 'Bloque, cemento, ladrillo',
-                                    'Tierra, arena, barro' => 'Tierra, arena, barro',
-                                    'Madera' => 'Madera',
-                                    'Material plastico ' => 'Material plástico ',
-                                    'Material Reciclado ' => 'Material reciclado',
-                                    'Lata, Lamina metal ' => 'Lata, Lamina metal',
+                                    '1.Bloque, cemento, ladrillo' => 'Bloque, cemento, ladrillo',
+                                    '2.Tierra, arena, barro' => 'Tierra, arena, barro',
+                                    '5.Madera' => 'Madera',
+                                    '7.Material plastico ' => 'Material plástico ',
+                                    '7.Material Reciclado ' => 'Material reciclado',
+                                    '7.Lata, Lamina metal ' => 'Lata, Lamina metal',
 
                                 );
                                 echo $this->Form->input('pared', array(
@@ -312,14 +333,13 @@ echo $this->Html->script('validationSocioAmbiental'); // 'validation' es el nomb
                                 <?php
                                 $optionPiso = array(
                                     '' => 'Elegir',
-                                    'Cemento, gravilla' => 'Cemento, gravilla',
-                                    'Ceramica' => 'Ceramica',
-                                    'Piso flotante' => 'Piso flotante',
-                                    'Tierra' => 'Tierra',
-                                    'Madera burda, tabla' => 'Madera burda, tabla',
-                                    'Baldosa, ladrillo' => 'baldosa, ladrillo',
-                                    'Piso flotante' => 'Piso flotante',
-                                    'Piso flotante' => 'Piso flotante',
+                                    '3.Cemento, gravilla' => 'Cemento, gravilla',
+                                    '3.Ceramica' => 'Ceramica',
+                                    '1.Piso flotante' => 'Piso flotante',
+                                    '5.Tierra' => 'Tierra',
+                                    '4.Madera burda, tabla' => 'Madera burda, tabla',
+                                    '3.Baldosa, ladrillo' => 'baldosa, ladrillo',
+                                    '6.Otro' => 'Otro',
                                     'SD' => 'Sin dato'
                                 );
                                 echo $this->Form->input('piso', array(
@@ -336,13 +356,13 @@ echo $this->Html->script('validationSocioAmbiental'); // 'validation' es el nomb
                                 <?php
                                 $optionTecho = array(
                                     '' => 'Elegir',
-                                    'Concreto' => 'Concreto',
-                                    'Eternit' => 'Eternit',
-                                    'Tejas de barro' => 'Tejas de barro',
-                                    'Zinc' => 'Zinc',
-                                    'Plastico' => 'Plástico',
-                                    'Desecho' => 'Eternit',
-                                    'Eternit' => 'Desechos (cartón, lata, tela, sacos, etc)',
+                                    '1.Concreto' => 'Concreto',
+                                    '4.Eternit' => 'Eternit',
+                                    '2.Tejas de barro' => 'Tejas de barro',
+                                    '4.Zinc' => 'Zinc',
+                                    '6.Plastico' => 'Plástico',
+                                    '7.Desecho' => 'Desechos (cartón, lata, tela, sacos, etc)',
+                                    '8.Otro' => 'Otro',
                                     'SD' => 'Sin dato'
 
                                 );
@@ -387,7 +407,7 @@ echo $this->Html->script('validationSocioAmbiental'); // 'validation' es el nomb
                                 ?>
                             </div>
                             <div class="form-group col-md-6" style="margin-top: 20px; margin-bottom: 30px;">
-                                <?php $optionHacinamiento = array('' => 'Elegir', 'Si' => 'Si', 'No' => 'No', 'SD' => 'Sin dato');
+                                <?php $optionHacinamiento = array('' => 'Elegir', '1.Si' => 'Si', '2.No' => 'No', 'SD' => 'Sin dato');
                                 echo $this->Form->input('hacinamiento', array(
                                     'label' => '¿En algunos de los dormitorios de la vivienda duermen tres o mas personas?',
                                     'class' => 'form-control',
@@ -416,16 +436,17 @@ echo $this->Html->script('validationSocioAmbiental'); // 'validation' es el nomb
                                 <?php
                                 $externalRiskOptions = [
                                     '' => 'Elegir',
-                                    'No se identifica' => 'No se identifica',
-                                    'Malos olores' => 'Malos olores',
-                                    'Iluminacion inadecuada' => 'Iluminación inadecuada',
-                                    'Ventilación inadecuada' => 'Ventilación inadecuada',
-                                    'Porquerizas' => 'Porquerizas',
-                                    'Galpones' => 'Galpones',
-                                    'Terrenos baldíos' => 'Terrenos baldíos',
-                                    'Ruido' => 'Ruido',
-                                    'Rellenos sanitarios, botaderos' => 'Rellenos sanitarios/botaderos',
-                                    'Excesivo trafico' => 'Excesivo trafico',
+                                    '20.No se identifica' => 'No se identifica',
+                                    '8.Malos olores' => 'Malos olores',
+                                    '19.Iluminacion inadecuada' => 'Iluminación inadecuada',
+                                    '8.Ventilación inadecuada' => 'Ventilación inadecuada',
+                                    '3.Porquerizas' => 'Porquerizas',
+                                    '4.Galpones' => 'Galpones',
+                                    '5.Terrenos baldíos' => 'Terrenos baldíos',
+                                    '7.Ruido' => 'Ruido',
+                                    '10.Rellenos sanitarios, botaderos' => 'Rellenos sanitarios/botaderos',
+                                    '17.Excesivo trafico' => 'Excesivo trafico',
+                                    '19.Otro' => 'Otro',
                                     'SD' => 'Sin dato'
                                 ];
                                 echo $this->Form->input('riesgoexterno', [
@@ -453,8 +474,8 @@ echo $this->Html->script('validationSocioAmbiental'); // 'validation' es el nomb
                                 <?php
                                 $yesNoOptions = [
                                     '' => 'Elegir',
-                                    'Si' => 'Si',
-                                    'No' => 'No',
+                                    '1.Si' => 'Si',
+                                    '2.No' => 'No',
                                     'SD' => 'Sin dato'
                                 ];
                                 echo $this->Form->input('actividad', [
@@ -472,11 +493,12 @@ echo $this->Html->script('validationSocioAmbiental'); // 'validation' es el nomb
                                 $accessOptions = [
                                     '' => 'Elegir',
                                     'No' => 'No hay dificultdad',
-                                    'Transporte' => 'Transporte',
-                                    'Espacios deportivos' => 'Espacios deportivos',
-                                    'Servicios Educativos' => 'Servicios Educativos',
-                                    'Servicios Salud' => 'Servicios Salud',
-                                    'Ninguno' => 'Ninguno'
+                                    '1.Transporte' => 'Transporte',
+                                    '2.Espacios deportivos' => 'Espacios deportivos',
+                                    '3.Servicios Educativos' => 'Servicios Educativos',
+                                    '4.Servicios Salud' => 'Servicios Salud',
+                                    '1,2,3,4. Acceso a todos' => 'Se tiene acceso a todos',
+                                    '5.Ninguno' => 'Ninguno'
                                 ];
                                 echo $this->Form->input('acceso', [
                                     'label' => '¿En su sector es difícil acceder a?',
@@ -529,14 +551,14 @@ echo $this->Html->script('validationSocioAmbiental'); // 'validation' es el nomb
                                 <?php
                                 $accidentRiskOptions = [
                                     '' => 'Elegir',
-                                    'Ninguno' => 'Ninguno',
-                                    'Objetos cortantes ' => 'Objetos cortantes ',
-                                    'Sustancias químicas_aseo a la vista' => 'Sustancias químicas_aseo a la vista',
-                                    'Medicamentos a la vista' => 'Medicamentos a la vista',
-                                    'Uso de Velas' => 'Uso de Velas',
-                                    'Conexiones Electricas inadecuadas' => 'Conexiones Electricas inadecuadas',
-                                    'Superficies resbaladizas' => 'Superficies resbaladizas',
-                                    'Escaleras sin proteccion' => 'Escaleras sin protección',
+                                    '11.Ninguno' => 'Ninguno',
+                                    '1.Objetos cortantes ' => 'Objetos cortantes ',
+                                    '2.Sustancias químicas_aseo a la vista' => 'Sustancias químicas_aseo a la vista',
+                                    '3.Medicamentos a la vista' => 'Medicamentos a la vista',
+                                    '4.Uso de Velas' => 'Uso de Velas',
+                                    '5.Conexiones Electricas inadecuadas' => 'Conexiones Electricas inadecuadas',
+                                    '8.Superficies resbaladizas' => 'Superficies resbaladizas',
+                                    '10.Escaleras sin proteccion' => 'Escaleras sin protección',
                                     'SD' => 'Sin dato'
                                 ];
                                 echo $this->Form->input('riesgo', [
@@ -563,13 +585,14 @@ echo $this->Html->script('validationSocioAmbiental'); // 'validation' es el nomb
                                 <?php
                                 $waterSupplyOptions = [
                                     '' => 'Elegir',
-                                    'Acueducto Empopasto' => 'Acueducto Empopasto',
-                                    'Acueducto Comunitario' => 'Acueducto Comunitario',
-                                    'agua envasada ' => 'agua envasada',
-                                    'Carro tanque ' => 'Carro tanque',
-                                    'Pozo sin bomba, aljibe, jagüey o barreno' => 'Pozo sin bomba, aljibe, jagüey o barreno',
-                                    'Río, quebrada, manantial o nacimiento' => 'Río, quebrada, manantial o nacimiento',
-                                    'Aguas lluvias' => 'Aguas lluvias',
+                                    '1.Acueducto Empopasto' => 'Acueducto Empopasto',
+                                    '3.Acueducto Comunitario' => 'Acueducto Comunitario',
+                                    '2.Agua envasada ' => 'agua envasada',
+                                    '5.Carro tanque ' => 'Carro tanque',
+                                    '8.Pozo sin bomba, aljibe, jagüey o barreno' => 'Pozo sin bomba, aljibe, jagüey o barreno',
+                                    '10.Río, quebrada, manantial o nacimiento' => 'Río, quebrada, manantial o nacimiento',
+                                    '11.Aguas lluvias' => 'Aguas lluvias',
+                                    '13.Otro' => 'Otro',
                                 ];
                                 echo $this->Form->input('aguaservicio', [
                                     'label' => '¿Cuál es la principal fuente de abastecimiento de agua para consumo?',
@@ -645,9 +668,12 @@ echo $this->Html->script('validationSocioAmbiental'); // 'validation' es el nomb
                                 <?php
                                 $excretaDisposalOptions = [
                                     '' => 'Elegir',
-                                    'Inodoro conectado a alcantarillado' => 'Inodoro conectado a alcantarillado',
-                                    'Campo abierto' => 'Campo abierto',
-                                    'Basenilla, bolsas' => 'Basenilla, Bolsas',
+                                    '1.Inodoro conectado a alcantarillado' => 'Inodoro conectado a alcantarillado',
+                                    '2.Inodoro sin conexion a alcantarillado' => 'Inodoro sin conexion a alcantarillado',
+                                    '2.Pozo séptico' => 'Pozo séptico',
+                                    '7.Campo abierto' => 'Campo abierto',
+                                    '8.Basenilla, bolsas' => 'Basenilla, Bolsas',
+                                    '8.Otro' => 'Otro'
 
                                 ];
                                 echo $this->Form->input('diposicionexcretas', [
@@ -664,8 +690,11 @@ echo $this->Html->script('validationSocioAmbiental'); // 'validation' es el nomb
                                 <?php
                                 $domesticWaterOptions = [
                                     '' => 'Elegir',
-                                    'Conexión alcantarillado' => 'Conexión alcantarillado',
-                                    'Campo Abierto ' => 'Campo Abierto',
+                                    '1.Conexión alcantarillado' => 'Conexión alcantarillado',
+                                    '5.Fuente hídrica ' => 'Fuente hídrica',
+                                    '6.Campo Abierto ' => 'Campo Abierto',
+                                    '7.Otro' => 'Otro'
+
 
                                 ];
                                 echo $this->Form->input('aguaresiduales', [
@@ -682,8 +711,11 @@ echo $this->Html->script('validationSocioAmbiental'); // 'validation' es el nomb
                                 <?php
                                 $garbageDisposalOptions = [
                                     '' => 'Elegir',
-                                    'Recolección por Emas' => 'Recolección por Empresa de aseo',
-                                    'Disposición a campo abierto' => 'Disposición a campo abierto'
+                                    '1.Recolección por Emas' => 'Recolección por Empresa de aseo',
+                                    '3.Quema a campo abierto' => 'Quema a campo abierto',
+                                    '5.Disposición a campo abierto' => 'Disposición a campo abierto',
+                                    '6.Otro' => 'Otro'
+
                                 ];
                                 echo $this->Form->input('basura', [
                                     'label' => 'Disposición final de basura',
@@ -717,13 +749,13 @@ echo $this->Html->script('validationSocioAmbiental'); // 'validation' es el nomb
                                 <?php
                                 $vectoresOption = [
                                     '' => 'Elegir',
-                                    'No' => 'No',
-                                    'Mosicos' => 'Moscos',
-                                    'Zancudos' => 'Zancudos',
-                                    'Pulgas' => 'Pulgas',
-                                    'Piojos' => 'Piojos',
-                                    'Ratones' => 'Ratones',
-                                    'Cucarachas' => 'Cucarachas',
+                                    '2.No' => 'No',
+                                    '1.Mosicos' => 'Moscos',
+                                    '1.Zancudos' => 'Zancudos',
+                                    '1.Pulgas' => 'Pulgas',
+                                    '1.Piojos' => 'Piojos',
+                                    '1.Ratones' => 'Ratones',
+                                    '1.Cucarachas' => 'Cucarachas',
                                     'SD' => 'Sin dato'
                                 ];
                                 echo $this->Form->input('vector', [

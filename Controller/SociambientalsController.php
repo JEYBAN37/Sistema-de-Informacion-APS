@@ -22,17 +22,87 @@ class SociambientalsController extends AppController
 	 * @return void
 	 */
 	public function index()
-	{$this->Sociambiental->recursive = 0;
-
-		$count = $this->Sociambiental->find('count');
-		$this->Paginator->settings['limit'] = $count;
-
-		$this->set(
-			"sociambientals",
-			$this->paginate()
-		);
+	{
+		$this->loadModel('Responsable'); // Cargar el modelo Responsable
+		$this->loadModel('Ubicacion'); // Cargar el modelo Ubicacion
+	
+		// Obtener listado de responsables (para mostrar en un select)
+		$responsablesList = $this->Responsable->find('list', array(
+			'fields' => array('id', 'nombres'), // Ajusta los campos según tu modelo Responsable
+			'order' => 'nombres'
+		));
+	
+		// Obtener listado de ubicaciones (si aplica)
+		$ubicacionesList = $this->Ubicacion->find('list', array(
+			'fields' => array('id', 'microterritorio'), // Ajusta los campos según tu modelo de Ubicación
+			'order' => 'microterritorio'
+		));
+	
+		$conditions = array();
+	
+		if ($this->request->is(['post', 'put'])) {
+			$encuestadorId = $this->request->data['Sociambiental']['encuestador_id'];
+	
+			if (!empty($encuestadorId)) {
+				$conditions['Sociambiental.responsable_id'] = $encuestadorId;
+			}
+	
+			$ubicacionId = $this->request->data['Sociambiental']['ubicacion_id'];
+			if (!empty($ubicacionId)) {
+				$conditions['Sociambiental.ubicacion_id'] = $ubicacionId;
+			}
+	
+			// Obtener los datos filtrados del modelo Sociambiental
+			$sociambientals = $this->Sociambiental->getFamiliaSocioambientalFilter($conditions);
+			
+		} else {
+			$sociambientals = array(); // Inicializar como array vacío
+		}
+		// Pasar las variables a la vista
+		$this->set(compact('sociambientals', 'ubicacionesList', 'responsablesList'));
 	}
 
+
+	public function viewFilter()
+	{
+		$this->loadModel('Responsable'); // Cargar el modelo Responsable
+		$this->loadModel('Ubicacion'); // Cargar el modelo Ubicacion
+	
+		// Obtener listado de responsables (para mostrar en un select)
+		$responsablesList = $this->Responsable->find('list', array(
+			'fields' => array('id', 'nombres'), // Ajusta los campos según tu modelo Responsable
+			'order' => 'nombres'
+		));
+	
+		// Obtener listado de ubicaciones (si aplica)
+		$ubicacionesList = $this->Ubicacion->find('list', array(
+			'fields' => array('id', 'microterritorio'), // Ajusta los campos según tu modelo de Ubicación
+			'order' => 'microterritorio'
+		));
+	
+		$conditions = array();
+	
+		if ($this->request->is(['post', 'put'])) {
+			$encuestadorId = $this->request->data['Sociambiental']['encuestador_id'];
+	
+			if (!empty($encuestadorId)) {
+				$conditions['Sociambiental.responsable_id'] = $encuestadorId;
+			}
+	
+			$ubicacionId = $this->request->data['Sociambiental']['ubicacion_id'];
+			if (!empty($ubicacionId)) {
+				$conditions['Sociambiental.ubicacion_id'] = $ubicacionId;
+			}
+	
+			// Obtener los datos filtrados del modelo Sociambiental
+			$sociambientals = $this->Sociambiental->getFamiliaSocioambientalFilter($conditions);
+		} else {
+			$sociambientals = array(); // Inicializar como array vacío
+		}
+		// Pasar las variables a la vista
+		$this->set(compact('sociambientals', 'ubicacionesList', 'responsablesList'));
+	}
+	
 
 	/**
 	 * view method
@@ -74,7 +144,6 @@ class SociambientalsController extends AppController
 				}
 			} else {
 				$this->Session->setFlash('El registro fue guardado o esta pendiente un campo del formulario', 'default', array('class' => 'alert alert-danger'));
-
 			}
 		}
 		$responsables = $this->Sociambiental->Responsable->find('list');
@@ -98,8 +167,6 @@ class SociambientalsController extends AppController
 			if ($this->Sociambiental->save($this->request->data)) {
 				$this->Session->setFlash('Registro se guradado con exito', 'default', array('class' => 'alert alert-success'));
 				return $this->redirect(array('controller' => 'Sociambientals', 'action' => 'index'));
-
-				$this->Session->setFlash('Registro no se guradado, por favor revisar la información', 'default', array('class' => 'alert alert-danger'));
 			}
 		} else {
 			$options = array('conditions' => array('Sociambiental.' . $this->Sociambiental->primaryKey => $id));

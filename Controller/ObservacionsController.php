@@ -30,7 +30,6 @@ class ObservacionsController extends AppController
 			"observacions",
 			$this->paginate()
 		);
-	
 	}
 
 	/**
@@ -79,6 +78,32 @@ class ObservacionsController extends AppController
 		$this->set(compact('familias', 'responsables'));
 	}
 
+	public function addanexo()
+	{
+		if ($this->request->is('post')) {
+			$this->Observacion->create();
+			if ($this->Observacion->save($this->request->data)) {
+				$this->Session->setFlash('La observación se ha guardado correctamente', 'default', array('class' => 'alert alert-success'));
+				$familiaId = isset($this->data["Observacion"]["familia_id"]) ? $this->data["Observacion"]["familia_id"] : null;
+
+				return $this->redirect(array(
+					'controller' => 'familias',
+					'action' => 'view',
+					$this->data["Observacion"]["familia_id"],
+					'?' => array(
+						'familia_id' => $familiaId
+					)
+				));
+			} else {
+				$this->Session->setFlash('No se ha guardado, por favor revisar campos', 'default', array('class' => 'alert alert-danger'));
+			}
+		}
+		$familias = $this->Observacion->Familia->find('list');
+		$responsables = $this->Observacion->Responsable->find('list');
+		$this->set(compact('familias', 'responsables'));
+	}
+
+
 	/**
 	 * edit method
 	 *
@@ -93,17 +118,51 @@ class ObservacionsController extends AppController
 		}
 		if ($this->request->is(array('post', 'put'))) {
 			if ($this->Observacion->save($this->request->data)) {
-				$this->Session->setFlash(__('The observacion has been saved.'));
-				return $this->redirect(array('action' => 'index'));
+				$this->Session->setFlash('La observación se ha guardado correctamente', 'default', array('class' => 'alert alert-success'));
+				$familiaId = isset($this->data["Observacion"]["familia_id"]) ? $this->data["Observacion"]["familia_id"] : null;
+
+				return $this->redirect(array(
+					'controller' => 'familias',
+					'action' => 'view',
+					$this->data["Observacion"]["familia_id"],
+					'?' => array(
+						'familia_id' => $familiaId
+					)
+				));
 			} else {
-				$this->Session->setFlash(__('The observacion could not be saved. Please, try again.'));
+				$this->Session->setFlash('No se ha guardado, por favor revisar campos', 'default', array('class' => 'alert alert-danger'));
 			}
-		} else {
-			$options = array('conditions' => array('Observacion.' . $this->Observacion->primaryKey => $id));
-			$this->request->data = $this->Observacion->find('first', $options);
 		}
 		$familias = $this->Observacion->Familia->find('list');
-		$this->set(compact('familias'));
+		$responsables = $this->Observacion->Responsable->find('list');
+		$this->set(compact('familias', 'responsables'));
+	}
+
+	public function editanexo($id = null)
+	{
+		if (!$this->Observacion->exists($id)) {
+			throw new NotFoundException(__('Invalid observacion'));
+		}
+		if ($this->request->is(array('post', 'put'))) {
+			if ($this->Observacion->save($this->request->data)) {
+				$this->Session->setFlash('La observación se ha guardado correctamente', 'default', array('class' => 'alert alert-success'));
+				$familiaId = isset($this->data["Observacion"]["familia_id"]) ? $this->data["Observacion"]["familia_id"] : null;
+
+				return $this->redirect(array(
+					'controller' => 'familias',
+					'action' => 'view',
+					$this->data["Observacion"]["familia_id"],
+					'?' => array(
+						'familia_id' => $familiaId
+					)
+				));
+			} else {
+				$this->Session->setFlash('No se ha guardado, por favor revisar campos', 'default', array('class' => 'alert alert-danger'));
+			}
+		}
+		$familias = $this->Observacion->Familia->find('list');
+		$responsables = $this->Observacion->Responsable->find('list');
+		$this->set(compact('familias', 'responsables'));
 	}
 
 	/**

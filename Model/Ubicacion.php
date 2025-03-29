@@ -10,7 +10,7 @@ class Ubicacion extends AppModel
 {
 
 	public $virtualFields = array(
-		'microterritorio' => 'CONCAT(Ubicacion.microterritorio, " ", Ubicacion.cod_mzblo)'
+		'microterritorio' => 'CONCAT(Ubicacion.microterritorio)'
 	);
 	public $displayField = 'microterritorio';
 
@@ -27,7 +27,7 @@ class Ubicacion extends AppModel
 	public $useTable = 'ubicaciones';
 
 	public $validate = array(
-	/*	'zona' => array(
+		/*	'zona' => array(
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),
 				//'message' => 'Your custom message here',
@@ -86,8 +86,7 @@ class Ubicacion extends AppModel
 				//'last' => false, // Stop validation after this rule
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
-		),*/
-	);
+		),*/);
 
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
 

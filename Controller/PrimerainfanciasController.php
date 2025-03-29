@@ -95,6 +95,13 @@ class PrimerainfanciasController extends AppController
 		$this->set(compact('personas', 'familias', 'canalizaciones'));
 	}
 
+
+
+
+
+
+
+
 	/**
 	 * delete method
 	 *

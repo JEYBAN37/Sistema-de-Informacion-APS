@@ -17,6 +17,7 @@ class Familia extends AppModel
 
 
 
+
 	public function getFamiliaDatos($contain)
 	{
 		try {
@@ -118,7 +119,8 @@ class Familia extends AppModel
 				//'last' => false, // Stop validation after this rule
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
-		), 'nombres' => array(
+		),
+		'nombres' => array(
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),
 				'message' => 'Revisar campo',

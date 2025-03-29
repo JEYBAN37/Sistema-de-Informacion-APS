@@ -118,7 +118,7 @@ class UsersController extends AppController
                             // return $this->redirect('controller' => 'orders', 'action' => 'thanks');
                             //$this->redirect("home");
                             return $this->redirect(
-                                array('controller' => 'familias', 'action' => 'index')
+                                array('controller' => 'sociambientals', 'action' => 'index')
                             );
                         }
                     } else {
@@ -243,7 +243,14 @@ class UsersController extends AppController
         $this->Acl->deny($group, 'controllers/users/add');
         $this->Acl->deny($group, 'controllers/users/edit');
         $this->Acl->deny($group, 'controllers/users/admin');
-        $this->Acl->deny($group, 'controllers/users/delete');*/
+        $this->Acl->deny($group, 'controllers/users/delete');
+        $this->Acl->allow($group, 'controllers/adolescencias/edit1');
+        $this->Acl->allow($group, 'controllers/primerainfancias/edit1');
+        $this->Acl->allow($group, 'controllers/infancias/edit1');
+        $this->Acl->allow($group, 'controllers/juventudadultos/edit1');
+        $this->Acl->allow($group, 'controllers/observacions/addanexo');
+        $this->Acl->allow($group, 'controllers/observacions/editanexo');*/
+
 
 
 
