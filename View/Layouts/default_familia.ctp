@@ -83,9 +83,9 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
                     <?php echo $this->Html->link(('Canalizaciones'), array('controller' => 'canalizacions', 'action' => 'index'), array('class' => 'nav-link', 'style' => 'color: white;')); ?>
                     <?php echo $this->Html->link(('Registros Socioambiental'), array('controller' => 'sociambientals', 'action' => 'index'), array('class' => 'nav-link', 'style' => 'color: white;')); ?>
                     <?php echo $this->Html->link(('Registros Novedades'), array('controller' => 'Visitasnegadas', 'action' => 'index'), array('class' => 'nav-link', 'style' => 'color: white;')); ?>
-                    <a style = "color: white;">Usuario: <?= $usr = $this->Session->read("usr");
-                                echo $this->Html->link("Cerrar Sesión", "/users/salir", array('style' => 'color: white;' ));
-                                ?> </a>
+                    <a style="color: white;">Usuario: <?= $usr = $this->Session->read("usr");
+                                                        echo $this->Html->link("Cerrar Sesión", "/users/salir", array('style' => 'color: white;'));
+                                                        ?> </a>
 
                 </nav>
                 <label for="btn-menu" style="color: white;">x

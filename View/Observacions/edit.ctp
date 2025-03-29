@@ -4,32 +4,32 @@ s<div>
 		<?php echo $this->Form->create('Observacion'); ?>
 		<fieldset>
 			<div class="col-12 text-center">
-				<h1 class="titulo-general-pwa-govco" style="color: #3366CC;margin-top: 20px; ">Modulo de Observaciones</h1>
+				<h1 class="titulo-general-pwa-govco" style="color: #3366CC;margin-top: 20px; ">Modulo de Observaciones
+				</h1>
 			</div>
 
-			<h2 class="titulo-general-pwa-govco col-md-12  " style="color: #3366CC; margin-left: 5px;margin-top: 20px; ">Detalles</h2>
-			<hr style="background-clip: border-box; border:0.1px solid rgba(0,0,0,.125); margin-left: 20px; margin-top: 1px;">
+			<h2 class="titulo-general-pwa-govco col-md-12  "
+				style="color: #3366CC; margin-left: 5px;margin-top: 20px; ">Detalles</h2>
+			<hr
+				style="background-clip: border-box; border:0.1px solid rgba(0,0,0,.125); margin-left: 20px; margin-top: 1px;">
 
 			<div class="grow justify-content-center" display="none" style="margin-top:20px">
 				<div class="card col-sm-12" style="margin-left: 15px;font-size: 12px;">
 					<div class="form-group row">
 
 
-						<?php $idAux = $_GET['Adolecencias'];
-						echo $this->Form->input('familia_id', array('value' => '' . $idAux, 'type' => 'hidden'));
+						<?php echo $this->Form->input('id'); ?>
+
+
+						<?php
+						echo $this->Form->input('familia_id', [
+							'label' => 'ID_Familia/N° Hogar/Nombres',
+							'class' => 'form-control',
+							'placeholder' => '',
+							'style' => 'font-size: 12px',
+							'type' => 'hidden'
+						]);
 						?>
-						<div class="form-group col-md-6">
-							<?php
-							echo $this->Form->input('familia_id', [
-								'label' => 'ID_Familia/N° Hogar/Nombres',
-								'class' => 'form-control',
-								'placeholder' => '',
-								'type' => 'select',
-								'class' => 'form-control select-search',
-								'style' => 'font-size: 12px',
-							]);
-							?>
-						</div>
 
 						<div class="form-group col-md-6">
 							<?php

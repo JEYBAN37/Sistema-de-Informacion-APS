@@ -15,7 +15,10 @@ App::uses('AppModel', 'Model');
 class Familia extends AppModel
 {
 
-	public function getFamiliaDatos($contain) {
+
+
+	public function getFamiliaDatos($contain)
+	{
 		try {
 			$result = $this->find('all', [
 				'contain' => $contain
@@ -27,8 +30,9 @@ class Familia extends AppModel
 			return [];
 		}
 	}
-	
-	public function getFamiliaResponsable() {
+
+	public function getFamiliaResponsable()
+	{
 		$contain = [
 			'Sociambiental' => [
 				'Responsable' => ['fields' => ['nombres']]
@@ -36,14 +40,32 @@ class Familia extends AppModel
 		];
 		return $this->getFamiliaDatos($contain);
 	}
-	
-	public function getSelectiveData() {
+
+	public function getSelectiveData()
+	{
+
+		/*$conditions = array(
+			'Sociambiental.fecha BETWEEN ? AND ?' => array(
+				date('Y-' . $mes . '-01'),
+				date('Y-' . $mes . '-t')
+			),
+			//'Ubicacion.microterritorio' => $microterritorio
+		);
+
+		return $this->find('all', array(
+			'conditions' => $conditions,
+			'contain' => array(
+				'Ubicacion'
+			)
+		));*/
+
 		$fields = ['id', 'nombres', 'apellidos', 'rol', 'celular', 'hogar'];
 		return $this->getFamiliaDatos($fields);
 	}
 
 
-	public function getFamiliaSocioambiental() {
+	public function getFamiliaSocioambiental()
+	{
 		$contain = [
 			'Sociambiental' => [
 				'fields' => ['id', 'direccion', 'apellidosfamilia', 'fecha']
@@ -53,8 +75,9 @@ class Familia extends AppModel
 
 		return $this->getFamiliaDatos($contain);
 	}
-	
-	public function getUbicaciones() {
+
+	public function getUbicaciones()
+	{
 		$contain = [
 			'Sociambiental' => [
 				'Ubicacion' => ['fields' => ['microterritorio']]
@@ -518,21 +541,21 @@ class Familia extends AppModel
 	 * @var array
 	 */
 	public $belongsTo = array(
-        'Sociambiental' => array(
-            'className' => 'Sociambiental',
-            'foreignKey' => 'sociambiental_id'
-        ),
-        'Responsable' => array(
-            'className' => 'Responsable',
-            'foreignKey' => false,
-            'conditions' => array('Responsable.id = Sociambiental.responsable_id')
+		'Sociambiental' => array(
+			'className' => 'Sociambiental',
+			'foreignKey' => 'sociambiental_id'
+		),
+		'Responsable' => array(
+			'className' => 'Responsable',
+			'foreignKey' => false,
+			'conditions' => array('Responsable.id = Sociambiental.responsable_id')
 		),
 		'Ubicacion' => array(
-            'className' => 'Ubicacion',
-            'foreignKey' => false,
-            'conditions' => array('Ubicacion.id = Sociambiental.ubicacion_id')
-        )
-    );
+			'className' => 'Ubicacion',
+			'foreignKey' => false,
+			'conditions' => array('Ubicacion.id = Sociambiental.ubicacion_id')
+		)
+	);
 
 	/**
 	 * hasMany associations

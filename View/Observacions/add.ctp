@@ -39,21 +39,21 @@
 							<?php
 							$canalizacion = [
 								'' => 'Elegir',
-								'No aplica ' => 'No aplica',								
+								'No aplica ' => 'No aplica',
 								'Bienestar social' => 'Bienestar social',
-								'Certificación de Discapacidad' =>'Certificación de Discapacidad',
-								'Proyecto Bien nacer' =>'Proyecto Bien nacer',
-								'Aseguramiento' =>'Aseguramiento',
-								'Renta ciudana' =>'Renta ciudana' ,
-								'Jovenes en acción' =>'Jovenes en acción',
-								'Adulto mayor' =>'Adulto mayor',
-								'CDI NIDOS NUTRIR' =>'CDI NIDOS NUTRIR',
+								'Certificación de Discapacidad' => 'Certificación de Discapacidad',
+								'Proyecto Bien nacer' => 'Proyecto Bien nacer',
+								'Aseguramiento' => 'Aseguramiento',
+								'Renta ciudana' => 'Renta ciudana',
+								'Jovenes en acción' => 'Jovenes en acción',
+								'Adulto mayor' => 'Adulto mayor',
+								'CDI NIDOS NUTRIR' => 'CDI NIDOS NUTRIR',
 								'Comedores solidarios' =>	'Comedores solidarios',
-								'Programa minimo vital' =>'Programa minimo vital',
-								'INVIYA' =>'INVIYA',
-								'SISBEN' =>'SISBEN',
-								'FONDO EMPRENDER' =>'FONDO EMPRENDER',
-								'Protección Migrantes' =>'Protección Migrantes',
+								'Programa minimo vital' => 'Programa minimo vital',
+								'INVIYA' => 'INVIYA',
+								'SISBEN' => 'SISBEN',
+								'FONDO EMPRENDER' => 'FONDO EMPRENDER',
+								'Protección Migrantes' => 'Protección Migrantes',
 								'Otro' => 'Otro'
 							];
 							echo $this->Form->input('canalizacionuno', array(
@@ -68,21 +68,59 @@
 
 						<div class="form-group col-md-6" style="margin-top: 20px;">
 							<?php
+							$canalizacion1 = [
+								'No aplica' => 'Elegir',
+								'No aplica ' => 'No aplica',
+								'Bienestar social' => 'Bienestar social',
+								'Certificación de Discapacidad' => 'Certificación de Discapacidad',
+								'Proyecto Bien nacer' => 'Proyecto Bien nacer',
+								'Aseguramiento' => 'Aseguramiento',
+								'Renta ciudana' => 'Renta ciudana',
+								'Jovenes en acción' => 'Jovenes en acción',
+								'Adulto mayor' => 'Adulto mayor',
+								'CDI NIDOS NUTRIR' => 'CDI NIDOS NUTRIR',
+								'Comedores solidarios' =>	'Comedores solidarios',
+								'Programa minimo vital' => 'Programa minimo vital',
+								'INVIYA' => 'INVIYA',
+								'SISBEN' => 'SISBEN',
+								'FONDO EMPRENDER' => 'FONDO EMPRENDER',
+								'Protección Migrantes' => 'Protección Migrantes',
+								'Otro' => 'Otro'
+							];
 							echo $this->Form->input('canalizaciondos', array(
 								'label' => 'Canalización a programa social',
 								'class' => 'form-control',
 								'style' => 'height:30px;  font-size: 15px ; width:100%',
-								'options' => $canalizacion,
+								'options' => $canalizacion1,
 							));
 							?>
 						</div>
 						<div class="form-group col-md-6" style="margin-top: 20px;">
 							<?php
+							$canalizacion2 = [
+								'No aplica' => 'Elegir',
+								'No aplica ' => 'No aplica',
+								'Bienestar social' => 'Bienestar social',
+								'Certificación de Discapacidad' => 'Certificación de Discapacidad',
+								'Proyecto Bien nacer' => 'Proyecto Bien nacer',
+								'Aseguramiento' => 'Aseguramiento',
+								'Renta ciudana' => 'Renta ciudana',
+								'Jovenes en acción' => 'Jovenes en acción',
+								'Adulto mayor' => 'Adulto mayor',
+								'CDI NIDOS NUTRIR' => 'CDI NIDOS NUTRIR',
+								'Comedores solidarios' =>	'Comedores solidarios',
+								'Programa minimo vital' => 'Programa minimo vital',
+								'INVIYA' => 'INVIYA',
+								'SISBEN' => 'SISBEN',
+								'FONDO EMPRENDER' => 'FONDO EMPRENDER',
+								'Protección Migrantes' => 'Protección Migrantes',
+								'Otro' => 'Otro'
+							];
 							echo $this->Form->input('canalizaciontres', array(
 								'label' => 'Canalización a programa social',
 								'class' => 'form-control',
 								'style' => 'height:30px;  font-size: 15px ; width:100%',
-								'options' => $canalizacion,
+								'options' => $canalizacion2,
 							));
 							?>
 						</div>
@@ -102,17 +140,17 @@
 							));
 							?>
 						</div>
-						
-							<?php
-							echo $this->Form->input('fechaseguimiento', array(
-								'label' => 'Fecha de seguimiento de canalizaciones',
-								'class' => 'form-control',
-								'style' => 'height:30px;  font-size: 15px ; width:100%',
-								'placeholder' => '',
-								'type' => 'hidden',
-							));
-							?>
-					
+
+						<?php
+						echo $this->Form->input('fechaseguimiento', array(
+							'label' => 'Fecha de seguimiento de canalizaciones',
+							'class' => 'form-control',
+							'style' => 'height:30px;  font-size: 15px ; width:100%',
+							'placeholder' => '',
+							'type' => 'hidden',
+						));
+						?>
+
 						<div class="form-group col-md-6" style="margin-top: 20px;">
 							<?php
 							echo $this->Form->input('responsable_id', array(
@@ -134,15 +172,15 @@
 							));
 							?>
 						</div>
-					
-							<!-- Coloca el campo en una mitad de la pantalla en dispositivos medianos y grandes -->
-							<?php echo $this->Form->input('date', array(
-								'label' => 'Fecha de visita : ',
-								'style' => 'height:30px;  font-size: 15px ; width:100%',
-								'type' => 'hidden',
-							));
-							?>
-					
+
+						<!-- Coloca el campo en una mitad de la pantalla en dispositivos medianos y grandes -->
+						<?php echo $this->Form->input('date', array(
+							'label' => 'Fecha de visita : ',
+							'style' => 'height:30px;  font-size: 15px ; width:100%',
+							'type' => 'hidden',
+						));
+						?>
+
 						<div class="form-group col-md-6" style="margin-top: 20px;">
 							<p class="help-block">Adjuntar anexo ' NOTA: Cargar un archivo tipo imagen o en pdf
 								extensión ".jpg, png" o

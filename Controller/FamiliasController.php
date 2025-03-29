@@ -29,15 +29,15 @@ class FamiliasController extends AppController
 			$familias = $this->Familia->getSelectiveData();
 			$sociambientals = $this->Familia->getFamiliaSocioambiental();
 			$ubicaciones = $this->Familia->getUbicaciones();
-			
+
 
 			$this->set([
 				'responsables' => $responsables,
+
 				'familias' => $familias,
 				'sociambientals' => $sociambientals,
 				'ubicaciones' => $ubicaciones,
 			]);
-
 		} catch (\Exception $e) {
 			$this->Flash->error('Error: ' . $e->getMessage());
 		}

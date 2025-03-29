@@ -1,6 +1,7 @@
 <?php $this->layout = 'default_familia' ?>
 <div class="col-12 text-center " style="margin: 20px; margin-top: 40px;">
-    <h1 class="titulo-general-pwa-govco" style="color: #3366CC;margin-top: 20px;font-size: 3.5rem ;font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+    <h1 class="titulo-general-pwa-govco"
+        style="color: #3366CC;margin-top: 20px;font-size: 3.5rem ;font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
         Atención Primaria en Salud
     </h1>
 </div>
@@ -36,7 +37,8 @@
                 <div class="row col-sm-12 JustifyCenter " style="margin: 20px; ">
                     <div class=" row">
                         <div class="col-sm-12">
-                            <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-example">
+                            <table width="100%" class="table table-striped table-bordered table-hover"
+                                id="dataTables-example">
                                 <thead>
                                     <tr>
                                         <th>id</th>
@@ -64,51 +66,51 @@
                                         $socioambiental = $sociambientals[$i];
                                         $ubicacion = $ubicaciones[$i];
                                     ?>
-                                        <tr>
-                                            <td><?php echo $familia['Familia']['id']; ?></td>
-                                            <td><?php echo $responsable['Responsable']['nombres']; ?></td>
-                                            <td><?php echo $this->Html->link($socioambiental['Sociambiental']['apellidosfamilia'], array('controller' => 'sociambientals', 'action' => 'view', $socioambiental['Sociambiental']['id'])); ?>
-                                            <td><?php echo $familia['Familia']['nombres']; ?></td>
-                                            <td><?php echo $familia['Familia']['apellidos']; ?></td>
-                                            <td><?php echo $familia['Familia']['rol']; ?></td>
-                                            <td><?php echo $familia['Familia']['celular']; ?></td>
-                                            <td><?php echo $ubicacion['Ubicacion']['microterritorio']; ?></td>
-                                            <td><?php echo $socioambiental['Sociambiental']['direccion']; ?></td>
+                                    <tr>
+                                        <td><?php echo $familia['Familia']['id']; ?></td>
+                                        <td><?php echo $responsable['Responsable']['nombres']; ?></td>
+                                        <td><?php echo $this->Html->link($socioambiental['Sociambiental']['apellidosfamilia'], array('controller' => 'sociambientals', 'action' => 'view', $socioambiental['Sociambiental']['id'])); ?>
+                                        <td><?php echo $familia['Familia']['nombres']; ?></td>
+                                        <td><?php echo $familia['Familia']['apellidos']; ?></td>
+                                        <td><?php echo $familia['Familia']['rol']; ?></td>
+                                        <td><?php echo $familia['Familia']['celular']; ?></td>
+                                        <td><?php echo $ubicacion['Ubicacion']['microterritorio']; ?></td>
+                                        <td><?php echo $socioambiental['Sociambiental']['direccion']; ?></td>
 
-                                            <td><?php echo $familia['Familia']['hogar']; ?></td>
-                                           
-                                            <td><?php echo $this->Time->format('d-m-Y h:i A', ($socioambiental['Sociambiental']['fecha'])); ?>
-                                            <td class="actions">
-                                                <div class="btn-group">
-                                                    <button type="button" class="my-button" data-toggle="dropdown">
-                                                        <?php echo ('Acciones'); ?> <span class="caret"></span>
-                                                    </button>
-                                                    <ul class="dropdown-menu" role="menu">
-                                                        <li><?php echo $this->Html->link(('Ver famlia'),
+                                        <td><?php echo $familia['Familia']['hogar']; ?></td>
+
+                                        <td><?php echo $socioambiental['Sociambiental']['fecha']; ?></td>
+                                        <td class="actions">
+                                            <div class="btn-group">
+                                                <button type="button" class="my-button" data-toggle="dropdown">
+                                                    <?php echo ('Acciones'); ?> <span class="caret"></span>
+                                                </button>
+                                                <ul class="dropdown-menu" role="menu">
+                                                    <li><?php echo $this->Html->link(('Ver famlia'),
                                                                 array('action' => 'view', $familia['Familia']['id']),
                                                                 array(
                                                                     'style' => 'font-size: 14px;'
                                                                 )
                                                             ); ?>
-                                                        </li>
-                                                        <li><?php echo $this->Html->link(('Editar hogar'),
+                                                    </li>
+                                                    <li><?php echo $this->Html->link(('Editar hogar'),
                                                                 array('action' => 'edit',  $familia['Familia']['id']),
                                                                 array(
                                                                     'onclick' => "return confirm('¿Estás seguro que deseas editar la información del hogar de " .  $familia['Familia']['nombres'] . " " .  $familia['Familia']['apellidos'] . "?');",
                                                                     'style' => 'font-size: 14px;'
                                                                 )
                                                             ); ?>
-                                                        </li>
-                                                        <li><?php echo $this->Html->link(('Agregar hogar'),
+                                                    </li>
+                                                    <li><?php echo $this->Html->link(('Agregar hogar'),
                                                                 array('controller' => 'familias', 'action' => 'add?hogar=' . $socioambiental['Sociambiental']['id']),
                                                                 array(
                                                                     'onclick' => "return confirm('¿Estás seguro de agregar un nuevo hogar en la familia " . $socioambiental['Sociambiental']['apellidosfamilia'] . "?');",
                                                                     'style' => 'font-size: 14px;'
                                                                 )
                                                             ); ?>
-                                                        </li>
-                                                        <li>
-                                                            <?php
+                                                    </li>
+                                                    <li>
+                                                        <?php
                                                             echo $this->Html->link(('Agregar menor de 2 años'),
                                                                 array(
                                                                     'controller' => 'Primerainfancias',
@@ -119,11 +121,11 @@
                                                                     'style' => 'font-size: 14px;'
                                                                 )
                                                             ); ?>
-                                                        </li>
+                                                    </li>
 
 
 
-                                                        <li><?php echo $this->Html->link(('Agregar menor de 2 a 5 años'),
+                                                    <li><?php echo $this->Html->link(('Agregar menor de 2 a 5 años'),
                                                                 array(
                                                                     'controller' => 'Primerainfancias',
                                                                     'action' => 'add2_5?primerainfancia=' . $familia['Familia']['id']
@@ -134,8 +136,8 @@
                                                                 )
 
                                                             ); ?>
-                                                        </li>
-                                                        <li><?php echo $this->Html->link(('Agregar menor de 6 a 11 años'),
+                                                    </li>
+                                                    <li><?php echo $this->Html->link(('Agregar menor de 6 a 11 años'),
                                                                 array(
                                                                     'controller' => 'Infantils',
                                                                     'action' => 'add?infantils=' . $familia['Familia']['id']
@@ -145,9 +147,9 @@
                                                                     'style' => 'font-size: 14px;'
                                                                 )
                                                             ); ?>
-                                                        </li>
-                                                        <li>
-                                                            <?php echo $this->Html->link(('Agregar menor de 12 a 17 años'),
+                                                    </li>
+                                                    <li>
+                                                        <?php echo $this->Html->link(('Agregar menor de 12 a 17 años'),
                                                                 array(
                                                                     'controller' => 'Adolescencias',
                                                                     'action' => 'add?adolescencias=' . $familia['Familia']['id']
@@ -158,7 +160,7 @@
                                                                 )
                                                             ); ?>
 
-                                                        <li><?php echo $this->Html->link(('Agregar adulto mayor de 18 años'),
+                                                    <li><?php echo $this->Html->link(('Agregar adulto mayor de 18 años'),
                                                                 array(
                                                                     'controller' => 'Juventudadultos',
                                                                     'action' => 'add?juventudadultos=' . $familia['Familia']['id']
@@ -168,9 +170,9 @@
                                                                     'style' => 'font-size: 14px;'
                                                                 )
                                                             ); ?>
-                                                        </li>
-                                                        <li>
-                                                            <?php
+                                                    </li>
+                                                    <li>
+                                                        <?php
                                                             echo $this->Html->link(
                                                                 'Editar inf.sociambiental',
                                                                 array(
@@ -184,13 +186,13 @@
                                                                 )
                                                             );
                                                             ?>
-                                                        </li>
+                                                    </li>
 
 
-                                                    </ul>
-                                                </div>
-                                            </td>
-                                        </tr>
+                                                </ul>
+                                            </div>
+                                        </td>
+                                    </tr>
                                     <?php endfor; ?>
 
 
@@ -210,68 +212,68 @@
     <!-- /.col-lg-12 -->
 </div>
 <script>
-    $(document).ready(function() {
-        $('#dataTables-example').DataTable({
-            "pagingType": "simple",
-            "pageLength": 10,
-            responsive: true,
-            dom: 'Bfrtip',
-            language: {
-                searchBuilder: {
-                    button: 'Filter',
-                }
-            },
-            buttons: [
-                'pageLength',
-                'copyHtml5',
-                'excelHtml5',
-                'csvHtml5',
-                'colvis',
-                'searchBuilder'
-            ]
-
-        });
+$(document).ready(function() {
+    $('#dataTables-example').DataTable({
+        "pagingType": "simple",
+        "pageLength": 10,
+        responsive: true,
+        dom: 'Bfrtip',
+        language: {
+            searchBuilder: {
+                button: 'Filter',
+            }
+        },
+        buttons: [
+            'pageLength',
+            'copyHtml5',
+            'excelHtml5',
+            'csvHtml5',
+            'colvis',
+            'searchBuilder'
+        ]
 
     });
 
-    function fnExcelReport() {
-        var tab_text = "<table border='2px'><tr bgcolor='#87AFC6'>";
-        var textRange;
-        var j = 0;
-        tab = document.getElementById('dataTables-example'); // id of table
+});
 
-        for (j = 0; j < tab.rows.length; j++) {
-            tab_text = tab_text + tab.rows[j].innerHTML + "</tr>";
-        }
+function fnExcelReport() {
+    var tab_text = "<table border='2px'><tr bgcolor='#87AFC6'>";
+    var textRange;
+    var j = 0;
+    tab = document.getElementById('dataTables-example'); // id of table
 
-        tab_text = tab_text + "</table>";
-
-        tab_text = tab_text.replace(/<A[^>]*>|<\/A>/g, ""); //remove if u want links in your table
-        tab_text = tab_text.replace(/<img[^>]*>/gi, ""); // remove if u want images in your table
-        tab_text = tab_text.replace(/<input[^>]*>|<\/input>/gi, ""); // reomves input params
-
-        var ua = window.navigator.userAgent;
-        var msie = ua.indexOf("MSIE ");
-
-        if (msie > 0 || !!navigator.userAgent.matc(/Trident.*rv\:11\./)) // If Internet Explorer
-        {
-            txtArea1.document.open("txt/html", "replace");
-            txtArea1.document.write(tab_text);
-            txtArea1.document.close();
-            txtArea1.focus();
-            sa = txtArea1.document.execCommand("SaveAs", true, "Say Thanks to Sumit.xls");
-        } else
-            sa = window.open('data:application/vnd.ms-excel,' + encodeURIComponent(tab_text));
-
-        //return (sa);
+    for (j = 0; j < tab.rows.length; j++) {
+        tab_text = tab_text + tab.rows[j].innerHTML + "</tr>";
     }
+
+    tab_text = tab_text + "</table>";
+
+    tab_text = tab_text.replace(/<A[^>]*>|<\/A>/g, ""); //remove if u want links in your table
+    tab_text = tab_text.replace(/<img[^>]*>/gi, ""); // remove if u want images in your table
+    tab_text = tab_text.replace(/<input[^>]*>|<\/input>/gi, ""); // reomves input params
+
+    var ua = window.navigator.userAgent;
+    var msie = ua.indexOf("MSIE ");
+
+    if (msie > 0 || !!navigator.userAgent.matc(/Trident.*rv\:11\./)) // If Internet Explorer
+    {
+        txtArea1.document.open("txt/html", "replace");
+        txtArea1.document.write(tab_text);
+        txtArea1.document.close();
+        txtArea1.focus();
+        sa = txtArea1.document.execCommand("SaveAs", true, "Say Thanks to Sumit.xls");
+    } else
+        sa = window.open('data:application/vnd.ms-excel,' + encodeURIComponent(tab_text));
+
+    //return (sa);
+}
 </script>
 
 <style>
-    /* Personaliza el botón desplegable en DataTables Responsive */
-    table.dataTable.dtr-inline.collapsed>tbody>tr[role="row"]>td.dtr-control:before,
-    table.dataTable.dtr-inline.collapsed>tbody>tr[role="row"]>th.dtr-control:before {
+/* Personaliza el botón desplegable en DataTables Responsive */
+table.dataTable.dtr-inline.collapsed>tbody>tr[role="row"]>td.dtr-control:before,
+table.dataTable.dtr-inline.collapsed>tbody>tr[role="row"]>th.dtr-control:before {
 
-        left: 15px;
-    }
+    left: 15px;
+}
 </style>
