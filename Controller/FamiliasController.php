@@ -33,6 +33,7 @@ class FamiliasController extends AppController
 
 			$this->set([
 				'responsables' => $responsables,
+
 				'familias' => $familias,
 				'sociambientals' => $sociambientals,
 				'ubicaciones' => $ubicaciones,

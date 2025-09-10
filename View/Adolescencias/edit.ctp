@@ -125,7 +125,7 @@ input[type="checkbox"] {
 						?>
 
 
-                      
+
 
                         <div class="form-group col-md-6" style="margin-top: 20px;">
                             <?php echo $this->Form->input('primerapellido', [
@@ -206,7 +206,8 @@ input[type="checkbox"] {
 							]);
 							?>
 
-							<button type="button" id="ayudaButton" class="btn btn-success rounded-circle" style="width: 30px; height: 30px; padding: 0; font-size: 18px; margin-top: 5px; margin-left: 15px;">
+                            <button type="button" id="ayudaButton" class="btn btn-success rounded-circle"
+                                style="width: 30px; height: 30px; padding: 0; font-size: 18px; margin-top: 5px; margin-left: 15px;">
                                 ?
                             </button>
                             <div id="popover" class="popover-content">
@@ -242,7 +243,8 @@ input[type="checkbox"] {
 								'onChange' => 'mostrar(this.value);', // Agrega el atributo onChange para llamar a la función JavaScript
 							]);
 							?>
-							<button type="button" id="ayudaButton1" class="btn btn-success rounded-circle" style="width: 30px; height: 30px; padding: 0; font-size: 18px; margin-top: 5px; margin-left: 15px;">
+                            <button type="button" id="ayudaButton1" class="btn btn-success rounded-circle"
+                                style="width: 30px; height: 30px; padding: 0; font-size: 18px; margin-top: 5px; margin-left: 15px;">
                                 ?
                             </button>
 
@@ -285,7 +287,8 @@ input[type="checkbox"] {
                         </div>
 
                         <!-- Segundo campo de selección -->
-						<div class="form-group col-md-6" style="margin-top: 20px; display: none;" id="otraAseguradoraDiv">
+                        <div class="form-group col-md-6" style="margin-top: 20px; display: none;"
+                            id="otraAseguradoraDiv">
                             <?php
 							echo $this->Form->input('aseguradora', [
 								'label' => 'Otra Aseguradora',
@@ -414,7 +417,8 @@ input[type="checkbox"] {
 								'options' => $optionDiscapacidad
 							));
 							?>
-							<button type="button" id="ayudaButton2" class="btn btn-success rounded-circle" style="width: 30px; height: 30px; padding: 0; font-size: 18px; margin-top: 5px; margin-left: 15px;">
+                            <button type="button" id="ayudaButton2" class="btn btn-success rounded-circle"
+                                style="width: 30px; height: 30px; padding: 0; font-size: 18px; margin-top: 5px; margin-left: 15px;">
                                 ?
                             </button>
 
@@ -623,7 +627,8 @@ input[type="checkbox"] {
 
 
 
-							<button type="button" id="ayudaButton3" class="btn btn-danger rounded-circle" style="width: 30px; height: 30px; padding: 0; font-size: 18px; margin-left: 15px;">
+                            <button type="button" id="ayudaButton3" class="btn btn-danger rounded-circle"
+                                style="width: 30px; height: 30px; padding: 0; font-size: 18px; margin-left: 15px;">
                                 !
                             </button>
 
@@ -792,7 +797,8 @@ input[type="checkbox"] {
 
                     <div id="yes">
                         <h2 class="subtitle-general-forms " style="margin-bottom: 10px;">Gestación
-							<button type="button" id="ayudaButton4" class="btn btn-danger rounded-circle" style="width: 30px; height: 30px; padding: 0; font-size: 18px; margin-left: -5px;">
+                            <button type="button" id="ayudaButton4" class="btn btn-danger rounded-circle"
+                                style="width: 30px; height: 30px; padding: 0; font-size: 18px; margin-left: -5px;">
                                 !
                             </button>
 
@@ -1156,27 +1162,27 @@ input[type="checkbox"] {
 							'onChange' => 'capturarValorSeleccionado();' // Llama a la función 'capturarValorSeleccionado()' cuando cambia el valor
 						));
 						?>
-					</div>
+                    </div>
 
 
-					<!-- Fondo oscuro y cuadro modal -->
-					<div id="canalizationSpecific" class="overlay">
-						<div class="form-group col-md-12" style="margin-top: 5px;">
-							<div id="modalvacunancion" class="modal">
-								<div class="d-flex  justify-content-end vh-100">
+                    <!-- Fondo oscuro y cuadro modal -->
+                    <div id="canalizationSpecific" class="overlay">
+                        <div class="form-group col-md-12" style="margin-top: 5px;">
+                            <div id="modalvacunancion" class="modal">
+                                <div class="d-flex  justify-content-end vh-100">
                                     <button type="button" class="close"
                                         onclick="cerrarModal('modalvacunancion','canalizationSpecific')">
-										<span aria-hidden="true" style="font-size: 30px;">&times;</span>
-									</button>
-								</div>
-								<ul id="dataTuning" class="list-group">
-								</ul>
-								<div class="d-flex justify-content-center vh-100 ">
+                                        <span aria-hidden="true" style="font-size: 30px;">&times;</span>
+                                    </button>
+                                </div>
+                                <ul id="dataTuning" class="list-group">
+                                </ul>
+                                <div class="d-flex justify-content-center vh-100 ">
                                     <button class=" my-button" type="button"
                                         onclick="cerrarModal('modalvacunancion','canalizationSpecific')">Aceptar</button>
-								</div>
-							</div>
-						</div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
                     <div id="Canalizacion">
@@ -1208,9 +1214,9 @@ input[type="checkbox"] {
 
 							)); ?>
 
-                    </div>
-                    
-                    <div class="form-group col-md-6" style="margin-top: 20px;">
+                        </div>
+
+                        <div class="form-group col-md-6" style="margin-top: 20px;">
                             <?php
 							$optionEstadoCanalizacion = [
 								'No aplica' => 'Elegir',
@@ -1232,11 +1238,11 @@ input[type="checkbox"] {
 								'id' => 'status', // Agrega el atributo id para que coincida con el select en JavaScript
 								'onChange' => 'canalizacion(this.value);', // Agrega el atributo onChange para llamar a la función JavaScript
 							)); ?>
-						</div>
-					</div>
+                        </div>
+                    </div>
 
-					<div class="form-group col-md-6" style="margin-top: 20px;">
-						<?php
+                    <div class="form-group col-md-6" style="margin-top: 20px;">
+                        <?php
 						echo $this->Form->input('remisionEspecifica', array(
 							'label' => 'Canalizaciones Especificas',
 							'type' => 'textarea', // Cambiado a 'textarea'
@@ -1248,7 +1254,7 @@ input[type="checkbox"] {
 						?>
 
 
-                        </div>
+                    </div>
 
 
                     <div class="form-group col-md-6" style="margin-top: 20px;">
@@ -1270,7 +1276,7 @@ input[type="checkbox"] {
                         <div class="form-group col-md-12" style="margin-top: 5px;">
                             <div id="modal" class="modal">
                                 <div class="modal-header-native" style="text-align: center;">
-									<button type="button" class="close" onclick="cerrarModal('overlay','modal')">
+                                    <button type="button" class="close" onclick="cerrarModal('overlay','modal')">
                                         <span aria-hidden="true" style="font-size: 30px;">&times;</span>
                                     </button>
                                 </div>
@@ -1278,10 +1284,10 @@ input[type="checkbox"] {
                                 <div id="miContenedor" class="form-group col-md-12" style="margin-top: 20px;">
 
                                 </div>
-								<div class="d-flex justify-content-center vh-100">
+                                <div class="d-flex justify-content-center vh-100">
                                     <button class=" my-button" type="button"
                                         onclick="cerrarModal('overlay','modal')">Aceptar</button>
-								</div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -1348,10 +1354,10 @@ function mostrarModal() {
 }
 
 // Función para cerrar el modal
-	function cerrarModal(divaleatory, divSecond) {
-		document.getElementById(divaleatory).style.display = "none";
-		document.getElementById(divSecond).style.display = "none ";
-	}
+function cerrarModal(divaleatory, divSecond) {
+    document.getElementById(divaleatory).style.display = "none";
+    document.getElementById(divSecond).style.display = "none ";
+}
 
 
 
@@ -1490,10 +1496,10 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 
-	function agregarOpcionSeleccion() {
+function agregarOpcionSeleccion() {
 
 
-		$("#PrimerainfanciaCanalizacionId").prepend(
+    $("#PrimerainfanciaCanalizacionId").prepend(
         "<option value='' selected='selected'>Seleccione</option>");
 
 
@@ -1563,12 +1569,12 @@ $(function() {
     $('#ayudaButton3').popover();
 });
 
-	function generarCheckboxes(opciones, id, result) {
-		let resultHTML = ''
+function generarCheckboxes(opciones, id, result) {
+    let resultHTML = ''
 
     opciones.forEach(opcion => {
         resultHTML +=
-				`<li class="list-group-item d-flex  align-items-center h-100" style="margin-bottom: 0em;">
+            `<li class="list-group-item d-flex  align-items-center h-100" style="margin-bottom: 0em;">
             <input type="checkbox" value="${opcion}" onclick="actualizarInput('${id}', '${result}')" class="d-flex justify-content-center">
             <label>${opcion}</label>
         </li>`;
@@ -1592,65 +1598,65 @@ const opciones = opcionesActividades = [
     'Remision a urgencias',
 ];
 // Generar los checkboxes y agregarlos al contenedor
-	document.getElementById('miContenedor').innerHTML = generarCheckboxes(opciones, 'modal', 'opcionesSeleccionadas');
+document.getElementById('miContenedor').innerHTML = generarCheckboxes(opciones, 'modal', 'opcionesSeleccionadas');
 
 
 
-	const dataGuardada = ''
-	const opcionesVacunancion = opcionesActividades = [
-		'MUJERES 12 A 17 AÑOS	Vacuna contra el Virus del Papiloma Humano - VPH 	Única Dosis',
-		'ADOLESCENTES	Vacuna contra COVID 19 	Refuerzo',
-		'MUJERES 15 AÑOS	Toxoide tetánico diftérico del adulto (Td)	REFUERZO',
-		'Gestantes	Influenza Gestacional 	1 dosis a partir de la Semana 14 de Gestación ',
-		'Gestantes	TdaP (Tetanos, Difteria, Tosferina Acelular)	Dosis Única a partir de semana 26 de gestación',
-		'Adultos de 60 ños y mas 	Vacuna de influenza estacional	una dosis cada año ',
+const dataGuardada = ''
+const opcionesVacunancion = opcionesActividades = [
+    'MUJERES 12 A 17 AÑOS	Vacuna contra el Virus del Papiloma Humano - VPH 	Única Dosis',
+    'ADOLESCENTES	Vacuna contra COVID 19 	Refuerzo',
+    'MUJERES 15 AÑOS	Toxoide tetánico diftérico del adulto (Td)	REFUERZO',
+    'Gestantes	Influenza Gestacional 	1 dosis a partir de la Semana 14 de Gestación ',
+    'Gestantes	TdaP (Tetanos, Difteria, Tosferina Acelular)	Dosis Única a partir de semana 26 de gestación',
+    'Adultos de 60 ños y mas 	Vacuna de influenza estacional	una dosis cada año ',
 
-	];
+];
 
-	// Función para actualizar el campo de entrada con las opciones selecciona
-	function actualizarInput(elementId, result) {
-		var checkboxes = document.querySelectorAll('#' + elementId + ' input[type="checkbox"]');
-		var opcionesSeleccionadas = Array.from(checkboxes)
-			.filter(checkbox => checkbox.checked)
-			.map(checkbox => checkbox.value)
-			.join(', ');
+// Función para actualizar el campo de entrada con las opciones selecciona
+function actualizarInput(elementId, result) {
+    var checkboxes = document.querySelectorAll('#' + elementId + ' input[type="checkbox"]');
+    var opcionesSeleccionadas = Array.from(checkboxes)
+        .filter(checkbox => checkbox.checked)
+        .map(checkbox => checkbox.value)
+        .join(', ');
 
-		document.getElementById(result).value = opcionesSeleccionadas;
-	}
-	//Optienen el valor de los campos del checkbox solo llama
-	//el array que quieres mostrar introduce el id de la etiqueta que hiciste
-	//para vizualizar la checkbox y el result es en la variable que guardara
+    document.getElementById(result).value = opcionesSeleccionadas;
+}
+//Optienen el valor de los campos del checkbox solo llama
+//el array que quieres mostrar introduce el id de la etiqueta que hiciste
+//para vizualizar la checkbox y el result es en la variable que guardara
 
-	function generarCheckboxes(opciones, id, result) {
-		let resultHTML = ''
+function generarCheckboxes(opciones, id, result) {
+    let resultHTML = ''
 
-		opciones.forEach(opcion => {
-			resultHTML +=
-				`<li class="list-group-item d-flex  align-items-center h-100" style="margin-bottom: 0em;">
+    opciones.forEach(opcion => {
+        resultHTML +=
+            `<li class="list-group-item d-flex  align-items-center h-100" style="margin-bottom: 0em;">
             <input type="checkbox" value="${opcion}" onclick="actualizarInput('${id}', '${result}')" class="d-flex justify-content-center">
             <label>${opcion}</label>
         </li>`;
-		});
+    });
 
-		return resultHTML;
-	}
+    return resultHTML;
+}
 
-	//Captura el valor igresar los casos encesarion en el switch
-	function capturarValorSeleccionado() {
-		var valorSeleccionado = document.getElementById("canalizacionuno").value; //Obtener el valor de la canalizacion
-		var otraAseguradoraDiv = document.getElementById('overlay');
-
-
-		switch (valorSeleccionado) {
-			case "Vacunacion":
-				console.log(valorSeleccionado)
-				document.getElementById('dataTuning').innerHTML = generarCheckboxes(opcionesActividades, 'modalvacunancion',
-					'remisionEspecifica');
-				document.getElementById("canalizationSpecific").style.display = "block";
-				document.getElementById("modalvacunancion").style.display = "block";
-				break;
+//Captura el valor igresar los casos encesarion en el switch
+function capturarValorSeleccionado() {
+    var valorSeleccionado = document.getElementById("canalizacionuno").value; //Obtener el valor de la canalizacion
+    var otraAseguradoraDiv = document.getElementById('overlay');
 
 
-		}
-	}
+    switch (valorSeleccionado) {
+        case "Vacunacion":
+            console.log(valorSeleccionado)
+            document.getElementById('dataTuning').innerHTML = generarCheckboxes(opcionesActividades, 'modalvacunancion',
+                'remisionEspecifica');
+            document.getElementById("canalizationSpecific").style.display = "block";
+            document.getElementById("modalvacunancion").style.display = "block";
+            break;
+
+
+    }
+}
 </script>

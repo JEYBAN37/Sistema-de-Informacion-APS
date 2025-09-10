@@ -5,116 +5,213 @@ echo $this->Html->script('validation2'); // 'validation' es el nombre del archiv
 ?>
 
 <style>
-	.popover-content {
-		display: none;
-		position: absolute;
-		background-color: #fff;
-		border: 1px solid #ccc;
-		padding: 10px;
-		box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-		z-index: 999;
-		/* Valor alto para colocar el popover encima de otros elementos */
-		font-size: 12px;
-		/* Ajusta el tamaño de la fuente según tus preferencias */
-		text-align: justify;
+.popover-content {
+    display: none;
+    position: absolute;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    padding: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    z-index: 999;
+    /* Valor alto para colocar el popover encima de otros elementos */
+    font-size: 12px;
+    /* Ajusta el tamaño de la fuente según tus preferencias */
+    text-align: justify;
+
+    .popover-content {
+        display: none;
+        position: absolute;
+        background-color: #fff;
+        border: 1px solid #ccc;
+        padding: 10px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        z-index: 999;
+        /* Valor alto para colocar el popover encima de otros elementos */
+        font-size: 12px;
+        /* Ajusta el tamaño de la fuente según tus preferencias */
+        text-align: justify;
 
 
-	}
+    }
+}
 
-	/* Estilo para el fondo oscuro cuando se muestra el modal */
-	.overlay {
-		display: none;
-		position: fixed;
-		top: 0;
-		left: 0;
-		width: 100%;
-		height: 100%;
-		background-color: rgba(0, 0, 0, 0.5);
-		z-index: 1;
-	}
+/* Estilo para el fondo oscuro cuando se muestra el modal */
+.overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1;
+}
 
-	/* Estilo para el cuadro modal */
-	.modal {
-		overflow: auto;
+/* Estilo para el fondo oscuro cuando se muestra el modal */
+.overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1;
+}
+
+/* Estilo para el cuadro modal */
+.modal {
+    overflow: auto;
+
+    /* Estilo para el cuadro modal */
+    .modal {
+        overflow: auto;
 
 
 
 
-		display: none;
-		position: fixed;
-		top: 50%;
-		left: 50%;
-		transform: translate(-50%, -50%);
-		width: 80%;
-		/* Ajusta el ancho del modal según tus necesidades */
+        display: none;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 80%;
+        /* Ajusta el ancho del modal según tus necesidades */
+        display: none;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 80%;
+        /* Ajusta el ancho del modal según tus necesidades */
 
-		/* Ancho máximo para pantallas más grandes */
+        /* Ancho máximo para pantallas más grandes */
+        /* Ancho máximo para pantallas más grandes */
 
-		background-color: #fff;
-		border: 1px solid #ccc;
-		border-radius: 5px;
-		z-index: 1;
-	}
+        background-color: #fff;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        z-index: 1;
+    }
 
-	.button-one {
-		display: block;
-		width: 100%;
-		height: 34px;
-		padding: 6px 12px;
-		font-size: 14px;
-		line-height: 1.42857143;
-		color: #555;
-		background-color: #fff;
-		background-image: none;
-		border: 1px solid #ccc;
-		border-radius: 4px;
-		-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-		box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-		-webkit-transition: border-color ease-in-out 0.15s, -webkit-box-shadow ease-in-out 0.15s;
-		-o-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
-		transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
-		text-align: left;
-		height: 35px;
-		font-size: 15px;
-		width: 100%;
-		margin-top: 10px;
-		font-weight: 700;
-	}
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    z-index: 1;
+}
 
-	/* Estilo para el texto y checkboxes dentro del modal */
-	.modal p {
-		text-align: left;
-	}
+.button-one {
+    display: block;
+    width: 100%;
+    height: 34px;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: #555;
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+    -webkit-transition: border-color ease-in-out 0.15s, -webkit-box-shadow ease-in-out 0.15s;
+    -o-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+    transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+    text-align: left;
+    height: 35px;
+    font-size: 15px;
+    width: 100%;
+    margin-top: 10px;
+    font-weight: 700;
+}
 
-	.modal label {
-		display: block;
-		margin-bottom: 10px;
-	}
+.button-one {
+    display: block;
+    width: 100%;
+    height: 34px;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: #555;
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+    -webkit-transition: border-color ease-in-out 0.15s, -webkit-box-shadow ease-in-out 0.15s;
+    -o-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+    transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+    text-align: left;
+    height: 35px;
+    font-size: 15px;
+    width: 100%;
+    margin-top: 10px;
+    font-weight: 700;
+}
 
-	input[type="checkbox"] {
-		margin-right: 10px;
-	}
+/* Estilo para el texto y checkboxes dentro del modal */
+.modal p {
+    text-align: left;
+}
+
+/* Estilo para el texto y checkboxes dentro del modal */
+.modal p {
+    text-align: left;
+}
+
+.modal label {
+    display: block;
+    margin-bottom: 10px;
+}
+
+.modal label {
+    display: block;
+    margin-bottom: 10px;
+}
+
+input[type="checkbox"] {
+    margin-right: 10px;
+}
+
+input[type="checkbox"] {
+    margin-right: 10px;
+}
 </style>
 
 <body style="font-size: 14px;">
-	<div class="form-group col-sm-12">
-		<?php echo $this->Form->create('Infantil'); ?>
-		<fieldset>
+    <div class="form-group col-sm-12">
+        <?php echo $this->Form->create('Infantil'); ?>
+        <fieldset>
+            <div class="form-group col-sm-12">
+                <?php echo $this->Form->create('Infantil'); ?>
+                <fieldset>
 
-			<div class="col-12 text-center">
-				<h1 class="title-general-forms">Módulo Infancia 6 a 11
-					años</h1>
+                    <div class="col-12 text-center">
+                        <h1 class="title-general-forms">Módulo Infancia 6 a 11
+                            años</h1>
+                        <div class="col-12 text-center">
+                            <h1 class="title-general-forms">Módulo Infancia 6 a 11
+                                años</h1>
 
-			</div>
+                        </div>
+                    </div>
 
 
-			<h2 class="subtitle-general-forms ">Datos Personales</h2>
-			<hr style=" border:0.1px solid rgba(0,0,0,.125);">
+                    <h2 class="subtitle-general-forms ">Datos Personales</h2>
+                    <hr style=" border:0.1px solid rgba(0,0,0,.125);">
+                    <h2 class="subtitle-general-forms ">Datos Personales</h2>
+                    <hr style=" border:0.1px solid rgba(0,0,0,.125);">
 
-			<div class="grow justify-content-center" display="none" style="margin-top:20px">
-				<div class="card col-sm-12" style=" font-size:15px;  border:1.5px solid rgba(0,0,0,.125);">
-					<div class="form-group row">
+                    <div class="grow justify-content-center" display="none" style="margin-top:20px">
+                        <div class="card col-sm-12" style=" font-size:15px;  border:1.5px solid rgba(0,0,0,.125);">
+                            <div class="form-group row">
+                                <div class="grow justify-content-center" display="none" style="margin-top:20px">
+                                    <div class="card col-sm-12"
+                                        style=" font-size:15px;  border:1.5px solid rgba(0,0,0,.125);">
+                                        <div class="form-group row">
 
+                                            <?php
 						<?php
 						$idAux = $_GET['infantils'];
 						echo $this->Form->input('familia_id', array('value' => '' . $idAux, 'type' => 'hidden'));
@@ -122,8 +219,10 @@ echo $this->Html->script('validation2'); // 'validation' es el nombre del archiv
 
 
 
-						<div class="form-group col-md-6" style="margin-top: 20px;">
+                                            <div class="form-group col-md-6" style="margin-top: 20px;">
+                                                <div class="form-group col-md-6" style="margin-top: 20px;">
 
+                                                    <?php
 							<?php
 							$TipoDeDocumentoOptions = array(
 								'' => 'Elegir',
@@ -141,55 +240,74 @@ echo $this->Html->script('validation2'); // 'validation' es el nombre del archiv
 								'options' => $TipoDeDocumentoOptions
 							));
 							?>
-						</div>
+                                                </div>
+                                            </div>
 
-						<div class="form-group col-md-6" style="margin-top: 20px;">
+                                            <div class="form-group col-md-6" style="margin-top: 20px;">
+                                                <div class="form-group col-md-6" style="margin-top: 20px;">
 
+                                                    <?php echo $this->Form->input('numerodoc', [
 							<?php echo $this->Form->input('numerodoc', [
 								'label' => 'N° de documento',
 								'class' => 'form-control',
 								'style' => 'height:30px;  font-size: 15px ; width:100%',
 							]);  ?>
-						</div>
+                                                </div>
+                                            </div>
 
-						<div class="form-group col-md-6" style="margin-top: 20px;">
+                                            <div class="form-group col-md-6" style="margin-top: 20px;">
+                                                <div class="form-group col-md-6" style="margin-top: 20px;">
 
+                                                    <?php echo $this->Form->input('primerapellido', [
 							<?php echo $this->Form->input('primerapellido', [
 								'label' => 'Primer Apellido',
 								'class' => 'form-control',
 								'style' => 'height:30px;  font-size: 15px ; width:100%',
 							]);  ?>
-						</div>
+                                                </div>
+                                            </div>
 
-						<div class="form-group col-md-6" style="margin-top: 20px;">
+                                            <div class="form-group col-md-6" style="margin-top: 20px;">
+                                                <div class="form-group col-md-6" style="margin-top: 20px;">
 
+                                                    <?php echo $this->Form->input('segundoapellido', [
 							<?php echo $this->Form->input('segundoapellido', [
 								'label' => 'Segundo Apellido',
 								'class' => 'form-control',
 								'style' => 'height:30px;  font-size: 15px ; width:100%',
 							]);  ?>
-						</div>
+                                                </div>
+                                            </div>
 
-						<div class="form-group col-md-6" style="margin-top: 20px;">
+                                            <div class="form-group col-md-6" style="margin-top: 20px;">
+                                                <div class="form-group col-md-6" style="margin-top: 20px;">
 
+                                                    <?php echo $this->Form->input('primernombre', [
 							<?php echo $this->Form->input('primernombre', [
 								'label' => 'Primer Nombre',
 								'class' => 'form-control',
 								'style' => 'height:30px;  font-size: 15px ; width:100%',
 							]);  ?>
-						</div>
+                                                </div>
+                                            </div>
 
-						<div class="form-group col-md-6" style="margin-top: 20px;">
+                                            <div class="form-group col-md-6" style="margin-top: 20px;">
+                                                <div class="form-group col-md-6" style="margin-top: 20px;">
 
+                                                    <?php echo $this->Form->input('segundonombre', [
 							<?php echo $this->Form->input('segundonombre', [
 								'label' => 'Segundo Nombre',
 								'class' => 'form-control',
 								'style' => 'height:30px;  font-size: 15px ; width:100%',
 							]);  ?>
-						</div>
+                                                </div>
+                                            </div>
 
-						<div class="form-group col-md-6" style="margin-top: 20px;">
+                                            <div class="form-group col-md-6" style="margin-top: 20px;">
+                                                <div class="form-group col-md-6" style="margin-top: 20px;">
 
+                                                    <!-- Campo de fecha de nacimiento -->
+                                                    <?php echo $this->Form->input('fechanac', [
 							<!-- Campo de fecha de nacimiento -->
 							<?php echo $this->Form->input('fechanac', [
 								'label' => 'Fecha de nacimiento:',
@@ -200,10 +318,14 @@ echo $this->Html->script('validation2'); // 'validation' es el nombre del archiv
 								'id' => 'fechanac', // Agrega este identificador al campo de fecha de nacimiento
 								'empty' => true, // Establecer el campo como vacío
 							]); ?>
-						</div>
+                                                </div>
+                                            </div>
 
-						<div class="form-group col-md-6" style="margin-top: 20px;">
+                                            <div class="form-group col-md-6" style="margin-top: 20px;">
+                                                <div class="form-group col-md-6" style="margin-top: 20px;">
 
+                                                    <!-- Campo de edad calculada (se llenará automáticamente con JavaScript) -->
+                                                    <?php echo $this->Form->input('edad', [
 							<!-- Campo de edad calculada (se llenará automáticamente con JavaScript) -->
 							<?php echo $this->Form->input('edad', [
 								'label' => 'Edad',
@@ -215,10 +337,13 @@ echo $this->Html->script('validation2'); // 'validation' es el nombre del archiv
 								'step' => '0.01'
 
 							]); ?>
-						</div>
+                                                </div>
+                                            </div>
 
-						<div class="form-group col-md-6" style="margin-top: 20px;">
+                                            <div class="form-group col-md-6" style="margin-top: 20px;">
+                                                <div class="form-group col-md-6" style="margin-top: 20px;">
 
+                                                    <?php
 							<?php
 							$generoOption = [
 								' ' => 'Elegir',
@@ -235,9 +360,12 @@ echo $this->Html->script('validation2'); // 'validation' es el nombre del archiv
 
 								'style' => 'height:30px;  font-size: 15px ; width:100%',
 							]); ?>
-						</div>
+                                                </div>
+                                            </div>
 
 
+                                            <div class="form-group col-md-6" style="margin-top: 20px;">
+                                                <?php
 						<div class="form-group col-md-6" style="margin-top: 20px;">
 							<?php
 							$aseguradoraOption = [
@@ -264,11 +392,13 @@ echo $this->Html->script('validation2'); // 'validation' es el nombre del archiv
 								'id' => 'aseguradora', // Añade un ID único
 							]);
 							?>
-						</div>
+                                            </div>
+                                        </div>
 
-						<!-- Segundo campo de selección -->
-						<div class="form-group col-md-6" style="margin-top: 20px; display: none;" id="otraAseguradoraDiv">
-							<?php
+                                        <!-- Segundo campo de selección -->
+                                        <div class="form-group col-md-6" style="margin-top: 20px; display: none;"
+                                            id="otraAseguradoraDiv">
+                                            <?php
 							echo $this->Form->input('otraAseguradora', [
 								'label' => 'Otra Aseguradora',
 								'class' => 'form-control',
@@ -277,10 +407,13 @@ echo $this->Html->script('validation2'); // 'validation' es el nombre del archiv
 								'id' => 'otraAseguradora', // Añade un ID único
 							]);
 							?>
-						</div>
+                                        </div>
+                                    </div>
 
-						<div class="form-group col-md-6" style="margin-top: 20px;">
+                                    <div class="form-group col-md-6" style="margin-top: 20px;">
+                                        <div class="form-group col-md-6" style="margin-top: 20px;">
 
+                                            <?php
 							<?php
 							$regimenOption = [
 								' ' => 'Elegir',
@@ -298,10 +431,13 @@ echo $this->Html->script('validation2'); // 'validation' es el nombre del archiv
 								'style' => 'height:30px;  font-size: 15px ; width:100%',
 								'options' => $regimenOption,
 							]);  ?>
-						</div>
+                                        </div>
+                                    </div>
 
-						<div class="form-group col-md-6" style="margin-top: 20px;">
+                                    <div class="form-group col-md-6" style="margin-top: 20px;">
+                                        <div class="form-group col-md-6" style="margin-top: 20px;">
 
+                                            <?php $estadoAfiliacionOption = [
 							<?php $estadoAfiliacionOption = [
 								' ' => 'Elegir',
 								'Activo' => 'Activo',
@@ -316,6 +452,9 @@ echo $this->Html->script('validation2'); // 'validation' es el nombre del archiv
 								'style' => 'height:30px;  font-size: 15px ; width:100%',
 								'options' => $estadoAfiliacionOption,
 							]);  ?>
+                                        </div>
+                                        <div class="form-group col-md-6" style="margin-top: 20px;">
+                                            <?php echo $this->Form->input('telefono', [
 						</div>
 						<div class="form-group col-md-6" style="margin-top: 20px;">
 							<?php echo $this->Form->input('telefono', [
@@ -323,22 +462,34 @@ echo $this->Html->script('validation2'); // 'validation' es el nombre del archiv
 								'class' => 'form-control',
 								'style' => 'height:30px;  font-size: 15px ; width:100%',
 							]);  ?>
-						</div>
-					</div>
-				</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
-			</div>
+            </div>
+    </div>
 
 
 
-			<h2 class="subtitle-general-forms">
-				Valoración de Salud</h2>
-			<hr style=" border:0.1px solid rgba(0,0,0,.125);">
-			<div class="grow justify-content-center" display="none" style="margin-top:20px">
-				<div class="card col-sm-12" style=" font-size:15px;  border:1.5px solid rgba(0,0,0,.125);">
-					<div class="form-group row">
-						<div class="form-group col-md-6" style="margin-top: 20px;">
+    <h2 class="subtitle-general-forms">
+        Valoración de Salud</h2>
+    <hr style=" border:0.1px solid rgba(0,0,0,.125);">
+    <div class="grow justify-content-center" display="none" style="margin-top:20px">
+        <div class="card col-sm-12" style=" font-size:15px;  border:1.5px solid rgba(0,0,0,.125);">
+            <div class="form-group row">
+                <div class="form-group col-md-6" style="margin-top: 20px;">
+                    <h2 class="subtitle-general-forms">
+                        Valoración de Salud</h2>
+                    <hr style=" border:0.1px solid rgba(0,0,0,.125);">
+                    <div class="grow justify-content-center" display="none" style="margin-top:20px">
+                        <div class="card col-sm-12" style=" font-size:15px;  border:1.5px solid rgba(0,0,0,.125);">
+                            <div class="form-group row">
+                                <div class="form-group col-md-6" style="margin-top: 20px;">
 
+                                    <?php
 							<?php
 							$optionDiscapacidad = array(
 								'' => 'Elegir',
@@ -362,35 +513,60 @@ echo $this->Html->script('validation2'); // 'validation' es el nombre del archiv
 							));
 							?>
 
-							<button type="button" id="ayudaButton" class="btn btn-success rounded-circle" style="width: 30px; height: 30px; padding: 0; font-size: 18px; margin-top: 5px; margin-left: 15px;">
-								?
-							</button>
+                                    <button type="button" id="ayudaButton" class="btn btn-success rounded-circle"
+                                        style="width: 30px; height: 30px; padding: 0; font-size: 18px; margin-top: 5px; margin-left: 15px;">
+                                        ?
+                                    </button>
 
-							<div id="popover" class="popover-content">
-								<p><strong>Auditivas:</strong>
-									Dificultades o limitaciones en la capacidad de escuchar o procesar el sonido.
-									<br>
-									<strong>Visuales:</strong>
-									Limitaciones o dificultades en la visión.
-									<br>
-									<strong>Sordoceguera:</strong>
-									Enfocarse en criar y educar a los hijos.
-									<br>
-									<strong>Cognitivas o intelectuales:</strong>
+                                    <div id="popover" class="popover-content">
+                                        <p><strong>Auditivas:</strong>
+                                            Dificultades o limitaciones en la capacidad de escuchar o procesar el
+                                            sonido.
+                                            <br>
+                                            <strong>Visuales:</strong>
+                                            Limitaciones o dificultades en la visión.
+                                            <br>
+                                            <strong>Sordoceguera:</strong>
+                                            Enfocarse en criar y educar a los hijos.
+                                            <br>
+                                            <strong>Cognitivas o intelectuales:</strong>
+                                        <div id="popover" class="popover-content">
+                                            <p><strong>Auditivas:</strong>
+                                                Dificultades o limitaciones en la capacidad de escuchar o procesar el
+                                                sonido.
+                                                <br>
+                                                <strong>Visuales:</strong>
+                                                Limitaciones o dificultades en la visión.
+                                                <br>
+                                                <strong>Sordoceguera:</strong>
+                                                Enfocarse en criar y educar a los hijos.
+                                                <br>
+                                                <strong>Cognitivas o intelectuales:</strong>
 
-									Condición en la que una persona tiene tanto discapacidad auditiva como
-									discapacidad visual.<br>
-									<strong>Mentales:</strong>
+                                                Condición en la que una persona tiene tanto discapacidad auditiva como
+                                                discapacidad visual.<br>
+                                                <strong>Mentales:</strong>
+                                                Condición en la que una persona tiene tanto discapacidad auditiva como
+                                                discapacidad visual.<br>
+                                                <strong>Mentales:</strong>
 
-									Limitaciones en el funcionamiento del cerebro que afectan el
-									procesamiento, comprensión, aprendizaje y memoria de la información.
-									<br>
-								</p>
-							</div>
+                                                Limitaciones en el funcionamiento del cerebro que afectan el
+                                                procesamiento, comprensión, aprendizaje y memoria de la información.
+                                                <br>
+                                            </p>
+                                        </div>
+                                        Limitaciones en el funcionamiento del cerebro que afectan el
+                                        procesamiento, comprensión, aprendizaje y memoria de la información.
+                                        <br>
+                                        </p>
+                                    </div>
 
-						</div>
-						<div class="form-group col-md-6" style="margin-top: 20px;">
+                                </div>
+                                <div class="form-group col-md-6" style="margin-top: 20px;">
+                                </div>
+                                <div class="form-group col-md-6" style="margin-top: 20px;">
 
+                                    <?php
 							<?php
 							echo $this->Form->input('peso', array(
 								'label' => 'Registre su Peso en Kg.',
@@ -400,10 +576,13 @@ echo $this->Html->script('validation2'); // 'validation' es el nombre del archiv
 								'id' => 'peso', // Agrega un id para identificar este campo
 							));
 							?>
-						</div>
+                                </div>
+                            </div>
 
-						<div class="form-group col-md-6" style="margin-top: 20px;">
+                            <div class="form-group col-md-6" style="margin-top: 20px;">
+                                <div class="form-group col-md-6" style="margin-top: 20px;">
 
+                                    <?php
 							<?php
 							echo $this->Form->input('talla', array(
 								'label' => 'Registre su talla en cm',
@@ -413,10 +592,13 @@ echo $this->Html->script('validation2'); // 'validation' es el nombre del archiv
 								'id' => 'talla', // Agrega un id para identificar este campo
 							));
 							?>
-						</div>
+                                </div>
+                            </div>
 
-						<div class="form-group col-md-6" style="margin-top: 20px;">
+                            <div class="form-group col-md-6" style="margin-top: 20px;">
+                                <div class="form-group col-md-6" style="margin-top: 20px;">
 
+                                    <?php
 							<?php
 							echo $this->Form->input('indicemasacorporal', array(
 								'label' => 'Índice de masa corporal',
@@ -427,18 +609,25 @@ echo $this->Html->script('validation2'); // 'validation' es el nombre del archiv
 								'id' => 'indicemasacorporal', // Agrega un id para identificar este campo
 							));
 							?>
-							<button style="margin-left: 5px;" class="my-button" id="calcularIMC">Calcular
-								IMC</button>
-						</div>
+                                    <button style="margin-left: 5px;" class="my-button" id="calcularIMC">Calcular
+                                        IMC</button>
+                                </div>
+                                <button style="margin-left: 5px;" class="my-button" id="calcularIMC">Calcular
+                                    IMC</button>
+                            </div>
 
 
 
 
-						<p id="mensajeIMC"></p>
-					</div>
+                            <p id="mensajeIMC"></p>
+                        </div>
+                        <p id="mensajeIMC"></p>
+                    </div>
 
-					<div class="form-group col-md-6" style="margin-top: 20px;">
+                    <div class="form-group col-md-6" style="margin-top: 20px;">
+                        <div class="form-group col-md-6" style="margin-top: 20px;">
 
+                            <?php
 						<?php
 						$optionCronica = array(
 							'' => 'Elegir',
@@ -470,20 +659,31 @@ echo $this->Html->script('validation2'); // 'validation' es el nombre del archiv
 							'id' => 'condicioncronica',
 
 						)); ?>
-					</div>
-				</div>
-			</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
-			<h2 class="subtitle-general-forms">
-				Atención en Salud</h2>
-			<hr style=" border:0.1px solid rgba(0,0,0,.125);">
+    <h2 class="subtitle-general-forms">
+        Atención en Salud</h2>
+    <hr style=" border:0.1px solid rgba(0,0,0,.125);">
+    <h2 class="subtitle-general-forms">
+        Atención en Salud</h2>
+    <hr style=" border:0.1px solid rgba(0,0,0,.125);">
 
-			<div class="grow justify-content-center" display="none" style="margin-top:20px; ">
-				<div class="card " style=" font-size:15px;  border:1.5px solid rgba(0,0,0,.125);">
-					<div class="form-group row">
-						<div class="form-group col-md-6" style="margin-top: 20px;">
+    <div class="grow justify-content-center" display="none" style="margin-top:20px; ">
+        <div class="card " style=" font-size:15px;  border:1.5px solid rgba(0,0,0,.125);">
+            <div class="form-group row">
+                <div class="form-group col-md-6" style="margin-top: 20px;">
+                    <div class="grow justify-content-center" display="none" style="margin-top:20px; ">
+                        <div class="card " style=" font-size:15px;  border:1.5px solid rgba(0,0,0,.125);">
+                            <div class="form-group row">
+                                <div class="form-group col-md-6" style="margin-top: 20px;">
 
+                                    <?php
 							<?php
 							$optionVacuna = array(
 								'' => 'Elegir',
@@ -504,12 +704,19 @@ echo $this->Html->script('validation2'); // 'validation' es el nombre del archiv
 
 							)); ?>
 
-							<p class="help-block"> Indague en sobre las vacunas VPH, Toxoide Tetánico Diftérico, Covid
-								19</p>
-						</div>
+                                    <p class="help-block"> Indague en sobre las vacunas VPH, Toxoide Tetánico Diftérico,
+                                        Covid
+                                        19</p>
+                                </div>
+                                <p class="help-block"> Indague en sobre las vacunas VPH, Toxoide Tetánico Diftérico,
+                                    Covid
+                                    19</p>
+                            </div>
 
-						<div class="form-group col-md-6" style="margin-top: 20px;">
+                            <div class="form-group col-md-6" style="margin-top: 20px;">
+                                <div class="form-group col-md-6" style="margin-top: 20px;">
 
+                                    <?php
 							<?php
 							$optionYesNo = [
 								'' => 'Elegir',
@@ -529,10 +736,13 @@ echo $this->Html->script('validation2'); // 'validation' es el nombre del archiv
 
 
 							)); ?>
-						</div>
+                                </div>
+                            </div>
 
-						<div class="form-group col-md-6" style="margin-top: 20px;">
+                            <div class="form-group col-md-6" style="margin-top: 20px;">
+                                <div class="form-group col-md-6" style="margin-top: 20px;">
 
+                                    <?php
 							<?php
 							$optionCyD = array(
 								'' => 'Elegir',
@@ -558,9 +768,12 @@ echo $this->Html->script('validation2'); // 'validation' es el nombre del archiv
 
 
 							)); ?>
-						</div>
-						<div class="form-group col-md-6" style="margin-top: 20px;">
+                                </div>
+                                <div class="form-group col-md-6" style="margin-top: 20px;">
+                                </div>
+                                <div class="form-group col-md-6" style="margin-top: 20px;">
 
+                                    <?php
 							<?php
 							$optionMalnutricion = array(
 								'' => 'Elegir',
@@ -587,10 +800,13 @@ echo $this->Html->script('validation2'); // 'validation' es el nombre del archiv
 								'id' => 'desnutricion',
 
 							)); ?>
-						</div>
+                                </div>
+                            </div>
 
-						<div class="form-group col-md-6" style="margin-top: 20px;">
+                            <div class="form-group col-md-6" style="margin-top: 20px;">
+                                <div class="form-group col-md-6" style="margin-top: 20px;">
 
+                                    <?php
 							<?php
 
 
@@ -604,10 +820,13 @@ echo $this->Html->script('validation2'); // 'validation' es el nombre del archiv
 								'id' => 'saludoral',
 
 							)); ?>
-						</div>
+                                </div>
+                            </div>
 
-						<div class="form-group col-md-6" style="margin-top: 20px;">
+                            <div class="form-group col-md-6" style="margin-top: 20px;">
+                                <div class="form-group col-md-6" style="margin-top: 20px;">
 
+                                    <?php echo $this->Form->input('desarrolloinfantil', array(
 							<?php echo $this->Form->input('desarrolloinfantil', array(
 								'label' => 'Informa sobre alguna dificultad del desarrollo',
 								'class' => 'form-control',
@@ -616,24 +835,39 @@ echo $this->Html->script('validation2'); // 'validation' es el nombre del archiv
 
 							)); ?>
 
-							<p class="help-block"> Reistre alguna dificultad de desarollo adicional, de lo contrario
-								coloque NA</p>
-						</div>
+                                    <p class="help-block"> Reistre alguna dificultad de desarollo adicional, de lo
+                                        contrario
+                                        coloque NA</p>
+                                </div>
+                                <p class="help-block"> Reistre alguna dificultad de desarollo adicional, de lo contrario
+                                    coloque NA</p>
+                            </div>
 
 
-					</div>
-				</div>
-			</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-			<h2 class="subtitle-general-forms">
-				Condiciones de vulnerabilidad</h2>
-			<hr style=" border:0.1px solid rgba(0,0,0,.125);">
+    <h2 class="subtitle-general-forms">
+        Condiciones de vulnerabilidad</h2>
+    <hr style=" border:0.1px solid rgba(0,0,0,.125);">
+    <h2 class="subtitle-general-forms">
+        Condiciones de vulnerabilidad</h2>
+    <hr style=" border:0.1px solid rgba(0,0,0,.125);">
 
-			<div class="grow justify-content-center" display="none" style="margin-top:20px">
-				<div class="card col-sm-12" style=" font-size:15px;  border:1.5px solid rgba(0,0,0,.125);">
-					<div class="form-group row">
-						<div class="form-group col-md-6" style="margin-top: 20px;">
+    <div class="grow justify-content-center" display="none" style="margin-top:20px">
+        <div class="card col-sm-12" style=" font-size:15px;  border:1.5px solid rgba(0,0,0,.125);">
+            <div class="form-group row">
+                <div class="form-group col-md-6" style="margin-top: 20px;">
+                    <div class="grow justify-content-center" display="none" style="margin-top:20px">
+                        <div class="card col-sm-12" style=" font-size:15px;  border:1.5px solid rgba(0,0,0,.125);">
+                            <div class="form-group row">
+                                <div class="form-group col-md-6" style="margin-top: 20px;">
 
+                                    <?php
 							<?php
 							$optionCuidado = [
 								'' => 'Elegir',
@@ -655,9 +889,12 @@ echo $this->Html->script('validation2'); // 'validation' es el nombre del archiv
 								'style' => 'height:30px;  font-size: 15px ; width:100%',
 
 							)); ?>
-						</div>
-						<div class="form-group col-md-6" style="margin-top: 20px;">
+                                </div>
+                                <div class="form-group col-md-6" style="margin-top: 20px;">
+                                </div>
+                                <div class="form-group col-md-6" style="margin-top: 20px;">
 
+                                    <?php echo $this->Form->input('padresconsumo', array(
 							<?php echo $this->Form->input('padresconsumo', array(
 								'label' => 'Hijo de padres (especialmente la madre) con consumo de sustancias psicoactivas',
 								'class' => 'form-control',
@@ -667,9 +904,12 @@ echo $this->Html->script('validation2'); // 'validation' es el nombre del archiv
 								'style' => 'height:30px;  font-size: 15px ; width:100%',
 
 							)); ?>
-						</div>
-						<div class="form-group col-md-6" style="margin-top: 20px;">
+                                </div>
+                                <div class="form-group col-md-6" style="margin-top: 20px;">
+                                </div>
+                                <div class="form-group col-md-6" style="margin-top: 20px;">
 
+                                    <?php
 							<?php
 							$optionEstudio = [
 								'' => 'Elegir',
@@ -692,10 +932,13 @@ echo $this->Html->script('validation2'); // 'validation' es el nombre del archiv
 								'style' => 'height:30px;  font-size: 15px ; width:100%',
 
 							)); ?>
-						</div>
+                                </div>
+                            </div>
 
-						<div class="form-group col-md-6" style="margin-top: 20px;">
+                            <div class="form-group col-md-6" style="margin-top: 20px;">
+                                <div class="form-group col-md-6" style="margin-top: 20px;">
 
+                                    <?php
 							<?php
 							$optionRendimientoEstudio = [
 								'' => 'Elegir',
@@ -717,8 +960,10 @@ echo $this->Html->script('validation2'); // 'validation' es el nombre del archiv
 							));
 							?></div>
 
-						<div class="form-group col-md-6" style="margin-top: 20px;">
+                                <div class="form-group col-md-6" style="margin-top: 20px;">
+                                    <div class="form-group col-md-6" style="margin-top: 20px;">
 
+                                        <?php
 							<?php
 							$optionTiposViolencia = [
 								'' => 'Elegir',
@@ -743,22 +988,33 @@ echo $this->Html->script('validation2'); // 'validation' es el nombre del archiv
 
 
 							)); ?>
-						</div>
+                                    </div>
+                                </div>
 
-					</div>
-				</div>
-			</div>
-
-
-
-			<h2 class="subtitle-general-forms">Plan de
-				Atención integral</h2>
-			<hr style=" border:0.1px solid rgba(0,0,0,.125);">
-			<div class="grow justify-content-center" display="none" style="margin-top:20px">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
 
-				<div class="card col-sm-12" style=" font-size:15px;  border:1.5px solid rgba(0,0,0,.125);">
 
+        <h2 class="subtitle-general-forms">Plan de
+            Atención integral</h2>
+        <hr style=" border:0.1px solid rgba(0,0,0,.125);">
+        <div class="grow justify-content-center" display="none" style="margin-top:20px">
+            <h2 class="subtitle-general-forms">Plan de
+                Atención integral</h2>
+            <hr style=" border:0.1px solid rgba(0,0,0,.125);">
+            <div class="grow justify-content-center" display="none" style="margin-top:20px">
+
+
+                <div class="card col-sm-12" style=" font-size:15px;  border:1.5px solid rgba(0,0,0,.125);">
+                    <div class="card col-sm-12" style=" font-size:15px;  border:1.5px solid rgba(0,0,0,.125);">
+
+                        <div class="form-group col-md-6" style="margin-top: 20px;">
+                            <?php
 					<div class="form-group col-md-6" style="margin-top: 20px;">
 						<?php
 
@@ -769,9 +1025,12 @@ echo $this->Html->script('validation2'); // 'validation' es el nombre del archiv
 							'id' => 'status', // Agrega el atributo id para que coincida con el select en JavaScript
 							'onChange' => 'canalizacion(this.value);', // Agrega el atributo onChange para llamar a la función JavaScript
 						)); ?>
-					</div>
+                        </div>
+                    </div>
 
 
+                    <div class="form-group col-md-6" style="margin-top: 20px;">
+                        <?php
 					<div class="form-group col-md-6" style="margin-top: 20px;">
 						<?php
 						$optionCanlizacion = [
@@ -801,27 +1060,33 @@ echo $this->Html->script('validation2'); // 'validation' es el nombre del archiv
 							'onChange' => 'capturarValorSeleccionado();' // Llama a la función 'capturarValorSeleccionado()' cuando cambia el valor
 						));
 						?>
-					</div>
+                    </div>
+                </div>
 
 
-					<!-- Fondo oscuro y cuadro modal -->
-					<div id="canalizationSpecific" class="overlay">
-						<div class="form-group col-md-12" style="margin-top: 5px;">
-							<div id="modalvacunancion" class="modal">
-								<div class="d-flex  justify-content-end vh-100">
-									<button type="button" class="close" onclick="cerrarModal('modalvacunancion','canalizationSpecific')">
-										<span aria-hidden="true" style="font-size: 30px;">&times;</span>
-									</button>
-								</div>
-								<ul id="dataTuning" class="list-group">
-								</ul>
-								<div class="d-flex justify-content-center vh-100 ">
-									<button class=" my-button" type="button" onclick="cerrarModal('modalvacunancion','canalizationSpecific')">Aceptar</button>
-								</div>
-							</div>
-						</div>
-					</div>
+                <!-- Fondo oscuro y cuadro modal -->
+                <div id="canalizationSpecific" class="overlay">
+                    <div class="form-group col-md-12" style="margin-top: 5px;">
+                        <div id="modalvacunancion" class="modal">
+                            <div class="d-flex  justify-content-end vh-100">
+                                <button type="button" class="close"
+                                    onclick="cerrarModal('modalvacunancion','canalizationSpecific')">
+                                    <span aria-hidden="true" style="font-size: 30px;">&times;</span>
+                                </button>
+                            </div>
+                            <ul id="dataTuning" class="list-group">
+                            </ul>
+                            <div class="d-flex justify-content-center vh-100 ">
+                                <button class=" my-button" type="button"
+                                    onclick="cerrarModal('modalvacunancion','canalizationSpecific')">Aceptar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
+                <div id="Canalizacion">
+                    <div class="form-group col-md-6" style="margin-top: 20px;">
+                        <?php
 					<div id="Canalizacion">
 						<div class="form-group col-md-6" style="margin-top: 20px;">
 							<?php
@@ -836,8 +1101,11 @@ echo $this->Html->script('validation2'); // 'validation' es el nombre del archiv
 
 							));
 							?>
-						</div>
+                    </div>
+                </div>
 
+                <div class="form-group col-md-6" style="margin-top: 20px;">
+                    <?php
 						<div class="form-group col-md-6" style="margin-top: 20px;">
 							<?php
 							echo $this->Form->input('canalizaciontres', array(
@@ -851,8 +1119,11 @@ echo $this->Html->script('validation2'); // 'validation' es el nombre del archiv
 
 							)); ?>
 
-						</div>
+                </div>
+            </div>
 
+            <div class="form-group col-md-6" style="margin-top: 20px;">
+                <?php
 						<div class="form-group col-md-6" style="margin-top: 20px;">
 							<?php
 							$optionEstadoCanalizacion = [
@@ -875,9 +1146,13 @@ echo $this->Html->script('validation2'); // 'validation' es el nombre del archiv
 								'id' => 'status', // Agrega el atributo id para que coincida con el select en JavaScript
 								'onChange' => 'canalizacion(this.value);', // Agrega el atributo onChange para llamar a la función JavaScript
 							)); ?>
-						</div>
-					</div>
+            </div>
+        </div>
+    </div>
+    </div>
 
+    <div class="form-group col-md-6" style="margin-top: 20px;">
+        <?php
 					<div class="form-group col-md-6" style="margin-top: 20px;">
 						<?php
 						echo $this->Form->input('remisionEspecifica', array(
@@ -891,57 +1166,81 @@ echo $this->Html->script('validation2'); // 'validation' es el nombre del archiv
 						?>
 
 
-					</div>
+    </div>
+    </div>
 
 
-					<div class="form-group col-md-6" style="margin-top: 20px;">
+    <div class="form-group col-md-6" style="margin-top: 20px;">
+        <div class="form-group col-md-6" style="margin-top: 20px;">
 
+            <?php
 						<?php
 						echo $this->Form->input('educacionuno', array(
 							'label' => 'Refiera el tipo de actividad desarrollada',
 							'class' => 'form-control',
 							'style' => 'height:30px;  font-size: 15px ; width:100%',
 							'value' => 'Elegir',
-							'id' => 'opcionesSeleccionadas', 'readonly', 'onclick' => 'mostrarModal()'
+							'id' => 'opcionesSeleccionadas',
+							'readonly',
+							'onclick' => 'mostrarModal()'
 
 						)); ?>
 
-					</div>
+        </div>
+    </div>
 
-					<!-- Fondo oscuro y cuadro modal -->
-					<div id="overlay" class="overlay">
-						<div class="form-group col-md-12" style="margin-top: 5px;">
-							<div id="modal" class="modal">
-								<div class="modal-header-native" style="text-align: center;">
-									<button type="button" class="close" onclick="cerrarModal('overlay','modal')">
-										<span aria-hidden="true" style="font-size: 30px;">&times;</span>
-									</button>
-								</div>
-								<div id="miContenedor" class="form-group col-md-12" style="margin-top: 20px;">
+    <!-- Fondo oscuro y cuadro modal -->
+    <div id="overlay" class="overlay">
+        <div class="form-group col-md-12" style="margin-top: 5px;">
+            <div id="modal" class="modal">
+                <div class="modal-header-native" style="text-align: center;">
+                    <button type="button" class="close" onclick="cerrarModal('overlay','modal')">
+                        <span aria-hidden="true" style="font-size: 30px;">&times;</span>
+                    </button>
+                </div>
+                <div id="miContenedor" class="form-group col-md-12" style="margin-top: 20px;">
+                    <!-- Fondo oscuro y cuadro modal -->
+                    <div id="overlay" class="overlay">
+                        <div class="form-group col-md-12" style="margin-top: 5px;">
+                            <div id="modal" class="modal">
+                                <div class="modal-header-native" style="text-align: center;">
+                                    <button type="button" class="close" onclick="cerrarModal('overlay','modal')">
+                                        <span aria-hidden="true" style="font-size: 30px;">&times;</span>
+                                    </button>
+                                </div>
+                                <div id="miContenedor" class="form-group col-md-12" style="margin-top: 20px;">
 
-								</div>
-								<div class="d-flex justify-content-center vh-100">
-									<button class=" my-button" type="button" onclick="cerrarModal('overlay','modal')">Cerrar</button>
-								</div>
+                                </div>
+                                <div class="d-flex justify-content-center vh-100">
+                                    <button class=" my-button" type="button"
+                                        onclick="cerrarModal('overlay','modal')">Cerrar</button>
+                                </div>
 
 
-							</div>
-						</div>
-					</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
 
 
 
 
-					<!-- Coloca el campo en una mitad de la pantalla en dispositivos medianos y grandes -->
+        <!-- Coloca el campo en una mitad de la pantalla en dispositivos medianos y grandes -->
+        <!-- Coloca el campo en una mitad de la pantalla en dispositivos medianos y grandes -->
 
 
 
+        <?php
 					<?php
 					echo $this->Form->input('fechaRegistro', array(
 
 						'hidden',
 					)); ?>
+        <div class="form-group col-md-6" style="margin-top: 20px;">
+            <?php
 					<div class="form-group col-md-6" style="margin-top: 20px;">
 						<?php
 						echo $this->Form->input('canalizacion_id', array(
@@ -952,21 +1251,29 @@ echo $this->Html->script('validation2'); // 'validation' es el nombre del archiv
 							'type' => 'select',
 
 						)); ?>
-					</div>
+        </div>
+    </div>
 
 
-				</div>
-			</div>
+    </div>
+    </div>
+    </div>
+    </div>
 
 
 
 
-		</fieldset>
-		<button class="my-button">
-			Guardar<?php echo $this->Form->end(); ?>
-		</button>
+    </fieldset>
+    <button class="my-button">
+        Guardar<?php echo $this->Form->end(); ?>
+    </button>
+    </fieldset>
+    <button class="my-button">
+        Guardar<?php echo $this->Form->end(); ?>
+    </button>
 
-	</div>
+    </div>
+    </div>
 
 
 </body>
@@ -988,199 +1295,365 @@ $this->Html->script([
 
 
 <script type="text/javascript">
-	// Función para mostrar el Box
-	function mostrarModal() {
-		document.getElementById("overlay").style.display = "block";
-		document.getElementById("modal").style.display = "block";
-	}
+// Función para mostrar el Box
+function mostrarModal() {
+    document.getElementById("overlay").style.display = "block";
+    document.getElementById("modal").style.display = "block";
+}
+// Función para mostrar el Box
+function mostrarModal() {
+    document.getElementById("overlay").style.display = "block";
+    document.getElementById("modal").style.display = "block";
+}
 
-	// Función para cerrar el modal
-	function cerrarModal(divaleatory, divSecond) {
-		document.getElementById(divaleatory).style.display = "none";
-		document.getElementById(divSecond).style.display = "none ";
-	}
-
-
-
-
-	$(document).ready(function() {
-		$('.select-search').select2();
-		agregarOpcionSeleccion();
-
-		$('#ayudaButton').on('click', function() {
-			$('#popover').toggle();
-		});
-
-		$(document).on('click', function(event) {
-			if (!$(event.target).closest('#ayudaButton, #popover').length) {
-				$('#popover').hide();
-			}
-		});
-	});
-
-	document.addEventListener('DOMContentLoaded', function() {
-		var aseguradoraSelect = document.getElementById('aseguradora');
-		var otraAseguradoraDiv = document.getElementById('otraAseguradoraDiv');
-
-		aseguradoraSelect.addEventListener('change', function() {
-			var selectedOption = aseguradoraSelect.value;
-
-			if (selectedOption === 'otra') {
-				otraAseguradoraDiv.style.display = 'block';
-				document.getElementById('otraAseguradora').removeAttribute('disabled');
-			} else {
-				otraAseguradoraDiv.style.display = 'none';
-				document.getElementById('otraAseguradora').setAttribute('disabled', 'disabled');
-			}
-		});
-
-		// Verifica el estado inicial
-		if (aseguradoraSelect.value === 'otra') {
-			otraAseguradoraDiv.style.display = 'block';
-			document.getElementById('otraAseguradora').removeAttribute('disabled');
-		} else {
-			otraAseguradoraDiv.style.display = 'none';
-			document.getElementById('otraAseguradora').setAttribute('disabled', 'disabled');
-		}
-
-	});
-
-
-	function agregarOpcionSeleccion() {
+// Función para cerrar el modal
+function cerrarModal(divaleatory, divSecond) {
+    document.getElementById(divaleatory).style.display = "none";
+    document.getElementById(divSecond).style.display = "none ";
+}
+// Función para cerrar el modal
+function cerrarModal(divaleatory, divSecond) {
+    document.getElementById(divaleatory).style.display = "none";
+    document.getElementById(divSecond).style.display = "none ";
+}
 
 
 
-		$("#InfantilCanalizacionId").prepend(
-			"<option value='' selected='selected'>Seleccione</option>");
+
+$(document).ready(function() {
+    $('.select-search').select2();
+    agregarOpcionSeleccion();
+    $(document).ready(function() {
+        $('.select-search').select2();
+        agregarOpcionSeleccion();
+
+        $('#ayudaButton').on('click', function() {
+            $('#popover').toggle();
+        });
+        $('#ayudaButton').on('click', function() {
+            $('#popover').toggle();
+        });
+
+        $(document).on('click', function(event) {
+            if (!$(event.target).closest('#ayudaButton, #popover').length) {
+                $('#popover').hide();
+            }
+        });
+    });
+    $(document).on('click', function(event) {
+        if (!$(event.target).closest('#ayudaButton, #popover').length) {
+            $('#popover').hide();
+        }
+    });
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+    var aseguradoraSelect = document.getElementById('aseguradora');
+    var otraAseguradoraDiv = document.getElementById('otraAseguradoraDiv');
+    document.addEventListener('DOMContentLoaded', function() {
+        var aseguradoraSelect = document.getElementById('aseguradora');
+        var otraAseguradoraDiv = document.getElementById('otraAseguradoraDiv');
+
+        aseguradoraSelect.addEventListener('change', function() {
+            var selectedOption = aseguradoraSelect.value;
+            aseguradoraSelect.addEventListener('change', function() {
+                var selectedOption = aseguradoraSelect.value;
+
+                if (selectedOption === 'otra') {
+                    otraAseguradoraDiv.style.display = 'block';
+                    document.getElementById('otraAseguradora').removeAttribute(
+                        'disabled');
+                } else {
+                    otraAseguradoraDiv.style.display = 'none';
+                    document.getElementById('otraAseguradora').setAttribute('disabled',
+                        'disabled');
+                }
+            });
+            if (selectedOption === 'otra') {
+                otraAseguradoraDiv.style.display = 'block';
+                document.getElementById('otraAseguradora').removeAttribute('disabled');
+            } else {
+                otraAseguradoraDiv.style.display = 'none';
+                document.getElementById('otraAseguradora').setAttribute('disabled', 'disabled');
+            }
+        });
+
+        // Verifica el estado inicial
+        if (aseguradoraSelect.value === 'otra') {
+            otraAseguradoraDiv.style.display = 'block';
+            document.getElementById('otraAseguradora').removeAttribute('disabled');
+        } else {
+            otraAseguradoraDiv.style.display = 'none';
+            document.getElementById('otraAseguradora').setAttribute('disabled', 'disabled');
+        }
+        // Verifica el estado inicial
+        if (aseguradoraSelect.value === 'otra') {
+            otraAseguradoraDiv.style.display = 'block';
+            document.getElementById('otraAseguradora').removeAttribute('disabled');
+        } else {
+            otraAseguradoraDiv.style.display = 'none';
+            document.getElementById('otraAseguradora').setAttribute('disabled', 'disabled');
+        }
+
+    });
+});
 
 
-	}
+function agregarOpcionSeleccion() {
+    function agregarOpcionSeleccion() {
 
-	document.getElementById('calcularIMC').addEventListener('click', function() {
-		var peso = parseFloat(document.getElementById('peso').value);
-		var talla = parseFloat(document.getElementById('talla').value);
 
-		if (!isNaN(peso) && !isNaN(talla) && talla > 0) {
-			var altura = talla / 100; // Convertir de cm a m
-			var imc = peso / (altura * altura);
 
-			// Mostrar el IMC calculado en el campo indicemasacorporal
-			var imcField = document.getElementById('indicemasacorporal');
-			imcField.value = imc.toFixed(2); // Redondear a 2 decimales
+        $("#InfantilCanalizacionId").prepend(
+            "<option value='' selected='selected'>Seleccione</option>");
+        $("#InfantilCanalizacionId").prepend(
+            "<option value='' selected='selected'>Seleccione</option>");
 
-			// Determinar el mensaje y el color según el rango del IMC
-			var mensaje = '';
-			if (imc < 18.5) {
-				mensaje = 'Peso insuficiente';
-				imcField.style.color = 'red'; // Cambiar el color del texto a rojo
-			} else if (imc >= 18.5 && imc <= 24.9) {
-				mensaje = 'Peso normal o saludable';
-				imcField.style.color = 'green'; // Cambiar el color del texto a verde
-			} else if (imc >= 25.0 && imc <= 29.9) {
-				mensaje = 'Sobrepeso';
-				imcField.style.color = 'orange'; // Cambiar el color del texto a naranja
-			} else {
-				mensaje = 'Obesidad';
-				imcField.style.color = 'red'; // Cambiar el color del texto a rojo
-			}
 
-			// Mostrar el mensaje en el elemento mensajeIMC
-			var mensajeIMC = document.getElementById('mensajeIMC');
-			mensajeIMC.textContent = mensaje;
-		} else {
-			alert('Por favor, ingrese valores válidos para peso y talla.');
-		}
-	});
-	$(function() {
-		$('#ayudaButton').popover();
-	});
+    }
+}
 
-	function generarCheckboxes(opciones, id, result) {
-		let resultHTML = ''
+document.getElementById('calcularIMC').addEventListener('click', function() {
+    var peso = parseFloat(document.getElementById('peso').value);
+    var talla = parseFloat(document.getElementById('talla').value);
+    document.getElementById('calcularIMC').addEventListener('click', function() {
+            var peso = parseFloat(document.getElementById('peso').value);
+            var talla = parseFloat(document.getElementById('talla').value);
 
+            if (!isNaN(peso) && !isNaN(talla) && talla > 0) {
+                var altura = talla / 100; // Convertir de cm a m
+                var imc = peso / (altura * altura);
+                if (!isNaN(peso) && !isNaN(talla) && talla > 0) {
+                    var altura = talla / 100; // Convertir de cm a m
+                    var imc = peso / (altura * altura);
+
+                    // Mostrar el IMC calculado en el campo indicemasacorporal
+                    var imcField = document.getElementById('indicemasacorporal');
+                    imcField.value = imc.toFixed(2); // Redondear a 2 decimales
+                    // Mostrar el IMC calculado en el campo indicemasacorporal
+                    var imcField = document.getElementById('indicemasacorporal');
+                    imcField.value = imc.toFixed(2); // Redondear a 2 decimales
+
+                    // Determinar el mensaje y el color según el rango del IMC
+                    var mensaje = '';
+                    if (imc < 18.5) {
+                        mensaje = 'Peso insuficiente';
+                        imcField.style.color = 'red'; // Cambiar el color del texto a rojo
+                    } else if (imc >= 18.5 && imc <= 24.9) {
+                        mensaje = 'Peso normal o saludable';
+                        imcField.style.color = 'green'; // Cambiar el color del texto a verde
+                    } else if (imc >= 25.0 && imc <= 29.9) {
+                        mensaje = 'Sobrepeso';
+                        imcField.style.color = 'orange'; // Cambiar el color del texto a naranja
+                    } else {
+                        mensaje = 'Obesidad';
+                        imcField.style.color = 'red'; // Cambiar el color del texto a rojo
+                    }
+                    // Determinar el mensaje y el color según el rango del IMC
+                    var mensaje = '';
+                    if (imc < 18.5) {
+                        mensaje = 'Peso insuficiente';
+                        imcField.style.color = 'red'; // Cambiar el color del texto a rojo
+                    } else if (imc >= 18.5 && imc <= 24.9) {
+                        mensaje = 'Peso normal o saludable';
+                        imcField.style.color = 'green'; // Cambiar el color del texto a verde
+                    } else if (imc >= 25.0 && imc <= 29.9) {
+                        mensaje = 'Sobrepeso';
+                        imcField.style.color = 'orange'; // Cambiar el color del texto a naranja
+                    } else {
+                        mensaje = 'Obesidad';
+                        imcField.style.color = 'red'; // Cambiar el color del texto a rojo
+                    }
+
+                    // Mostrar el mensaje en el elemento mensajeIMC
+                    var mensajeIMC = document.getElementById('mensajeIMC');
+                    mensajeIMC.textContent = mensaje;
+                } else {
+                    alert('Por favor, ingrese valores válidos para peso y talla.');
+                }
+            }); $(function() {
+            $('#ayudaButton').popover();
+        });
+        // Mostrar el mensaje en el elemento mensajeIMC
+        var mensajeIMC = document.getElementById('mensajeIMC'); mensajeIMC.textContent = mensaje;
+    }
+    else {
+        alert('Por favor, ingrese valores válidos para peso y talla.');
+    }
+});
+$(function() {
+    $('#ayudaButton').popover();
+});
+
+function generarCheckboxes(opciones, id, result) {
+    let resultHTML = ''
+
+    function generarCheckboxes(opciones, id, result) {
+        let resultHTML = ''
+
+        opciones.forEach(opcion => {
+            resultHTML +=
+                `<li class="list-group-item d-flex  align-items-center h-100" style="margin-bottom: 0em;">
 		opciones.forEach(opcion => {
 			resultHTML +=
-				`<li class="list-group-item d-flex  align-items-center h-100" style="margin-bottom: 0em;">
-            <input type="checkbox" value="${opcion}" onclick="actualizarInput('${id}', '${result}')" class="d-flex justify-content-center">
-            <label>${opcion}</label>
-        </li>`;
-		});
+				` < li class = "list-group-item d-flex  align-items-center h-100"
+            style = "margin-bottom: 0em;" >
+                <
+                input type = "checkbox"
+            value = "${opcion}"
+            onclick = "actualizarInput('${id}', '${result}')"
+            class = "d-flex justify-content-center" >
+                <
+                label > $ {
+                    opcion
+                } < /label> <
+                /li>`;
+        });
+    });
 
-		return resultHTML;
-	}
-
-
-	const opciones = opcionesActividades = [
-		'Elegir',
-		'No',
-		'Educación para la salud individual',
-		'Educación para la salud familiar',
-		'Educación para la salud grupal',
-		'Valoración medíca',
-		'Valoración odontológica',
-		'Valoración Nutricional',
-		'Valoración Piscologica',
-		'Valoración Integral',
-		'Remision a urgencias',
-	];
-	// Generar los checkboxes y agregarlos al contenedor
-	document.getElementById('miContenedor').innerHTML = generarCheckboxes(opciones, 'modal', 'opcionesSeleccionadas');
+return resultHTML;
+}
+return resultHTML;
+}
 
 
+const opciones = opcionesActividades = [
+    'Elegir',
+    'No',
+    'Educación para la salud individual',
+    'Educación para la salud familiar',
+    'Educación para la salud grupal',
+    'Valoración medíca',
+    'Valoración odontológica',
+    'Valoración Nutricional',
+    'Valoración Piscologica',
+    'Valoración Integral',
+    'Remision a urgencias',
+];
+// Generar los checkboxes y agregarlos al contenedor
+document.getElementById('miContenedor').innerHTML = generarCheckboxes(opciones, 'modal', 'opcionesSeleccionadas');
+const opciones = opcionesActividades = [
+    'Elegir',
+    'No',
+    'Educación para la salud individual',
+    'Educación para la salud familiar',
+    'Educación para la salud grupal',
+    'Valoración medíca',
+    'Valoración odontológica',
+    'Valoración Nutricional',
+    'Valoración Piscologica',
+    'Valoración Integral',
+    'Remision a urgencias',
+];
+// Generar los checkboxes y agregarlos al contenedor
+document.getElementById('miContenedor').innerHTML = generarCheckboxes(opciones, 'modal', 'opcionesSeleccionadas');
 
-	const dataGuardada = ''
-	const opcionesVacunancion = opcionesActividades = [
-		'9 A 11 AÑOS Vacuna recombinante tetravalente contra el Virus del Papiloma Humano - VPH Unica Dosis ',
-		'9 AÑOS Vacuna recombinante tetravalente contra el Virus del Papiloma Humano - VPH Unica Dosis',
-		'9,10,11 AÑOS Vacuna contra COVID 19 ',
 
 
-	];
+const dataGuardada = ''
+const opcionesVacunancion = opcionesActividades = [
+    '9 A 11 AÑOS Vacuna recombinante tetravalente contra el Virus del Papiloma Humano - VPH Unica Dosis ',
+    '9 AÑOS Vacuna recombinante tetravalente contra el Virus del Papiloma Humano - VPH Unica Dosis',
+    '9,10,11 AÑOS Vacuna contra COVID 19 ',
+    const dataGuardada = ''
+    const opcionesVacunancion = opcionesActividades = [
+        '9 A 11 AÑOS Vacuna recombinante tetravalente contra el Virus del Papiloma Humano - VPH Unica Dosis ',
+        '9 AÑOS Vacuna recombinante tetravalente contra el Virus del Papiloma Humano - VPH Unica Dosis',
+        '9,10,11 AÑOS Vacuna contra COVID 19 ',
 
-	// Función para actualizar el campo de entrada con las opciones selecciona
-	function actualizarInput(elementId, result) {
-		var checkboxes = document.querySelectorAll('#' + elementId + ' input[type="checkbox"]');
-		var opcionesSeleccionadas = Array.from(checkboxes)
-			.filter(checkbox => checkbox.checked)
-			.map(checkbox => checkbox.value)
-			.join(', ');
 
-		document.getElementById(result).value = opcionesSeleccionadas;
-	}
-	//Optienen el valor de los campos del checkbox solo llama
-	//el array que quieres mostrar introduce el id de la etiqueta que hiciste
-	//para vizualizar la checkbox y el result es en la variable que guardara
+    ];
+];
 
-	function generarCheckboxes(opciones, id, result) {
-		let resultHTML = ''
+// Función para actualizar el campo de entrada con las opciones selecciona
+function actualizarInput(elementId, result) {
+    var checkboxes = document.querySelectorAll('#' + elementId + ' input[type="checkbox"]');
+    var opcionesSeleccionadas = Array.from(checkboxes)
+        .filter(checkbox => checkbox.checked)
+        .map(checkbox => checkbox.value)
+        .join(', ');
+    // Función para actualizar el campo de entrada con las opciones selecciona
+    function actualizarInput(elementId, result) {
+        var checkboxes = document.querySelectorAll('#' + elementId + ' input[type="checkbox"]');
+        var opcionesSeleccionadas = Array.from(checkboxes)
+            .filter(checkbox => checkbox.checked)
+            .map(checkbox => checkbox.value)
+            .join(', ');
 
+        document.getElementById(result).value = opcionesSeleccionadas;
+    }
+    //Optienen el valor de los campos del checkbox solo llama
+    //el array que quieres mostrar introduce el id de la etiqueta que hiciste
+    //para vizualizar la checkbox y el result es en la variable que guardara
+    document.getElementById(result).value = opcionesSeleccionadas;
+}
+//Optienen el valor de los campos del checkbox solo llama
+//el array que quieres mostrar introduce el id de la etiqueta que hiciste
+//para vizualizar la checkbox y el result es en la variable que guardara
+
+function generarCheckboxes(opciones, id, result) {
+    let resultHTML = ''
+
+    function generarCheckboxes(opciones, id, result) {
+        let resultHTML = ''
+
+        opciones.forEach(opcion => {
+            resultHTML +=
+                `<li class="list-group-item d-flex  align-items-center h-100" style="margin-bottom: 0em;">
 		opciones.forEach(opcion => {
 			resultHTML +=
-				`<li class="list-group-item d-flex  align-items-center h-100" style="margin-bottom: 0em;">
-            <input type="checkbox" value="${opcion}" onclick="actualizarInput('${id}', '${result}')" class="d-flex justify-content-center">
-            <label>${opcion}</label>
-        </li>`;
-		});
+				` < li class = "list-group-item d-flex  align-items-center h-100"
+            style = "margin-bottom: 0em;" >
+                <
+                input type = "checkbox"
+            value = "${opcion}"
+            onclick = "actualizarInput('${id}', '${result}')"
+            class = "d-flex justify-content-center" >
+                <
+                label > $ {
+                    opcion
+                } < /label> <
+                /li>`;
+        });
+    });
 
-		return resultHTML;
-	}
+return resultHTML;
+}
+return resultHTML;
+}
 
-	//Captura el valor igresar los casos encesarion en el switch
-	function capturarValorSeleccionado() {
-		var valorSeleccionado = document.getElementById("canalizacionuno").value; //Obtener el valor de la canalizacion
-		var otraAseguradoraDiv = document.getElementById('overlay');
-
-
-		switch (valorSeleccionado) {
-			case "Vacunacion":
-				console.log(valorSeleccionado)
-				document.getElementById('dataTuning').innerHTML = generarCheckboxes(opcionesActividades, 'modalvacunancion',
-					'remisionEspecifica');
-				document.getElementById("canalizationSpecific").style.display = "block";
-				document.getElementById("modalvacunancion").style.display = "block";
-				break;
+//Captura el valor igresar los casos encesarion en el switch
+function capturarValorSeleccionado() {
+    var valorSeleccionado = document.getElementById("canalizacionuno").value; //Obtener el valor de la canalizacion
+    var otraAseguradoraDiv = document.getElementById('overlay');
+    //Captura el valor igresar los casos encesarion en el switch
+    function capturarValorSeleccionado() {
+        var valorSeleccionado = document.getElementById("canalizacionuno").value; //Obtener el valor de la canalizacion
+        var otraAseguradoraDiv = document.getElementById('overlay');
 
 
-		}
-	}
+        switch (valorSeleccionado) {
+            case "Vacunacion":
+                console.log(valorSeleccionado)
+                document.getElementById('dataTuning').innerHTML = generarCheckboxes(opcionesActividades,
+                    'modalvacunancion',
+                    'remisionEspecifica');
+                document.getElementById("canalizationSpecific").style.display = "block";
+                document.getElementById("modalvacunancion").style.display = "block";
+                break;
+                switch (valorSeleccionado) {
+                    case "Vacunacion":
+                        console.log(valorSeleccionado)
+                        document.getElementById('dataTuning').innerHTML = generarCheckboxes(opcionesActividades,
+                            'modalvacunancion',
+                            'remisionEspecifica');
+                        document.getElementById("canalizationSpecific").style.display = "block";
+                        document.getElementById("modalvacunancion").style.display = "block";
+                        break;
+
+
+                }
+        }
+    }
+}
 </script>

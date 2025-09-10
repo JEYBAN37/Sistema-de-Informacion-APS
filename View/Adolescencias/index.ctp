@@ -56,88 +56,88 @@
                                     < /thead>
                                 <tbody>
                                     <?php foreach ($adolescencias as $adolescencia) : ?>
-                                    <tr class="gradeA odd">
-                                        <td class="sorting_1">
-                                            <?php echo h($adolescencia['Adolescencia']['id']); ?>&nbsp;</td>
-                                        <td><?php echo h($adolescencia['Familia']['id']); ?>&nbsp;</td>
+                                        <tr class="gradeA odd">
+                                            <td class="sorting_1">
+                                                <?php echo h($adolescencia['Adolescencia']['id']); ?>&nbsp;</td>
+                                            <td><?php echo h($adolescencia['Familia']['id']); ?>&nbsp;</td>
 
-                                        <td>
-                                            <?php echo $this->Html->link($adolescencia['Familia']['apellidosfamilia'], array('controller' => 'familias', 'action' => 'view', $adolescencia['Familia']['id'])); ?>
-                                        </td>
+                                            <td>
+                                                <?php echo $this->Html->link($adolescencia['Familia']['apellidosfamilia'], array('controller' => 'familias', 'action' => 'view', $adolescencia['Familia']['id'])); ?>
+                                            </td>
 
-                                        <td><?php echo h($adolescencia['Adolescencia']['tipodocumento']); ?>&nbsp;</td>
-                                        <td><?php echo h($adolescencia['Adolescencia']['numerodoc']); ?>&nbsp;</td>
-                                        <td><?php echo h($adolescencia['Adolescencia']['primerapellido']); ?>&nbsp;</td>
-                                        <td><?php echo h($adolescencia['Adolescencia']['segundoapellido']); ?>&nbsp;
-                                        </td>
-                                        <td><?php echo h($adolescencia['Adolescencia']['primernombre']); ?>&nbsp;</td>
-                                        <td><?php echo h($adolescencia['Adolescencia']['segundonombre']); ?>&nbsp;</td>
-                                        <td><?php echo h($adolescencia['Adolescencia']['fechanac']); ?>&nbsp;</td>
-                                        <td><?php echo h($adolescencia['Adolescencia']['edad']); ?>&nbsp;</td>
-                                        <td><?php echo h($adolescencia['Adolescencia']['sexo']); ?>&nbsp;</td>
+                                            <td><?php echo h($adolescencia['Adolescencia']['tipodocumento']); ?>&nbsp;</td>
+                                            <td><?php echo h($adolescencia['Adolescencia']['numerodoc']); ?>&nbsp;</td>
+                                            <td><?php echo h($adolescencia['Adolescencia']['primerapellido']); ?>&nbsp;</td>
+                                            <td><?php echo h($adolescencia['Adolescencia']['segundoapellido']); ?>&nbsp;
+                                            </td>
+                                            <td><?php echo h($adolescencia['Adolescencia']['primernombre']); ?>&nbsp;</td>
+                                            <td><?php echo h($adolescencia['Adolescencia']['segundonombre']); ?>&nbsp;</td>
+                                            <td><?php echo h($adolescencia['Adolescencia']['fechanac']); ?>&nbsp;</td>
+                                            <td><?php echo h($adolescencia['Adolescencia']['edad']); ?>&nbsp;</td>
+                                            <td><?php echo h($adolescencia['Adolescencia']['sexo']); ?>&nbsp;</td>
 
-                                        <td><?php echo h($adolescencia['Adolescencia']['aseguradora']); ?>&nbsp;</td>
-                                        <td><?php echo h($adolescencia['Adolescencia']['regimen']); ?>&nbsp;</td>
-                                        <td><?php echo h($adolescencia['Adolescencia']['estadoafiliacion']); ?>&nbsp;
-                                        </td>
-                                        <td><?php echo h($adolescencia['Adolescencia']['telefono']); ?>&nbsp;</td>
+                                            <td><?php echo h($adolescencia['Adolescencia']['aseguradora']); ?>&nbsp;</td>
+                                            <td><?php echo h($adolescencia['Adolescencia']['regimen']); ?>&nbsp;</td>
+                                            <td><?php echo h($adolescencia['Adolescencia']['estadoafiliacion']); ?>&nbsp;
+                                            </td>
+                                            <td><?php echo h($adolescencia['Adolescencia']['telefono']); ?>&nbsp;</td>
 
-                                        <td><?php echo h($adolescencia['Adolescencia']['canalizacionuno']); ?>&nbsp;
-                                        </td>
-                                        <td><?php echo h($adolescencia['Adolescencia']['canalizaciondos']); ?>&nbsp;
-                                        </td>
-                                        <td><?php echo h($adolescencia['Adolescencia']['canalizaciontres']); ?>&nbsp;
-                                        </td>
-                                        <td><?php echo h($adolescencia['Adolescencia']['educacion']); ?>&nbsp;</td>
-                                        <td>
-                                            <?php echo $this->Html->link($adolescencia['Canalizacion']['enlace'], array('controller' => 'canalizaciones', 'action' => 'view', $adolescencia['Canalizacion']['id'])); ?>
-                                        </td>
+                                            <td><?php echo h($adolescencia['Adolescencia']['canalizacionuno']); ?>&nbsp;
+                                            </td>
+                                            <td><?php echo h($adolescencia['Adolescencia']['canalizaciondos']); ?>&nbsp;
+                                            </td>
+                                            <td><?php echo h($adolescencia['Adolescencia']['canalizaciontres']); ?>&nbsp;
+                                            </td>
+                                            <td><?php echo h($adolescencia['Adolescencia']['educacion']); ?>&nbsp;</td>
+                                            <td>
+                                                <?php echo $this->Html->link($adolescencia['Canalizacion']['enlace'], array('controller' => 'canalizaciones', 'action' => 'view', $adolescencia['Canalizacion']['id'])); ?>
+                                            </td>
 
-                                        <td><?php echo h($adolescencia['Adolescencia']['estadocanalizacion']); ?>&nbsp;
-                                        </td>
-                                        <td><?php echo h($adolescencia['Adolescencia']['observacioncanalizacion']); ?>&nbsp;
-                                        </td>
-                                        <td><?php echo h($adolescencia['Adolescencia']['fechaRegistro']); ?>&nbsp;</td>
-                                        <td><?php echo h($adolescencia['Adolescencia']['registroCanalizacion']); ?>&nbsp;
-                                        </td>
-                                        <td class="actions">
+                                            <td><?php echo h($adolescencia['Adolescencia']['estadocanalizacion']); ?>&nbsp;
+                                            </td>
+                                            <td><?php echo h($adolescencia['Adolescencia']['observacioncanalizacion']); ?>&nbsp;
+                                            </td>
+                                            <td><?php echo h($adolescencia['Adolescencia']['fechaRegistro']); ?>&nbsp;</td>
+                                            <td><?php echo h($adolescencia['Adolescencia']['registroCanalizacion']); ?>&nbsp;
+                                            </td>
+                                            <td class="actions">
 
-                                            <div class="btn-group">
-                                                <button type="button" class="my-button" data-toggle="dropdown">
-                                                    <?php echo ('Acciones'); ?> <span class="caret"></span>
-                                                </button>
-                                                <ul class="dropdown-menu" role="menu">
-                                                    <li><?php echo $this->Html->link(('Ver registro'),
-																array('action' => 'view', $adolescencia['Adolescencia']['id']),
-																array(
-																	'style' => 'font-size: 14px;'
-																)
-															); ?>
+                                                <div class="btn-group">
+                                                    <button type="button" class="my-button" data-toggle="dropdown">
+                                                        <?php echo ('Acciones'); ?> <span class="caret"></span>
+                                                    </button>
+                                                    <ul class="dropdown-menu" role="menu">
+                                                        <li><?php echo $this->Html->link(('Ver registro'),
+                                                                array('action' => 'view', $adolescencia['Adolescencia']['id']),
+                                                                array(
+                                                                    'style' => 'font-size: 14px;'
+                                                                )
+                                                            ); ?>
 
-                                                    </li>
-                                                    <li><?php echo $this->Html->link(('Editar'),
-																array('action' => 'edit',   $adolescencia['Adolescencia']['id']),
-																array(
-																	'onclick' => "return confirm('¿Estás seguro que deseas editar la información del menor " .   $adolescencia['Adolescencia']['primernombre'] . " " .   $adolescencia['Adolescencia']['primerapellido'] . "?');",
-																	'style' => 'font-size: 14px;'
-																)
-															); ?>
-                                                    </li>
-                                                    <li><?php echo $this->Html->link(('Obsevacion canalización'),
-																array('action' => 'edit1',   $adolescencia['Adolescencia']['id']),
-																array(
-																	'onclick' => "return confirm('¿Estás seguro de agregar una observacion del menor " .   $adolescencia['Adolescencia']['primernombre'] . " " .   $adolescencia['Adolescencia']['primerapellido'] . "?');",
-																	'style' => 'font-size: 14px;'
-																)
-															); ?>
-                                                    </li>
-                                                </ul>
-                                            </div>
+                                                        </li>
+                                                        <li><?php echo $this->Html->link(('Editar'),
+                                                                array('action' => 'edit',   $adolescencia['Adolescencia']['id']),
+                                                                array(
+                                                                    'onclick' => "return confirm('¿Estás seguro que deseas editar la información del menor " .   $adolescencia['Adolescencia']['primernombre'] . " " .   $adolescencia['Adolescencia']['primerapellido'] . "?');",
+                                                                    'style' => 'font-size: 14px;'
+                                                                )
+                                                            ); ?>
+                                                        </li>
+                                                        <li><?php echo $this->Html->link(('Obsevacion canalización'),
+                                                                array('action' => 'edit1',   $adolescencia['Adolescencia']['id']),
+                                                                array(
+                                                                    'onclick' => "return confirm('¿Estás seguro de agregar una observacion del menor " .   $adolescencia['Adolescencia']['primernombre'] . " " .   $adolescencia['Adolescencia']['primerapellido'] . "?');",
+                                                                    'style' => 'font-size: 14px;'
+                                                                )
+                                                            ); ?>
+                                                        </li>
+                                                    </ul>
+                                                </div>
 
 
-                                        </td>
+                                            </td>
 
-                                    </tr>
+                                        </tr>
                                     <?php endforeach; ?>
 
                                 </tbody>
@@ -151,132 +151,132 @@
             </div>
 
             <script>
-            $(document).ready(function() {
-                $('#dataTables-example').DataTable({
-                    "pagingType": "simple",
-                    "pageLength": 4,
-                    responsive: true,
-                    dom: 'Bfrtip',
-                    language: {
-                        searchBuilder: {
-                            button: 'Filter',
-                        }
-                    },
-                    buttons: [
-                        'pageLength',
-                        'copyHtml5',
-                        'excelHtml5',
-                        'csvHtml5',
-                        'colvis',
-                        'searchBuilder'
-                    ]
+                $(document).ready(function() {
+                    $('#dataTables-example').DataTable({
+                        "pagingType": "simple",
+                        "pageLength": 4,
+                        responsive: true,
+                        dom: 'Bfrtip',
+                        language: {
+                            searchBuilder: {
+                                button: 'Filter',
+                            }
+                        },
+                        buttons: [
+                            'pageLength',
+                            'copyHtml5',
+                            'excelHtml5',
+                            'csvHtml5',
+                            'colvis',
+                            'searchBuilder'
+                        ]
+                    });
+
+
+
+                });
+
+                $(document).ready(function() {
+                    $('#dataTables-f').DataTable({
+                        "pagingType": "simple",
+                        "pageLength": 4,
+                        responsive: true,
+                        dom: 'Bfrtip',
+                        language: {
+                            searchBuilder: {
+                                button: 'Filter',
+                            }
+                        },
+                        buttons: [
+                            'pageLength',
+                            'copyHtml5',
+                            'excelHtml5',
+                            'csvHtml5',
+                            'colvis',
+                            'searchBuilder'
+                        ]
+                    });
+
+                });
+
+                $(document).ready(function() {
+                    $('#dataTables-a').DataTable({
+                        "pagingType": "simple",
+                        "pageLength": 4,
+                        responsive: true,
+                        dom: 'Bfrtip',
+                        language: {
+                            searchBuilder: {
+                                button: 'Filter',
+                            }
+                        },
+                        buttons: [
+                            'pageLength',
+                            'copyHtml5',
+                            'excelHtml5',
+                            'csvHtml5',
+                            'colvis',
+                            'searchBuilder'
+                        ]
+                    });
+
+                });
+
+                $(document).ready(function() {
+                    $('#dataTables-j').DataTable({
+                        "pagingType": "simple",
+                        "pageLength": 4,
+                        responsive: true,
+                        dom: 'Bfrtip',
+                        language: {
+                            searchBuilder: {
+                                button: 'Filter',
+                            }
+                        },
+                        buttons: [
+                            'pageLength',
+                            'copyHtml5',
+                            'excelHtml5',
+                            'csvHtml5',
+                            'colvis',
+                            'searchBuilder'
+                        ]
+                    });
+
                 });
 
 
 
-            });
 
-            $(document).ready(function() {
-                $('#dataTables-f').DataTable({
-                    "pagingType": "simple",
-                    "pageLength": 4,
-                    responsive: true,
-                    dom: 'Bfrtip',
-                    language: {
-                        searchBuilder: {
-                            button: 'Filter',
-                        }
-                    },
-                    buttons: [
-                        'pageLength',
-                        'copyHtml5',
-                        'excelHtml5',
-                        'csvHtml5',
-                        'colvis',
-                        'searchBuilder'
-                    ]
-                });
+                function fnExcelReport() {
+                    var tab_text = "<table border='2px'><tr bgcolor='#87AFC6'>";
+                    var textRange;
+                    var j = 0;
+                    tab = document.getElementById('dataTables-example'); // id of table
 
-            });
+                    for (j = 0; j < tab.rows.length; j++) {
+                        tab_text = tab_text + tab.rows[j].innerHTML + "</tr>";
+                    }
 
-            $(document).ready(function() {
-                $('#dataTables-a').DataTable({
-                    "pagingType": "simple",
-                    "pageLength": 4,
-                    responsive: true,
-                    dom: 'Bfrtip',
-                    language: {
-                        searchBuilder: {
-                            button: 'Filter',
-                        }
-                    },
-                    buttons: [
-                        'pageLength',
-                        'copyHtml5',
-                        'excelHtml5',
-                        'csvHtml5',
-                        'colvis',
-                        'searchBuilder'
-                    ]
-                });
+                    tab_text = tab_text + "</table>";
 
-            });
+                    tab_text = tab_text.replace(/<A[^>]*>|<\/A>/g, ""); //remove if u want links in your table
+                    tab_text = tab_text.replace(/<img[^>]*>/gi, ""); // remove if u want images in your table
+                    tab_text = tab_text.replace(/<input[^>]*>|<\/input>/gi, ""); // reomves input params
 
-            $(document).ready(function() {
-                $('#dataTables-j').DataTable({
-                    "pagingType": "simple",
-                    "pageLength": 4,
-                    responsive: true,
-                    dom: 'Bfrtip',
-                    language: {
-                        searchBuilder: {
-                            button: 'Filter',
-                        }
-                    },
-                    buttons: [
-                        'pageLength',
-                        'copyHtml5',
-                        'excelHtml5',
-                        'csvHtml5',
-                        'colvis',
-                        'searchBuilder'
-                    ]
-                });
+                    var ua = window.navigator.userAgent;
+                    var msie = ua.indexOf("MSIE ");
 
-            });
+                    if (msie > 0 || !!navigator.userAgent.matc(/Trident.*rv\:11\./)) // If Internet Explorer
+                    {
+                        txtArea1.document.open("txt/html", "replace");
+                        txtArea1.document.write(tab_text);
+                        txtArea1.document.close();
+                        txtArea1.focus();
+                        sa = txtArea1.document.execCommand("SaveAs", true, "Say Thanks to Sumit.xls");
+                    } else
+                        sa = window.open('data:application/vnd.ms-excel,' + encodeURIComponent(tab_text));
 
-
-
-
-            function fnExcelReport() {
-                var tab_text = "<table border='2px'><tr bgcolor='#87AFC6'>";
-                var textRange;
-                var j = 0;
-                tab = document.getElementById('dataTables-example'); // id of table
-
-                for (j = 0; j < tab.rows.length; j++) {
-                    tab_text = tab_text + tab.rows[j].innerHTML + "</tr>";
+                    //return (sa);
                 }
-
-                tab_text = tab_text + "</table>";
-
-                tab_text = tab_text.replace(/<A[^>]*>|<\/A>/g, ""); //remove if u want links in your table
-                tab_text = tab_text.replace(/<img[^>]*>/gi, ""); // remove if u want images in your table
-                tab_text = tab_text.replace(/<input[^>]*>|<\/input>/gi, ""); // reomves input params
-
-                var ua = window.navigator.userAgent;
-                var msie = ua.indexOf("MSIE ");
-
-                if (msie > 0 || !!navigator.userAgent.matc(/Trident.*rv\:11\./)) // If Internet Explorer
-                {
-                    txtArea1.document.open("txt/html", "replace");
-                    txtArea1.document.write(tab_text);
-                    txtArea1.document.close();
-                    txtArea1.focus();
-                    sa = txtArea1.document.execCommand("SaveAs", true, "Say Thanks to Sumit.xls");
-                } else
-                    sa = window.open('data:application/vnd.ms-excel,' + encodeURIComponent(tab_text));
-
-                //return (sa);
-            }
             </script>

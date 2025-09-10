@@ -209,6 +209,13 @@ input[type="checkbox"] {
 									'placeholder' => '',
 									'type' => 'select',
 									'options' => $generoOption,
+								];
+								echo $this->Form->input('sexo', [
+									'label' => 'Sexo',
+									'class' => 'form-control',
+									'placeholder' => '',
+									'type' => 'select',
+									'options' => $generoOption,
 
 									'style' => 'height:30px;  font-size: 15px ; width:100%',
 								]); ?>
@@ -375,6 +382,7 @@ input[type="checkbox"] {
 									'style' => 'height:30px;  font-size: 15px ; width:100%',
 									'placeholder' => '',
 									'id' => 'peso', // Agrega un id para identificar este campo
+									'id' => 'peso', // Agrega un id para identificar este campo
 								));
 								?>
                             </div>
@@ -387,6 +395,7 @@ input[type="checkbox"] {
 									'class' => 'form-control',
 									'style' => 'height:30px;  font-size: 15px ; width:100%',
 									'placeholder' => '',
+									'id' => 'talla', // Agrega un id para identificar este campo
 									'id' => 'talla', // Agrega un id para identificar este campo
 								));
 								?>
@@ -401,6 +410,7 @@ input[type="checkbox"] {
 									'style' => 'height:30px;  font-size: 15px ; width:100%',
 									'placeholder' => '',
 									'readonly' => 'readonly', // Para que el campo sea de solo lectura
+									'id' => 'indicemasacorporal', // Agrega un id para identificar este campo
 									'id' => 'indicemasacorporal', // Agrega un id para identificar este campo
 								));
 								?>
@@ -757,6 +767,7 @@ input[type="checkbox"] {
 								'No' => 'No',
 								'Tramite de autorización de servicios de salud' => 'Tramite de autorización de servicios de salud',
 								'Vacunacion' => 'Vacunación ',
+								'Vacunacion' => 'Vacunación ',
 								'Atencion de PyM Medico' => 'Atención en salud de PyM por médico',
 								'Atencion de PyM Enfermera' => 'Atención en salud de PyM por enfermeria',
 								'Atencion medicina general' => ' Atención en salud por medicina general',
@@ -768,6 +779,7 @@ input[type="checkbox"] {
 
 							echo $this->Form->input('canalizacionuno', array(
 								'label' => 'Canalización 1',
+								'style' => 'height:30px; font-size: 15px; width:100%',
 								'style' => 'height:30px; font-size: 15px; width:100%',
 								'placeholder' => '',
 								'class' => ' select-search',
@@ -880,7 +892,9 @@ input[type="checkbox"] {
 								'class' => 'form-control',
 								'style' => 'height:30px;  font-size: 15px ; width:100%',
 								'value' => 'Elegir',
-								'id' => 'opcionesSeleccionadas', 'readonly', 'onclick' => 'mostrarModal()'
+								'id' => 'opcionesSeleccionadas',
+								'readonly',
+								'onclick' => 'mostrarModal()'
 
 							)); ?>
 

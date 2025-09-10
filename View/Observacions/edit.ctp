@@ -2,6 +2,19 @@
 
 ?>
 <style>
+.popover-content {
+    display: none;
+    position: absolute;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    padding: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    z-index: 999;
+    /* Valor alto para colocar el popover encima de otros elementos */
+    font-size: 12px;
+    /* Ajusta el tamaño de la fuente según tus preferencias */
+    text-align: justify;
+
     .popover-content {
         display: none;
         position: absolute;
@@ -17,18 +30,35 @@
 
 
     }
+}
 
-    /* Estilo para el fondo oscuro cuando se muestra el modal */
-    .overlay {
-        display: none;
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.5);
-        z-index: 1;
-    }
+/* Estilo para el fondo oscuro cuando se muestra el modal */
+.overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1;
+}
+
+/* Estilo para el fondo oscuro cuando se muestra el modal */
+.overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1;
+}
+
+/* Estilo para el cuadro modal */
+.modal {
+    overflow: auto;
 
     /* Estilo para el cuadro modal */
     .modal {
@@ -53,44 +83,99 @@
         z-index: 1;
     }
 
-    .button-one {
-        display: block;
-        width: 100%;
-        height: 34px;
-        padding: 6px 12px;
-        font-size: 14px;
-        line-height: 1.42857143;
-        color: #555;
-        background-color: #fff;
-        background-image: none;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-        -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-        box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-        -webkit-transition: border-color ease-in-out 0.15s, -webkit-box-shadow ease-in-out 0.15s;
-        -o-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
-        transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
-        text-align: left;
-        height: 35px;
-        font-size: 15px;
-        width: 100%;
-        margin-top: 10px;
-        font-weight: 700;
-    }
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80%;
+    /* Ajusta el ancho del modal según tus necesidades */
+    max-width: 400px;
+    /* Ancho máximo para pantallas más grandes */
+    padding: 20px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    z-index: 1;
+}
 
-    /* Estilo para el texto y checkboxes dentro del modal */
-    .modal p {
-        text-align: left;
-    }
+.button-one {
+    display: block;
+    width: 100%;
+    height: 34px;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: #555;
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+    -webkit-transition: border-color ease-in-out 0.15s, -webkit-box-shadow ease-in-out 0.15s;
+    -o-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+    transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+    text-align: left;
+    height: 35px;
+    font-size: 15px;
+    width: 100%;
+    margin-top: 10px;
+    font-weight: 700;
+}
 
-    .modal label {
-        display: block;
-        margin-bottom: 10px;
-    }
+.button-one {
+    display: block;
+    width: 100%;
+    height: 34px;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: #555;
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+    -webkit-transition: border-color ease-in-out 0.15s, -webkit-box-shadow ease-in-out 0.15s;
+    -o-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+    transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+    text-align: left;
+    height: 35px;
+    font-size: 15px;
+    width: 100%;
+    margin-top: 10px;
+    font-weight: 700;
+}
 
-    input[type="checkbox"] {
-        margin-right: 10px;
-    }
+/* Estilo para el texto y checkboxes dentro del modal */
+.modal p {
+    text-align: left;
+}
+
+/* Estilo para el texto y checkboxes dentro del modal */
+.modal p {
+    text-align: left;
+}
+
+.modal label {
+    display: block;
+    margin-bottom: 10px;
+}
+
+.modal label {
+    display: block;
+    margin-bottom: 10px;
+}
+
+input[type="checkbox"] {
+    margin-right: 10px;
+}
+
+input[type="checkbox"] {
+    margin-right: 10px;
+}
 </style>
 
 <body style="font-size: 14px;">
@@ -729,82 +814,98 @@
 $this->Html->css([
     'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css',
     'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css'
+    'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css',
+    'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css'
 ], ['block' => 'css']);
 $this->Html->script([
+    'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js',
+    'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js'
     'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js',
     'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js'
 ], ['block' => 'script']);
 ?>
 <script type="text/javascript">
-    $('document').ready(function() {
+$('document').ready(function() {
 
-        function calcularprioridad() {
+    function calcularprioridad() {
 
-            let sumaPrioridad = 0;
+        let sumaPrioridad = 0;
 
-            $('select.sumar').each(function() {
-                sumaPrioridad += parseInt($(this).val()) || 0;
-            });
+        $('select.sumar').each(function() {
+            sumaPrioridad += parseInt($(this).val()) || 0;
+        });
 
-            $('#resultadoprioridad-input').val(sumaPrioridad);
+        $('#resultadoprioridad-input').val(sumaPrioridad);
 
 
-            var prioridadField = document.getElementById('resultadoprioridad-input');
-            var resultPrioridad = document.getElementById('resultprioridad');
+        var prioridadField = document.getElementById('resultadoprioridad-input');
+        var resultPrioridad = document.getElementById('resultprioridad');
 
-            switch (true) {
-                case sumaPrioridad === 0:
-                    prioridadField.style.color = 'green';
-                    resultPrioridad.value = 'Con Gestion del riesgo salud';
-                    break;
-                case sumaPrioridad >= 12: //puntaje max 17 posibles, puntos 12 corresponde al 70%
-                    prioridadField.style.color = 'red';
-                    resultPrioridad.value = 'Prioridad alta';
-                    break;
+        switch (true) {
+            case sumaPrioridad === 0:
+                prioridadField.style.color = 'green';
+                resultPrioridad.value = 'Con Gestion del riesgo salud';
+                break;
+            case sumaPrioridad >= 12: //puntaje max 17 posibles, puntos 12 corresponde al 70%
+                prioridadField.style.color = 'red';
+                resultPrioridad.value = 'Prioridad alta';
+                break;
 
-                case sumaPrioridad >= 8 && sumaPrioridad <= 11:
-                    prioridadField.style.color = 'orange';
-                    resultPrioridad.value = 'Prioridad media';
-                    break;
+            case sumaPrioridad >= 8 && sumaPrioridad <= 11:
+                prioridadField.style.color = 'orange';
+                resultPrioridad.value = 'Prioridad media';
+                break;
 
-                case sumaPrioridad > 0 && sumaPrioridad <= 7:
-                    prioridadField.style.color = '#FAA80D';
-                    resultPrioridad.value = 'Prioridad baja';
-                    break;
-                default:
-                    prioridadField.style.color = 'black';
-                    resultPrioridad.value = '';
-            }
-
-            var prioridadField = document.getElementById('valoracionfamiliina');
-
+            case sumaPrioridad > 0 && sumaPrioridad <= 7:
+                prioridadField.style.color = '#FAA80D';
+                resultPrioridad.value = 'Prioridad baja';
+                break;
+            default:
+                prioridadField.style.color = 'black';
+                resultPrioridad.value = '';
         }
 
-        $('select.sumar').on('change', calcularprioridad);
-        calcularprioridad();
+        var prioridadField = document.getElementById('valoracionfamiliina');
 
-
-    });
-
-
-
-
-
-
-
-
-    // Función para mostrar el Box
-    function mostrarModal() {
-        document.getElementById("overlay").style.display = "block";
-        document.getElementById("modal").style.display = "block";
     }
 
-    // Función para cerrar el modal
-    function cerrarModal() {
-        document.getElementById("overlay").style.display = "none";
-        document.getElementById("modal").style.display = "none";
-    }
+    $('select.sumar').on('change', calcularprioridad);
+    calcularprioridad();
 
+
+});
+
+
+
+
+
+
+
+
+// Función para mostrar el Box
+function mostrarModal() {
+    document.getElementById("overlay").style.display = "block";
+    document.getElementById("modal").style.display = "block";
+}
+
+// Función para cerrar el modal
+function cerrarModal() {
+    document.getElementById("overlay").style.display = "none";
+    document.getElementById("modal").style.display = "none";
+}
+// Función para cerrar el modal
+function cerrarModal() {
+    document.getElementById("overlay").style.display = "none";
+    document.getElementById("modal").style.display = "none";
+}
+
+// Función para actualizar el campo de entrada con las opciones seleccionadas
+function actualizarInput() {
+    var checkboxes = document.querySelectorAll('#modal input[type="checkbox"]');
+    var opcionesSeleccionadas = Array.from(checkboxes)
+        .filter(checkbox => checkbox.checked)
+        .map(checkbox => checkbox.value)
+        .join(', ');
     // Función para actualizar el campo de entrada con las opciones seleccionadas
     function actualizarInput() {
         var checkboxes = document.querySelectorAll('#modal input[type="checkbox"]');
@@ -816,24 +917,47 @@ $this->Html->script([
         document.getElementById("opcionesSeleccionadas").value = opcionesSeleccionadas;
         document.getElementById("ponerOpcion").value = opcionesSeleccionadas;
     }
+    document.getElementById("opcionesSeleccionadas").value = opcionesSeleccionadas;
+    document.getElementById("ponerOpcion").value = opcionesSeleccionadas;
+}
 
-    $(document).ready(function() {
-        $('.select-search').select2();
-        agregarOpcionSeleccion();
-    });
+$(document).ready(function() {
+    $('.select-search').select2();
+    agregarOpcionSeleccion();
+});
+$(document).ready(function() {
+    $('.select-search').select2();
+    agregarOpcionSeleccion();
+});
 
-    function agregarOpcionSeleccion() {
-        $("#ObservacionResponsableId").prepend("<option value='' selected='selected'>Seleccione</option>");
+function agregarOpcionSeleccion() {
+    $("#ObservacionResponsableId").prepend("<option value='' selected='selected'>Seleccione</option>");
+}
+
+function agregarOpcionSeleccion() {
+    $("#ObservacionResponsableId").prepend("<option value='' selected='selected'>Seleccione</option>");
+}
+
+function validarTamanioSoporte() {
+    var auxFile = document.getElementById('ActaAnexo');
+    var sizeF = auxFile.files[0].size;
+    if (sizeF > 3000000) {
+        alert('El archivo debe ser menor a 3 Mb');
+        auxFile.value = '';
     }
+}
 
-    function validarTamanioSoporte() {
-        var auxFile = document.getElementById('ActaAnexo');
-        var sizeF = auxFile.files[0].size;
-        if (sizeF > 3000000) {
-            alert('El archivo debe ser menor a 3 Mb');
-            auxFile.value = '';
-        }
+function validarTamanioSoporte() {
+    var auxFile = document.getElementById('ActaAnexo');
+    var sizeF = auxFile.files[0].size;
+    if (sizeF > 3000000) {
+        alert('El archivo debe ser menor a 3 Mb');
+        auxFile.value = '';
     }
+}
+
+function generarCheckboxes(opciones) {
+    let resultHTML = '';
 
     function generarCheckboxes(opciones) {
         let resultHTML = '';
@@ -842,17 +966,31 @@ $this->Html->script([
             resultHTML +=
                 `<label><input type="checkbox" value="${opcion}" onclick="actualizarInput()">${opcion}</label>`;
         });
+        opciones.forEach(opcion => {
+            resultHTML +=
+                `<label><input type="checkbox" value="${opcion}" onclick="actualizarInput()">${opcion}</label>`;
+        });
 
         return resultHTML;
     }
+    return resultHTML;
+}
 
 
-    const opciones = opcionesfamiliograma = [
-        '1.Biológicos',
-        '2.Psocológicos',
-        '3.Sociales',
-        '0.Sin riesgo'
-    ];
-    // Generar los checkboxes y agregarlos al contenedor
-    document.getElementById('miContenedor').innerHTML = generarCheckboxes(opcionesfamiliograma);
+const opciones = opcionesfamiliograma = [
+    '1.Biológicos',
+    '2.Psocológicos',
+    '3.Sociales',
+    '0.Sin riesgo'
+];
+// Generar los checkboxes y agregarlos al contenedor
+document.getElementById('miContenedor').innerHTML = generarCheckboxes(opcionesfamiliograma);
+const opciones = opcionesfamiliograma = [
+    '1.Biológicos',
+    '2.Psocológicos',
+    '3.Sociales',
+    '0.Sin riesgo'
+];
+// Generar los checkboxes y agregarlos al contenedor
+document.getElementById('miContenedor').innerHTML = generarCheckboxes(opcionesfamiliograma);
 </script>

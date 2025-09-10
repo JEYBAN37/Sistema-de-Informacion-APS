@@ -1,299 +1,340 @@
-<?php $this->layout = 'default_familia'; ?>
-<div class="row" style="margin:1px;">
-	<div class="dataTable_wrapper">
-		<div class="row" style="justify-content: center;">
-			<div class=" col-sm-12">
-				<table width="100%" class="table table-striped table-bordered table-hover">
-					<thead>
-						<div class="dataTable_wrapper">
-							<div class="row">
-								<div class="col-sm-12">
-									<table width="100%" class="table table-striped table-bordered table-hover">
-										<tr>
-										<tr>
-											<td rowspan="4" style="text-align: center; vertical-align: middle;">
-
-												<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQWooVnP-ggyJ3x_xZOgBlBAHas5_sVFyR16boEFOv24Q&s" style="display: block; margin: 0 auto;" width="100px" height="auto">
-
-											</td>
-										</tr>
-										<tr>
-											<td colspan="6">Atención Primaria En Salud</td>
-										</tr>
-										<tr>
-											<td colspan="6">Nombre de Formato: Registro Joven-adulto
-											</td>
-										</tr>
-										<td>Vigencia 00-00-000</td>
-										<td>Version 1.0</td>
-										<td>Codigo ID Adultos</td>
-										<td><?php echo ($juventudadulto['Juventudadulto']['id']); ?>
-										</td>
-										</tr>
-									</table>
-								</div>
-							</div>
-
-							<div class="row" style="justify-content: center;">
-								<div class="col-sm-12">
-
-									<table width="100%" class="table table-striped table-bordered table-hover">
-										<tr class="title">
-											<td colspan="3">Nombre del Menor </td>
-											<td colspan="3">Documento </td>
-											<td colspan="3">Aseguradora </td>
-											<td colspan="3">Familia Asociada </td>
-										</tr>
-										<tr>
-
-											<td colspan="3">
-												<?php echo ($juventudadulto['Juventudadulto']['primernombre'] . ' ' . $juventudadulto['Juventudadulto']['segundonombre'] . ' ' . $juventudadulto['Juventudadulto']['primerapellido'] . ' ' . $juventudadulto['Juventudadulto']['segundoapellido']); ?>
-											</td>
-											<td colspan="3">
-												<?php echo ($juventudadulto['Juventudadulto']['tipodocumento'] . ' ' . $juventudadulto['Juventudadulto']['numerodoc']); ?>
-											</td>
-											<td colspan="3">
-												<?php echo ($juventudadulto['Juventudadulto']['aseguradora'] . ' ' . $juventudadulto['Juventudadulto']['regimen']); ?>
-											</td>
-											<td colspan="3">
-												<?php echo $this->Html->link($juventudadulto['Familia']['apellidosfamilia'], array('controller' => 'familias', 'action' => 'view', $juventudadulto['Familia']['id'])); ?>
-											</td>
-
-										</tr>
-										<tr>
-											<td colspan="12" style="text-align: center;" class="title">Valoración En
-												Salud</td>
-
-										</tr>
-
-										<tr>
-											<td colspan="2" class="title"> Talla</td>
-											<td colspan="2">
-												<?php echo ($juventudadulto['Juventudadulto']['talla']); ?>
-											</td>
-											<td colspan="2" class="title">Peso</td>
-											<td colspan="2">
-												<?php echo ($juventudadulto['Juventudadulto']['peso']); ?>
-											</td>
-											<td colspan="2" class="title">Indice de Masa Corporal</td>
-											<td colspan="2">
-												<?php echo ($juventudadulto['Juventudadulto']['indicemasacorporal']); ?>
-											</td>
-
-										</tr>
-
-										<tr>
-											<td colspan="2" class="title">Tensión Arterial</td>
-											<td colspan="4">
-												<?php echo ($juventudadulto['Juventudadulto']['tensionarterial']); ?>
-											</td>
-											<td colspan="2" class="title">Discapacidad</td>
-											<td colspan="4">
-												<?php echo ($juventudadulto['Juventudadulto']['discapacidad']); ?>
-											</td>
-
-										</tr>
-
-
-
-										<tr>
-											<td colspan="2" class="title">Enfermedad Crónica</td>
-											<td colspan="2">
-												<?php echo ($juventudadulto['Juventudadulto']['condicioncronica']); ?>
-											</td>
-											<td colspan="2" class="title">Enfermedad Crónica</td>
-											<td colspan="2">
-												<?php echo ($juventudadulto['Juventudadulto']['condicioncronica1']); ?>
-											</td>
-											<td colspan="2" class="title">Antecedente Ginecológico</td>
-											<td colspan="2">
-												<?php echo ($juventudadulto['Juventudadulto']['antecedenteginecologico']); ?>
-											</td>
-										</tr>
-										<tr>
-
-											<td colspan="2" class="title">Valoración Medica</td>
-											<td colspan="10">
-												<?php echo ($juventudadulto['Juventudadulto']['valoracionmedica']); ?>
-											</td>
-										</tr>
-
-										<tr>
-											<td colspan="12" style="text-align: center;" class="title">Atención En
-												Salud</td>
-
-										</tr>
-										<tr>
-											<td colspan="6" style="text-align: center;" class="title">Esquema de
-												Vacunación</td>
-											<td colspan="6" style="text-align: center;" class="title">Desparasitación
-											</td>
-
-										</tr>
-										<tr>
-											<td colspan="6">
-												<?php echo ($juventudadulto['Juventudadulto']['esquemavacunacion']); ?>
-											</td>
-											<td colspan="6">
-												<?php echo ($juventudadulto['Juventudadulto']['desparasitacion']); ?>
-											</td>
-										</tr>
-										<tr>
-											
-											<td colspan="6" class="title">Salud Oral</td>
-											<td colspan="6">
-												<?php echo ($juventudadulto['Juventudadulto']['saludoral']); ?>
-											</td>
-
-										</tr>
-										<tr>
-											<td colspan="2" class="title">Valoración Medica</td>
-											<td colspan="2">
-												<?php echo ($juventudadulto['Juventudadulto']['valoracionmedica']); ?>
-											</td>
-											<td colspan="2" class="title">Toma citología</td>
-											<td colspan="2">
-												<?php echo ($juventudadulto['Juventudadulto']['tomacitologia']); ?>
-											</td>
-										</tr>
-										<tr>
-											<td colspan="12" style="text-align: center;" class="title">Salud Sexual y
-												Reproductiva</td>
-
-										</tr>
-
-										<tr>
-											<td colspan="2" class="title">Inicio vida Sexual</td>
-											<td colspan="2">
-												<?php echo ($juventudadulto['Juventudadulto']['iniciovidasexual']); ?>
-											</td>
-											<td colspan="2" class="title">Metodos Anticonceptivos</td>
-											<td colspan="2">
-												<?php echo ($juventudadulto['Juventudadulto']['metodosanticonceptivos']); ?>
-											</td>
-											<td colspan="2" class="title">Infecciones de trasmision Sexual</td>
-											<td colspan="2">
-												<?php echo ($juventudadulto['Juventudadulto']['infeccionestransmisionsexual']); ?>
-											</td>
-										</tr>
-
-
-										<tr>
-											<td colspan="12" style="text-align: center;" class="title">Condiciones de
-												Vulnerabilidad</td>
-
-										</tr>
-										<tr>
-											<td colspan="4" class="title">Riesgo de Maltrato</td>
-											<td colspan="8">
-												<?php echo ($juventudadulto['Juventudadulto']['sopechamaltrato']); ?>
-											</td>
-										</tr>
-
-
-										<tr>
-											<td colspan="3" class="title">Riesgo Psicosocial</td>
-											<td colspan="3">
-												<?php echo ($juventudadulto['Juventudadulto']['riesgopsicosocial']); ?>
-											</td>
-											<td colspan="3" class="title">otro..</td>
-											<td colspan="3">
-												<?php echo ($juventudadulto['Juventudadulto']['riesgopsicosocial1']); ?>
-											</td>
-										</tr>
-										<tr>
-											<td colspan="3" class="title">Consumo sustancias Psicoactivas</td>
-											<td colspan="3">
-												<?php echo ($juventudadulto['Juventudadulto']['consumospa']); ?>
-											</td>
-											<td colspan="3" class="title">Consumo sustancias Psicoactivas</td>
-											<td colspan="3">
-												<?php echo ($juventudadulto['Juventudadulto']['consumospa1']); ?>
-											</td>
-										</tr>
-										<tr>
-											<td colspan="3" class="title">Estudio</td>
-											<td colspan="3">
-												<?php echo ($juventudadulto['Juventudadulto']['estudio']); ?>
-											</td>
-											<td colspan="3" class="title">Educación</td>
-											<td colspan="3">
-												<?php echo ($juventudadulto['Juventudadulto']['educacion']); ?>
-											</td>
-										</tr>
-										<tr>
-											<td colspan="12" style="text-align: center;" class="title">Plan de
-												Atención Integral</td>
-
-										</tr>
-
-										<tr>
-											<td colspan="3" class="title">Canalización uno</td>
-											<td colspan="3">
-												<?php echo ($juventudadulto['Juventudadulto']['canalizacionuno']); ?>
-											</td>
-											<td colspan="3" class="title">Canalización dos</td>
-											<td colspan="3">
-												<?php echo ($juventudadulto['Juventudadulto']['canalizaciondos']); ?>
-											</td>
-										</tr>
-										<tr>
-											<td colspan="2" class="title">Canalización tres</td>
-											<td colspan="10">
-												<?php echo ($juventudadulto['Juventudadulto']['canalizaciontres']); ?>
-											</td>
-										</tr>
-
-									
-									</table>
-								</div>
-							</div>
-
-							<div class="row">
-								<div class="col-sm-12">
-									<table width="100%" class="table table-striped table-bordered table-hover">
-										<button class="my-button" onclick="window.print();">Imprimir</button>
-									</table>
-								</div>
-							</div>
-						</div>
-			</div>
-
-
-			<thead>
-
-				</table>
-		</div>
-	</div>
+<div class="juventudadultos view">
+<h2><?php echo __('Juventudadulto'); ?></h2>
+	<dl>
+		<dt><?php echo __('Id'); ?></dt>
+		<dd>
+			<?php echo h($juventudadulto['Juventudadulto']['id']); ?>
+			&nbsp;
+		</dd>
+		<dt><?php echo __('Familia'); ?></dt>
+		<dd>
+			<?php echo $this->Html->link($juventudadulto['Familia']['apellidosfamilia'], array('controller' => 'familias', 'action' => 'view', $juventudadulto['Familia']['id'])); ?>
+			&nbsp;
+		</dd>
+		<dt><?php echo __('Persona'); ?></dt>
+		<dd>
+			<?php echo $this->Html->link($juventudadulto['Persona']['apellidosnombre'], array('controller' => 'personas', 'action' => 'view', $juventudadulto['Persona']['id'])); ?>
+			&nbsp;
+		</dd>
+		<dt><?php echo __('Tipodocumento'); ?></dt>
+		<dd>
+			<?php echo h($juventudadulto['Juventudadulto']['tipodocumento']); ?>
+			&nbsp;
+		</dd>
+		<dt><?php echo __('Numerodoc'); ?></dt>
+		<dd>
+			<?php echo h($juventudadulto['Juventudadulto']['numerodoc']); ?>
+			&nbsp;
+		</dd>
+		<dt><?php echo __('Primerapellido'); ?></dt>
+		<dd>
+			<?php echo h($juventudadulto['Juventudadulto']['primerapellido']); ?>
+			&nbsp;
+		</dd>
+		<dt><?php echo __('Segundoapellido'); ?></dt>
+		<dd>
+			<?php echo h($juventudadulto['Juventudadulto']['segundoapellido']); ?>
+			&nbsp;
+		</dd>
+		<dt><?php echo __('Primernombre'); ?></dt>
+		<dd>
+			<?php echo h($juventudadulto['Juventudadulto']['primernombre']); ?>
+			&nbsp;
+		</dd>
+		<dt><?php echo __('Segundonombre'); ?></dt>
+		<dd>
+			<?php echo h($juventudadulto['Juventudadulto']['segundonombre']); ?>
+			&nbsp;
+		</dd>
+		<dt><?php echo __('Fechanac'); ?></dt>
+		<dd>
+			<?php echo h($juventudadulto['Juventudadulto']['fechanac']); ?>
+			&nbsp;
+		</dd>
+		<dt><?php echo __('Edad'); ?></dt>
+		<dd>
+			<?php echo h($juventudadulto['Juventudadulto']['edad']); ?>
+			&nbsp;
+		</dd>
+		<dt><?php echo __('Sexo'); ?></dt>
+		<dd>
+			<?php echo h($juventudadulto['Juventudadulto']['sexo']); ?>
+			&nbsp;
+		</dd>
+		<dt><?php echo __('Genero'); ?></dt>
+		<dd>
+			<?php echo h($juventudadulto['Juventudadulto']['genero']); ?>
+			&nbsp;
+		</dd>
+		<dt><?php echo __('Aseguradora'); ?></dt>
+		<dd>
+			<?php echo h($juventudadulto['Juventudadulto']['aseguradora']); ?>
+			&nbsp;
+		</dd>
+		<dt><?php echo __('Regimen'); ?></dt>
+		<dd>
+			<?php echo h($juventudadulto['Juventudadulto']['regimen']); ?>
+			&nbsp;
+		</dd>
+		<dt><?php echo __('Estadoafiliacion'); ?></dt>
+		<dd>
+			<?php echo h($juventudadulto['Juventudadulto']['estadoafiliacion']); ?>
+			&nbsp;
+		</dd>
+		<dt><?php echo __('Telefono'); ?></dt>
+		<dd>
+			<?php echo h($juventudadulto['Juventudadulto']['telefono']); ?>
+			&nbsp;
+		</dd>
+		<dt><?php echo __('Email'); ?></dt>
+		<dd>
+			<?php echo h($juventudadulto['Juventudadulto']['email']); ?>
+			&nbsp;
+		</dd>
+		<dt><?php echo __('Discapacidad'); ?></dt>
+		<dd>
+			<?php echo h($juventudadulto['Juventudadulto']['discapacidad']); ?>
+			&nbsp;
+		</dd>
+		<dt><?php echo __('Peso'); ?></dt>
+		<dd>
+			<?php echo h($juventudadulto['Juventudadulto']['peso']); ?>
+			&nbsp;
+		</dd>
+		<dt><?php echo __('Talla'); ?></dt>
+		<dd>
+			<?php echo h($juventudadulto['Juventudadulto']['talla']); ?>
+			&nbsp;
+		</dd>
+		<dt><?php echo __('Indicemasacorporal'); ?></dt>
+		<dd>
+			<?php echo h($juventudadulto['Juventudadulto']['indicemasacorporal']); ?>
+			&nbsp;
+		</dd>
+		<dt><?php echo __('Tensionarterial'); ?></dt>
+		<dd>
+			<?php echo h($juventudadulto['Juventudadulto']['tensionarterial']); ?>
+			&nbsp;
+		</dd>
+		<dt><?php echo __('Condicioncronica'); ?></dt>
+		<dd>
+			<?php echo h($juventudadulto['Juventudadulto']['condicioncronica']); ?>
+			&nbsp;
+		</dd>
+		<dt><?php echo __('Condicioncronica1'); ?></dt>
+		<dd>
+			<?php echo h($juventudadulto['Juventudadulto']['condicioncronica1']); ?>
+			&nbsp;
+		</dd>
+		<dt><?php echo __('Esquemavacunacion'); ?></dt>
+		<dd>
+			<?php echo h($juventudadulto['Juventudadulto']['esquemavacunacion']); ?>
+			&nbsp;
+		</dd>
+		<dt><?php echo __('Desparasitacion'); ?></dt>
+		<dd>
+			<?php echo h($juventudadulto['Juventudadulto']['desparasitacion']); ?>
+			&nbsp;
+		</dd>
+		<dt><?php echo __('Valoracionmedica'); ?></dt>
+		<dd>
+			<?php echo h($juventudadulto['Juventudadulto']['valoracionmedica']); ?>
+			&nbsp;
+		</dd>
+		<dt><?php echo __('Tomacitologia'); ?></dt>
+		<dd>
+			<?php echo h($juventudadulto['Juventudadulto']['tomacitologia']); ?>
+			&nbsp;
+		</dd>
+		<dt><?php echo __('Saludoral'); ?></dt>
+		<dd>
+			<?php echo h($juventudadulto['Juventudadulto']['saludoral']); ?>
+			&nbsp;
+		</dd>
+		<dt><?php echo __('Iniciovidasexual'); ?></dt>
+		<dd>
+			<?php echo h($juventudadulto['Juventudadulto']['iniciovidasexual']); ?>
+			&nbsp;
+		</dd>
+		<dt><?php echo __('Metodosanticonceptivos'); ?></dt>
+		<dd>
+			<?php echo h($juventudadulto['Juventudadulto']['metodosanticonceptivos']); ?>
+			&nbsp;
+		</dd>
+		<dt><?php echo __('Infeccionestransmisionsexual'); ?></dt>
+		<dd>
+			<?php echo h($juventudadulto['Juventudadulto']['infeccionestransmisionsexual']); ?>
+			&nbsp;
+		</dd>
+		<dt><?php echo __('Mamografia'); ?></dt>
+		<dd>
+			<?php echo h($juventudadulto['Juventudadulto']['mamografia']); ?>
+			&nbsp;
+		</dd>
+		<dt><?php echo __('Antecedenteginecologico'); ?></dt>
+		<dd>
+			<?php echo h($juventudadulto['Juventudadulto']['antecedenteginecologico']); ?>
+			&nbsp;
+		</dd>
+		<dt><?php echo __('Ancedenteginecologico1'); ?></dt>
+		<dd>
+			<?php echo h($juventudadulto['Juventudadulto']['ancedenteginecologico1']); ?>
+			&nbsp;
+		</dd>
+		<dt><?php echo __('Gestacion'); ?></dt>
+		<dd>
+			<?php echo h($juventudadulto['Juventudadulto']['gestacion']); ?>
+			&nbsp;
+		</dd>
+		<dt><?php echo __('Controlprenatal'); ?></dt>
+		<dd>
+			<?php echo h($juventudadulto['Juventudadulto']['controlprenatal']); ?>
+			&nbsp;
+		</dd>
+		<dt><?php echo __('Riesgoembarazo'); ?></dt>
+		<dd>
+			<?php echo h($juventudadulto['Juventudadulto']['riesgoembarazo']); ?>
+			&nbsp;
+		</dd>
+		<dt><?php echo __('SignoAlarma'); ?></dt>
+		<dd>
+			<?php echo h($juventudadulto['Juventudadulto']['signoAlarma']); ?>
+			&nbsp;
+		</dd>
+		<dt><?php echo __('Saludalternativa'); ?></dt>
+		<dd>
+			<?php echo h($juventudadulto['Juventudadulto']['saludalternativa']); ?>
+			&nbsp;
+		</dd>
+		<dt><?php echo __('Cursovida'); ?></dt>
+		<dd>
+			<?php echo h($juventudadulto['Juventudadulto']['cursovida']); ?>
+			&nbsp;
+		</dd>
+		<dt><?php echo __('Ocupacion'); ?></dt>
+		<dd>
+			<?php echo h($juventudadulto['Juventudadulto']['ocupacion']); ?>
+			&nbsp;
+		</dd>
+		<dt><?php echo __('Estudio'); ?></dt>
+		<dd>
+			<?php echo h($juventudadulto['Juventudadulto']['estudio']); ?>
+			&nbsp;
+		</dd>
+		<dt><?php echo __('Consumospa'); ?></dt>
+		<dd>
+			<?php echo h($juventudadulto['Juventudadulto']['consumospa']); ?>
+			&nbsp;
+		</dd>
+		<dt><?php echo __('Consumospa1'); ?></dt>
+		<dd>
+			<?php echo h($juventudadulto['Juventudadulto']['consumospa1']); ?>
+			&nbsp;
+		</dd>
+		<dt><?php echo __('Riesgopsicosocial'); ?></dt>
+		<dd>
+			<?php echo h($juventudadulto['Juventudadulto']['riesgopsicosocial']); ?>
+			&nbsp;
+		</dd>
+		<dt><?php echo __('Riesgopsicosocial1'); ?></dt>
+		<dd>
+			<?php echo h($juventudadulto['Juventudadulto']['riesgopsicosocial1']); ?>
+			&nbsp;
+		</dd>
+		<dt><?php echo __('Sopechamaltrato'); ?></dt>
+		<dd>
+			<?php echo h($juventudadulto['Juventudadulto']['sopechamaltrato']); ?>
+			&nbsp;
+		</dd>
+		<dt><?php echo __('Ayudafamiliar'); ?></dt>
+		<dd>
+			<?php echo h($juventudadulto['Juventudadulto']['ayudafamiliar']); ?>
+			&nbsp;
+		</dd>
+		<dt><?php echo __('Participacionfamiliar'); ?></dt>
+		<dd>
+			<?php echo h($juventudadulto['Juventudadulto']['participacionfamiliar']); ?>
+			&nbsp;
+		</dd>
+		<dt><?php echo __('Aceptacionapoyo'); ?></dt>
+		<dd>
+			<?php echo h($juventudadulto['Juventudadulto']['aceptacionapoyo']); ?>
+			&nbsp;
+		</dd>
+		<dt><?php echo __('Afectoemociones'); ?></dt>
+		<dd>
+			<?php echo h($juventudadulto['Juventudadulto']['afectoemociones']); ?>
+			&nbsp;
+		</dd>
+		<dt><?php echo __('Compartirfamilia'); ?></dt>
+		<dd>
+			<?php echo h($juventudadulto['Juventudadulto']['compartirfamilia']); ?>
+			&nbsp;
+		</dd>
+		<dt><?php echo __('Calculoapgar'); ?></dt>
+		<dd>
+			<?php echo h($juventudadulto['Juventudadulto']['calculoapgar']); ?>
+			&nbsp;
+		</dd>
+		<dt><?php echo __('Canalizacionuno'); ?></dt>
+		<dd>
+			<?php echo h($juventudadulto['Juventudadulto']['canalizacionuno']); ?>
+			&nbsp;
+		</dd>
+		<dt><?php echo __('Canalizaciondos'); ?></dt>
+		<dd>
+			<?php echo h($juventudadulto['Juventudadulto']['canalizaciondos']); ?>
+			&nbsp;
+		</dd>
+		<dt><?php echo __('Canalizaciontres'); ?></dt>
+		<dd>
+			<?php echo h($juventudadulto['Juventudadulto']['canalizaciontres']); ?>
+			&nbsp;
+		</dd>
+		<dt><?php echo __('Canalizacion'); ?></dt>
+		<dd>
+			<?php echo $this->Html->link($juventudadulto['Canalizacion']['enlace'], array('controller' => 'canalizaciones', 'action' => 'view', $juventudadulto['Canalizacion']['id'])); ?>
+			&nbsp;
+		</dd>
+		<dt><?php echo __('Educacion'); ?></dt>
+		<dd>
+			<?php echo h($juventudadulto['Juventudadulto']['educacion']); ?>
+			&nbsp;
+		</dd>
+		<dt><?php echo __('Estadocanalizacion'); ?></dt>
+		<dd>
+			<?php echo h($juventudadulto['Juventudadulto']['estadocanalizacion']); ?>
+			&nbsp;
+		</dd>
+		<dt><?php echo __('Observacioncanalizacion'); ?></dt>
+		<dd>
+			<?php echo h($juventudadulto['Juventudadulto']['observacioncanalizacion']); ?>
+			&nbsp;
+		</dd>
+		<dt><?php echo __('FechaRegistro'); ?></dt>
+		<dd>
+			<?php echo h($juventudadulto['Juventudadulto']['fechaRegistro']); ?>
+			&nbsp;
+		</dd>
+		<dt><?php echo __('RegistroCanalizacion'); ?></dt>
+		<dd>
+			<?php echo h($juventudadulto['Juventudadulto']['registroCanalizacion']); ?>
+			&nbsp;
+		</dd>
+	</dl>
 </div>
-
-
-
-
+<div class="actions">
+	<h3><?php echo __('Actions'); ?></h3>
+	<ul>
+		<li><?php echo $this->Html->link(__('Edit Juventudadulto'), array('action' => 'edit', $juventudadulto['Juventudadulto']['id'])); ?> </li>
+		<li><?php echo $this->Form->postLink(__('Delete Juventudadulto'), array('action' => 'delete', $juventudadulto['Juventudadulto']['id']), array(), __('Are you sure you want to delete # %s?', $juventudadulto['Juventudadulto']['id'])); ?> </li>
+		<li><?php echo $this->Html->link(__('List Juventudadultos'), array('action' => 'index')); ?> </li>
+		<li><?php echo $this->Html->link(__('New Juventudadulto'), array('action' => 'add')); ?> </li>
+		<li><?php echo $this->Html->link(__('List Familias'), array('controller' => 'familias', 'action' => 'index')); ?> </li>
+		<li><?php echo $this->Html->link(__('New Familia'), array('controller' => 'familias', 'action' => 'add')); ?> </li>
+		<li><?php echo $this->Html->link(__('List Canalizaciones'), array('controller' => 'canalizaciones', 'action' => 'index')); ?> </li>
+		<li><?php echo $this->Html->link(__('New Canalizacion'), array('controller' => 'canalizaciones', 'action' => 'add')); ?> </li>
+		<li><?php echo $this->Html->link(__('List Personas'), array('controller' => 'personas', 'action' => 'index')); ?> </li>
+		<li><?php echo $this->Html->link(__('New Persona'), array('controller' => 'personas', 'action' => 'add')); ?> </li>
+	</ul>
 </div>
-
-
-
-<?php
-/*$this->Html->css([
-    'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css'
-        ], ['block' => 'css']
-);
-$this->Html->script([
-    'https://code.jquery.com/jquery-3.2.1.min.js',
-    'https://cdn.ckeditor.com/4.9.2/basic/ckeditor.js',
-    'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js'
-        ], ['block' => 'script']
-);*/
-?>
-<script type="text/javascript">
-	$(document).ready(function() {
-		$('textarea').eac(function() {
-			this.setAttribute('style', 'height:' + (this.scrollHeight) + 'px;overflow-y:hidden;');
-		}).on('input', function() {
-			this.style.height = 'auto';
-			this.style.height = (this.scrollHeight) + 'px';
-		});
-
-	});
-</script>

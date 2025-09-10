@@ -1,287 +1,280 @@
-<?php $this->layout = 'default_familia' ?>
-
-<div class="row" style="margin:30px;">
-
-    <div class="dataTable_wrapper">
-
-        <div class="row" style="justify-content: center;">
-            <div class=" col-sm-12">
-
-                <table width="100%" class="table table-striped table-bordered table-hover">
-
-                    <thead>
-                        <div class="dataTable_wrapper">
-
-
-                            <div class="row">
-                                <div class="col-sm-12">
-
-                                    <table width="100%" class="table table-striped table-bordered table-hover">
-                                        <tr>
-                                        <tr>
-                                            <td rowspan="4" style="text-align: center; vertical-align: middle;">
-
-                                                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQWooVnP-ggyJ3x_xZOgBlBAHas5_sVFyR16boEFOv24Q&s" style="display: block; margin: 0 auto;" width="100px" height="auto">
-
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="6">Atención Primaria En Salud</td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="6">Nombre de Formato : Registro primera
-                                                infancia
-                                            </td>
-                                        </tr>
-                                        <td>Vigencia 00-00-000</td>
-                                        <td>Version 1.0</td>
-                                        <td>Codigo ID Primera Infancia</td>
-                                        <td><?php echo ($primerainfancia['Primerainfancia']['id']); ?>
-                                        </td>
-
-
-                                        </tr>
-                                    </table>
-                                </div>
-                            </div>
-
-                            <div class="row" style="justify-content: center;">
-                                <div class="col-sm-12">
-
-                                    <table width="100%" class="table table-striped table-bordered table-hover">
-                                        <tr class="title">
-                                            <td colspan="3">Nombre del Menor </td>
-                                            <td colspan="3">Documento </td>
-                                            <td colspan="3">Aseguradora </td>
-                                            <td colspan="3">Familia Asociada </td>
-                                        </tr>
-                                        <tr>
-
-                                            <td colspan="3">
-                                                <?php echo ($primerainfancia['Primerainfancia']['primernombre'] . ' ' . $primerainfancia['Primerainfancia']['segundonombre'] . ' ' . $primerainfancia['Primerainfancia']['primerapellido'] . ' ' . $primerainfancia['Primerainfancia']['segundoapellido']); ?>
-                                            </td>
-                                            <td colspan="3">
-                                                <?php echo ($primerainfancia['Primerainfancia']['tipodocumento'] . ' ' . $primerainfancia['Primerainfancia']['numerodoc']); ?>
-                                            </td>
-                                            <td colspan="3">
-                                                <?php echo ($primerainfancia['Primerainfancia']['aseguradora'] . ' ' . $primerainfancia['Primerainfancia']['regimen']); ?>
-                                            </td>
-                                            <td colspan="3">
-                                                <?php echo $this->Html->link($primerainfancia['Familia']['apellidosfamilia'], array('controller' => 'familias', 'action' => 'view', $primerainfancia['Familia']['id'])); ?>
-                                            </td>
-
-                                        </tr>
-                                        <tr>
-                                            <td colspan="12" style="text-align: center;" class="title">Valoración En
-                                                Salud</td>
-
-                                        </tr>
-
-                                        <tr>
-                                            <td colspan="2" class="title"> Talla</td>
-                                            <td colspan="2">
-                                                <?php echo ($primerainfancia['Primerainfancia']['talla']); ?>
-                                            </td>
-                                            <td colspan="2" class="title">Peso</td>
-                                            <td colspan="2">
-                                                <?php echo ($primerainfancia['Primerainfancia']['peso']); ?>
-                                            </td>
-                                            <td colspan="2" class="title"> Bajo de Peso</td>
-                                            <td colspan="2">
-                                                <?php echo ($primerainfancia['Primerainfancia']['bajopeso']); ?>
-                                            </td>
-
-
-
-                                        </tr>
-
-                                        <tr>
-                                            <td colspan="2" class="title">Tensión Arterial</td>
-                                            <td colspan="0">
-                                                <?php echo ($primerainfancia['Primerainfancia']['tensionarterial']); ?>
-                                            </td>
-                                            <td colspan="2" class="title">Discapacidad</td>
-                                            <td colspan="0">
-                                                <?php echo ($primerainfancia['Primerainfancia']['discapacidad']); ?>
-                                            </td>
-                                            <td colspan="2" class="title">Prematuro</td>
-                                            <td colspan="0">
-                                                <?php echo ($primerainfancia['Primerainfancia']['prematuro']); ?>
-                                            </td>
-                                            <td colspan="2" class="title"> Condición Congenita</td>
-                                            <td colspan="0">
-                                                <?php echo ($primerainfancia['Primerainfancia']['anomaliacongenita']); ?>
-                                            </td>
-                                        </tr>
-
-                                        <tr>
-                                            <td colspan="2" class="title">Perímetro Cefálico</td>
-                                            <td colspan="">
-                                                <?php echo ($primerainfancia['Primerainfancia']['perimetrocefalico']); ?>
-                                            </td>
-                                            <td colspan="2" class="title">Perímetro Branquial</td>
-                                            <td colspan="">
-                                                <?php echo ($primerainfancia['Primerainfancia']['perimetrobraquial']); ?>
-                                            </td>
-                                            <td colspan="2" class="title"> Perímetro Cintura</td>
-                                            <td colspan="">
-                                                <?php echo ($primerainfancia['Primerainfancia']['perimetrocintura']); ?>
-                                            </td>
-                                            <td colspan="2" class="title"> Perímetro Cadera</td>
-                                            <td colspan="">
-                                                <?php echo ($primerainfancia['Primerainfancia']['perimetrocadera']); ?>
-                                            </td>
-
-                                        </tr>
-
-                                        <tr>
-                                            <td colspan="4" class="title">Enfermedad Crónica</td>
-                                            <td colspan="8">
-                                                <?php echo ($primerainfancia['Primerainfancia']['condicioncronica']); ?>
-                                            </td>
-
-                                        </tr>
-                                        <tr>
-                                            <td colspan="4" class="title">Alimentación</td>
-                                            <td colspan="8">
-                                                <?php echo ($primerainfancia['Primerainfancia']['lactanciamaterna']); ?>
-                                            </td>
-                                        </tr>
-
-                                        <tr>
-                                            <td colspan="12" style="text-align: center;" class="title">Atención En
-                                                Salud</td>
-
-                                        </tr>
-                                        <tr>
-                                            <td colspan="6" style="text-align: center;" class="title">Esquema de
-                                                Vacunación</td>
-                                            <td colspan="6" style="text-align: center;" class="title"> Asistencia a
-                                                crecimiento y Desarrollo</td>
-
-                                        </tr>
-                                        <tr>
-                                            <td colspan="6">
-                                                <?php echo ($primerainfancia['Primerainfancia']['esquemavacunacion']); ?>
-                                            </td>
-                                            <td colspan="6">
-                                                <?php echo ($primerainfancia['Primerainfancia']['crecimientoydesarrollo']); ?>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="3" class="title">Signos alarma EDA</td>
-                                            <td colspan="3">
-                                                <?php echo ($primerainfancia['Primerainfancia']['eda']); ?>
-                                            </td>
-                                            <td colspan="3" class="title">Signos alarma ERA</td>
-                                            <td colspan="3">
-                                                <?php echo ($primerainfancia['Primerainfancia']['era']); ?>
-                                            </td>
-
-                                        </tr>
-                                        <tr>
-                                            <td colspan="2" class="title">Salud Oral</td>
-                                            <td colspan="2">
-                                                <?php echo ($primerainfancia['Primerainfancia']['higieneoral']); ?>
-                                            </td>
-                                            <td colspan="2" class="title">Desparasitación</td>
-                                            <td colspan="2">
-                                                <?php echo ($primerainfancia['Primerainfancia']['desparasitacion']); ?>
-                                            </td>
-                                            <td colspan="2" class="title"> Diagnóstico Nutricional</td>
-                                            <td colspan="2">
-                                                <?php echo ($primerainfancia['Primerainfancia']['desnutricion']); ?>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="4" class="title">Dificultad en Desarrollo</td>
-                                            <td colspan="8">
-                                                <?php echo ($primerainfancia['Primerainfancia']['desarrolloinfantil']); ?>
-                                            </td>
-                                        </tr>
-
-                                        <tr>
-                                            <td colspan="12" class="title" style="text-align: center;">Condiciones de
-                                                Vulnerabilidad</td>
-
-                                        </tr>
-
-                                        <tr>
-                                            <td colspan="12" class="title" style="text-align: center;">Plan de
-                                                Atención Integral</td>
-
-                                        </tr>
-
-                                        <tr>
-                                            <td colspan="3" class="title">Canalización uno</td>
-                                            <td colspan="3">
-                                                <?php echo ($primerainfancia['Primerainfancia']['canalizacionuno']); ?>
-                                            </td>
-                                            <td colspan="3" class="title">Canalización dos</td>
-                                            <td colspan="3">
-                                                <?php echo ($primerainfancia['Primerainfancia']['canalizaciondos']); ?>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="2" class="title">Canalización tres</td>
-                                            <td colspan="10">
-                                                <?php echo ($primerainfancia['Primerainfancia']['canalizaciontres']); ?>
-                                            </td>
-                                        </tr>
-
-                                        <tr>
-                                            <td colspan="2" class="title">Educación</td>
-                                            <td colspan="10">
-                                                <?php echo ($primerainfancia['Primerainfancia']['educacionuno']); ?>
-                                            </td>
-                                        </tr>
-
-                                        <div class="row">
-                                            <div class="col-sm-12">
-
-                                                <table width="100%" class="table table-striped table-bordered table-hover">
-                                                    <button class="my-button" onclick="window.print();">Imprimir</button>
-                                            </div>
-                                        </div>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-
-                        <thead>
-
-                </table>
-            </div>
-        </div>
-    </div>
-
-
-
-
+<div class="primerainfancias view">
+<h2><?php echo __('Primerainfancia'); ?></h2>
+	<dl>
+		<dt><?php echo __('Id'); ?></dt>
+		<dd>
+			<?php echo h($primerainfancia['Primerainfancia']['id']); ?>
+			&nbsp;
+		</dd>
+		<dt><?php echo __('Persona'); ?></dt>
+		<dd>
+			<?php echo $this->Html->link($primerainfancia['Persona']['apellidosnombre'], array('controller' => 'personas', 'action' => 'view', $primerainfancia['Persona']['id'])); ?>
+			&nbsp;
+		</dd>
+		<dt><?php echo __('Familia'); ?></dt>
+		<dd>
+			<?php echo $this->Html->link($primerainfancia['Familia']['apellidosfamilia'], array('controller' => 'familias', 'action' => 'view', $primerainfancia['Familia']['id'])); ?>
+			&nbsp;
+		</dd>
+		<dt><?php echo __('Tipodocumento'); ?></dt>
+		<dd>
+			<?php echo h($primerainfancia['Primerainfancia']['tipodocumento']); ?>
+			&nbsp;
+		</dd>
+		<dt><?php echo __('Numerodoc'); ?></dt>
+		<dd>
+			<?php echo h($primerainfancia['Primerainfancia']['numerodoc']); ?>
+			&nbsp;
+		</dd>
+		<dt><?php echo __('Primerapellido'); ?></dt>
+		<dd>
+			<?php echo h($primerainfancia['Primerainfancia']['primerapellido']); ?>
+			&nbsp;
+		</dd>
+		<dt><?php echo __('Segundoapellido'); ?></dt>
+		<dd>
+			<?php echo h($primerainfancia['Primerainfancia']['segundoapellido']); ?>
+			&nbsp;
+		</dd>
+		<dt><?php echo __('Primernombre'); ?></dt>
+		<dd>
+			<?php echo h($primerainfancia['Primerainfancia']['primernombre']); ?>
+			&nbsp;
+		</dd>
+		<dt><?php echo __('Segundonombre'); ?></dt>
+		<dd>
+			<?php echo h($primerainfancia['Primerainfancia']['segundonombre']); ?>
+			&nbsp;
+		</dd>
+		<dt><?php echo __('Fechanac'); ?></dt>
+		<dd>
+			<?php echo h($primerainfancia['Primerainfancia']['fechanac']); ?>
+			&nbsp;
+		</dd>
+		<dt><?php echo __('Edad'); ?></dt>
+		<dd>
+			<?php echo h($primerainfancia['Primerainfancia']['edad']); ?>
+			&nbsp;
+		</dd>
+		<dt><?php echo __('Sexo'); ?></dt>
+		<dd>
+			<?php echo h($primerainfancia['Primerainfancia']['sexo']); ?>
+			&nbsp;
+		</dd>
+		<dt><?php echo __('Aseguradora'); ?></dt>
+		<dd>
+			<?php echo h($primerainfancia['Primerainfancia']['aseguradora']); ?>
+			&nbsp;
+		</dd>
+		<dt><?php echo __('Otraseguradora'); ?></dt>
+		<dd>
+			<?php echo h($primerainfancia['Primerainfancia']['otraseguradora']); ?>
+			&nbsp;
+		</dd>
+		<dt><?php echo __('Regimen'); ?></dt>
+		<dd>
+			<?php echo h($primerainfancia['Primerainfancia']['regimen']); ?>
+			&nbsp;
+		</dd>
+		<dt><?php echo __('Estadoafiliacion'); ?></dt>
+		<dd>
+			<?php echo h($primerainfancia['Primerainfancia']['estadoafiliacion']); ?>
+			&nbsp;
+		</dd>
+		<dt><?php echo __('Telefono'); ?></dt>
+		<dd>
+			<?php echo h($primerainfancia['Primerainfancia']['telefono']); ?>
+			&nbsp;
+		</dd>
+		<dt><?php echo __('Email'); ?></dt>
+		<dd>
+			<?php echo h($primerainfancia['Primerainfancia']['email']); ?>
+			&nbsp;
+		</dd>
+		<dt><?php echo __('Prematuro'); ?></dt>
+		<dd>
+			<?php echo h($primerainfancia['Primerainfancia']['prematuro']); ?>
+			&nbsp;
+		</dd>
+		<dt><?php echo __('Discapacidad'); ?></dt>
+		<dd>
+			<?php echo h($primerainfancia['Primerainfancia']['discapacidad']); ?>
+			&nbsp;
+		</dd>
+		<dt><?php echo __('Peso'); ?></dt>
+		<dd>
+			<?php echo h($primerainfancia['Primerainfancia']['peso']); ?>
+			&nbsp;
+		</dd>
+		<dt><?php echo __('Talla'); ?></dt>
+		<dd>
+			<?php echo h($primerainfancia['Primerainfancia']['talla']); ?>
+			&nbsp;
+		</dd>
+		<dt><?php echo __('Bajopeso'); ?></dt>
+		<dd>
+			<?php echo h($primerainfancia['Primerainfancia']['bajopeso']); ?>
+			&nbsp;
+		</dd>
+		<dt><?php echo __('Perimetrocefalico'); ?></dt>
+		<dd>
+			<?php echo h($primerainfancia['Primerainfancia']['perimetrocefalico']); ?>
+			&nbsp;
+		</dd>
+		<dt><?php echo __('Perimetrobraquial'); ?></dt>
+		<dd>
+			<?php echo h($primerainfancia['Primerainfancia']['perimetrobraquial']); ?>
+			&nbsp;
+		</dd>
+		<dt><?php echo __('Perimetrocintura'); ?></dt>
+		<dd>
+			<?php echo h($primerainfancia['Primerainfancia']['perimetrocintura']); ?>
+			&nbsp;
+		</dd>
+		<dt><?php echo __('Perimetrocadera'); ?></dt>
+		<dd>
+			<?php echo h($primerainfancia['Primerainfancia']['perimetrocadera']); ?>
+			&nbsp;
+		</dd>
+		<dt><?php echo __('Tensionarterial'); ?></dt>
+		<dd>
+			<?php echo h($primerainfancia['Primerainfancia']['tensionarterial']); ?>
+			&nbsp;
+		</dd>
+		<dt><?php echo __('Lactanciamaterna'); ?></dt>
+		<dd>
+			<?php echo h($primerainfancia['Primerainfancia']['lactanciamaterna']); ?>
+			&nbsp;
+		</dd>
+		<dt><?php echo __('Condicioncronica'); ?></dt>
+		<dd>
+			<?php echo h($primerainfancia['Primerainfancia']['condicioncronica']); ?>
+			&nbsp;
+		</dd>
+		<dt><?php echo __('Anomaliacongenita'); ?></dt>
+		<dd>
+			<?php echo h($primerainfancia['Primerainfancia']['anomaliacongenita']); ?>
+			&nbsp;
+		</dd>
+		<dt><?php echo __('Esquemavacunacion'); ?></dt>
+		<dd>
+			<?php echo h($primerainfancia['Primerainfancia']['esquemavacunacion']); ?>
+			&nbsp;
+		</dd>
+		<dt><?php echo __('Desparasitacion'); ?></dt>
+		<dd>
+			<?php echo h($primerainfancia['Primerainfancia']['desparasitacion']); ?>
+			&nbsp;
+		</dd>
+		<dt><?php echo __('Crecimientoydesarrollo'); ?></dt>
+		<dd>
+			<?php echo h($primerainfancia['Primerainfancia']['crecimientoydesarrollo']); ?>
+			&nbsp;
+		</dd>
+		<dt><?php echo __('Desnutricion'); ?></dt>
+		<dd>
+			<?php echo h($primerainfancia['Primerainfancia']['desnutricion']); ?>
+			&nbsp;
+		</dd>
+		<dt><?php echo __('Sospechamaltrato'); ?></dt>
+		<dd>
+			<?php echo h($primerainfancia['Primerainfancia']['sospechamaltrato']); ?>
+			&nbsp;
+		</dd>
+		<dt><?php echo __('Padresconsumo'); ?></dt>
+		<dd>
+			<?php echo h($primerainfancia['Primerainfancia']['padresconsumo']); ?>
+			&nbsp;
+		</dd>
+		<dt><?php echo __('Cuidador'); ?></dt>
+		<dd>
+			<?php echo h($primerainfancia['Primerainfancia']['cuidador']); ?>
+			&nbsp;
+		</dd>
+		<dt><?php echo __('Educacion'); ?></dt>
+		<dd>
+			<?php echo h($primerainfancia['Primerainfancia']['educacion']); ?>
+			&nbsp;
+		</dd>
+		<dt><?php echo __('Higieneoral'); ?></dt>
+		<dd>
+			<?php echo h($primerainfancia['Primerainfancia']['higieneoral']); ?>
+			&nbsp;
+		</dd>
+		<dt><?php echo __('Desarrolloinfantil'); ?></dt>
+		<dd>
+			<?php echo h($primerainfancia['Primerainfancia']['desarrolloinfantil']); ?>
+			&nbsp;
+		</dd>
+		<dt><?php echo __('Eda'); ?></dt>
+		<dd>
+			<?php echo h($primerainfancia['Primerainfancia']['eda']); ?>
+			&nbsp;
+		</dd>
+		<dt><?php echo __('Era'); ?></dt>
+		<dd>
+			<?php echo h($primerainfancia['Primerainfancia']['era']); ?>
+			&nbsp;
+		</dd>
+		<dt><?php echo __('Canalizacionuno'); ?></dt>
+		<dd>
+			<?php echo h($primerainfancia['Primerainfancia']['canalizacionuno']); ?>
+			&nbsp;
+		</dd>
+		<dt><?php echo __('Canalizaciondos'); ?></dt>
+		<dd>
+			<?php echo h($primerainfancia['Primerainfancia']['canalizaciondos']); ?>
+			&nbsp;
+		</dd>
+		<dt><?php echo __('Educacionuno'); ?></dt>
+		<dd>
+			<?php echo h($primerainfancia['Primerainfancia']['educacionuno']); ?>
+			&nbsp;
+		</dd>
+		<dt><?php echo __('Canalizacion'); ?></dt>
+		<dd>
+			<?php echo $this->Html->link($primerainfancia['Canalizacion']['enlace'], array('controller' => 'canalizaciones', 'action' => 'view', $primerainfancia['Canalizacion']['id'])); ?>
+			&nbsp;
+		</dd>
+		<dt><?php echo __('Canalizaciontres'); ?></dt>
+		<dd>
+			<?php echo h($primerainfancia['Primerainfancia']['canalizaciontres']); ?>
+			&nbsp;
+		</dd>
+		<dt><?php echo __('Estadocanalizacion'); ?></dt>
+		<dd>
+			<?php echo h($primerainfancia['Primerainfancia']['estadocanalizacion']); ?>
+			&nbsp;
+		</dd>
+		<dt><?php echo __('Observacioncanalizacion'); ?></dt>
+		<dd>
+			<?php echo h($primerainfancia['Primerainfancia']['observacioncanalizacion']); ?>
+			&nbsp;
+		</dd>
+		<dt><?php echo __('FechaRegistro'); ?></dt>
+		<dd>
+			<?php echo h($primerainfancia['Primerainfancia']['fechaRegistro']); ?>
+			&nbsp;
+		</dd>
+		<dt><?php echo __('RegistroCanalizacion'); ?></dt>
+		<dd>
+			<?php echo h($primerainfancia['Primerainfancia']['registroCanalizacion']); ?>
+			&nbsp;
+		</dd>
+	</dl>
 </div>
-
-
-
-<?php
-/*$this->Html->css([
-    'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css'
-        ], ['block' => 'css']
-);
-$this->Html->script([
-    'https://code.jquery.com/jquery-3.2.1.min.js',
-    'https://cdn.ckeditor.com/4.9.2/basic/ckeditor.js',
-    'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js'
-        ], ['block' => 'script']
-);*/
-?>
-<script type="text/javascript">
-    $(document).ready(function() {
-        $('textarea').eac(function() {
-            this.setAttribute('style', 'height:' + (this.scrollHeight) + 'px;overflow-y:hidden;');
-        }).on('input', function() {
-            this.style.height = 'auto';
-            this.style.height = (this.scrollHeight) + 'px';
-        });
-
-    });
-</script>
+<div class="actions">
+	<h3><?php echo __('Actions'); ?></h3>
+	<ul>
+		<li><?php echo $this->Html->link(__('Edit Primerainfancia'), array('action' => 'edit', $primerainfancia['Primerainfancia']['id'])); ?> </li>
+		<li><?php echo $this->Form->postLink(__('Delete Primerainfancia'), array('action' => 'delete', $primerainfancia['Primerainfancia']['id']), array(), __('Are you sure you want to delete # %s?', $primerainfancia['Primerainfancia']['id'])); ?> </li>
+		<li><?php echo $this->Html->link(__('List Primerainfancias'), array('action' => 'index')); ?> </li>
+		<li><?php echo $this->Html->link(__('New Primerainfancia'), array('action' => 'add')); ?> </li>
+		<li><?php echo $this->Html->link(__('List Personas'), array('controller' => 'personas', 'action' => 'index')); ?> </li>
+		<li><?php echo $this->Html->link(__('New Persona'), array('controller' => 'personas', 'action' => 'add')); ?> </li>
+		<li><?php echo $this->Html->link(__('List Familias'), array('controller' => 'familias', 'action' => 'index')); ?> </li>
+		<li><?php echo $this->Html->link(__('New Familia'), array('controller' => 'familias', 'action' => 'add')); ?> </li>
+		<li><?php echo $this->Html->link(__('List Canalizaciones'), array('controller' => 'canalizaciones', 'action' => 'index')); ?> </li>
+		<li><?php echo $this->Html->link(__('New Canalizacion'), array('controller' => 'canalizaciones', 'action' => 'add')); ?> </li>
+	</ul>
+</div>

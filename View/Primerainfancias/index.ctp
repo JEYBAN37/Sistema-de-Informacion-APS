@@ -1,7 +1,8 @@
 <?php $this->layout = 'default_familia' ?>
 
 <div class="col-12 text-center " style="margin: 20px; margin-top: 40px;">
-    <h1 class="titulo-general-pwa-govco" style="color: #3366CC;margin-top: 25px;font-size: 3.5rem ;font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+    <h1 class="titulo-general-pwa-govco"
+        style="color: #3366CC;margin-top: 25px;font-size: 3.5rem ;font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
         Listado de Infantes
     </h1>
 </div>
@@ -18,7 +19,8 @@
                 <div class="row col-sm-12 JustifyCenter " style="margin: 20px; ">
                     <div class=" row">
                         <div class="col-sm-12">
-                            <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-example">
+                            <table width="100%" class="table table-striped table-bordered table-hover"
+                                id="dataTables-example">
                                 <thead>
                                     <tr>
                                         <th><?php echo $this->Paginator->sort('id'); ?></th>
