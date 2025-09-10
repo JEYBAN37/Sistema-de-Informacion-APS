@@ -274,7 +274,7 @@ function cronica(id) {
 			const sistolica = parseInt(partes[0]);
 			const diastolica = parseInt(partes[1]);
 	
-			if (sistolica > 90 && diastolica > 60) {
+			if  (sistolica >= 90 && sistolica <= 120 && diastolica >= 60 && diastolica <= 90) {
 				tensionArterialInput.style.color = 'green'; // Tensión óptima
 				mensajeTensionArterial.textContent = 'Óptima';mensajeTensionArterial.style.color = 'black';
 			} else if (sistolica <= 90 && diastolica <= 60) {

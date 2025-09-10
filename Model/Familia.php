@@ -13,24 +13,29 @@ App::uses('AppModel', 'Model');
  * @property Primerainfancia $Primerainfancia
  */
 class Familia extends AppModel
+
 {
+
+
+
 	public function getFamiliaSocioambientalFiltered($encuestadorId = null, $ubicacionId = null)
-    {
-        $query = $this->find('all')
-                      ->contain(['Sociambiental']);
+	{
+		$query = $this->find('all')
+			->contain(['Sociambiental']);
 
-        if ($encuestadorId !== null) {
-            $query->where(['Sociambiental.responsable_id' => $encuestadorId]);
-        }
+		if ($encuestadorId !== null) {
+			$query->where(['Sociambiental.responsable_id' => $encuestadorId]);
+		}
 
-        if ($ubicacionId !== null) {
-            $query->where(['Sociambiental.ubicacion_id' => $ubicacionId]);
-        }
+		if ($ubicacionId !== null) {
+			$query->where(['Sociambiental.ubicacion_id' => $ubicacionId]);
+		}
 
-        return $query;
-    }
+		return $query;
+	}
 
-	public function getFamiliaDatos($contain) {
+	public function getFamiliaDatos($contain)
+	{
 		try {
 			$result = $this->find('all', [
 				'contain' => $contain
@@ -42,36 +47,38 @@ class Familia extends AppModel
 			return [];
 		}
 	}
-	
-	public function getFamiliaSocioambientalFilter($conditions = array()) {
+
+	public function getFamiliaSocioambientalFilter($conditions = array())
+	{
 		$options = array(
 			'fields' => array(
-				'Familia.id', 
-				'Familia.nombres', 
+				'Familia.id',
+				'Familia.nombres',
 				'Familia.apellidos',
-				'Sociambiental.id', 
-				'Sociambiental.direccion', 
-				'Sociambiental.apellidosfamilia', 
+				'Sociambiental.id',
+				'Sociambiental.direccion',
+				'Sociambiental.apellidosfamilia',
 				'Sociambiental.fecha',
 				'Sociambiental.responsable_id'
 			),
 			'conditions' => $conditions,
-				'Sociambiental' => array(
-					'fields' => array(
-						'id', 
-						'direccion', 
-						'apellidosfamilia', 
-						'fecha',
-						'responsable_id'
-					)
-				), 
+			'Sociambiental' => array(
+				'fields' => array(
+					'id',
+					'direccion',
+					'apellidosfamilia',
+					'fecha',
+					'responsable_id'
+				)
+			),
 		);
 		return $this->find('all', $options);
 	}
-	
-	
 
-	public function getFamiliaResponsable() {
+
+
+	public function getFamiliaResponsable()
+	{
 		$contain = [
 			'Sociambiental' => [
 				'Responsable' => ['fields' => ['nombres']]
@@ -79,14 +86,16 @@ class Familia extends AppModel
 		];
 		return $this->getFamiliaDatos($contain);
 	}
-	
-	public function getSelectiveData() {
+
+	public function getSelectiveData()
+	{
 		$fields = ['id', 'nombres', 'apellidos', 'rol', 'celular', 'hogar'];
 		return $this->getFamiliaDatos($fields);
 	}
 
 
-	public function getFamiliaSocioambiental() {
+	public function getFamiliaSocioambiental()
+	{
 		$contain = [
 			'Sociambiental' => [
 				'fields' => ['id', 'direccion', 'apellidosfamilia', 'fecha']
@@ -98,8 +107,9 @@ class Familia extends AppModel
 	}
 
 
-	
-	public function getUbicaciones() {
+
+	public function getUbicaciones()
+	{
 		$contain = [
 			'Sociambiental' => [
 				'Ubicacion' => ['fields' => ['microterritorio']]
@@ -552,6 +562,27 @@ class Familia extends AppModel
 			),
 		),
 
+		'resguardo' => array(
+			'notEmpty' => array(
+				'rule' => array('notEmpty'),
+				'message' => 'Revisar campo',
+				//'allowEmpty' => false,
+				//'required' => false,
+				//'last' => false, // Stop validation after this rule
+				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+			),
+		),
+		'poblacionetnica' => array(
+			'notEmpty' => array(
+				'rule' => array('notEmpty'),
+				'message' => 'Revisar campo',
+				//'allowEmpty' => false,
+				//'required' => false,
+				//'last' => false, // Stop validation after this rule
+				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+			),
+		),
+
 	);
 
 
@@ -563,28 +594,28 @@ class Familia extends AppModel
 	 * @var array
 	 */
 	public $belongsTo = array(
-        'Sociambiental' => array(
-            'className' => 'Sociambiental',
-            'foreignKey' => 'sociambiental_id'
-        ),
-        'Responsable' => array(
-            'className' => 'Responsable',
-            'foreignKey' => false,
-            'conditions' => array('Responsable.id = Sociambiental.responsable_id')
+		'Sociambiental' => array(
+			'className' => 'Sociambiental',
+			'foreignKey' => 'sociambiental_id'
+		),
+		'Responsable' => array(
+			'className' => 'Responsable',
+			'foreignKey' => false,
+			'conditions' => array('Responsable.id = Sociambiental.responsable_id')
 		),
 		'Ubicacion' => array(
-            'className' => 'Ubicacion',
-            'foreignKey' => false,
-            'conditions' => array('Ubicacion.id = Sociambiental.ubicacion_id')
-        )
-    );
+			'className' => 'Ubicacion',
+			'foreignKey' => false,
+			'conditions' => array('Ubicacion.id = Sociambiental.ubicacion_id')
+		)
+	);
 
 	/**
 	 * hasMany associations
 	 *
 	 * @var array
 	 */
-public $hasMany = array(
+	public $hasMany = array(
 		'Adolescencia' => array(
 			'className' => 'Adolescencia',
 			'foreignKey' => 'familia_id',

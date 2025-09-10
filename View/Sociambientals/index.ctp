@@ -58,51 +58,124 @@
 </style>
 
 <div class="col-12 text-center " style="margin: 20px; margin-top: 40px;">
-    <h1 class="titulo-general-pwa-govco" style="color: #3366CC;margin-top: 20px;font-size: 3.5rem ;font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+    <h1 class="titulo-general-pwa-govco"
+        style="color: #3366CC;margin-top: 20px;font-size: 3.5rem ;font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
         Atención Primaria en Salud
     </h1>
 </div>
 
 
 
-<div style="margin: 20px;">
 
-    <!-- Formulario para filtrar registros -->
-    <?php echo $this->Form->create('Sociambiental', array('url' => array('action' => 'index'))); ?>
 
-    <div class="d-flex row">
-        <div class="col-md-6" style="margin-bottom: -2px;">
-            <?php echo $this->Form->label('encuestador_id', 'Nombre del Encuestador', ['class' => 'form-label']); ?>
-            <?php echo $this->Form->select('encuestador_id', $responsablesList, [
-                'class' => 'form-control select-search',
-                'style' => 'height: 30px; font-size: 15px; width: 100%',
-                'placeholder' => 'Seleccionar...',
-            ]); ?>
-        </div>
+<!-- Formulario para filtrar registros -->
+<?php echo $this->Form->create('Sociambiental', array('url' => array('action' => 'index'))); ?>
 
-        <div class="col-md-6" style="margin-bottom: -2px;">
-            <?php echo $this->Form->label('ubicacion_id', 'Microterritorio', ['class' => 'form-label']); ?>
-            <?php echo $this->Form->select('ubicacion_id', $ubicacionesList, [
-                'class' => 'form-control select-search',
-                'style' => 'height: 50px; font-size: 15px; width: 100%;',
-            ]); ?>
-        </div>
-
-        <div class="col-md-12 text-md-end" style="margin-bottom: -20px;">
-            <button type="submit" class="my-button">Buscar</button>
-            <?php echo $this->Form->end(); ?>
-        </div>
+<div class="d-flex row">
+    <div class="col-md-6" style="margin-bottom: -2px;">
+        <?php echo $this->Form->label('encuestador_id', 'Nombre del Encuestador', ['class' => 'form-label']); ?>
+        <?php echo $this->Form->select('encuestador_id', $responsablesList, [
+            'class' => 'form-control select-search',
+            'style' => 'height: 30px; font-size: 15px; width: 100%',
+            'placeholder' => 'Seleccionar...',
+        ]); ?>
     </div>
 
+    <div class="col-md-6" style="margin-bottom: -2px;">
+        <?php echo $this->Form->label('ubicacion_id', 'Microterritorio', ['class' => 'form-label']); ?>
+        <?php echo $this->Form->select('ubicacion_id', $ubicacionesList, [
+            'class' => 'form-control select-search',
+            'style' => 'height: 50px; font-size: 15px; width: 100%;',
+        ]); ?>
+    </div>
 
-
-
-
-
+    <div class="col-md-12 text-md-end" style="margin-bottom: -20px;">
+        <button type="submit" class="my-button">Buscar</button>
+        <?php echo $this->Form->end(); ?>
+    </div>
 </div>
 
 
+
+
+
+
+
+
+
 <?php echo $this->Form->end(); ?>
+
+<table id="tablaEjemplo" class="display responsive nowrap" style="width:100%">
+    <thead>
+        <tr>
+            <th class="sorting_1">id</th>
+            <th>Opciones</th>
+            <th>Territorio</th>
+            <th>Direccion</th>
+            <th>Apellidos de la Familia</th>
+            <th>Encuestador</th>
+            <th>N° de Hogares</th>
+            <th>N° de habitantes</th>
+            <th>Fecha de Encuesta</th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php foreach ($sociambientals as $sociambiental) : ?>
+            <tr class="gradeA odd">
+
+                <td><?php echo ($sociambiental['Sociambiental']['id']); ?>&nbsp;</td>
+                <td>
+                    <div class="btn-group">
+                        <button class="my-buttonOne" onclick="toggleDropdown(event)">
+                            <?php echo ('Acciones'); ?> <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" role="menu">
+
+                            <li><?php echo $this->Html->link(('Registro Familias'),
+                                    array('action' => 'view', $sociambiental['Sociambiental']['id']),
+                                    array(
+                                        'style' => 'font-size: 14px;'
+                                    )
+                                ); ?>
+                            </li>
+                            <li><?php echo $this->Html->link(('Editar Datos Vivienda'),
+                                    array('action' => 'edit',  $sociambiental['Sociambiental']['id']),
+                                    array(
+                                        'style' => 'font-size: 14px;'
+                                    )
+                                ); ?>
+                            </li>
+                            <li><?php echo $this->Html->link(('Agregar Familia'),
+                                    array('controller' => 'familias', 'action' => 'add?hogar=' . $sociambiental['Sociambiental']['id']),
+                                    array(
+                                        'style' => 'font-size: 14px;'
+                                    )
+                                ); ?>
+                            </li>
+                        </ul>
+                    </div>
+                </td>
+                <td><?php echo ($sociambiental['Ubicacion']['microterritorio']); ?>&nbsp;</td>
+                <td><?php echo ($sociambiental['Sociambiental']['direccion']); ?>&nbsp;</td>
+                <td><?php echo ($sociambiental['Sociambiental']['apellidosfamilia']); ?>&nbsp;
+                </td>
+                <td><?php echo ($sociambiental['Responsable']['nombres']); ?>&nbsp;</td>
+
+
+
+                <td><?php echo ($sociambiental['Sociambiental']['numerohogares']); ?>&nbsp;
+                </td>
+                <td><?php echo ($sociambiental['Sociambiental']['numerohabitantes']); ?>&nbsp;
+                </td>
+                <td><?php echo $this->Time->format('d-m-Y h:i A', ($sociambiental['Sociambiental']['fecha'])); ?>
+            </tr>
+
+
+        <?php endforeach; ?>
+
+
+    </tbody>
+</table>
 
 <div class="col-lg-12" style="justify-items: center; ">
     <div class="panel panel-default">
@@ -126,96 +199,14 @@
 
          </div-->
 
-        </ul>
+
         <!-- /.panel-heading -->
-        <div class="table-responsive">
-            <div style="margin: 20px;">
-                <div class="row">
-                    <div class="col-sm-12">
-                        <table width="100%" class="table table-striped table-bordered " id="dataTables-example">
-                            <thead>
-                                <tr>
-                                    <th class="sorting_1">id</th>
-                                    <th>Opciones</th>
-                                    <th>Territorio</th>
-                                    <th>Direccion</th>
-                                    <th>Apellidos de la Familia</th>
-                                    <th>Encuestador</th>
-                                    <th>N° de Hogares</th>
-                                    <th>N° de habitantes</th>
-                                    <th>Fecha de Encuesta</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php foreach ($sociambientals as $sociambiental) : ?>
-                                    <tr class="gradeA odd">
 
-                                        <td><?php echo ($sociambiental['Sociambiental']['id']); ?>&nbsp;</td>
-                                        <td>
-                                            <div class="btn-group">
-                                                <button class="my-buttonOne" onclick="toggleDropdown(event)">
-                                                    <?php echo ('Acciones'); ?> <span class="caret"></span>
-                                                </button>
-                                                <ul class="dropdown-menu" role="menu">
-
-                                                    <li><?php echo $this->Html->link(('Registro Familias'),
-                                                            array('action' => 'view', $sociambiental['Sociambiental']['id']),
-                                                            array(
-                                                                'style' => 'font-size: 14px;'
-                                                            )
-                                                        ); ?>
-                                                    </li>
-                                                    <li><?php echo $this->Html->link(('Editar Datos Vivienda'),
-                                                            array('action' => 'edit',  $sociambiental['Sociambiental']['id']),
-                                                            array(
-                                                                'style' => 'font-size: 14px;'
-                                                            )
-                                                        ); ?>
-                                                    </li>
-                                                    <li><?php echo $this->Html->link(('Agregar Familia'),
-                                                            array('controller' => 'familias', 'action' => 'add?hogar=' . $sociambiental['Sociambiental']['id']),
-                                                            array(
-                                                                'style' => 'font-size: 14px;'
-                                                            )
-                                                        ); ?>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </td>
-                                        <td><?php echo ($sociambiental['Ubicacion']['microterritorio']); ?>&nbsp;</td>
-                                        <td><?php echo ($sociambiental['Sociambiental']['direccion']); ?>&nbsp;</td>
-                                        <td><?php echo ($sociambiental['Sociambiental']['apellidosfamilia']); ?>&nbsp;
-                                        </td>
-                                        <td><?php echo ($sociambiental['Responsable']['nombres']); ?>&nbsp;</td>
-
-
-
-                                        <td><?php echo ($sociambiental['Sociambiental']['numerohogares']); ?>&nbsp;
-                                        </td>
-                                        <td><?php echo ($sociambiental['Sociambiental']['numerohabitantes']); ?>&nbsp;
-                                        </td>
-                                        <td><?php echo $this->Time->format('d-m-Y h:i A', ($sociambiental['Sociambiental']['fecha'])); ?>
-                                    </tr>
-
-
-                                <?php endforeach; ?>
-
-
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-
-            </div>
-            <!-- /.table-responsive -->
-
-        </div>
         <!-- /.panel-body -->
     </div>
     <!-- /.panel -->
 </div>
-<!-- /.col-lg-12 -->
-</div>
+
 
 <script>
     function toggleDropdown(event) {
@@ -248,26 +239,7 @@
             guardarSeleccionLocalStorage();
         });
 
-        $('#dataTables-example').DataTable({
-            "pagingType": "simple",
-            "pageLength": 10,
-            responsive: true,
-            dom: 'Bfrtip',
-            language: {
-                searchBuilder: {
-                    button: 'Filter',
-                }
-            },
-            buttons: [
-                'pageLength',
-                'copyHtml5',
-                'excelHtml5',
-                'csvHtml5',
-                'colvis',
-                'searchBuilder'
-            ]
 
-        });
 
     });
 
@@ -340,6 +312,29 @@
         localStorage.setItem('familiaEncuestadorId', familiaEncuestadorIdValue);
         localStorage.setItem('sociambientalResponsableId', sociambientalResponsableIdValue);
     }
+
+
+    $(document).ready(function() {
+        $('#tablaEjemplo').DataTable({
+            responsive: true,
+            "pagingType": "simple",
+            "pageLength": 10,
+            language: {
+                url: "//cdn.datatables.net/plug-ins/1.10.25/i18n/Spanish.json",
+                searchBuilder: {
+                    button: 'Filter',
+                }
+            },
+            buttons: [
+                'pageLength',
+                'copyHtml5',
+                'excelHtml5',
+                'csvHtml5',
+                'colvis',
+                'searchBuilder'
+            ]
+        });
+    });
 </script>
 
 

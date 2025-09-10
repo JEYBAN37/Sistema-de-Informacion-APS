@@ -122,7 +122,7 @@ echo $this->Html->script('validation'); // 'validation' es el nombre del archivo
                             'class' => 'form-control',
                             'placeholder' => '',
                             'style' => 'font-size: 12px',
-                            'type' => 'hidden'
+
                         ]);
                         ?>
 
@@ -260,7 +260,8 @@ echo $this->Html->script('validation'); // 'validation' es el nombre del archivo
                             ]);
                             ?>
 
-                            <button type="button" id="ayudaButton3" class="btn btn-success rounded-circle" data-toggle="popover" data-placement="top" data-content="Reconocer que las mujeres, 
+                            <button type="button" id="ayudaButton3" class="btn btn-success rounded-circle"
+                                data-toggle="popover" data-placement="top" data-content="Reconocer que las mujeres, 
 								los hombres y las personas de los sectores sociales LGBTI,
 								reaccionan de distinta forma a los servicios de salud,
 								 debido a sus diferentes experiencias a lo largo de la vida,
@@ -301,7 +302,8 @@ echo $this->Html->script('validation'); // 'validation' es el nombre del archivo
                         </div>
 
                         <!-- Segundo campo de selección -->
-                        <div class="form-group col-md-6" style="margin-top: 20px; display: none;" id="otraAseguradoraDiv">
+                        <div class="form-group col-md-6" style="margin-top: 20px; display: none;"
+                            id="otraAseguradoraDiv">
                             <?php
                             echo $this->Form->input('aseguradora', [
                                 'label' => 'Otra Aseguradora',
@@ -427,7 +429,8 @@ echo $this->Html->script('validation'); // 'validation' es el nombre del archivo
                             ));
                             ?>
 
-                            <button type="button" id="ayudaButton" class="btn btn-success rounded-circle" data-toggle="popover" data-placement="top" data-content="Físicas: Limitaciones o dificultades en la movilidad o funcionamiento físico.
+                            <button type="button" id="ayudaButton" class="btn btn-success rounded-circle"
+                                data-toggle="popover" data-placement="top" data-content="Físicas: Limitaciones o dificultades en la movilidad o funcionamiento físico.
 
                                         Auditivas: Dificultades o limitaciones en la capacidad de escuchar o procesar el sonido.
 
@@ -438,7 +441,8 @@ echo $this->Html->script('validation'); // 'validation' es el nombre del archivo
                                         Cognitivas o intelectuales: Limitaciones en el funcionamiento del cerebro que afectan el procesamiento, comprensión, aprendizaje y memoria de la información.
 
                                         Mentales: Limitaciones en las habilidades cognitivas, emocionales y de comportamiento.
-                                        " style="width: 30px; height: 30px; padding: 0; font-size: 18px; margin-top: 5px; margin-left: 15px;">
+                                        "
+                                style="width: 30px; height: 30px; padding: 0; font-size: 18px; margin-top: 5px; margin-left: 15px;">
                                 ?
                             </button>
 
@@ -1028,42 +1032,42 @@ echo $this->Html->script('validation'); // 'validation' es el nombre del archivo
                             )); ?>
                         </div>
                         <div class="form-group col-md-6" style="margin-top: 20px;">
-    <?php
-    $optionOcupacion = [
-        '' => 'Elegir',
-        '9998.Estudia' => 'Estudia',
-        '9998.Oficios Hogar y cuidado' => 'Oficios del hogar y/o de cuidado',
-        '5169.Trabajo formal' => 'Trabajo formal',
-        '9510.Trabajo informal' => 'Trabajo informal',
-        '9622.Independiente' => 'Independiente/microempresario',
-        'Sin ocupación' => 'Sin ocupación',
-        '9999.No informa' => 'No informa',
-        '9999.No aplica' => 'No aplica',
-        '9999.SD' => 'Sin dato'
-    ];
-    echo $this->Form->input('ocupacion', array(
-        'label' => '¿Cúal es la ocupación actual?',
-        'class' => 'form-control',
-        'placeholder' => '',
-        'type' => 'select',
-        'options' => $optionOcupacion,
-        'style' => 'height:30px; font-size: 15px; width:100%',
-        'id' => 'ocupacion'
-    ));
-    ?>
-</div>
+                            <?php
+                            $optionOcupacion = [
+                                '' => 'Elegir',
+                                '9998.Estudia' => 'Estudia',
+                                '9998.Oficios Hogar y cuidado' => 'Oficios del hogar y/o de cuidado',
+                                '5169.Trabajo formal' => 'Trabajo formal',
+                                '9510.Trabajo informal' => 'Trabajo informal',
+                                '9622.Independiente' => 'Independiente/microempresario',
+                                'Sin ocupación' => 'Sin ocupación',
+                                '9999.No informa' => 'No informa',
+                                '9999.No aplica' => 'No aplica',
+                                '9999.SD' => 'Sin dato'
+                            ];
+                            echo $this->Form->input('ocupacion', array(
+                                'label' => '¿Cúal es la ocupación actual?',
+                                'class' => 'form-control',
+                                'placeholder' => '',
+                                'type' => 'select',
+                                'options' => $optionOcupacion,
+                                'style' => 'height:30px; font-size: 15px; width:100%',
+                                'id' => 'ocupacion'
+                            ));
+                            ?>
+                        </div>
 
-<div class="form-group col-md-6" style="margin-top: 20px; display: none;" id="otraOcupacionDiv">
-    <?php
-    echo $this->Form->input('ocupacion', [
-        'label' => 'Descripción específica de ocupación',
-        'class' => 'form-control',
-        'style' => 'height:30px; font-size: 15px; width:100%',
-        'id' => 'otraOcupacion'
-    ]);
-    ?>
-</div>
-	
+                        <div class="form-group col-md-6" style="margin-top: 20px; display: none;" id="otraOcupacionDiv">
+                            <?php
+                            echo $this->Form->input('ocupacion', [
+                                'label' => 'Descripción específica de ocupación',
+                                'class' => 'form-control',
+                                'style' => 'height:30px; font-size: 15px; width:100%',
+                                'id' => 'otraOcupacion'
+                            ]);
+                            ?>
+                        </div>
+
 
                         <div class="form-group col-md-6" style="margin-top: 20px;">
                             <?php
@@ -1206,7 +1210,7 @@ echo $this->Html->script('validation'); // 'validation' es el nombre del archivo
                             'No aplica ' => 'Elegir',
                             'No' => 'No',
                             'Tramite de autorización de servicios de salud' => 'Tramite de autorización de servicios de salud',
-							'Vacunacion' => 'Vacunación ',
+                            'Vacunacion' => 'Vacunación ',
                             'Atencion de PyM Medico' => 'Atención en salud de promoción y mantenimiento por médico',
                             'Atencion medicina general' => ' Atención en salud por medicina general',
                             'Atencion  Urgencias ' => 'Atención en salud en un servicio de Urgencias ',
@@ -1230,36 +1234,38 @@ echo $this->Html->script('validation'); // 'validation' es el nombre del archivo
                         ];
 
                         echo $this->Form->input('canalizacionuno', array(
-							'label' => 'Canalización 1',
-							'style' => 'height:30px; font-size: 15px; width:100%',
+                            'label' => 'Canalización 1',
+                            'style' => 'height:30px; font-size: 15px; width:100%',
                             'placeholder' => '',
-							'class' => 'select-search',
+                            'class' => 'select-search',
                             'options' => $optionCanlizacion,
                             'type' => 'select',
-							'id' => 'canalizacionuno', // Cambiado de 'status' a 'canalizacionuno'
-							'onChange' => 'capturarValorSeleccionado();' // Llama a la función 'capturarValorSeleccionado()' cuando cambia el valor
-						));
-						?>
+                            'id' => 'canalizacionuno', // Cambiado de 'status' a 'canalizacionuno'
+                            'onChange' => 'capturarValorSeleccionado();' // Llama a la función 'capturarValorSeleccionado()' cuando cambia el valor
+                        ));
+                        ?>
                     </div>
 
 
-					<!-- Fondo oscuro y cuadro modal -->
-					<div id="canalizationSpecific" class="overlay">
-						<div class="form-group col-md-12" style="margin-top: 5px;">
-							<div id="modalvacunancion" class="modal">
-								<div class="d-flex  justify-content-end vh-100">
-									<button type="button" class="close" onclick="cerrarModal('modalvacunancion','canalizationSpecific')">
-										<span aria-hidden="true" style="font-size: 30px;">&times;</span>
-									</button>
-								</div>
-								<ul id="dataTuning" class="list-group">
-								</ul>
-								<div class="d-flex justify-content-center vh-100 ">
-									<button class=" my-button" type="button" onclick="cerrarModal('modalvacunancion','canalizationSpecific')">Aceptar</button>
-								</div>
-							</div>
-						</div>
-					</div>
+                    <!-- Fondo oscuro y cuadro modal -->
+                    <div id="canalizationSpecific" class="overlay">
+                        <div class="form-group col-md-12" style="margin-top: 5px;">
+                            <div id="modalvacunancion" class="modal">
+                                <div class="d-flex  justify-content-end vh-100">
+                                    <button type="button" class="close"
+                                        onclick="cerrarModal('modalvacunancion','canalizationSpecific')">
+                                        <span aria-hidden="true" style="font-size: 30px;">&times;</span>
+                                    </button>
+                                </div>
+                                <ul id="dataTuning" class="list-group">
+                                </ul>
+                                <div class="d-flex justify-content-center vh-100 ">
+                                    <button class=" my-button" type="button"
+                                        onclick="cerrarModal('modalvacunancion','canalizationSpecific')">Aceptar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
                     <div id="Canalizacion">
                         <div class="form-group col-md-6" style="margin-top: 20px;">
@@ -1322,29 +1328,31 @@ echo $this->Html->script('validation'); // 'validation' es el nombre del archivo
 
                     <div class="form-group col-md-6" style="margin-top: 20px;">
                         <?php
-						echo $this->Form->input('remisionEspecifica', array(
-							'label' => 'Canalizaciones Especificas',
-							'type' => 'textarea', // Cambiado a 'textarea'
-							'class' => 'form-control',
-							'style' => 'height:100px;  font-size: 15px ; width:100%', // Ajustado el estilo para un área de texto más grande
-							'id' => 'remisionEspecifica',
-							'readonly' => true // Utilizando '=> true' en lugar de solo 'readonly'
-						));
-						?>
+                        echo $this->Form->input('remisionEspecifica', array(
+                            'label' => 'Canalizaciones Especificas',
+                            'type' => 'textarea', // Cambiado a 'textarea'
+                            'class' => 'form-control',
+                            'style' => 'height:100px;  font-size: 15px ; width:100%', // Ajustado el estilo para un área de texto más grande
+                            'id' => 'remisionEspecifica',
+                            'readonly' => true // Utilizando '=> true' en lugar de solo 'readonly'
+                        ));
+                        ?>
 
 
-					</div>
+                    </div>
 
 
-					<div class="form-group col-md-6" style="margin-top: 20px;">
+                    <div class="form-group col-md-6" style="margin-top: 20px;">
 
-						<?php
-						echo $this->Form->input('educacionuno', array(
+                        <?php
+                        echo $this->Form->input('educacionuno', array(
                             'label' => 'Refiera el tipo de actividad desarrollada',
                             'class' => 'form-control',
                             'style' => 'height:30px;  font-size: 15px ; width:100%',
                             'value' => 'Elegir',
-                            'id' => 'opcionesSeleccionadas', 'readonly', 'onclick' => 'mostrarModal()'
+                            'id' => 'opcionesSeleccionadas',
+                            'readonly',
+                            'onclick' => 'mostrarModal()'
 
                         )); ?>
 
@@ -1355,16 +1363,17 @@ echo $this->Html->script('validation'); // 'validation' es el nombre del archivo
                         <div class="form-group col-md-12" style="margin-top: 5px;">
                             <div id="modal" class="modal">
                                 <div class="modal-header-native" style="text-align: center;">
-									<button type="button" class="close" onclick="cerrarModal('overlay','modal')">
+                                    <button type="button" class="close" onclick="cerrarModal('overlay','modal')">
                                         <span aria-hidden="true" style="font-size: 30px;">&times;</span>
                                     </button>
                                 </div>
                                 <div id="miContenedor" class="form-group col-md-12" style="margin-top: 20px;">
 
                                 </div>
-								<div class="d-flex justify-content-center vh-100">
-									<button class=" my-button" type="button" onclick="cerrarModal('overlay','modal')">Cerrar</button>
-								</div>
+                                <div class="d-flex justify-content-center vh-100">
+                                    <button class=" my-button" type="button"
+                                        onclick="cerrarModal('overlay','modal')">Cerrar</button>
+                                </div>
 
 
                             </div>
@@ -1432,10 +1441,10 @@ $this->Html->script([
     }
 
     // Función para cerrar el modal
-	function cerrarModal(divaleatory, divSecond) {
-		document.getElementById(divaleatory).style.display = "none";
-		document.getElementById(divSecond).style.display = "none ";
-	}
+    function cerrarModal(divaleatory, divSecond) {
+        document.getElementById(divaleatory).style.display = "none";
+        document.getElementById(divSecond).style.display = "none ";
+    }
 
 
 
@@ -1485,7 +1494,7 @@ $this->Html->script([
         });
 
 
-	});
+    });
 
 
 
@@ -1494,15 +1503,15 @@ $this->Html->script([
 
 
 
-	function agregarOpcionSeleccion() {
+    function agregarOpcionSeleccion() {
 
 
-    $("#JuventudadultoCanalizacionId").prepend(
-        "<option value='' selected='selected'>Seleccione</option>");
+        $("#JuventudadultoCanalizacionId").prepend(
+            "<option value='' selected='selected'>Seleccione</option>");
 
 
 
-	}
+    }
 
 
 
@@ -1569,12 +1578,12 @@ $this->Html->script([
         $('#ayudaButton3').popover();
     });
 
-	function generarCheckboxes(opciones, id, result) {
-		let resultHTML = ''
+    function generarCheckboxes(opciones, id, result) {
+        let resultHTML = ''
 
         opciones.forEach(opcion => {
             resultHTML +=
-				`<li class="list-group-item d-flex  align-items-center h-100" style="margin-bottom: 0em;">
+                `<li class="list-group-item d-flex  align-items-center h-100" style="margin-bottom: 0em;">
             <input type="checkbox" value="${opcion}" onclick="actualizarInput('${id}', '${result}')" class="d-flex justify-content-center">
             <label>${opcion}</label>
         </li>`;
@@ -1598,70 +1607,70 @@ $this->Html->script([
         'Remision a urgencias',
     ];
     // Generar los checkboxes y agregarlos al contenedor
-	document.getElementById('miContenedor').innerHTML = generarCheckboxes(opciones, 'modal', 'opcionesSeleccionadas');
+    document.getElementById('miContenedor').innerHTML = generarCheckboxes(opciones, 'modal', 'opcionesSeleccionadas');
 
 
 
-	const dataGuardada = ''
-	const opcionesVacunancion = opcionesActividades = [
+    const dataGuardada = ''
+    const opcionesVacunancion = opcionesActividades = [
 
-		'Gestantes	Influenza Gestacional 	1 dosis a partir de la Semana 14 de Gestación ',
-		'Gestantes	TdaP (Tetanos, Difteria, Tosferina Acelular)	Dosis Única a partir de semana 26 de gestación',
-		'Adultos de 60 ños y mas 	Vacuna de influenza estacional	una dosis cada año ',
+        'Gestantes	Influenza Gestacional 	1 dosis a partir de la Semana 14 de Gestación ',
+        'Gestantes	TdaP (Tetanos, Difteria, Tosferina Acelular)	Dosis Única a partir de semana 26 de gestación',
+        'Adultos de 60 ños y mas 	Vacuna de influenza estacional	una dosis cada año ',
 
-	];
+    ];
 
-	// Función para actualizar el campo de entrada con las opciones selecciona
-	function actualizarInput(elementId, result) {
-		var checkboxes = document.querySelectorAll('#' + elementId + ' input[type="checkbox"]');
-		var opcionesSeleccionadas = Array.from(checkboxes)
-			.filter(checkbox => checkbox.checked)
-			.map(checkbox => checkbox.value)
-			.join(', ');
+    // Función para actualizar el campo de entrada con las opciones selecciona
+    function actualizarInput(elementId, result) {
+        var checkboxes = document.querySelectorAll('#' + elementId + ' input[type="checkbox"]');
+        var opcionesSeleccionadas = Array.from(checkboxes)
+            .filter(checkbox => checkbox.checked)
+            .map(checkbox => checkbox.value)
+            .join(', ');
 
-		document.getElementById(result).value = opcionesSeleccionadas;
-	}
-	//Optienen el valor de los campos del checkbox solo llama
-	//el array que quieres mostrar introduce el id de la etiqueta que hiciste
-	//para vizualizar la checkbox y el result es en la variable que guardara
+        document.getElementById(result).value = opcionesSeleccionadas;
+    }
+    //Optienen el valor de los campos del checkbox solo llama
+    //el array que quieres mostrar introduce el id de la etiqueta que hiciste
+    //para vizualizar la checkbox y el result es en la variable que guardara
 
-	function generarCheckboxes(opciones, id, result) {
-		let resultHTML = ''
+    function generarCheckboxes(opciones, id, result) {
+        let resultHTML = ''
 
-		opciones.forEach(opcion => {
-			resultHTML +=
-				`<li class="list-group-item d-flex  align-items-center h-100" style="margin-bottom: 0em;">
+        opciones.forEach(opcion => {
+            resultHTML +=
+                `<li class="list-group-item d-flex  align-items-center h-100" style="margin-bottom: 0em;">
             <input type="checkbox" value="${opcion}" onclick="actualizarInput('${id}', '${result}')" class="d-flex justify-content-center">
             <label>${opcion}</label>
         </li>`;
-		});
+        });
 
-		return resultHTML;
-	}
+        return resultHTML;
+    }
 
-	//Captura el valor igresar los casos encesarion en el switch
-	function capturarValorSeleccionado() {
-		var valorSeleccionado = document.getElementById("canalizacionuno").value; //Obtener el valor de la canalizacion
-		var otraAseguradoraDiv = document.getElementById('overlay');
-
-
-		switch (valorSeleccionado) {
-			case "Vacunacion":
-				console.log(valorSeleccionado)
-				document.getElementById('dataTuning').innerHTML = generarCheckboxes(opcionesActividades, 'modalvacunancion',
-					'remisionEspecifica');
-				document.getElementById("canalizationSpecific").style.display = "block";
-				document.getElementById("modalvacunancion").style.display = "block";
-				break;
+    //Captura el valor igresar los casos encesarion en el switch
+    function capturarValorSeleccionado() {
+        var valorSeleccionado = document.getElementById("canalizacionuno").value; //Obtener el valor de la canalizacion
+        var otraAseguradoraDiv = document.getElementById('overlay');
 
 
-		}
-	}
+        switch (valorSeleccionado) {
+            case "Vacunacion":
+                console.log(valorSeleccionado)
+                document.getElementById('dataTuning').innerHTML = generarCheckboxes(opcionesActividades, 'modalvacunancion',
+                    'remisionEspecifica');
+                document.getElementById("canalizationSpecific").style.display = "block";
+                document.getElementById("modalvacunancion").style.display = "block";
+                break;
+
+
+        }
+    }
 
     document.getElementById('ocupacion').addEventListener('change', function() {
         var otraOcupacionDiv = document.getElementById('otraOcupacionDiv');
         var otraOcupacion = document.getElementById('otraOcupacion');
-        
+
         if (this.value === '9510.Trabajo informal') {
             otraOcupacionDiv.style.display = 'block';
             otraOcupacion.disabled = false;
@@ -1678,6 +1687,4 @@ $this->Html->script([
             ocupacion.value = ocupacion.value.split('.')[0] + '.' + this.value;
         }
     });
-
-
 </script>

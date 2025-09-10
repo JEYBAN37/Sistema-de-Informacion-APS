@@ -4,131 +4,132 @@
 echo $this->Html->script('validationAdolescencia'); // 'validation' es el nombre del archivo sin la extensión .js
 ?>
 <style>
-.popover-content {
-    display: none;
-    position: absolute;
-    background-color: #fff;
-    border: 1px solid #ccc;
-    padding: 10px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    z-index: 999;
-    /* Valor alto para colocar el popover encima de otros elementos */
-    font-size: 12px;
-    /* Ajusta el tamaño de la fuente según tus preferencias */
-    text-align: justify;
+	.popover-content {
+		display: none;
+		position: absolute;
+		background-color: #fff;
+		border: 1px solid #ccc;
+		padding: 10px;
+		box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+		z-index: 999;
+		/* Valor alto para colocar el popover encima de otros elementos */
+		font-size: 12px;
+		/* Ajusta el tamaño de la fuente según tus preferencias */
+		text-align: justify;
 
 
-}
+	}
 
-/* Estilo para el fondo oscuro cuando se muestra el modal */
-.overlay {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    z-index: 1;
-}
+	/* Estilo para el fondo oscuro cuando se muestra el modal */
+	.overlay {
+		display: none;
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		background-color: rgba(0, 0, 0, 0.5);
+		z-index: 1;
+	}
 
-/* Estilo para el cuadro modal */
-.modal {
-    overflow: auto;
-
-
+	/* Estilo para el cuadro modal */
+	.modal {
+		overflow: auto;
 
 
-    display: none;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 80%;
-    /* Ajusta el ancho del modal según tus necesidades */
 
-    /* Ancho máximo para pantallas más grandes */
 
-    background-color: #fff;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    z-index: 1;
-}
+		display: none;
+		position: fixed;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		width: 80%;
+		/* Ajusta el ancho del modal según tus necesidades */
 
-.button-one {
-    display: block;
-    width: 100%;
-    height: 34px;
-    padding: 6px 12px;
-    font-size: 14px;
-    line-height: 1.42857143;
-    color: #555;
-    background-color: #fff;
-    background-image: none;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-    -webkit-transition: border-color ease-in-out 0.15s, -webkit-box-shadow ease-in-out 0.15s;
-    -o-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
-    transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
-    text-align: left;
-    height: 35px;
-    font-size: 15px;
-    width: 100%;
-    margin-top: 10px;
-    font-weight: 700;
-}
+		/* Ancho máximo para pantallas más grandes */
 
-/* Estilo para el texto y checkboxes dentro del modal */
-.modal p {
-    text-align: left;
-}
+		background-color: #fff;
+		border: 1px solid #ccc;
+		border-radius: 5px;
+		z-index: 1;
+	}
 
-.modal label {
-    display: block;
-    margin-bottom: 10px;
-}
+	.button-one {
+		display: block;
+		width: 100%;
+		height: 34px;
+		padding: 6px 12px;
+		font-size: 14px;
+		line-height: 1.42857143;
+		color: #555;
+		background-color: #fff;
+		background-image: none;
+		border: 1px solid #ccc;
+		border-radius: 4px;
+		-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+		box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+		-webkit-transition: border-color ease-in-out 0.15s, -webkit-box-shadow ease-in-out 0.15s;
+		-o-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+		transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+		text-align: left;
+		height: 35px;
+		font-size: 15px;
+		width: 100%;
+		margin-top: 10px;
+		font-weight: 700;
+	}
 
-input[type="checkbox"] {
-    margin-right: 10px;
-}
+	/* Estilo para el texto y checkboxes dentro del modal */
+	.modal p {
+		text-align: left;
+	}
+
+	.modal label {
+		display: block;
+		margin-bottom: 10px;
+	}
+
+	input[type="checkbox"] {
+		margin-right: 10px;
+	}
 </style>
 
 <body style="font-size: 14px;">
-    <div class="form-group col-sm-12">
-        <?php echo $this->Form->create('Adolescencia'); ?>
-        <fieldset>
+	<div class="form-group col-sm-12">
+		<?php echo $this->Form->create('Adolescencia'); ?>
+		<fieldset>
 
-            <div class="col-12 text-center">
-                <h1 class="title-general-forms">Modulo Adolescencia</h1>
-            </div>
+			<div class="col-12 text-center">
+				<h1 class="title-general-forms">Modulo Adolescencia</h1>
+			</div>
 
-            <h2 class="subtitle-general-forms">Datos Personales</h2>
-            <hr style=" border:0.1px solid rgba(0,0,0,.125);">
+			<h2 class="subtitle-general-forms">Datos Personales</h2>
+			<hr style=" border:0.1px solid rgba(0,0,0,.125);">
 
-            <div class="grow justify-content-center" display="none" style="margin-top:20px">
-                <div class="card col-sm-12" style=" font-size:15px;  border:1.5px solid rgba(0,0,0,.125);">
-                    <div class="form-group row">
-                        <?php
+			<div class="grow justify-content-center" display="none" style="margin-top:20px">
+				<div class="card col-sm-12" style=" font-size:15px;  border:1.5px solid rgba(0,0,0,.125);">
+					<div class="form-group row">
+						<?php
 						$idAux = $_GET['adolescencias'];
 						echo $this->Form->input('familia_id', array('value' => '' . $idAux, 'type' => 'hidden'));
 						?>
-                        <!--div class="form-group col-md-6">
+						<!--div class="form-group col-md-6">
 							<?php
 							echo $this->Form->input('familia_id', [
 								'label' => 'ID_Familia/N° Hogar/Nombres',
 								'class' => 'form-control',
 								'placeholder' => '',
 								'type' => 'select',
+
 								'class' => 'form-control select-search',
 								'style' => 'height:30px;  font-size: 15px ; width:100%',
 							]);
 							?>
 							</div-->
 
-                        <div class="form-group col-md-6" style="margin-top: 20px;">
-                            <?php
+						<div class="form-group col-md-6" style="margin-top: 20px;">
+							<?php
 							$TipoDeDocumentoOptions = array(
 								'' => 'Elegir',
 								'RC' => 'Registro Civil',
@@ -145,51 +146,53 @@ input[type="checkbox"] {
 								'options' => $TipoDeDocumentoOptions
 							));
 							?>
-                        </div>
+						</div>
 
-                        <div class="form-group col-md-6" style="margin-top: 20px;">
-                            <?php echo $this->Form->input('numerodoc', [
+						<div class="form-group col-md-6" style="margin-top: 20px;">
+							<?php echo $this->Form->input('numerodoc', [
 								'label' => 'N° de documento',
 								'class' => 'form-control',
+								'type' => 'numeric',
 								'style' => 'height:30px;  font-size: 15px ; width:100%',
+								'type' => 'numeric',
 							]);  ?>
-                        </div>
+						</div>
 
-                        <div class="form-group col-md-6" style="margin-top: 20px;">
-                            <?php echo $this->Form->input('primerapellido', [
+						<div class="form-group col-md-6" style="margin-top: 20px;">
+							<?php echo $this->Form->input('primerapellido', [
 								'label' => 'Primer Apellido',
 								'class' => 'form-control',
 								'style' => 'height:30px;  font-size: 15px ; width:100%',
 							]);  ?>
-                        </div>
+						</div>
 
-                        <div class="form-group col-md-6" style="margin-top: 20px;">
-                            <?php echo $this->Form->input('segundoapellido', [
+						<div class="form-group col-md-6" style="margin-top: 20px;">
+							<?php echo $this->Form->input('segundoapellido', [
 								'label' => 'Segundo Apellido',
 								'class' => 'form-control',
 								'style' => 'height:30px;  font-size: 15px ; width:100%',
 							]);  ?>
-                        </div>
+						</div>
 
-                        <div class="form-group col-md-6" style="margin-top: 20px;">
-                            <?php echo $this->Form->input('primernombre', [
+						<div class="form-group col-md-6" style="margin-top: 20px;">
+							<?php echo $this->Form->input('primernombre', [
 								'label' => 'Primer Nombre',
 								'class' => 'form-control',
 								'style' => 'height:30px;  font-size: 15px ; width:100%',
 							]);  ?>
-                        </div>
+						</div>
 
-                        <div class="form-group col-md-6" style="margin-top: 20px;">
-                            <?php echo $this->Form->input('segundonombre', [
+						<div class="form-group col-md-6" style="margin-top: 20px;">
+							<?php echo $this->Form->input('segundonombre', [
 								'label' => 'Segundo Nombre',
 								'class' => 'form-control',
 								'style' => 'height:30px;  font-size: 15px ; width:100%',
 							]);  ?>
-                        </div>
+						</div>
 
-                        <div class="form-group col-md-6" style="margin-top: 20px;">
-                            <!-- Campo de fecha de nacimiento -->
-                            <?php echo $this->Form->input('fechanac', [
+						<div class="form-group col-md-6" style="margin-top: 20px;">
+							<!-- Campo de fecha de nacimiento -->
+							<?php echo $this->Form->input('fechanac', [
 								'label' => 'Fecha de nacimiento:',
 								'type' => 'date',
 								'minYear' => date('Y') - 19,
@@ -199,11 +202,11 @@ input[type="checkbox"] {
 								'empty' => true, // Establecer el campo como vacío
 
 							]); ?>
-                        </div>
+						</div>
 
-                        <div class="form-group col-md-6" style="margin-top: 20px;">
-                            <!-- Campo de edad calculada (se llenará automáticamente con JavaScript) -->
-                            <?php echo $this->Form->input('edad', [
+						<div class="form-group col-md-6" style="margin-top: 20px;">
+							<!-- Campo de edad calculada (se llenará automáticamente con JavaScript) -->
+							<?php echo $this->Form->input('edad', [
 								'label' => 'Edad',
 								'style' => 'font-size: 16px; padding: 5px; border: 1px solid #ccc; border-radius: 5px;',
 								'id' => 'edad', // Agrega este identificador al campo de edad
@@ -213,10 +216,10 @@ input[type="checkbox"] {
 								'step' => '0.01'
 
 							]); ?>
-                        </div>
+						</div>
 
-                        <div class="form-group col-md-6" style="margin-top: 20px;">
-                            <?php
+						<div class="form-group col-md-6" style="margin-top: 20px;">
+							<?php
 							$sexoOption = [
 								' ' => 'Elegir',
 								'Hombre' => 'Hombre',
@@ -234,24 +237,23 @@ input[type="checkbox"] {
 							]);
 							?>
 
-                            <button type="button" id="ayudaButton" class="btn btn-success rounded-circle"
-                                style="width: 30px; height: 30px; padding: 0; font-size: 18px; margin-top: 5px; margin-left: 15px;">
-                                ?
-                            </button>
-                            <div id="popover" class="popover-content">
-                                <p>Reconocer que las mujeres,
-                                    los hombres y las personas de los sectores sociales LGBTI,
-                                    reaccionan de distinta forma a los servicios de salud,
-                                    debido a sus diferentes experiencias a lo largo de la vida,
-                                    que afecta su salud, la incidencia o prevalencia de enfermedades y su tratamiento.
-                                    (Ajustado de módulo conocimientos, OPS 2020).
-                                </p>
-                            </div>
+							<button type="button" id="ayudaButton" class="btn btn-success rounded-circle" style="width: 30px; height: 30px; padding: 0; font-size: 18px; margin-top: 5px; margin-left: 15px;">
+								?
+							</button>
+							<div id="popover" class="popover-content">
+								<p>Reconocer que las mujeres,
+									los hombres y las personas de los sectores sociales LGBTI,
+									reaccionan de distinta forma a los servicios de salud,
+									debido a sus diferentes experiencias a lo largo de la vida,
+									que afecta su salud, la incidencia o prevalencia de enfermedades y su tratamiento.
+									(Ajustado de módulo conocimientos, OPS 2020).
+								</p>
+							</div>
 
-                        </div>
+						</div>
 
-                        <div class="form-group col-md-6" style="margin-top: 20px;">
-                            <?php
+						<div class="form-group col-md-6" style="margin-top: 20px;">
+							<?php
 							$generoOption = [
 								' ' => 'Elegir',
 								'Masculino' => 'Masculino',
@@ -271,23 +273,22 @@ input[type="checkbox"] {
 								'onChange' => 'mostrar(this.value);', // Agrega el atributo onChange para llamar a la función JavaScript
 							]);
 							?>
-                            <button type="button" id="ayudaButton1" class="btn btn-success rounded-circle"
-                                style="width: 30px; height: 30px; padding: 0; font-size: 18px; margin-top: 5px; margin-left: 15px;">
-                                ?
-                            </button>
+							<button type="button" id="ayudaButton1" class="btn btn-success rounded-circle" style="width: 30px; height: 30px; padding: 0; font-size: 18px; margin-top: 5px; margin-left: 15px;">
+								?
+							</button>
 
-                            <div id="popover-content" class="popover-content">
-                                <p>Reconocer que las mujeres,
-                                    los hombres y las personas de los sectores sociales LGBTI,
-                                    reaccionan de distinta forma a los servicios de salud,
-                                    debido a sus diferentes experiencias a lo largo de la vida,
-                                    que afecta su salud, la incidencia o prevalencia de enfermedades y su tratamiento.
-                                    (Ajustado de módulo conocimientos, OPS 2020)</p>
-                            </div>
-                        </div>
+							<div id="popover-content" class="popover-content">
+								<p>Reconocer que las mujeres,
+									los hombres y las personas de los sectores sociales LGBTI,
+									reaccionan de distinta forma a los servicios de salud,
+									debido a sus diferentes experiencias a lo largo de la vida,
+									que afecta su salud, la incidencia o prevalencia de enfermedades y su tratamiento.
+									(Ajustado de módulo conocimientos, OPS 2020)</p>
+							</div>
+						</div>
 
-                        <div class="form-group col-md-6" style="margin-top: 20px;">
-                            <?php
+						<div class="form-group col-md-6" style="margin-top: 20px;">
+							<?php
 							$aseguradoraOption = [
 								' ' => 'Elegir',
 								'Sanitas' => 'Sanitas',
@@ -312,12 +313,11 @@ input[type="checkbox"] {
 								'id' => 'aseguradora', // Añade un ID único
 							]);
 							?>
-                        </div>
+						</div>
 
-                        <!-- Segundo campo de selección -->
-                        <div class="form-group col-md-6" style="margin-top: 20px; display: none;"
-                            id="otraAseguradoraDiv">
-                            <?php
+						<!-- Segundo campo de selección -->
+						<div class="form-group col-md-6" style="margin-top: 20px; display: none;" id="otraAseguradoraDiv">
+							<?php
 							echo $this->Form->input('aseguradora', [
 								'label' => 'Otra Aseguradora',
 								'class' => 'form-control',
@@ -326,11 +326,11 @@ input[type="checkbox"] {
 								'id' => 'otraAseguradora', // Añade un ID único
 							]);
 							?>
-                        </div>
+						</div>
 
 
-                        <div class="form-group col-md-6" style="margin-top: 20px;">
-                            <?php
+						<div class="form-group col-md-6" style="margin-top: 20px;">
+							<?php
 							$regimenOption = [
 								' ' => 'Elegir',
 								'Subsidiado' => 'Subsidiado',
@@ -347,10 +347,10 @@ input[type="checkbox"] {
 								'style' => 'height:30px;  font-size: 15px ; width:100%',
 								'options' => $regimenOption,
 							]);  ?>
-                        </div>
+						</div>
 
-                        <div class="form-group col-md-6" style="margin-top: 20px;">
-                            <?php $estadoAfiliacionOption = [
+						<div class="form-group col-md-6" style="margin-top: 20px;">
+							<?php $estadoAfiliacionOption = [
 								' ' => 'Elegir',
 								'Activo' => 'Activo',
 								'Inactivo' => 'Inactivo',
@@ -364,9 +364,9 @@ input[type="checkbox"] {
 								'style' => 'height:30px;  font-size: 15px ; width:100%',
 								'options' => $estadoAfiliacionOption,
 							]);  ?>
-                        </div>
+						</div>
 
-                        <!--div class="form-group col-md-6">
+						<!--div class="form-group col-md-6">
                             <?php echo $this->Form->input('barrio', [
 								'label' => 'Barrio',
 								'class' => 'form-control',
@@ -374,7 +374,7 @@ input[type="checkbox"] {
 							]);  ?>
                         </div-->
 
-                        <!--div class="form-group col-md-6">
+						<!--div class="form-group col-md-6">
                             <?php echo $this->Form->input('direccion', [
 								'label' => 'Direccion',
 								'class' => 'form-control',
@@ -382,40 +382,40 @@ input[type="checkbox"] {
 							]);  ?>
                         </div-->
 
-                        <div class="form-group col-md-6" style="margin-top: 20px;">
-                            <?php echo $this->Form->input('telefono', [
+						<div class="form-group col-md-6" style="margin-top: 20px;">
+							<?php echo $this->Form->input('telefono', [
 								'label' => 'Telefono',
 								'class' => 'form-control',
 								'style' => 'height:30px;  font-size: 15px ; width:100%',
 							]);  ?>
-                        </div>
+						</div>
 
-                        <div class="form-group col-md-6" style="margin-top: 20px;">
-                            <?php echo $this->Form->input('email', [
+						<div class="form-group col-md-6" style="margin-top: 20px;">
+							<?php echo $this->Form->input('email', [
 								'label' => 'Email',
 								'class' => 'form-control',
 								'style' => 'height:30px;  font-size: 15px ; width:100%',
 							]);  ?>
-                        </div>
+						</div>
 
 
 
-                    </div>
-                </div>
-            </div>
+					</div>
+				</div>
+			</div>
 
-            <h2 class="subtitle-general-forms ">
-                Valoración de Salud</h2>
-            <hr style=" border:0.1px solid rgba(0,0,0,.125);">
-            <div class="grow justify-content-center" display="none" style="margin-top:20px">
-                <div class="card col-sm-12" style=" font-size:15px;  border:1.5px solid rgba(0,0,0,.125);">
+			<h2 class="subtitle-general-forms ">
+				Valoración de Salud</h2>
+			<hr style=" border:0.1px solid rgba(0,0,0,.125);">
+			<div class="grow justify-content-center" display="none" style="margin-top:20px">
+				<div class="card col-sm-12" style=" font-size:15px;  border:1.5px solid rgba(0,0,0,.125);">
 
-                    <div class="form-group row">
+					<div class="form-group row">
 
 
 
-                        <div class="form-group col-md-6" style="margin-top: 20px;">
-                            <?php
+						<div class="form-group col-md-6" style="margin-top: 20px;">
+							<?php
 							$optionYesNo = [
 								'' => 'Elegir',
 								'Si' => 'Si',
@@ -445,64 +445,65 @@ input[type="checkbox"] {
 								'options' => $optionDiscapacidad
 							));
 							?>
-                            <button type="button" id="ayudaButton2" class="btn btn-success rounded-circle"
-                                style="width: 30px; height: 30px; padding: 0; font-size: 18px; margin-top: 5px; margin-left: 15px;">
-                                ?
-                            </button>
+							<button type="button" id="ayudaButton2" class="btn btn-success rounded-circle" style="width: 30px; height: 30px; padding: 0; font-size: 18px; margin-top: 5px; margin-left: 15px;">
+								?
+							</button>
 
-                            <div id="popover-t" class="popover-content">
-                                <p><strong>Auditivas:</strong>
-                                    Dificultades o limitaciones en la capacidad de escuchar o procesar el sonido.
-                                    <br>
-                                    <strong>Visuales:</strong>
-                                    Limitaciones o dificultades en la visión.
-                                    <br>
-                                    <strong>Sordoceguera:</strong>
-                                    Enfocarse en criar y educar a los hijos.
-                                    <br>
-                                    <strong>Cognitivas o intelectuales:</strong>
+							<div id="popover-t" class="popover-content">
+								<p><strong>Auditivas:</strong>
+									Dificultades o limitaciones en la capacidad de escuchar o procesar el sonido.
+									<br>
+									<strong>Visuales:</strong>
+									Limitaciones o dificultades en la visión.
+									<br>
+									<strong>Sordoceguera:</strong>
+									Enfocarse en criar y educar a los hijos.
+									<br>
+									<strong>Cognitivas o intelectuales:</strong>
 
-                                    Condición en la que una persona tiene tanto discapacidad auditiva como
-                                    discapacidad visual.<br>
-                                    <strong>Mentales:</strong>
+									Condición en la que una persona tiene tanto discapacidad auditiva como
+									discapacidad visual.<br>
+									<strong>Mentales:</strong>
 
-                                    Limitaciones en el funcionamiento del cerebro que afectan el
-                                    procesamiento, comprensión, aprendizaje y memoria de la información.
-                                    <br>
-                                </p>
-                            </div>
+									Limitaciones en el funcionamiento del cerebro que afectan el
+									procesamiento, comprensión, aprendizaje y memoria de la información.
+									<br>
+								</p>
+							</div>
 
-                        </div>
-                        <div class="form-group col-md-6" style="margin-top: 20px;">
-                            <?php
+						</div>
+						<div class="form-group col-md-6" style="margin-top: 20px;">
+							<?php
 							echo $this->Form->input('peso', array(
 								'label' => 'Registre Peso en Kg.',
 								'class' => 'form-control',
 								'style' => 'height:30px;  font-size: 15px ; width:100%',
 								'placeholder' => '',
+								'type' => 'numeric',
 								'id' => 'peso',
 							));
 							?>
-                        </div>
+						</div>
 
-                        <div class="form-group col-md-6" style="margin-top: 20px;">
-                            <?php
+						<div class="form-group col-md-6" style="margin-top: 20px;">
+							<?php
 							echo $this->Form->input('talla', array(
 								'label' => 'Registre talla en cm',
 								'class' => 'form-control',
 								'style' => 'height:30px;  font-size: 15px ; width:100%',
 								'placeholder' => '',
+								'type' => 'numeric',
 								'id' => 'talla',
 							));
 							?>
-                        </div>
-                        <div class="form-group col-md-6" style="margin-top: 20px;">
+						</div>
+						<div class="form-group col-md-6" style="margin-top: 20px;">
 
-                            <button class="my-button" style="margin-left: 5px;" id="calcularIMC">Calcular IMC</button>
-                        </div>
+							<button class="my-button" style="margin-left: 5px;" id="calcularIMC">Calcular IMC</button>
+						</div>
 
-                        <div class="form-group col-md-6" style="margin-top: 20px;">
-                            <?php
+						<div class="form-group col-md-6" style="margin-top: 20px;">
+							<?php
 							echo $this->Form->input('indicemasacorporal', array(
 								'label' => 'Indice de masa corporal',
 								'class' => 'form-control',
@@ -512,20 +513,20 @@ input[type="checkbox"] {
 								'id' => 'indicemasacorporal',
 							)); ?>
 
-                            <p id="mensajeIMC"></p>
-                        </div>
-                        <div class="form-group col-md-6" style="margin-top: 20px;">
-                            <?php
+							<p id="mensajeIMC"></p>
+						</div>
+						<div class="form-group col-md-6" style="margin-top: 20px;">
+							<?php
 							echo $this->Form->input('tensionarterial', array(
 								'label' => 'Registre Tensión arterial 0/0',
 								'class' => 'form-control tension-arterial-input',
 								'style' => 'height:30px;  font-size: 15px ; width:100%',
 								'placeholder' => ''
 							)); ?>
-                            <p id="mensaje-tension-arterial"></p>
-                        </div>
-                        <div class="form-group col-md-6" style="margin-top: 20px;">
-                            <?php
+							<p id="mensaje-tension-arterial"></p>
+						</div>
+						<div class="form-group col-md-6" style="margin-top: 20px;">
+							<?php
 							$optionVacuna = array(
 								'' => 'Elegir',
 								'Incompleto' => 'Esquema incompleto a su edad',
@@ -546,9 +547,9 @@ input[type="checkbox"] {
 
 							)); ?>
 
-                        </div>
-                        <div class="form-group col-md-6" style="margin-top: 20px;">
-                            <?php
+						</div>
+						<div class="form-group col-md-6" style="margin-top: 20px;">
+							<?php
 							$optionCronica = array(
 								'No aplica ' => 'Elegir',
 								'No' => 'No',
@@ -576,9 +577,9 @@ input[type="checkbox"] {
 
 
 							)); ?>
-                        </div>
-                        <div class="form-group col-md-6" style="margin-top: 20px;">
-                            <?php
+						</div>
+						<div class="form-group col-md-6" style="margin-top: 20px;">
+							<?php
 							echo $this->Form->input('desparasitacion', array(
 								'label' => '¿Se ha desparasitado en los últimos seis meses?',
 								'class' => 'form-control',
@@ -589,8 +590,8 @@ input[type="checkbox"] {
 
 							)); ?> </div>
 
-                        <div class="form-group col-md-6" style="margin-top: 20px;">
-                            <?php
+						<div class="form-group col-md-6" style="margin-top: 20px;">
+							<?php
 							$optionValoracionMedica = array(
 								'' => 'Elegir',
 								'Consulta Morbilidad' => 'Consulta de Morbilidad',
@@ -607,9 +608,9 @@ input[type="checkbox"] {
 								'placeholder' => '',
 								'options' => $optionValoracionMedica,
 							)); ?>
-                        </div>
-                        <div class="form-group col-md-6" style="margin-top: 20px;">
-                            <?php
+						</div>
+						<div class="form-group col-md-6" style="margin-top: 20px;">
+							<?php
 							echo $this->Form->input('saludoral', array(
 								'label' => '¿Asistió a consulta de odontología en los últimos seis meses?',
 								'class' => 'form-control',
@@ -618,21 +619,21 @@ input[type="checkbox"] {
 								'placeholder' => '',
 								'id' => 'saludoral',
 							)); ?>
-                        </div>
-                    </div>
-                </div>
-            </div>
+						</div>
+					</div>
+				</div>
+			</div>
 
-            <h2 class="subtitle-general-forms ">Salud Sexual y
-                Reproductiva</h2>
-            <hr style=" border:0.1px solid rgba(0,0,0,.125);">
-            <div class="grow justify-content-center" display="none" style="margin-top:20px">
-                <div class="card col-sm-12" style=" font-size:15px;  border:1.5px solid rgba(0,0,0,.125);">
+			<h2 class="subtitle-general-forms ">Salud Sexual y
+				Reproductiva</h2>
+			<hr style=" border:0.1px solid rgba(0,0,0,.125);">
+			<div class="grow justify-content-center" display="none" style="margin-top:20px">
+				<div class="card col-sm-12" style=" font-size:15px;  border:1.5px solid rgba(0,0,0,.125);">
 
-                    <div class="form-group row">
-                        <div class="form-group col-md-6" style="margin-top: 20px;">
+					<div class="form-group row">
+						<div class="form-group col-md-6" style="margin-top: 20px;">
 
-                            <?php
+							<?php
 							$optionVidaSexual = [
 								'' =>  'Elegir',
 								'No' => 'No',
@@ -655,24 +656,23 @@ input[type="checkbox"] {
 
 
 
-                            <button type="button" id="ayudaButton3" class="btn btn-danger rounded-circle"
-                                style="width: 30px; height: 30px; padding: 0; font-size: 18px; margin-left: 15px;">
-                                !
-                            </button>
+							<button type="button" id="ayudaButton3" class="btn btn-danger rounded-circle" style="width: 30px; height: 30px; padding: 0; font-size: 18px; margin-left: 15px;">
+								!
+							</button>
 
-                            <div id="popover-d" class="popover-content">
-                                <p><strong>Alerta:</strong>
-                                    Riesgo en menor de 14 años con inicio de relaciones sexuales
-                                </p>
-                            </div>
-                        </div>
+							<div id="popover-d" class="popover-content">
+								<p><strong>Alerta:</strong>
+									Riesgo en menor de 14 años con inicio de relaciones sexuales
+								</p>
+							</div>
+						</div>
 
 
-                    </div>
-                    <div id="yess" class="form-group row">
+					</div>
+					<div id="yess" class="form-group row">
 
-                        <div class="form-group col-md-6" style="margin-top: 20px;">
-                            <?php
+						<div class="form-group col-md-6" style="margin-top: 20px;">
+							<?php
 							$optionAnticonceptivos = [
 								'No aplica ' =>  'Elegir',
 								'No' => 'No',
@@ -696,9 +696,9 @@ input[type="checkbox"] {
 								'id' => 'metodosanticonceptivos'
 
 							)); ?>
-                        </div>
-                        <div class="form-group col-md-6" style="margin-top: 20px;">
-                            <?php
+						</div>
+						<div class="form-group col-md-6" style="margin-top: 20px;">
+							<?php
 							$optionits = [
 								'No aplica ' =>  'Elegir',
 								'No' => 'No',
@@ -716,24 +716,24 @@ input[type="checkbox"] {
 								'id' => 'infeccionestransmisionsexual'
 
 							)); ?>
-                        </div>
+						</div>
 
 
-                    </div>
-                </div>
-            </div>
+					</div>
+				</div>
+			</div>
 
-            <div id="yesss" style="margin-top:-50px">
-                <div id="si" class="grow justify-content-center" display="none" style="margin-top:20px">
-                    <h2 class="subtitle-general-forms" style="margin-bottom: 10px;">Antecedentes
-                        ginecológicos/obsetétricos</h2>
-                    <hr style=" border:0.1px solid rgba(0,0,0,.125);margin-bottom: 20px;">
-                    <div class="card col-sm-12" style=" font-size:15px;  border:1.5px solid rgba(0,0,0,.125);">
-                        <div class="form-group row">
+			<div id="yesss" style="margin-top:-50px">
+				<div id="si" class="grow justify-content-center" display="none" style="margin-top:20px">
+					<h2 class="subtitle-general-forms" style="margin-bottom: 10px;">Antecedentes
+						ginecológicos/obsetétricos</h2>
+					<hr style=" border:0.1px solid rgba(0,0,0,.125);margin-bottom: 20px;">
+					<div class="card col-sm-12" style=" font-size:15px;  border:1.5px solid rgba(0,0,0,.125);">
+						<div class="form-group row">
 
 
-                            <div class="form-group col-md-6" style="margin-top: 20px;">
-                                <?php $optionYesNo1 = [
+							<div class="form-group col-md-6" style="margin-top: 20px;">
+								<?php $optionYesNo1 = [
 									'No aplica ' => 'Elegir',
 									'Si' => 'Si',
 									'No' => 'No',
@@ -751,12 +751,12 @@ input[type="checkbox"] {
 									'options' => $optionYesNo1,
 									'placeholder' => ''
 								)); ?>
-                                <p class="help-block"> Procedimientos en el sistema reproductivo, ovarios,
-                                    útero, trompas de
-                                    Falopio, cuello uterino </p>
-                            </div>
-                            <div class="form-group col-md-6" style="margin-top: 20px;">
-                                <?php
+								<p class="help-block"> Procedimientos en el sistema reproductivo, ovarios,
+									útero, trompas de
+									Falopio, cuello uterino </p>
+							</div>
+							<div class="form-group col-md-6" style="margin-top: 20px;">
+								<?php
 								$optionGinecologico = [
 									'No aplica ' => 'Elegir',
 									'No' => 'No',
@@ -781,13 +781,13 @@ input[type="checkbox"] {
 									'options' => $optionGinecologico,
 									'placeholder' => ''
 								)); ?>
-                            </div>
-                            <div class="form-group col-md-6" style="margin-top: 20px;">
-                                <p class="help-block">Selecione otra respuesta si requiere, de lo contrario
-                                    elija la
-                                    opción
-                                    'No ' </p>
-                                <?php
+							</div>
+							<div class="form-group col-md-6" style="margin-top: 20px;">
+								<p class="help-block">Selecione otra respuesta si requiere, de lo contrario
+									elija la
+									opción
+									'No ' </p>
+								<?php
 								echo $this->Form->input('ancedenteginecologico1', array(
 									'label' => '¿Ha presentado alguna de las siguientes situaciones en el embarazo? ',
 									'class' => 'form-control',
@@ -796,10 +796,10 @@ input[type="checkbox"] {
 									'options' => $optionGinecologico,
 									'placeholder' => ''
 								)); ?>
-                            </div>
+							</div>
 
-                            <div class="form-group col-md-6" style="margin-top: 20px;">
-                                <?php
+							<div class="form-group col-md-6" style="margin-top: 20px;">
+								<?php
 								$gestanteOption = [
 									'No aplica ' => 'Elegir',
 									'No' => 'No',
@@ -816,30 +816,29 @@ input[type="checkbox"] {
 									'onChange' => 'gestacion(this.value);', // Agrega el atributo onChange para llamar a la función JavaScript
 								]);
 								?>
-                                <p class="help-block"> Registre información de mujer en gestación o puerperio
-                                </p>
+								<p class="help-block"> Registre información de mujer en gestación o puerperio
+								</p>
 
-                            </div>
-                        </div>
-                    </div>
+							</div>
+						</div>
+					</div>
 
-                    <div id="yes">
-                        <h2 class="subtitle-general-forms " style="margin-bottom: 10px;">Gestación
-                            <button type="button" id="ayudaButton4" class="btn btn-danger rounded-circle"
-                                style="width: 30px; height: 30px; padding: 0; font-size: 18px; margin-left: -5px;">
-                                !
-                            </button>
+					<div id="yes">
+						<h2 class="subtitle-general-forms " style="margin-bottom: 10px;">Gestación
+							<button type="button" id="ayudaButton4" class="btn btn-danger rounded-circle" style="width: 30px; height: 30px; padding: 0; font-size: 18px; margin-left: -5px;">
+								!
+							</button>
 
-                            <div id="popover-dTwo" class="popover-content" style="color: black; ">
-                                <p><strong>Alerta:</strong>
-                                    Riesgo alto gestantes menores de 18 años.
-                                </p>
-                            </div>
-                        </h2>
-                        <hr style=" border:0.1px solid rgba(0,0,0,.125);margin-bottom: 20px;">
-                        <div class="card col-sm-12" style=" font-size:15px;  border:1.5px solid rgba(0,0,0,.125);">
-                            <div class="form-group col-md-6" style="margin-top: 20px;">
-                                <?php
+							<div id="popover-dTwo" class="popover-content" style="color: black; ">
+								<p><strong>Alerta:</strong>
+									Riesgo alto gestantes menores de 18 años.
+								</p>
+							</div>
+						</h2>
+						<hr style=" border:0.1px solid rgba(0,0,0,.125);margin-bottom: 20px;">
+						<div class="card col-sm-12" style=" font-size:15px;  border:1.5px solid rgba(0,0,0,.125);">
+							<div class="form-group col-md-6" style="margin-top: 20px;">
+								<?php
 								$optionControlPrenatal = [
 									'No aplica ' =>  'Elegir',
 									'No inscrita' => 'No inscrita en control de embarazo',
@@ -859,9 +858,9 @@ input[type="checkbox"] {
 
 								)); ?>
 
-                            </div>
-                            <div class="form-group col-md-6" style="margin-top: 20px;">
-                                <?php
+							</div>
+							<div class="form-group col-md-6" style="margin-top: 20px;">
+								<?php
 								$optionRiesgoEmbarazo = [
 									'No aplica ' =>  'Elegir',
 									'Bajo' => 'Bajo',
@@ -880,9 +879,9 @@ input[type="checkbox"] {
 
 								)); ?>
 
-                            </div>
-                            <div class="form-group col-md-6" style="margin-top: 20px;">
-                                <?php
+							</div>
+							<div class="form-group col-md-6" style="margin-top: 20px;">
+								<?php
 								$optionAlarmaEmbarazo = [
 									'No aplica ' =>  'Elegir',
 									'No' => 'No',
@@ -910,11 +909,11 @@ input[type="checkbox"] {
 
 								)); ?>
 
-                            </div>
+							</div>
 
-                            <div class="form-group col-md-6" style="margin-top: 20px;">
+							<div class="form-group col-md-6" style="margin-top: 20px;">
 
-                                <?php
+								<?php
 								$optionCursoVida = [
 
 									'Adolescencia' => 'Adolescencia',
@@ -931,10 +930,10 @@ input[type="checkbox"] {
 
 
 								)); ?>
-                            </div>
+							</div>
 
-                            <div class="form-group col-md-6" style="margin-top: 20px;">
-                                <?php
+							<div class="form-group col-md-6" style="margin-top: 20px;">
+								<?php
 								$optionAlternativa = [
 									'No aplica ' => 'Elegir',
 									'No refiere' => 'No refiere',
@@ -954,23 +953,23 @@ input[type="checkbox"] {
 									'style' => 'height:30px;  font-size: 15px ; width:100%',
 								]);
 								?>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+							</div>
+						</div>
+					</div>
+				</div>
 
-            </div>
+			</div>
 
-            <h2 class="subtitle-general-forms ">Riesgo
-                Psicosocial</h2>
-            <hr style=" border:0.1px solid rgba(0,0,0,.125);">
-            <div class="grow justify-content-center" display="none" style="margin-top:20px">
-                <div class="card col-sm-12" style=" font-size:15px;  border:1.5px solid rgba(0,0,0,.125);">
+			<h2 class="subtitle-general-forms ">Riesgo
+				Psicosocial</h2>
+			<hr style=" border:0.1px solid rgba(0,0,0,.125);">
+			<div class="grow justify-content-center" display="none" style="margin-top:20px">
+				<div class="card col-sm-12" style=" font-size:15px;  border:1.5px solid rgba(0,0,0,.125);">
 
-                    <div class="form-group row">
+					<div class="form-group row">
 
-                        <div class="form-group col-md-6" style="margin-top: 20px;">
-                            <?php
+						<div class="form-group col-md-6" style="margin-top: 20px;">
+							<?php
 							$optionConsumospa = [
 								'No aplica ' =>  'Elegir',
 								'No' => 'No',
@@ -993,11 +992,11 @@ input[type="checkbox"] {
 								'id' => 'consumospa',
 								'onChange' => 'spa(this.value);', // Agrega el atributo onChange para llamar a la función JavaScript
 							)); ?>
-                        </div>
-                        <div id="Consumospa" class="form-group col-md-6">
-                            <p class="help-block">Selecione otra respuesta si requiere, de lo contrario elija la opción
-                                'No'' </p>
-                            <?php
+						</div>
+						<div id="Consumospa" class="form-group col-md-6">
+							<p class="help-block">Selecione otra respuesta si requiere, de lo contrario elija la opción
+								'No'' </p>
+							<?php
 							echo $this->Form->input('consumospa1', array(
 								'label' => 'Consumo de Alcohol/Cigarrillo, sustancias Psicoactivas, uso indebido de medicamentos ',
 								'class' => 'form-control',
@@ -1006,9 +1005,9 @@ input[type="checkbox"] {
 								'placeholder' => '',
 								'id' => 'consumospa1'
 							)); ?>
-                        </div>
-                        <div class="form-group col-md-6" style="margin-top: 20px;">
-                            <?php
+						</div>
+						<div class="form-group col-md-6" style="margin-top: 20px;">
+							<?php
 							$optionConflictos = [
 								'No aplica ' => 'Elegir',
 								'No' => 'No refiere',
@@ -1033,11 +1032,11 @@ input[type="checkbox"] {
 								'onChange' => 'psicosocial(this.value);', // Agrega el atributo onChange para llamar a la función JavaScript
 							]);
 							?>
-                        </div>
-                        <div id="Psicosocial" class="form-group col-md-6">
-                            <p class="help-block">Selecione otra respuesta si requiere, de lo contrario elija la opción
-                                'No refiere' </p>
-                            <?php
+						</div>
+						<div id="Psicosocial" class="form-group col-md-6">
+							<p class="help-block">Selecione otra respuesta si requiere, de lo contrario elija la opción
+								'No refiere' </p>
+							<?php
 							echo $this->Form->input('riesgopsicosocial1', array(
 								'label' => '¿Ha presentado alguna de las siguientes situaciones en el último mes?',
 								'class' => 'form-control',
@@ -1046,9 +1045,9 @@ input[type="checkbox"] {
 								'placeholder' => '',
 								'id' => 'riesgopsicosocial1'
 							)); ?>
-                        </div>
-                        <div class="form-group col-md-6" style="margin-top: 20px;">
-                            <?php
+						</div>
+						<div class="form-group col-md-6" style="margin-top: 20px;">
+							<?php
 							$optionEstudio = [
 								'' => 'Elegir',
 								'Institucion educativa' => 'Institución educativa',
@@ -1074,9 +1073,9 @@ input[type="checkbox"] {
 								'style' => 'height:30px;  font-size: 15px ; width:100%',
 
 							)); ?>
-                        </div>
-                        <div class="form-group col-md-6" style="margin-top: 20px;">
-                            <?php
+						</div>
+						<div class="form-group col-md-6" style="margin-top: 20px;">
+							<?php
 							$optionRendimientoEstudio = [
 								'' => 'Elegir',
 								'Alto' => 'Aprende y es dedicado en sus tareas',
@@ -1096,8 +1095,8 @@ input[type="checkbox"] {
 
 							));
 							?></div>
-                        <div class="form-group col-md-6" style="margin-top: 20px;">
-                            <?php
+						<div class="form-group col-md-6" style="margin-top: 20px;">
+							<?php
 							$optionTiposViolencia = [
 								'' => 'Elegir',
 								'No' => 'No se identifica',
@@ -1120,10 +1119,10 @@ input[type="checkbox"] {
 
 
 							)); ?>
-                        </div>
-                    </div>
-                </div>
-            </div>
+						</div>
+					</div>
+				</div>
+			</div>
 
 
 
@@ -1131,18 +1130,18 @@ input[type="checkbox"] {
 
 
 
-            <h2 class="subtitle-general-forms ">Plan de
-                Atención integral</h2>
-            <hr style=" border:0.1px solid rgba(0,0,0,.125);">
+			<h2 class="subtitle-general-forms ">Plan de
+				Atención integral</h2>
+			<hr style=" border:0.1px solid rgba(0,0,0,.125);">
 
 
-            <div class="grow justify-content-center" display="none" style="margin-top:20px">
+			<div class="grow justify-content-center" display="none" style="margin-top:20px">
 
 
-                <div class="card col-sm-12" style=" font-size:15px;  border:1.5px solid rgba(0,0,0,.125);">
+				<div class="card col-sm-12" style=" font-size:15px;  border:1.5px solid rgba(0,0,0,.125);">
 
-                    <div class="form-group col-md-6" style="margin-top: 20px;">
-                        <?php
+					<div class="form-group col-md-6" style="margin-top: 20px;">
+						<?php
 
 						echo $this->Form->input('observacioncanalizacion', array(
 							'label' => 'Obseracion de la atención',
@@ -1152,11 +1151,11 @@ input[type="checkbox"] {
 							'id' => 'status', // Agrega el atributo id para que coincida con el select en JavaScript
 							'onChange' => 'canalizacion(this.value);', // Agrega el atributo onChange para llamar a la función JavaScript
 						)); ?>
-                    </div>
+					</div>
 
 
-                    <div class="form-group col-md-6" style="margin-top: 20px;">
-                        <?php
+					<div class="form-group col-md-6" style="margin-top: 20px;">
+						<?php
 						$optionCanlizacion = [
 							'No aplica ' => 'Elegir',
 							'No' => 'No',
@@ -1189,32 +1188,30 @@ input[type="checkbox"] {
 							'onChange' => 'capturarValorSeleccionado();' // Llama a la función 'capturarValorSeleccionado()' cuando cambia el valor
 						));
 						?>
-                    </div>
+					</div>
 
 
-                    <!-- Fondo oscuro y cuadro modal -->
-                    <div id="canalizationSpecific" class="overlay">
-                        <div class="form-group col-md-12" style="margin-top: 5px;">
-                            <div id="modalvacunancion" class="modal">
-                                <div class="d-flex  justify-content-end vh-100">
-                                    <button type="button" class="close"
-                                        onclick="cerrarModal('modalvacunancion','canalizationSpecific')">
-                                        <span aria-hidden="true" style="font-size: 30px;">&times;</span>
-                                    </button>
-                                </div>
-                                <ul id="dataTuning" class="list-group">
-                                </ul>
-                                <div class="d-flex justify-content-center vh-100 ">
-                                    <button class=" my-button" type="button"
-                                        onclick="cerrarModal('modalvacunancion','canalizationSpecific')">Aceptar</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+					<!-- Fondo oscuro y cuadro modal -->
+					<div id="canalizationSpecific" class="overlay">
+						<div class="form-group col-md-12" style="margin-top: 5px;">
+							<div id="modalvacunancion" class="modal">
+								<div class="d-flex  justify-content-end vh-100">
+									<button type="button" class="close" onclick="cerrarModal('modalvacunancion','canalizationSpecific')">
+										<span aria-hidden="true" style="font-size: 30px;">&times;</span>
+									</button>
+								</div>
+								<ul id="dataTuning" class="list-group">
+								</ul>
+								<div class="d-flex justify-content-center vh-100 ">
+									<button class=" my-button" type="button" onclick="cerrarModal('modalvacunancion','canalizationSpecific')">Aceptar</button>
+								</div>
+							</div>
+						</div>
+					</div>
 
-                    <div id="Canalizacion">
-                        <div class="form-group col-md-6" style="margin-top: 20px;">
-                            <?php
+					<div id="Canalizacion">
+						<div class="form-group col-md-6" style="margin-top: 20px;">
+							<?php
 							echo $this->Form->input('canalizaciondos', array(
 								'label' => 'Canalización 2',
 								'class' => 'form-control',
@@ -1226,10 +1223,10 @@ input[type="checkbox"] {
 
 							));
 							?>
-                        </div>
+						</div>
 
-                        <div class="form-group col-md-6" style="margin-top: 20px;">
-                            <?php
+						<div class="form-group col-md-6" style="margin-top: 20px;">
+							<?php
 							echo $this->Form->input('canalizaciontres', array(
 								'label' => 'Canalización 3',
 								'class' => 'form-control',
@@ -1241,10 +1238,10 @@ input[type="checkbox"] {
 
 							)); ?>
 
-                        </div>
+						</div>
 
-                        <div class="form-group col-md-6" style="margin-top: 20px;">
-                            <?php
+						<div class="form-group col-md-6" style="margin-top: 20px;">
+							<?php
 							$optionEstadoCanalizacion = [
 								'' => 'Elegir',
 								'No aplica ' => 'No aplica',
@@ -1265,11 +1262,11 @@ input[type="checkbox"] {
 								'id' => 'status', // Agrega el atributo id para que coincida con el select en JavaScript
 								'onChange' => 'canalizacion(this.value);', // Agrega el atributo onChange para llamar a la función JavaScript
 							)); ?>
-                        </div>
-                    </div>
+						</div>
+					</div>
 
-                    <div class="form-group col-md-6" style="margin-top: 20px;">
-                        <?php
+					<div class="form-group col-md-6" style="margin-top: 20px;">
+						<?php
 						echo $this->Form->input('remisionEspecifica', array(
 							'label' => 'Canalizaciones Especificas',
 							'type' => 'textarea', // Cambiado a 'textarea'
@@ -1281,12 +1278,12 @@ input[type="checkbox"] {
 						?>
 
 
-                    </div>
+					</div>
 
 
-                    <div class="form-group col-md-6" style="margin-top: 20px;">
+					<div class="form-group col-md-6" style="margin-top: 20px;">
 
-                        <?php
+						<?php
 						echo $this->Form->input('educacionuno', array(
 							'label' => 'Refiera el tipo de actividad desarrollada',
 							'class' => 'form-control',
@@ -1296,44 +1293,43 @@ input[type="checkbox"] {
 
 						)); ?>
 
-                    </div>
+					</div>
 
-                    <!-- Fondo oscuro y cuadro modal -->
-                    <div id="overlay" class="overlay">
-                        <div class="form-group col-md-12" style="margin-top: 5px;">
-                            <div id="modal" class="modal">
-                                <div class="modal-header-native" style="text-align: center;">
-                                    <button type="button" class="close" onclick="cerrarModal('overlay','modal')">
-                                        <span aria-hidden="true" style="font-size: 30px;">&times;</span>
-                                    </button>
-                                </div>
+					<!-- Fondo oscuro y cuadro modal -->
+					<div id="overlay" class="overlay">
+						<div class="form-group col-md-12" style="margin-top: 5px;">
+							<div id="modal" class="modal">
+								<div class="modal-header-native" style="text-align: center;">
+									<button type="button" class="close" onclick="cerrarModal('overlay','modal')">
+										<span aria-hidden="true" style="font-size: 30px;">&times;</span>
+									</button>
+								</div>
 
-                                <div id="miContenedor" class="form-group col-md-12" style="margin-top: 20px;">
+								<div id="miContenedor" class="form-group col-md-12" style="margin-top: 20px;">
 
-                                </div>
-                                <div class="d-flex justify-content-center vh-100">
-                                    <button class=" my-button" type="button"
-                                        onclick="cerrarModal('overlay','modal')">Aceptar</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
+								</div>
+								<div class="d-flex justify-content-center vh-100">
+									<button class=" my-button" type="button" onclick="cerrarModal('overlay','modal')">Aceptar</button>
+								</div>
+							</div>
+						</div>
+					</div>
 
 
 
 
-                    <!-- Coloca el campo en una mitad de la pantalla en dispositivos medianos y grandes -->
+
+					<!-- Coloca el campo en una mitad de la pantalla en dispositivos medianos y grandes -->
 
 
 
-                    <?php
+					<?php
 					echo $this->Form->input('fechaRegistro', array(
 
 						'hidden',
 					)); ?>
-                    <div class="form-group col-md-6" style="margin-top: 20px;">
-                        <?php
+					<div class="form-group col-md-6" style="margin-top: 20px;">
+						<?php
 						echo $this->Form->input('canalizacion_id', array(
 							'label' => 'Enlace de canalizacion',
 							'style' => 'height:30px;  font-size: 15px ; width:100%',
@@ -1342,17 +1338,17 @@ input[type="checkbox"] {
 							'type' => 'select',
 
 						)); ?>
-                    </div>
+					</div>
 
 
-                </div>
-            </div>
-        </fieldset>
-        <button class="my-button">
-            Guardar<?php echo $this->Form->end(); ?>
-        </button>
+				</div>
+			</div>
+		</fieldset>
+		<button class="my-button">
+			Guardar<?php echo $this->Form->end(); ?>
+		</button>
 
-    </div>
+	</div>
 
 
 </body>
@@ -1374,316 +1370,316 @@ $this->Html->script([
 ], ['block' => 'script']);
 ?>
 <script type="text/javascript">
-// Función para mostrar el Box
-function mostrarModal() {
-    document.getElementById("overlay").style.display = "block";
-    document.getElementById("modal").style.display = "block";
-}
+	// Función para mostrar el Box
+	function mostrarModal() {
+		document.getElementById("overlay").style.display = "block";
+		document.getElementById("modal").style.display = "block";
+	}
 
-// Función para cerrar el modal
-function cerrarModal(divaleatory, divSecond) {
-    document.getElementById(divaleatory).style.display = "none";
-    document.getElementById(divSecond).style.display = "none ";
-}
-
-
-
-
-$(document).ready(function() {
-
-    $('.select-search').select2();
-    agregarOpcionSeleccion();
-
-    $('#ayudaButton').on('click', function() {
-        $('#popover').toggle();
-    });
-
-    $(document).on('click', function(event) {
-        if (!$(event.target).closest('#ayudaButton, #popover').length) {
-            $('#popover').hide();
-        }
-    });
-
-    $('#ayudaButton1').on('click', function() {
-        $('#popover-content').toggle();
-    });
-
-    $(document).on('click', function(event) {
-        if (!$(event.target).closest('#ayudaButton1, #popover-content').length) {
-            $('#popover-content').hide();
-        }
-    });
-
-    $('#ayudaButton2').on('click', function() {
-        $('#popover-t').toggle();
-    });
-
-    $(document).on('click', function(event) {
-        if (!$(event.target).closest('#ayudaButton2, #popover-t').length) {
-            $('#popover-t').hide();
-        }
-    });
-    $('#ayudaButton3').on('click', function() {
-        $('#popover-d').toggle();
-    });
-
-    $(document).on('click', function(event) {
-        if (!$(event.target).closest('#ayudaButton3, #popover-d').length) {
-            $('#popover-d').hide();
-        }
-    });
-
-    $('#ayudaButton4').on('click', function() {
-        $('#popover-dTwo').toggle();
-    });
-
-    $(document).on('click', function(event) {
-        if (!$(event.target).closest('#ayudaButton4, #popover-dTwo').length) {
-            $('#popover-dTwo').hide();
-        }
-    });
-
-    $('#ayudaButton5').on('click', function() {
-        $('#popover-dThree').toggle();
-    });
-
-    $(document).on('click', function(event) {
-        if (!$(event.target).closest('#ayudaButton5, #popover-dThree').length) {
-            $('#popover-dThree').hide();
-        }
-    });
-
-    function calcularSuma() {
-        suma = 0;
-
-        // Obtener el valor seleccionado de cada opción y sumarlo
-        $('select.sumar').each(function() {
-            suma += parseInt($(this).val()) || 0;
-        });
-
-        // Mostrar el resultado en el campo de entrada con id 'resultado-input'
-        $('#resultado-input').val(suma);
-        var imcField = document.getElementById('resultado-input');
-        switch (true) {
-            case suma <= 9:
-                imcField.style.color = 'red';
-                break;
-            case suma >= 10 && suma <= 13:
-                imcField.style.color = 'orange';
-                break;
-            case suma >= 14 && suma <= 17:
-                imcField.style.color = '#FAA80D';
-                break;
-            case suma >= 18:
-                imcField.style.color = 'green';
-                break;
-            default:
-                imcField.style.color = 'black';
-        }
-
-    }
-
-    // Llamar a la función al cargar la página
-    calcularSuma();
-
-    // Vincular la función al evento change de los elementos select
-    $('select.sumar').on('change', function() {
-        calcularSuma();
-    });
-
-
-});
-
-
-document.addEventListener('DOMContentLoaded', function() {
-    var aseguradoraSelect = document.getElementById('aseguradora');
-    var otraAseguradoraDiv = document.getElementById('otraAseguradoraDiv');
-
-    aseguradoraSelect.addEventListener('change', function() {
-        var selectedOption = aseguradoraSelect.value;
-
-        if (selectedOption === 'otra') {
-            otraAseguradoraDiv.style.display = 'block';
-            document.getElementById('otraAseguradora').removeAttribute('disabled');
-        } else {
-            otraAseguradoraDiv.style.display = 'none';
-            document.getElementById('otraAseguradora').setAttribute('disabled', 'disabled');
-        }
-    });
-
-    // Verifica el estado inicial
-    if (aseguradoraSelect.value === 'otra') {
-        otraAseguradoraDiv.style.display = 'block';
-        document.getElementById('otraAseguradora').removeAttribute('disabled');
-    } else {
-        otraAseguradoraDiv.style.display = 'none';
-        document.getElementById('otraAseguradora').setAttribute('disabled', 'disabled');
-    }
-
-});
-
-
-function agregarOpcionSeleccion() {
-
-
-    $("#PrimerainfanciaCanalizacionId").prepend(
-        "<option value='' selected='selected'>Seleccione</option>");
-
-
-}
+	// Función para cerrar el modal
+	function cerrarModal(divaleatory, divSecond) {
+		document.getElementById(divaleatory).style.display = "none";
+		document.getElementById(divSecond).style.display = "none ";
+	}
 
 
 
-/*function gestacion(id) {
-    if (id === "Si") {
-        $("#yes").show();
-        $("#not").hide();
+
+	$(document).ready(function() {
+
+		$('.select-search').select2();
+		agregarOpcionSeleccion();
+
+		$('#ayudaButton').on('click', function() {
+			$('#popover').toggle();
+		});
+
+		$(document).on('click', function(event) {
+			if (!$(event.target).closest('#ayudaButton, #popover').length) {
+				$('#popover').hide();
+			}
+		});
+
+		$('#ayudaButton1').on('click', function() {
+			$('#popover-content').toggle();
+		});
+
+		$(document).on('click', function(event) {
+			if (!$(event.target).closest('#ayudaButton1, #popover-content').length) {
+				$('#popover-content').hide();
+			}
+		});
+
+		$('#ayudaButton2').on('click', function() {
+			$('#popover-t').toggle();
+		});
+
+		$(document).on('click', function(event) {
+			if (!$(event.target).closest('#ayudaButton2, #popover-t').length) {
+				$('#popover-t').hide();
+			}
+		});
+		$('#ayudaButton3').on('click', function() {
+			$('#popover-d').toggle();
+		});
+
+		$(document).on('click', function(event) {
+			if (!$(event.target).closest('#ayudaButton3, #popover-d').length) {
+				$('#popover-d').hide();
+			}
+		});
+
+		$('#ayudaButton4').on('click', function() {
+			$('#popover-dTwo').toggle();
+		});
+
+		$(document).on('click', function(event) {
+			if (!$(event.target).closest('#ayudaButton4, #popover-dTwo').length) {
+				$('#popover-dTwo').hide();
+			}
+		});
+
+		$('#ayudaButton5').on('click', function() {
+			$('#popover-dThree').toggle();
+		});
+
+		$(document).on('click', function(event) {
+			if (!$(event.target).closest('#ayudaButton5, #popover-dThree').length) {
+				$('#popover-dThree').hide();
+			}
+		});
+
+		function calcularSuma() {
+			suma = 0;
+
+			// Obtener el valor seleccionado de cada opción y sumarlo
+			$('select.sumar').each(function() {
+				suma += parseInt($(this).val()) || 0;
+			});
+
+			// Mostrar el resultado en el campo de entrada con id 'resultado-input'
+			$('#resultado-input').val(suma);
+			var imcField = document.getElementById('resultado-input');
+			switch (true) {
+				case suma <= 9:
+					imcField.style.color = 'red';
+					break;
+				case suma >= 10 && suma <= 13:
+					imcField.style.color = 'orange';
+					break;
+				case suma >= 14 && suma <= 17:
+					imcField.style.color = '#FAA80D';
+					break;
+				case suma >= 18:
+					imcField.style.color = 'green';
+					break;
+				default:
+					imcField.style.color = 'black';
+			}
+
+		}
+
+		// Llamar a la función al cargar la página
+		calcularSuma();
+
+		// Vincular la función al evento change de los elementos select
+		$('select.sumar').on('change', function() {
+			calcularSuma();
+		});
 
 
-    } else if (id === "No") {
-        $("#yes").hide();
-        $("#not").show();
+	});
 
 
-    }
-}*/
+	document.addEventListener('DOMContentLoaded', function() {
+		var aseguradoraSelect = document.getElementById('aseguradora');
+		var otraAseguradoraDiv = document.getElementById('otraAseguradoraDiv');
 
-document.getElementById('calcularIMC').addEventListener('click', function() {
-    var peso = parseFloat(document.getElementById('peso').value);
-    var talla = parseFloat(document.getElementById('talla').value);
+		aseguradoraSelect.addEventListener('change', function() {
+			var selectedOption = aseguradoraSelect.value;
 
-    if (!isNaN(peso) && !isNaN(talla) && talla > 0) {
-        var altura = talla / 100; // Convertir de cm a m
-        var imc = peso / (altura * altura);
+			if (selectedOption === 'otra') {
+				otraAseguradoraDiv.style.display = 'block';
+				document.getElementById('otraAseguradora').removeAttribute('disabled');
+			} else {
+				otraAseguradoraDiv.style.display = 'none';
+				document.getElementById('otraAseguradora').setAttribute('disabled', 'disabled');
+			}
+		});
 
-        // Mostrar el IMC calculado en el campo indicemasacorporal
-        var imcField = document.getElementById('indicemasacorporal');
-        imcField.value = imc.toFixed(2); // Redondear a 2 decimales
+		// Verifica el estado inicial
+		if (aseguradoraSelect.value === 'otra') {
+			otraAseguradoraDiv.style.display = 'block';
+			document.getElementById('otraAseguradora').removeAttribute('disabled');
+		} else {
+			otraAseguradoraDiv.style.display = 'none';
+			document.getElementById('otraAseguradora').setAttribute('disabled', 'disabled');
+		}
 
-        // Determinar el mensaje y el color según el rango del IMC
-        var mensaje = '';
-        if (imc < 18.5) {
-            mensaje = 'Peso insuficiente';
-            imcField.style.color = 'red'; // Cambiar el color del texto a rojo
-        } else if (imc >= 18.5 && imc <= 24.9) {
-            mensaje = 'Peso normal o saludable';
-            imcField.style.color = 'green'; // Cambiar el color del texto a verde
-        } else if (imc >= 25.0 && imc <= 29.9) {
-            mensaje = 'Sobrepeso';
-            imcField.style.color = 'orange'; // Cambiar el color del texto a naranja
-        } else {
-            mensaje = 'Obesidad';
-            imcField.style.color = 'red'; // Cambiar el color del texto a rojo
-        }
+	});
 
-        // Mostrar el mensaje en el elemento mensajeIMC
-        var mensajeIMC = document.getElementById('mensajeIMC');
-        mensajeIMC.textContent = mensaje;
-    } else {
-        alert('Por favor, ingrese valores válidos para peso y talla.');
-    }
-});
-$(function() {
-    $('#ayudaButton').popover();
-});
-$(function() {
-    $('#ayudaButton1').popover();
-});
-$(function() {
-    $('#ayudaButton2').popover();
-});
-$(function() {
-    $('#ayudaButton3').popover();
-});
 
-function generarCheckboxes(opciones, id, result) {
-    let resultHTML = ''
+	function agregarOpcionSeleccion() {
 
-    opciones.forEach(opcion => {
-        resultHTML +=
-            `<li class="list-group-item d-flex  align-items-center h-100" style="margin-bottom: 0em;">
+
+		$("#PrimerainfanciaCanalizacionId").prepend(
+			"<option value='' selected='selected'>Seleccione</option>");
+
+
+	}
+
+
+
+	/*function gestacion(id) {
+	    if (id === "Si") {
+	        $("#yes").show();
+	        $("#not").hide();
+
+
+	    } else if (id === "No") {
+	        $("#yes").hide();
+	        $("#not").show();
+
+
+	    }
+	}*/
+
+	document.getElementById('calcularIMC').addEventListener('click', function() {
+		var peso = parseFloat(document.getElementById('peso').value);
+		var talla = parseFloat(document.getElementById('talla').value);
+
+		if (!isNaN(peso) && !isNaN(talla) && talla > 0) {
+			var altura = talla / 100; // Convertir de cm a m
+			var imc = peso / (altura * altura);
+
+			// Mostrar el IMC calculado en el campo indicemasacorporal
+			var imcField = document.getElementById('indicemasacorporal');
+			imcField.value = imc.toFixed(2); // Redondear a 2 decimales
+
+			// Determinar el mensaje y el color según el rango del IMC
+			var mensaje = '';
+			if (imc < 18.5) {
+				mensaje = 'Peso insuficiente';
+				imcField.style.color = 'red'; // Cambiar el color del texto a rojo
+			} else if (imc >= 18.5 && imc <= 24.9) {
+				mensaje = 'Peso normal o saludable';
+				imcField.style.color = 'green'; // Cambiar el color del texto a verde
+			} else if (imc >= 25.0 && imc <= 29.9) {
+				mensaje = 'Sobrepeso';
+				imcField.style.color = 'orange'; // Cambiar el color del texto a naranja
+			} else {
+				mensaje = 'Obesidad';
+				imcField.style.color = 'red'; // Cambiar el color del texto a rojo
+			}
+
+			// Mostrar el mensaje en el elemento mensajeIMC
+			var mensajeIMC = document.getElementById('mensajeIMC');
+			mensajeIMC.textContent = mensaje;
+		} else {
+			alert('Por favor, ingrese valores válidos para peso y talla.');
+		}
+	});
+	$(function() {
+		$('#ayudaButton').popover();
+	});
+	$(function() {
+		$('#ayudaButton1').popover();
+	});
+	$(function() {
+		$('#ayudaButton2').popover();
+	});
+	$(function() {
+		$('#ayudaButton3').popover();
+	});
+
+	function generarCheckboxes(opciones, id, result) {
+		let resultHTML = ''
+
+		opciones.forEach(opcion => {
+			resultHTML +=
+				`<li class="list-group-item d-flex  align-items-center h-100" style="margin-bottom: 0em;">
             <input type="checkbox" value="${opcion}" onclick="actualizarInput('${id}', '${result}')" class="d-flex justify-content-center">
             <label>${opcion}</label>
         </li>`;
-    });
+		});
 
-    return resultHTML;
-}
-
-
-const opciones = opcionesActividades = [
-    'Elegir',
-    'No',
-    'Educación para la salud individual',
-    'Educación para la salud familiar',
-    'Educación para la salud grupal',
-    'Valoración medíca',
-    'Valoración odontológica',
-    'Valoración Nutricional',
-    'Valoración Piscologica',
-    'Valoración Integral',
-    'Remision a urgencias',
-];
-// Generar los checkboxes y agregarlos al contenedor
-document.getElementById('miContenedor').innerHTML = generarCheckboxes(opciones, 'modal', 'opcionesSeleccionadas');
+		return resultHTML;
+	}
 
 
+	const opciones = opcionesActividades = [
+		'Elegir',
+		'No',
+		'Educación para la salud individual',
+		'Educación para la salud familiar',
+		'Educación para la salud grupal',
+		'Valoración medíca',
+		'Valoración odontológica',
+		'Valoración Nutricional',
+		'Valoración Piscologica',
+		'Valoración Integral',
+		'Remision a urgencias',
+	];
+	// Generar los checkboxes y agregarlos al contenedor
+	document.getElementById('miContenedor').innerHTML = generarCheckboxes(opciones, 'modal', 'opcionesSeleccionadas');
 
-const dataGuardada = ''
-const opcionesVacunancion = opcionesActividades = [
-    'MUJERES 12 A 17 AÑOS	Vacuna contra el Virus del Papiloma Humano - VPH 	Única Dosis',
-    'ADOLESCENTES	Vacuna contra COVID 19 	Refuerzo',
-    'MUJERES 15 AÑOS	Toxoide tetánico diftérico del adulto (Td)	REFUERZO',
-    'Gestantes	Influenza Gestacional 	1 dosis a partir de la Semana 14 de Gestación ',
-    'Gestantes	TdaP (Tetanos, Difteria, Tosferina Acelular)	Dosis Única a partir de semana 26 de gestación',
-    'Adultos de 60 ños y mas 	Vacuna de influenza estacional	una dosis cada año ',
 
-];
 
-// Función para actualizar el campo de entrada con las opciones selecciona
-function actualizarInput(elementId, result) {
-    var checkboxes = document.querySelectorAll('#' + elementId + ' input[type="checkbox"]');
-    var opcionesSeleccionadas = Array.from(checkboxes)
-        .filter(checkbox => checkbox.checked)
-        .map(checkbox => checkbox.value)
-        .join(', ');
+	const dataGuardada = ''
+	const opcionesVacunancion = opcionesActividades = [
+		'MUJERES 12 A 17 AÑOS	Vacuna contra el Virus del Papiloma Humano - VPH 	Única Dosis',
+		'ADOLESCENTES	Vacuna contra COVID 19 	Refuerzo',
+		'MUJERES 15 AÑOS	Toxoide tetánico diftérico del adulto (Td)	REFUERZO',
+		'Gestantes	Influenza Gestacional 	1 dosis a partir de la Semana 14 de Gestación ',
+		'Gestantes	TdaP (Tetanos, Difteria, Tosferina Acelular)	Dosis Única a partir de semana 26 de gestación',
+		'Adultos de 60 ños y mas 	Vacuna de influenza estacional	una dosis cada año ',
 
-    document.getElementById(result).value = opcionesSeleccionadas;
-}
-//Optienen el valor de los campos del checkbox solo llama
-//el array que quieres mostrar introduce el id de la etiqueta que hiciste
-//para vizualizar la checkbox y el result es en la variable que guardara
+	];
 
-function generarCheckboxes(opciones, id, result) {
-    let resultHTML = ''
+	// Función para actualizar el campo de entrada con las opciones selecciona
+	function actualizarInput(elementId, result) {
+		var checkboxes = document.querySelectorAll('#' + elementId + ' input[type="checkbox"]');
+		var opcionesSeleccionadas = Array.from(checkboxes)
+			.filter(checkbox => checkbox.checked)
+			.map(checkbox => checkbox.value)
+			.join(', ');
 
-    opciones.forEach(opcion => {
-        resultHTML +=
-            `<li class="list-group-item d-flex  align-items-center h-100" style="margin-bottom: 0em;">
+		document.getElementById(result).value = opcionesSeleccionadas;
+	}
+	//Optienen el valor de los campos del checkbox solo llama
+	//el array que quieres mostrar introduce el id de la etiqueta que hiciste
+	//para vizualizar la checkbox y el result es en la variable que guardara
+
+	function generarCheckboxes(opciones, id, result) {
+		let resultHTML = ''
+
+		opciones.forEach(opcion => {
+			resultHTML +=
+				`<li class="list-group-item d-flex  align-items-center h-100" style="margin-bottom: 0em;">
             <input type="checkbox" value="${opcion}" onclick="actualizarInput('${id}', '${result}')" class="d-flex justify-content-center">
             <label>${opcion}</label>
         </li>`;
-    });
+		});
 
-    return resultHTML;
-}
+		return resultHTML;
+	}
 
-//Captura el valor igresar los casos encesarion en el switch
-function capturarValorSeleccionado() {
-    var valorSeleccionado = document.getElementById("canalizacionuno").value; //Obtener el valor de la canalizacion
-    var otraAseguradoraDiv = document.getElementById('overlay');
-
-
-    switch (valorSeleccionado) {
-        case "Vacunacion":
-            console.log(valorSeleccionado)
-            document.getElementById('dataTuning').innerHTML = generarCheckboxes(opcionesActividades, 'modalvacunancion',
-                'remisionEspecifica');
-            document.getElementById("canalizationSpecific").style.display = "block";
-            document.getElementById("modalvacunancion").style.display = "block";
-            break;
+	//Captura el valor igresar los casos encesarion en el switch
+	function capturarValorSeleccionado() {
+		var valorSeleccionado = document.getElementById("canalizacionuno").value; //Obtener el valor de la canalizacion
+		var otraAseguradoraDiv = document.getElementById('overlay');
 
 
-    }
-}
+		switch (valorSeleccionado) {
+			case "Vacunacion":
+				console.log(valorSeleccionado)
+				document.getElementById('dataTuning').innerHTML = generarCheckboxes(opcionesActividades, 'modalvacunancion',
+					'remisionEspecifica');
+				document.getElementById("canalizationSpecific").style.display = "block";
+				document.getElementById("modalvacunancion").style.display = "block";
+				break;
+
+
+		}
+	}
 </script>

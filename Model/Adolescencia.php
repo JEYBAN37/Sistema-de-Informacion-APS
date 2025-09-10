@@ -76,6 +76,10 @@ class Adolescencia extends AppModel
 				//'last' => false, // Stop validation after this rule
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
+			'validarNumeros' => array(
+				'rule' => array('custom', '/^[0-9]+$/'),
+				'message' => 'Este campo solo permite números',
+			),
 		),
 		'segundoapellido' => array(
 			'notEmpty' => array(

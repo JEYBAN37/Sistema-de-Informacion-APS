@@ -6,95 +6,95 @@ echo $this->Html->script('validation2'); // 'validation' es el nombre del archiv
 ?>
 
 <style>
-    .popover-content {
-        display: none;
-        position: absolute;
-        background-color: #fff;
-        border: 1px solid #ccc;
-        padding: 10px;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        z-index: 999;
-        /* Valor alto para colocar el popover encima de otros elementos */
-        font-size: 12px;
-        /* Ajusta el tamaño de la fuente según tus preferencias */
-        text-align: justify;
+.popover-content {
+    display: none;
+    position: absolute;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    padding: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    z-index: 999;
+    /* Valor alto para colocar el popover encima de otros elementos */
+    font-size: 12px;
+    /* Ajusta el tamaño de la fuente según tus preferencias */
+    text-align: justify;
 
 
-    }
+}
 
-    /* Estilo para el fondo oscuro cuando se muestra el modal */
-    .overlay {
-        display: none;
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.5);
-        z-index: 1;
-    }
+/* Estilo para el fondo oscuro cuando se muestra el modal */
+.overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1;
+}
 
-    /* Estilo para el cuadro modal */
-    .modal {
-        overflow: auto;
-
-
+/* Estilo para el cuadro modal */
+.modal {
+    overflow: auto;
 
 
-        display: none;
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        width: 80%;
-        /* Ajusta el ancho del modal según tus necesidades */
 
-        /* Ancho máximo para pantallas más grandes */
 
-        background-color: #fff;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-        z-index: 1;
-    }
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80%;
+    /* Ajusta el ancho del modal según tus necesidades */
 
-    .button-one {
-        display: block;
-        width: 100%;
-        height: 34px;
-        padding: 6px 12px;
-        font-size: 14px;
-        line-height: 1.42857143;
-        color: #555;
-        background-color: #fff;
-        background-image: none;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-        -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-        box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-        -webkit-transition: border-color ease-in-out 0.15s, -webkit-box-shadow ease-in-out 0.15s;
-        -o-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
-        transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
-        text-align: left;
-        height: 35px;
-        font-size: 15px;
-        width: 100%;
-        margin-top: 10px;
-        font-weight: 700;
-    }
+    /* Ancho máximo para pantallas más grandes */
 
-    /* Estilo para el texto y checkboxes dentro del modal */
-    .modal p {
-        text-align: left;
-    }
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    z-index: 1;
+}
 
-    .modal label {
-        display: block;
-        margin-bottom: 10px;
-    }
+.button-one {
+    display: block;
+    width: 100%;
+    height: 34px;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: #555;
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+    -webkit-transition: border-color ease-in-out 0.15s, -webkit-box-shadow ease-in-out 0.15s;
+    -o-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+    transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+    text-align: left;
+    height: 35px;
+    font-size: 15px;
+    width: 100%;
+    margin-top: 10px;
+    font-weight: 700;
+}
 
-    input[type="checkbox"] {
-        margin-right: 10px;
-    }
+/* Estilo para el texto y checkboxes dentro del modal */
+.modal p {
+    text-align: left;
+}
+
+.modal label {
+    display: block;
+    margin-bottom: 10px;
+}
+
+input[type="checkbox"] {
+    margin-right: 10px;
+}
 </style>
 
 <body style="font-size: 14px;">
@@ -274,7 +274,8 @@ echo $this->Html->script('validation2'); // 'validation' es el nombre del archiv
                         </div>
 
                         <!-- Segundo campo de selección -->
-                        <div class="form-group col-md-6" style="margin-top: 20px; display: none;" id="otraAseguradoraDiv">
+                        <div class="form-group col-md-6" style="margin-top: 20px; display: none;"
+                            id="otraAseguradoraDiv">
                             <?php
                             echo $this->Form->input('aseguradora', [
                                 'label' => 'Otra Aseguradora',
@@ -391,7 +392,8 @@ echo $this->Html->script('validation2'); // 'validation' es el nombre del archiv
                             ));
                             ?>
 
-                            <button type="button" id="ayudaButton" class="btn btn-success rounded-circle" style="width: 30px; height: 30px; padding: 0; font-size: 18px; margin-top: 5px; margin-left: 15px;">
+                            <button type="button" id="ayudaButton" class="btn btn-success rounded-circle"
+                                style="width: 30px; height: 30px; padding: 0; font-size: 18px; margin-top: 5px; margin-left: 15px;">
                                 ?
                             </button>
 
@@ -447,7 +449,8 @@ echo $this->Html->script('validation2'); // 'validation' es el nombre del archiv
                             <p class="help-block"> Encuestador: ¿Cuenta con elementos antropométricos para tomar
                                 datos </p>
                             <div id="status" class="switch-button">
-                                <input type="checkbox" name="switch-button" id="switch-label" class="switch-button__checkbox">
+                                <input type="checkbox" name="switch-button" id="switch-label"
+                                    class="switch-button__checkbox">
                                 <label for="switch-label" class="switch-button__label"></label>
                             </div>
                         </div>
@@ -868,8 +871,9 @@ echo $this->Html->script('validation2'); // 'validation' es el nombre del archiv
                             'Vacunacion' => 'Vacunación',
                             'Atención en salud del recién nacido ' => 'Atención en salud del recién nacido',
                             'Atención en salud de promoción y mantenimiento por médico o enfermera ' => 'Atención en salud de promoción y mantenimiento por médico o enfermera',
-                            'Atención en salud bucal' => 'Atención en salud bucal',
-                            'aplicación de sellantes' => 'aplicación de sellantes, fluor, barniz',
+                           'Odontología P Y M' => 'Odontología P Y M',
+							'Odontología general' => 'Odontología general',
+							'Odontología Urgencias' => 'Odontología Urgencias',
                             'Atención medicina general ' => 'Atención en salud por medicina general',
                             'Atención Urgencias ' => 'Atención en salud en un servicio de Urgencias',
                             'Asesoría en Lactancia Materna ' => 'Asesoría en Lactancia Materna',
@@ -896,14 +900,16 @@ echo $this->Html->script('validation2'); // 'validation' es el nombre del archiv
                         <div class="form-group col-md-12" style="margin-top: 5px;">
                             <div id="modalvacunancion" class="modal">
                                 <div class="d-flex  justify-content-end vh-100">
-                                    <button type="button" class="close" onclick="cerrarModal('modalvacunancion','canalizationSpecific')">
+                                    <button type="button" class="close"
+                                        onclick="cerrarModal('modalvacunancion','canalizationSpecific')">
                                         <span aria-hidden="true" style="font-size: 30px;">&times;</span>
                                     </button>
                                 </div>
                                 <ul id="dataTuning" class="list-group">
                                 </ul>
                                 <div class="d-flex justify-content-center vh-100 ">
-                                    <button class=" my-button" type="button" onclick="cerrarModal('modalvacunancion','canalizationSpecific')">Aceptar</button>
+                                    <button class=" my-button" type="button"
+                                        onclick="cerrarModal('modalvacunancion','canalizationSpecific')">Aceptar</button>
                                 </div>
                             </div>
                         </div>
@@ -1009,7 +1015,8 @@ echo $this->Html->script('validation2'); // 'validation' es el nombre del archiv
 
                                 </div>
                                 <div class="d-flex justify-content-center vh-100">
-                                    <button class=" my-button" type="button" onclick="cerrarModal('overlay','modal')">Cerrar</button>
+                                    <button class=" my-button" type="button"
+                                        onclick="cerrarModal('overlay','modal')">Cerrar</button>
                                 </div>
 
 
@@ -1074,201 +1081,201 @@ $this->Html->script([
 ?>
 
 <script type="text/javascript">
-    // Función para mostrar el Box
-    function mostrarModal() {
-        document.getElementById("overlay").style.display = "block";
-        document.getElementById("modal").style.display = "block";
-    }
+// Función para mostrar el Box
+function mostrarModal() {
+    document.getElementById("overlay").style.display = "block";
+    document.getElementById("modal").style.display = "block";
+}
 
 
-    // Función para cerrar el modal
-    function cerrarModal(divaleatory, divSecond) {
-        document.getElementById(divaleatory).style.display = "none";
-        document.getElementById(divSecond).style.display = "none ";
-    }
+// Función para cerrar el modal
+function cerrarModal(divaleatory, divSecond) {
+    document.getElementById(divaleatory).style.display = "none";
+    document.getElementById(divSecond).style.display = "none ";
+}
 
 
 
 
-    $(document).ready(function() {
-        $('.select-search').select2();
-        agregarOpcionSeleccion();
+$(document).ready(function() {
+    $('.select-search').select2();
+    agregarOpcionSeleccion();
 
-        $('#ayudaButton').on('click', function() {
-            $('#popover').toggle();
-        });
-
-        $(document).on('click', function(event) {
-            if (!$(event.target).closest('#ayudaButton, #popover').length) {
-                $('#popover').hide();
-            }
-        });
+    $('#ayudaButton').on('click', function() {
+        $('#popover').toggle();
     });
 
-    document.addEventListener('DOMContentLoaded', function() {
-        var aseguradoraSelect = document.getElementById('aseguradora');
-        var otraAseguradoraDiv = document.getElementById('otraAseguradoraDiv');
+    $(document).on('click', function(event) {
+        if (!$(event.target).closest('#ayudaButton, #popover').length) {
+            $('#popover').hide();
+        }
+    });
+});
 
-        aseguradoraSelect.addEventListener('change', function() {
-            var selectedOption = aseguradoraSelect.value;
+document.addEventListener('DOMContentLoaded', function() {
+    var aseguradoraSelect = document.getElementById('aseguradora');
+    var otraAseguradoraDiv = document.getElementById('otraAseguradoraDiv');
 
-            if (selectedOption === 'otra') {
-                otraAseguradoraDiv.style.display = 'block';
-                document.getElementById('otraAseguradora').removeAttribute('disabled');
-            } else {
-                otraAseguradoraDiv.style.display = 'none';
-                document.getElementById('otraAseguradora').setAttribute('disabled', 'disabled');
-            }
-        });
+    aseguradoraSelect.addEventListener('change', function() {
+        var selectedOption = aseguradoraSelect.value;
 
-        // Verifica el estado inicial
-        if (aseguradoraSelect.value === 'otra') {
+        if (selectedOption === 'otra') {
             otraAseguradoraDiv.style.display = 'block';
             document.getElementById('otraAseguradora').removeAttribute('disabled');
         } else {
             otraAseguradoraDiv.style.display = 'none';
             document.getElementById('otraAseguradora').setAttribute('disabled', 'disabled');
         }
-
     });
 
-
-    function agregarOpcionSeleccion() {
-
-
-        $("#PrimerainfanciaCanalizacionId").prepend(
-            "<option value='' selected='selected'>Seleccione</option>");
+    // Verifica el estado inicial
+    if (aseguradoraSelect.value === 'otra') {
+        otraAseguradoraDiv.style.display = 'block';
+        document.getElementById('otraAseguradora').removeAttribute('disabled');
+    } else {
+        otraAseguradoraDiv.style.display = 'none';
+        document.getElementById('otraAseguradora').setAttribute('disabled', 'disabled');
     }
 
-    $(function() {
-        $('#ayudaButton').popover();
-    });
-
-    $("#switch-label").change(function() {
-        var switchValue = this.checked ? "si" : "no";
-        mostrar(switchValue);
-    });
+});
 
 
-    function mostrar(id) {
-        if (id == "si") {
-            $("#si").show();
-            $("#no").hide();
+function agregarOpcionSeleccion() {
 
-        } else if (id == "no") {
-            $("#si").hide();
-            $("#no").show();
 
-        }
+    $("#PrimerainfanciaCanalizacionId").prepend(
+        "<option value='' selected='selected'>Seleccione</option>");
+}
+
+$(function() {
+    $('#ayudaButton').popover();
+});
+
+$("#switch-label").change(function() {
+    var switchValue = this.checked ? "si" : "no";
+    mostrar(switchValue);
+});
+
+
+function mostrar(id) {
+    if (id == "si") {
+        $("#si").show();
+        $("#no").hide();
+
+    } else if (id == "no") {
+        $("#si").hide();
+        $("#no").show();
+
     }
+}
 
-    function generarCheckboxes(opciones, id, result) {
-        let resultHTML = ''
+function generarCheckboxes(opciones, id, result) {
+    let resultHTML = ''
 
-        opciones.forEach(opcion => {
-            resultHTML +=
-                `<li class="list-group-item d-flex  align-items-center h-100" style="margin-bottom: 0em;">
+    opciones.forEach(opcion => {
+        resultHTML +=
+            `<li class="list-group-item d-flex  align-items-center h-100" style="margin-bottom: 0em;">
             <input type="checkbox" value="${opcion}" onclick="actualizarInput('${id}', '${result}')" class="d-flex justify-content-center">
             <label>${opcion}</label>
         </li>`;
-        });
+    });
 
-        return resultHTML;
-    }
-
-
-    const opciones = opcionesActividades = [
-        'Elegir',
-        'No',
-        'Educación para la salud individual',
-        'Educación para la salud familiar',
-        'Educación para la salud grupal',
-        'Valoración medíca',
-        'Valoración odontológica',
-        'Valoración Nutricional',
-        'Valoración Piscologica',
-        'Valoración Integral',
-        'Remision a urgencias',
-    ];
-    // Generar los checkboxes y agregarlos al contenedor
-    document.getElementById('miContenedor').innerHTML = generarCheckboxes(opciones, 'modal', 'opcionesSeleccionadas');
+    return resultHTML;
+}
 
 
+const opciones = opcionesActividades = [
+    'Elegir',
+    'No',
+    'Educación para la salud individual',
+    'Educación para la salud familiar',
+    'Educación para la salud grupal',
+    'Valoración medíca',
+    'Valoración odontológica',
+    'Valoración Nutricional',
+    'Valoración Piscologica',
+    'Valoración Integral',
+    'Remision a urgencias',
+];
+// Generar los checkboxes y agregarlos al contenedor
+document.getElementById('miContenedor').innerHTML = generarCheckboxes(opciones, 'modal', 'opcionesSeleccionadas');
 
-    const dataGuardada = ''
-    const opcionesVacunancion = opcionesActividades = [
-        'RN Antituberculosa - BCG Única',
-        'RN Hepatitis B recién nacido',
-        '2 meses PENTAVALENTE Primera',
-        '2 meses Vacuna inactivada de polio - VIP Primera',
-        '2 meses Vacuna oral de rotavirus Primera',
-        '2 meses Vacuna contra el neumococo Primera',
-        '4 meses PENTAVALENTE Segunda',
-        '5 meses Vacuna inactivada de polio - VIP Segunda',
-        '6 meses Vacuna oral de rotavirus Segunda',
-        '7 meses Vacuna contra el neumococo Segunda',
-        '6 meses PENTAVALENTE Tercera',
-        '7 meses Vacuna inactivada de polio - VIP Tercera',
-        '8 meses Vacuna de influenza estacional Primera',
-        '9 meses Vacuna contra COVID 19 Primera',
-        '7 meses Vacuna de influenza estacional Segunda',
-        '12 meses Sarampión Rubeola Paperas(SRP) Unica',
-        '13 meses Antihepatitis A Unica',
-        '14 meses Neumococo Refuerzo',
-        '15 meses Varicela Unica',
-        '18 meses PENTAVALENTE(1 R) 1 Refuerzo',
-        '19 meses dosis Difteria - tosferina - tétanos(DPT) 1 Refuerzo',
-        '20 meses Haemophilus influenzae tipo b 1 Refuerzo',
-        '21 meses Hepatitis B 1 Refuerzo',
-        '22 meses Vacuna inactivada de polio - VIP 1 Refuerzo',
-        '23 meses Fiebre amarilla(FA) Unica',
-        '24 meses Sarampión Rubeola Paperas(SRP) Refuerzo',
-    ];
 
-    // Función para actualizar el campo de entrada con las opciones selecciona
-    function actualizarInput(elementId, result) {
-        var checkboxes = document.querySelectorAll('#' + elementId + ' input[type="checkbox"]');
-        var opcionesSeleccionadas = Array.from(checkboxes)
-            .filter(checkbox => checkbox.checked)
-            .map(checkbox => checkbox.value)
-            .join(', ');
 
-        document.getElementById(result).value = opcionesSeleccionadas;
-    }
-    //Optienen el valor de los campos del checkbox solo llama
-    //el array que quieres mostrar introduce el id de la etiqueta que hiciste
-    //para vizualizar la checkbox y el result es en la variable que guardara
+const dataGuardada = ''
+const opcionesVacunancion = opcionesActividades = [
+    'RN Antituberculosa - BCG Única',
+    'RN Hepatitis B recién nacido',
+    '2 meses PENTAVALENTE Primera',
+    '2 meses Vacuna inactivada de polio - VIP Primera',
+    '2 meses Vacuna oral de rotavirus Primera',
+    '2 meses Vacuna contra el neumococo Primera',
+    '4 meses PENTAVALENTE Segunda',
+    '5 meses Vacuna inactivada de polio - VIP Segunda',
+    '6 meses Vacuna oral de rotavirus Segunda',
+    '7 meses Vacuna contra el neumococo Segunda',
+    '6 meses PENTAVALENTE Tercera',
+    '7 meses Vacuna inactivada de polio - VIP Tercera',
+    '8 meses Vacuna de influenza estacional Primera',
+    '9 meses Vacuna contra COVID 19 Primera',
+    '7 meses Vacuna de influenza estacional Segunda',
+    '12 meses Sarampión Rubeola Paperas(SRP) Unica',
+    '13 meses Antihepatitis A Unica',
+    '14 meses Neumococo Refuerzo',
+    '15 meses Varicela Unica',
+    '18 meses PENTAVALENTE(1 R) 1 Refuerzo',
+    '19 meses dosis Difteria - tosferina - tétanos(DPT) 1 Refuerzo',
+    '20 meses Haemophilus influenzae tipo b 1 Refuerzo',
+    '21 meses Hepatitis B 1 Refuerzo',
+    '22 meses Vacuna inactivada de polio - VIP 1 Refuerzo',
+    '23 meses Fiebre amarilla(FA) Unica',
+    '24 meses Sarampión Rubeola Paperas(SRP) Refuerzo',
+];
 
-    function generarCheckboxes(opciones, id, result) {
-        let resultHTML = ''
+// Función para actualizar el campo de entrada con las opciones selecciona
+function actualizarInput(elementId, result) {
+    var checkboxes = document.querySelectorAll('#' + elementId + ' input[type="checkbox"]');
+    var opcionesSeleccionadas = Array.from(checkboxes)
+        .filter(checkbox => checkbox.checked)
+        .map(checkbox => checkbox.value)
+        .join(', ');
 
-        opciones.forEach(opcion => {
-            resultHTML +=
-                `<li class="list-group-item d-flex  align-items-center h-100" style="margin-bottom: 0em;">
+    document.getElementById(result).value = opcionesSeleccionadas;
+}
+//Optienen el valor de los campos del checkbox solo llama
+//el array que quieres mostrar introduce el id de la etiqueta que hiciste
+//para vizualizar la checkbox y el result es en la variable que guardara
+
+function generarCheckboxes(opciones, id, result) {
+    let resultHTML = ''
+
+    opciones.forEach(opcion => {
+        resultHTML +=
+            `<li class="list-group-item d-flex  align-items-center h-100" style="margin-bottom: 0em;">
             <input type="checkbox" value="${opcion}" onclick="actualizarInput('${id}', '${result}')" class="d-flex justify-content-center">
             <label>${opcion}</label>
         </li>`;
-        });
+    });
 
-        return resultHTML;
+    return resultHTML;
+}
+
+//Captura el valor igresar los casos encesarion en el switch
+function capturarValorSeleccionado() {
+    var valorSeleccionado = document.getElementById("canalizacionuno").value; //Obtener el valor de la canalizacion
+    var otraAseguradoraDiv = document.getElementById('overlay');
+
+
+    switch (valorSeleccionado) {
+        case "Vacunacion":
+            console.log(valorSeleccionado)
+            document.getElementById('dataTuning').innerHTML = generarCheckboxes(opcionesActividades, 'modalvacunancion',
+                'remisionEspecifica');
+            document.getElementById("canalizationSpecific").style.display = "block";
+            document.getElementById("modalvacunancion").style.display = "block";
+            break;
+
+
     }
-
-    //Captura el valor igresar los casos encesarion en el switch
-    function capturarValorSeleccionado() {
-        var valorSeleccionado = document.getElementById("canalizacionuno").value; //Obtener el valor de la canalizacion
-        var otraAseguradoraDiv = document.getElementById('overlay');
-
-
-        switch (valorSeleccionado) {
-            case "Vacunacion":
-                console.log(valorSeleccionado)
-                document.getElementById('dataTuning').innerHTML = generarCheckboxes(opcionesActividades, 'modalvacunancion',
-                    'remisionEspecifica');
-                document.getElementById("canalizationSpecific").style.display = "block";
-                document.getElementById("modalvacunancion").style.display = "block";
-                break;
-
-
-        }
-    }
+}
 </script>

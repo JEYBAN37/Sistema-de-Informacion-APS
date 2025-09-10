@@ -350,7 +350,8 @@ echo $this->Html->script('validationFamilia'); // 'validation' es el nombre del 
                         '1.Nuclear biparental' => 'Nuclear',
                         '2.Nuclear monoparental' => 'Nuclear monoparental',
                         '7.Unipersonal' => 'Unipersonal',
-                        '4.Extensa' => 'Extensa', 'Mixta o ampliada' => 'Mixta o ampliada'
+                        '4.Extensa' => 'Extensa', 
+                        'Mixta o ampliada' => 'Mixta o ampliada'
                     ];
                     echo $this->Form->input('tipofamilia', [
                         'label' => '¿Cómo está compuesta la familia?',
@@ -377,6 +378,59 @@ echo $this->Html->script('validationFamilia'); // 'validation' es el nombre del 
                             <strong>Extensa:</strong> Compuesta por persona como Tios, Primos, abuelos.
                         </p>
                     </div>
+
+
+                </div>
+
+                <div class="form-group col-md-6" style="margin-top: 20px;">
+                    <?php
+                            $optionPoblacionEtnica = [
+                                '' => 'Elegir',
+                                'No aplica' => 'No aplica',
+                                'Población indígena' => 'Población indígena',
+                                'Población Afrocolombiano' => 'Población Afrocolombiano',
+                                'Población Rom' => 'Población Rom',
+                                'Población Raizal' => 'Raizal San Andrés y Providencia',
+
+                            ];
+                            echo $this->Form->input('poblacionetnica', [
+                                'label' => '¿Hacen parte de una poblacion etnica?',
+                                'class' => 'form-control',
+                                'type' => 'select',
+                                'options' => $optionPoblacionEtnica,
+                                'style' => 'height:30px;  font-size: 15px ; width:100%',
+                            ]);
+                            ?>
+
+
+
+
+                </div>
+                <div class="form-group col-md-6" style="margin-top: 20px;">
+                    <?php
+                            $optionCabildo = [
+                                '' => 'Elegir',
+                                'No aplica' => 'No aplica',
+                                'Resguado indígena La Laguna Pejendino' => 'Resguado indígena La Laguna Pejendino',
+                                'Cabildo indígena de Jenoy' => 'Cabildo indígena de Jenoy',
+                                'Cabildo indígena de Obonuco' => 'Cabildo indígena de Obonuco',
+                                'Cabildo indígena de Mocondino' => 'Cabildo indígena de Mocondino',
+                                'Cabildo indígena de Catambuco' => 'Cabildo indígena de Catambuco',
+                                'Cabildo indígena de Mapachico' => 'Cabildo indígena de Mapachico',
+                                'Cabildo indígena de Botanilla' => 'Cabildo indígena de Botanilla',
+                                'Cabildo indígena de Valle de Aranda' => 'Cabildo indígena de Aranda',
+                                'Resguardo Indígena Refugio del Sol' => 'Resguardo Indígena Refugio del Sol',
+                                'Kumpania Rom Pasto' => 'Kumpania Rom Pasto',
+                            ];
+                            echo $this->Form->input('resguardo', [
+                                'label' => '¿A cual resguado, cabildo pertenecen?',
+                                'class' => 'form-control',
+                                'type' => 'select',
+                                'options' => $optionCabildo,
+                                'style' => 'height:30px;  font-size: 15px ; width:100%',
+                            ]);
+                            ?>
+
 
 
                 </div>
@@ -420,8 +474,6 @@ echo $this->Html->script('validationFamilia'); // 'validation' es el nombre del 
                         '1.Personas con enferemedades cronicas' => 'Personas con enferemedades cronicas',
                         '1.Personas con enferemedades huerfanas/terminales' => 'Personas con enferemedades huerfanas/terminales',
                         '1.Personas con enferemedades tranmisibles' => 'Personas con enferemedades tranmisibles(TBC,Lepra,Varicela)',
-                        'Indígena' => 'Indígena',
-                        'Afrocolombiano' => 'Afrocolombiano',
                         'Migrante irregular' => 'Migrante irregular',
                         'Migrante regular' => 'Migrante regular',
                         'Habitante de calle' => 'Habitante de calle',
@@ -452,6 +504,19 @@ echo $this->Html->script('validationFamilia'); // 'validation' es el nombre del 
                         'options' => $optionEtnia,
                     ]);
                     ?>
+                </div>
+
+                <div class="form-group col-md-6" style="margin-top: 20px;margin-bottom: 30px;">
+                    <?php
+                            $option = ['' => 'Elegir', 'Si' => 'Si', 'No' => 'No', 'SD' => 'No sabe', 'No sabe' => 'Sin Dato'];
+                            echo $this->Form->input('lgtbi', [
+                                'label' => '¿En el hogar hay integrantes que pertenezcan a la comunidad LGBTI?',
+                                'class' => 'form-control',
+                                'type' => 'select',
+                                'options' => $option,
+                                'style' => 'height:30px;  font-size: 15px ; width:100%',
+                            ]);
+                            ?>
                 </div>
 
                 <div class="form-group col-md-6" style="margin-top: 20px;">
@@ -1077,13 +1142,11 @@ echo $this->Html->script('validationFamilia'); // 'validation' es el nombre del 
                 </div>
                 </fieldset>
 
-
+                <button class="my-button" style="">
+                    Guardar<?php echo $this->Form->end(); ?>
+                </button>
 
             </div>
-            <button class="my-button" style="">
-                Guardar<?php echo $this->Form->end(); ?>
-            </button>
-
 </body>
 
 

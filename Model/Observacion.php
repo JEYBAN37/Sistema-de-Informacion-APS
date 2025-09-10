@@ -34,7 +34,7 @@ class Observacion extends AppModel
 		'responsable_id' => array(
 			'numeric' => array(
 				'rule' => array('numeric'),
-				//'message' => 'Your custom message here',
+				'message' => 'Seleccione un campo de la lista',
 				//'allowEmpty' => false,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule
@@ -52,7 +52,7 @@ class Observacion extends AppModel
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
 		),
-		'canalizaciondos' => array(
+		/*'canalizaciondos' => array(
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),
 				//'message' => 'Your custom message here',
@@ -61,9 +61,9 @@ class Observacion extends AppModel
 				//'last' => false, // Stop validation after this rule
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
-		),
+		),*/
 
-		'canalizaciontres' => array(
+		/*'canalizaciontres' => array(
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),
 				//'message' => 'Your custom message here',
@@ -72,7 +72,7 @@ class Observacion extends AppModel
 				//'last' => false, // Stop validation after this rule
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
-		),
+		),*/
 
 		'estado' => array(
 			'notEmpty' => array(
@@ -95,7 +95,78 @@ class Observacion extends AppModel
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
 		),
-		'resultadofamiliograma' => array(
+		'resultadoFamiliograma' => array(
+			'notEmpty' => array(
+				'rule' => array('notEmpty'),
+				'message' => 'Seleccione al menos un criterio',
+				//'allowEmpty' => false,
+				//'required' => false,
+				//'last' => false, // Stop validation after this rule
+				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+			),
+		),
+
+		/*'objetivocortoplazo' => array(
+			'notEmpty' => array(
+				'rule' => array('notEmpty'),
+				//'message' => 'Your custom message here',
+				//'allowEmpty' => false,
+				//'required' => false,
+				//'last' => false, // Stop validation after this rule
+				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+			),
+		),
+		'objetivolargoplazo' => array(
+			'notEmpty' => array(
+				'rule' => array('notEmpty'),
+				//'message' => 'Your custom message here',
+				//'allowEmpty' => false,
+				//'required' => false,
+				//'last' => false, // Stop validation after this rule
+				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+			),
+		),*/
+		'menoresriegosalud' => array(
+			'notEmpty' => array(
+				'rule' => array('notEmpty'),
+				//'message' => 'Your custom message here',
+				//'allowEmpty' => false,
+				//'required' => false,
+				//'last' => false, // Stop validation after this rule
+				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+			),
+		),
+		'mujerriesgosalud' => array(
+			'notEmpty' => array(
+				'rule' => array('notEmpty'),
+				//'message' => 'Your custom message here',
+				//'allowEmpty' => false,
+				//'required' => false,
+				//'last' => false, // Stop validation after this rule
+				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+			),
+		),
+		'personamayorriesgosalud' => array(
+			'notEmpty' => array(
+				'rule' => array('notEmpty'),
+				//'message' => 'Your custom message here',
+				//'allowEmpty' => false,
+				//'required' => false,
+				//'last' => false, // Stop validation after this rule
+				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+			),
+		),
+		'adolescenteriesgosalud' => array(
+			'notEmpty' => array(
+				'rule' => array('notEmpty'),
+				//'message' => 'Your custom message here',
+				//'allowEmpty' => false,
+				//'required' => false,
+				//'last' => false, // Stop validation after this rule
+				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+			),
+		),
+		'jovenriesgosalud' => array(
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),
 				//'message' => 'Your custom message here',
@@ -106,7 +177,242 @@ class Observacion extends AppModel
 			),
 		),
 
+
+		'riesgovulnerabilidad' => array(
+			'notEmpty' => array(
+				'rule' => array('notEmpty'),
+				//'message' => 'Your custom message here',
+				//'allowEmpty' => false,
+				//'required' => false,
+				//'last' => false, // Stop validation after this rule
+				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+			),
+		),
+		'tamizajeriesgo' => array(
+			'notEmpty' => array(
+				'rule' => array('notEmpty'),
+				//'message' => 'Your custom message here',
+				//'allowEmpty' => false,
+				//'required' => false,
+				//'last' => false, // Stop validation after this rule
+				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+			),
+		),
+		'puntuacionfamilia' => array(
+			'notEmpty' => array(
+				'rule' => array('notEmpty'),
+				//'message' => 'Your custom message here',
+				//'allowEmpty' => false,
+				//'required' => false,
+				//'last' => false, // Stop validation after this rule
+				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+			),
+		),
+		'valoracionfamilia' => array(
+			'notEmpty' => array(
+				'rule' => array('notEmpty'),
+				//'message' => 'Your custom message here',
+				//'allowEmpty' => false,
+				//'required' => false,
+				//'last' => false, // Stop validation after this rule
+				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+			),
+		),
+		/*'problematicafamilia1' => array(
+			'notEmpty' => array(
+				'rule' => array('notEmpty'),
+				//'message' => 'Your custom message here',
+				//'allowEmpty' => false,
+				//'required' => false,
+				//'last' => false, // Stop validation after this rule
+				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+			),
+		),*/
+		/*	'entornoafectado' => array(
+			'notEmpty' => array(
+				'rule' => array('notEmpty'),
+				//'message' => 'Your custom message here',
+				//'allowEmpty' => false,
+				//'required' => false,
+				//'last' => false, // Stop validation after this rule
+				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+			),
+		),*/
+		/*	'actividaddesarrollar' => array(
+			'notEmpty' => array(
+				'rule' => array('notEmpty'),
+				//'message' => 'Your custom message here',
+				//'allowEmpty' => false,
+				//'required' => false,
+				//'last' => false, // Stop validation after this rule
+				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+			),
+		),/*
+		/*'indicadorria' => array(
+			'notEmpty' => array(
+				'rule' => array('notEmpty'),
+				//'message' => 'Your custom message here',
+				//'allowEmpty' => false,
+				//'required' => false,
+				//'last' => false, // Stop validation after this rule
+				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+			),
+		),*/
+		/*'recursoscomunitarios' => array(
+			'notEmpty' => array(
+				'rule' => array('notEmpty'),
+				//'message' => 'Your custom message here',
+				//'allowEmpty' => false,
+				//'required' => false,
+				//'last' => false, // Stop validation after this rule
+				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+			),
+		),*/
+		/*'apoyofamiliar' => array(
+			'notEmpty' => array(
+				'rule' => array('notEmpty'),
+				//'message' => 'Your custom message here',
+				//'allowEmpty' => false,
+				//'required' => false,
+				//'last' => false, // Stop validation after this rule
+				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+			),
+		),
+		'apoyosocial' => array(
+			'notEmpty' => array(
+				'rule' => array('notEmpty'),
+				//'message' => 'Your custom message here',
+				//'allowEmpty' => false,
+				//'required' => false,
+				//'last' => false, // Stop validation after this rule
+				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+			),
+		),*/
+		/*'asistenciafinanciera' => array(
+			'notEmpty' => array(
+				'rule' => array('notEmpty'),
+				//'message' => 'Your custom message here',
+				//'allowEmpty' => false,
+				//'required' => false,
+				//'last' => false, // Stop validation after this rule
+				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+			),
+		),*/
+		/*'observacionesplancuidado' => array(
+			'notEmpty' => array(
+				'rule' => array('notEmpty'),
+				//'message' => 'Your custom message here',
+				//'allowEmpty' => false,
+				//'required' => false,
+				//'last' => false, // Stop validation after this rule
+				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+			),
+		),*/
+		/*	'firmaplancuidado' => array(
+			'notEmpty' => array(
+				'rule' => array('notEmpty'),
+				//'message' => 'Your custom message here',
+				//'allowEmpty' => false,
+				//'required' => false,
+				//'last' => false, // Stop validation after this rule
+				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+			),
+		),*/
+		/*	'disentimiento' => array(
+			'notEmpty' => array(
+				'rule' => array('notEmpty'),
+				//'message' => 'Your custom message here',
+				//'allowEmpty' => false,
+				//'required' => false,
+				//'last' => false, // Stop validation after this rule
+				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+			),
+		),*/
+		/*'motivodisentimiento' => array(
+			'notEmpty' => array(
+				'rule' => array('notEmpty'),
+				//'message' => 'Your custom message here',
+				//'allowEmpty' => false,
+				//'required' => false,
+				//'last' => false, // Stop validation after this rule
+				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+			),
+		),*/
+		/*'fecha' => array(
+			'notEmpty' => array(
+				'rule' => array('notEmpty'),
+				//'message' => 'Your custom message here',
+				//'allowEmpty' => false,
+				//'required' => false,
+				//'last' => false, // Stop validation after this rule
+				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+			),
+		),
+		'fecha1' => array(
+			'notEmpty' => array(
+				'rule' => array('notEmpty'),
+				//'message' => 'Your custom message here',
+				//'allowEmpty' => false,
+				//'required' => false,
+				//'last' => false, // Stop validation after this rule
+				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+			),
+		),
+		'fecha2' => array(
+			'notEmpty' => array(
+				'rule' => array('notEmpty'),
+				//'message' => 'Your custom message here',
+				//'allowEmpty' => false,
+				//'required' => false,
+				//'last' => false, // Stop validation after this rule
+				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+			),
+		),
+		'fecha3' => array(
+			'notEmpty' => array(
+				'rule' => array('notEmpty'),
+				//'message' => 'Your custom message here',
+				//'allowEmpty' => false,
+				//'required' => false,
+				//'last' => false, // Stop validation after this rule
+				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+			),
+		),*/
+
+
+
+
 		'familiograma' => array(
+			'uploadError' => array(
+				'rule' => 'uploadError',
+				'message' => 'Por favor verifique campo, intente nuevamente',
+				'on' => 'create'
+			),
+			'isUnderPhpSizeLimit' => array(
+				'rule' => 'isUnderPhpSizeLimit',
+				'message' => 'Archivo excede el límite de tamaño de archivo de subida'
+			),
+			'isValidMimeType' => array(
+
+				'rule' => array('isValidExtension', array('pdf', 'jpg', 'png', 'jpeg')),
+				'message' => 'El archivo debe ser de tipo pdf'
+			),
+			'isBelowMaxSize' => array(
+				'rule' => array('isBelowMaxSize', 8000000),
+				'message' => 'El tamaño delarchivo es demasiado grande. Maximo 5mb'
+			),
+			/*'isValidExtension' => array(
+				'rule' => array('isValidExtension', array('jpg', 'png'), false),
+				'message' => 'La imagen no tiene la extension jpg o png'
+			),
+			'checkUniqueName' => array(
+				'rule' => array('checkUniqueName'),
+				'message' => 'Ya existe un archivo con el mismo nombre',
+				'on' => 'update'
+			),*/
+		),
+
+		'plancuidado' => array(
 			'uploadError' => array(
 				'rule' => 'uploadError',
 				'message' => 'Por favor verifique campo, intente nuevamente',
@@ -144,22 +450,33 @@ class Observacion extends AppModel
 					'dir' => 'dirfamiliograma'
 				),
 				'thumbnailMethod' => 'php',
-
 				'deleteOnUpdate' => false,
-				'deleteFolderOndelete' => true
+				'deleteFolderOndelete' => true,
+				'checkUniqueName' => array( // Aquí se aplica la regla de validación
+					'rule' => array('checkUniqueName'),
+					'message' => 'Existe un archivo almacenado con el mismo nombre',
+					'on' => 'update'
+				),
 			),
-
-
-
-			'checkUniqueName' => array(
-				'rule' => array('checkUniqueName'),
-				'message' => 'Existe un archivo almacenado con el mismo nombre',
-				'on' => 'update'
+			'plancuidado' => array(
+				'fields' => array(
+					'dir' => 'dirplancuidado'
+				),
+				'thumbnailMethod' => 'php',
+				'deleteOnUpdate' => false,
+				'deleteFolderOndelete' => true,
+				'checkUniqueName' => array( // Aquí se aplica la regla de validación
+					'rule' => array('checkUniqueName'),
+					'message' => 'Existe un archivo almacenado con el mismo nombre',
+					'on' => 'update'
+				),
 			),
-
 		),
-
 	);
+
+
+
+
 
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
 
@@ -189,6 +506,13 @@ class Observacion extends AppModel
 function checkUniqueName($data)
 {
 	$isUnique = $this->find('first', array('fields' => array('Observacion.familiograma'), 'conditions' => array('Observacion.familiograma' => $data['familiograma'])));
+	if (!empty($isUnique)) {
+		return false;
+	} else {
+		return true;
+	}
+
+	$isUnique = $this->find('first', array('fields' => array('Observacion.plancuidado'), 'conditions' => array('Observacion.plancuidado' => $data['plancuidado'])));
 	if (!empty($isUnique)) {
 		return false;
 	} else {

@@ -7,7 +7,7 @@ $serv = 'localhost';
 $port = '3306';
 $userS = 'root';
 $passS = '';
-$bd = 'fichafamiliar2024';
+$bd = 'fichafamiliar20241709';
 ?>
 
 <style>
@@ -25,12 +25,15 @@ $bd = 'fichafamiliar2024';
             </div>
 
             <div>
+
                 <div class="dataTable_wrapper">
+
 
                     <div class="row">
                         <div class="col-lg-12">
 
-                            <table width="100%" class="table table-responsive table-striped table-bordered  " style="margin-top: 30px;">
+                            <table width="100%" class="table table-responsive table-striped table-bordered  "
+                                style="margin-top: 30px;">
                                 <td colspan="6" style="text-align: center; color: #3366CC;"><strong>DATOS
                                         GENERALES</strong>
                                     <tr>
@@ -119,7 +122,8 @@ $bd = 'fichafamiliar2024';
                                     <button id="verMasButton" class="my-button" onclick="toggleTableVisibility()">
                                         <?php $imageUrl = $this->Html->url('/img/flecha-correcta.png', true);
                                         ?>
-                                        <img src="<?= $imageUrl ?>" style=" transform: rotate(90deg);" alt="Imagen de marcador genérico" width="100%" height="auto">
+                                        <img src="<?= $imageUrl ?>" style=" transform: rotate(90deg);"
+                                            alt="Imagen de marcador genérico" width="100%" height="auto">
 
                                     </button>
                                 </td>
@@ -129,7 +133,8 @@ $bd = 'fichafamiliar2024';
 
 
 
-                            <table id="miTabla" style="display: none; margin-top: 20px;" width="100%" class="table table-responsive table-striped table-bordered  ">
+                            <table id="miTabla" style="display: none; margin-top: 20px;" width="100%"
+                                class="table table-responsive table-striped table-bordered  ">
                                 <tr>
                                     <td colspan="6" style="text-align: center; color: #3366CC;">
                                         <strong>VIVIENDA</strong>
@@ -348,191 +353,177 @@ $bd = 'fichafamiliar2024';
 
                                 <td colspan="12" style="text-align: center;">
                                     <button class="my-button" onclick="toggleTableVisibility()">
-                                        <img src="<?= $imageUrl ?>" style=" transform: rotate(-90deg);" alt="Imagen de marcador genérico" width="100%" height="auto"> </button>
+                                        <img src="<?= $imageUrl ?>" style=" transform: rotate(-90deg);"
+                                            alt="Imagen de marcador genérico" width="100%" height="auto"> </button>
                                     </button>
                                 </td>
 
 
 
                             </table>
+
+                            <td class="actions">
+                                <div class="btn-group">
+                                    <button type="button" class="my-button" data-toggle="dropdown">
+                                        <?php echo ('Acciones'); ?> <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu" role="menu">
+
+                                        <li> <?php
+                                                echo $this->Html->link(
+                                                    'Editar inf.sociambiental',
+                                                    array(
+                                                        'controller' => 'sociambientals',
+                                                        'action' => 'edit',
+                                                        $familia['Sociambiental']['id']
+                                                    ),
+                                                    array(
+                                                        'onclick' => "return confirm('¿Estás seguro de que deseas editar la información sociambiental de la familia " . $familia['Sociambiental']['apellidosfamilia'] . "?');",
+                                                        'style' => 'color: blue; font-size: 16px; font-weight: bold;'
+                                                    )
+                                                );
+                                                ?>
+
+                                        </li>
+                                        <li> <?php echo $this->Html->link(
+                                                    __('Editar información Familiar'),
+                                                    array('action' => 'edit', $familia['Familia']['id']),
+                                                    array(
+                                                        'onclick' => "return confirm('¿Estás seguro de editar la información del hogar de " .  $familia['Familia']['nombres'] . ' ' . $familia['Familia']['apellidos'] . "?');",
+                                                        'style' => 'color: blue; font-size: 16px; font-weight: bold;'
+                                                    )
+                                                ); ?>
+
+                                        </li>
+                                        <li> <?php
+                                                echo $this->Html->link(('Agregar menor de 2 años'),
+                                                    array(
+                                                        'controller' => 'Primerainfancias',
+                                                        'action' => 'add?primerainfancia=' . $familia['Familia']['id']
+                                                    ),
+                                                    array(
+                                                        'onclick' => "return confirm('¿Estás seguro de agregar un menor de 2 años en el hogar de " .  $familia['Familia']['nombres'] . " " .  $familia['Familia']['apellidos'] . "?');",
+                                                        'style' => 'color: blue; font-size: 16px; font-weight: bold;'
+                                                    )
+                                                ); ?>
+
+                                        </li>
+                                        <li> <?php echo $this->Html->link(('Agregar menor de 2 a 5 años'),
+                                                    array(
+                                                        'controller' => 'Primerainfancias',
+                                                        'action' => 'add2_5?primerainfancia=' . $familia['Familia']['id']
+                                                    ),
+                                                    array(
+                                                        'onclick' => "return confirm('¿Estás seguro de agregar un menor de 2 a 5 años en el hogar de " .  $familia['Familia']['nombres'] . " " .  $familia['Familia']['apellidos'] . "?');",
+                                                        'style' => 'color: blue; font-size: 16px; font-weight: bold;'
+                                                    )
+
+                                                ); ?>
+                                        </li>
+                                        <li> <?php echo $this->Html->link(('Agregar menor de 6 a 11 años'),
+                                                    array(
+                                                        'controller' => 'Infantils',
+                                                        'action' => 'add?infantils=' . $familia['Familia']['id']
+                                                    ),
+                                                    array(
+                                                        'onclick' => "return confirm('¿Estás seguro de agregar un menor de 6 a 11 años en el hogar de " .  $familia['Familia']['nombres'] . " " .  $familia['Familia']['apellidos'] . "?');",
+                                                        'style' => 'color: blue; font-size: 16px; font-weight: bold;'
+                                                    )
+                                                ); ?>
+                                        </li>
+                                        <li> <?php echo $this->Html->link(('Agregar menor de 12 a 17 años'),
+                                                    array(
+                                                        'controller' => 'Adolescencias',
+                                                        'action' => 'add?adolescencias=' . $familia['Familia']['id']
+                                                    ),
+                                                    array(
+                                                        'onclick' => "return confirm('¿Estás seguro de agregar un menor de 12 a 17 años en el hogar de " .  $familia['Familia']['nombres'] . " " .   $familia['Familia']['apellidos'] . "?');",
+                                                        'style' => 'color: blue; font-size: 16px; font-weight: bold;'
+                                                    )
+                                                ); ?>
+                                        </li>
+                                        <li> <?php echo $this->Html->link(('Agregar adulto mayor de 18 años'),
+                                                    array(
+                                                        'controller' => 'Juventudadultos',
+                                                        'action' => 'add?juventudadultos=' . $familia['Familia']['id']
+                                                    ),
+                                                    array(
+                                                        'onclick' => "return confirm('¿Estás seguro de agregar un adulto mayor de 18 en el hogar de " .  $familia['Familia']['nombres'] . " " .  $familia['Familia']['apellidos'] . "?');",
+                                                        'style' => 'color: blue; font-size: 16px; font-weight: bold;'
+                                                    )
+                                                ); ?>
+                                        </li>
+                                        <li> <?php echo $this->Html->link(('Agregar Observación '),
+                                                    array(
+                                                        'controller' => 'Observacions',
+                                                        'action' => 'add?observaciones=' . $familia['Familia']['id']
+                                                    ),
+                                                    array(
+                                                        'onclick' => "return confirm('¿Estás seguro de agregar una observación en el hogar de " .  $familia['Familia']['nombres'] . " " .  $familia['Familia']['apellidos'] . "?');",
+                                                        'style' => 'color: blue; font-size: 16px; font-weight: bold;'
+                                                    )
+                                                ); ?>
+                                        </li>
+
+                                        <li> <?php echo $this->Html->link(('Generar plan cuidado '),
+                                                    array(
+                                                        'controller' => 'familias',
+                                                        'action' => 'plancuidado' . '/' . $familia['Familia']['id']
+                                                    ),
+                                                    array(
+                                                        'onclick' => "return confirm('¿Estás seguro de agregar una observación en el hogar de " .  $familia['Familia']['nombres'] . " " .  $familia['Familia']['apellidos'] . "?');",
+                                                        'style' => 'color: blue; font-size: 16px; font-weight: bold;'
+                                                    )
+                                                ); ?>
+                                        </li>
+
+                                    </ul>
+                                </div>
+                            </td>
                         </div>
-
-                        <div style="text-align: center;">
-                            <button class="my-button" style="width: 250px;">
-                                <?php
-                                echo $this->Html->link(
-                                    'Editar inf.sociambiental',
-                                    array(
-                                        'controller' => 'sociambientals',
-                                        'action' => 'edit',
-                                        $familia['Sociambiental']['id']
-                                    ),
-                                    array(
-                                        'onclick' => "return confirm('¿Estás seguro de que deseas editar la información sociambiental de la familia " . $familia['Sociambiental']['apellidosfamilia'] . "?');",
-                                        'style' => 'color: white; font-size: 16px; font-weight: bold;'
-                                    )
-                                );
-                                ?>
-                            </button>
-                            <button class="my-button" style="width: 250px;">
-
-                                <?php echo $this->Html->link(
-                                    __('Editar información Familiar'),
-                                    array('action' => 'edit', $familia['Familia']['id']),
-                                    array(
-                                        'onclick' => "return confirm('¿Estás seguro de editar la información del hogar de " .  $familia['Familia']['nombres'] . ' ' . $familia['Familia']['apellidos'] . "?');",
-                                        'style' => 'color: white; font-size: 16px; font-weight: bold;'
-                                    )
-                                ); ?>
-
-                            </button>
-                        </div>
-
                     </div>
                 </div>
             </div>
 
+
+
+
+
             <h2 class="subtitle-general-forms" style=" margin-top: 40px;">Personas en la Familia</h2>
             <hr style=" background-clip: border-box; border:0.1px solid rgba(0,0,0,.125); margin-top: 1px;">
 
-
-            <div class="row" style="margin: 5px;">
-                <div class="col-lg-12" style="justify-items: center; ">
-                    <div class="panel panel-default">
-
+            <div class="dataTable_wrapper">
+                <div class="row" style="margin: 5px;">
+                    <div class="col-lg-12">
 
 
-                        <!-- /.panel-heading -->
-                        <div class="table-responsive" style="justify-items: center; margin-top: 5px; ">
-                            <div class="row col-sm-12 JustifyCenter " style="margin: 20px; ">
-                                <div class=" row">
-                                    <div class="col-sm-12">
-                                        <div class="panel-body">
-                                            <!-- Nav tabs -->
-                                            <ul class="nav nav-pills">
-                                                <li class="active"><a href="#home-pills" data-toggle="tab">Primera
-                                                        infancia 0 a 5 años</a>
-                                                </li>
-                                                <li><a href="#profile-pills" data-toggle="tab">Infancia 6 a 11 años</a>
-                                                </li>
-                                                <li><a href="#messages-pills" data-toggle="tab">Adolescencia 12 a 17
-                                                        años</a>
-                                                </li>
-                                                <li><a href="#settings-pills" data-toggle="tab">Personas mayores de 18
-                                                        años</a>
-                                                </li>
-                                                <li><a href="#observacion-pills" data-toggle="tab">Observación</a>
-                                                </li>
-                                            </ul>
+                        <div class="panel-body">
+                            <!-- Nav tabs -->
 
-                                        </div>
-
-                                    </div>
-
-
-
-
-                                </div>
-                                <!-- /.table-responsive -->
-                            </div>
-                            <!-- /.panel-body -->
-                        </div>
-                        <!-- /.panel -->
-                    </div>
-
-                    <div class="panel-body">
-                        <!-- Nav tabs -->
-
-                        <!-- Tab panes -->
-                        <div class="tab-content">
-                            <div class="tab-pane fade in active" id="home-pills">
-
-                                <div class="col-12 text-center">
-                                    <h3 class="titulo-general-pwa-govco" style="color: #3366CC; margin-top: 20px;">
-                                        Menores de 0 a 5 años
-                                    </h3>
-                                    <button class="my-button" style="margin-top: 30px; width: 270px;"> <?php
-                                                                                                        echo $this->Html->link(('Agregar menor de 2 años'),
-                                                                                                            array(
-                                                                                                                'controller' => 'Primerainfancias',
-                                                                                                                'action' => 'add?primerainfancia=' . $familia['Familia']['id']
-                                                                                                            ),
-                                                                                                            array(
-                                                                                                                'onclick' => "return confirm('¿Estás seguro de agregar un menor de 2 años en el hogar de " .  $familia['Familia']['nombres'] .  $familia['Familia']['apellidos'] . "?');",
-                                                                                                                'style' => 'color: white; font-size: 16px; font-weight: bold;',
-
-                                                                                                            )
-                                                                                                        ); ?>
-                                    </button>
-
-
-
-
-                                    <button class="my-button" style="width: 270px;"> <?php
-                                                                                        echo $this->Html->link(('Agregar menor entre 2 a 5 años'),
-                                                                                            array(
-                                                                                                'controller' => 'Primerainfancias',
-                                                                                                'action' => 'add2_5?primerainfancia=' . $familia['Familia']['id']
-                                                                                            ),
-                                                                                            array(
-                                                                                                'onclick' => "return confirm('¿Estás seguro de agregar un menor entre 2 a 5 años en el hogar de " .  $familia['Familia']['nombres'] .  $familia['Familia']['apellidos'] . "?');",
-                                                                                                'style' => 'color: white; font-size: 16px; font-weight: bold; '
-                                                                                            )
-                                                                                        ); ?>
-                                    </button>
-
-                                </div>
-
-
-
+                            <!-- Tab panes -->
+                            <div class="tab-content">
 
                                 <div class="card-body" style="margin-top: 20px;">
                                     <?php if (!empty($familia['Primerainfancia'])) : ?>
 
-                                        <div class="table-responsive" style="justify-items: center; margin-top: 10px; ">
-                                            <div class="row col-sm-12 JustifyCenter " style="margin: 20px; ">
+                                        <div>
+                                            <div style="margin: 20px; ">
                                                 <div class=" row">
+
                                                     <div class="col-sm-12">
-                                                        <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-example">
+                                                        <table id="dataTables-example" class="display responsive nowrap"
+                                                            style="width:100%">
                                                             <!--table cellpatding="0" cellspacing="0" class="table-hover table-striped table-bordered"-->
                                                             <thead>
                                                                 <tr>
                                                                     <th>Id</th>
-                                                                    <th>Acciones</th>
+                                                                    <th>Opciones</th>
                                                                     <th>Nombres</th>
                                                                     <th>Edad</th>
                                                                     <th>Sexo</th>
                                                                     <th>Aseguradora</th>
                                                                     <th>Canalización</th>
-                                                                    <th>Canalización</th>
-                                                                    <th>Canalización</th>
-                                                                    <th>Institucion</th>
-                                                                    <th>enlace</th>
-                                                                    <th>celular</th>
-                                                                    <th>correo</th>
-                                                                    <th>Prematuro </th>
-                                                                    <th>Discapacidad </th>
-                                                                    <th>Peso </th>
-                                                                    <th>Talla </th>
-                                                                    <th>Bajopeso </th>
-
-                                                                    <th>Lactanciamaterna </th>
                                                                     <th>Condicioncronica </th>
-                                                                    <th>Anomaliacongenita </th>
-                                                                    <th>Esquemavacunacion </th>
-                                                                    <th>Desparasitacion </th>
-                                                                    <th>Crecimientoydesarrollo </th>
-                                                                    <th>Desnutricion </th>
-                                                                    <th>Higieneoral </th>
-                                                                    <th>Desarrolloinfantil </th>
-                                                                    <th>Eda </th>
-                                                                    <th>Era </th>
-                                                                    <th>Padresconsumo </th>
-                                                                    <th>Sospechaviolencia </th>
-                                                                    <th>Cudadorpermanente </th>
-
-
-
                                                                 </tr>
 
                                                             <tbody>
@@ -548,7 +539,9 @@ $bd = 'fichafamiliar2024';
                                                                             <td class="actions">
 
                                                                                 <div class="btn-group">
-                                                                                    <button type="button" class="my-button" style="margin-top: -2px;" data-toggle="dropdown">
+                                                                                    <button type="button" class="my-button"
+                                                                                        style="margin-top: -2px;"
+                                                                                        data-toggle="dropdown">
                                                                                         Opciones
                                                                                     </button>
                                                                                     <ul class="dropdown-menu" role="menu">
@@ -573,23 +566,12 @@ $bd = 'fichafamiliar2024';
 
 
                                                                                         </li>
-                                                                                        <li>
-
-                                                                                            <?php echo $this->Html->link(('Canalización'),
-                                                                                                "../primerainfancias/edit1/" . $primerainfancia['id'],
-                                                                                                array('action' => 'edit1', $primerainfancia['id']),
-                                                                                                array(
-                                                                                                    'style' => 'font-size: 14px;'
-                                                                                                )
-                                                                                            ); ?>
-
-
-                                                                                        </li>
                                                                                         <li><?php echo $this->Form->postLink(
                                                                                                 __('Borrar'),
                                                                                                 array(
                                                                                                     'controller' => 'primerainfancias',
-                                                                                                    'action' => 'delete', $primerainfancia['id']
+                                                                                                    'action' => 'delete',
+                                                                                                    $primerainfancia['id']
                                                                                                 ),
                                                                                                 array('style' => 'color: red; font-size: 14px; '),
                                                                                                 __('Esta seguro de eliminar el registro # %s?', $primerainfancia['id'] . ' ' . $primerainfancia['primernombre'] . ' ' . $primerainfancia['primerapellido'] . ' de la familia de con id # ' .  $primerainfancia['familia_id'])
@@ -599,6 +581,7 @@ $bd = 'fichafamiliar2024';
                                                                                 </div>
 
                                                                             </td>
+
 
 
                                                                             <td><?php echo $primerainfancia['primernombre'] ?>
@@ -612,94 +595,12 @@ $bd = 'fichafamiliar2024';
                                                                             </td>
                                                                             <td> <?php echo $primerainfancia['aseguradora']; ?>
                                                                             </td>
-                                                                            <td> <?php echo $primerainfancia['canalizacionuno']; ?>
-                                                                            </td>
-                                                                            <td> <?php echo $primerainfancia['canalizaciondos']; ?>
-                                                                            </td>
-                                                                            <td> <?php echo $primerainfancia['canalizaciontres']; ?>
-                                                                            </td>
-                                                                            <td>
-                                                                                <?php
-                                                                                $link = mysqli_connect($serv, $userS, $passS, $bd);
-                                                                                $tildes = $link->query("SET NAMES 'utf8'"); // Para que se muestren las tildes correctamente
-                                                                                $result = mysqli_query($link, "SELECT nombre FROM Canalizaciones WHERE id = " . $primerainfancia['canalizacion_id']);
-                                                                                if ($fila = mysqli_fetch_array($result)) {
-                                                                                    echo $fila['nombre'];
-                                                                                }
-                                                                                mysqli_free_result($result);
-                                                                                mysqli_close($link);
-                                                                                ?>
-                                                                            </td>
-                                                                            <td>
-                                                                                <?php
-                                                                                $link = mysqli_connect($serv, $userS, $passS, $bd);
-                                                                                $tildes = $link->query("SET NAMES 'utf8'"); // Para que se muestren las tildes correctamente
-                                                                                $result = mysqli_query($link, "SELECT enlaceuno FROM Canalizaciones WHERE id = " . $primerainfancia['canalizacion_id']);
-                                                                                if ($fila = mysqli_fetch_array($result)) {
-                                                                                    echo $fila['enlaceuno'];
-                                                                                }
-                                                                                mysqli_free_result($result);
-                                                                                mysqli_close($link);
-                                                                                ?>
-                                                                            </td>
-                                                                            <td>
-                                                                                <?php
-                                                                                //echo $adolescencia['responsable_id']; 
-                                                                                $link = mysqli_connect($serv, $userS, $passS);
-                                                                                mysqli_select_db($link, $bd);
-                                                                                $tildes = $link->query("SET NAMES 'utf8'"); //Para que se muestren las tildes correctamente
-                                                                                $result = mysqli_query($link, "SELECT telefono1 FROM Canalizaciones WHERE id = " . $primerainfancia['canalizacion_id']);
-                                                                                while ($fila = mysqli_fetch_array($result)) {
-                                                                                    echo $fila['telefono1'];
-
-                                                                                    mysqli_close($link);
-                                                                                }
-                                                                                ?>
-                                                                            </td>
-                                                                            <td>
-                                                                                <?php
-                                                                                //echo $adolescencia['responsable_id']; 
-                                                                                $link = mysqli_connect($serv, $userS, $passS);
-                                                                                mysqli_select_db($link, $bd);
-                                                                                $tildes = $link->query("SET NAMES 'utf8'"); //Para que se muestren las tildes correctamente
-                                                                                $result = mysqli_query($link, "SELECT correo1 FROM Canalizaciones WHERE id = " . $primerainfancia['canalizacion_id']);
-                                                                                while ($fila = mysqli_fetch_array($result)) {
-                                                                                    echo $fila['correo1'];
-
-                                                                                    mysqli_close($link);
-                                                                                }
-                                                                                ?>
-                                                                            </td>
-
-                                                                            <td><?php echo $primerainfancia['prematuro']; ?></td>
-                                                                            <td><?php echo $primerainfancia['discapacidad']; ?></td>
-                                                                            <td><?php echo $primerainfancia['peso']; ?></td>
-                                                                            <td><?php echo $primerainfancia['talla']; ?></td>
-                                                                            <td><?php echo $primerainfancia['bajopeso']; ?></td>
-                                                                            <td><?php echo $primerainfancia['lactanciamaterna']; ?>
+                                                                            <td> <?php echo $primerainfancia['canalizacionuno']; ?>,
+                                                                                <?php echo $primerainfancia['canalizaciondos']; ?>,
+                                                                                <?php echo $primerainfancia['canalizaciontres']; ?>
                                                                             </td>
                                                                             <td><?php echo $primerainfancia['condicioncronica']; ?>
                                                                             </td>
-                                                                            <td><?php echo $primerainfancia['anomaliacongenita']; ?>
-                                                                            </td>
-                                                                            <td><?php echo $primerainfancia['esquemavacunacion']; ?>
-                                                                            </td>
-                                                                            <td><?php echo $primerainfancia['desparasitacion']; ?>
-                                                                            </td>
-                                                                            <td><?php echo $primerainfancia['crecimientoydesarrollo']; ?>
-                                                                            </td>
-                                                                            <td><?php echo $primerainfancia['desnutricion']; ?></td>
-                                                                            <td><?php echo $primerainfancia['higieneoral']; ?></td>
-                                                                            <td><?php echo $primerainfancia['desarrolloinfantil']; ?>
-                                                                            </td>
-                                                                            <td><?php echo $primerainfancia['eda']; ?></td>
-                                                                            <td><?php echo $primerainfancia['era']; ?></td>
-                                                                            <td><?php echo $primerainfancia['padresconsumo']; ?>
-                                                                            </td>
-                                                                            <td><?php echo $primerainfancia['sospechamaltrato']; ?>
-                                                                            </td>
-                                                                            <td><?php echo $primerainfancia['cuidador']; ?></td>
-
 
                                                                         </tr>
                                                                 <?php }
@@ -712,54 +613,28 @@ $bd = 'fichafamiliar2024';
                                             </div>
                                         </div>
                                     <?php endif; ?>
-                                </div>
 
-                            </div>
-
-                            <div class="tab-pane fade" id="profile-pills">
-
-                                <div class="col-12 text-center">
-                                    <h3 class="titulo-general-pwa-govco" style="color: #3366CC; margin-top: 20px;">
-                                        Menores de 6 a 11 años
-                                    </h3>
-                                    <button class="my-button" style="margin-top: 30px;">
-                                        <?php
-                                        echo $this->Html->link(('Agregar menor de 6 a 11 años'),
-                                            array(
-                                                'controller' => 'Infantils',
-                                                'action' => 'add?infantils=' . $familia['Familia']['id']
-                                            ),
-                                            array(
-                                                'onclick' => "return confirm('¿Estás seguro de agregar un menor de 6 a 11 años en el hogar de " .  $familia['Familia']['nombres'] . " " .  $familia['Familia']['apellidos'] . "?');",
-                                                'style' => 'color: white; font-size: 16px; font-weight: bold;'
-                                            )
-                                        ); ?></button>
-
-                                </div>
-                                <div class="card-body" style="margin-top: 20px;">
                                     <?php if (!empty($familia['Infantil'])) : ?>
 
-                                        <div class="dataTables-example" style="justify-items: center; margin-top: 10px; ">
-                                            <div class="row col-sm-12 JustifyCenter " style="margin: 20px; ">
+                                        <div>
+                                            <div style="margin: 20px; ">
                                                 <div class=" row">
+
                                                     <div class="col-sm-12">
-                                                        <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-infantil">
+                                                        <table id="dataTables-infantil" class="display responsive nowrap"
+                                                            style="width:100%">
                                                             <!--table cellpatding="0" cellspacing="0" class="table-hover table-striped table-bordered"-->
                                                             <thead>
                                                                 <tr>
                                                                     <th>Id</th>
-                                                                    <th>Acciones</th>
+                                                                    <th>Opciones</th>
                                                                     <th>Nombres</th>
                                                                     <th>Edad</th>
                                                                     <th>Sexo</th>
                                                                     <th>Aseguradora</th>
                                                                     <th>Canalización</th>
-                                                                    <th>Canalización</th>
-                                                                    <th>Canalización</th>
-                                                                    <th>Institucion</th>
-                                                                    <th>enlace</th>
-                                                                    <th>celular</th>
-                                                                    <th>correo</th>
+                                                                    <th>Condición Crónica</th>
+
                                                                 </tr>
 
                                                             <tbody>
@@ -773,7 +648,9 @@ $bd = 'fichafamiliar2024';
                                                                             <td class="actions">
 
                                                                                 <div class="btn-group">
-                                                                                    <button type="button" class="my-button" style="margin-top: -2px;" data-toggle="dropdown">
+                                                                                    <button type="button" class="my-button"
+                                                                                        style="margin-top: -2px;"
+                                                                                        data-toggle="dropdown">
                                                                                         Opciones
                                                                                     </button>
                                                                                     <ul class="dropdown-menu" role="menu">
@@ -785,7 +662,8 @@ $bd = 'fichafamiliar2024';
                                                                                                 __('Borrar'),
                                                                                                 array(
                                                                                                     'controller' => 'infantils',
-                                                                                                    'action' => 'delete', $infantil['id']
+                                                                                                    'action' => 'delete',
+                                                                                                    $infantil['id']
                                                                                                 ),
                                                                                                 array('style' => 'color: red; font-size: 16px; font-weight: bold;'),
                                                                                                 __('Esta seguro de eliminar el registro # %s?', $infantil['id'] . ' ' . $infantil['primernombre'] . ' ' . $infantil['primerapellido'] . ' de la familia de con id # ' .  $infantil['familia_id'])
@@ -795,6 +673,7 @@ $bd = 'fichafamiliar2024';
                                                                                 </div>
 
                                                                             </td>
+
                                                                             <td><?php echo $infantil['primernombre'] ?>
                                                                                 <?php echo $infantil['primerapellido'] ?>
                                                                             </td>
@@ -805,64 +684,13 @@ $bd = 'fichafamiliar2024';
                                                                             </td>
                                                                             <td> <?php echo $infantil['aseguradora']; ?>
                                                                             </td>
-                                                                            <td> <?php echo $infantil['canalizacionuno']; ?>
+                                                                            <td> <?php echo $infantil['canalizacionuno']; ?>,
+                                                                                <?php echo $infantil['canalizaciondos']; ?>,
+                                                                                <?php echo $infantil['canalizaciontres']; ?>
                                                                             </td>
-                                                                            <td> <?php echo $infantil['canalizaciondos']; ?>
+                                                                            <td> <?php echo $infantil['condicioncronica']; ?>
                                                                             </td>
-                                                                            <td> <?php echo $infantil['canalizaciontres']; ?>
-                                                                            </td>
-                                                                            <td>
-                                                                                <?php
-                                                                                $link = mysqli_connect($serv, $userS, $passS, $bd);
-                                                                                $tildes = $link->query("SET NAMES 'utf8'"); // Para que se muestren las tildes correctamente
-                                                                                $result = mysqli_query($link, "SELECT nombre FROM Canalizaciones WHERE id = " . $infantil['canalizacion_id']);
-                                                                                if ($fila = mysqli_fetch_array($result)) {
-                                                                                    echo $fila['nombre'];
-                                                                                }
-                                                                                mysqli_free_result($result);
-                                                                                mysqli_close($link);
-                                                                                ?>
-                                                                            </td>
-                                                                            <td>
-                                                                                <?php
-                                                                                $link = mysqli_connect($serv, $userS, $passS, $bd);
-                                                                                $tildes = $link->query("SET NAMES 'utf8'"); // Para que se muestren las tildes correctamente
-                                                                                $result = mysqli_query($link, "SELECT enlaceuno FROM Canalizaciones WHERE id = " . $infantil['canalizacion_id']);
-                                                                                if ($fila = mysqli_fetch_array($result)) {
-                                                                                    echo $fila['enlaceuno'];
-                                                                                }
-                                                                                mysqli_free_result($result);
-                                                                                mysqli_close($link);
-                                                                                ?>
-                                                                            </td>
-                                                                            <td>
-                                                                                <?php
-                                                                                //echo $adolescencia['responsable_id']; 
-                                                                                $link = mysqli_connect($serv, $userS, $passS);
-                                                                                mysqli_select_db($link, $bd);
-                                                                                $tildes = $link->query("SET NAMES 'utf8'"); //Para que se muestren las tildes correctamente
-                                                                                $result = mysqli_query($link, "SELECT telefono1 FROM Canalizaciones WHERE id = " . $infantil['canalizacion_id']);
-                                                                                while ($fila = mysqli_fetch_array($result)) {
-                                                                                    echo $fila['telefono1'];
 
-                                                                                    mysqli_close($link);
-                                                                                }
-                                                                                ?>
-                                                                            </td>
-                                                                            <td>
-                                                                                <?php
-                                                                                //echo $adolescencia['responsable_id']; 
-                                                                                $link = mysqli_connect($serv, $userS, $passS);
-                                                                                mysqli_select_db($link, $bd);
-                                                                                $tildes = $link->query("SET NAMES 'utf8'"); //Para que se muestren las tildes correctamente
-                                                                                $result = mysqli_query($link, "SELECT correo1 FROM Canalizaciones WHERE id = " . $infantil['canalizacion_id']);
-                                                                                while ($fila = mysqli_fetch_array($result)) {
-                                                                                    echo $fila['correo1'];
-
-                                                                                    mysqli_close($link);
-                                                                                }
-                                                                                ?>
-                                                                            </td>
 
                                                                         </tr>
                                                                 <?php }
@@ -877,40 +705,17 @@ $bd = 'fichafamiliar2024';
                                     <?php endif; ?>
                                 </div>
 
-
-
-
-
-                            </div>
-
-
-                            <div class="tab-pane fade" id="messages-pills">
-
-                                <div class="col-12 text-center">
-                                    <h3 class="titulo-general-pwa-govco" style="color: #3366CC;margin-top: 20px;">
-                                        Menores de 12 a 17 años
-                                    </h3>
-                                    <button class="my-button">
-                                        <?php echo $this->Html->link(('Agregar menor de 12 a 17 años'),
-                                            array(
-                                                'controller' => 'Adolescencias',
-                                                'action' => 'add?adolescencias=' . $familia['Familia']['id']
-                                            ),
-                                            array(
-                                                'onclick' => "return confirm('¿Estás seguro de agregar un menor de 12 a 17 años en el hogar de " .  $familia['Familia']['nombres'] .   $familia['Familia']['apellidos'] . "?');",
-                                                'style' => 'color: white; font-size: 16px; font-weight: bold;'
-                                            )
-                                        ); ?>
-                                    </button>
-                                </div>
-
                                 <div class="card-body" style="margin-top: 20px;">
                                     <?php if (!empty($familia['Adolescencia'])) : ?>
-                                        <div class="table-responsive" style="justify-items: center; margin-top: 10px; ">
-                                            <div class="row col-sm-12 JustifyCenter " style="margin: 20px; ">
+                                        <div>
+                                            <div style="margin: 20px; ">
+
                                                 <div class=" row">
+
+
                                                     <div class="col-sm-12">
-                                                        <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-Adolescencia">
+                                                        <table id="dataTables-Adolescencia"
+                                                            class="display responsive nowrap" style="width:100%">
                                                             <!--table cellpatding="0" cellspacing="0" class="table-hover table-striped table-bordered"-->
                                                             <thead>
                                                                 <tr>
@@ -921,14 +726,7 @@ $bd = 'fichafamiliar2024';
                                                                     <th>Sexo</th>
                                                                     <th>Aseguradora</th>
                                                                     <th>Canalización</th>
-                                                                    <th>Canalización</th>
-                                                                    <th>Canalización</th>
-                                                                    <th>Institucion</th>
-                                                                    <th>enlace</th>
-                                                                    <th>celular</th>
-                                                                    <th>correo</th>
-
-
+                                                                    <th>Condición Crónica</th>
                                                                 </tr>
 
                                                             <tbody>
@@ -938,10 +736,13 @@ $bd = 'fichafamiliar2024';
                                                                         <tr class="gradeA odd">
                                                                             <td class="sorting_1">
                                                                                 <?php echo $adolescencia['id']; ?></td>
+
                                                                             <td class="actions">
 
                                                                                 <div class="btn-group">
-                                                                                    <button type="button" class="my-button" style="margin-top: -2px;" data-toggle="dropdown">
+                                                                                    <button type="button" class="my-button"
+                                                                                        style="margin-top: -2px;"
+                                                                                        data-toggle="dropdown">
                                                                                         Opciones
                                                                                     </button>
                                                                                     <ul class="dropdown-menu" role="menu">
@@ -953,7 +754,8 @@ $bd = 'fichafamiliar2024';
                                                                                                 __('Borrar'),
                                                                                                 array(
                                                                                                     'controller' => 'adolescencias',
-                                                                                                    'action' => 'delete', $adolescencia['id']
+                                                                                                    'action' => 'delete',
+                                                                                                    $adolescencia['id']
                                                                                                 ),
                                                                                                 array('style' => 'color: red; font-size: 16px; font-weight: bold;'),
                                                                                                 __('Esta seguro de eliminar el registro # %s?', $adolescencia['id'] . ' ' . $adolescencia['primernombre'] . ' ' . $adolescencia['primerapellido'] . ' de la familia de con id # ' .  $adolescencia['familia_id'])
@@ -974,65 +776,11 @@ $bd = 'fichafamiliar2024';
                                                                             </td>
                                                                             <td> <?php echo $adolescencia['aseguradora']; ?>
                                                                             </td>
-                                                                            <td> <?php echo $adolescencia['canalizacionuno']; ?>
+                                                                            <td> <?php echo $adolescencia['canalizacionuno']; ?>,<?php echo $adolescencia['canalizaciondos']; ?>,
+                                                                                <?php echo $adolescencia['canalizaciontres']; ?>
                                                                             </td>
-                                                                            <td> <?php echo $adolescencia['canalizaciondos']; ?>
+                                                                            <td> <?php echo $adolescencia['condicioncronica']; ?>
                                                                             </td>
-                                                                            <td> <?php echo $adolescencia['canalizaciontres']; ?>
-                                                                            </td>
-                                                                            <td>
-                                                                                <?php
-                                                                                $link = mysqli_connect($serv, $userS, $passS, $bd);
-                                                                                $tildes = $link->query("SET NAMES 'utf8'"); // Para que se muestren las tildes correctamente
-                                                                                $result = mysqli_query($link, "SELECT nombre FROM Canalizaciones WHERE id = " . $adolescencia['canalizacion_id']);
-                                                                                if ($fila = mysqli_fetch_array($result)) {
-                                                                                    echo $fila['nombre'];
-                                                                                }
-                                                                                mysqli_free_result($result);
-                                                                                mysqli_close($link);
-                                                                                ?>
-                                                                            </td>
-                                                                            <td>
-                                                                                <?php
-                                                                                $link = mysqli_connect($serv, $userS, $passS, $bd);
-                                                                                $tildes = $link->query("SET NAMES 'utf8'"); // Para que se muestren las tildes correctamente
-                                                                                $result = mysqli_query($link, "SELECT enlaceuno FROM Canalizaciones WHERE id = " . $adolescencia['canalizacion_id']);
-                                                                                if ($fila = mysqli_fetch_array($result)) {
-                                                                                    echo $fila['enlaceuno'];
-                                                                                }
-                                                                                mysqli_free_result($result);
-                                                                                mysqli_close($link);
-                                                                                ?>
-                                                                            </td>
-                                                                            <td>
-                                                                                <?php
-                                                                                //echo $adolescencia['responsable_id']; 
-                                                                                $link = mysqli_connect($serv, $userS, $passS);
-                                                                                mysqli_select_db($link, $bd);
-                                                                                $tildes = $link->query("SET NAMES 'utf8'"); //Para que se muestren las tildes correctamente
-                                                                                $result = mysqli_query($link, "SELECT telefono1 FROM Canalizaciones WHERE id = " . $adolescencia['canalizacion_id']);
-                                                                                while ($fila = mysqli_fetch_array($result)) {
-                                                                                    echo $fila['telefono1'];
-
-                                                                                    mysqli_close($link);
-                                                                                }
-                                                                                ?>
-                                                                            </td>
-                                                                            <td>
-                                                                                <?php
-                                                                                //echo $adolescencia['responsable_id']; 
-                                                                                $link = mysqli_connect($serv, $userS, $passS);
-                                                                                mysqli_select_db($link, $bd);
-                                                                                $tildes = $link->query("SET NAMES 'utf8'"); //Para que se muestren las tildes correctamente
-                                                                                $result = mysqli_query($link, "SELECT correo1 FROM Canalizaciones WHERE id = " . $adolescencia['canalizacion_id']);
-                                                                                while ($fila = mysqli_fetch_array($result)) {
-                                                                                    echo $fila['correo1'];
-
-                                                                                    mysqli_close($link);
-                                                                                }
-                                                                                ?>
-                                                                            </td>
-
                                                                         </tr>
                                                                 <?php }
                                                                 endforeach; ?>
@@ -1044,55 +792,29 @@ $bd = 'fichafamiliar2024';
                                             </div>
                                         </div>
                                     <?php endif; ?>
-
-
-
                                 </div>
-                            </div>
-                            <div class="tab-pane fade" id="settings-pills">
-                                <div class="col-12 text-center">
-                                    <h3 class="titulo-general-pwa-govco" style="color: #3366CC;margin-top: 20px;">
-                                        Mayores de 18 años
-                                    </h3>
-                                    <button class="my-button">
-                                        <?php echo $this->Html->link(('Agregar persona mayor de 18 años '),
-                                            array(
-                                                'controller' => 'Juventudadultos',
-                                                'action' => 'add?juventudadultos=' . $familia['Familia']['id']
-                                            ),
-                                            array(
-                                                'onclick' => "return confirm('¿Estás seguro de agregar una persona mayor de 18 años en el hogar de " .  $familia['Familia']['nombres'] . " " .  $familia['Familia']['apellidos'] . "?');",
-                                                'style' => 'color: white; font-size: 16px; font-weight: bold;'
-                                            )
-                                        ); ?>
-                                    </button>
-                                </div>
-
 
                                 <div class="card-body" style="margin-top: 20px;">
 
                                     <?php if (!empty($familia['Juventudadulto'])) : ?>
-                                        <div class="table-responsive" style="justify-items: center; margin-top: 10px; ">
-                                            <div class="row col-sm-12 JustifyCenter " style="margin: 20px; ">
+                                        <div>
+                                            <div style="margin: 20px; ">
                                                 <div class=" row">
+
                                                     <div class="col-sm-12">
-                                                        <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-juventudAdulto">
+                                                        <table id="dataTables-juventudAdulto"
+                                                            class="display responsive nowrap" style="width:100%">
                                                             <!--table cellpatding="0" cellspacing="0" class="table-hover table-striped table-bordered"-->
                                                             <thead>
                                                                 <tr>
                                                                     <th>Id</th>
-                                                                    <th>Acciones</th>
+                                                                    <th>Opciones</th>
                                                                     <th>Nombres</th>
                                                                     <th>Edad</th>
                                                                     <th>Sexo</th>
                                                                     <th>Aseguradora</th>
                                                                     <th>Canalización</th>
-                                                                    <th>Canalización</th>
-                                                                    <th>Canalización</th>
-                                                                    <th>Institucion</th>
-                                                                    <th>enlace</th>
-                                                                    <th>celular</th>
-                                                                    <th>correo</th>
+                                                                    <th>Condición Crónica</th>
 
 
                                                                 </tr>
@@ -1108,7 +830,9 @@ $bd = 'fichafamiliar2024';
                                                                             <td class="actions">
 
                                                                                 <div class="btn-group">
-                                                                                    <button type="button" class="my-button" style="margin-top: -2px;" data-toggle="dropdown">
+                                                                                    <button type="button" class="my-button"
+                                                                                        style="margin-top: -2px;"
+                                                                                        data-toggle="dropdown">
                                                                                         Opciones
                                                                                     </button>
                                                                                     <ul class="dropdown-menu" role="menu">
@@ -1120,7 +844,8 @@ $bd = 'fichafamiliar2024';
                                                                                                 __('Borrar'),
                                                                                                 array(
                                                                                                     'controller' => 'juventudadultos',
-                                                                                                    'action' => 'delete', $juventudadulto['id']
+                                                                                                    'action' => 'delete',
+                                                                                                    $juventudadulto['id']
                                                                                                 ),
                                                                                                 array('style' => 'color: red; font-size: 16px; font-weight: bold;'),
                                                                                                 __('Esta seguro de eliminar el registro # %s?', $juventudadulto['id'] . ' ' . $juventudadulto['primernombre'] . ' ' . $juventudadulto['primerapellido'] . ' de la familia de con id # ' .  $juventudadulto['familia_id'])
@@ -1141,64 +866,12 @@ $bd = 'fichafamiliar2024';
                                                                             </td>
                                                                             <td> <?php echo $juventudadulto['aseguradora']; ?>
                                                                             </td>
-                                                                            <td> <?php echo $juventudadulto['canalizacionuno']; ?>
+                                                                            <td> <?php echo $juventudadulto['canalizacionuno']; ?>,<?php echo $juventudadulto['canalizaciondos']; ?>,<?php echo $juventudadulto['canalizaciontres']; ?>
                                                                             </td>
-                                                                            <td> <?php echo $juventudadulto['canalizaciondos']; ?>
+                                                                            <td> <?php echo $juventudadulto['condicioncronica']; ?>
                                                                             </td>
-                                                                            <td> <?php echo $juventudadulto['canalizaciontres']; ?>
-                                                                            </td>
-                                                                            <td>
-                                                                                <?php
-                                                                                $link = mysqli_connect($serv, $userS, $passS, $bd);
-                                                                                $tildes = $link->query("SET NAMES 'utf8'"); // Para que se muestren las tildes correctamente
-                                                                                $result = mysqli_query($link, "SELECT nombre FROM Canalizaciones WHERE id = " . $juventudadulto['canalizacion_id']);
-                                                                                if ($fila = mysqli_fetch_array($result)) {
-                                                                                    echo $fila['nombre'];
-                                                                                }
-                                                                                mysqli_free_result($result);
-                                                                                mysqli_close($link);
-                                                                                ?>
-                                                                            </td>
-                                                                            <td>
-                                                                                <?php
-                                                                                $link = mysqli_connect($serv, $userS, $passS, $bd);
-                                                                                $tildes = $link->query("SET NAMES 'utf8'"); // Para que se muestren las tildes correctamente
-                                                                                $result = mysqli_query($link, "SELECT enlaceuno FROM Canalizaciones WHERE id = " . $juventudadulto['canalizacion_id']);
-                                                                                if ($fila = mysqli_fetch_array($result)) {
-                                                                                    echo $fila['enlaceuno'];
-                                                                                }
-                                                                                mysqli_free_result($result);
-                                                                                mysqli_close($link);
-                                                                                ?>
-                                                                            </td>
-                                                                            <td>
-                                                                                <?php
-                                                                                //echo $juventudadulto['responsable_id']; 
-                                                                                $link = mysqli_connect($serv, $userS, $passS);
-                                                                                mysqli_select_db($link, $bd);
-                                                                                $tildes = $link->query("SET NAMES 'utf8'"); //Para que se muestren las tildes correctamente
-                                                                                $result = mysqli_query($link, "SELECT telefono1 FROM Canalizaciones WHERE id = " . $juventudadulto['canalizacion_id']);
-                                                                                while ($fila = mysqli_fetch_array($result)) {
-                                                                                    echo $fila['telefono1'];
 
-                                                                                    mysqli_close($link);
-                                                                                }
-                                                                                ?>
-                                                                            </td>
-                                                                            <td>
-                                                                                <?php
-                                                                                //echo $juventudadulto['responsable_id']; 
-                                                                                $link = mysqli_connect($serv, $userS, $passS);
-                                                                                mysqli_select_db($link, $bd);
-                                                                                $tildes = $link->query("SET NAMES 'utf8'"); //Para que se muestren las tildes correctamente
-                                                                                $result = mysqli_query($link, "SELECT correo1 FROM Canalizaciones WHERE id = " . $juventudadulto['canalizacion_id']);
-                                                                                while ($fila = mysqli_fetch_array($result)) {
-                                                                                    echo $fila['correo1'];
 
-                                                                                    mysqli_close($link);
-                                                                                }
-                                                                                ?>
-                                                                            </td>
 
                                                                         </tr>
                                                                 <?php }
@@ -1214,68 +887,28 @@ $bd = 'fichafamiliar2024';
 
 
                                 </div>
-                            </div>
-
-                            <div class="tab-pane fade" id="observacion-pills">
-                                <div class="col-12 text-center">
-                                    <h3 class="titulo-general-pwa-govco" style="color: #3366CC;margin-top: 20px;">
-                                        Observaciones
-                                    </h3>
-                                    <button class="my-button">
-                                        <?php echo $this->Html->link(('Agregar Observación '),
-                                            array(
-                                                'controller' => 'Observacions',
-                                                'action' => 'add?observaciones=' . $familia['Familia']['id']
-                                            ),
-                                            array(
-                                                'onclick' => "return confirm('¿Estás seguro de agregar una observación en el hogar de " .  $familia['Familia']['nombres'] . " " .  $familia['Familia']['apellidos'] . "?');",
-                                                'style' => 'color: white; font-size: 16px; font-weight: bold;'
-                                            )
-                                        ); ?>
-                                    </button>
-                                    <button class="my-button">
-                                        <?php echo $this->Html->link(('Agregar Familograma '),
-                                            array(
-                                                'controller' => 'Observacions',
-                                                'action' => 'addanexo?observaciones=' . $familia['Familia']['id']
-                                            ),
-                                            array(
-                                                'onclick' => "return confirm('¿Estás seguro de agregar el familiograma en el hogar de " .  $familia['Familia']['nombres'] . " " .  $familia['Familia']['apellidos'] . "?');",
-                                                'style' => 'color: white; font-size: 16px; font-weight: bold;'
-                                            )
-                                        ); ?>
-                                    </button>
-                                </div>
-
-
                                 <div class="card-body" style="margin-top: 20px;">
 
 
                                     <?php if (!empty($familia['Observacion'])) : ?>
-                                        <div class="table-responsive" style="justify-items: center; margin-top: 10px; ">
-                                            <div class="row col-sm-12 JustifyCenter " style="margin: 20px; ">
+                                        <div>
+                                            <div style="margin: 20px; ">
                                                 <div class=" row">
+
                                                     <div class="col-sm-12">
-                                                        <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-Observacion">
+                                                        <table id="dataTables-Observacion" class="display responsive nowrap"
+                                                            style="width:100%">
                                                             <!--table cellpatding="0" cellspacing="0" class="table-hover table-striped table-bordered"-->
                                                             <thead>
                                                                 <tr>
-
                                                                     <th>id</th>
-                                                                    <th>Acciones</th>
-                                                                    <th>Canalización Social</th>
-                                                                    <th>Canalización Social</th>
-                                                                    <th>Canalización Social</th>
-                                                                    <th>Estado</th>
-                                                                    <th>Fecha seguimiento</th>
-                                                                    <th>Responsable</th>
+                                                                    <th>Opciones</th>
+                                                                    <th>Prioridad</th>
+                                                                    <th>Canalización</th>
+                                                                    <th>Familiograma</th>
+                                                                    <th>Ecomapa</th>
                                                                     <th>Observacion</th>
                                                                     <th>Fecha</th>
-
-                                                                    <th>Familiograma</th>
-
-
-
                                                                 </tr>
 
                                                             <tbody>
@@ -1287,10 +920,13 @@ $bd = 'fichafamiliar2024';
 
                                                                             <td class="sorting_1">
                                                                                 <?php echo $observacion['id']; ?></td>
+
                                                                             <td class="actions">
 
                                                                                 <div class="btn-group">
-                                                                                    <button type="button" class="my-button" style="margin-top: -2px;" data-toggle="dropdown">
+                                                                                    <button type="button" class="my-button"
+                                                                                        style="margin-top: -2px;"
+                                                                                        data-toggle="dropdown">
                                                                                         Opciones
                                                                                     </button>
                                                                                     <ul class="dropdown-menu" role="menu">
@@ -1298,13 +934,14 @@ $bd = 'fichafamiliar2024';
                                                                                         </li>
                                                                                         <li><?php echo $this->Html->link("Editar ", "../observacions/edit/" . $observacion['id'], array('target' => '_blank')); ?>
                                                                                         </li>
-                                                                                        <li><?php echo $this->Html->link("Editar Anexo", "../observacions/editanexo/" . $observacion['id'], array('target' => '_blank')); ?>
+                                                                                        <li><?php echo $this->Html->link("Cargar Plan Cuidado ", "../observacions/add_plancuidado/" . $observacion['id'], array('target' => '_blank')); ?>
                                                                                         </li>
                                                                                         <li><?php echo $this->Form->postLink(
                                                                                                 __('Borrar'),
                                                                                                 array(
                                                                                                     'controller' => 'observacions',
-                                                                                                    'action' => 'delete', $observacion['id']
+                                                                                                    'action' => 'delete',
+                                                                                                    $observacion['id']
                                                                                                 ),
                                                                                                 array('style' => 'color: red; font-size: 16px; font-weight: bold;'),
                                                                                                 __('Esta seguro de eliminar el registro # %s?', $observacion['id'] . ' ' . ' de la familia de con id # ' .  $observacion['familia_id'])
@@ -1314,54 +951,19 @@ $bd = 'fichafamiliar2024';
                                                                                 </div>
 
                                                                             </td>
+                                                                            <td><?php echo ($observacion['valoracionfamilia']); ?>
+                                                                            </td>
+                                                                            <td><?php echo ($observacion['canalizacionuno']); ?>,<?php echo ($observacion['canalizaciondos']); ?>,<?php echo ($observacion['canalizaciontres']); ?>
+                                                                            </td>
 
-
-                                                                            <td><?php echo ($observacion['canalizacionuno']); ?>&nbsp;
+                                                                            <td><?php echo ($observacion['resultadoFamiliograma']); ?>&nbsp;
                                                                             </td>
-                                                                            <td><?php echo ($observacion['canalizaciondos']); ?>&nbsp;
-                                                                            </td>
-                                                                            <td><?php echo ($observacion['canalizaciontres']); ?>&nbsp;
-                                                                            </td>
-                                                                            <td><?php echo ($observacion['estado']); ?>&nbsp;
-                                                                            </td>
-                                                                            <td><?php echo ($observacion['fechaseguimiento']); ?>&nbsp;
-                                                                            </td>
-                                                                            <td>
-                                                                                <!--?php echo $this->Html->link($observacion['Responsable']['id']); ?-->
-
-                                                                                <?php
-                                                                                $link = mysqli_connect($serv, $userS, $passS, $bd);
-                                                                                $tildes = $link->query("SET NAMES 'utf8'"); // Para que se muestren las tildes correctamente
-                                                                                $result = mysqli_query($link, "SELECT nombres FROM responsables WHERE id = " . $observacion['responsable_id']);
-                                                                                if ($fila = mysqli_fetch_array($result)) {
-                                                                                    echo $fila['nombres'];
-                                                                                }
-                                                                                mysqli_free_result($result);
-                                                                                mysqli_close($link);
-                                                                                ?>&nbsp;
+                                                                            <td><?php echo ($observacion['resultadoEcomapa']); ?>&nbsp;
                                                                             </td>
                                                                             <td><?php echo ($observacion['observacion']); ?>&nbsp;
                                                                             </td>
-                                                                            <td><?php echo ($observacion['date']); ?>&nbsp;
+                                                                            <td><?php echo ($observacion['fecha']); ?>&nbsp;
                                                                             </td>
-
-                                                                            <td> <?php echo $this->Html->link('../files/observacion/familiograma/' . $observacion['dirfamiliograma'] . '/' . $observacion['familiograma']); ?>&nbsp;
-                                                                            </td>
-                                                                            <!--td>
-                                                                                <?php
-                                                                                $link = mysqli_connect($serv, $userS, $passS, $bd);
-                                                                                $tildes = $link->query("SET NAMES 'utf8'"); // Para que se muestren las tildes correctamente
-                                                                                $result = mysqli_query($link, "SELECT nombre FROM Canalizaciones WHERE id = " . $responsable['canalizacion_id']);
-                                                                                if ($fila = mysqli_fetch_array($result)) {
-                                                                                    echo $fila['nombres'];
-                                                                                }
-                                                                                mysqli_free_result($result);
-                                                                                mysqli_close($link);
-                                                                                ?>
-                                                                            </td-->
-
-
-
 
                                                                         </tr>
                                                                 <?php }
@@ -1376,23 +978,9 @@ $bd = 'fichafamiliar2024';
                                     <?php endif; ?>
 
 
-                                </div>
-                            </div>
 
 
 
-
-
-
-
-                        </div>
-                    </div>
-                    <!-- /.col-lg-12 -->
-                </div>
-
-
-
-            </div>
         </fieldset>
     </div>
 </div>
@@ -1402,11 +990,11 @@ $bd = 'fichafamiliar2024';
     $(document).ready(function() {
         // Inicialización de la primera tabla
         $('#dataTables-example').DataTable({
-            "pagingType": "simple",
-            "pageLength": 5,
             responsive: true,
-            dom: 'Bfrtip',
+            "pagingType": "simple",
+            "pageLength": 10,
             language: {
+                url: "//cdn.datatables.net/plug-ins/1.10.25/i18n/Spanish.json",
                 searchBuilder: {
                     button: 'Filter',
                 }
@@ -1423,11 +1011,11 @@ $bd = 'fichafamiliar2024';
 
         // Inicialización de la segunda tabla
         $('#dataTables-infantil').DataTable({
-            "pagingType": "simple",
-            "pageLength": 5,
             responsive: true,
-            dom: 'Bfrtip',
+            "pagingType": "simple",
+            "pageLength": 10,
             language: {
+                url: "//cdn.datatables.net/plug-ins/1.10.25/i18n/Spanish.json",
                 searchBuilder: {
                     button: 'Filter',
                 }
@@ -1443,11 +1031,11 @@ $bd = 'fichafamiliar2024';
         });
 
         $('#dataTables-juventudAdulto').DataTable({
-            "pagingType": "simple",
-            "pageLength": 5,
             responsive: true,
-            dom: 'Bfrtip',
+            "pagingType": "simple",
+            "pageLength": 10,
             language: {
+                url: "//cdn.datatables.net/plug-ins/1.10.25/i18n/Spanish.json",
                 searchBuilder: {
                     button: 'Filter',
                 }
@@ -1463,11 +1051,11 @@ $bd = 'fichafamiliar2024';
         });
 
         $('#dataTables-Adolescencia').DataTable({
-            "pagingType": "simple",
-            "pageLength": 5,
             responsive: true,
-            dom: 'Bfrtip',
+            "pagingType": "simple",
+            "pageLength": 10,
             language: {
+                url: "//cdn.datatables.net/plug-ins/1.10.25/i18n/Spanish.json",
                 searchBuilder: {
                     button: 'Filter',
                 }
@@ -1483,11 +1071,11 @@ $bd = 'fichafamiliar2024';
         });
 
         $('#dataTables-Observacion').DataTable({
-            "pagingType": "simple",
-            "pageLength": 5,
             responsive: true,
-            dom: 'Bfrtip',
+            "pagingType": "simple",
+            "pageLength": 10,
             language: {
+                url: "//cdn.datatables.net/plug-ins/1.10.25/i18n/Spanish.json",
                 searchBuilder: {
                     button: 'Filter',
                 }
@@ -1612,7 +1200,7 @@ $bd = 'fichafamiliar2024';
 
     }
 
-    .nav-pills a:hover {}
+
 
 
 

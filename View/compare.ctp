@@ -1,910 +1,1155 @@
-<?php $this->layout = 'default_familia' ?>
+<?php $this->layout = 'default_familia';
 
 
-<?php
 // Enlaza el archivo JavaScript desde la carpeta webroot/js
-echo $this->Html->script('validationSocioAmbiental'); // 'validation' es el nombre del archivo sin la extensión .js
-?>
+echo $this->Html->script('familia'); // 'validation' es el nombre del archivo sin la extensión .js
 
+
+
+?>
+<?php
+echo $this->Html->script('validationFamilia'); // 'validation' es el nombre del archivo sin la extensión .js
+?>
 <style>
-	.modal-header-native {
-		padding: 1rem;
-		border-bottom: 1px solid #e9ecef;
-		border-top-left-radius: .3rem;
-		border-top-right-radius: .3rem;
-	}
+.popover-content {
+    display: none;
+    position: absolute;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    padding: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    z-index: 999;
+    /* Valor alto para colocar el popover encima de otros elementos */
+    font-size: 12px;
+    /* Ajusta el tamaño de la fuente según tus preferencias */
+    text-align: justify;
+
+
+}
+
+
+.negrilla {
+    font-size: small;
+    font-weight: bold;
+}
 </style>
 
-
-
-
-
 <body style="font-size: 14px;">
+    <?php echo $this->Form->create('Familia'); ?>
+    <div class="form-group col-sm-12 ">
+        <fieldset>
 
-	<div class="modal fade" id="mostrarmodal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header-native" style="text-align: center;">
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-					<h3 class="modal-title" id="myModalLabel">Consentimiento informado</h3>
-				</div>
-				<div class="modal-body">
-					<!--div>
-                        <img src="../img/logoescudopasto.jpg" alt="Imagen de marcador genérico" width="199px" height="auto">
-                    </div-->
-					<h4 style=" text-align: justify; margin: 20px;">Cordial saludo.</h4>
+            <div class="col-12 text-center">
+                <h1 class="title-general-forms ">Módulo Familia Hogar
+                </h1>
+            </div>
 
-					<p style=" text-align: justify; margin: 20px;"> Con el diligenciamiento del presente formulario
-						<strong>autorizo libre y expresamente</strong> a
-						la Secretaría de
-						Salud de Pasto para que realice el tratamiento de los datos personales registrados y
-						recolectados, de igual manera manifiesto que <strong>he sido informado</strong> sobre la
-						finalidad de la
-						recolección de la misma, con el propósito de implementar el modelo predictivo,
-						preventivo y
-						resolutivo basado en <strong>Atención Primaria en Salud</strong>, dando cumplimiento a la
-						<strong>privacidad y
-							protección
-							de datos</strong> dispuesto en la Ley 1581 de 2012, el Decreto 1377 de 2013 y la circular
-						externa
-						008 de
-						2020 de la Super intendencia de registro y comercio.
-					</p>
-
-					<!--p><?php echo $this->Html->link(('Si acepto'),  array('controller' => 'sociambientals', 'action' => 'add')); ?>
-                    </p-->
-
-				</div>
-				<div class="modal-footer">
-					<a href="#" style="margin-top:-5px; background-color: #449D45;" data-dismiss="modal" class="my-button">Si acepto</a>
-				</div>
-			</div>
-		</div>
-	</div>
+            <h2 class="subtitle-general-forms">Datos del Encuestado</h2>
+            <hr style=" border:0.1px solid rgba(0,0,0,.125);">
 
 
-	<div>
-		<?php echo $this->Form->create(); ?>
-		<div class="form-group col-sm-12 center">
-
-			<fieldset>
-
-				<div class="col-12 text-center">
-					<h1 class="title-general-forms">Módulo Socioambiental
-					</h1>
-				</div>
+            <div class="grow justify-content-center" display="none" style="margin-top:20px">
+                <div class="card col-sm-12" style=" font-size:15px;  border:1.5px solid rgba(0,0,0,.125);">
 
 
-				<div class="grow justify-content-center" display="none" style="margin-top:20px; ">
-					<div class="card " style=" font-size:15px;  border:1.5px solid rgba(0,0,0,.125);">
-						<div class="form-group row">
-							<?php
-							echo $this->Form->hidden('aceptaformulario', array(
-								'value' => 'Si acepta'
+                    <div class="form-group row">
+                        <div class="form-group col-md-6" style="margin-top: 20px;">
+
+                            <?php
+							echo $this->Form->input('id');
+							echo $this->Form->input('nombres', [
+								'label' => 'Nombres',
+								'class' => 'form-control',
+								'style' => 'height:30px;  font-size: 15px ; width:100%',
+							]); ?>
+                        </div>
+
+
+                        <div class="form-group col-md-6" style="margin-top: 20px;">
+                            <?php echo $this->Form->input('apellidos', [
+								'label' => 'Apellidos',
+								'class' => 'form-control',
+								'style' => 'height:30px;  font-size: 15px ; width:100%',
+							]); ?>
+                        </div>
+
+                        <div class="form-group col-md-6" style="margin-top: 20px;">
+                            <?php
+							$TipoDeDocumentoOptions = array(
+								'' => 'Elegir',
+								'CC' => 'Cedula de ciudadania',
+								'TI' => 'Tarjeta de identidad',
+								'PPT' => 'Permiso Protección Temporal',
+
+							);
+							echo $this->Form->input('tipodocumento', array(
+								'label' => 'Tipo de Documento:',
+								'class' => 'form-control',
+								'style' => 'height:30px;  font-size: 15px ; width:100%',
+								'placeholder' => '',
+								'type' => 'select',
+								'options' => $TipoDeDocumentoOptions,
+								//'empty' => true, // Establecer el campo como vacío
 							));
 							?>
+                        </div>
+
+                        <div class="form-group col-md-6" style="margin-top: 20px;">
+                            <?php echo $this->Form->input('numerodocumento', [
+								'label' => 'N° de documento',
+								'class' => 'form-control',
+								'style' => 'height:30px;  font-size: 15px ; width:100%',
+							]);  ?>
+                        </div>
+
+
+                        <div class="form-group col-md-6" style="margin-top: 20px;">
+                            <?php
+							$generoOption = [
+								' ' => 'Elegir',
+								'Masculino' => 'Masculino',
+								'Femenino' => 'Femenino',
+								'No binanrio' => 'No binario',
+								'Prefiere no informar' => 'Prefiere no informar',
+
+							];
+							echo $this->Form->input('genero', [
+								'label' => '¿Cúal es tu género?',
+								'class' => 'form-control',
+								'placeholder' => '',
+								'type' => 'select',
+								'options' => $generoOption,
+								'style' => 'height:30px;  font-size: 15px ; width:100%',
+
+							]);
+							?>
+                        </div>
+
+
+                        <div class="form-group col-md-6" style="margin-top: 20px;">
+                            <?php
+							$rolOption = [
+								' ' => 'Elegir',
+								'Padre' => 'Padre',
+								'Madre' => 'Madre',
+								'Esposo_a' => 'Esposo/Esposa/Pareja',
+								'Hijo_a' => 'Hijo/Hija',
+								'Abuelo_a' => 'Abuelo/Abuela',
+								'Otro familiar' => 'Otro familiar'
+							];
+							echo $this->Form->input('rol', [
+								'label' => 'Quién atiende la visita es',
+								'class' => 'form-control',
+								'placeholder' => '',
+								'type' => 'select',
+								'options' => $rolOption,
+
+								'style' => 'height:30px;  font-size: 15px ; width:100%',
+							]); ?>
+                        </div>
+
+                        <div class="form-group col-md-6" style="margin-top: 20px;">
+                            <?php echo $this->Form->input('celular', [
+								'label' => 'Número celular de contacto',
+								'class' => 'form-control',
+								'style' => 'height:30px;  font-size: 15px ; width:100%',
+							]); ?>
+                        </div>
+
+                        <div class="form-group col-md-6" style="margin-top: 20px;">
+                            <?php echo $this->Form->input('correo', [
+								'label' => 'Correo electrónico',
+								'class' => 'form-control',
+								'style' => 'height:30px;  font-size: 15px ; width:100%',
+							]); ?>
+
+                            <p class="help-block"> Agregar la estructura de correo electronico nombre@proveedor.com</p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+
+            <h2 class="titulo-general-pwa-govco col-md-12" style="color: #3366CC;  font-size:30px ; margin-top: 25px; ">
+                Vivienda</h2>
+            <hr style=" border:0.1px solid rgba(0,0,0,.125);">
+
+
+            <div class="grow justify-content-center" display="none" style="margin-top:20px">
+                <div class="card col-sm-12" style=" font-size:15px;  border:1.5px solid rgba(0,0,0,.125);">
+
+                    <div class="form-group col-md-6" style="margin-top: 20px;">
+
+                        <?php
+
+						echo $this->Form->input('sociambiental_id', [
+							'label' => 'Id Vivenda',
+							'class' => 'form-control',
+							'placeholder' => '',
+							'style' => 'height:30px;  font-size: 15px ; width:100%',
+							'type' => 'readonly',
+						]); ?>
+                    </div>
+
 
-							<?php echo $this->Form->input('fecha', array(
-								'type' => 'hidden',
-							)); ?>
-							<div class="form-group col-md-6" style="margin-top: 20px;">
-								<?php echo $this->Form->input('responsable_id', array(
-									'label' => 'Responsable diligenciamiento Encuesta',
-									'style' => 'height:30px;  font-size: 15px ; width:100%',
-									'type' => 'select',
-									'class' => 'select-search'
-								)); ?>
-							</div>
-
-							<div class="form-group col-md-6" style="margin-top: 20px;">
-								<?php echo $this->Form->input('ubicacion_id', array(
-									'label' => 'territorio',
-									'style' => 'height:30px;  font-size: 15px ; width:100%',
-									'type' => 'select',
-									'class' => 'select-search col-md-12'
-								)); ?>
-
-							</div>
-
-							<div class="form-group col-md-6" style="margin-top: 20px;">
-								<?php echo $this->Form->input('numMicroterritorio', array(
-									'label' => 'Numero de microterritorio',
-									'style' => 'height:30px;  font-size: 15px ; width:100%',
-
-								)); ?>
-								</p>
-							</div>
-
-							<div class="form-group col-md-6" style="margin-top: 20px;">
-								<?php echo $this->Form->input('barriovereda', array(
-									'label' => 'Barrio/sector/vereda',
-									'style' => 'height:30px;  font-size: 15px ; width:100%',
-
-								)); ?>
-								</p>
-							</div>
-
-							<div class="form-group col-md-6" style="margin-top: 20px;">
-								<?php echo $this->Form->input('manzana', array(
-									'label' => 'N.Cuadra o Manzana',
-									'style' => 'height:30px;  font-size: 15px ; width:100%',
-
-
-								)); ?>
-
-							</div>
-
-							<div class="form-group col-md-6" style="margin-top: 20px;">
-								<?php
-
-
-								echo $this->Form->input('apartamento', array(
-									'label' => 'Num. Apartamento',
-									'class' => 'form-control',
-									'style' => 'height:30px;  font-size: 15px',
-
-								)); ?>
-							</div>
-
-							<div class="form-group col-md-6" style="margin-top: 20px;">
-								<?php echo $this->Form->input('direccion', array(
-									'label' => 'Nomenclatura de la Dirección',
-									'class' => 'form-control',
-									'style' => 'height:30px;  font-size: 15px',
-								)); ?>
-
-								<p class="help-block">Colocar la nomenclatura de un recibo de servicio publico del
-									domicilio
-								</p>
-							</div>
-							<div class="form-group col-md-6" style="margin-top: 20px;">
-								<?php echo $this->Form->input('latitud', array(
-									'label' => 'Geopunto latitud',
-									'class' => 'form-control',
-									'style' => 'height:30px;  font-size: 15px',
-								)); ?>
-								<p class="help-block">Coordenada de latitud en la ubicación geográfica. Ej.: 0.670348
-									Valor numérico con decimales, separador punto. Acepta valores negativos
-								</p>
-							</div>
-
-							<div class="form-group col-md-6" style="margin-top: 20px;">
-								<?php echo $this->Form->input('longitud', array(
-									'label' => 'Geopunto longitud',
-									'class' => 'form-control',
-									'style' => 'height:30px;  font-size: 15px',
-								)); ?>
-								<p class="help-block">Coordenada de longitud en la ubicación geográfica . Ejemplo:
-									-70.240149
-									Valor numérico con decimales, separador punto. Acepta valores negativos
-								</p>
-							</div>
-
-
-
-							<div class="form-group col-md-6" style="margin-top: 20px;">
-								<?php echo $this->Form->input('apellidosfamilia', array(
-									'label' => 'Apellidos de la familia',
-									'class' => 'form-control',
-									'style' => 'height:30px;  font-size: 15px',
-								)); ?>
-							</div>
-
-							<div class="form-group col-md-6" style="margin-top: 20px;">
-								<?php
-								$viviendaOptions = array(
-									'' => 'Elegir',
-									'1.Casa' => 'Casa',
-									'4.Apartamento' => 'Apartamento',
-									'5.Pieza' => 'Pieza',
-									'3.Cuarto improvisado' => 'Cuarto improvisado',
-									'5.Cuarto en inquilinato' => 'Cuarto en inquilinato',
-									'10.Cuevas' => 'Cuevas',
-									'11.En calle' => 'En calle, puente, rio, parque',
-								);
-								echo $this->Form->input('vivienda', array(
-									'label' => 'Tipo de vivienda:',
-									'class' => 'form-control',
-									'style' => 'height:30px;  font-size: 15px',
-									'placeholder' => '',
-									'type' => 'select',
-									'options' => $viviendaOptions
-								));
-								?>
-							</div>
-
-							<div class="form-group col-md-6" style="margin-top: 20px;">
-								<?php
-								$estratoOptions = array('' => 'Elegir', '1' => '1', '2' => '2', '3' => '3', '4' => '4', '5' => '5', '6' => '6');
-								echo $this->Form->input('estrato', array(
-									'label' => 'Estrato:',
-									'class' => 'form-control',
-									'style' => 'height:30px;  font-size: 15px',
-									'placeholder' => '',
-									'type' => 'select',
-									'options' => $estratoOptions
-								));
-								?>
-								<p class="help-block">Se sugiere revisar recibo de agua o luz de la residencia</p>
-							</div>
-
-							<div class="form-group col-md-6" style="margin-top: 20px;">
-								<?php
-								$numhabitantesOptions = array('' => 'Elegir', '1' => '1', '2' => '2', '3' => '3', '4' => '4', '5' => '5', '6' => '6', '7' => 'Mas de 7');
-								echo $this->Form->input('numerohabitantes', array(
-									'label' => '¿Cuantas personas habitan en la vivienda?',
-									'class' => 'form-control',
-									'style' => 'height:30px;  font-size: 15px',
-									'placeholder' => '',
-									'options' => $numhabitantesOptions,
-								));
-								?>
-							</div>
-
-							<div class="form-group col-md-6" style="margin-top: 20px;">
-								<?php
-								$numhogaresOptions = array('' => 'Elegir', '1' => '1', '2' => '2', '3' => '3', '4' => '4', '5' => '5', '6' => '6');
-								echo $this->Form->input('numerohogares', array(
-									'label' => 'No. Hogares en la residencia',
-									'class' => 'form-control',
-									'style' => 'height:30px;  font-size: 15px',
-									'options' => $numhogaresOptions
-								));
-								?>
-								<p class="help-block">Si todos comen de la misma olla se considera una sola
-									familia/hogar</p>
-							</div>
-						</div>
-					</div>
-				</div>
-
-
-				<h2 class="subtitle-general-forms">Habitabilidad</h2>
-				<hr style="background-clip: border-box; border:0.1px solid rgba(0,0,0,.125);">
-
-				<div class="grow justify-content-center" display="none" style="margin-top:20px">
-					<div class="card col-sm-12" style=" font-size:15px;  border:1.5px solid rgba(0,0,0,.125);">
-
-						<div class="form-group row">
-
-							<div class="form-group col-md-6" style="margin-top: 20px;">
-								<?php
-								$optionMaterialPared = array(
-									'' => 'Elegir',
-									'1.Bloque, cemento, ladrillo' => 'Bloque, cemento, ladrillo',
-									'2.Tierra, arena, barro' => 'Tierra, arena, barro',
-									'5.Madera' => 'Madera',
-									'7.Material plastico ' => 'Material plástico ',
-									'7.Material Reciclado ' => 'Material reciclado',
-									'7.Lata, Lamina metal ' => 'Lata, Lamina metal',
-
-								);
-								echo $this->Form->input('pared', array(
-									'label' => '¿Cuál es el material predominante de las paredes?',
-									'options' => $optionMaterialPared,
-									'class' => 'form-control',
-									'style' => 'height:30px;  font-size: 15px ; width:100%',
-									'placeholder' => ""
-								));
-								?>
-							</div>
-
-							<div class="form-group col-md-6" style="margin-top: 20px;">
-
-								<?php $optionParedes = array(
-									'' => 'Elegir',
-									'Buen estado' => 'Buen estado',
-									'Descascaramiento, humedad' => 'Descascaramiento, humedad',
-									'Estructura inestable' => 'Estructura inestable',
-									'SD' => 'Sin dato'
-								);
-								echo $this->Form->input('estadoparedes', array(
-									'label' => '¿El estado de las paredes es?',
-									'class' => 'form-control',
-									'style' => 'height:30px;  font-size: 15px ; width:100%',
-									'type' => 'select',
-									'options' => $optionParedes,
-
-								));
-								?>
-							</div>
-							<div class="form-group col-md-6" style="margin-top: 20px;">
-								<?php
-								$optionPiso = array(
-									'' => 'Elegir',
-									'3.Cemento, gravilla' => 'Cemento, gravilla',
-									'3.Ceramica' => 'Ceramica',
-									'1.Piso flotante' => 'Piso flotante',
-									'5.Tierra' => 'Tierra',
-									'4.Madera burda, tabla' => 'Madera burda, tabla',
-									'3.Baldosa, ladrillo' => 'baldosa, ladrillo',
-									'6.Otro' => 'Otro',
-									'SD' => 'Sin dato'
-								);
-								echo $this->Form->input('piso', array(
-									'label' => '¿Cuál es el material predominante del piso de la vivienda?',
-									'class' => 'form-control',
-									'style' => 'height:30px;  font-size: 15px ; width:100%',
-									'type' => 'select',
-									'options' => $optionPiso,
-
-								));
-								?>
-							</div>
-							<div class="form-group col-md-6" style="margin-top: 20px;">
-								<?php
-								$optionTecho = array(
-									'' => 'Elegir',
-									'1.Concreto' => 'Concreto',
-									'4.Eternit' => 'Eternit',
-									'2.Tejas de barro' => 'Tejas de barro',
-									'4.Zinc' => 'Zinc',
-									'6.Plastico' => 'Plástico',
-									'7.Desecho' => 'Desechos (cartón, lata, tela, sacos, etc)',
-									'8.Otro' => 'Otro',
-									'SD' => 'Sin dato'
-
-								);
-								echo $this->Form->input('techo', array(
-									'label' => '¿Cuál es el material predominante del techo?',
-									'class' => 'form-control',
-									'style' => 'height:30px;  font-size: 15px ; width:100%',
-									'type' => 'select',
-									'options' => $optionTecho,
-
-								));
-								?>
-							</div>
-							<div class="form-group col-md-6" style="margin-top: 20px;">
-								<?php
-								$optionEstadoTecho = array(
-									'' => 'Elegir',
-									'Buen estado' => 'Buen estado',
-									'Agrietamiento, goteras o fisuras' => 'Agrietamiento, goteras o fisuras',
-									'SD' => 'Sin dato'
-								);
-								echo $this->Form->input('estadotecho', array(
-									'label' => '¿Cuál es el estado en general del techo?',
-									'class' => 'form-control',
-									'style' => 'height:30px;  font-size: 15px ; width:100%',
-									'type' => 'select',
-									'options' => $optionEstadoTecho,
-
-								));
-								?>
-							</div>
-							<div class="form-group col-md-6" style="margin-top: 20px;">
-								<?php
-								$optionDormitorio = array('' => 'Elegir', '1' => '1', '2' => '2', '3' => '3', '4' => '4', 'SD' => 'Sin dato');
-								echo $this->Form->input('dormitorios', array(
-									'label' => '¿Cuantos cuartos se utilizan para dormir?',
-									'class' => 'form-control',
-									'type' => 'select',
-									'options' => $optionDormitorio,
-									'style' => 'height:30px;  font-size: 15px ; width:100%',
-								));
-								?>
-							</div>
-							<div class="form-group col-md-6" style="margin-top: 20px; margin-bottom: 30px;">
-								<?php $optionHacinamiento = array('' => 'Elegir', '1.Si' => 'Si', '2.No' => 'No', 'SD' => 'Sin dato');
-								echo $this->Form->input('hacinamiento', array(
-									'label' => '¿En algunos de los dormitorios de la vivienda duermen tres o mas personas?',
-									'class' => 'form-control',
-									'type' => 'select',
-									'options' => $optionHacinamiento,
-									'style' => 'height:30px;  font-size: 15px ; width:100%',
-									'id' => 'hacinamiento'
-								));
-								?>
-							</div>
-
-						</div>
-					</div>
-				</div>
-
-
-				<h2 class="subtitle-general-forms">Servicios y Riesgos de la vivienda </h2>
-				<hr style="background-clip: border-box; border:0.1px solid rgba(0,0,0,.125);">
-
-				<div class="grow justify-content-center" display="none" style="margin-top:20px">
-					<div class="card col-sm-12" style=" font-size:15px;  border:1.5px solid rgba(0,0,0,.125);">
-
-						<div class="form-group row">
-
-							<div class="col-md-6" style="margin-top: 30px;">
-								<?php
-								$externalRiskOptions = [
-									'' => 'Elegir',
-									'20.No se identifica' => 'No se identifica',
-									'8.Malos olores' => 'Malos olores',
-									'19.Iluminacion inadecuada' => 'Iluminación inadecuada',
-									'8.Ventilación inadecuada' => 'Ventilación inadecuada',
-									'3.Porquerizas' => 'Porquerizas',
-									'4.Galpones' => 'Galpones',
-									'5.Terrenos baldíos' => 'Terrenos baldíos',
-									'7.Ruido' => 'Ruido',
-									'10.Rellenos sanitarios, botaderos' => 'Rellenos sanitarios/botaderos',
-									'17.Excesivo trafico' => 'Excesivo trafico',
-									'19.Otro' => 'Otro',
-									'SD' => 'Sin dato'
-								];
-								echo $this->Form->input('riesgoexterno', [
-									'label' => 'Identifique en el entorno si hay:',
-									'class' => 'form-control',
-									'type' => 'select',
-									'options' => $externalRiskOptions,
-									'style' => 'height:30px;  font-size: 15px ; width:100%',
-								]);
-								?>
-								<p class="help-block">Refiera el riesgo más evidente</p>
-							</div>
-
-							<div class="col-md-6" style="margin-top: 30px;">
-								<?php
-								echo $this->Form->input('otroriesgo', [
-									'label' => 'Registre otro riesgo interno o externo si considera',
-									'class' => 'form-control',
-									'style' => 'height:30px;  font-size: 15px ; width:100%',
-								]);
-								?>
-							</div>
-
-							<div class="col-md-6" style="margin-top: 30px;">
-								<?php
-								$yesNoOptions = [
-									'' => 'Elegir',
-									'1.Si' => 'Si',
-									'2.No' => 'No',
-									'SD' => 'Sin dato'
-								];
-								echo $this->Form->input('actividad', [
-									'label' => '¿Hay Actividad productiva en la vivienda?',
-									'class' => 'form-control',
-									'type' => 'select',
-									'options' => $yesNoOptions,
-									'style' => 'height:30px;  font-size: 15px ; width:100%',
-								]);
-								?>
-							</div>
-
-							<div class="col-md-6" style="margin-top: 30px;">
-								<?php
-								$accessOptions = [
-									'' => 'Elegir',
-									'No' => 'No hay dificultdad',
-									'1.Transporte' => 'Transporte',
-									'2.Espacios deportivos' => 'Espacios deportivos',
-									'3.Servicios Educativos' => 'Servicios Educativos',
-									'4.Servicios Salud' => 'Servicios Salud',
-									'1,2,3,4. Acceso a todos' => 'Se tiene acceso a todos',
-									'5.Ninguno' => 'Ninguno'
-								];
-								echo $this->Form->input('acceso', [
-									'label' => '¿En su sector es difícil acceder a?',
-									'class' => 'form-control',
-									'type' => 'select',
-									'options' => $accessOptions,
-									'style' => 'height:30px;  font-size: 15px ; width:100%',
-								]);
-								?>
-								<p class="help-block"> Relacione el más importante
-								</p>
-							</div>
-
-							<div class="col-md-6" style="margin-top: 30px;">
-								<?php
-
-								echo $this->Form->input('accesoDos', [
-									'label' => 'Agregue otra asepecto de dificil acceso',
-									'class' => 'form-control',
-									'type' => 'select',
-									'options' => $accessOptions,
-									'style' => 'height:30px;  font-size: 15px ; width:100%',
-								]);
-								?>
-								<p class="help-block">Relacione el más importante
-								</p>
-							</div>
-
-							<div class="col-md-6" style="margin-top: 30px;">
-								<?php
-								$transportOptions = [
-									'' => 'Elegir',
-									'Moto' => 'Moto',
-									'Carro' => 'Carro',
-									'Transporte publico' => 'Transporte publico',
-									'Bicicleta' => 'Bicicleta',
-									'Caminar' => 'Caminar'
-								];
-								echo $this->Form->input('transporte', [
-									'label' => '¿El Medio de transporte principal que utiliza su familia es?',
-									'class' => 'form-control',
-									'type' => 'select',
-									'options' => $transportOptions,
-									'style' => 'height:30px;  font-size: 15px ; width:100%',
-								]);
-								?>
-							</div>
-
-							<div class="col-md-6" style="margin-top: 30px;">
-								<?php
-								$accidentRiskOptions = [
-									'' => 'Elegir',
-									'11.Ninguno' => 'Ninguno',
-									'1.Objetos cortantes ' => 'Objetos cortantes ',
-									'2.Sustancias químicas_aseo a la vista' => 'Sustancias químicas_aseo a la vista',
-									'3.Medicamentos a la vista' => 'Medicamentos a la vista',
-									'4.Uso de Velas' => 'Uso de Velas',
-									'5.Conexiones Electricas inadecuadas' => 'Conexiones Electricas inadecuadas',
-									'8.Superficies resbaladizas' => 'Superficies resbaladizas',
-									'10.Escaleras sin proteccion' => 'Escaleras sin protección',
-									'SD' => 'Sin dato'
-								];
-								echo $this->Form->input('riesgo', [
-									'label' => 'Identifique en el entorno si hay riesgo de accidente en la vivienda',
-									'class' => 'form-control',
-									'type' => 'select',
-									'options' => $accidentRiskOptions,
-									'style' => 'height:30px;  font-size: 15px ; width:100%',
-								]);
-								?>
-							</div>
-
-							<div class="col-md-6" style="margin-top: 30px;">
-								<?php
-								echo $this->Form->input('otroriesgohogar', [
-									'label' => 'Registre otro riesgo interno o externo si considera',
-									'class' => 'form-control',
-									'style' => 'font-size: 12px'
-								]);
-								?>
-							</div>
-
-							<div class="col-md-6" style="margin-top: 30px;">
-								<?php
-								$waterSupplyOptions = [
-									'' => 'Elegir',
-									'1.Acueducto Empopasto' => 'Acueducto Empopasto',
-									'3.Acueducto Comunitario' => 'Acueducto Comunitario',
-									'2.Agua envasada ' => 'agua envasada',
-									'5.Carro tanque ' => 'Carro tanque',
-									'8.Pozo sin bomba, aljibe, jagüey o barreno' => 'Pozo sin bomba, aljibe, jagüey o barreno',
-									'10.Río, quebrada, manantial o nacimiento' => 'Río, quebrada, manantial o nacimiento',
-									'11.Aguas lluvias' => 'Aguas lluvias',
-									'13.Otro' => 'Otro',
-								];
-								echo $this->Form->input('aguaservicio', [
-									'label' => '¿Cuál es la principal fuente de abastecimiento de agua para consumo?',
-									'class' => 'form-control',
-									'type' => 'select',
-									'options' => $waterSupplyOptions,
-									'style' => 'height:30px;  font-size: 15px ; width:100%',
-								]);
-								?>
-							</div>
-
-							<div class="col-md-6" style="margin-top: 30px;">
-								<?php
-								$waterTreatmentOptions = [
-									'' => 'Elegir',
-									'Directamente del grifo' => 'Directamente del grifo',
-									'Hirve' => 'Hierve',
-									'Filta' => 'Filtra',
-									'Ozonifica' => 'Ozonifica',
-									'Desinfección con cloro' => 'Desinfección con cloro ',
-									'SD' => 'Sin dato'
-								];
-								echo $this->Form->input('aguatratamiento', [
-									'label' => '¿Realiza algún tratamiento al agua para su consumo?',
-									'class' => 'form-control',
-									'type' => 'select',
-									'options' => $waterTreatmentOptions,
-									'style' => 'height:30px;  font-size: 15px ; width:100%',
-								]);
-								?>
-							</div>
-
-							<div class="col-md-6" style="margin-top: 30px;">
-								<?php
-								$waterSupplyStatusOptions = [
-									'' => 'Elegir',
-									'Continuo' => 'Continuo',
-									'Intermitente' => 'Intermitente',
-									'Razonamientos prolongados' => 'Razonamientos prolongados',
-									'SD' => 'Sin dato'
-								];
-								echo $this->Form->input('aguasiministro', [
-									'label' => '¿El suministro de agua es?',
-									'class' => 'form-control',
-									'type' => 'select',
-									'options' => $waterSupplyStatusOptions,
-									'style' => 'height:30px;  font-size: 15px ; width:100%',
-								]);
-								?>
-							</div>
-
-							<div class="col-md-6" style="margin-top: 30px;">
-								<?php
-								$tankCleaningOptions = [
-									'' => 'Elegir',
-									'Sin tanque' => 'No tiene tanque',
-									'Mensual' => 'Mensual',
-									'Semestral' => 'Semestral',
-									'No realiza lavado' => 'No realiza lavado',
-									'SD' => 'Sin dato'
-								];
-								echo $this->Form->input('aguaalmacenamiento', [
-									'label' => '¿Lavado del tanque de almacenamiento de agua?',
-									'class' => 'form-control',
-									'type' => 'select',
-									'options' => $tankCleaningOptions,
-									'style' => 'height:30px;  font-size: 15px ; width:100%',
-								]);
-								?>
-							</div>
-
-							<div class="col-md-6" style="margin-top: 30px;">
-								<?php
-								$excretaDisposalOptions = [
-									'' => 'Elegir',
-									'1.Inodoro conectado a alcantarillado' => 'Inodoro conectado a alcantarillado',
-									'2.Inodoro sin conexion a alcantarillado' => 'Inodoro sin conexion a alcantarillado',
-									'2.Pozo séptico' => 'Pozo séptico',
-									'7.Campo abierto' => 'Campo abierto',
-									'8.Basenilla, bolsas' => 'Basenilla, Bolsas',
-									'8.Otro' => 'Otro'
-
-								];
-								echo $this->Form->input('diposicionexcretas', [
-									'label' => 'Disposición de excretas en la vivienda',
-									'class' => 'form-control',
-									'type' => 'select',
-									'options' => $excretaDisposalOptions,
-									'style' => 'height:30px;  font-size: 15px ; width:100%',
-								]);
-								?>
-							</div>
-
-							<div class="col-md-6" style="margin-top: 30px;">
-								<?php
-								$domesticWaterOptions = [
-									'' => 'Elegir',
-									'1.Conexión alcantarillado' => 'Conexión alcantarillado',
-									'5.Fuente hídrica ' => 'Fuente hídrica',
-									'6.Campo Abierto ' => 'Campo Abierto',
-									'7.Otro' => 'Otro'
-
-
-								];
-								echo $this->Form->input('aguaresiduales', [
-									'label' => 'Aguas residuales domésticas',
-									'class' => 'form-control',
-									'type' => 'select',
-									'options' => $domesticWaterOptions,
-									'style' => 'height:30px;  font-size: 15px ; width:100%',
-								]);
-								?>
-							</div>
-
-							<div class="col-md-6" style="margin-top: 30px;">
-								<?php
-								$garbageDisposalOptions = [
-									'' => 'Elegir',
-									'1.Recolección por Emas' => 'Recolección por Empresa de aseo',
-									'3.Quema a campo abierto' => 'Quema a campo abierto',
-									'5.Disposición a campo abierto' => 'Disposición a campo abierto',
-									'6.Otro' => 'Otro'
-
-								];
-								echo $this->Form->input('basura', [
-									'label' => 'Disposición final de basura',
-									'class' => 'form-control',
-									'type' => 'select',
-									'options' => $garbageDisposalOptions,
-									'style' => 'height:30px;  font-size: 15px ; width:100%',
-								]);
-								?>
-							</div>
-
-							<div class="col-md-6" style="margin-top: 30px;">
-								<?php
-								$recyclingOptions = [
-									'' => 'Elegir',
-									'Si' => 'Si',
-									'No' => 'No',
-									'ocasionalmente' => 'Ocasionalmente',
-									'SD' => 'Sin dato'
-								];
-								echo $this->Form->input('reciclaje', [
-									'label' => '¿Se realiza el proceso de separación de los residuos en la fuente?',
-									'class' => 'form-control',
-									'type' => 'select',
-									'options' => $recyclingOptions,
-									'style' => 'height:30px;  font-size: 15px ; width:100%',
-								]);
-								?>
-							</div>
-							<div class="col-md-6" style="margin-top: 30px; margin-bottom: 30px;">
-								<?php
-								$vectoresOption = [
-									'' => 'Elegir',
-									'2.No' => 'No',
-									'1.Mosicos' => 'Moscos',
-									'1.Zancudos' => 'Zancudos',
-									'1.Pulgas' => 'Pulgas',
-									'1.Piojos' => 'Piojos',
-									'1.Ratones' => 'Ratones',
-									'1.Cucarachas' => 'Cucarachas',
-									'SD' => 'Sin dato'
-								];
-								echo $this->Form->input('vector', [
-									'label' => 'Hay presencia vectores transmisores de enfermedades en la vivienda o en su entorno inmediato?',
-									'class' => 'form-control',
-									'type' => 'select',
-									'options' => $vectoresOption,
-									'style' => 'height:30px;  font-size: 15px ; width:100%',
-								]);
-								?>
-							</div>
-						</div>
-					</div>
-				</div>
-
-
-
-
-
-				<h2 class="subtitle-general-forms">Mascotas o
-					animales de crianza en el hogar </h2>
-
-
-
-				<div class="col-sm-12" style="margin-top: 20px; ">
-					<div id="status" class="switch-button">
-						<input type="checkbox" name="switch-button" id="switch-label" class="switch-button__checkbox">
-						<label for="switch-label" class="switch-button__label"></label>
-					</div>
-
-
-				</div>
-				<div class="grow justify-content-center" display="none" style="margin-top:20px">
-					<div id="si" class="panel panel-default form-group col-md-12" style="font-size:15px; display: none;">
-
-						<div class="form-group row">
-
-							<div class="col-md-6" style="margin-top: 30px;">
-								<?php
-								$numMascotaOption = [
-									'No aplica' => 'Elegir',
-									'0' => '0',
-									'1' => '1',
-									'2' => '2',
-									'3' => '3',
-									'4' => '4',
-									'5' => '5 y mas',
-
-								];
-								echo $this->Form->input('numeroGatos', [
-									'label' => '¿Cuantos Gatos tiene?',
-									'class' => 'form-control',
-									'type' => 'select',
-									'options' => $numMascotaOption,
-									'style' => 'height:30px;  font-size: 15px ; width:100%',
-								]);
-								?>
-							</div>
-							<div class="col-md-6" style="margin-top: 30px;">
-								<?php
-								echo $this->Form->input('numeroPerros', [
-									'label' => '¿Cuantos Perros tiene?',
-									'class' => 'form-control',
-									'type' => 'select',
-									'options' => $numMascotaOption,
-									'style' => 'height:30px;  font-size: 15px ; width:100%',
-								]);
-								?>
-							</div>
-							<div class="col-md-6" style="margin-top: 30px;">
-								<?php
-								$cuidadoMascotaOptions = [
-									'No aplica' => 'Elegir',
-									'Si' => 'Si',
-									'No' => 'No',
-									'SD' => 'Sin dato'
-								];
-								echo $this->Form->input('desparasitamascotas', [
-									'label' => '¿Se desparasita a perros o gatos?',
-									'class' => 'form-control',
-									'type' => 'select',
-									'options' => $cuidadoMascotaOptions,
-									'style' => 'height:30px;  font-size: 15px ; width:100%',
-									'id' => 'desparasitacion'
-								]);
-								?>
-							</div>
-							<div class="col-md-6" style="margin-top: 30px;">
-								<?php
-								echo $this->Form->input('vacunamascotas', [
-									'label' => '¿Se ha vacunado a perros o gatos en el ultimo año?',
-									'class' => 'form-control',
-									'type' => 'select',
-									'options' =>  $cuidadoMascotaOptions,
-									'style' => 'height:30px;  font-size: 15px ; width:100%',
-									'id' => 'vacunacion',
-								]);
-								?>
-							</div>
-							<div class="col-md-6" style="margin-top: 30px;">
-								<?php
-								$mascotaOption = [
-									'No aplica ' => 'Elegir',
-									'No' => 'No',
-									'Aves' => 'Aves',
-									'Cerdos' => 'Cerdos',
-									'Cuyes_conejos' => 'Cuyes/conejos',
-									'Otro' => 'Otro'
-								];
-								echo $this->Form->input('mascotas', [
-									'label' => '¿Tienen animales de producción?',
-									'class' => 'form-control',
-									'type' => 'select',
-									'options' => $mascotaOption,
-									'style' => 'height:30px;  font-size: 15px ; width:100%',
-								]);
-								?>
-							</div>
-							<div class="col-md-6" style="margin-top: 30px;">
-								<?php
-								echo $this->Form->input('otramascota', [
-									'label' => 'Agregue animales de producción si requiere',
-									'class' => 'form-control',
-									'type' => 'select',
-									'options' => $mascotaOption,
-									'style' => 'height:30px;  font-size: 15px ; width:100%',
-								]);
-								?>
-							</div>
-
-
-							<div class="col-md-6" style="margin-top: 30px;">
-								<?php
-								echo $this->Form->input('cuidadomascotas', [
-									'label' => '¿Las excretas de los animales de compañía se recogen y disponen adecuadamente? ',
-									'class' => 'form-control',
-									'type' => 'select',
-									'options' => $cuidadoMascotaOptions,
-									'style' => 'height:30px;  font-size: 15px ; width:100% ;margin-bottom: 30px;',
-								]);
-								?>
-							</div>
-						</div>
-					</div>
-
-					<?php //echo $this->Form->end(__('Guardar y Listar')); 
+
+                    <div class="form-group col-md-6" style="margin-top: 20px;">
+                        <?php
+						$option = [
+							'' => 'Elegir', '1' => '1',
+							'2' => '2',
+							'3' => '3',
+							'4' => '4',
+							'5' => '5',
+							'6' => '6'
+						];
+						echo $this->Form->input('hogar', [
+							'label' => 'Número de hogar encuestado en la vivienda',
+							'class' => 'form-control',
+							'placeholder' => '',
+							'type' => 'select',
+							'options' => $option,
+							'style' => 'height:30px;  font-size: 15px ; width:100%',
+						]); ?>
+                    </div>
+
+                    <div class="form-group col-md-6" style="margin-top: 20px;">
+                        <?php
+						$viviendaOptions = [
+							'' => 'Elegir',
+							'Casa' => 'Toda la Casa',
+							'Apartamento' => 'En un Apartamento',
+							'Pieza' => 'En una Pieza',
+							'Cuarto improvisado' => 'En un Cuarto improvisado',
+							'Cuarto en inquilinato' => 'En Cuarto del inquilinato',
+							'Espacion improvisado' => 'En un Espacio improvisado',
+							'No aplica' => 'No Aplica',
+						];
+						echo $this->Form->input('vivienda', [
+							'label' => '¿Su núcleo familiar dentro de la vivienda habita en: ?',
+							'class' => 'form-control',
+							'placeholder' => '',
+							'type' => 'select',
+							'options' => $viviendaOptions,
+
+							'style' => 'height:30px;  font-size: 15px ; width:100%',
+						]); ?>
+                    </div>
+
+                    <div class="form-group col-md-6" style="margin-top: 20px;">
+                        <?php
+						$option = [
+							'' => 'Elegir',
+							'Propia pagando' => 'Propia pagando',
+							'Propia pagada' => 'Propia pagada',
+							'anticresis' => 'anticresis',
+							'Arriendo' => 'Arriendo',
+							'Subarriendo' => 'Subarriendo',
+							'Prestada' => 'Prestada sin costo'
+						];
+						echo $this->Form->input('tenencia', [
+							'label' => '¿Tenencia de la Vivienda es?',
+							'class' => 'form-control',
+							'placeholder' => '',
+							'type' => 'select',
+							'options' => $option,
+
+							'style' => 'height:30px;  font-size: 15px ; width:100%',
+						]); ?>
+                    </div>
+
+                    <div class="form-group col-md-6" style="margin-top: 20px;">
+                        <?php
+						$option = [
+							'' => 'Elegir',
+							'Permante' => 'Permanente',
+							'Permanecen fuera de Pasto' => 'Permanecen fuera de la ciudad',
+							'Sin Dato' => 'Sin Dato'
+						];
+						echo $this->Form->input('permanenciaresidencia', [
+							'label' => '¿La permanencia de las personas en el hogar es?',
+							'class' => 'form-control',
+							'placeholder' => '',
+							'type' => 'select',
+							'options' => $option,
+
+							'style' => 'height:30px;  font-size: 15px ; width:100%',
+						]); ?>
+                    </div>
+
+                    <div class="form-group col-md-6" style="margin-top: 20px;">
+                        <?php
+						$option = [
+							'' => 'Elegir', 'Menos de un 1 mes' => 'Menos de un 1mes',
+							'Entre 2 meses y 1 anio ' => 'Entre 2 meses y 1 año',
+							'Entre 1 anio y 2 anio ' => 'Entre 1 año y 2 año',
+							'Mas de 2 anio ' => 'Mas de 2 años', 'Sin Dato' => 'Sin Dato'
+						];
+						echo $this->Form->input('tiemporesidencia', [
+							'label' => '¿Hace cuanto tiempo vive en barrio/sector?',
+							'class' => 'form-control',
+							'placeholder' => '',
+							'type' => 'select',
+							'options' => $option,
+							'style' => 'height:30px;  font-size: 15px ; width:100%',
+						]); ?>
+                    </div>
+                    <div class="form-group col-md-6" style="margin-top: 20px;">
+                        <?php
+						$option = [
+							'' => 'Elegir',
+							'1.Electricidad' => 'Electricidad',
+							'2.Cilindro de Gas' => 'Cilindro de Gas',
+							'3.Gas domiciliario' => 'Gas domiciliario',
+							'4.Carbon, leña' => 'Carbon, leña',
+							'5.Gasolina' => 'Gasolina,Petroleo',
+							'7.Material_Desecho' => 'Material de Desecho',
+							'8.Otro' => 'Otro'
+
+						];
+						echo $this->Form->input('combustible', [
+							'label' => '¿Cuál fuente principal de energía o combustible que usa para cocinar?',
+							'class' => 'form-control',
+							'type' => 'select',
+							'options' => $option,
+							'style' => 'height:30px;  font-size: 15px ; width:100%',
+						]); ?>
+                    </div>
+
+                    <div class="form-group col-md-6" style="margin-top: 20px;margin-bottom: 30px;">
+                        <?php
+						$option = ['' => 'Elegir', 'No aplica' => 'No aplica', 'Electricidad' => 'Electricidad', 'Cilindro de Gas' => 'Cilindro de Gas', 'Gas domiciliario' => 'Gas domiciliario', 'Gas domiciliario' => 'Gas domiciliario', 'Carbon, leña' => 'Carbon, leña', 'Gasolina' => 'Gasolina'];
+						echo $this->Form->input('otrocombustible', [
+							'label' => 'Registre otra fuente de combustible si requiere',
+							'class' => 'form-control',
+							'type' => 'select',
+							'options' => $option,
+
+							'style' => 'height:30px;  font-size: 15px ; width:100%',
+						]); ?>
+                    </div>
+                </div>
+
+            </div>
+    </div>
+
+    <h2 class="subtitle-general-forms">Composición
+        Familiar</h2>
+    <hr style="background-clip: border-box; border:0.1px solid rgba(0,0,0,.125);">
+
+    <div class="grow justify-content-center" display="none" style="margin-top:20px">
+        <div class="card col-sm-12" style=" font-size:15px;  border:1.5px solid rgba(0,0,0,.125);">
+
+            <div class="form-group row">
+                <div class="form-group col-md-6" style="margin-top: 20px;">
+                    <?php
+					$option = [
+						'' => 'Elegir',
+						'1.Nuclear biparental' => 'Nuclear',
+						'2.Nuclear monoparental' => 'Nuclear monoparental',
+						'7.Unipersonal' => 'Unipersonal',
+						'4.Extensa' => 'Extensa',
+						 'Mixta o ampliada' => 'Mixta o ampliada'
+					];
+					echo $this->Form->input('tipofamilia', [
+						'label' => '¿Cómo está compuesta la familia?',
+						'class' => 'form-control',
+						'type' => 'select',
+						'options' => $option,
+						'style' => 'height:30px;  font-size: 15px ; width:100%',
+					]);
 					?>
-					<?php echo $this->Form->submit('Guardar y continuar', [
-						'name' => 'btn',
-						'class' => 'my-button',
-					]); ?>
-					<?php echo $this->Form->submit('Guardar y finalizar', [
-						'name' => 'btn',
-						'class' => 'my-button',
-						'style' => 'width:185px'
-					]); ?>
-				</div>
+
+                    <!-- Botón de ayuda -->
+
+                    <button type="button" id="ayudaButton1" class="btn btn-success rounded-circle"
+                        style="width: 30px; height: 30px; padding: 0; font-size: 18px; margin-top: 2px; margin-left: 10px;">
+                        ?
+                    </button>
+
+                    <div id="popover-content" class="popover-content">
+                        <p> <strong>Nuclear:</strong> constituida por los progenitores y los hijos. <br>
+                            <strong>Nuclear monoparental: </strong>constituida por un solo progenitor y sus
+                            hijos. <br>
+                            <strong> Unipersonal:</strong> no tiene núcleo familiar y sólo consta de una
+                            persona. <br>
+                            <strong>Extensa:</strong> Compuesta por persona como Tios, Primos, abuelos.
+                        </p>
+                    </div>
+
+
+                </div>
+
+                <div class="form-group col-md-6" style="margin-top: 20px;">
+                    <?php
+                            $optionPoblacionEtnica = [
+                                '' => 'Elegir',
+                                'No aplica' => 'No aplica',
+                                'Población indígena' => 'Población indígena',
+                                'Población Afrocolombiano' => 'Población Afrocolombiano',
+                                'Población Rom' => 'Población Rom',
+                                'Población Raizal' => 'Raizal San Andrés y Providencia',
+
+                            ];
+                            echo $this->Form->input('poblacionetnica', [
+                                'label' => '¿Hacen parte de una poblacion etnica?',
+                                'class' => 'form-control',
+                                'type' => 'select',
+                                'options' => $optionPoblacionEtnica,
+                                'style' => 'height:30px;  font-size: 15px ; width:100%',
+                            ]);
+                            ?>
 
 
 
 
+                </div>
+                <div class="form-group col-md-6" style="margin-top: 20px;">
+                    <?php
+                            $optionCabildo = [
+                                '' => 'Elegir',
+                                'No aplica' => 'No aplica',
+                                'Resguado indígena La Laguna Pejendino' => 'Resguado indígena La Laguna Pejendino',
+                                'Cabildo indígena de Jenoy' => 'Cabildo indígena de Jenoy',
+                                'Cabildo indígena de Obonuco' => 'Cabildo indígena de Obonuco',
+                                'Cabildo indígena de Mocondino' => 'Cabildo indígena de Mocondino',
+                                'Cabildo indígena de Catambuco' => 'Cabildo indígena de Catambuco',
+                                'Cabildo indígena de Mapachico' => 'Cabildo indígena de Mapachico',
+                                'Cabildo indígena de Botanilla' => 'Cabildo indígena de Botanilla',
+                                'Cabildo indígena de Valle de Aranda' => 'Cabildo indígena de Aranda',
+                                'Resguardo Indígena Refugio del Sol' => 'Resguardo Indígena Refugio del Sol',
+                                'Kumpania Rom Pasto' => 'Kumpania Rom Pasto',
+                            ];
+                            echo $this->Form->input('resguardo', [
+                                'label' => '¿A cual resguado, cabildo pertenecen?',
+                                'class' => 'form-control',
+                                'type' => 'select',
+                                'options' => $optionCabildo,
+                                'style' => 'height:30px;  font-size: 15px ; width:100%',
+                            ]);
+                            ?>
 
 
-			</fieldset>
-		</div>
-	</div>
 
+                </div>
+
+                <div class="form-group col-md-6" style="margin-top: 20px;">
+                    <?php
+					$option = [
+						'' => 'Elegir',
+						'1' => '1',
+						'2' => '2',
+						'3' => '3',
+						'4' => '4',
+						'5' => '5',
+						'6' => '6',
+						'7' => '7',
+						'8' => '8',
+						'9' => '9',
+						'10' => 'Más de 10'
+					];
+					echo $this->Form->input('numeropersonas', [
+						'label' => '¿De cuántas personas está compuesto el hogar?',
+						'class' => 'form-control',
+						'type' => 'select',
+						'options' => $option,
+
+						'style' => 'height:30px;  font-size: 15px ; width:100%',
+					]);
+					?>
+                </div>
+
+                <div class="form-group col-md-6" style="margin-top: 20px;">
+                    <?php
+					$optionEtnia = [
+						'' => 'Elegir',
+						'2.No' => 'No',
+						'1.Familia con niñas, niños y adolescentes' => 'Familia con niñas, niños y adolescentes',
+						'1.Gestante' => 'Mujer en embarazo',
+						'1.AdultosMayores' => 'Personas Adulto Mayores',
+						'1.Víctima conflicto' => 'Víctima del conflicto',
+						'1.Discapacidad' => 'Discapacidad',
+						'1.Personas con enferemedades cronicas' => 'Personas con enferemedades cronicas',
+						'1.Personas con enferemedades huerfanas/terminales' => 'Personas con enferemedades huerfanas/terminales',
+						'1.Personas con enferemedades tranmisibles' => 'Personas con enferemedades tranmisibles(TBC,Lepra,Varicela)',
+						'Migrante irregular' => 'Migrante irregular',
+						'Migrante regular' => 'Migrante regular',
+						'Habitante de calle' => 'Habitante de calle',
+						'Otro' => 'Otro',
+						'No informa' => 'No informa',
+						'Sin Dato' => 'Sin Dato'
+					];
+					echo $this->Form->input('poblacionvulnerable', [
+						'label' => '¿Hay personas dentro del hogar que pertenecen a población vulnerable?',
+						'class' => 'form-control',
+						'type' => 'select',
+						'options' => $optionEtnia,
+						'style' => 'height:30px;  font-size: 15px ; width:100%',
+						'id' => 'status', // Agrega el atributo id para que coincida con el select en JavaScript
+						'onChange' => 'vulnerable(this.value);', // Agrega el atributo onChange para llamar a la función JavaScript
+
+					]);
+					?>
+                </div>
+
+                <div id="yes" class="form-group col-md-6" style="margin-top: 20px;">
+                    <?php
+
+					echo $this->Form->input('poblacionvulnerable1', [
+						'label' => 'Registre otra población con la cual se identifique si es necesario',
+						'class' => 'form-control',
+						'style' => 'height:30px;  font-size: 15px ; width:100%',
+						'options' => $optionEtnia,
+                    ]);
+                    ?>
+                </div>
+
+                <div class="form-group col-md-6" style="margin-top: 20px;margin-bottom: 30px;">
+                    <?php
+                            $option = ['' => 'Elegir', 'Si' => 'Si', 'No' => 'No', 'SD' => 'No sabe', 'No sabe' => 'Sin Dato'];
+                            echo $this->Form->input('lgtbi', [
+                                'label' => '¿En el hogar hay integrantes que pertenezcan a la comunidad LGBTI?',
+                                'class' => 'form-control',
+                                'type' => 'select',
+                                'options' => $option,
+                                'style' => 'height:30px;  font-size: 15px ; width:100%',
+					]);
+					?>
+                </div>
+
+                <div class="form-group col-md-6" style="margin-top: 20px;">
+                    <?php
+					$option = [
+						'' => 'Elegir',
+						'Formación' => 'Formación',
+						'Expansión' => 'Expansión',
+						'Consolidación' => 'Consolidación',
+						'Apertura' => 'Apertura',
+						'Nido vacío' => 'Nido vacío',
+						'Disolución' => 'Disolución',
+						'SD' => 'Sin dato'
+					];
+					echo $this->Form->input('cursovidafamilia', [
+						'label' => 'Curso de vida en el que se encuentra el hogar',
+						'class' => 'form-control',
+						'type' => 'select',
+						'options' => $option,
+						'style' => 'height:30px;  font-size: 15px ; width:100%',
+					]);
+					?>
+                    <button type="button" id="ayudaButton" class="btn btn-success rounded-circle"
+                        style="width: 30px; height: 30px; padding: 0; font-size: 18px; margin-top: 5px; margin-left: 15px;">
+                        ?
+                    </button>
+
+                    <div id="popover" class="popover-content">
+                        <p><strong>Formación:</strong>
+                            Inicio de una nueva unidad familiar y formación de la identidad de pareja.
+                            <br>
+                            <strong>Expansión:</strong>
+                            Añadir miembros adicionales a la familia, generalmente hijos.
+                            <br>
+                            <strong>Consolidación:</strong>
+                            Enfocarse en criar y educar a los hijos.
+                            <br>
+                            <strong>Apertura:</strong>
+                            <br>
+                            Los hijos crecen y comienzan a independizarse. <br>
+                            <strong> Nido vacío:</strong>
+                            <br>
+                            Los hijos abandonan el hogar familiar para vivir de forma independiente.
+                            <br>
+                            <strong> Disolución:</strong>
+                            Separación o divorcio de la pareja.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="form-group col-md-6" style="margin-top: 20px;margin-bottom: 30px;">
+                    <?php
+					$option = ['' => 'Elegir', 'Si' => 'Si', 'No' => 'No', 'SD' => 'No sabe', 'No sabe' => 'Sin Dato'];
+					echo $this->Form->input('lgtbi', [
+						'label' => '¿En el hogar hay integrantes que pertenezcan a la comunidad LGBTI?',
+						'class' => 'form-control',
+						'type' => 'select',
+						'options' => $option,
+						'style' => 'height:30px;  font-size: 15px ; width:100%',
+					]);
+					?>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <h2 class="subtitle-general-forms">Riesgos de salud
+    </h2>
+    <hr style="background-clip: border-box; border:0.1px solid rgba(0,0,0,.125);">
+
+    <div class="grow justify-content-center" display="none" style="margin-top:20px">
+        <div class="card col-sm-12" style=" font-size:15px;  border:1.5px solid rgba(0,0,0,.125);">
+
+            <div class="form-group row">
+                <div class="form-group col-md-6" style="margin-top: 20px;">
+                    <?php
+					$optionEnferemedadAntecedentes = [
+						'' => 'Elegir',
+						'2.No' => 'No refiere',
+						'1.Alteraciones mentales : Esquizofrenia, TAB, depresión.' => 'Alteraciones mentales : Esquizofrenia, TAB, depresión.',
+						'1.Cánceres (Mama, cuello uterino, estómago, prostata, colon, recto, pulmonar, leucemia.' => 'Cánceres (Mama, cuello uterino, estómago, prostata, colon, recto, pulmonar, leucemia.',
+						'1.Enfermedad cardio- cerebro- vascular: (hipertensión, infarto agudo al miocardio)' => 'Enfermedad cardio- cerebro- vascular: (hipertensión, infarto agudo al miocardio)',
+						'1.Enfermedad renal ' => 'Enfermedad renal y/o cronica',
+						'1.Enfermedad respiratoria: Asma/EPOC' => 'Enfermedad respiratoria: Asma/EPOC',
+						'1.Diabetes' => 'Diabetes',
+						'1.Obesidad' => 'Obesidad',
+						'1.Enfermedades huérfanas' => 'Enfermedades huérfanas',
+						'SD' => 'Sin dato',
+
+
+					];
+
+					echo $this->Form->input('antecedenteenfermedad', [
+						'label' => 'Antecedentes familiares de enfermedad',
+						'type' => 'select',
+						'options' => $optionEnferemedadAntecedentes,
+						'class' => 'form-control select-search',
+						'style' => 'height:30px;  font-size: 15px ; width:100%',
+						'id' => 'status', // Agrega el atributo id para que coincida con el select en JavaScript
+						'onChange' => 'cronica(this.value);', // Ag
+					]);
+					?>
+                </div>
+
+
+
+                <div id="Cronica" class="form-group col-md-6" style="margin-top: 20px;">
+                    <?php
+					echo $this->Form->input('antecedenteenfermedad1', [
+						'label' => 'Agregue otro Antecedente enfermedad si requiere',
+						'type' => 'select',
+						'options' => $optionEnferemedadAntecedentes,
+						'class' => 'form-control select-search',
+						'style' => 'height:30px;  font-size: 15px ; width:100%',
+					]);
+					?>
+                </div>
+
+
+                <div class="form-group col-md-6" style="margin-top: 20px;">
+                    <?php
+					echo $this->Form->input('antecedenteenfermedad2', [
+						'label' => 'Agregue otro Antecedentes enfermedad si requiere',
+						'class' => 'form-control',
+						'type' => 'select',
+						'options' => $optionEnferemedadAntecedentes,
+						'class' => 'form-control select-search',
+						'style' => 'height:30px;  font-size: 15px ; width:100%',
+					]);
+					?>
+                </div>
+
+
+                <div class="form-group col-md-6" style="margin-top: 20px;">
+                    <?php
+					$option = [
+						'' => 'Elegir',
+						'1.Sedentarismo' => 'Sedentarismo',
+						'2.Actividad física' => 'Actividad física',
+						'1.Consumo de cigarrillo' => 'Consumo de cigarrillo',
+						'1.Consumo de Acohol' => 'Consumo de Acohol',
+						'1.Consumo de otras SPA' => 'Consumo de otras SPA',
+						'1.Inadecuadas Prácticas alimentarias y nutricionales' => 'Prácticas alimentarias y nutricionales (consumo sal, grasas, carbohidratos, azúcares refinados)'
+					];
+
+					echo $this->Form->input('estilodevidapredominante', [
+						'label' => 'Identifique el Estilo de Vida predominante en el hogar',
+						'class' => 'form-control',
+						'type' => 'select',
+						'options' => $option,
+						'style' => 'height:30px;  font-size: 15px ; width:100%',
+					]);
+					?>
+                </div>
+
+                <div class="form-group col-md-6" style="margin-top: 20px;">
+                    <?php
+					$optionTranmisibles = [
+						'' => 'Elegir',
+						'No' => 'No',
+						'SD' => 'Sin dato',
+						'Sintomatico respiratorio' => 'Tos crónica ',
+						'Sudoracion nocturna' => 'sudoración Nocturna ',
+						'Brotes en la piel' => 'Brotes en la piel/salpullido',
+						'Lesiones en piel' => 'lesiones en la piel sin dolor',
+					];
+
+					echo $this->Form->input('enfermedadtransmible', [
+						'label' => 'En los últimos 15 dias algún miembro del hogar a presentado',
+						'class' => 'form-control',
+						'type' => 'select',
+						'options' => $optionTranmisibles,
+						'style' => 'height:30px;  font-size: 15px ; width:100%',
+						'id' => 'status', // Agrega el atributo id para que coincida con el select en JavaScript
+						'onChange' => 'sintomatico(this.value);', // Ag
+					]);
+					?>
+                </div>
+                <div id="Sintomatico" class="form-group col-md-6" style="margin-top: 20px;margin-bottom: 30px;">
+                    <p class="help-block">Agregue otra situación si se requiere</p>
+
+                    <?php
+					echo $this->Form->input('enfermedadtransmible1', [
+						'label' => 'En los últimos 15 dias algún miembro del hogar a presentado',
+						'class' => 'form-control',
+						'type' => 'select',
+						'options' => $optionTranmisibles,
+						'style' => 'height:30px;  font-size: 15px ; width:100%',
+					]);
+					?>
+
+                </div>
+
+
+            </div>
+
+        </div>
+    </div>
+
+    <h2 class="subtitle-general-forms">Dinamica
+        Familiar</h2>
+    <hr style="background-clip: border-box; border:0.1px solid rgba(0,0,0,.125);">
+
+    <div class="grow justify-content-center" display="none" style="margin-top:20px">
+        <div class="card col-sm-12" style=" font-size:15px;  border:1.5px solid rgba(0,0,0,.125);">
+
+            <div class="form-group row">
+                <div class="form-group col-md-6" style="margin-top: 20px;">
+                    <?php
+					$optionConflictos = [
+						'' => 'Elegir',
+						'2.No' => 'No refiere',
+						'1.Conflictos conyugales' => 'Conflictos conyugales',
+						'1.Conflictos entre padres e hijos' => 'Conflictos entre padres e hijos',
+						'1.Conflictos entre hermanos' => 'Conflictos entre hermanos',
+						'1.Conflictos entre Familia' => 'Conflictos entre Familia',
+						'1.Violencia Intrafamiliar y maltrato' => 'Violencia Intrafamiliar y maltrato',
+						'1.Violencia Intrafamiliar y maltrato contra NNA' => 'Violencia Intrafamiliar y maltrato contra NNA',
+						'1.Violencias de género' => 'Violencias de género',
+						'1.Problemas o Transtornos mentales diangnosticados' => 'Problemas o Transtornos mentales diangnosticados',
+						'1.Consumo de alcohol o psicoactivos' => 'Consumo de alcohol o psicoactivos',
+						'SD' => 'Sin dato'
+					];
+
+					echo $this->Form->input('riesgopsicosocial', [
+						'label' => '¿En su hogar se ha presentado alguna de las siguientes situaciones en el ultimo mes?',
+						'class' => 'form-control',
+						'type' => 'select',
+						'options' => $optionConflictos,
+
+						'style' => 'height:30px;  font-size: 15px ; width:100%',
+						'id' => 'status', // Agrega el atributo id para que coincida con el select en JavaScript
+						'onChange' => 'psicosocial(this.value);', // Ag
+					]);
+					?>
+                </div>
+
+
+
+                <div id="Psicosocial" class="form-group col-md-6" style="margin-top: 20px;">
+                    <?php
+					echo $this->Form->input('riesgopsicosocial1', [
+						'label' => '¿En su hogar se ha presentado alguna de las siguientes situaciones en el ultimo mes?',
+						'class' => 'form-control',
+						'type' => 'select',
+						'options' => $optionConflictos,
+
+						'style' => 'height:30px;  font-size: 15px ; width:100%',
+					]);
+					?>
+                    <p class="help-block">Agregue otra situación si se requiere</p>
+
+                </div>
+
+                <div class="form-group col-md-6" style="margin-top: 20px;">
+                    <?php
+					echo $this->Form->input('riesgopsicosocial2', [
+						'label' => '¿En su hogar se ha presentado alguna de las siguientes situaciones en el ultimo mes?',
+						'class' => 'form-control',
+						'type' => 'select',
+						'options' => $optionConflictos,
+
+						'style' => 'height:30px;  font-size: 15px ; width:100%',
+					]);
+					?>
+                    <p class="help-block">Agregue otra situación si se requiere</p>
+                </div>
+
+                <div class="form-group col-md-6" style="margin-top: 20px;">
+                    <?php
+					$optionAlternativa = [
+						'' => 'Elegir',
+						'4.No' => 'No refiere',
+						'1.Medicina indigena' => 'Medicina Tradicional/indigena',
+						'4.Homeopatía' => 'Homeopatía',
+						'4.Medicina tradicional china' => 'Medicina tradicional china',
+						'4.Acupuntura' => 'Acupuntura',
+						'4.Quiropraxia' => 'Quiropraxia',
+						'4.Otro' => 'Otro',
+						'4.SD' => 'Sin dato'
+					];
+					echo $this->Form->input('saludalternativa', [
+						'label' => '¿Hacen uso de otras opciones para el cuidado de su salud?',
+						'class' => 'form-control',
+						'type' => 'select',
+						'options' => $optionAlternativa,
+						'style' => 'height:30px;  font-size: 15px ; width:100%',
+					]);
+					?>
+                </div>
+
+
+
+
+            </div>
+        </div>
+
+        <h2 class="subtitle-general-forms ">APGAR Familiar</h2>
+        <hr style=" border:0.1px solid rgba(0,0,0,.125);">
+
+        <div class="grow justify-content-center" display="none" style="margin-top:20px">
+            <div class="card col-sm-12" style=" font-size:15px;  border:1.5px solid rgba(0,0,0,.125);">
+
+                <div class="form-group row">
+                    <div class="form-group col-md-6" style="margin-top: 20px;">
+                        <?php
+						$optionApgar = [
+							'' =>  'Elegir',
+							'1.Normal' => '1.Normal',
+							'2.Disfunción leve' => '2.Disfunción leve',
+							'3.Disfunción moderada' => '3.Disfunción moderada',
+							'4.Disfunción severa' => '4.Disfunción severa',
+							'0' => 'No informa',
+							'0' => 'Sin dato',
+
+						];
+
+						echo $this->Form->input('calculoapgar', array(
+							'label' => 'Resultado Apgar',
+							'class' => 'form-control',
+							'style' => 'height:30px; font-size: 15px; width:100%',
+							'placeholder' => '',
+
+						));
+						?>
+                    </div>
+
+                    <div class="form-group col-md-6" style="margin-top: 20px;">
+                        <?php
+						echo $this->Form->input('apgarFuncionalidad', [
+							'label' => 'Funcionalidad de la familia',
+							'class' => 'form-control',
+							'style' => 'height:30px; font-size: 15px; width:100%',
+							'placeholder' => '',
+
+							'options' => $optionApgar,
+						]); ?>
+                    </div>
+                </div>
+
+
+
+            </div>
+        </div>
+
+
+        <h2 class="subtitle-general-forms">Apoyo Social
+        </h2>
+        <hr style="background-clip: border-box; border:0.1px solid rgba(0,0,0,.125);">
+
+        <div class="grow justify-content-center" display="none" style="margin-top:20px">
+            <div class="card col-sm-12" style=" font-size:15px;  border:1.5px solid rgba(0,0,0,.125);">
+
+                <div class="form-group row">
+                    <div class="form-group col-md-6" style="margin-top: 20px;">
+                        <?php
+						$optionProgramaSocial = [
+							'' => 'Elegir',
+							'No aplica' => 'No aplica',
+							'No' => 'No recibe',
+							'Adulto mayor' => 'Bono - Adulto mayor',
+							'Bien Nacer' => 'Bien nacer',
+							'Familias en acción' => 'Familias en acción',
+							'Banco de leche humana' => 'Banco de leche humana',
+							'Otro' => 'Otro',
+							'No sabe' => 'No sabe',
+							'SD' => 'Sin dato'
+
+						];
+
+						echo $this->Form->input('programasocial', [
+							'label' => '¿ Alguien de su hogar recibe algún subsidio o aporte de programas sociales o de salud?',
+							'class' => 'form-control',
+							'type' => 'select',
+							'options' => $optionProgramaSocial,
+
+							'style' => 'height:30px;  font-size: 15px ; width:100%',
+							'id' => 'status', // Agrega el atributo id para que coincida con el select en JavaScript
+							'onChange' => 'programaSocial(this.value);', // Ag
+						]);
+						?>
+                    </div>
+
+
+
+
+                    <div id="Social" class="form-group col-md-6" style="margin-top: 20px;">
+                        <?php
+						echo $this->Form->input('programasocial1', [
+							'label' => 'Agregue otro subsidio o aporte de programas sociales si requiere',
+							'class' => 'form-control',
+							'type' => 'select',
+							'options' => $optionProgramaSocial,
+							'style' => 'height:30px;  font-size: 15px ; width:100%',
+						]);
+						?>
+                    </div>
+
+                    <div class="form-group col-md-6" style="margin-top: 20px;margin-bottom: 30px;">
+                        <?php
+						echo $this->Form->input('programasocial2', [
+							'label' => 'Agregue otro subsidio o aporte de programas sociales si requiere',
+							'class' => 'form-control',
+							'type' => 'select',
+							'options' => $optionProgramaSocial,
+							'style' => 'height:30px;  font-size: 15px ; width:100%',
+						]);
+						?>
+                    </div>
+
+
+
+                </div>
+
+
+
+            </div>
+        </div>
+
+        <h2 class="subtitle-general-forms ">Encuesta a cuidadores ZARIT</h2>
+
+        <hr style=" border:0.1px solid rgba(0,0,0,.125);">
+
+        <div class="col-sm-12" style="margin-top: 20px; ">
+            <div id="status" class="switch-button">
+                <input type="checkbox" name="switch-button" id="switch-label" class="switch-button__checkbox">
+                <label for="switch-label" class="switch-button__label"></label>
+                <p class="help-block">El Objetivo de la Escala Zarit es medir la sobrecarga del cuidador
+                    evaluando
+                    dimensiones como calidad de vida, capacidad de autocuidado, red de apoyo
+                    social y competencias para afrontar problemas conductuales y clínicos del paciente cuidad.
+                    Las preguntas de la escala sin tipo Likert de 5 opciones:</p>
+            </div>
+
+
+        </div>
+
+        <div class="grow justify-content-center" display="none" style="margin-top:20px">
+            <div id="si" class="panel panel-default form-group col-md-12" style="font-size:15px; display: none;">
+                <div class="form-group row">
+
+                    <div class="form-group col-md-6" style="margin-top: 20px;">
+                        <?php
+						$yesNoCuidador = [
+							'0' => 'Elegir',
+							'1.Si' => 'Si',
+
+						];
+						echo $this->Form->input('cuidadorpermanente', [
+							'label' => '¿En la familia se identifica un cuidador principal de niños, niñas, persona con discapacidad, adulto mayor o enfermedad?',
+							'class' => 'form-control',
+							'type' => 'select',
+							'options' => $yesNoCuidador,
+							'style' => 'height:30px;  font-size: 15px ; width:100%',
+						]);
+						?>
+                    </div>
+
+
+                    <div class="form-group col-md-6" style="margin-top: -10px;">
+                        <?php
+						echo $this->Form->input('calculozarit', array(
+							'label' => 'Resultado zarit',
+							'class' => 'form-control',
+							'style' => 'height:30px; font-size: 15px; width:100%',
+							'placeholder' => '',
+
+						));
+						?>
+                    </div>
+
+                    <div class="form-group col-md-6" style="margin-top: 20px;">
+                        <?php
+						$optionZaritResultado = [
+							'0' =>  'Elegir',
+							'1.Ausencia de sobrecarga' => '1.Ausencia de sobrecarga',
+							'2.Sobrecarga ligera' => '2.Sobrecarga ligera',
+							'3.Sobrecarga intensa' => '3.Sobrecarga intensa',
+							'0' => 'No informa',
+							'-1' => 'Sin dato',
+						];
+						echo $this->Form->input('zaritFuncionalidad', [
+							'label' => 'Sobrecarga del cuidador',
+							'class' => 'form-control',
+							'options' => $optionZaritResultado,
+							'style' => 'height:30px; font-size: 15px; width:100%',
+							'placeholder' => '',
+
+
+						]); ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <h2 class="subtitle-general-forms">Aseo e Higiene
+        </h2>
+        <hr style="background-clip: border-box; border:0.1px solid rgba(0,0,0,.125);">
+
+        <div class="grow justify-content-center" display="none" style="margin-top:20px">
+            <div class="card col-sm-12" style=" font-size:15px;  border:1.5px solid rgba(0,0,0,.125);">
+
+                <div class="form-group row">
+                    <div class="form-group col-md-6" style="margin-top: 20px;">
+                        <?php
+						$optionYesNo = [
+							'' => 'Elegir',
+							'Si' => 'Si',
+							'No' => 'No',
+							'SD' => 'Sin dato'
+						];
+
+						echo $this->Form->input('higiene', [
+							'label' => '¿Se observan adecuadas condiciones de higiene en el hogar?',
+							'class' => 'form-control',
+							'type' => 'select',
+							'options' => $optionYesNo,
+							'style' => 'height:30px;  font-size: 15px ; width:100%',
+						]);
+						?>
+                    </div>
+
+                    <div class="form-group col-md-6" style="margin-top: 20px;">
+                        <?php
+						echo $this->Form->input('higienealimentos', [
+							'label' => '¿Disponen de Almacenamiento y conservación adecuada de alimentos?',
+							'class' => 'form-control',
+							'type' => 'select',
+							'options' => $optionYesNo,
+							'style' => 'height:30px;  font-size: 15px ; width:100%',
+						]);
+						?>
+                    </div>
+
+                    <div class="form-group col-md-6" style="margin-top: 20px;">
+                        <?php
+						echo $this->Form->input('aseococina', [
+							'label' => '¿Procuran mantener limpia de la cocina?',
+							'class' => 'form-control',
+							'type' => 'select',
+							'options' => $optionYesNo,
+							'style' => 'height:30px;  font-size: 15px ; width:100%',
+						]);
+						?>
+                    </div>
+
+
+
+                    <div class="form-group col-md-6" style="margin-top: 20px;">
+                        <?php
+						$optionLavadoManos = [
+							'' => 'Elegir',
+							'Con agua y jabon' => 'Si,Con agua y jabon',
+							'Solo agua' => 'Si, Solo Agua',
+							'No' => 'No hay hábito de lavado de manos'
+						];
+
+						echo $this->Form->input('lavadomanos', [
+							'label' => '¿Es frecuente el hábito del lavado de manos durante el día?',
+							'class' => 'form-control',
+							'type' => 'select',
+							'options' => $optionLavadoManos,
+							'style' => 'height:30px;  font-size: 15px ; width:100%',
+						]);
+						?>
+                    </div>
+
+                    <div class="form-group col-md-6" style="margin-top: 20px;">
+                        <?php
+						$optionelementosHigiene = [
+							'' => 'Elegir',
+							'Cepillo de dientes' => 'Cepillo de dientes',
+							'Máquina de afeitar' => 'Máquina de afeitar',
+							'Toallas' => 'Toallas',
+							'No' => 'No se comparte',
+							'No refiere' => 'No refiere',
+							'SD' => 'Sin dato'
+						];
+
+						echo $this->Form->input('elementoshigiene', [
+							'label' => '¿Se comparte algun implemento de higiene personal?',
+							'class' => 'form-control',
+							'type' => 'select',
+							'options' => $optionelementosHigiene,
+							'style' => 'height:30px;  font-size: 15px ; width:100%',
+						]);
+						?>
+                    </div>
+
+                    <div class="form-group col-md-6" style="margin-top: 20px;">
+                        <?php
+						echo $this->Form->input('otroelementohigiene', [
+							'label' => 'Agregue otros implementos de higiene que se comparta si requiere',
+							'class' => 'form-control',
+							'style' => 'height:30px;  font-size: 15px ; width:100%',
+						]);
+						?>
+                    </div>
+
+                    <div class="form-group col-md-6" style="margin-top: 20px;">
+                        <?php
+						$optionCepilladoDientes = [
+							'' => 'Elegir',
+							'Cepillo y crema dental' => 'Si, con cepillo y crema dental',
+							'Ademas Ceda dental' => 'Si, Ademas el uso de Ceda dental',
+							'No' => 'No hay hábito de cepillado de dientes',
+							'No refiere' => 'No refiere',
+							'SD' => 'Sin dato'
+						];
+
+						echo $this->Form->input('cepilladodientes', [
+							'label' => '¿Existe el hábito de cepillarse los dientes?',
+							'class' => 'form-control',
+							'type' => 'select',
+							'options' => $optionCepilladoDientes,
+
+							'style' => 'height:30px;  font-size: 15px ; width:100%',
+						]);
+						?>
+                    </div>
+                </div>
+                </fieldset>
+
+                <button class="my-button" style="">
+                    Guardar<?php echo $this->Form->end(); ?>
+                </button>
+
+            </div>
 </body>
+
+
 <?php
 $this->Html->css([
 	'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css',
@@ -916,56 +1161,60 @@ $this->Html->script([
 ], ['block' => 'script']);
 ?>
 <script type="text/javascript">
-	$(document).ready(function() {
-		$('.select-search').select2();
-		agregarOpcionSeleccion();
-	});
+$("#switch-label").change(function() {
+    var switchValue = this.checked ? "si" : "no";
+    mostrar(switchValue);
+});
+
+$("#switch-label-initial").change(function() {
+    var switchValue = this.checked ? "yes" : "nope";
+    mostrar(switchValue);
+});
 
 
+function mostrar(id) {
+    if (id == "si") {
+        $("#si").show();
+        $("#no").hide();
 
-	function agregarOpcionSeleccion() {
-		$("#SociambientalUbicacionId").prepend("<option value='' selected='selected'>Seleccione</option>");
-		$("#SociambientalResponsableId").prepend("<option value='' selected='selected'>Seleccione</option>");
-	}
+    } else if (id == "no") {
+        $("#si").hide();
+        $("#no").show();
 
+    }
 
-	$("#switch-label").change(function() {
-		var switchValue = this.checked ? "si" : "no";
-		mostrar(switchValue);
-	});
+    if (id == "yes") {
+        $("#yes").show();
+        $("#nope").hide();
+        $("#validacion").val("si acepto");
 
-	$("#switch-label-initial").change(function() {
-		var switchValue = this.checked ? "yes" : "nope";
-		mostrar(switchValue);
-	});
+    } else if (id == "nope") {
+        $("#yes").hide();
+        $("#nope").show();
+        $("#validacion").val(" ");
 
-
-	function mostrar(id) {
-		if (id == "si") {
-			$("#si").show();
-			$("#no").hide();
-
-		} else if (id == "no") {
-			$("#si").hide();
-			$("#no").show();
-
-		}
-
-		if (id == "yes") {
-			$("#yes").show();
-			$("#nope").hide();
-			$("#validacion").val("si acepto");
-
-		} else if (id == "nope") {
-			$("#yes").hide();
-			$("#nope").show();
-			$("#validacion").val(" ");
-
-		}
-	}
+    }
+}
 
 
-	$(document).ready(function() {
-		$("#mostrarmodal").modal("show");
-	});
+$(document).ready(function() {
+    $(document).ready(function() {
+        $('#ayudaButton1').on('click', function() {
+            $('#popover-content').toggle();
+        });
+
+        $(document).on('click', function(event) {
+            if (!$(event.target).closest('#ayudaButton1, #popover-content').length) {
+                $('#popover-content').hide();
+            }
+        });
+
+    });
+
+    $(document).ready(function() {
+        $('#ayudaButton').on('click', function() {
+            $('#popover').toggle();
+        });
+    });
+});
 </script>

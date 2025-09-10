@@ -135,15 +135,13 @@
                             'No aplica ' => 'Elegir',
                             'No' => 'No',
                             'Tramite de autorización de servicios de salud' => 'Tramite de autorización de servicios de salud',
-                            'Vacunación ' => 'Vacunación',
-                            'Atención en salud del recién nacido ' => 'Atención en salud del recién nacido',
-                            'Atención en salud de promoción y mantenimiento por médico o enfermera ' => 'Atención en salud de promoción y mantenimiento por médico o enfermera',
-                            'Atención en salud bucal' => 'Atención en salud bucal',
-                            'aplicación de sellantes' => 'aplicación de sellantes, fluor, barniz',
-                            'Atención medicina general ' => 'Atención en salud por medicina general',
-                            'Atención Urgencias ' => 'Atención en salud en un servicio de Urgencias',
-                            'Asesoría en Lactancia Materna ' => 'Asesoría en Lactancia Materna',
-                            'Activación de ruta por sospecha de violencias ' => 'Activación de ruta por sospecha de violencias',
+                            'Vacunacion' => 'Vacunación ',
+                            'Atencion de PyM Medico' => 'Atención en salud de PyM por médico',
+                            'Atencion de PyM Enfermera' => 'Atención en salud de PyM por enfermeria',
+                            'Atencion medicina general' => ' Atención en salud por medicina general',
+                            'Atencion  Urgencias ' => 'Atención en salud en un servicio de Urgencias ',
+                            'Atencion odontologia' => 'Atención en salud bucal',
+                            'Activacion de ruta por sospecha de violencias' => 'Activación de ruta por sospecha de violencias',
 
 
                         ];

@@ -48,19 +48,23 @@ echo $this->Html->script('validationSocioAmbiental'); // 'validation' es el nomb
 
 
 
-                            <div class="form-group col-md-6" style="margin-top: 20px;">
+                            <?php echo $this->Form->input('updateDate', array(
+                                'type' => 'hidden',
+                                'value' => date('Y-m-d H:i:s'),
+                            )); ?>
 
-                                <!-- Campo de fecha de nacimiento -->
-                                <?php echo $this->Form->input('fechaRegistro', [
+                            <div class="form-group col-md-6" style="margin-top: 20px;">
+                                <?php echo $this->Form->input('fecha', array(
                                     'label' => 'Fecha de registro:',
                                     'type' => 'date',
-                                    'minYear' => date('Y') - 12,
-                                    'maxYear' => date('Y') - 7,
+                                    'minYear' => date('Y'),
+                                    'maxYear' => date('Y'),
                                     'style' => 'height:30px;  font-size: 15px ;',
-                                    'id' => 'fechanac', // Agrega este identificador al campo de fecha de nacimiento
-                                    'empty' => true, // Establecer el campo como vacío
-                                ]); ?>
+                                   
+                                
+                            )); ?>
                             </div>
+
 
                             <div class="form-group col-md-6" style="margin-top: 20px;">
                                 <?php

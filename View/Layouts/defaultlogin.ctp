@@ -53,11 +53,14 @@
                             <form action="#" class="signin-form">
                                 <div class="form-group mb-3">
                                     <label class="label" for="name">Usuario</label>
-                                    <input name="data[User][username]" type="text" class="form-control" name="UserUsername" placeholder="Usuario" required>
+                                    <input name="data[User][username]" type="text" class="form-control"
+                                        name="UserUsername" placeholder="Usuario" required>
                                 </div>
                                 <div class="form-group mb-3">
                                     <label class="label" for="password">Contraseña</label>
-                                    <input name="data[User][password]" id="UserPassword" type="password" id="UserUsername" name="UserUsername" class="form-control" placeholder="Contraseña" required>
+                                    <input name="data[User][password]" id="UserPassword" type="password"
+                                        id="UserUsername" name="UserUsername" class="form-control"
+                                        placeholder="Contraseña" required>
                                 </div>
                                 <div class="mb-3">
 
@@ -65,15 +68,17 @@
                                     </div>
                                 </div>
                                 <div class="form-group" style="margin-top: 10px;">
-                                    <button onfocus="verCod()" value="Entrar" type="submit" class="form-control btn btn-primary rounded submit px-3">Ingresar</button>
+                                    <button onfocus="verCod()" value="Entrar" type="submit"
+                                        class="form-control btn btn-primary rounded submit px-3">Ingresar</button>
                                 </div>
 
                             </form>
 
                         </div>
 
-                        <div class="login-wrap p-4 p-md-5" style=" display: flex; justify-content: center; align-items: center;">
-                            <img class="imagenbig" src="https://rtvc-assets-radionica3.s3.amazonaws.com/s3fs-public/inline-images/4_0.jpg" alt="">
+                        <div class="login-wrap p-4 p-md-5"
+                            style=" display: flex; justify-content: center; align-items: center;">
+                            <img class="imagenbig" src="../img/EBS.jpg" alt="">
 
                         </div>
                     </div>

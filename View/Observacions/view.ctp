@@ -11,7 +11,8 @@
                                     <table width="100%" class="table table-striped table-bordered table-hover">
                                         <tr>
                                         <tr>
-                                            <td rowspan="4"><img src="../../img/escudosms.png" width="100" height="auto"></td>
+                                            <td rowspan="4"><img src="../../img/escudosms.png" width="100"
+                                                    height="auto"></td>
                                         </tr>
                                         <tr>
                                             <td colspan="6">Atencion Primaria En Salud</td>
@@ -41,7 +42,8 @@
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td colspan="12" style="text-align: center;" class="title">Canalizaciones</td>
+                                            <td colspan="12" style="text-align: center;" class="title">Canalizaciones
+                                            </td>
 
                                         </tr>
                                         <tr>
@@ -53,7 +55,8 @@
 
                                         <tr>
                                             <td colspan="2" class="title">Segunda</td>
-                                            <td colspan="10"> <?php echo ($observacion['Observacion']['canalizaciondos']); ?>
+                                            <td colspan="10">
+                                                <?php echo ($observacion['Observacion']['canalizaciondos']); ?>
                                             </td>
 
                                         </tr>
@@ -114,6 +117,7 @@
                                             </td>
                                             <td colspan="2" class="title">link</td>
                                             <td colspan="4">
+                                            <td> <?php echo $this->Html->link('../files/observacion/familiograma/' . $observacion['dirfamiliograma'] . '/' . $observacion['familiograma']); ?>&nbsp;
                                                 <?php echo ($observacion['Observacion']['dirfamiliograma']); ?>
                                             </td>
                                         </tr>
@@ -165,4 +169,3 @@ $this->Html->script([
 
     });
 </script>
-
