@@ -29,7 +29,7 @@ class FamiliasController extends AppController
 			$familias = $this->Familia->getSelectiveData();
 			$sociambientals = $this->Familia->getFamiliaSocioambiental();
 			$ubicaciones = $this->Familia->getUbicaciones();
-			
+
 
 			$this->set([
 				'responsables' => $responsables,
@@ -37,7 +37,6 @@ class FamiliasController extends AppController
 				'sociambientals' => $sociambientals,
 				'ubicaciones' => $ubicaciones,
 			]);
-
 		} catch (\Exception $e) {
 			$this->Flash->error('Error: ' . $e->getMessage());
 		}
@@ -51,6 +50,15 @@ class FamiliasController extends AppController
 	 * @return void
 	 */
 	public function view($id = null)
+	{
+		if (!$this->Familia->exists($id)) {
+			throw new NotFoundException(__('Invalid familia'));
+		}
+		$options = array('conditions' => array('Familia.' . $this->Familia->primaryKey => $id));
+		$this->set('familia', $this->Familia->find('first', $options));
+	}
+
+	public function plancuidado($id = null)
 	{
 		if (!$this->Familia->exists($id)) {
 			throw new NotFoundException(__('Invalid familia'));
@@ -77,7 +85,9 @@ class FamiliasController extends AppController
 				$aux = "view/$id";
 				return $this->redirect(
 					array(
-						'action' => $aux, '?' => array('view' => 'familias'), '#' => 'top'
+						'action' => $aux,
+						'?' => array('view' => 'familias'),
+						'#' => 'top'
 					)
 				);
 			} else {

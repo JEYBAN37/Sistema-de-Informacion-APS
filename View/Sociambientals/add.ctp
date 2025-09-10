@@ -7,12 +7,12 @@ echo $this->Html->script('validationSocioAmbiental'); // 'validation' es el nomb
 ?>
 
 <style>
-.modal-header-native {
-    padding: 1rem;
-    border-bottom: 1px solid #e9ecef;
-    border-top-left-radius: .3rem;
-    border-top-right-radius: .3rem;
-}
+    .modal-header-native {
+        padding: 1rem;
+        border-bottom: 1px solid #e9ecef;
+        border-top-left-radius: .3rem;
+        border-top-right-radius: .3rem;
+    }
 </style>
 
 
@@ -96,9 +96,9 @@ echo $this->Html->script('validationSocioAmbiental'); // 'validation' es el nomb
                                     'minYear' => date('Y'),
                                     'maxYear' => date('Y'),
                                     'style' => 'height:30px;  font-size: 15px ;',
-                                     'empty' => true, // Establecer el campo como vacío
-                                
-                            )); ?>
+                                    'empty' => true, // Establecer el campo como vacío
+
+                                )); ?>
                             </div>
 
 
@@ -127,6 +127,7 @@ echo $this->Html->script('validationSocioAmbiental'); // 'validation' es el nomb
                                 <?php echo $this->Form->input('numMicroterritorio', array(
                                     'label' => 'Numero de microterritorio',
                                     'style' => 'height:30px;  font-size: 15px ; width:100%',
+                                    'type' => 'number'
 
                                 )); ?>
                                 </p>
@@ -488,7 +489,7 @@ echo $this->Html->script('validationSocioAmbiental'); // 'validation' es el nomb
                                 <?php
                                 $accessOptions = [
                                     '' => 'Elegir',
-                                    'No' => 'No hay dificultdad',
+                                    '1,2,3,4. Acceso a todos' => 'No hay dificultdad',
                                     '1.Transporte' => 'Transporte',
                                     '2.Espacios deportivos' => 'Espacios deportivos',
                                     '3.Servicios Educativos' => 'Servicios Educativos',
@@ -746,7 +747,7 @@ echo $this->Html->script('validationSocioAmbiental'); // 'validation' es el nomb
                                 $vectoresOption = [
                                     '' => 'Elegir',
                                     '2.No' => 'No',
-                                    '1.Mosicos' => 'Moscos',
+                                    '1.Moscos' => 'Moscos',
                                     '1.Zancudos' => 'Zancudos',
                                     '1.Pulgas' => 'Pulgas',
                                     '1.Piojos' => 'Piojos',
@@ -932,56 +933,56 @@ $this->Html->script([
 ], ['block' => 'script']);
 ?>
 <script type="text/javascript">
-$(document).ready(function() {
-    $('.select-search').select2();
-    agregarOpcionSeleccion();
-});
+    $(document).ready(function() {
+        $('.select-search').select2();
+        agregarOpcionSeleccion();
+    });
 
 
 
-function agregarOpcionSeleccion() {
-    $("#SociambientalUbicacionId").prepend("<option value='' selected='selected'>Seleccione</option>");
-    $("#SociambientalResponsableId").prepend("<option value='' selected='selected'>Seleccione</option>");
-}
-
-
-$("#switch-label").change(function() {
-    var switchValue = this.checked ? "si" : "no";
-    mostrar(switchValue);
-});
-
-$("#switch-label-initial").change(function() {
-    var switchValue = this.checked ? "yes" : "nope";
-    mostrar(switchValue);
-});
-
-
-function mostrar(id) {
-    if (id == "si") {
-        $("#si").show();
-        $("#no").hide();
-
-    } else if (id == "no") {
-        $("#si").hide();
-        $("#no").show();
-
+    function agregarOpcionSeleccion() {
+        $("#SociambientalUbicacionId").prepend("<option value='' selected='selected'>Seleccione</option>");
+        $("#SociambientalResponsableId").prepend("<option value='' selected='selected'>Seleccione</option>");
     }
 
-    if (id == "yes") {
-        $("#yes").show();
-        $("#nope").hide();
-        $("#validacion").val("si acepto");
 
-    } else if (id == "nope") {
-        $("#yes").hide();
-        $("#nope").show();
-        $("#validacion").val(" ");
+    $("#switch-label").change(function() {
+        var switchValue = this.checked ? "si" : "no";
+        mostrar(switchValue);
+    });
 
+    $("#switch-label-initial").change(function() {
+        var switchValue = this.checked ? "yes" : "nope";
+        mostrar(switchValue);
+    });
+
+
+    function mostrar(id) {
+        if (id == "si") {
+            $("#si").show();
+            $("#no").hide();
+
+        } else if (id == "no") {
+            $("#si").hide();
+            $("#no").show();
+
+        }
+
+        if (id == "yes") {
+            $("#yes").show();
+            $("#nope").hide();
+            $("#validacion").val("si acepto");
+
+        } else if (id == "nope") {
+            $("#yes").hide();
+            $("#nope").show();
+            $("#validacion").val(" ");
+
+        }
     }
-}
 
 
-$(document).ready(function() {
-    $("#mostrarmodal").modal("show");
-});
+    $(document).ready(function() {
+        $("#mostrarmodal").modal("show");
+    });
 </script>
