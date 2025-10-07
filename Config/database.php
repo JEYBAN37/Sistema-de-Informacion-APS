@@ -66,15 +66,15 @@
 class DATABASE_CONFIG
 {
 
-	public $default = array(
+		public $default = array(
 		'datasource' => 'Database/Mysql',
 		'persistent' => false,
 		'host' => 'localhost',
-		'login' => 'root',
-		'password' => '',
+		'login' => 'agsolutic_fichafamilarbdresolucionnueva',
+		'password' => 'FichaFamiliar2023*',
 		//'database' => 'bienestarmarzo15pic2018',
-		'database' => 'fichafamiliar20241709',
-
+		'database' => 'agsolutic_alpha_2025',
+		              
 		'prefix' => '',
 		'encoding' => 'utf8',
 	);
