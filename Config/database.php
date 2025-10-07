@@ -68,10 +68,10 @@ class DATABASE_CONFIG {
 		'datasource' => 'Database/Mysql',
 		'persistent' => false,
 		'host' => 'localhost',
-		'login' => 'root',
-		'password' => '',
+		'login' => 'agsolutic_fichafamilarbdresolucionnueva',
+		'password' => 'FichaFamiliar2023*',
 		//'database' => 'bienestarmarzo15pic2018',
-		'database' => 'fichafamiliar',
+		'database' => 'agsolutic_alpha_2025',
 		              
 		'prefix' => '',
 		'encoding' => 'utf8',
