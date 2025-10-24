@@ -41,8 +41,6 @@
 														<td>Codigo ID Primera Infancia</td>
 														<td><?php echo ($responsable['Responsable']['id']); ?>
 														</td>
-
-
 														</tr>
 													</table>
 												</div>

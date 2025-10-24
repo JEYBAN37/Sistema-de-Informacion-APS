@@ -1,10 +1,18 @@
 <?php $this->layout = 'default_familia' ?>
 
 
-<?php
-// Enlaza el archivo JavaScript desde la carpeta webroot/js
-echo $this->Html->script('validationSocioAmbiental'); // 'validation' es el nombre del archivo sin la extensión .js
-?>
+<div class="max-w-5xl mx-auto text-center mb-8">
+    <h1 class="text-5xl font-bold mb-4 text-blue-600">
+        Modulo Socioambiental
+    </h1>
+    <p class="text-gray-500 mb-4 text-lg">
+        Registre preliminarmente los campos relacionados con la sistematización.
+        Tenga en cuenta que podrá editar y complementar los demás campos posteriormente.
+    </p>
+</div>
+
+
+
 
 <style>
     .modal-header-native {

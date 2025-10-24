@@ -8,6 +8,9 @@ App::uses('AppModel', 'Model');
  */
 class Responsable extends AppModel
 {
+	 public $actsAs = array(
+        'Containable',
+    );
 
     public function getResponsablesList() {
         return $this->find('list', [

@@ -1,5 +1,4 @@
 <?php
-
 /**
  *
  *
@@ -63,22 +62,20 @@
  * flags =>
  * A key/value array of driver specific connection options.
  */
-class DATABASE_CONFIG
-{
+class DATABASE_CONFIG {
 
-		public $default = array(
+	public $default = array(
 		'datasource' => 'Database/Mysql',
 		'persistent' => false,
 		'host' => 'localhost',
-		'login' => 'agsolutic_fichafamilarbdresolucionnueva',
-		'password' => 'FichaFamiliar2023*',
+		'login' => 'root',
+		'password' => '',
 		//'database' => 'bienestarmarzo15pic2018',
 		'database' => 'agsolutic_alpha_2025',
 		              
 		'prefix' => '',
 		'encoding' => 'utf8',
 	);
-
 
 
 
@@ -92,4 +89,5 @@ class DATABASE_CONFIG
 		'prefix' => '',
 		//'encoding' => 'utf8',
 	);
+
 }

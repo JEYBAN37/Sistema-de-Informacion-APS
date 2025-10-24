@@ -15,6 +15,9 @@ class Sociambiental extends AppModel
 	);
 	public $displayField = 'apellidosfamilia';
 
+    public $actsAs = array(
+        'Containable',
+    );
 
 	public function getFamiliaSocioambientalFilter($conditions = array())
 	{
