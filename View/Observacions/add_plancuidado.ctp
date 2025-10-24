@@ -413,7 +413,7 @@ echo $this->Form->input('responsable_id', array('value' => $nombreUsuario, 'type
              <div class="col-span-2 text-md font-semibold my-6">
                 <div class="flex items-center mb-4">
                     <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">4</span>
-                    <label for="direccion" class="font-semibold">Entorno de intervención</label>
+                    <label for="entornoafectado" class="font-semibold">Entorno de intervención</label>
                 </div>
                 
                 <?php
@@ -427,11 +427,16 @@ echo $this->Form->input('responsable_id', array('value' => $nombreUsuario, 'type
                  // Usando FormHelper para generar checkboxes (CakePHP 2.x)
                             echo $this->Form->input('entornoafectado', [                              
                                 'type' => 'select',
-                                'multiple' => 'checkbox',
+                                'multiple' => 'multiple',
                                 'options' => $entornoAfectado,
                                 'id' => 'entornoafectado',
-                                'class' => 'form-control'
+                                'class' => 'w-full',
+                        'empty' => false,                       
+                        'error' => false // No mostrar error aquí
                             ]);
+                            if (!empty($this->Form->error('entornoafectado'))) {
+                    echo '<div class="text-red-600 text-md mt-1 font-semibold">' . $this->Form->error('entornoafectado') . '</div>';
+                }
                 ?>
                 
             </div>
@@ -444,27 +449,25 @@ echo $this->Form->input('responsable_id', array('value' => $nombreUsuario, 'type
                     <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">3</span>
                     <label for="ria" class="font-semibold">Actividades a desarrollar</label>
                     <p class="text-red-600">*</p>
-
                 </div>
                 <?php
-              $actividadesDesarrollar = [
-                                'Atenciones,intervenciones individuales'   => 'Atenciones/intervenciones individuales',
-                                //'Atención Salud adaptado'   => 'Atención Salud adaptado',
-                                'Derivación servicios salud espcializados'   => 'Derivación servicios salud especializados',
-                                'Apoyo Psicosocial' => 'Apoyo Psicosocial',
-                                'Acompañamiento familiar' => 'Acompañamiento familiar',
-                                'Gestión recursos comunitarios' => 'Gestión recursos comunitarios',
-                                'Educación en Salud'=> 'Educación en Salud',
-                                'Información en Salud'=> 'Información en Salud',
-                                'Intervenciones Colectivas'=> 'Intervenciones Colectivas',
-                                 ];
+                $actividadesDesarrollar = [
+                    'Atenciones,intervenciones individuales' => 'Atenciones/intervenciones individuales',
+                    'Derivación servicios salud espcializados' => 'Derivación servicios salud especializados',
+                    'Apoyo Psicosocial' => 'Apoyo Psicosocial',
+                    'Acompañamiento familiar' => 'Acompañamiento familiar',
+                    'Gestión recursos comunitarios' => 'Gestión recursos comunitarios',
+                    'Educación en Salud' => 'Educación en Salud',
+                    'Información en Salud' => 'Información en Salud',
+                    'Intervenciones Colectivas' => 'Intervenciones Colectivas',
+                ];
 
                 echo $this->Form->input(
                     'indicadorria',
                     [
                         'type' => 'select',
                         'label' => false,
-                        'multiple' => true,
+                        'multiple' => 'multiple', // Permitir selección múltiple
                         'id' => 'ria',
                         'class' => 'w-full',
                         'empty' => false,
@@ -656,8 +659,6 @@ echo $this->Form->input('responsable_id', array('value' => $nombreUsuario, 'type
                         </div>
 
 
-
-
                         <div class="col-span-2 text-md font-semibold my-6">
                 <div class="flex items-center mb-4">
                     <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">4</span>
@@ -821,12 +822,10 @@ echo $this->Form->input('responsable_id', array('value' => $nombreUsuario, 'type
 
 
     <script type="text/javascript">
-    // Mostrar el modal al cargar la página
-   
+      
 
     document.addEventListener("DOMContentLoaded", () => {
-       
-        const choices_ria= new Choices("#ria", {
+        const choices_ria = new Choices("#ria", {
             searchEnabled: true,
             searchChoices: true,
             removeItemButton: true, // Permite eliminar seleccionados
@@ -837,17 +836,28 @@ echo $this->Form->input('responsable_id', array('value' => $nombreUsuario, 'type
             removeItems: true, // Permite quitar seleccionados
             duplicateItemsAllowed: false,
             placeholder: true,
-            placeholderValue: "Seleccione los sitios de facil acceso",
+            placeholderValue: "Seleccione las actividades a desarrollar",
         });
 
-        
-
+          const choices_entornoafectado = new Choices("#entornoafectado", {
+            searchEnabled: true,
+            searchChoices: true,
+            removeItemButton: true, // Permite eliminar seleccionados
+            itemSelectText: '',
+            shouldSort: false,
+            searchPlaceholderValue: "Escriba para filtrar...",
+            maxItemCount: -1, // Sin límite
+            removeItems: true, // Permite quitar seleccionados
+            duplicateItemsAllowed: false,
+            placeholder: true,
+            placeholderValue: "Seleccione los entornos a intervenir",
         });
+
         // Aplicar estilos con Tailwind
         const inner = document.querySelector('.choices__inner');
         if (inner) {
             inner.classList.add(
-                'bg-white', 'border', 'bordelr-gray-300', 'rounded-lg',
+                'bg-white', 'border', 'border-gray-300', 'rounded-lg',
                 'px-3', 'py-2', 'focus:ring', 'focus:ring-blue-200', 'text-gray-700'
             );
         }
