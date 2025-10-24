@@ -52,7 +52,11 @@ class ObservacionsController extends AppController
 	 * add method
 	 *
 	 * @return void
+	 * 
+	 * 
+	 * 
 	 */
+	  
 	public function add()
 	{
 		if ($this->request->is('post')) {
@@ -92,6 +96,16 @@ class ObservacionsController extends AppController
 			throw new NotFoundException(__('Invalid observacion'));
 		}
 		if ($this->request->is(array('post', 'put'))) {
+
+			// Si el campo 'entornoafectado' viene como array (checkboxes), convertir a cadena para almacenamiento
+			if (isset($this->request->data['Observacion']['entornoafectado']) && is_array($this->request->data['Observacion']['entornoafectado'])) {
+				// Guardar como CSV. Cambiar a json_encode si prefieres JSON en BD.
+				$this->request->data['Observacion']['entornoafectado'] = implode(',', $this->request->data['Observacion']['entornoafectado']);
+			} elseif (!isset($this->request->data['Observacion']['entornoafectado'])) {
+				// Asegurar que existe el campo aunque esté vacío
+				$this->request->data['Observacion']['entornoafectado'] = '';
+			}
+
 			if ($this->Observacion->save($this->request->data)) {
 				$this->Session->setFlash('Se ha guardado correctamente', 'default', array('class' => 'alert alert-success'));
 				return $this->redirect(array('controller' => 'familias', 'action' => 'view/' . $this->data["Observacion"]["familia_id"]));
@@ -101,6 +115,11 @@ class ObservacionsController extends AppController
 		} else {
 			$options = array('conditions' => array('Observacion.' . $this->Observacion->primaryKey => $id));
 			$this->request->data = $this->Observacion->find('first', $options);
+
+			// Si el campo viene almacenado como CSV, convertirlo a array para que los checkboxes estén seleccionados
+			if (!empty($this->request->data['Observacion']['entornoafectado']) && is_string($this->request->data['Observacion']['entornoafectado'])) {
+				$this->request->data['Observacion']['entornoafectado'] = explode(',', $this->request->data['Observacion']['entornoafectado']);
+			}
 		}
 
 		$familias = $this->Observacion->Familia->find('list');

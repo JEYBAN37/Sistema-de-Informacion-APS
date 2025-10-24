@@ -192,16 +192,7 @@ class Familia extends AppModel
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
 		),
-		'genero' => array(
-			'notEmpty' => array(
-				'rule' => array('notEmpty'),
-				'message' => 'Revisar campo',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			),
-		),
+
 		'rol' => array(
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),
