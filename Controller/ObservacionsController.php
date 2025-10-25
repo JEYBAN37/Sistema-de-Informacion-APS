@@ -106,9 +106,10 @@ class ObservacionsController extends AppController
 				$this->request->data['Observacion']['entornoafectado'] = '';
 			}
 
+			// Procesar otros campos específicos del formulario si es necesario
 			if ($this->Observacion->save($this->request->data)) {
 				$this->Session->setFlash('Se ha guardado correctamente', 'default', array('class' => 'alert alert-success'));
-				return $this->redirect(array('controller' => 'familias', 'action' => 'view/' . $this->data["Observacion"]["familia_id"]));
+				return $this->redirect(array('controller' => 'familias', 'action' => 'view', $this->request->data["Observacion"]["familia_id"]));
 			} else {
 				$this->Session->setFlash('No se ha guardado, por favor revisar campos', 'default', array('class' => 'alert alert-danger'));
 			}
