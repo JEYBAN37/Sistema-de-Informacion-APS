@@ -1,118 +1,41 @@
-<?php $this->layout = 'default_familia';
+<?php /*$this->layout = 'default_familia';*/
 
 ?>
-<style>
-    .popover-content {
-        display: none;
-        position: absolute;
-        background-color: #fff;
-        border: 1px solid #ccc;
-        padding: 10px;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        z-index: 999;
-        /* Valor alto para colocar el popover encima de otros elementos */
-        font-size: 12px;
-        /* Ajusta el tamaño de la fuente según tus preferencias */
-        text-align: justify;
 
 
-    }
+<?php echo $this->Html->script('ckeditor/ckeditor'); ?>
+<!-- Choices.js -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css" />
+<script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
 
-    /* Estilo para el fondo oscuro cuando se muestra el modal */
-    .overlay {
-        display: none;
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.5);
-        z-index: 1;
-    }
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+<script src="https://cdn.jsdelivr.net/npm/jquery"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment"></script>
+<script src="https://cdn.jsdelivr.net/npm/daterangepicker"></script>
 
-    /* Estilo para el cuadro modal */
-    .modal {
-        overflow: auto;
+<div class="max-w-5xl mx-auto text-center mb-8">
+    <h1 class="text-5xl font-bold mb-4 text-blue-600">
+       Plan de cuidado Primario 
+       </h1>
+    <p class="text-gray-500 mb-4 text-lg">
+        Registre informacion del plan de cuidado familiar.
+    </p>
+</div>
 
+<?php
 
+echo $this->Form->create('Acta',  [
+    'type' => 'file',
+    'novalidate' => 'novalidate',
+    'class' => 'space-y-6',
+]);
 
+// se utiliza para llamar el id responsable donde sea necesario
+$nombreUsuario = isset($_SESSION['Auth']['User']['id_responsable']) ? $_SESSION['Auth']['User']['id_responsable'] : '';
+echo $this->Form->input('responsable_id', array('value' => $nombreUsuario, 'type' => 'hidden'));
+?>
 
-        display: none;
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        width: 80%;
-        /* Ajusta el ancho del modal según tus necesidades */
-        max-width: 400px;
-        /* Ancho máximo para pantallas más grandes */
-        padding: 20px;
-        background-color: #fff;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-        z-index: 1;
-    }
-
-    .button-one {
-        display: block;
-        width: 100%;
-        height: 34px;
-        padding: 6px 12px;
-        font-size: 14px;
-        line-height: 1.42857143;
-        color: #555;
-        background-color: #fff;
-        background-image: none;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-        -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-        box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-        -webkit-transition: border-color ease-in-out 0.15s, -webkit-box-shadow ease-in-out 0.15s;
-        -o-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
-        transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
-        text-align: left;
-        height: 35px;
-        font-size: 15px;
-        width: 100%;
-        margin-top: 10px;
-        font-weight: 700;
-    }
-
-    /* Estilo para el texto y checkboxes dentro del modal */
-    .modal p {
-        text-align: left;
-    }
-
-    .modal label {
-        display: block;
-        margin-bottom: 10px;
-    }
-
-    input[type="checkbox"] {
-        margin-right: 10px;
-    }
-</style>
-
-<body style="font-size: 14px;">
-    <div class="form-group col-sm-12">
-        <?php echo $this->Form->create('Observacion', array('type' => 'file', 'novalidate' => 'novalidate')); ?>
-        <fieldset>
-            <div class="col-12 text-center">
-                <h2 class="subtitle-general-forms">Plan cuidado familiar
-                </h2>
-            </div>
-
-            <h3 class="subtitle-general-forms">Identificación del riesgo familiar</h3>
-            <hr style=" border:0.1px solid rgba(0,0,0,.125);">
-
-            <div class="grow justify-content-center" display="none" style="margin-top:20px">
-                <div class="card col-sm-12" style=" font-size:15px;  border:1.5px solid rgba(0,0,0,.125);">
-                    <div class="form-group row">
-
-
-                        <?php
-                        echo $this->Form->input('id');
-                        ?>
+<?php echo $this->Form->input('id');?>
 
                         <?php
                         echo $this->Form->input('familia_id', [
@@ -123,303 +46,519 @@
                         ]);
                         ?>
 
+<div class="max-w-6xl mx-auto p-18">
+    <div class="bg-white shadow-2xl rounded-xl p-12">
+       
+        <div class="grid grid-cols-1 md:grid-cols-2">
+
+           
+            
+            <!-- Resultados de ficha familiar-->
+            <div class="col-span-2 md:col-span-1 text-md font-semibold my-6 mr-4">
+                <div class="flex items-center mb-4">
+                    <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">1</span>
+                    <label for="direccion" class="font-semibold">Resultado Ecomapa</label>
+                </div>
+                
+                <?php
+                echo $this->Form->input('resultadoEcomapa', [
+                    'label' => false,
+                    'type' => 'text',
+                    'id' => 'resultadoEcomapa',
+                    'class' => 'border border-gray-300 rounded-lg w-full p-2 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 text-sm text-gray-700',
+                                  'readonly' => 'readonly'
+                ]);
+                ?>
+                
+            </div>
+
+            <!-- Resultado famliograma -->
+            <div class="col-span-2 md:col-span-1 text-md font-semibold my-6 mr-4">
+                <div class="flex items-center mb-4">
+                    <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">2</span>
+                    <label for="familiograma" class="font-semibold">Resultado Familiograma</label>
+                </div>
+             
+                <?php
+                echo $this->Form->input('resultadoFamiliograma', [
+                    'label' => false,
+                    'type' => 'text',
+                    'id' => 'resultadoFamiliograma',
+                    'class' => 'border border-gray-300 rounded-lg w-full p-2 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 text-sm text-gray-700',
+                    'empty' => 'Registre la dirección de la vivienda',
+                     'readonly' => 'readonly',
+                ]);
+                ?>               
+            </div>        
+            
+            <div class="col-span-2 md:col-span-1 text-md font-semibold my-6 mr-4">
+                <div class="flex items-center mb-4">
+                    <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">4</span>
+                    <label for="actividad" class="font-semibold">Fecha de registro de plan cuidado</label>
+                </div>
+                <?php echo $this->Form->input('fecha', array(
+                    'label' => false,
+                    'type' => 'text',
+                    'id' => 'fechaRegistro',
+                    'style' => 'height:40px; font-size:16px; width:100%; border:1px solid #d1d5db; border-radius:0.375rem; padding:0.5rem; color:#374151; background-color:#ffffff;',
+                    'class' => 'focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500',
+                    'empty' => false, // Establecer el campo como vacío
+                )); ?>
+                <script type="text/javascript">
+                    document.addEventListener("DOMContentLoaded", () => {
+                        const fechaInput = document.getElementById('fechaRegistro');
+                        if (fechaInput) {
+                            fechaInput.addEventListener('focus', () => {
+                                fechaInput.type = 'date';
+                            });
+                            fechaInput.addEventListener('blur', () => {
+                                if (!fechaInput.value) {
+                                    fechaInput.type = 'text';
+                                }
+                            });
+                        }
+                    });
+                </script>
+            </div>
+            <div class="col-span-2 md:col-span-1 text-md font-semibold my-6 mr-4">
+
+                <div class="flex items-center mb-4">
+                    <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">3</span>
+                    <label for="riesgosalud" class="font-semibold">Seleccionar riesgos en salud</label>
+                    <p class="text-red-600">*</p>
+                </div>
+
+                <?php
+                $riesgosalud = [                    
+                                '0' => 'Ninguno',
+                                '5.1' => 'Menor con Riesgo desnutrición',
+                                '5.2' => 'Menor sin esquema de vacunación completo',                                
+                                '5.3' => 'Menor con Signos de peligro EDA o IRA', 
+                                '4.1' => 'Menor sin valoraciones de PYM',
+                                '3' => 'Persona joven/adulto sin valoraciones de PYM',                               
+                                '5.4' => 'Gestante sin control',
+                                '5.5' => 'Embarazo de alto riesgo',
+                                '4' => 'Persona con enfermedad crónica',
+                                '5.6' => 'Enferemedad crónica sin control',
+                                '5.6' => 'Persona con enfermedad crónica sin control',
+                                '3.1' => 'Persona Sintomatico respiratorio o de piel',
+                                                               
+                 ];
 
 
-                        <!-- Fondo oscuro y cuadro modal -->
-                        <div id="overlay" class="overlay">
-                            <div class="form-group col-md-12" style="margin-top: 5px;">
-                                <div id="modal" class="modal">
-                                    <div class="modal-header-native" style="text-align: center;">
-                                        <button type="button" class="close" onclick="cerrarModal()">
-                                            <span aria-hidden="true" style="font-size: 30px;">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div id="miContenedor" class="form-group col-md-12" style="margin-top: 20px;">
+                echo $this->Form->input('menoresriegosalud', [
+                     'type' => 'select',
+                        'label' => false,
+                        'multiple' => 'multiple',
+                        'id' => 'riesgosalud',
+                        'class' => 'w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 text-sm text-gray-700',
+                        'empty' => false,
+                        'options' => $riesgosalud,
+                        'error' => false // No mostrar error aquí
+                ]);
+                if (!empty($this->Form->error('riesgosalud'))) {
+                    echo '<div class="text-red-600 text-md mt-1 font-semibold">' . $this->Form->error('riesgosalud') . '</div>';
+                }
+                ?>
+            </div>
 
-                                    </div>
+          
+            
+            <div class="col-span-2 md:col-span-1 text-md font-semibold my-6 mr-4">
+                <div class="flex items-center mb-4">
+                    <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">4</span>
+                    <label for="riesgovulnerabilidad" class="font-semibold">Se identificó algún riesgo de vulnerabilidad</label>
+                    <p class="text-red-600">*</p>
+                </div>
 
-                                    <button class="my-button" type="button" onclick="cerrarModal()">Cerrar</button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="form-group col-md-6" style="margin-top: 20px;">
-                            <?php $menorriesgosalud = [
-                                '' => 'Elegir',
-                                '0' => 'No',
-                                '12' => 'Riesgo desnutrición',
-                                '8' => 'Menor sin vacunación',
-                                '3' => 'Sin valoraciones de PYM',
-                                '8' => 'Signos de peligro EDA- IRA',
-                            ];
-
-
-                            echo $this->Form->input('menoresriegosalud', array(
-                                'label' => 'Menores cinco años con algún riesgo en salud',
-                                'class' => 'form-control sumar',
-                                'style' => 'height:30px;  font-size: 15px ; width:100%',
-                                'options' => $menorriesgosalud,
-                                'id' => 'opcion1',
-                                'placeholder' => ''
-
-
-                            )); ?>
-                        </div>
-                        <div class="form-group col-md-6" style="margin-top: 20px;">
-                            <?php
-                            $mujerriesgosalud = [
-                                '' => 'Elegir',
-                                '0' => 'No',
-                                '12' => 'Embarazo sin control',
-                                '8' => 'Enferemedad crónica sin control',
-                                '1' => 'Sin valoraciones de PYM',
-                                '3' => 'Sintomatico respiratorio o de piel',
-
-                            ];
-                            echo $this->Form->input('mujerriesgosalud', array(
-                                'label' => 'Mujeres con algún riesgo en salud',
-                                'class' => 'form-control sumar',
-                                'style' => 'height:30px;  font-size: 15px ; width:100%',
-                                'options' => $mujerriesgosalud,
-                                'id' => 'opcion2',
-                                'placeholder' => ''
-
-
-                            )); ?>
-                        </div>
-                        <div class="form-group col-md-6" style="margin-top: 20px;">
-                            <?php
-                            $personamayorriesgosalud = [
-                                '' => 'Elegir',
-                                '0' => 'No',
-                                '8' => 'Enferemedad crónica sin control',
-                                '1' => 'Sin valoraciones de PYM',
-                                '3' => 'Sintomatico respiratorio o de piel',
-                            ];
-
-                            echo $this->Form->input('personamayorriesgosalud', array(
-                                'label' => 'Personas mayores con algún riesgo en salud',
-                                'class' => 'form-control sumar',
-                                'style' => 'height:30px;  font-size: 15px ; width:100%',
-                                'options' => $personamayorriesgosalud,
-                                'id' => 'opcion3',
-                                'placeholder' => ''
-                            )); ?>
-                        </div>
-                        <div class="form-group col-md-6" style="margin-top: 20px;">
-                            <?php
-
-                            $adolescenteriesgosalud = [
-                                '' => 'Elegir',
-                                '0' => 'No',
-                                '12' => 'Embarazo sin control',
-                                '1' => 'Sin valoraciones de PYM',
-                                '3' => 'Sintomatico respiratorio o de piel',
-                            ];
-
-                            echo $this->Form->input('adolescenteriesgosalud', array(
-                                'label' => 'Adolescentes con algún riesgo en salud',
-                                'class' => 'form-control sumar',
-                                'style' => 'height:30px;  font-size: 15px ; width:100%',
-                                'options' => $adolescenteriesgosalud,
-                                'id' => 'opcion4',
-                                'placeholder' => ''
-                            )); ?>
-                        </div>
-                        <div class="form-group col-md-6" style="margin-top: 20px;">
-                            <?php
-                            $jovenriesgosalud = [
-                                '' => 'Elegir',
-                                '0' => 'No',
-                                '8' => 'Enferemedad crónica sin control',
-                                '1' => 'Sin valoraciones de PYM',
-                                '3' => 'Sintomatico respiratorio o de piel',
-                            ];
-
-                            echo $this->Form->input('jovenriesgosalud', array(
-                                'label' => 'Jovenes o adultos con algún riesgo en salud',
-
-                                'class' => 'form-control sumar',
-                                'style' => 'height:30px;  font-size: 15px ; width:100%',
-                                'options' => $jovenriesgosalud,
-                                'id' => 'opcion5',
-                                'placeholder' => ''
-                            )); ?>
-                        </div>
-
-                        <div class="form-group col-md-6" style="margin-top: 20px;">
-                            <?php
-                            $riesgovulnerabilidad = [
-                                '' => 'Elegir',
-                                '0' => 'No',
+                <?php
+                      $riesgovulnerabilidad = [                                
+                                '0' => 'Ninguna',
                                 '3.0' => 'Persona con discapacidad sin cuidador',
-                                '1' => 'Cuidador con sobrecarga',
-                                '3' => 'Menor sin estudiar',
-                                '2.1' => 'Persona si afiliacion a salud',
-                                '2.2' => 'Persona con consumo SPA',
-                                '2.3' => 'Sospecha de violencia intrafamiliar',
-                                '2.3' => 'Vivienda precaria',
-
+                                '3.1' => 'Menor sin estudiar',
+                                '2.3' => 'Población Especial en riesgo',
+                                '3.4' => 'Persona sin afiliación a salud',
+                                '3.2' => 'Persona con consumo SPA',
+                                '4' => 'Sospecha de violencia intrafamiliar',
+                                '3.5' => 'Vivienda precaria',                               
+                                '2.1' => 'Cuidador con sobrecarga',                             
+                                '2.2' => 'Disfunción famliliar',
+                                '3.6' => 'Relaciones familiares tensas o estresantes'
                             ];
-                            echo $this->Form->input('riesgovulnerabilidad', array(
-                                'label' => 'Se identifico algnún riesgo de vulnerabilidad',
-                                'class' => 'form-control sumar',
-                                'style' => 'height:30px;  font-size: 15px ; width:100%',
-                                'options' => $riesgovulnerabilidad,
-                                'id' => 'opcion6',
-                                'placeholder' => ''
-                            )); ?>
-                        </div>
 
-                        <div class="form-group col-md-6" style="margin-top: 20px;">
-                            <?php
-                            $tamizajeriesgo = [
-                                '' => 'Elegir',
-                                '0' => 'No se identifica',
-                                '1' => 'APGAR NO favorable',
-                                '1.1' => 'Familiograma NO favorable',
-                                '1.2' => 'Ecomapa NO favorable',
+                echo $this->Form->input(
+                    'riesgovulnerabilidad', 
+                    [
+                        'type' => 'select',
+                        'label' => false,
+                        'multiple' => 'multiple',
+                        'id' => 'riesgovulnerabilidad',
+                        'class' => 'w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 text-sm text-gray-700',
+                        'empty' => false,
+                        'options' => $riesgovulnerabilidad,
+                        'error' => false // No mostrar error aquí
+                    ]
+                );
+                if (!empty($this->Form->error('riesgovulnerabilidad'))) {
+                    echo '<div class="text-red-600 text-md mt-1 font-semibold">' . $this->Form->error('riesgovulnerabilidad') . '</div>';
+                }
+                ?>
+            </div>
+            
+         
+
+            <div class="col-span-2 md:col-span-1 text-md font-semibold my-6 mr-4">
+                <div class="flex items-center mb-4">
+                    <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">5</span>
+                    <label for="direccion" class="font-semibold">Valoración de riesgo familia</label>
+                </div>
+                
+                <?php
+                echo $this->Form->input('puntuacionfamilia', [
+                    'label' => false,
+                    'type' => 'text',
+                    'id' => 'puntuacionfamilia',
+                    'class' => 'border border-gray-300 rounded-lg w-full p-2 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 text-sm text-gray-700',
+                    'readonly' => 'readonly', // Hacer el campo de solo lectura
+                ]);
+                ?>
+            </div>
+
+           
+
+            <div class="col-span-2 md:col-span-1 text-md font-semibold my-6 mr-4">
+                <div class="flex items-center mb-4">
+                    <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">6</span>
+                    <label for="direccion" class="font-semibold">Clacificación de la famlia'</label>
+                </div>
+                
+                <?php
+                echo $this->Form->input('valoracionfamilia', [
+                    'label' => false,
+                    'type' => 'text',
+                    'id' => 'valoracionfamilia',
+                    'class' => 'border border-gray-300 rounded-lg w-full p-2 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 text-sm text-gray-700',
+                    'readonly' => 'readonly', // Hacer el campo de solo lectura
+                ]);
+                ?>
+
+                <script type="text/javascript">
+                    document.addEventListener("DOMContentLoaded", () => {
+                        const puntuacionFamilia = document.getElementById('puntuacionfamilia');
+                        const valoracionFamilia = document.getElementById('valoracionfamilia');
+
+                        function updateValoracionFamilia() {
+                            if (puntuacionFamilia && valoracionFamilia) {
+                                const puntuacion = parseFloat(puntuacionFamilia.value) || 0;
+
+                                if (puntuacion < 3) {
+                                    valoracionFamilia.value = 'Riesgo Bajo';
+                                } else if (puntuacion >= 3 && puntuacion < 5) {
+                                    valoracionFamilia.value = 'Riesgo Medio';
+                                } else if (puntuacion >= 5) {
+                                    valoracionFamilia.value = 'Riesgo Alto';
+                                } else {
+                                    valoracionFamilia.value = '';
+                                }
+                            }
+                        }
+
+                        // Escuchar cambios en el campo de puntuación
+                        if (puntuacionFamilia) {
+                            puntuacionFamilia.addEventListener('input', updateValoracionFamilia); // Use 'input' for real-time updates
+                        }
+
+                        // Llamar la función al cargar la página para inicializar el valor
+                        updateValoracionFamilia();
+                    });
+                </script>
+                </script>
+                
+            </div>
+
+            <div class="col-span-2 md:col-span-1 text-md font-semibold my-6 mr-4">
+                <div class="flex items-center mb-4">
+                    <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">7</span>
+                    <label for="fortalezas" class="font-semibold">Fortalezas de la familia</label>
+                </div>
+                
+                <?php
+
+                         $fortalezas = [
+                    'Vivienda adecuada y segura' => 'Vivienda adecuada y segura',
+                    'Acceso a servicios básicos (agua, luz, gas)' => 'Acceso a servicios básicos (agua, luz, gas)',
+                    'Buena salud física y mental de los miembros' => 'Buena salud física y mental de los miembros',
+                    'Relaciones familiares afectuosas y respetuosas' => 'Relaciones familiares afectuosas y respetuosas',
+                    'Apoyo emocional entre los miembros' => 'Apoyo emocional entre los miembros',
+                    'Participación activa en la comunidad' => 'Participación activa en la comunidad',
+                    'Estabilidad económica' => 'Estabilidad económica',
+                    'Acceso a educación y formación' => 'Acceso a educación y formación',
+                    'Habilidades de resolución de conflictos' => 'Habilidades de resolución de conflictos',
+                    'Red de apoyo social sólida' => 'Red de apoyo social sólida',
+                    'Prácticas saludables de alimentación y ejercicio' => 'Prácticas saludables de alimentación y ejercicio',
+                    'Entorno familiar seguro y libre de violencia' => 'Entorno familiar seguro y libre de violencia',
+                ];
+
+                echo $this->Form->input('observacion', [
+                     'label' => false,                         
+                                'type' => 'select',
+                                'multiple' => 'multiple',
+                                'options' => $fortalezas,
+                                'id' => 'fortalezas',
+                                'class' => 'w-full',
+                        'empty' => false,                       
+                        'error' => false // No mostrar error aquí
+                            ]);
+                            if (!empty($this->Form->error('fortalezas'))) {
+                    echo '<div class="text-red-600 text-md mt-1 font-semibold">' . $this->Form->error('fortalezas') . '</div>';
+                }
+                ?>
+            </div>
+
+            <div class="col-span-2 text-md font-semibold my-6">
+                <div class="flex items-center mb-4">
+                    <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">8</span>
+                    <label for="direccion" class="font-semibold">Objetivo corto plazo de plan de cuidado</label>
+                </div>
+                
+                <?php
+                echo $this->Form->input('objetivocortoplazo', [
+                    'label' => false,
+                    'type' => 'textarea', // Cambiado a 'textarea'
+                    'id' => 'objetivocortoplazo',
+                    'class' => 'border border-gray-300 rounded-lg w-full p-2 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 text-sm text-gray-700',
+                                 
+                ]);
+                ?>
+                
+            </div>
+
+            <div class="col-span-2 text-md font-semibold my-6">
+                <div class="flex items-center mb-4">
+                    <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">9</span>
+                    <label for="direccion" class="font-semibold">Objetivo  plan de cuidado largo plazo</label>
+                </div>
+                
+                <?php
+                echo $this->Form->input('objetivolargoplazo', [
+                    'label' => false,
+                    'type' => 'textarea', // Cambiado a 'textarea'
+                    'id' => 'objetivolargoplazo',
+                    'class' => 'border border-gray-300 rounded-lg w-full p-2 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 text-sm text-gray-700',
+                                 
+                ]);
+                ?>
+                
+            </div>
+
+             <div class="col-span-2 text-md font-semibold my-6">
+                <div class="flex items-center mb-4">
+                    <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">10</span>
+                    <label for="entornoafectado" class="font-semibold">Entorno de intervención</label>
+                </div>
+                
+                <?php
+
+                          $entornoAfectado = [
+                                'Hogar'   => 'Hogar',
+                                'Comunitario'   => 'Comunitario',
+                                'Educativo' => 'Educativo'                                
                             ];
-                            echo $this->Form->input('tamizajeriesgo', array(
-                                'label' => 'Tamizajes con resultado negativo',
-                                'class' => 'form-control sumar',
-                                'style' => 'height:30px;  font-size: 15px ; width:100%',
-                                'options' => $tamizajeriesgo,
-                                'id' => 'opcion7',
-                                'placeholder' => ''
-                            )); ?>
-                        </div>
+
+                 // Usando FormHelper para generar checkboxes (CakePHP 2.x)
+                            echo $this->Form->input('entornoafectado', [   
+                                'label' => false,                         
+                                'type' => 'select',
+                                'multiple' => 'multiple',
+                                'options' => $entornoAfectado,
+                                'id' => 'entornoafectado',
+                                'class' => 'w-full',
+                        'empty' => false,                       
+                        'error' => false // No mostrar error aquí
+                            ]);
+                            if (!empty($this->Form->error('entornoafectado'))) {
+                    echo '<div class="text-red-600 text-md mt-1 font-semibold">' . $this->Form->error('entornoafectado') . '</div>';
+                }
+                ?>
+                
+            </div>
+
+          
+
+               <!-- Tipo de poblacion participante -->
+            <div class="col-span-2 text-md font-semibold my-6">
+                <div class="flex items-center mb-4">
+                    <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">11</span>
+                    <label for="ria" class="font-semibold">Actividades a desarrollar</label>
+                    <p class="text-red-600">*</p>
+                </div>
+                <?php
+                $actividadesDesarrollar = [
+                    'Atenciones,intervenciones individuales' => 'Atenciones/intervenciones individuales',
+                    'Derivación servicios salud espcializados' => 'Derivación servicios salud especializados',
+                    'Apoyo Psicosocial' => 'Apoyo Psicosocial',
+                    'Acompañamiento familiar' => 'Acompañamiento familiar',
+                    'Gestión recursos comunitarios' => 'Gestión recursos comunitarios',
+                    'Educación en Salud' => 'Educación en Salud',
+                    'Información en Salud' => 'Información en Salud',
+                    'Intervenciones Colectivas' => 'Intervenciones Colectivas',
+                ];
+
+                echo $this->Form->input(
+                    'indicadorria',
+                    [
+                        'type' => 'select',
+                        'label' => false,
+                        'multiple' => 'multiple', // Permitir selección múltiple
+                        'id' => 'ria',
+                        'class' => 'w-full',
+                        'empty' => false,
+                        'options' => $actividadesDesarrollar,
+                        'error' => false // No mostrar error aquí
+                    ]
+                );
+                if (!empty($this->Form->error('indicadorria'))) {
+                    echo '<div class="text-red-600 text-md mt-1 font-semibold">' . $this->Form->error('indicadorria') . '</div>';
+                }
+                ?>
+            </div>
+
+            <div class="col-span-2 text-md font-semibold my-6">
+                <div class="flex items-center mb-4">
+                    <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">12</span>
+                    <label for="actividad" class="font-semibold">Definición de logros concertados con la familia</label>
+                </div>
+                
+             
+                            <table id="	actividaddesarrollar_table" class="table table-bordered" style="width:100%; font-size:14px;">
+                                <thead>
+                                    <tr>
+                                        <th>Situación identificada</th>
+                                        <th>Logro en salud</th>
+                                        <th>Responsable familia</th>
+                                        <th>Fecha</th>
+                                        <th>Fecha Segimiento</th>
+                                        <th>Observación</th> 
+                                        <th>Estado</th>    
+                                    </tr>
+                                </thead>
+                            <tbody id="actividaddesarrollar_tbody" data-index="<?php $initialRows = 1; echo $initialRows; ?>">
+                                <?php for ($i = 0; $i < $initialRows; $i++): ?>
+                                <tr class="bg-gray-50 hover:bg-gray-100 border-b border-gray-200">
+                                    <td class="p-2">
+                                        <textarea name="data[Observacion][actividaddesarrollar][<?php echo $i;?>][situacion]" class="form-control border border-gray-300 rounded-lg w-full p-2 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 text-sm text-gray-700" style="resize:vertical;"></textarea>
+                                    </td>
+                                    <td class="p-2">
+                                        <textarea name="data[Observacion][actividaddesarrollar][<?php echo $i;?>][logro]" class="form-control border border-gray-300 rounded-lg w-full p-2 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 text-sm text-gray-700" style="resize:vertical;"></textarea>
+                                    </td>
+                                    <td class="p-2">
+                                        <textarea name="data[Observacion][actividaddesarrollar][<?php echo $i;?>][responsable]" class="form-control border border-gray-300 rounded-lg w-full p-2 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 text-sm text-gray-700" style="resize:vertical;"></textarea>
+                                    </td>
+                                    <td class="p-2">
+                                        <textarea name="data[Observacion][actividaddesarrollar][<?php echo $i;?>][fecha]" class="form-control border border-gray-300 rounded-lg w-full p-2 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 text-sm text-gray-700" style="resize:vertical;"></textarea>
+                                    </td>
+                                    <td class="p-2">
+                                        <textarea name="data[Observacion][actividaddesarrollar][<?php echo $i;?>][fechaSeguimiento]" class="form-control border border-gray-300 rounded-lg w-full p-2 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 text-sm text-gray-700" style="resize:vertical;"></textarea>
+                                    </td>
+                                    <td class="p-2">
+                                        <textarea name="data[Observacion][actividaddesarrollar][<?php echo $i;?>][observacion]" class="form-control border border-gray-300 rounded-lg w-full p-2 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 text-sm text-gray-700" style="resize:vertical;"></textarea>
+                                    </td>
+                                    <td class="p-2">
+                                        <select name="data[Observacion][actividaddesarrollar][<?php echo $i;?>][estado]" class="form-control border border-gray-300 rounded-lg w-full p-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm text-gray-700 bg-white hover:bg-gray-50">
+                                            <option value="" class="text-gray-500">En Proceso</option>
+                                            <option value="Logro alcanzado" class="text-green-600">Logro alcanzado</option>
+                                            <option value="Logro no alcanzado" class="text-red-600">Logro no alcanzado</option>
+                                        </select>
+                                        <div class="mt-2">
+                                            <button type="button" class="btn btn-danger btn-sm bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600" onclick="removeRow(this)">Eliminar</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <?php endfor; ?>
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td colspan="7" style="text-align:left;">
+                                        <button type="button" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600" onclick="addRow()">Agregar fila</button>
+                                        <button type="button" class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600" onclick="removeLastRow()">Quitar última fila</button>
+                                    </td>
+                                </tr>
+                            </tfoot>
+
+                            <script type="text/javascript">
+                                function addRow() {
+                                    var tbody = document.getElementById('actividaddesarrollar_tbody');
+                                    var index = parseInt(tbody.getAttribute('data-index'), 10);
+                                    var row = document.createElement('tr');
+                                    row.innerHTML = '' +
+                                        '<td class="p-2">' +
+                                        '<textarea name="data[Observacion][actividaddesarrollar][' + index + '][situacion]" class="form-control border border-gray-300 rounded-lg w-full p-2 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 text-sm text-gray-700" style="resize:vertical;"></textarea>' +
+                                        '</td>' +
+                                        '<td class="p-2">' +
+                                        '<textarea name="data[Observacion][actividaddesarrollar][' + index + '][logro]" class="form-control border border-gray-300 rounded-lg w-full p-2 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 text-sm text-gray-700" style="resize:vertical;"></textarea>' +
+                                        '</td>' +
+                                        '<td class="p-2">' +
+                                        '<textarea name="data[Observacion][actividaddesarrollar][' + index + '][responsable]" class="form-control border border-gray-300 rounded-lg w-full p-2 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 text-sm text-gray-700" style="resize:vertical;"></textarea>' +
+                                        '</td>' +
+                                        '<td class="p-2">' +
+                                        '<textarea name="data[Observacion][actividaddesarrollar][' + index + '][fecha]" class="form-control border border-gray-300 rounded-lg w-full p-2 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 text-sm text-gray-700" style="resize:vertical;"></textarea>' +
+                                        '</td>' +
+                                        '<td class="p-2">' +
+                                        '<textarea name="data[Observacion][actividaddesarrollar][' + index + '][fechaSeguimiento]" class="form-control border border-gray-300 rounded-lg w-full p-2 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 text-sm text-gray-700" style="resize:vertical;"></textarea>' +
+                                        '</td>' +
+                                        '<td class="p-2">' +
+                                        '<textarea name="data[Observacion][actividaddesarrollar][' + index + '][observacion]" class="form-control border border-gray-300 rounded-lg w-full p-2 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 text-sm text-gray-700" style="resize:vertical;"></textarea>' +
+                                        '</td>' +
+                                        '<td class="p-2">' +
+                                        '<select name="data[Observacion][actividaddesarrollar][' + index + '][estado]" class="form-control border border-gray-300 rounded-lg w-full p-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm text-gray-700 bg-white hover:bg-gray-50">' +
+                                        '<option value="" class="text-gray-500">En Proceso</option>' +
+                                        '<option value="Logro alcanzado" class="text-green-600">Logro alcanzado</option>' +
+                                        '<option value="Logro no alcanzado" class="text-red-600">Logro no alcanzado</option>' +
+                                        '</select>' +
+                                        '<div class="mt-2">' +
+                                        '<button type="button" class="btn btn-danger btn-sm bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600" onclick="removeRow(this)">Eliminar</button>' +
+                                        '</div>' +
+                                        '</td>';
+                                    tbody.appendChild(row);
+                                    tbody.setAttribute('data-index', index + 1);
+                                }
+
+                                function removeRow(button) {
+                                    var tr = button.closest('tr');
+                                    if (!tr) return;
+                                    var tbody = document.getElementById('actividaddesarrollar_tbody');
+                                    // Evitar eliminar la última fila si se desea mantener al menos una fila
+                                    if (tbody.rows.length <= 1) {
+                                        // si se quiere permitir eliminar todas, comentar la siguiente línea
+                                        alert('Debe quedar al menos una fila.');
+                                        return;
+                                    }
+                                    tr.parentNode.removeChild(tr);
+                                }
+
+                                function removeLastRow() {
+                                    var tbody = document.getElementById('actividaddesarrollar_tbody');
+                                    if (tbody.rows.length > 1) {
+                                        tbody.deleteRow(tbody.rows.length - 1);
+                                    } else {
+                                        alert('Debe quedar al menos una fila.');
+                                    }
+                                }
+                            </script>
+                            </table>
+                
+            </div>
+
+                      
 
 
-                        <div class="form-group col-md-6" style="margin-top: 20px;">
-                            <?php echo $this->Form->input('puntuacionfamilia', array(
-                                'label' => 'Valoración de riesgo familia',
-                                'class' => 'form-control',
-                                'style' => 'height:30px; font-size: 15px; width:100%',
-                                'placeholder' => '',
-                                'id' => 'resultadoprioridad-input', // Cambiado el ID a 'resultado-input'
-                                'readonly'
-
-
-
-                            )); ?>
-                        </div>
-                        <div class="form-group col-md-6" style="margin-top: 20px;">
-                            <?php echo $this->Form->input('valoracionfamilia', array(
-                                'label' => 'Valoración de la famlia',
-                                'class' => 'form-control',
-                                'style' => 'height:30px; font-size: 15px; width:100%',
-                                'placeholder' => '',
-                                'id' => 'resultprioridad',
-                                'readonly',
-                            )); ?>
-                        </div>
-
-                        <div class="form-group col-md-6" style="margin-top: 20px;">
-
-                            <?php
-                            echo $this->Form->input('observacion', array(
-                                'label' => 'Describa otra problemática identificada',
-                                'type' => 'textarea', // Cambiado a 'textarea'
-                                'class' => 'form-control',
-                                'style' => 'height:100px;  font-size: 15px ; width:100%', // Ajustado el estilo para un área de texto más grande
-                            ));
-                            ?>
-                        </div>
-
-
-
-                        <div class="form-group col-md-6" style="margin-top: 20px;">
-                            <?php echo $this->Form->input('objetivocortoplazo', array(
-                                'label' => 'Objetivo plan de cuidado corto plazo',
-                                'type' => 'textarea', // Cambiado a 'textarea'
-                                'class' => 'form-control',
-                                'style' => 'height:100px;  font-size: 15px ; width:100%', // Ajustado el estilo para un área de texto más grande
-                            )); ?>
-                        </div>
-
-                        <div class="form-group col-md-6" style="margin-top: 20px;">
-                            <?php echo $this->Form->input('objetivolargoplazo', array(
-                                'label' => 'Objetivo  plan de cuidado largo plazo',
-                                'type' => 'textarea', // Cambiado a 'textarea'
-                                'class' => 'form-control',
-                                'style' => 'height:100px;  font-size: 15px ; width:100%', // Ajustado el estilo para un área de texto más grande
-                            )); ?>
-                        </div>
-
-                        <div class="form-group col-md-6" style="margin-top: 20px;">
-                            <?php echo $this->Form->input('entornoafectado', array(
-                                'label' => 'Entorno afectado',
-                                'type' => 'textarea', // Cambiado a 'textarea'
-                                'class' => 'form-control',
-                                'style' => 'height:100px;  font-size: 15px ; width:100%', // Ajustado el estilo para un área de texto más grande
-
-                            )); ?>
-                        </div>
-                        <div class="form-group col-md-6" style="margin-top: 20px;">
-                            <?php echo $this->Form->input('actividaddesarrolar', array(
-                                'label' => 'Actividades a desarrollar',
-                                'type' => 'textarea', // Cambiado a 'textarea'
-                                'class' => 'form-control',
-                                'style' => 'height:100px;  font-size: 15px ; width:100%', // Ajustado el estilo para un área de texto más grande
-                            )); ?>
-                        </div>
-
-
-                        <div class="form-group col-md-6" style="margin-top: 20px;">
-                            <?php echo $this->Form->input('indicadorria', array(
-                                'label' => 'Indicador RIA',
-                                'type' => 'textarea', // Cambiado a 'textarea'
-                                'class' => 'form-control',
-                                'style' => 'height:100px;  font-size: 15px ; width:100%', // Ajustado el estilo para un área de texto más grande
-                            )); ?>
-                        </div>
-
-
-
-                        <div class="form-group col-md-6" style="margin-top: 20px;">
-                            <?php echo $this->Form->input('recursoscomunitarios', array(
-                                'label' => 'Recursos comuntarios',
-                                'type' => 'textarea', // Cambiado a 'textarea'
-                                'class' => 'form-control',
-                                'style' => 'height:100px;  font-size: 15px ; width:100%', // Ajustado el estilo para un área de texto más grande
-                            )); ?>
-                        </div>
-                        <div class="form-group col-md-6" style="margin-top: 20px;">
-                            <?php echo $this->Form->input('apoyofamiliar', array(
-                                'label' => 'Apoyo familiar',
-                                'type' => 'textarea', // Cambiado a 'textarea'
-                                'class' => 'form-control',
-                                'style' => 'height:100px;  font-size: 15px ; width:100%', // Ajustado el estilo para un área de texto más grande
-                            )); ?>
-                        </div>
-                        <div class="form-group col-md-6" style="margin-top: 20px;">
-                            <?php echo $this->Form->input('apoyosocial', array(
-                                'label' => 'Apoyo Social',
-                                'type' => 'textarea', // Cambiado a 'textarea'
-                                'class' => 'form-control',
-                                'style' => 'height:100px;  font-size: 15px ; width:100%', // Ajustado el estilo para un área de texto más grande
-
-
-                            )); ?>
-                        </div>
-                        <div class="form-group col-md-6" style="margin-top: 20px;">
-                            <?php echo $this->Form->input('asistenciafinanciera', array(
-                                'label' => 'Apoyo o asistencia financiera',
-                                'type' => 'textarea', // Cambiado a 'textarea'
-                                'class' => 'form-control',
-                                'style' => 'height:100px;  font-size: 15px ; width:100%', // Ajustado el estilo para un área de texto más grande
-
-
-                            )); ?>
-                        </div>
-
-
-
-
-                        <div class="form-group col-md-6" style="margin-top: 20px;">
+                        <div class="col-span-2 text-md font-semibold my-6">
+                <div class="flex items-center mb-4">
+                    <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">13</span>
+                    <label for="actividad" class="font-semibold">Observación de concertación</label>
+                </div>
                             <?php echo $this->Form->input('observacionesplancuidado', array(
-                                'label' => 'Observación plan de cuidado',
+                                'label' => false,
                                 'type' => 'textarea', // Cambiado a 'textarea'
                                 'class' => 'form-control',
                                 'style' => 'height:100px;  font-size: 15px ; width:100%', // Ajustado el estilo para un área de texto más grande
@@ -428,31 +567,51 @@
                             )); ?>
                         </div>
 
-                        <div class="form-group col-md-6" style="margin-top: 20px;">
+                        <div class="col-span-2 text-md font-semibold my-6">
+                <div class="flex items-center mb-4">
+                    <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">14</span>
+                    <label for="actividad" class="font-semibold">Nombres de representante familia</label>
+                </div>
                             <?php echo $this->Form->input('firmaplancuidado', array(
-                                'label' => 'Nombres de representante familia',
+                                'label' => false,
                                 'style' => 'height:30px;  font-size: 15px ; width:100%',
 
                             )); ?>
                         </div>
-                        <div class="form-group col-md-6" style="margin-top: 20px;">
-                            <?php echo $this->Form->input('disentimiento', array(
-                                'label' => 'Nombres y apellidos, numero CC no aceptan plan',
-                                'type' => 'textarea', // Cambiado a 'textarea'
-                                'class' => 'form-control',
-                                'style' => 'height:100px;  font-size: 15px ; width:100%', // Ajustado el estilo para un área de texto más grande
-
-                            )); ?>
-                        </div>
-                        <div class="form-group col-md-6" style="margin-top: 20px;">
-                            <?php echo $this->Form->input('motivodisentimiento', array(
-                                'label' => 'Motivos disentimiento',
-                                'type' => 'textarea', // Cambiado a 'textarea'
-                                'class' => 'form-control',
-                                'style' => 'height:100px;  font-size: 15px ; width:100%', // Ajustado el estilo para un área de texto más grande
-
-
-                            )); ?>
+                        <div class="col-span-2 text-md font-semibold my-6">
+                <div class="flex items-center mb-4">
+                    <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">15</span>
+                    <label for="actividad" class="font-semibold">Registre personas que no desean participar en el plan de cuidado familiar</label>
+                </div>
+                           
+                            <table id="disentimiento_table" class="table-auto w-full border-collapse border border-gray-300 text-sm text-gray-700">
+                                <thead class="bg-gray-100">
+                                    <tr>
+                                        <th class="border border-gray-300 px-4 py-2 text-left">Nombres</th>
+                                        <th class="border border-gray-300 px-4 py-2 text-left">N. Documento</th>
+                                        <th class="border border-gray-300 px-4 py-2 text-left">Rol</th>
+                                        <th class="border border-gray-300 px-4 py-2 text-left">Motivo</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php for ($i = 0; $i < 3; $i++): // 3 filas preseteadas ?>
+                                    <tr class="hover:bg-gray-50">
+                                        <td class="border border-gray-300 px-4 py-2">
+                                            <textarea name="data[Observacion][disentimiento][<?php echo $i;?>][nombre]" class="form-control border border-gray-300 rounded-lg w-full p-2 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 text-sm text-gray-700" style="resize:vertical;"></textarea>
+                                        </td>
+                                        <td class="border border-gray-300 px-4 py-2">
+                                            <textarea name="data[Observacion][disentimiento][<?php echo $i;?>][documento]" class="form-control border border-gray-300 rounded-lg w-full p-2 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 text-sm text-gray-700" style="resize:vertical;"></textarea>
+                                        </td>
+                                        <td class="border border-gray-300 px-4 py-2">
+                                            <textarea name="data[Observacion][disentimiento][<?php echo $i;?>][rol]" class="form-control border border-gray-300 rounded-lg w-full p-2 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 text-sm text-gray-700" style="resize:vertical;"></textarea>
+                                        </td>
+                                        <td class="border border-gray-300 px-4 py-2">
+                                            <textarea name="data[Observacion][disentimiento][<?php echo $i;?>][motivo]" class="form-control border border-gray-300 rounded-lg w-full p-2 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 text-sm text-gray-700" style="resize:vertical;"></textarea>
+                                        </td>
+                                    </tr>
+                                    <?php endfor; ?>
+                                </tbody>
+                            </table>
                         </div>
 
 
@@ -464,228 +623,222 @@
                             'type' => 'hidden',
                         ));
                         ?>
+                    
 
-                        <div class="form-group col-md-6" style="margin-top: 20px;">
-                            <p class="help-block">Adjuntar anexo ' NOTA: Cargar un archivo tipo imagen o en pdf
-                                extensión ".jpg, png" o
-                                ".pdf" Nomenclatura de archivo: IdHogar_Apellidofamilia'</p>
-                            <?php
-                            echo $this->Form->input('plancuidado', array(
-                                'label' => 'Plan cuidado firmado',
-                                'type' => 'file',
-                                'onchange' => 'validarTamanioSoporte()',
-                                'class' => 'form-control',
-                                'style' => 'height:40px;  font-size: 15px ; width:100%',
-                            ));
-                            echo $this->Form->input(
-                                'dirplancuidado',
-                                array(
-                                    'type' => 'hidden',
-                                    'class' => 'form-control',
-                                    'style' => 'height:40px;  font-size: 15px ; width:100%',
-                                )
-                            );
+                        <div class="col-span-2 text-md font-semibold my-6">
+                <div class="flex items-center mb-4">
+                    <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">16</span>
+                    <label for="responsables" class="font-semibold">Responsable EBS</label>
+                </div>
+                            <?php echo $this->Form->input('responsable_id',                            
+                             [
+                        'type' => 'select',
+                        'label' => false,
+                        'multiple' => 'multiple', // Permitir selección múltiple
+                        'id' => 'responsables',
+                        'class' => 'w-full',
+                        'empty' => false,
+                        'options' => $responsables,
+                        'error' => false // No mostrar error aquí
+                    ]     );
+                if (!empty($this->Form->error('responsables'))) {
+                    echo '<div class="text-red-600 text-md mt-1 font-semibold">' . $this->Form->error('responsables') . '</div>';
+                }                         
+                            
                             ?>
                         </div>
 
-                        <div class="form-group col-md-6" style="margin-top: 20px;">
-                            <?php echo $this->Form->input('responsable_id', array(
-                                'label' => 'Responsable de seguimiento',
-                                'style' => 'height:30px;  font-size: 15px ; width:100%',
-                                'type' => 'select',
-                                'class' => 'select-search'
-                            )); ?>
-                        </div>
+
+              
 
 
-                        <div class="form-group col-md-6" style="margin-top: 20px;">
-                            <?php echo $this->Form->input('fecha', array(
-                                'label' => 'Fecha de registro: ',
-                                'type' => 'date',
-                                'minYear' => date('Y'),
-                                'maxYear' => date('Y'),
-                                'style' => 'height:30px;  font-size: 15px ;',
-                                'empty' => false, // Establecer el campo como vacío
-
-                            )); ?>
-                        </div>
+                       
 
 
 
-                        <div class="form-group col-md-6" style="margin-top: 20px;">
-                            <?php echo $this->Form->input('fecha1', array(
-                                'label' => 'Fecha de visita 1: ',
-                                'type' => 'date',
-                                'minYear' => date('Y'),
-                                'maxYear' => date('Y'),
-                                'style' => 'height:30px;  font-size: 15px ;',
-                                'empty' => true, // Establecer el campo como vacío
 
-                            ));
-                            ?> </div>
-                        <div class="form-group col-md-6" style="margin-top: 20px;">
-                            <?php echo $this->Form->input('fecha2', array(
-                                'label' => 'Fecha de visita 2: ',
-                                'type' => 'date',
-                                'minYear' => date('Y'),
-                                'maxYear' => date('Y'),
-                                'style' => 'height:30px;  font-size: 15px ;',
-                                'empty' => true, // Establecer el campo como vacío
-
-                            ));
-
-                            ?> </div>
-                        <div class="form-group col-md-6" style="margin-top: 20px;">
-                            <?php echo $this->Form->input('fecha3', array(
-                                'label' => 'Fecha de visita 3: ',
-                                'type' => 'date',
-                                'minYear' => date('Y'),
-                                'maxYear' => date('Y'),
-                                'style' => 'height:30px;  font-size: 15px ;',
-                                'empty' => true, // Establecer el campo como vacío
-
-                            ));
-                            ?> </div>
-                    </div>
-                </div>
-            </div>
-        </fieldset>
-        <button class="my-button">
-            Guardar<?php echo $this->Form->end(); ?>
-        </button>
     </div>
-</body>
+ </div>
+</div>
 
 
+    <script type="text/javascript">
+      
 
-<?php
-$this->Html->css([
-    'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css',
-    'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css'
-], ['block' => 'css']);
-$this->Html->script([
-    'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js',
-    'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js'
-], ['block' => 'script']);
-?>
-<script type="text/javascript">
-    $('document').ready(function() {
+    document.addEventListener("DOMContentLoaded", () => {
 
-        function calcularprioridad() {
-
-            let sumaPrioridad = 0;
-
-            $('select.sumar').each(function() {
-                sumaPrioridad += parseInt($(this).val()) || 0;
-            });
-
-            $('#resultadoprioridad-input').val(sumaPrioridad);
-
-
-            var prioridadField = document.getElementById('resultadoprioridad-input');
-            var resultPrioridad = document.getElementById('resultprioridad');
-
-            switch (true) {
-                case sumaPrioridad === 0:
-                    prioridadField.style.color = 'green';
-                    resultPrioridad.value = 'Con Gestion del riesgo salud';
-                    break;
-                case sumaPrioridad >= 12: //puntaje max 17 posibles, puntos 12 corresponde al 70%
-                    prioridadField.style.color = 'red';
-                    resultPrioridad.value = 'Prioridad alta';
-                    break;
-
-                case sumaPrioridad >= 8 && sumaPrioridad <= 11:
-                    prioridadField.style.color = 'orange';
-                    resultPrioridad.value = 'Prioridad media';
-                    break;
-
-                case sumaPrioridad > 0 && sumaPrioridad <= 7:
-                    prioridadField.style.color = '#FAA80D';
-                    resultPrioridad.value = 'Prioridad baja';
-                    break;
-                default:
-                    prioridadField.style.color = 'black';
-                    resultPrioridad.value = '';
-            }
-
-            var prioridadField = document.getElementById('valoracionfamiliina');
-
-        }
-
-        $('select.sumar').on('change', calcularprioridad);
-        calcularprioridad();
-
-
-    });
-
-
-
-
-
-
-
-
-    // Función para mostrar el Box
-    function mostrarModal() {
-        document.getElementById("overlay").style.display = "block";
-        document.getElementById("modal").style.display = "block";
-    }
-
-    // Función para cerrar el modal
-    function cerrarModal() {
-        document.getElementById("overlay").style.display = "none";
-        document.getElementById("modal").style.display = "none";
-    }
-
-    // Función para actualizar el campo de entrada con las opciones seleccionadas
-    function actualizarInput() {
-        var checkboxes = document.querySelectorAll('#modal input[type="checkbox"]');
-        var opcionesSeleccionadas = Array.from(checkboxes)
-            .filter(checkbox => checkbox.checked)
-            .map(checkbox => checkbox.value)
-            .join(', ');
-
-        document.getElementById("opcionesSeleccionadas").value = opcionesSeleccionadas;
-        document.getElementById("ponerOpcion").value = opcionesSeleccionadas;
-    }
-
-    $(document).ready(function() {
-        $('.select-search').select2();
-        agregarOpcionSeleccion();
-    });
-
-    function agregarOpcionSeleccion() {
-        $("#ObservacionResponsableId").prepend("<option value='' selected='selected'>Seleccione</option>");
-    }
-
-    function validarTamanioSoporte() {
-        var auxFile = document.getElementById('ActaAnexo');
-        var sizeF = auxFile.files[0].size;
-        if (sizeF > 3000000) {
-            alert('El archivo debe ser menor a 3 Mb');
-            auxFile.value = '';
-        }
-    }
-
-    function generarCheckboxes(opciones) {
-        let resultHTML = '';
-
-        opciones.forEach(opcion => {
-            resultHTML +=
-                `<label><input type="checkbox" value="${opcion}" onclick="actualizarInput()">${opcion}</label>`;
+        const choices_riesgosalud = new Choices("#riesgosalud", {
+            searchEnabled: true,
+            searchChoices: true,
+            removeItemButton: true, // Permite eliminar seleccionados
+            itemSelectText: '',
+            shouldSort: false,
+            searchPlaceholderValue: "Escriba para filtrar...",
+            maxItemCount: -1, // Sin límite
+            removeItems: true, // Permite quitar seleccionados
+            duplicateItemsAllowed: false,
+            placeholder: true,
+            placeholderValue: "Seleccione riesgos en salud identificados",
         });
 
-        return resultHTML;
-    }
+      
+        const choices_ria = new Choices("#ria", {
+            searchEnabled: true,
+            searchChoices: true,
+            removeItemButton: true, // Permite eliminar seleccionados
+            itemSelectText: '',
+            shouldSort: false,
+            searchPlaceholderValue: "Escriba para filtrar...",
+            maxItemCount: -1, // Sin límite
+            removeItems: true, // Permite quitar seleccionados
+            duplicateItemsAllowed: false,
+            placeholder: true,
+            placeholderValue: "Seleccione las actividades a desarrollar",
+        });
+
+          const choices_entornoafectado = new Choices("#entornoafectado", {
+            searchEnabled: true,
+            searchChoices: true,
+            removeItemButton: true, // Permite eliminar seleccionados
+            itemSelectText: '',
+            shouldSort: false,
+            searchPlaceholderValue: "Escriba para filtrar...",
+            maxItemCount: -1, // Sin límite
+            removeItems: true, // Permite quitar seleccionados
+            duplicateItemsAllowed: false,
+            placeholder: true,
+            placeholderValue: "Seleccione los entornos a intervenir",
+        });
+
+           const choices_riesgovulnerabilidad = new Choices("#riesgovulnerabilidad", {
+            searchEnabled: true,
+            searchChoices: true,
+            removeItemButton: true, // Permite eliminar seleccionados
+            itemSelectText: '',
+            shouldSort: false,
+            searchPlaceholderValue: "Escriba para filtrar...",
+            maxItemCount: -1, // Sin límite
+            removeItems: true, // Permite quitar seleccionados
+            duplicateItemsAllowed: false,
+            placeholder: true,
+            placeholderValue: "Seleccione riesgos o vulnerabilidad identificados",
+        });
+
+        
+         const choices_fortalezas = new Choices("#fortalezas", {
+            searchEnabled: true,
+            searchChoices: true,
+            removeItemButton: true, // Permite eliminar seleccionados
+            itemSelectText: '',
+            shouldSort: false,
+            searchPlaceholderValue: "Escriba para filtrar...",
+            maxItemCount: -1, // Sin límite
+            removeItems: true, // Permite quitar seleccionados
+            duplicateItemsAllowed: false,
+            placeholder: true,
+            placeholderValue: "Seleccione las fortalezas de la familia",
+        });
+            const choices_responsables = new Choices("#responsables", {
+            searchEnabled: true,
+            searchChoices: true,
+            removeItemButton: true, // Permite eliminar seleccionados
+            itemSelectText: '',
+            shouldSort: false,
+            searchPlaceholderValue: "Escriba para filtrar...",
+            maxItemCount: -1, // Sin límite
+            removeItems: true, // Permite quitar seleccionados
+            duplicateItemsAllowed: false,
+            placeholder: true,
+            placeholderValue: "Seleccione los responsables EBS",
+        });
 
 
-    const opciones = opcionesfamiliograma = [
-        '1.Biológicos',
-        '2.Psocológicos',
-        '3.Sociales',
-        '0.Sin riesgo'
-    ];
-    // Generar los checkboxes y agregarlos al contenedor
-    document.getElementById('miContenedor').innerHTML = generarCheckboxes(opcionesfamiliograma);
-</script>
+    
+
+        // Aplicar estilos con Tailwind
+        const inner = document.querySelector('.choices__inner');
+        if (inner) {
+            inner.classList.add(
+                'bg-white', 'border', 'border-gray-300', 'rounded-lg',
+                'px-3', 'py-2', 'focus:ring', 'focus:ring-blue-200', 'text-gray-700'
+            );
+        }
+
+        const dropdown = document.querySelector('.choices__list--dropdown');
+        if (dropdown) {
+            dropdown.classList.add('bg-white', 'shadow-lg', 'rounded-lg', 'border', 'border-gray-200');
+        }
+    });
+
+    
+
+    $(function() {
+        $('#datetime_range').daterangepicker({
+            singleDatePicker: true,
+            showDropdowns: true,
+            autoApply: true,
+            locale: {
+                format: 'YYYY-MM-DD',
+                applyLabel: "Aplicar",
+                cancelLabel: "Cancelar",
+                daysOfWeek: ["Do", "Lu", "Ma", "Mi", "Ju", "Vi", "Sa"],
+                monthNames: [
+                    "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
+                    "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
+                ],
+
+            }
+        }, function(start) {
+            let fecha = start.format('YYYY-MM-DD');
+            console.log("Fecha seleccionada:", fecha);
+
+            // Si necesitas guardarlos en campos ocultos para enviarlos al backend:
+            if (!$("#fecha").length) {
+                $("form").append('<?php echo $this->Form->hidden('fecha', ['id' => 'fecha']); ?>');
+            }
+            $("#fecha").val(fecha);
+        });
+    });
+
+
+
+   
+
+        document.addEventListener("DOMContentLoaded", () => {
+                    const riesgosVulnerabilidad = document.getElementById('riesgovulnerabilidad');
+                    const riesgosSalud = document.getElementById('riesgosalud');
+                    const puntuacionFamilia = document.getElementById('puntuacionfamilia');
+
+                    function calculateSum() {
+                        let sum = 0;
+
+                        // Sumar valores seleccionados en riesgos de vulnerabilidad
+                        if (riesgosVulnerabilidad) {
+                            const selectedOptions = Array.from(riesgosVulnerabilidad.selectedOptions);
+                            sum += selectedOptions.reduce((acc, option) => acc + parseInt(option.value || 0, 10), 0);
+                        }
+
+                        // Sumar valores seleccionados en riesgos de salud
+                        if (riesgosSalud) {
+                            const selectedOptions = Array.from(riesgosSalud.selectedOptions);
+                            sum += selectedOptions.reduce((acc, option) => acc + parseInt(option.value || 0, 10), 0);
+                        }
+
+                        // Actualizar el campo de puntuación
+                        if (puntuacionFamilia) {
+                            puntuacionFamilia.value = sum;
+                        }
+                    }
+
+                    // Escuchar cambios en ambos selectores
+                    if (riesgosVulnerabilidad) {
+                        riesgosVulnerabilidad.addEventListener('change', calculateSum);
+                    }
+                    if (riesgosSalud) {
+                        riesgosSalud.addEventListener('change', calculateSum);
+                    }
+                });
+
+    </script>
+
+    

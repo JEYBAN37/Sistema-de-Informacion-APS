@@ -128,6 +128,7 @@ class SociambientalsController extends AppController
 	{
 		if ($this->request->is('post')) {
 			$this->Sociambiental->create();
+			debug($this->request->data);
 			if ($this->Sociambiental->save($this->request->data)) {
 
 				if ($this->request->data['btn'] == 'Guardar y continuar') {
@@ -142,7 +143,7 @@ class SociambientalsController extends AppController
 					return $this->redirect(array('controller' => 'Sociambientals', 'action' => 'index'));
 				}
 			} else {
-				$this->Session->setFlash('El registro fue guardado o esta pendiente un campo del formulario', 'default', array('class' => 'alert alert-danger'));
+				$this->Session->setFlash('El registro no fue guardado o esta pendiente un campo del formulario', 'default', array('stylerror' => 'alert alert-danger'));
 			}
 		}
 		$responsables = $this->Sociambiental->Responsable->find('list');
@@ -170,6 +171,7 @@ class SociambientalsController extends AppController
 		} else {
 			$options = array('conditions' => array('Sociambiental.' . $this->Sociambiental->primaryKey => $id));
 			$this->request->data = $this->Sociambiental->find('first', $options);
+			$this->request->data = $this->Sociambiental->tranformData($this->request->data);
 		}
 		$responsables = $this->Sociambiental->Responsable->find('list');
 		$ubicaciones = $this->Sociambiental->Ubicacion->find('list');
