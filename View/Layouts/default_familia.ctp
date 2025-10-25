@@ -128,24 +128,23 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
 
     <div class="flex pt-[65px]">
         <!-- Botón de menú para móvil - posicionado independientemente -->
-        <button id="mobileMenuBtn" 
-                class="fixed top-[75px] left-3 z-50 md:hidden
+        <button id="mobileMenuBtn"
+            class="fixed top-[75px] left-3 z-50 md:hidden
                        w-10 h-10 flex items-center justify-center
                        bg-white shadow-lg rounded-lg border
                        text-gray-700 hover:bg-gray-100 
                        transition-all duration-300">
             <svg id="mobileMenuIcon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <line x1="4" x2="20" y1="12" y2="12"/>
-                <line x1="4" x2="20" y1="6" y2="6"/>
-                <line x1="4" x2="20" y1="18" y2="18"/>
+                <line x1="4" x2="20" y1="12" y2="12" />
+                <line x1="4" x2="20" y1="6" y2="6" />
+                <line x1="4" x2="20" y1="18" y2="18" />
             </svg>
         </button>
 
         <!-- Overlay para móvil cuando el sidebar está abierto -->
         <div id="mobileOverlay" class="fixed inset-0 bg-black bg-opacity-50 z-30 md:hidden hidden transition-opacity duration-300"></div>
 
-        <div id="sidebarContainer" class="flex fixed top-[65px] left-0 z-40
-          w-[300px] h-[calc(100vh-65px)] overflow-y-auto">
+        <div id="sidebarContainer" class="flex fixed top-[65px] left-0 z-30 h-[calc(100vh-65px)] overflow-y-auto">
 
             <aside id="sidebar" class="w-full
          bg-white border-r shadow border-gray-200
@@ -326,7 +325,7 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
         </div>
 
         <!-- Contenido principal -->
-        <main id="mainContent" class="flex-1 p-6 md:ml-[280px] transition-all duration-300 ">
+        <main id="mainContent" class="flex-1 p-6 md:ml-[280px] transition-all duration-300">
             <?php echo $this->Session->flash(); ?>
             <div class="relative z-10">
                 <?php echo $this->fetch('content'); ?>
@@ -384,16 +383,19 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
     const mobileOverlay = document.getElementById('mobileOverlay');
     const desktopToggleBtn = document.getElementById('toggleSidebar');
     const desktopArrow = document.getElementById('arrow');
-
+    window.addEventListener('DOMContentLoaded', function() {
+        document.getElementById('mobileOverlay')?.classList.add('hidden');
+    });
     // Función para toggle del sidebar
     function toggleSidebar() {
         const isMobile = window.matchMedia('(max-width: 768px)').matches;
-        
+
         if (isMobile) {
             // Lógica para móvil
             if (sidebar.classList.contains('-translate-x-full')) {
                 // Mostrar sidebar
                 sidebar.classList.remove('-translate-x-full');
+                sidebarContainer.classList.remove('hidden')
                 mobileOverlay.classList.remove('hidden');
                 // Cambiar icono a X
                 mobileMenuIcon.innerHTML = `
@@ -404,6 +406,8 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
                 // Ocultar sidebar
                 sidebar.classList.add('-translate-x-full');
                 mobileOverlay.classList.add('hidden');
+                sidebarContainer.classList.add('hidden')
+
                 // Cambiar icono a hamburguesa
                 mobileMenuIcon.innerHTML = `
                     <line x1="4" x2="20" y1="12" y2="12"/>
@@ -417,13 +421,16 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
                 // Mostrar sidebar
                 sidebar.classList.remove('hidden');
                 mainContent.classList.add('md:ml-[280px]');
-                sidebarContainer.style.width = '300px';
+                sidebar.classList.remove('hidden');
+                sidebarContainer.classList.remove('w-[50px]');
+                sidebarContainer.classList.add('w-[300px]');
                 desktopArrow.style.transform = 'rotate(0deg)';
             } else {
                 // Ocultar sidebar
                 sidebar.classList.add('hidden');
                 mainContent.classList.remove('md:ml-[280px]');
-                sidebarContainer.style.width = '50px';
+                sidebarContainer.classList.remove('w-[300px]');
+                sidebarContainer.classList.add('w-[10px]');
                 desktopArrow.style.transform = 'rotate(180deg)';
             }
         }
@@ -432,7 +439,7 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
     // Event listeners para ambos botones
     mobileMenuBtn?.addEventListener('click', toggleSidebar);
     desktopToggleBtn?.addEventListener('click', toggleSidebar);
-    
+
     // Cerrar sidebar al hacer clic en el overlay
     mobileOverlay?.addEventListener('click', () => {
         if (window.matchMedia('(max-width: 768px)').matches) {
@@ -447,14 +454,16 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
             sidebar.classList.remove('hidden', '-translate-x-full');
             sidebar.classList.add('md:translate-x-0');
             mainContent.classList.add('md:ml-[280px]');
-            sidebarContainer.style.width = '300px';
+            sidebarContainer.classList.add('md:w-[300px]');
             mobileOverlay.classList.add('hidden');
         } else {
             // Mobile: ocultar sidebar por defecto
             sidebar.classList.add('-translate-x-full');
             sidebar.classList.remove('hidden');
             mainContent.classList.remove('md:ml-[280px]');
-            sidebarContainer.style.width = '300px';
+            sidebarContainer.classList.remove('md:w-[300px]');
+            sidebarContainer.classList.add('hidden');
+            sidebarContainer.classList.add('w-[250px]');
             mobileOverlay.classList.add('hidden');
         }
     });
@@ -468,7 +477,7 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
             mobileOverlay.classList.add('hidden');
             if (!sidebar.classList.contains('hidden')) {
                 mainContent.classList.add('md:ml-[280px]');
-                sidebarContainer.style.width = '300px';
+                sidebarContainer.classList.add('md:w-[300px]');
             }
             // Resetear icono móvil
             mobileMenuIcon.innerHTML = `
@@ -484,7 +493,7 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
                 mobileOverlay.classList.add('hidden');
             }
             mainContent.classList.remove('md:ml-[280px]');
-            sidebarContainer.style.width = '300px';
+            sidebarContainer.classList.add('w-[300px]');
         }
     });
 

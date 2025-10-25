@@ -87,32 +87,21 @@
                 <i class="fas fa-table"></i>
                 Consulta de Familias Registradas
             </h3>
-            <div class="grid md:grid-cols-3 gap-3">
-                <div class="flex flex-col bg-white/20 hover:bg-white/30 backdrop-blur-sm rounded-lg p-3 transition-all flex items-center gap-2 text-sm font-semibold">
+            <div class="grid md:grid-cols-2 gap-3">
+                <div class="flex flex-col bg-white/20 hover:bg-white/30 backdrop-blur-sm rounded-lg p-3 transition-all flex items-center gap-2 text-sm font-semibold z-30">
                     <label class="block text-sm font-semibold text-white mb-2">
                         <i class="fas fa-map-marker-alt"></i> Microterritorio
                     </label>
                     <select id="territorioSelect" class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent bg-white text-slate-800">
                         <option value="">Seleccione el microterritorio</option>
-                        <?php foreach ($territorios as $id => $nombre): ?>
-                            <option value="<?php echo $id; ?>"><?php echo h($nombre); ?></option>
+                        <?php foreach ($estadisticas['territorios'] as $territorio): ?>
+                            <option value="<?php echo $territorio['ubicacion_id']; ?>">
+                                <?php echo h($territorio['microterritorio']); ?>
+                            </option>
                         <?php endforeach; ?>
                     </select>
                 </div>
-                <div class="flex flex-col bg-white/20 hover:bg-white/30 backdrop-blur-sm rounded-lg p-3 transition-all flex items-center gap-2 text-sm font-semibold">
-                    <label class="block text-sm font-semibold text-white mb-2">
-                        <i class="fa-solid fa-people-arrows"></i> Responsable
-                    </label>
-                    <select id="filterMunicipio" class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent">
-                        <option value="">Todos</option>
-                        <option value="Antioquia">Antioquia</option>
-                        <option value="Cundinamarca">Cundinamarca</option>
-                        <option value="Valle del Cauca">Valle del Cauca</option>
-                        <option value="Atlántico">Atlántico</option>
-                        <option value="Santander">Santander</option>
-                    </select>
-                </div>
-                <div class="flex flex-col bg-white/20 hover:bg-white/30 backdrop-blur-sm rounded-lg p-3 transition-all flex items-center gap-2 text-sm font-semibold">
+                <div class="flex flex-col bg-white/20 hover:bg-white/30 backdrop-blur-sm rounded-lg p-3 transition-all flex items-center gap-2 text-sm font-semibold z-0">
                     <label class="block text-sm font-semibold text-white mb-2">
                         <i class="fas fa-calendar"></i> fecha de registro
                     </label>
@@ -128,26 +117,28 @@
             </div>
         </div>
         <!-- Search and Filter Section -->
-        <div class="bg-white rounded-b-2xl shadow-lg p-6 mb-8">
-            <!-- Tabulator Table -->
-            <!-- DataTable -->
-            <div class="overflow-x-auto">
-                <table id="familiasTable" class="display w-full">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Familia</th>
-                            <th>Numero celular</th>
-                            <th>Fecha</th>
-                            <th>Microterritorio</th>
-                            <th>Sociambiental</th>
-                            <th>Responsable</th>
-                            <th>Acciones</th>
-                        </tr>
-                    </thead>
-                </table>
-            </div>
+        <div
+            class="w-full max-w-lg sm:max-w-3xl md:max-w-4xl lg:max-w-5xl xl:max-w-6xl 2xl:max-w-7xl mx-auto border border-gray-200 rounded-lg h-full pb-12 shadow-lg">
+            <table id="familiasTable" style="width:100%;"
+                class="stripe hover text-sm text-left text-gray-600 border border-gray-200 rounded-lg overflow-hidden">
+                <thead class="bg-gray-200 font-medium border-b border-gray-300">
+                    <tr class=" text-gray-900 font-light">
+                        <th class="px-2 w-6"></th> <!-- control (+) -->
+                        <th class="px-4 py-2 font-semibold text-center cursor-pointer hover:bg-gray-100">ID</th>
+                        <th class="px-16 py-2 font-semibold text-center cursor-pointer hover:bg-green-100">Apellidos de la Familia </th>
+                        <th class="px-16 py-2 font-semibold text-center cursor-pointer hover:bg-green-100">Celular</th>
+                        <th class="px-16 py-2 font-semibold text-center cursor-pointer hover:bg-green-100">Fecha de Registro</th>
+                        <th class="px-2 py-2 font-semibold text-center cursor-pointer hover:bg-green-100">Microterritorio</th>
+                        <th class="px-2 py-2 font-semibold text-center cursor-pointer hover:bg-green-100">ID vivivienda</th>
+                        <th class="px-4 py-2 font-semibold text-center">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody class="bg-white divide-y divide-gray-300">
+                    <!-- DataTables llenará esta sección -->
+                </tbody>
+            </table>
         </div>
+
     </main>
 
     <!-- Footer -->
@@ -261,13 +252,18 @@
             if (inner) {
                 inner.classList.add(
                     'bg-white', 'border', 'border-gray-300', 'rounded-lg',
-                    'px-3', 'py-2', 'focus:ring', 'focus:ring-blue-200', 'text-gray-700'
+                    'px-3', 'py-2', 'focus:ring', 'focus:ring-blue-200', 'text-gray-700', 'w-full', 'z-50'
                 );
             }
 
             const dropdown = document.querySelector('.choices__list--dropdown');
             if (dropdown) {
                 dropdown.classList.add('z-50', 'bg-white', 'shadow-lg', 'rounded-lg', 'border', 'border-gray-200', 'text-gray-700');
+            }
+
+            const searchInput = document.querySelector('.choices[data-type*=select-one]');
+            if (searchInput) {
+                searchInput.classList.add('w-full', );
             }
         });
 
@@ -284,8 +280,41 @@
         }
 
         $(document).ready(function() {
+
+            const $miTabla = $('#familiasTable');
             // Initialize DataTable
-            var table = $('#familiasTable').DataTable({
+            const table = $miTabla.DataTable({
+                createdRow: function(row, data, dataIndex) {
+                    // Aplica clases a cada celda del body
+                    $('td', row).each(function(index) {
+                        $(this).addClass('px-4 py-3 align-center-left');
+                        if (index === 1) $(this).addClass(
+                            'text-center text-black font-bold'); // ID
+
+                        if (index === 2) $(this).addClass('text-center'); // idproducto
+
+                        // Para columnas de texto largo (por ejemplo, nombreproducto, objactividad)
+                        if (index === 3 || index === 4) {
+                            const maxLength = 200;
+                            const cellText = $(this).text();
+                            if (cellText.length > maxLength) {
+                                const truncated = cellText.substring(0, maxLength) + '...';
+                                $(this).html(
+                                    `<span class="texto-truncado">${truncated}</span>
+                                     <span class="texto-completo hidden">${cellText}</span>
+                                     <a href="#" class="ver-mas text-blue-500 underline ml-2">Ver más</a>
+                                     <a href="#" class="ver-menos text-blue-500 underline ml-2 hidden">Ver menos</a>`
+                                );
+                            }
+                        }
+
+                        if (index === 5) $(this).addClass(
+                            'text-center font-bold text-black text-xs'); // responsable
+                        if (index === 6) $(this).addClass('text-center'); // conCat
+                    });
+                    // Aplica clase a la fila completa si quieres
+                    $(row).addClass('hover:bg-gray-50 transition ');
+                },
                 responsive: true,
                 language: {
                     url: '//cdn.datatables.net/plug-ins/1.13.7/i18n/es-ES.json'
@@ -341,6 +370,19 @@
                         }
                     }
                 ],
+                columnDefs: [{
+                        responsivePriority: 1,
+                        targets: 2
+                    }, // nombreproducto
+                    {
+                        responsivePriority: 2,
+                        targets: 3
+                    }, // objactividad
+                    {
+                        responsivePriority: 3,
+                        targets: -2
+                    } // created
+                ],
                 order: [
                     [3, "desc"]
                 ], // Ordenar por fecha (columna 4) descendente
@@ -354,6 +396,163 @@
                     regex: false
                 }
             });
+
+            $table.removeClass("dataTable no-footer rounded-lg shadow-lg overflow-hidden");
+
+             $('.custom-search-container').html(`
+        <div class="relative w-1/2">
+            <svg class="absolute left-2 top-2.5 text-gray-400" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-scan-search-icon lucide-scan-search"><path d="M3 7V5a2 2 0 0 1 2-2h2"/><path d="M17 3h2a2 2 0 0 1 2 2v2"/><path d="M21 17v2a2 2 0 0 1-2 2h-2"/><path d="M7 21H5a2 2 0 0 1-2-2v-2"/><circle cx="12" cy="12" r="3"/><path d="m16 16-1.9-1.9"/></svg>
+            <input 
+                type="search" 
+                id="customSearch" 
+                class="pl-10 pr-4 py-2 border border-gray-300 rounded-lg shadow-sm 
+                       focus:ring-2 focus:ring-blue-500 focus:outline-none w-full" 
+                placeholder="Buscar registros..."
+            >
+        </div>
+        `);
+
+            // Función para estilizar la paginación
+            $('.custom-pagination').html(`
+            <div class="pagination-container flex items-center space-x-2">
+                <button class="first-page bg-white border border-gray-300 text-gray-700 px-3 py-1 rounded hover:bg-gray-100" title="Primera página" id="first-page">&laquo;&laquo;</button>
+                <button class="previous-page bg-white border border-gray-300 text-gray-700 px-3 py-1 rounded hover:bg-gray-100" title="Página anterior" id="previous-page">&laquo;</button>
+                <span class="page-info text-gray-700 text-sm"></span>
+                <button class="next-page bg-white border border-gray-300 text-gray-700 px-3 py-1 rounded hover:bg-gray-100" title="Página siguiente" id="next-page">&raquo;</button>
+                <button class="last-page bg-white border border-gray-300 text-gray-700 px-3 py-1 rounded hover:bg-gray-100" title="Última página" id="last-page">&raquo;&raquo;</button>
+            </div>
+        `);
+
+            $('.custom-table-length').html(`
+        <table>
+           <tbody>
+               <tr>
+                   <td>
+                       <div class="flex items-center space-x-2">
+                           <label for="table-length" class="text-gray-700 text-sm">Mostrar</label>
+                           <select id="table-length" class="border border-gray-300 rounded px-2 py-1 focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                               <option value="5">5</option>
+                               <option value="7" selected>7</option>
+                               <option value="10">10</option>
+                               <option value="25">25</option>
+                               <option value="50">50</option>
+                               <option value="100">100</option>
+                           </select>
+                           <span class="text-gray-700 text-sm">registros</span>
+                       </div>
+                   </td>
+               </tr>
+           </tbody>
+        </table>
+        `);
+
+            // Conectar botones de paginación personalizados
+            $(document).on("click", ".first-page", function() {
+                table.page("first").draw("page");
+            });
+
+            $(document).on("click", ".previous-page", function() {
+                table.page("previous").draw("page");
+            });
+
+            $(document).on("click", ".next-page", function() {
+                table.page("next").draw("page");
+            });
+
+            $(document).on("click", ".last-page", function() {
+                table.page("last").draw("page");
+            });
+
+            // Actualizar info de la página actual
+            function updatePageInfo() {
+                let info = table.page.info();
+                $(".page-info").text(`Página ${info.page + 1} de ${info.pages}`);
+            }
+
+            // Llamar en cada cambio de página
+            table.on("draw", function() {
+                updatePageInfo();
+                setupDropdowns(); // <-- Vuelve a conectar los eventos cada vez que se dibuja la tabla
+                stylePagination && stylePagination(); // si tienes esta función
+            });
+            updatePageInfo();
+
+
+            // Conectar el nuevo input con DataTables
+            $('#customSearch').on('keyup', function() {
+                table.search(this.value).draw();
+            });
+
+            table.on('draw', stylePagination);
+        });
+
+
+        // Función para manejar el despliegue de los menús
+        function setupDropdowns() {
+            const buttons = document.querySelectorAll('[id^="menu-button-"]');
+
+            buttons.forEach(button => {
+                button.addEventListener('click', (event) => {
+                    const buttonId = event.currentTarget.id;
+
+                    const recordId = buttonId.split('-')[2];
+                    console.log(buttonId);
+                    const menu = document.getElementById(`menu-options-${recordId}`);
+
+                    // Oculta todos los menús desplegables
+                    document.querySelectorAll('[id^="menu-options-"]').forEach(m => {
+                        if (m.id !== menu.id) {
+                            m.classList.add('hidden');
+                        }
+                    });
+
+                    // Muestra o esconde el menú actual
+                    menu.classList.toggle('hidden');
+                });
+            });
+
+            // Oculta los menús si se hace clic fuera de ellos
+            window.addEventListener('click', function(event) {
+                if (!event.target.matches('[id^="menu-button-"]')) {
+                    document.querySelectorAll('[id^="menu-options-"]').forEach(menu => {
+                        if (!menu.classList.contains('hidden')) {
+                            menu.classList.add('hidden');
+                        }
+                    });
+                }
+            });
+
+            document.querySelectorAll('.ver-mas').forEach(function(link) {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const td = link.closest('td');
+                    td.querySelector('.texto-truncado').classList.add('hidden');
+                    td.querySelector('.texto-completo').classList.remove('hidden');
+                    td.querySelector('.ver-mas').classList.add('hidden');
+                    td.querySelector('.ver-menos').classList.remove('hidden');
+                });
+            });
+
+            document.querySelectorAll('.ver-menos').forEach(function(link) {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const td = link.closest('td');
+                    td.querySelector('.texto-truncado').classList.remove('hidden');
+                    td.querySelector('.texto-completo').classList.add('hidden');
+                    td.querySelector('.ver-mas').classList.remove('hidden');
+                    td.querySelector('.ver-menos').classList.add('hidden');
+                });
+            });
+
+
+            const menu = document.getElementById('miTabla_processing');
+            if (menu) {
+                menu.classList.remove('dataTables_processing');
+                menu.classList.add('hidden');
+            }
+
+
+        }
 
             // Custom filter functions
             $('#filterDepartamento, #filterMunicipio, #filterEstado, #filterAno').on('change', function() {
@@ -373,6 +572,7 @@
                     table.column(7).search('').draw();
                 }
             });
-        });
+            
+       document.addEventListener('DOMContentLoaded', setupDropdowns);
     </script>
 </body>

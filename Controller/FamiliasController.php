@@ -44,14 +44,8 @@ class FamiliasController extends AppController
 			return $this->redirect(array('controller' => 'users', 'action' => 'login'));
 		}
 
-		$territorios = $this->Ubicacion->find('list', array(
-			'fields' => array('Ubicacion.id', 'Ubicacion.microterritorio'),
-			'order' => array('Ubicacion.microterritorio' => 'asc')
-		));
-
 		$estadisticas = $this->Familia->getEstadisticasResponsable($responsable);
 		$this->set('estadisticas', $estadisticas);
-		$this->set('territorios', $territorios);
 	}
 
 	/**
@@ -240,13 +234,13 @@ class FamiliasController extends AppController
 		}
 
 		$conditions = array();
-		$responsable = isset($_SESSION['Auth']['User']['username']) ? $_SESSION['Auth']['User']['username'] : '';
-
+		$responsable = isset($_SESSION['Auth']['User']['responsable_id']) ? $_SESSION['Auth']['User']['responsable_id'] : '';
+		
 		if (!empty($search)) {
 			if (!empty($responsable)) {
 				// responsable es obligatoria (AND), el resto es OR
 				$conditions['AND'] = array(
-					'Responsable.numero LIKE' => "%$responsable%",
+					'Responsable.id' => "%$responsable%",
 					'OR' => array(
 						'Familia.id LIKE' => "%$search%",
 						'Sociambiental.fecha LIKE' => "%$search%",
@@ -266,9 +260,10 @@ class FamiliasController extends AppController
 					'Ubicacion.microterritorio LIKE' => "%$search%",
 				);
 			}
-		} elseif (!empty($responsable)) {
+		} else if (!empty($responsable)) {
+			debug($responsable);
 			// Si no hay búsqueda pero sí responsable, filtrar por responsable igual
-			$conditions['Responsable.numero LIKE'] = "%$responsable%";
+			$conditions['Responsable.id'] = "%$responsable%";
 		}
 
 		$total = $this->Familia->find('count');

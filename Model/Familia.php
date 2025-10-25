@@ -39,7 +39,7 @@ class Familia extends AppModel
 
 	public function getEstadisticasResponsable($responsableId)
 	{
-		// Construir la consulta SQL personalizada
+		// Consulta principal: solo los conteos
 		$sql = "SELECT 
         (SELECT COUNT(*) 
          FROM sociambientals sa
@@ -59,24 +59,40 @@ class Familia extends AppModel
              ON f.sociambiental_id = sa.id
          WHERE sa.responsable_id = :responsable_id) AS total_personas";
 
-		// Ejecutar la consulta con parámetros seguros
+		// Ejecutar la consulta principal
 		$result = $this->query($sql, array('responsable_id' => $responsableId));
 
+		// Consulta aparte para territorios
+		$territoriosSql = "SELECT DISTINCT sa.ubicacion_id, u.microterritorio
+        FROM sociambientals sa
+        INNER JOIN ubicaciones u ON sa.ubicacion_id = u.id
+        WHERE sa.responsable_id = :responsable_id";
+		$territoriosResult = $this->query($territoriosSql, array('responsable_id' => $responsableId));
 
-		// Retornar el primer resultado o valores por defecto
+		// Procesar territorios en un array simple
+		$territorios = array();
+		foreach ($territoriosResult as $row) {
+			$territorios[] = array(
+				'ubicacion_id' => $row['sa']['ubicacion_id'],
+				'microterritorio' => $row['u']['microterritorio']
+			);
+		}
+
+		// Retornar resultados
 		if (!empty($result) && isset($result[0][0])) {
 			return array(
 				'total_sociambiental' => (int)$result[0][0]['total_sociambiental'],
 				'total_familias' => (int)$result[0][0]['total_familias'],
-				'total_personas' => (int)$result[0][0]['total_personas']
+				'total_personas' => (int)$result[0][0]['total_personas'],
+				'territorios' => $territorios
 			);
 		}
 
-		// Si no hay resultados, retornar ceros
 		return array(
 			'total_sociambiental' => 0,
 			'total_familias' => 0,
-			'total_personas' => 0
+			'total_personas' => 0,
+			'territorios' => array()
 		);
 	}
 
