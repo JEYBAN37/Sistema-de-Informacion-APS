@@ -98,23 +98,22 @@ class UsersController extends AppController
                         'recursive' => -1
                     ]);
 
-                    $auxUser = array(
+                    $auxUser = [
                         'username' => $r["User"]["username"],
                         'password' => $r["User"]["password"],
                         'group_id' => $r["User"]["group_id"],
                         'responsable_id' => isset($responsableId['Responsable']['id']) ? $responsableId['Responsable']['id'] : 169,
-                    );
+                    ];
 
 
                     $this->Auth->login($auxUser);
                     //$this->redirect("bienvenida");
                     if ($this->Session->read('Auth.User')) {
-                        debug($responsableId);
                         $this->Session->setFlash('Acceso exitoso, bienvenido', 'flash_custom',     array('class' => 'success', 'title' => 'El registro se ha completado correctamente'));
                         // return $this->redirect('controller' => 'orders', 'action' => 'thanks');
                         //$this->redirect("home");
                         return $this->redirect(
-                                array('controller' => 'familias', 'action' => 'index')
+                            array('controller' => 'familias', 'action' => 'index')
                             );
                     }
                 } else {

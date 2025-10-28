@@ -95,17 +95,8 @@ class ObservacionsController extends AppController
 		if (!$this->Observacion->exists($id)) {
 			throw new NotFoundException(__('Invalid observacion'));
 		}
+
 		if ($this->request->is(array('post', 'put'))) {
-
-			// Si el campo 'entornoafectado' viene como array (checkboxes), convertir a cadena para almacenamiento
-			if (isset($this->request->data['Observacion']['entornoafectado']) && is_array($this->request->data['Observacion']['entornoafectado'])) {
-				// Guardar como CSV. Cambiar a json_encode si prefieres JSON en BD.
-				$this->request->data['Observacion']['entornoafectado'] = implode(',', $this->request->data['Observacion']['entornoafectado']);
-			} elseif (!isset($this->request->data['Observacion']['entornoafectado'])) {
-				// Asegurar que existe el campo aunque esté vacío
-				$this->request->data['Observacion']['entornoafectado'] = '';
-			}
-
 			// Procesar otros campos específicos del formulario si es necesario
 			if ($this->Observacion->save($this->request->data)) {
 				$this->Session->setFlash('Se ha guardado correctamente', 'default', array('class' => 'alert alert-success'));
@@ -114,8 +105,34 @@ class ObservacionsController extends AppController
 				$this->Session->setFlash('No se ha guardado, por favor revisar campos', 'default', array('class' => 'alert alert-danger'));
 			}
 		} else {
-			$options = array('conditions' => array('Observacion.' . $this->Observacion->primaryKey => $id));
+			$options = array(
+				'conditions' => array('Observacion.' . $this->Observacion->primaryKey => $id),
+				'fields' => array(
+					'Observacion.resultadoEcomapa',
+					'Observacion.resultadoFamiliograma',
+					'Observacion.fecha',
+					'Observacion.menoresriesgosalud',
+					'Observacion.riesgovulnerabilidad',
+					'Observacion.puntuacionfamilia',
+					'Observacion.valoracionfamilia',
+					'Observacion.observacion',
+					'Observacion.objetivocortoplazo',
+					'Observacion.objetivolargoplazo',
+					'Observacion.entornoafectado',
+					'Observacion.indicadorria',
+					'Observacion.actividaddesarrollar',
+					'Observacion.observacionesplancuidado',
+					'Observacion.firmaplancuidado',
+					'Observacion.disentimiento',
+					'Observacion.date',
+					'Responsable.nombres',
+				),
+				'Responsable' => array(
+					'fields' => array('Responsable.id', 'Responsable.nombres')
+				)
+			);
 			$this->request->data = $this->Observacion->find('first', $options);
+			
 
 			// Si el campo viene almacenado como CSV, convertirlo a array para que los checkboxes estén seleccionados
 			if (!empty($this->request->data['Observacion']['entornoafectado']) && is_string($this->request->data['Observacion']['entornoafectado'])) {
@@ -166,6 +183,7 @@ class ObservacionsController extends AppController
 		if (!$this->Observacion->exists($id)) {
 			throw new NotFoundException(__('Invalid observacion'));
 		}
+
 		if ($this->request->is(array('post', 'put'))) {
 			if ($this->Observacion->save($this->request->data)) {
 				$this->Session->setFlash('Se ha guardado correctamente', 'default', array('class' => 'alert alert-success'));

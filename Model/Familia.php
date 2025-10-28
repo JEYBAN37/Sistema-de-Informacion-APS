@@ -57,7 +57,11 @@ class Familia extends AppModel
              ON j.familia_id = f.id
          INNER JOIN sociambientals sa 
              ON f.sociambiental_id = sa.id
-         WHERE sa.responsable_id = :responsable_id) AS total_personas";
+         WHERE sa.responsable_id = :responsable_id) AS total_personas,
+
+        (SELECT COUNT(*) 
+         FROM visitasnegadas v
+         WHERE v.responsable_id = :responsable_id) AS total_novedades";
 
 		// Ejecutar la consulta principal
 		$result = $this->query($sql, array('responsable_id' => $responsableId));
@@ -84,7 +88,8 @@ class Familia extends AppModel
 				'total_sociambiental' => (int)$result[0][0]['total_sociambiental'],
 				'total_familias' => (int)$result[0][0]['total_familias'],
 				'total_personas' => (int)$result[0][0]['total_personas'],
-				'territorios' => $territorios
+				'territorios' => $territorios,
+				'total_novedades' => (int)$result[0][0]['total_novedades']
 			);
 		}
 
@@ -92,7 +97,8 @@ class Familia extends AppModel
 			'total_sociambiental' => 0,
 			'total_familias' => 0,
 			'total_personas' => 0,
-			'territorios' => array()
+			'territorios' => array(),
+			'total_novedades' => 0
 		);
 	}
 

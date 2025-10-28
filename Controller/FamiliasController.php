@@ -48,6 +48,12 @@ class FamiliasController extends AppController
 		$this->set('estadisticas', $estadisticas);
 	}
 
+	public function index_familias()
+	{
+		$estadisticas = $this->Familia->getEstadisticasResponsable(1);
+		$this->set('estadisticas', $estadisticas);
+	}
+
 	/**
 	 * view method
 	 *
@@ -188,8 +194,10 @@ class FamiliasController extends AppController
 		$columns = array('Familia.id');
 
 		$start = isset($_GET['start']) ? intval($_GET['start']) : 0;
-		$length = isset($_GET['length']) ? intval($_GET['length']) : 10;
+		$length = isset($_GET['length']) ? intval($_GET['length']) : 5;
 		$search = isset($_GET['search']['value']) ? $_GET['search']['value'] : '';
+		$microterritorio = isset($_GET['microterritorio']) ? $_GET['microterritorio'] : '';
+		$fecha = isset($_GET['fecha']) ? $_GET['fecha'] : '';
 		$order = isset($_GET['order']) ? $_GET['order'] : array();
 		$columns = isset($_GET['columns']) ? $_GET['columns'] : array();
 
@@ -234,13 +242,16 @@ class FamiliasController extends AppController
 		}
 
 		$conditions = array();
-		$responsable = isset($_SESSION['Auth']['User']['responsable_id']) ? $_SESSION['Auth']['User']['responsable_id'] : '';
-		
+		// Obtener responsable usando Auth o Session (fallback a $_SESSION si hace falta)
+		$r = $this->Auth->user();
+		$responsable = $r['responsable_id'];
+
+		// debug($responsable); // activar si necesita depurar
 		if (!empty($search)) {
 			if (!empty($responsable)) {
 				// responsable es obligatoria (AND), el resto es OR
 				$conditions['AND'] = array(
-					'Responsable.id' => "%$responsable%",
+					'Responsable.id' => intval($responsable),
 					'OR' => array(
 						'Familia.id LIKE' => "%$search%",
 						'Sociambiental.fecha LIKE' => "%$search%",
@@ -250,20 +261,16 @@ class FamiliasController extends AppController
 						'Ubicacion.microterritorio LIKE' => "%$search%",
 					)
 				);
-			} else {
-				$conditions['OR'] = array(
-					'Familia.id LIKE' => "%$search%",
-					'Sociambiental.fecha LIKE' => "%$search%",
-					'Sociambiental.id LIKE' => "%$search%",
-					'Familia.celular LIKE' => "%$search%",
-					'Familia.apellidos LIKE' => "%$search%",
-					'Ubicacion.microterritorio LIKE' => "%$search%",
-				);
 			}
-		} else if (!empty($responsable)) {
-			debug($responsable);
-			// Si no hay búsqueda pero sí responsable, filtrar por responsable igual
-			$conditions['Responsable.id'] = "%$responsable%";
+		} else if (!empty($microterritorio) || !empty($fecha)) {
+			if (!empty($microterritorio)) {
+				$conditions['Ubicacion.microterritorio'] = intval($microterritorio);
+			}
+			if (!empty($fecha)) {
+				$conditions['Sociambiental.fecha'] = $fecha;
+			}
+		} else {
+				$conditions['Responsable.id'] = intval($responsable);
 		}
 
 		$total = $this->Familia->find('count');

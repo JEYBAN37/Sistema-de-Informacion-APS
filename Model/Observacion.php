@@ -87,7 +87,7 @@ class Observacion extends AppModel
 
 		'resultadoEcomapa' => array(
 			'notEmpty' => array(
-				'rule' => array('notEmpty'),
+				//'rule' => array('notEmpty'),
 				//'message' => 'Your custom message here',
 				//'allowEmpty' => false,
 				//'required' => false,
@@ -96,14 +96,14 @@ class Observacion extends AppModel
 			),
 		),
 		'resultadoFamiliograma' => array(
-			'notEmpty' => array(
-				'rule' => array('notEmpty'),
-				'message' => 'Seleccione al menos un criterio',
+			//'notEmpty' => array(
+				//'rule' => array('notEmpty'),
+				//'message' => 'Seleccione al menos un criterio',
 				//'allowEmpty' => false,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			),
+		
 		),
 
 		/*'objetivocortoplazo' => array(
@@ -126,7 +126,7 @@ class Observacion extends AppModel
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
 		),*/
-		'menoresriegosalud' => array(
+		'menoresriesgosalud' => array(
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),
 				//'message' => 'Your custom message here',
@@ -209,14 +209,14 @@ class Observacion extends AppModel
 			),
 		),
 		'valoracionfamilia' => array(
-			'notEmpty' => array(
-				'rule' => array('notEmpty'),
+			//'notEmpty' => array(
+			//	'rule' => array('notEmpty'),
 				//'message' => 'Your custom message here',
 				//'allowEmpty' => false,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			),
+			//),
 		),
 		/*'problematicafamilia1' => array(
 			'notEmpty' => array(

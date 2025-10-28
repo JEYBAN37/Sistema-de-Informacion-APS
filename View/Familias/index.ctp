@@ -59,13 +59,36 @@
             </button>
         </div>
 
+        <div class="grid md:grid-cols-2 gap-6 mb-8">
+            <!-- Agregar Vivienda Card -->
+            <button onclick="toNovedad()" class="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 p-8 border-2 border-transparent hover:border-teal-500 transform hover:-translate-y-1">
+                <div class="flex flex-col items-center text-center gap-4">
+                    <div class="bg-gradient-to-br from-green-100 to-green-100 p-6 rounded-2xl group-hover:scale-110 transition-transform duration-300">
+                        <i class="fa-solid fa-house-medical-circle-xmark text-green-600 text-5xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-slate-800 group-hover:text-teal-600 transition-colors">
+                        Agregar Novedad
+                    </h3>
+                    <p class="text-slate-600 text-sm">
+                        Registra una nueva novedad en el sistema
+                    </p>
+                    <div class="mt-2 flex items-center gap-2 text-teal-600 font-semibold opacity-0 group-hover:opacity-100 transition-opacity">
+                        <span>Comenzar</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </div>
+                </div>
+            </button>
+
+
+        </div>
+
         <!-- Stats Section -->
         <div class="bg-white rounded-2xl shadow-lg p-6 mb-8">
             <h3 class="text-xl font-bold text-slate-800 mb-4 flex items-center gap-2">
                 <i class="fas fa-chart-line text-teal-600"></i>
                 Resumen de Registros
             </h3>
-            <div class="grid grid-cols-3 gap-4">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
                 <div class="text-center p-4 bg-gradient-to-br from-teal-50 to-cyan-50 rounded-xl">
                     <p class="text-3xl font-bold text-teal-600"><?php echo isset($estadisticas['total_familias']) ? $estadisticas['total_familias'] : 0; ?></p>
                     <p class="text-sm text-slate-600 mt-1">Familias</p>
@@ -78,66 +101,44 @@
                     <p class="text-3xl font-bold text-blue-600"><?php echo isset($estadisticas['total_personas']) ? $estadisticas['total_personas'] : 0; ?></p>
                     <p class="text-sm text-slate-600 mt-1">Personas</p>
                 </div>
+                <div class="text-center p-4 bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl">
+                    <p class="text-3xl font-bold text-blue-600"><?php echo isset($estadisticas['total_novedades']) ? $estadisticas['total_novedades'] : 0; ?></p>
+                    <p class="text-sm text-slate-600 mt-1">Novedades</p>
+                </div>
             </div>
         </div>
 
         <!-- Quick Actions -->
         <div class="bg-gradient-to-r from-teal-600 to-cyan-600 rounded-t-2xl shadow-lg p-6 text-white">
-            <h3 class="text-2xl font-bold  flex items-center gap-2 mb-6">
+            <h3 class="text-2xl font-bold  flex items-center gap-2 mb-4">
                 <i class="fas fa-table"></i>
                 Consulta de Familias Registradas
             </h3>
-            <div class="grid md:grid-cols-2 gap-3">
-                <div class="flex flex-col bg-white/20 hover:bg-white/30 backdrop-blur-sm rounded-lg p-3 transition-all flex items-center gap-2 text-sm font-semibold z-30">
-                    <label class="block text-sm font-semibold text-white mb-2">
-                        <i class="fas fa-map-marker-alt"></i> Microterritorio
-                    </label>
-                    <select id="territorioSelect" class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent bg-white text-slate-800">
-                        <option value="">Seleccione el microterritorio</option>
-                        <?php foreach ($estadisticas['territorios'] as $territorio): ?>
-                            <option value="<?php echo $territorio['ubicacion_id']; ?>">
-                                <?php echo h($territorio['microterritorio']); ?>
-                            </option>
-                        <?php endforeach; ?>
-                    </select>
-                </div>
-                <div class="flex flex-col bg-white/20 hover:bg-white/30 backdrop-blur-sm rounded-lg p-3 transition-all flex items-center gap-2 text-sm font-semibold z-0">
-                    <label class="block text-sm font-semibold text-white mb-2">
-                        <i class="fas fa-calendar"></i> fecha de registro
-                    </label>
-                    <select id="filterMunicipio" class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent">
-                        <option value="">Todos</option>
-                        <option value="Antioquia">Antioquia</option>
-                        <option value="Cundinamarca">Cundinamarca</option>
-                        <option value="Valle del Cauca">Valle del Cauca</option>
-                        <option value="Atlántico">Atlántico</option>
-                        <option value="Santander">Santander</option>
-                    </select>
-                </div>
-            </div>
+
         </div>
         <!-- Search and Filter Section -->
-        <div
-            class="w-full max-w-lg sm:max-w-3xl md:max-w-4xl lg:max-w-5xl xl:max-w-6xl 2xl:max-w-7xl mx-auto border border-gray-200 rounded-lg h-full pb-12 shadow-lg">
-            <table id="familiasTable" style="width:100%;"
-                class="stripe hover text-sm text-left text-gray-600 border border-gray-200 rounded-lg overflow-hidden">
+        <div class="w-[350px] md:w-full md:mt-6 mb-4">
+            <table id="miTabla" style="width:100%;" class="stripe hover text-sm text-left text-gray-600 border border-gray-200 rounded-lg overflow-hidden">
                 <thead class="bg-gray-200 font-medium border-b border-gray-300">
                     <tr class=" text-gray-900 font-light">
                         <th class="px-2 w-6"></th> <!-- control (+) -->
                         <th class="px-4 py-2 font-semibold text-center cursor-pointer hover:bg-gray-100">ID</th>
-                        <th class="px-16 py-2 font-semibold text-center cursor-pointer hover:bg-green-100">Apellidos de la Familia </th>
-                        <th class="px-16 py-2 font-semibold text-center cursor-pointer hover:bg-green-100">Celular</th>
-                        <th class="px-16 py-2 font-semibold text-center cursor-pointer hover:bg-green-100">Fecha de Registro</th>
-                        <th class="px-2 py-2 font-semibold text-center cursor-pointer hover:bg-green-100">Microterritorio</th>
-                        <th class="px-2 py-2 font-semibold text-center cursor-pointer hover:bg-green-100">ID vivivienda</th>
-                        <th class="px-4 py-2 font-semibold text-center">Acciones</th>
+                        <th class="px-4 py-2 font-semibold text-center cursor-pointer hover:bg-gray-100">Apellidos</th>
+                        <th class="px-4 py-2 font-semibold text-center cursor-pointer hover:bg-green-100">Celular</th>
+                        <th class="px-16 py-2 font-semibold text-center cursor-pointer hover:bg-green-100">Fecha</th>
+                        <th class="px-16 py-2 font-semibold text-center cursor-pointer hover:bg-green-100">Microterritorio</th>
+                        <th class="px-16 py-2 font-semibold text-center cursor-pointer hover:bg-green-100">Responsable</th>
+                        <th class="px-2 py-2 font-semibold text-center cursor-pointer hover:bg-green-100">ID Vivienda</th>
+                        <th class="px-2 py-2 font-semibold text-center cursor-pointer hover:bg-green-100">Acciones</th>
                     </tr>
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-300">
                     <!-- DataTables llenará esta sección -->
                 </tbody>
             </table>
+
         </div>
+
 
     </main>
 
@@ -166,71 +167,6 @@
 
         .animate-fade-in {
             animation: fade-in 0.5s ease-out;
-        }
-
-        /* Added custom DataTables styling */
-        #familiasTable {
-            border-collapse: separate;
-            border-spacing: 0;
-        }
-
-        #familiasTable thead th {
-            background: linear-gradient(to right, #0d9488, #0891b2);
-            color: white;
-            padding: 12px;
-            font-weight: 600;
-            text-align: left;
-            border: none;
-        }
-
-        #familiasTable thead th:first-child {
-            border-top-left-radius: 8px;
-        }
-
-        #familiasTable thead th:last-child {
-            border-top-right-radius: 8px;
-        }
-
-        #familiasTable tbody td {
-            padding: 12px;
-            border-bottom: 1px solid #e2e8f0;
-        }
-
-        #familiasTable tbody tr:hover {
-            background-color: #f8fafc;
-        }
-
-        .dataTables_wrapper .dataTables_length,
-        .dataTables_wrapper .dataTables_filter,
-        .dataTables_wrapper .dataTables_info,
-        .dataTables_wrapper .dataTables_paginate {
-            margin: 10px 0;
-        }
-
-        .dataTables_wrapper .dataTables_paginate .paginate_button {
-            padding: 5px 12px;
-            margin: 0 2px;
-            border-radius: 6px;
-            border: 1px solid #e2e8f0;
-            background: white;
-        }
-
-        .dataTables_wrapper .dataTables_paginate .paginate_button.current {
-            background: linear-gradient(to right, #0d9488, #0891b2);
-            color: white !important;
-            border: none;
-        }
-
-        .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
-            background: #f1f5f9;
-            border-color: #cbd5e1;
-        }
-
-        .dataTables_wrapper .dataTables_filter input {
-            border: 1px solid #cbd5e1;
-            border-radius: 8px;
-            padding: 6px 12px;
-            margin-left: 8px;
         }
     </style>
 
@@ -279,10 +215,54 @@
             }
         }
 
-        $(document).ready(function() {
+        function toNovedad() {
+            if (confirm('¿Está seguro de realizar esta acción?')) {
+                window.location.href = '<?php echo $this->Html->url(['controller' => 'visitasnegadas', 'action' => 'add']); ?>';
+            }
+        }
 
-            const $miTabla = $('#familiasTable');
-            // Initialize DataTable
+        $(function() {
+            $('#datetime_range').daterangepicker({
+                singleDatePicker: true,
+                showDropdowns: true,
+                autoApply: true,
+                locale: {
+                    format: 'YYYY-MM-DD',
+                    applyLabel: "Aplicar",
+                    cancelLabel: "Cancelar",
+                    daysOfWeek: ["Do", "Lu", "Ma", "Mi", "Ju", "Vi", "Sa"],
+                    monthNames: [
+                        "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
+                        "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
+                    ],
+
+                }
+            }, function(start) {
+                let fecha = start.format('YYYY-MM-DD');
+                console.log("Fecha seleccionada:", fecha);
+
+                // Si necesitas guardarlos en campos ocultos para enviarlos al backend:
+                if (!$("#fecha").length) {
+                    $("form").append('<?php echo $this->Form->hidden('fecha', ['id' => 'fecha']); ?>');
+                }
+                $("#fecha").val(fecha);
+            });
+        });
+
+        const URL_view = "<?php echo $this->Html->url(['action' => 'view', '__ID__']); ?>";
+        <?php if (!isset($tipoUsuario)) {
+            $tipoUsuario = null;
+        } ?>
+        const URL_edit = "<?php
+                            echo $this->Html->url(['action' => 'edit', '__ID__']);
+                            ?>";
+        const URL_delete = "<?php echo $this->Html->url(['action' => 'delete', '__ID__']); ?>";
+
+
+        $(document).ready(function() {
+            const $miTabla = $('#miTabla');
+
+            // Inicializar DataTable
             const table = $miTabla.DataTable({
                 createdRow: function(row, data, dataIndex) {
                     // Aplica clases a cada celda del body
@@ -315,10 +295,73 @@
                     // Aplica clase a la fila completa si quieres
                     $(row).addClass('hover:bg-gray-50 transition ');
                 },
-                responsive: true,
-                language: {
-                    url: '//cdn.datatables.net/plug-ins/1.13.7/i18n/es-ES.json'
+                responsive: {
+                    details: {
+                        type: 'column',
+                        target: 'td.dtr-control',
+                        renderer: function(api, rowIdx, columns) {
+                            // Construye el contenido del child row
+                            let data = api.row(rowIdx).data();
+                            return `
+                    <div class="bg-white rounded-xl shadow-lg p-4 mt-2 w-full max-w-md mx-auto">
+                        <h4 class="text-lg font-semibold text-teal-700 mb-2">Detalles de la Familia</h4>
+                        <ul class="space-y-2 text-gray-700">
+                            <li><strong>ID:</strong> ${data.id}</li>
+                            <li><strong>Apellidos:</strong> ${data.apellidos}</li>
+                            <li><strong>Celular:</strong> ${data.celular}</li>
+                            <li><strong>Fecha:</strong> ${(() => {
+                                const f = data.fecha;
+                                if (!f) return '';
+                                // Intentar parsear como fecha válida
+                                const dObj = new Date(f);
+                                if (!isNaN(dObj.getTime())) {
+                                    const y = dObj.getFullYear();
+                                    const m = ('0' + (dObj.getMonth() + 1)).slice(-2);
+                                    const d = ('0' + dObj.getDate()).slice(-2);
+                                    return `${y}-${m}-${d}`;
+                                }
+                                // Formatos dd/mm/yyyy o dd-mm-yyyy -> yyyy-mm-dd
+                                const m1 = f.match(/^(\d{2})[\/\-](\d{2})[\/\-](\d{4})$/);
+                                if (m1) return `
+                            $ {
+                                m1[3]
+                            } - $ {
+                                m1[2]
+                            } - $ {
+                                m1[1]
+                            }
+                            `;
+                                // Normalizar yyyy/mm/dd o yyyy-mm-dd
+                                const m2 = f.match(/^(\d{4})[\/\-](\d{2})[\/\-](\d{2})$/);
+                                if (m2) return `
+                            $ {
+                                m2[1]
+                            } - $ {
+                                m2[2]
+                            } - $ {
+                                m2[3]
+                            }
+                            `;
+                                // Fallback: devolver original
+                                return f;
+                            })()}</li>
+                            <li><strong>Microterritorio:</strong> ${data.microterritorio}</li>
+                            <li><strong>Responsable:</strong> ${data.nombre_responsable}</li>
+                        </ul>
+                        <div class="flex gap-2 mt-4">
+                            <a href="${URL_view.replace('__ID__', data.id)}" class="bg-gray-200 hover:bg-blue-600 text-teal-700 px-3 py-1 rounded text-sm">Ver</a>
+                            <a href="${URL_edit.replace('__ID__', data.id)}" class="bg-gray-200 hover:bg-amber-600 text-teal-700 px-3 py-1 rounded text-sm">Editar</a>
+                            <a href="${URL_delete.replace('__ID__', data.id)}" class="bg-gray-200 hover:bg-red-600 text-teal-700 px-3 py-1 rounded text-sm"
+                               onclick="return confirm('¿Seguro que quieres borrar #${data.id}?');">Borrar</a>
+                        </div>
+                    </div>
+                `;
+                        }
+                    }
                 },
+                dom: '<"flex flex-col md:flex-row items-center justify-between py-8"<"w-full md:w-2/3 flex"<"flex flex-row w-full mb-4 custom-search-container">><"flex items-center custom-pagination"p>>rt',
+                pageLength: 5,
+                processing: true,
                 serverSide: true,
                 ajax: {
                     url: "<?php echo $this->Html->url(array('controller' => 'familias', 'action' => 'familiasResponsablesIndex')); ?>",
@@ -332,7 +375,19 @@
                 order: [
                     [0, 'asc']
                 ],
-                columns: [{
+                columns: [
+                    // Columna control (+)
+                    {
+                        data: null,
+                        className: 'dtr-control',
+                        orderable: false,
+                        searchable: false,
+                        defaultContent: '',
+                        render: function() {
+                            return '<span class="text-gray-400">+</span>';
+                        }
+                    },
+                    {
                         data: "id",
                         name: "id"
                     },
@@ -361,15 +416,25 @@
                         name: "nombre_responsable"
                     },
                     {
-                        data: null,
+                        data: "id",
                         orderable: false,
                         searchable: false,
-                        render: function(data, type, row) {
-                            return '<a href="<?php echo $this->Html->url(array('controller' => 'familias', 'action' => 'view')); ?>/' + row.id + '" class="btn btn-sm btn-primary">Ver</a> ' +
-                                '<a href="<?php echo $this->Html->url(array('controller' => 'familias', 'action' => 'edit')); ?>/' + row.id + '" class="btn btn-sm btn-warning">Editar</a>';
+                        render: function(data) {
+                            const viewUrl = URL_view.replace('__ID__', data);
+                            const editUrl = URL_edit.replace('__ID__', data);
+                            const deleteUrl = URL_delete.replace('__ID__', data);
+                            return `
+          <div class="relative inline-block text-left">
+            <a href="${viewUrl}" class="block px-4 py-2 text-sm hover:bg-gray-100">Ver</a>
+            <a href="${editUrl}" class="block px-4 py-2 text-sm hover:bg-gray-100">Editar</a>
+            <hr class="my-1 border-gray-200">
+            <a href="${deleteUrl}" class="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100"
+               onclick="return confirm('¿Seguro que quieres borrar #${data}?');">Borrar</a>
+          </div>`;
                         }
                     }
                 ],
+                // Opcional: prioridades de columnas (qué esconder primero)
                 columnDefs: [{
                         responsivePriority: 1,
                         targets: 2
@@ -380,27 +445,15 @@
                     }, // objactividad
                     {
                         responsivePriority: 3,
-                        targets: -2
+                        targets: 1
                     } // created
-                ],
-                order: [
-                    [3, "desc"]
-                ], // Ordenar por fecha (columna 4) descendente
-                pageLength: 5,
-                lengthMenu: [
-                    [5, 10, 25],
-                    [5, 10, 25]
-                ],
-                searching: true,
-                search: {
-                    regex: false
-                }
+                ]
             });
+            $miTabla.removeClass("dataTable no-footer rounded-lg shadow-lg overflow-hidden");
 
-            $table.removeClass("dataTable no-footer rounded-lg shadow-lg overflow-hidden");
-
-             $('.custom-search-container').html(`
-        <div class="relative w-1/2">
+            // Reemplazar el input original por uno custom
+            $('.custom-search-container').html(`
+        <div class="relative w-full md:w-2/3">
             <svg class="absolute left-2 top-2.5 text-gray-400" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-scan-search-icon lucide-scan-search"><path d="M3 7V5a2 2 0 0 1 2-2h2"/><path d="M17 3h2a2 2 0 0 1 2 2v2"/><path d="M21 17v2a2 2 0 0 1-2 2h-2"/><path d="M7 21H5a2 2 0 0 1-2-2v-2"/><circle cx="12" cy="12" r="3"/><path d="m16 16-1.9-1.9"/></svg>
             <input 
                 type="search" 
@@ -554,25 +607,16 @@
 
         }
 
-            // Custom filter functions
-            $('#filterDepartamento, #filterMunicipio, #filterEstado, #filterAno').on('change', function() {
-                var departamento = $('#filterDepartamento').val();
-                var municipio = $('#filterMunicipio').val();
-                var estado = $('#filterEstado').val();
-                var ano = $('#filterAno').val();
+        // Función para la confirmación de borrado
+        function confirmarBorrado(id) {
+            if (confirm('¿Estás seguro de que quieres eliminar este registro?')) {
+                // Si el usuario confirma, redirige o envía una solicitud a la ruta de borrado.
+                // Aquí debes reemplazar '/ruta/borrar/' con tu URL real.
+                window.location.href = '/ruta/borrar/' + id;
+            }
+        }
 
-                // Apply filters
-                table.columns(1).search(departamento).draw();
-                table.columns(2).search(municipio).draw();
-                table.columns(5).search(estado).draw();
-
-                if (ano) {
-                    table.column(7).search(ano).draw();
-                } else {
-                    table.column(7).search('').draw();
-                }
-            });
-            
-       document.addEventListener('DOMContentLoaded', setupDropdowns);
+        // Llama a la función de configuración cuando el DOM esté cargado
+        document.addEventListener('DOMContentLoaded', setupDropdowns);
     </script>
 </body>

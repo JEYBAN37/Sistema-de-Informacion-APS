@@ -57,7 +57,11 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.5.0/css/responsive.dataTables.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/service-worker.js');
+        }
+    </script>
     <!-- JS -->
     <script src="https://cdn.datatables.net/responsive/2.5.0/js/dataTables.responsive.min.js"></script>
 </head>
@@ -101,7 +105,7 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
                     <a href='<?php echo $this->Html->url(['controller' => 'Familias', 'action' => 'index']); ?>'>
                         <h2
                             class="text-2xl md:text-4xl font-bold text-slate-800 leading-tight text-transparent bg-clip-text bg-gradient-to-r from-teal-600 to-cyan-600">
-                            {{ dataHome.title }}
+                           APS
                         </h2>
                     </a>
                 </div>
@@ -201,7 +205,7 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
                             <div class="submenu ml-8 mt-1 space-y-1">
                                 <button
                                     class="subitem block w-full text-left text-[13px] text-gray-500 hover:text-teal-600 hover:bg-gray-100 rounded p-1 cursor-pointer"
-                                    data-href="<?php echo $this->Html->url(['controller' => 'proactividades', 'action' => '/index']); ?>">
+                                    data-href="<?php echo $this->Html->url(['controller' => 'familias', 'action' => 'index_familias']); ?>">
                                     Registros Familias
                                 </button>
                                 <button
