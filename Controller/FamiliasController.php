@@ -84,31 +84,25 @@ class FamiliasController extends AppController
 	 *
 	 * @return void
 	 */
-	public function add()
+	public function add($sociambientals_id = null)
 	{
-
+		debug($sociambientals_id);
 		if ($this->request->is('post')) {
-			$this->Familia->create();
+			$this->request->data['Familia']['sociambientals_id'] = $sociambientals_id;
 			if ($this->Familia->save($this->request->data)) {
-				$this->Session->setFlash('Registro de hogar guradado', 'default', array('class' => 'alert alert-success'));
-				//return $this->redirect(array('action' => 'index'));
+				if ($this->request->data['btn'] == 'Guardar') {
+					$this->Session->setFlash('Registro de familia se guradado con exito, continuar con informacion de los integrantes', 'flash_custom', array('class' => 'success', 'title' => 'El registro se ha completado correctamente'));
+					return $this->redirect(array('controller' => 'Familias', 'action' => 'view', $this->Familia->id));
+				}
 
-				$id = $this->Familia->id;
-				$aux = "view/$id";
-				return $this->redirect(
-					array(
-						'action' => $aux,
-						'?' => array('view' => 'familias'),
-						'#' => 'top'
-					)
-				);
+				if ($this->request->data['btn'] == 'Agregar integrante') {
+					$this->Session->setFlash('Registro de familia se guradado con exito, continuar con informacion de los integrantes', 'flash_custom', array('class' => 'success', 'title' => 'El registro se ha completado correctamente'));
+					return $this->redirect(array('controller' => 'Juventudadultos', 'action' => 'add?familia=' . $this->Familia->id));
+				}
 			} else {
-				$this->Session->setFlash('No se ha guardado, por favor revisar campos', 'default', array('class' => 'alert alert-danger'));
+				$this->Session->setFlash('El registro no fue guardado o esta pendiente un campo del formulario', 'flash_custom', array('class' => 'error', 'title' => 'Error al guardar el registro'));
 			}
 		}
-		$sociambientals = $this->Familia->Sociambiental->find('list', array('order' => array('sociambiental.id' => 'desc')));
-
-		$this->set(compact('sociambientals'));
 	}
 
 
@@ -194,7 +188,7 @@ class FamiliasController extends AppController
 		$columns = array('Familia.id');
 
 		$start = isset($_GET['start']) ? intval($_GET['start']) : 0;
-		$length = isset($_GET['length']) ? intval($_GET['length']) : 5;
+		$length = isset($_GET['length']) ? intval($_GET['length']) : 3;
 		$search = isset($_GET['search']['value']) ? $_GET['search']['value'] : '';
 		$microterritorio = isset($_GET['microterritorio']) ? $_GET['microterritorio'] : '';
 		$fecha = isset($_GET['fecha']) ? $_GET['fecha'] : '';
@@ -270,7 +264,7 @@ class FamiliasController extends AppController
 				$conditions['Sociambiental.fecha'] = $fecha;
 			}
 		} else {
-				$conditions['Responsable.id'] = intval($responsable);
+			$conditions['Responsable.id'] = intval($responsable);
 		}
 
 		$total = $this->Familia->find('count');

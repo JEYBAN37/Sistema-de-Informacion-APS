@@ -94,7 +94,7 @@ class UsersController extends AppController
 
                     $responsableId = $this->Responsable->find('first', [
                         'conditions' => ['Responsable.numero' => $r['User']['username']],
-                        'fields' => ['Responsable.id'],
+                        'fields' => ['Responsable.id', 'Responsable.nombres'],
                         'recursive' => -1
                     ]);
 
@@ -103,6 +103,7 @@ class UsersController extends AppController
                         'password' => $r["User"]["password"],
                         'group_id' => $r["User"]["group_id"],
                         'responsable_id' => isset($responsableId['Responsable']['id']) ? $responsableId['Responsable']['id'] : 169,
+                        'nombre_responsable' => isset($responsableId['Responsable']['nombres']) ? $responsableId['Responsable']['nombres'] : 'LECTOR SISTEMA',
                     ];
 
 
@@ -113,7 +114,7 @@ class UsersController extends AppController
                         // return $this->redirect('controller' => 'orders', 'action' => 'thanks');
                         //$this->redirect("home");
                         return $this->redirect(
-                            array('controller' => 'familias', 'action' => 'index')
+                            array('controller' => 'Familias', 'action' => 'index')
                             );
                     }
                 } else {

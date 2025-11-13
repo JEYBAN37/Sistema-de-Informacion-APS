@@ -32,7 +32,7 @@ echo $this->Form->input('updateDate', array(
 ));
 
 echo $this->Form->input('responsable_id', [
-    'hidden' => true,
+    'type' => 'hidden',
 ]);
 
 $viviendaOptions = array(
@@ -189,8 +189,6 @@ $animalesOptions = [
 
 
 
-
-
 <div class="max-w-6xl mx-auto p-18">
     <div class="bg-white shadow-2xl rounded-xl  p-6  md:p-12">
 
@@ -214,27 +212,26 @@ $animalesOptions = [
                     <div class="flex flex-col w-full">
                         <?php
                         echo $this->Form->input('id', [
-                            'readonly' => true,
-                            'class' => 'border border-gray-300 rounded-lg w-full p-2 focus:outline-none  focus:ring-1 focus:ring-blue-500 focus:border-blue-500 borde azul  mt-2 font-semibold text-gray-700  text-sm focus:text-gray-900',
+                            'type' => 'text',
+                            'label' => '',
+                            'class' => 'bg-gray-50 border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400 w-full',
+                            'readonly' => true
                         ]);
                         ?>
                     </div>
                 </div>
             </div>
 
-            <div class="col-span-2 md:col-span-1 text-md font-semibold my-4 sm:mr-4">
+            <div class="col-span-2 md:col-span-1 text-md font-semibold my-4">
                 <div class="flex items-center">
                     <span class="mr-2 px-2 rounded-lg bg-gray-200 text-md font-semibold">2</span>
                     <label for="resultadoEcomapa" class="font-semibold">Responsable</label>
                 </div>
                 <div class="col-span-2 text-md font-semibold mt-6">
                     <div class="flex flex-col w-full">
-                        <input
-                            type="text"
-                            class="border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400 w-full"
-                            value="<?= $nombre ?>"
-                            readonly
-                            disabled />
+                        <div class="bg-gray-50 border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400 w-full">
+                            <?= h(!empty($nombre) ? $nombre : 'Ya validado'); ?>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -243,7 +240,7 @@ $animalesOptions = [
             <!-- Fecha de visita -->
             <div class="col-span-2 md:col-span-1 text-md font-semibold my-4 sm:mr-4">
                 <div class="flex items-center">
-                    <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">1</span>
+                    <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">3</span>
                     <label for="resultadoEcomapa" class="font-semibold">Fecha de visita</label>
                     <p class="text-red-600">*</p>
                 </div>
@@ -266,7 +263,7 @@ $animalesOptions = [
             <!-- Microterritorio -->
             <div class="col-span-2 md:col-span-1 text-md font-semibold my-6">
                 <div class="flex items-center mb-4">
-                    <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">2</span>
+                    <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">4</span>
                     <label for="familiograma" class="font-semibold">Microterritorio</label>
                     <p class="text-red-600">*</p>
                 </div>
@@ -290,7 +287,7 @@ $animalesOptions = [
 
             <div class="col-span-2 md:col-span-2 text-md font-semibold my-6">
                 <div class="flex items-center mb-4">
-                    <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">3</span>
+                    <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">5</span>
                     <label for="familiograma" class="font-semibold">Ubicacion Geoespacial</label>
                     <p class="text-red-600">*</p>
                 </div>
@@ -349,7 +346,7 @@ $animalesOptions = [
             <!-- Barrio / Vereda -->
             <div class="col-span-2 text-md font-semibold mt-4 mb-6 sm:mr-4">
                 <div class="flex items-center mb-4">
-                    <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">4</span>
+                    <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">6</span>
                     <label for="objactividad" class="font-semibold">Barrio / Vereda</label>
                 </div>
                 <?php
@@ -368,7 +365,7 @@ $animalesOptions = [
             <!-- direccion -->
             <div class="col-span-2 text-md font-semibold mt-4 mb-6">
                 <div class="flex items-center mb-4">
-                    <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">5</span>
+                    <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">7</span>
                     <label for="direccion" class="font-semibold">Nomenclatura de la Dirección</label>
                     <p class="text-red-600">*</p>
                 </div>
@@ -391,7 +388,7 @@ $animalesOptions = [
             <!-- Apellidos de la familia -->
             <div class="col-span-2 text-md font-semibold mt-4 mb-6 sm:mr-4">
                 <div class="flex items-center mb-4">
-                    <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">6</span>
+                    <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">8</span>
                     <label for="apellidosfamilia" class="font-semibold">Apellidos de la familia</label>
                     <p class="text-red-600">*</p>
                 </div>
@@ -411,7 +408,7 @@ $animalesOptions = [
             <!-- Tipo de Vivienda -->
             <div class="col-span-2 md:col-span-1 text-md font-semibold my-6 mr-4">
                 <div class="flex items-center mb-4">
-                    <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">7</span>
+                    <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">9</span>
                     <label for="proactividad_id" class="font-semibold">Tipo de Vivienda</label>
                     <p class="text-red-600">*</p>
 
@@ -436,7 +433,7 @@ $animalesOptions = [
             <!-- Estrato -->
             <div class="col-span-2 md:col-span-1 text-md font-semibold my-6 mr-4">
                 <div class="flex items-center mb-4">
-                    <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">8</span>
+                    <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">10</span>
                     <label for="proactividad_id" class="font-semibold">Estrato</label>
                     <p class="text-red-600">*</p>
 
@@ -460,7 +457,7 @@ $animalesOptions = [
 
             <div class="col-span-2 md:col-span-1 text-md font-semibold my-6 mr-4">
                 <div class="flex items-center mb-4">
-                    <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">9</span>
+                    <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">11</span>
                     <label for="numerohabitantes" class="font-semibold">¿Cuantas personas habitan en la vivienda?</label>
                     <p class="text-red-600">*</p>
                 </div>
@@ -481,7 +478,7 @@ $animalesOptions = [
 
             <div class="col-span-2 md:col-span-1 text-md font-semibold my-6 mr-4">
                 <div class="flex items-center mb-4">
-                    <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">10</span>
+                    <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">12</span>
                     <label for="numerohogares" class="font-semibold">N°. familias en la vivienda</label>
                     <p class="text-red-600">*</p>
                 </div>
@@ -1078,15 +1075,18 @@ $animalesOptions = [
                         <label for="numeroAnimales" class="font-semibold">¿Cuantos animales hay en el hogar?</label>
                     </div>
                     <?php
+                    $value = $this->Form->value('numeroPerros');
+                    if ($value === 'acion') {
+                        $value = 0;
+                    }
                     echo $this->Form->input('numeroPerros', [
                         'type' => 'number',
                         'label' => false,
                         'empty' => false,
+                        'value' => ($value !== null && $value !== '') ? $value : 0,
                         'class' => 'border border-gray-300 rounded-lg w-full p-2 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 text-sm text-gray-500 focus:text-gray-800',
                         'error' => false,
-                        'label' => '',
                         'default' => 0,
-
                     ]);
                     if (!empty($this->Form->error('numeroPerros'))) {
                         echo '<div class="text-red-600 text-md mt-1 font-semibold">' . $this->Form->error('numeroPerros') . '</div>';

@@ -18,48 +18,45 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
 
     echo $this->Html->meta('icon');
 
-    // ✅ Tailwind CDN
+    // ✅ Tailwind CSS (solo una vez)
     echo $this->Html->css("https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css");
 
     // ✅ DataTables CSS
-    echo $this->Html->css("https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css");
+    echo $this->Html->css("https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css");
+    echo $this->Html->css("https://cdn.datatables.net/responsive/2.5.0/css/responsive.dataTables.min.css");
+    echo $this->Html->css("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css");
 
-    // jQuery y DataTables
-    echo $this->Html->script("https://code.jquery.com/jquery-3.6.0.min.js");
-    echo $this->Html->script("https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js");
+    // ✅ CKEditor
     echo $this->Html->script('ckeditor/ckeditor');
     ?>
-    <!-- Tailwind -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Vue -->
-    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 
-    <!-- Choices.js -->
+    <!-- 🧩 Tailwind (JS) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- 🧩 Choices.js -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css" />
     <script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
 
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
-    <script src="https://cdn.jsdelivr.net/npm/jquery"></script>
-    <script src="https://cdn.jsdelivr.net/npm/moment"></script>
-    <script src="https://cdn.jsdelivr.net/npm/daterangepicker"></script>
-    <!-- Incluye DataTables y Buttons -->
-
+    <!-- 🧩 jQuery (SOLO UNA VEZ, al inicio de scripts que dependen de él) -->
     <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+
+    <!-- 🧩 Moment + Daterangepicker (orden correcto) -->
+    <script src="https://cdn.jsdelivr.net/npm/moment@2.29.4/min/moment.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+    <script src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+
+    <!-- 🧩 DataTables y extensiones -->
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.5.0/js/dataTables.responsive.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/2.4.2/js/dataTables.buttons.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.html5.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.print.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.colVis.min.js"></script> <!-- 👈 necesario -->
+    <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.colVis.min.js"></script>
+
+    <!-- 🧩 Dependencias para exportar -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
-    <!-- CSS -->
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.5.0/css/responsive.dataTables.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-    <!-- JS -->
-    <script src="https://cdn.datatables.net/responsive/2.5.0/js/dataTables.responsive.min.js"></script>
 </head>
 <style>
     /* transición suave para submenús */
@@ -101,13 +98,13 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
                     <a href='<?php echo $this->Html->url(['controller' => 'Familias', 'action' => 'index']); ?>'>
                         <h2
                             class="text-2xl md:text-4xl font-bold text-slate-800 leading-tight text-transparent bg-clip-text bg-gradient-to-r from-teal-600 to-cyan-600">
-                            {{ dataHome.title }}
+                            APS
                         </h2>
                     </a>
                 </div>
 
-                <img class="md:hidden w-50 h-10 object-cover cursor-pointer" :alt="dataHome.alt"
-                    :src="dataHome.adminIcon.default">
+                <img class="md:hidden w-50 h-10 object-cover cursor-pointer" alt="Logo Colombia"
+                    src="<?php echo $this->webroot; ?>/img/aps_v2025/logo_colombia.png" />
             </div>
 
             <!-- Mobile button removed - solo usar el botón de flecha -->
@@ -117,9 +114,9 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
 
                 <!-- Botón admin solo si grupoUsuario == 1 -->
                 <button v-if="grupoUsuario === '1'" type="button" class="p-0 bg-transparent border-none"
-                    @click="goTo('/homePage/userAdmin')" aria-label="Ir a Administrador">
-                    <img class="w-50 h-10 object-cover cursor-pointer" :alt="dataHome.alt"
-                        :src="dataHome.adminIcon.default">
+                    aria-label="Ir a Administrador" href="<?php echo $this->Html->url(['controller' => 'Familias', 'action' => 'index']); ?>">
+                    <img class="w-50 h-10 object-cover cursor-pointer" alt="Logo Colombia"
+                        src="<?php echo $this->webroot; ?>/img/aps_v2025/logo_colombia.png" />
                 </button>
             </div>
         </div>
@@ -153,8 +150,10 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
                 <div class="p-6 h-full relative">
                     <!-- Header / Usuario -->
                     <div class="mb-6 pl-2 mt-8  md:mt-0">
-                        <h1 id="nombreUsuario" class="text-lg font-semibold">{{ nombreUsuario }}</h1>
-                        <p id="rolUsuario" class="text-sm text-[#5DD395]">{{ rolUsuario }}</p>
+                        <h1 id="nombreUsuario" class="text-sm font-semibold"><?php echo
+                                                                                $nombreUsuario = isset($_SESSION['Auth']['User']['nombre_responsable']) ? mb_strtoupper($_SESSION['Auth']['User']['nombre_responsable'], 'UTF-8') : '';
+                                                                        ?></h1>
+                        <p id="rolUsuario" class="text-sm text-[#5DD395]">Encuestador</p>
                     </div>
 
                     <!-- Menú -->
@@ -201,7 +200,7 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
                             <div class="submenu ml-8 mt-1 space-y-1">
                                 <button
                                     class="subitem block w-full text-left text-[13px] text-gray-500 hover:text-teal-600 hover:bg-gray-100 rounded p-1 cursor-pointer"
-                                    data-href="<?php echo $this->Html->url(['controller' => 'familias', 'action' => 'view']); ?>">
+                                    data-href="<?php echo $this->Html->url(['controller' => 'familias', 'action' => 'index_familias']); ?>">
                                     Registros Familias
                                 </button>
                                 <button
@@ -333,47 +332,19 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
         </main>
 
     </div>
+
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/APS_DEMO/sw.js')
+                    .then(reg => console.log('✅ Service Worker registrado:', reg.scope))
+                    .catch(err => console.error('❌ Error al registrar el Service Worker:', err));
+            });
+        }
+    </script>
 </body>
 
 <script>
-    const URLCAKE = "http://localhost/PIC";
-    const {
-        createApp
-    } = Vue;
-    createApp({
-        data() {
-            return {
-                grupoUsuario: "1",
-                nombreUsuario: "Usuario",
-                rolUsuario: "EBS001",
-                dataHome: {
-                    alt: "Logo",
-                    img: "https://via.placeholder.com/40x50",
-                    href: "/",
-                    title: "APS",
-                    adminIcon: {
-                        default: "<?php echo $this->webroot; ?>/img/aps_v2025/logo_colombia.png",
-                    },
-                    icons: [{
-                        key: "Home",
-                        default: "",
-                        action: () => {
-                            window.location.href = `/react/#/homePage`;
-                        }
-                    }, ]
-                }
-            }
-        },
-        methods: {
-            goTo(path) {
-                window.location.href = path;
-            }
-        },
-        mounted() {
-
-        }
-    }).mount('#app');
-
     // ----- Control del Sidebar -----
     const sidebar = document.getElementById('sidebar');
     const sidebarContainer = document.getElementById('sidebarContainer');

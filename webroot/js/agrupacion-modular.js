@@ -1,2 +1,0 @@
-
-// Opciones que deseas mostrar

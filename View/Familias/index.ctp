@@ -127,8 +127,8 @@
                         <th class="px-4 py-2 font-semibold text-center cursor-pointer hover:bg-green-100">Celular</th>
                         <th class="px-16 py-2 font-semibold text-center cursor-pointer hover:bg-green-100">Fecha</th>
                         <th class="px-16 py-2 font-semibold text-center cursor-pointer hover:bg-green-100">Microterritorio</th>
-                        <th class="px-16 py-2 font-semibold text-center cursor-pointer hover:bg-green-100">Responsable</th>
-                        <th class="px-2 py-2 font-semibold text-center cursor-pointer hover:bg-green-100">ID Vivienda</th>
+                        <th class="px-16 py-2 font-semibold text-center cursor-pointer hover:bg-green-100">ID Vivienda</th>
+                        <th class="px-2 py-2 font-semibold text-center cursor-pointer hover:bg-green-100">Responsable</th>
                         <th class="px-2 py-2 font-semibold text-center cursor-pointer hover:bg-green-100">Acciones</th>
                     </tr>
                 </thead>
@@ -171,38 +171,6 @@
     </style>
 
     <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            const choices = new Choices("#territorioSelect", { // Botón para eliminar seleccionados
-                searchEnabled: true, // 🔎 activa búsqueda
-                searchChoices: true, // 🔎 filtra opciones
-                removeItemButton: false, // ❌ no mostrar botón de eliminar
-                itemSelectText: '', // 🚫 quita el "Press to select"
-                shouldSort: false, // 📌 mantiene el orden original
-                searchPlaceholderValue: "Escriba para filtrar...", // placeholder búsqueda
-                renderChoiceLimit: -1, // Sin límite de renderizado
-                searchResultLimit: 20, // Puedes aumentar este valor si tienes muchos resultados
-            });
-
-            // Aplicar estilos con Tailwind
-            const inner = document.querySelector('.choices__inner');
-            if (inner) {
-                inner.classList.add(
-                    'bg-white', 'border', 'border-gray-300', 'rounded-lg',
-                    'px-3', 'py-2', 'focus:ring', 'focus:ring-blue-200', 'text-gray-700', 'w-full', 'z-50'
-                );
-            }
-
-            const dropdown = document.querySelector('.choices__list--dropdown');
-            if (dropdown) {
-                dropdown.classList.add('z-50', 'bg-white', 'shadow-lg', 'rounded-lg', 'border', 'border-gray-200', 'text-gray-700');
-            }
-
-            const searchInput = document.querySelector('.choices[data-type*=select-one]');
-            if (searchInput) {
-                searchInput.classList.add('w-full', );
-            }
-        });
-
         function toSociambiental() {
             if (confirm('¿Está seguro de realizar esta acción?')) {
                 window.location.href = '<?php echo $this->Html->url(['controller' => 'Sociambientals', 'action' => 'add']); ?>';
@@ -210,8 +178,26 @@
         }
 
         function toFamilia() {
-            if (confirm('¿Está seguro de realizar esta acción?')) {
-                window.location.href = '<?php echo $this->Html->url(['controller' => 'Familias', 'action' => 'add']); ?>';
+            // Solicita al usuario el ID de vivienda
+            const input = prompt('Ingrese el ID de vivienda para crear la familia (ej: 123):');
+            if (input === null) return; // usuario canceló
+
+            const idVivienda = input.trim();
+            if (idVivienda === '') {
+                alert('Debe ingresar un ID de vivienda para continuar.');
+                return;
+            }
+
+            // Validación básica: permitir solo números, pero dar opción si no es numérico
+            if (!/^\d+$/.test(idVivienda)) {
+                if (!confirm('El ID ingresado no parece numérico. ¿Desea continuar de todos modos?')) {
+                    return;
+                }
+            }
+
+            if (confirm('¿Está seguro de crear la familia con ID de vivienda ' + idVivienda + '?')) {
+                // Redirige a la acción add pasando el ID como segmento de URL
+                window.location.href = '<?php echo $this->Html->url(['controller' => 'Familias', 'action' => 'add']); ?>/' + idVivienda;
             }
         }
 
@@ -360,7 +346,7 @@
                     }
                 },
                 dom: '<"flex flex-col md:flex-row items-center justify-between py-8"<"w-full md:w-2/3 flex"<"flex flex-row w-full mb-4 custom-search-container">><"flex items-center custom-pagination"p>>rt',
-                pageLength: 5,
+                pageLength: 3,
                 processing: true,
                 serverSide: true,
                 ajax: {
@@ -526,7 +512,6 @@
             table.on("draw", function() {
                 updatePageInfo();
                 setupDropdowns(); // <-- Vuelve a conectar los eventos cada vez que se dibuja la tabla
-                stylePagination && stylePagination(); // si tienes esta función
             });
             updatePageInfo();
 
@@ -536,12 +521,15 @@
                 table.search(this.value).draw();
             });
 
-            table.on('draw', stylePagination);
+            table.on('draw');
         });
 
 
         // Función para manejar el despliegue de los menús
         function setupDropdowns() {
+
+            localStorage.removeItem('consentAccepted');
+            
             const buttons = document.querySelectorAll('[id^="menu-button-"]');
 
             buttons.forEach(button => {
