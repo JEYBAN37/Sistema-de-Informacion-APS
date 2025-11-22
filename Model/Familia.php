@@ -212,7 +212,7 @@ class Familia extends AppModel
 		'tipofamilia' => array(
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),
-				'message' => 'Revisar campo',
+				'message' => 'El tipo de familia no puede estar vacío',
 				//'allowEmpty' => false,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule
@@ -222,7 +222,7 @@ class Familia extends AppModel
 		'nombres' => array(
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),
-				'message' => 'Revisar campo',
+				'message' => 'El nombre no puede estar vacío',
 				//'allowEmpty' => false,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule
@@ -232,24 +232,19 @@ class Familia extends AppModel
 		'apellidos' => array(
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),
-				'message' => 'Revisar campo',
+				'message' => 'El apellido no puede estar vacío',
 				//'allowEmpty' => false,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
 		),
-		'tipodocumento' => array(
+		'tipodocumento' => array(),
+		'numerodocumento' => array(
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+				'message' => 'El número de documento no puede estar vacío',
 			),
-		),
-		'numerodocumento' => array(
 			'numeric' => array(
 				'rule' => array('isUnique'),
 				'message' => 'La persona con este número de documento ya está asociada a un hogar',
@@ -264,7 +259,7 @@ class Familia extends AppModel
 		'rol' => array(
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),
-				'message' => 'Revisar campo',
+				'message' => 'Quien atiende no puede estar vacío',
 				//'allowEmpty' => false,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule
@@ -287,7 +282,7 @@ class Familia extends AppModel
 		'celular' => array(
 			'numeric' => array(
 				'rule' => array('numeric'),
-				'message' => 'Revisar campo',
+				'message' => '	Numero de celular no obligatorio',
 				//'allowEmpty' => false,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule
@@ -298,7 +293,7 @@ class Familia extends AppModel
 		'numeropersonas' => array(
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),
-				'message' => 'Revisar campo',
+				'message' => 'Numero de personas no puede estar vacío',
 				//'allowEmpty' => false,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule
@@ -309,7 +304,7 @@ class Familia extends AppModel
 		'vivienda' => array(
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),
-				'message' => 'Revisar campo',
+				'message' => 'La vivienda no puede estar vacía',
 				//'allowEmpty' => false,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule
@@ -320,7 +315,7 @@ class Familia extends AppModel
 		'tenencia' => array(
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),
-				'message' => 'Revisar campo',
+				'message' => 'La tenencia no puede estar vacía',
 				//'allowEmpty' => false,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule
@@ -331,7 +326,8 @@ class Familia extends AppModel
 		'combustible' => array(
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),
-				'message' => 'Revisar campo',
+				'rule' => array('multiple', array('min' => 1)),
+				'message' => 'El combustible no puede estar vacío',
 				//'allowEmpty' => false,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule
@@ -352,7 +348,7 @@ class Familia extends AppModel
 		'cursovidafamilia' => array(
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),
-				'message' => 'Revisar campo',
+				'message' => 'El curso de vida no puede estar vacío',
 				//'allowEmpty' => false,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule
@@ -372,7 +368,7 @@ class Familia extends AppModel
 		'estilodevidapredominante' => array(
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),
-				'message' => 'Revisar campo',
+				'message' => 'El estilo de vida predominante no puede estar vacío',
 				//'allowEmpty' => false,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule
@@ -382,27 +378,29 @@ class Familia extends AppModel
 		'poblacionvulnerable' => array(
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),
-				'message' => 'Revisar campo',
+				'rule' => array('multiple', array('min' => 1)),
+				'message' => 'La población vulnerable no puede estar vacía',
 				//'allowEmpty' => false,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
 		),
-		/*'poblacionvulnerable1' => array(
+		'alimentos' => array(
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),
-				'message' => 'Revisar campo',
+				'rule' => array('multiple', array('min' => 1)),
+				'message' => 'Los alimentos no pueden estar vacíos',
 				//'allowEmpty' => false,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
-		),*/
+		),
 		'hogar' => array(
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),
-				'message' => 'Revisar campo',
+				'message' => 'El hogar no puede estar vacío',
 				//'allowEmpty' => false,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule
@@ -412,7 +410,8 @@ class Familia extends AppModel
 		'antecedenteenfermedad' => array(
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),
-				'message' => 'Revisar campo',
+				'rule' => array('multiple', array('min' => 1)),
+				'message' => 'El antecedente de enfermedad no puede estar vacío',
 				//'allowEmpty' => false,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule
@@ -442,7 +441,8 @@ class Familia extends AppModel
 		'riesgopsicosocial' => array(
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),
-				'message' => 'Revisar campo',
+				'rule' => array('multiple', array('min' => 1)),
+				'message' => 'El riesgo psicosocial no puede estar vacío',
 				//'allowEmpty' => false,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule
@@ -459,7 +459,7 @@ class Familia extends AppModel
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
 		),
-		'riesgopsicosocial2' => array(
+	riesgopsicosocial2' => array(
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),
 				'message' => 'Revisar campo',
@@ -472,7 +472,7 @@ class Familia extends AppModel
 		'programasocial' => array(
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),
-				'message' => 'Revisar campo',
+				'message' => 'El programa social no puede estar vacío',
 				//'allowEmpty' => false,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule
@@ -502,7 +502,7 @@ class Familia extends AppModel
 		'cepilladodientes' => array(
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),
-				'message' => 'Revisar campo',
+				'message' => 'El cepillado de dientes no puede estar vacío',
 				//'allowEmpty' => false,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule
@@ -513,7 +513,7 @@ class Familia extends AppModel
 		'elementoshigiene' => array(
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),
-				'message' => 'Revisar campo',
+				'message' => 'Los elementos de higiene no pueden estar vacíos',
 				//'allowEmpty' => false,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule
@@ -523,7 +523,7 @@ class Familia extends AppModel
 		'lavadomanos' => array(
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),
-				'message' => 'Revisar campo',
+				'message' => 'El lavado de manos no puede estar vacío',
 				//'allowEmpty' => false,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule
@@ -533,7 +533,7 @@ class Familia extends AppModel
 		'aseococina' => array(
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),
-				'message' => 'Revisar campo',
+				'message' => 'El aseo de la cocina no puede estar vacío',
 				//'allowEmpty' => false,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule
@@ -553,7 +553,7 @@ class Familia extends AppModel
 		'higiene' => array(
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),
-				'message' => 'Revisar campo',
+				'message' => 'La higiene no puede estar vacía',
 				//'allowEmpty' => false,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule
@@ -563,7 +563,7 @@ class Familia extends AppModel
 		'saludalternativa' => array(
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),
-				'message' => 'Revisar campo',
+				'message' => 'La salud alternativa no puede estar vacía',
 				//'allowEmpty' => false,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule
@@ -573,7 +573,7 @@ class Familia extends AppModel
 		'cuidadopermanente' => array(
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),
-				'message' => 'Revisar campo',
+				'message' => 'El cuidado permanente no puede estar vacío',
 				//'allowEmpty' => false,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule
@@ -583,7 +583,7 @@ class Familia extends AppModel
 		'enfermedadtransmible' => array(
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),
-				'message' => 'Revisar campo',
+				'message' => 'La enfermedad transmisible no puede estar vacía',
 				//'allowEmpty' => false,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule
@@ -604,7 +604,7 @@ class Familia extends AppModel
 		'tiemporesidencia' => array(
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),
-				'message' => 'Revisar campo',
+				'message' => 'El tiempo de residencia no puede estar vacío',
 				//'allowEmpty' => false,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule
@@ -614,7 +614,7 @@ class Familia extends AppModel
 		'permanenciaresidencia' => array(
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),
-				'message' => 'Revisar campo',
+				'message' => 'La permanencia en la residencia no puede estar vacía',
 				//'allowEmpty' => false,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule
@@ -622,16 +622,7 @@ class Familia extends AppModel
 			),
 		),
 
-		'resguardo' => array(
-			'notEmpty' => array(
-				'rule' => array('notEmpty'),
-				'message' => 'Revisar campo',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			),
-		),
+		'resguardo' => array(),
 		'poblacionetnica' => array(
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),
@@ -768,4 +759,66 @@ class Familia extends AppModel
 			'counterQuery' => ''
 		)
 	);
+
+
+	public function beforeSave($options = array())
+	{
+		if (isset($this->data[$this->alias]['combustible']) && is_array($this->data[$this->alias]['combustible'])) {
+			$this->data[$this->alias]['combustible'] = implode(',', $this->data[$this->alias]['combustible']);
+		}
+		if (isset($this->data[$this->alias]['poblacionvulnerable']) && is_array($this->data[$this->alias]['poblacionvulnerable'])) {
+			$this->data[$this->alias]['poblacionvulnerable'] = implode(',', $this->data[$this->alias]['poblacionvulnerable']);
+		}
+		if (isset($this->data[$this->alias]['antecedenteenfermedad']) && is_array($this->data[$this->alias]['antecedenteenfermedad'])) {
+			$this->data[$this->alias]['antecedenteenfermedad'] = implode(',', $this->data[$this->alias]['antecedenteenfermedad']);
+		}
+		if (isset($this->data[$this->alias]['riesgopsicosocial']) && is_array($this->data[$this->alias]['riesgopsicosocial'])) {
+			$this->data[$this->alias]['riesgopsicosocial'] = implode(',', $this->data[$this->alias]['riesgopsicosocial']);
+		}
+		if (isset($this->data[$this->alias]['alimentos']) && is_array($this->data[$this->alias]['alimentos'])) {
+			$this->data[$this->alias]['alimentos'] = implode(',', $this->data[$this->alias]['alimentos']);
+		}
+
+		return true;
+	}
+
+
+	public function tranformData($data)
+	{
+		// Ejemplo: viene "2. Hombres,4. Niños y niñas"
+		if (!empty($data['Familia']['combustible'])) {
+			$poblacionStr = $data['Familia']['combustible'];
+			// Extraer cada palabra/frase hasta la coma
+			$tipos = array_map('trim', explode(',', $poblacionStr));
+			$data['Familia']['combustible'] = $tipos;
+		}
+		if (!empty($data['Familia']['poblacionvulnerable'])) {
+			$poblacionStr = $data['Familia']['poblacionvulnerable'];
+			// Extraer cada palabra/frase hasta la coma
+			$tipos = array_map('trim', explode(',', $poblacionStr));
+			$data['Familia']['poblacionvulnerable'] = $tipos;
+		}
+		if (!empty($data['Familia']['antecedenteenfermedad'])) {
+			$poblacionStr = $data['Familia']['antecedenteenfermedad'];
+			// Extraer cada palabra/frase hasta la coma
+			$tipos = array_map('trim', explode(',', $poblacionStr));
+			$data['Familia']['antecedenteenfermedad'] = $tipos;
+		}
+
+		if (!empty($data['Familia']['riesgopsicosocial'])) {
+			$poblacionStr = $data['Familia']['riesgopsicosocial'];
+			// Extraer cada palabra/frase hasta la coma
+			$tipos = array_map('trim', explode(',', $poblacionStr));
+			$data['Familia']['riesgopsicosocial'] = $tipos;
+		}
+
+		if (!empty($data['Familia']['alimentos'])) {
+			$poblacionStr = $data['Familia']['alimentos'];
+			// Extraer cada palabra/frase hasta la coma
+			$tipos = array_map('trim', explode(',', $poblacionStr));
+			$data['Familia']['alimentos'] = $tipos;
+		}
+
+		return $data;
+	}
 }

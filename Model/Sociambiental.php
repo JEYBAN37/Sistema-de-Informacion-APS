@@ -225,7 +225,6 @@ class Sociambiental extends AppModel
 		),
 		'riesgoexterno' => array(
 			'notEmpty' => array(
-
 				'rule' => array('notEmpty'),
 				'rule' => array('multiple', array('min' => 1)),
 				'message' => 'Por favor seleccione al menos una opción',

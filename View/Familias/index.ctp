@@ -79,8 +79,12 @@
                 </div>
             </button>
 
-
+                   
+        <div  class="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 p-8 border-2 border-transparent hover:border-teal-500 transform hover:-translate-y-1">
+            <iframe width="100%" height="100%" src="https://lookerstudio.google.com/embed/reporting/f70581e1-168b-41e5-b9c5-33a679e40b3c/page/p_gwatai39xd" frameborder="0" style="border:0" allowfullscreen sandbox="allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox"></iframe>
         </div>
+        </div>
+
 
         <!-- Stats Section -->
         <div class="bg-white rounded-2xl shadow-lg p-6 mb-8">
@@ -529,7 +533,7 @@
         function setupDropdowns() {
 
             localStorage.removeItem('consentAccepted');
-            
+
             const buttons = document.querySelectorAll('[id^="menu-button-"]');
 
             buttons.forEach(button => {

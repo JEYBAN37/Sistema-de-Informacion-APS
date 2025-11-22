@@ -1,4 +1,8 @@
 <?php $this->layout = 'default_familia';
+echo $this->Form->create('Familia', [
+    'class' => 'space-y-6',
+    'novalidate' => true
+]);
 $rolOption = [
     ' ' => 'Elegir',
     'Padre' => 'Padre',
@@ -173,7 +177,6 @@ $optionTranmisibles = [
 ];
 
 $optionConflictos = [
-
     '2.No' => 'No refiere',
     '1.Conflictos conyugales' => 'Conflictos conyugales',
     '1.Conflictos entre padres e hijos' => 'Conflictos entre padres e hijos',
@@ -192,25 +195,29 @@ $optionAlternativa = [
     '2.No' => 'No',
     '1.Si' => 'Si',
 ];
+
+$alimentosHogar = [
+    '1.Cultivo' => 'Cultivo',
+    '6.Compra' => 'Compra',
+    '7.Asistencia del Estado' => 'Ayuda gubernamental',
+    '8.Apoyo familiar' => 'Apoyo familiar',
+];
 ?>
-<?php echo $this->Form->create('Familia', [
-    'class' => 'space-y-6',
-    'novalidate' => true
-]); ?>
+
 
 <!-- Formulario ZARIT tipo wizard -->
 <div id="zaritWizard" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-40" style="display: none;">
     <div class="bg-white rounded-xl shadow-2xl max-w-lg w-full p-8 relative">
         <button type="button" class="absolute top-4 right-4 text-gray-400 hover:text-gray-700 text-2xl font-bold" onclick="cerrarZaritWizard()">×</button>
         <h3 class="text-2xl font-semibold mb-4 text-center text-teal-600">ZARIT</h3>
-        <form id="zaritForm">
+        <div id="zaritForm">
             <div id="zaritStepContainer">
                 <!-- Las preguntas se insertan aquí por JS -->
             </div>
             <div class="flex justify-center mt-6">
                 <button type="button" id="zaritNextBtn" class="bg-teal-600 hover:bg-teal-700 text-white px-6 py-2 rounded-lg font-semibold">Siguiente</button>
             </div>
-        </form>
+        </div>
         <div id="zaritResult" class="hidden mt-6 text-center">
             <div class="mb-2">
                 <span class="font-bold">Puntaje total:</span>
@@ -613,7 +620,7 @@ $optionAlternativa = [
                 }
                 ?>
             </div>
-            <div class="col-span-2 md:col-span-1 text-md font-semibold mt-4 mb-6">
+            <div class="col-span-2 md:col-span-1 text-md font-semibold mt-4 mb-6 md:mr-4">
                 <div class="flex items-center mb-4">
                     <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">4</span>
                     <label for="nombre" class="font-semibold">Identifique el tipo de población que hay familia</label>
@@ -694,28 +701,46 @@ $optionAlternativa = [
                 </div>
             </div>
 
-
-            <div class="col-span-2 md:col-span-1 text-md font-semibold mt-4 mb-6">
-                <div class="flex items-center mb-4">
+            <div class="flex flex-col md:flex-row justify-center md:justify-between col-span-1 md:col-span-2 text-md font-semibold my-6 mr-4">
+                <div class="md:w-1/2 flex items-center mb-4">
                     <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">6</span>
-                    <label for="nombre" class="font-semibold">¿En la familia hay integrantes que pertenezcan a la comunidad LGBTI?</label>
-                    <p class="text-red-600">*</p>
+                    <label for="programasocial" class="font-semibold">¿En la familia hay integrantes que pertenezcan a la comunidad LGBTI?</label>
                 </div>
-                <?php
-                echo $this->Form->input('lgtbi', [
-                    'type' => 'select',
-                    'options' => $optionLgtbi,
-                    'id' => 'lgtbi',
-                    'error' => false,
-                    'label' => false,
-                    'class' => 'border border-gray-300 rounded-lg w-full p-2 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 text-sm text-gray-500 focus:text-gray-800',
-                    'empty' => 'Selecciona una opción',
-                ]);
 
-                if (!empty($this->Form->error('lgtbi'))) {
-                    echo '<div class="text-red-600 text-md mt-1 font-semibold">' . $this->Form->error('cursovidafamilia') . '</div>';
-                }
-                ?>
+                <div class="flex space-x-4 items-center justify-center md:justify-start mt-4 pr-0 md:pr-[10%]  md:mt-0 ">
+                    <!-- Botón NO -->
+                    <div>
+                        <input type="radio"
+                            name="data[Familia][lgtbi]"
+                            id="lgtbi-no"
+                            value="0"
+                            class="hidden peer"
+                            data-target="lgtbi"
+                            data-show="false"
+                            checked /> <!-- 👈 Por defecto NO -->
+                        <label for="lgtbi-no"
+                            class="px-12 py-2 rounded-lg border cursor-pointer hover:text-white hover:bg-teal-600
+                       peer-checked:bg-teal-600 peer-checked:text-white">
+                            NO
+                        </label>
+                    </div>
+
+                    <!-- Botón SÍ -->
+                    <div>
+                        <input type="radio"
+                            name="data[Familia][lgtbi]"
+                            id="lgtbi-si"
+                            value="1"
+                            data-target="lgtbi"
+                            data-show="true"
+                            class="hidden peer cursor-pointer" />
+                        <label for="lgtbi-si"
+                            class="px-12 py-2 rounded-lg border hover:bg-teal-600 cursor-pointer hover:text-white
+                       peer-checked:bg-teal-600 peer-checked:text-white">
+                            SI
+                        </label>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -739,21 +764,22 @@ $optionAlternativa = [
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2">
+
             <div class="col-span-2 md:col-span-1 text-md font-semibold mt-4 mb-2 md:mr-4">
                 <div class="flex items-center mb-4">
                     <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">1</span>
-                    <label for="nombre" class="font-semibold">Antecedentes familiares de enfermedad</label>
+                    <label for="antecedenteenfermedad" class="font-semibold">Antecedentes familiares de enfermedad</label>
                     <p class="text-red-600">*</p>
                 </div>
                 <?php
                 echo $this->Form->input('antecedenteenfermedad', [
                     'type' => 'select',
+                    'multiple' => true,
                     'id' => 'antecedenteenfermedad',
                     'error' => false,
                     'options' => $optionEnferemedadAntecedentes,
                     'class' => 'border border-gray-300 rounded-lg w-full p-2 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 text-sm text-gray-500 focus:text-gray-800',
                     'label' => false,
-                    'multiple' => true,
                     'empty' => false,
                 ]);
 
@@ -762,7 +788,6 @@ $optionAlternativa = [
                 }
                 ?>
             </div>
-
 
 
             <div class="col-span-2 md:col-span-1 text-md font-semibold mt-4 mb-2">
@@ -905,7 +930,7 @@ $optionAlternativa = [
             </svg>
             <div class="ml-4">
                 <h1 class="text-xl font-semibold">APGAR Familiar</h1>
-                <p class="text-gray-500">Complementa la información de la evaluación familiar.</p>
+                <p class="text-gray-500">Complementa la información de la evaluación familiar. segun el puntaje asignado ( 0 = 0 , 1 = Nunca , 2 = Algunas veces , 3 = La mayoría de veces , 4 = Siempre )</p>
             </div>
 
         </div>
@@ -918,31 +943,31 @@ $optionAlternativa = [
                     </label>
                     <p class="text-red-600">*</p>
                 </div>
-                <div class="flex space-x-4 items-start justify-center md:justify-start pr-0 md:pr-[10%] md:mt-0 ">
+                <div class="flex space-x-8 items-start justify-center md:justify-start pr-0 md:pr-[10%] md:mt-0 ">
                     <!-- Botón NO -->
                     <div class="flex flex-col items-center">
                         <input type="radio" name="data[Familia][ayudafamiliar]" value="4">
-                        <label for="ayudafamiliar_no" class="ml-2 text-xs">Siempre</label>
+                        <label for="ayudafamiliar_no" class="text-xs">4</label>
                     </div>
 
                     <div class="flex flex-col items-center justify-start">
                         <input type="radio" name="data[Familia][ayudafamiliar]" value="3">
-                        <label for="ayudafamiliar_no" class="ml-2 text-xs text-center">La mayoría de veces</label>
+                        <label for="ayudafamiliar_no" class="text-xs text-center">3</label>
                     </div>
 
                     <div class="flex flex-col items-center justify-start">
                         <input type="radio" name="data[Familia][ayudafamiliar]" value="2">
-                        <label for="ayudafamiliar_no" class="ml-2 text-xs text-center">Algunas veces</label>
+                        <label for="ayudafamiliar_no" class="text-xs text-center">2</label>
                     </div>
 
                     <div class="flex flex-col items-center justify-start">
                         <input type="radio" name="data[Familia][ayudafamiliar]" value="1">
-                        <label for="ayudafamiliar_no" class="ml-2 text-xs text-center">Muy pocas veces</label>
+                        <label for="ayudafamiliar_no" class="text-xs text-center">1</label>
                     </div>
 
                     <div class="flex flex-col items-center justify-start">
                         <input type="radio" name="data[Familia][ayudafamiliar]" value="0">
-                        <label for="ayudafamiliar_no" class="ml-2 text-xs text-center">Nunca</label>
+                        <label for="ayudafamiliar_no" class="text-xs text-center">0</label>
                     </div>
                 </div>
             </div>
@@ -953,31 +978,31 @@ $optionAlternativa = [
                     <label for="nombre" class="font-semibold">¿Conversan entre ustedes los problemas que tienen en casa?</label>
                     <p class="text-red-600">*</p>
                 </div>
-                <div class="flex space-x-4 items-start justify-center md:justify-start pr-0 md:pr-[10%]  md:mt-0 ">
+                <div class="flex space-x-8 items-start justify-center md:justify-start pr-0 md:pr-[10%]  md:mt-0 ">
                     <!-- Botón NO -->
                     <div class="flex flex-col items-center">
                         <input type="radio" name="data[Familia][participacionfamiliar]" value="4">
-                        <label for="ayudafamiliar_no" class="ml-2 text-xs">Siempre</label>
+                        <label for="ayudafamiliar_no" class="text-xs">4</label>
                     </div>
 
                     <div class="flex flex-col items-center justify-start">
                         <input type="radio" name="data[Familia][participacionfamiliar]" value="3">
-                        <label for="ayudafamiliar_no" class="ml-2 text-xs text-center">La mayoría de veces</label>
+                        <label for="ayudafamiliar_no" class="text-xs text-center">3</label>
                     </div>
 
                     <div class="flex flex-col items-center justify-start">
                         <input type="radio" name="data[Familia][participacionfamiliar]" value="2">
-                        <label for="ayudafamiliar_no" class="ml-2 text-xs text-center">Algunas veces</label>
+                        <label for="ayudafamiliar_no" class="text-xs text-center">2</label>
                     </div>
 
                     <div class="flex flex-col items-center justify-start">
                         <input type="radio" name="data[Familia][participacionfamiliar]" value="1">
-                        <label for="ayudafamiliar_no" class="ml-2 text-xs text-center">Muy pocas veces</label>
+                        <label for="ayudafamiliar_no" class="text-xs text-center">1</label>
                     </div>
 
                     <div class="flex flex-col items-center justify-start">
                         <input type="radio" name="data[Familia][participacionfamiliar]" value="0">
-                        <label for="ayudafamiliar_no" class="ml-2 text-xs text-center">Nunca</label>
+                        <label for="ayudafamiliar_no" class="text-xs text-center">0</label>
                     </div>
                 </div>
             </div>
@@ -988,26 +1013,26 @@ $optionAlternativa = [
                     <label class="font-semibold">¿Las decisiones importantes se toman juntos en familia?</label>
                     <p class="text-red-600">*</p>
                 </div>
-                <div class="flex space-x-4 items-start justify-center md:justify-start pr-0 md:pr-[10%] md:mt-0">
+                <div class="flex space-x-8 items-start justify-center md:justify-start pr-0 md:pr-[10%] md:mt-0">
                     <div class="flex flex-col items-center">
                         <input type="radio" name="data[Familia][aceptacionapoyo]" value="4" id="aceptacionapoyo_4">
-                        <label for="aceptacionapoyo_4" class="ml-2 text-xs">Siempre</label>
+                        <label for="aceptacionapoyo_4" class="text-xs">4</label>
                     </div>
                     <div class="flex flex-col items-center">
                         <input type="radio" name="data[Familia][aceptacionapoyo]" value="3" id="aceptacionapoyo_3">
-                        <label for="aceptacionapoyo_3" class="ml-2 text-xs text-center">La mayoría de veces</label>
+                        <label for="aceptacionapoyo_3" class="text-xs text-center">3</label>
                     </div>
                     <div class="flex flex-col items-center">
                         <input type="radio" name="data[Familia][aceptacionapoyo]" value="2" id="aceptacionapoyo_2">
-                        <label for="aceptacionapoyo_2" class="ml-2 text-xs text-center">Algunas veces</label>
+                        <label for="aceptacionapoyo_2" class="text-xs text-center">2</label>
                     </div>
                     <div class="flex flex-col items-center">
                         <input type="radio" name="data[Familia][aceptacionapoyo]" value="1" id="aceptacionapoyo_1">
-                        <label for="aceptacionapoyo_1" class="ml-2 text-xs">Muy pocas veces</label>
+                        <label for="aceptacionapoyo_1" class="text-xs">1</label>
                     </div>
                     <div class="flex flex-col items-center">
                         <input type="radio" name="data[Familia][aceptacionapoyo]" value="0" id="aceptacionapoyo_0">
-                        <label for="aceptacionapoyo_0" class="ml-2 text-xs">Nunca</label>
+                        <label for="aceptacionapoyo_0" class="text-xs">0</label>
                     </div>
                 </div>
             </div>
@@ -1018,26 +1043,26 @@ $optionAlternativa = [
                     <label class="font-semibold">¿Siente que su familia expresa afectos de amor, comprensión y respeto?</label>
                     <p class="text-red-600">*</p>
                 </div>
-                <div class="flex space-x-4 items-start justify-center md:justify-start pr-0 md:pr-[10%] md:mt-0">
+                <div class="flex space-x-8 items-start justify-center md:justify-start pr-0 md:pr-[10%] md:mt-0">
                     <div class="flex flex-col items-center">
                         <input type="radio" name="data[Familia][afectoemociones]" value="4" id="afectoemociones_4">
-                        <label for="afectoemociones_4" class="ml-2 text-xs">Siempre</label>
+                        <label for="afectoemociones_4" class="text-xs">4</label>
                     </div>
                     <div class="flex flex-col items-center">
                         <input type="radio" name="data[Familia][afectoemociones]" value="3" id="afectoemociones_3">
-                        <label for="afectoemociones_3" class="ml-2 text-xs text-center">La mayoría de veces</label>
+                        <label for="afectoemociones_3" class="text-xs text-center">3</label>
                     </div>
                     <div class="flex flex-col items-center">
                         <input type="radio" name="data[Familia][afectoemociones]" value="2" id="afectoemociones_2">
-                        <label for="afectoemociones_2" class="ml-2 text-xs">Algunas veces</label>
+                        <label for="afectoemociones_2" class="text-xs">2</label>
                     </div>
                     <div class="flex flex-col items-center">
                         <input type="radio" name="data[Familia][afectoemociones]" value="1" id="afectoemociones_1">
-                        <label for="afectoemociones_1" class="ml-2 text-xs">Muy pocas veces</label>
+                        <label for="afectoemociones_1" class="text-xs">1</label>
                     </div>
                     <div class="flex flex-col items-center">
                         <input type="radio" name="data[Familia][afectoemociones]" value="0" id="afectoemociones_0">
-                        <label for="afectoemociones_0" class="ml-2 text-xs">Nunca</label>
+                        <label for="afectoemociones_0" class="text-xs">0</label>
                     </div>
                 </div>
             </div>
@@ -1048,26 +1073,26 @@ $optionAlternativa = [
                     <label class="font-semibold">¿Se procura compartir tiempo en familia? - El tiempo para estar juntos, los espacios en casa, salir a pasear</label>
                     <p class="text-red-600">*</p>
                 </div>
-                <div class="flex space-x-4 items-start justify-center md:justify-start pr-0 md:pr-[10%] md:mt-0">
+                <div class="flex space-x-8 items-start justify-center md:justify-start pr-0 md:pr-[10%] md:mt-0">
                     <div class="flex flex-col items-center">
                         <input type="radio" name="data[Familia][compartirfamilia]" value="4" id="compartirfamilia_4">
-                        <label for="compartirfamilia_4" class="ml-2 text-xs">Siempre</label>
+                        <label for="compartirfamilia_4" class="text-xs">4</label>
                     </div>
                     <div class="flex flex-col items-center">
                         <input type="radio" name="data[Familia][compartirfamilia]" value="3" id="compartirfamilia_3">
-                        <label for="compartirfamilia_3" class="ml-2 text-xs">La mayoría de veces</label>
+                        <label for="compartirfamilia_3" class="text-xs">3</label>
                     </div>
                     <div class="flex flex-col items-center">
                         <input type="radio" name="data[Familia][compartirfamilia]" value="2" id="compartirfamilia_2">
-                        <label for="compartirfamilia_2" class="ml-2 text-xs">Algunas veces</label>
+                        <label for="compartirfamilia_2" class="text-xs">2</label>
                     </div>
                     <div class="flex flex-col items-center">
                         <input type="radio" name="data[Familia][compartirfamilia]" value="1" id="compartirfamilia_1">
-                        <label for="compartirfamilia_1" class="ml-2 text-xs">Muy pocas veces</label>
+                        <label for="compartirfamilia_1" class="text-xs">1</label>
                     </div>
                     <div class="flex flex-col items-center">
                         <input type="radio" name="data[Familia][compartirfamilia]" value="0" id="compartirfamilia_0">
-                        <label for="compartirfamilia_0" class="ml-2 text-xs">Nunca</label>
+                        <label for="compartirfamilia_0" class="text-xs">0</label>
                     </div>
                 </div>
             </div>
@@ -1136,7 +1161,7 @@ $optionAlternativa = [
                         <label for="programasocial-no"
                             class="px-12 py-2 rounded-lg border cursor-pointer hover:text-white hover:bg-teal-600
                        peer-checked:bg-teal-600 peer-checked:text-white">
-                            -
+                            NO
                         </label>
                     </div>
 
@@ -1152,7 +1177,7 @@ $optionAlternativa = [
                         <label for="programasocial-si"
                             class="px-12 py-2 rounded-lg border hover:bg-teal-600 cursor-pointer hover:text-white
                        peer-checked:bg-teal-600 peer-checked:text-white">
-                            X
+                            SI
                         </label>
                     </div>
                 </div>
@@ -1194,7 +1219,7 @@ $optionAlternativa = [
                         <label for="cuidadorpermanente-no"
                             class="px-12 py-2 rounded-lg border cursor-pointer hover:text-white hover:bg-teal-600
                        peer-checked:bg-teal-600 peer-checked:text-white">
-                            -
+                            NO
                         </label>
                     </div>
 
@@ -1210,7 +1235,7 @@ $optionAlternativa = [
                         <label for="cuidadorpermanente-si"
                             class="px-12 py-2 rounded-lg border hover:bg-teal-600 cursor-pointer hover:text-white
                        peer-checked:bg-teal-600 peer-checked:text-white">
-                            X
+                            SI
                         </label>
                     </div>
                 </div>
@@ -1221,7 +1246,7 @@ $optionAlternativa = [
         <div class="col-span-2 md:col-span-1 text-md font-semibold mt-4 mb-6 md:mr-4">
             <div class="flex items-center mb-4">
                 <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">2</span>
-                <label for="nombre" class="font-semibold">Resultado zaritr</label>
+                <label for="nombre" class="font-semibold">Resultado zarit</label>
                 <p class="text-red-600">*</p>
             </div>
             <?php
@@ -1265,468 +1290,339 @@ $optionAlternativa = [
     </div>
 </div>
 
-<body style="font-size: 14px;">
+<div class="max-w-6xl mx-auto p-18 mt-12">
+    <div class="bg-white shadow-2xl rounded-xl p-6 md:p-12">
+        <!-- Header -->
+        <div class="flex items-center mb-4">
+            <i class="fa-solid fa-bath text-teal-600 text-3xl bg-teal-100 p-3 rounded-lg"></i>
+            <div class="ml-4">
+                <h1 class="text-xl font-semibold">Aseo e Higiene</h1>
+                <p class="text-gray-500">Ingresa la información solicitada referente al aseo e higiene en la familia.</p>
+            </div>
 
-    <div class="grow justify-content-center" display="none" style="margin-top:20px">
+        </div>
+        <div class="grid grid-cols-2 md:grid-cols-2">
+
+            <div class="col-span-2 md:col-span-1 text-md font-semibold mt-4 mb-6">
+                <div class="flex items-center mb-4">
+                    <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">1</span>
+                    <label for="celular" class="font-semibold">¿Como obtienten los alimientos para el consumo?</label>
+                    <p class="text-red-600">*</p>
+                </div>
+                <?php
+                echo $this->Form->input('alimentos', [
+                    'type' => 'select',
+                    'id' => 'alimentosHogarAtentos',
+                    'error' => false,
+                    'options' => $option_combustible,
+                    'class' => 'border border-gray-300 rounded-lg w-full p-2 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 text-sm text-gray-500 focus:text-gray-800',
+                    'label' => false,
+                    'multiple' => true,
+                    'empty' => false,
+                ]);
+
+                if (!empty($this->Form->error('alimentos'))) {
+                    echo '<div class="text-red-600 text-md mt-1 font-semibold">' . $this->Form->error('alimentos') . '</div>';
+                }
+                ?>
+            </div>
+
+            <div class="flex flex-col md:flex-row justify-center md:justify-between col-span-2 text-md font-semibold my-6 mr-4">
+                <div class="md:w-1/2 flex items-center mb-4">
+                    <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">2</span>
+                    <label for="higiene" class="font-semibold">¿Se realizan buenos habitos de higiene y aseo en la familia?</label>
+                </div>
+
+                <div class="flex space-x-4 items-center justify-center md:justify-start mt-4 pr-0 md:pr-[10%]  md:mt-0 ">
+                    <!-- Botón NO -->
+                    <div>
+                        <input type="radio"
+                            name="data[Familia][higiene]"
+                            id="higiene-no"
+                            value="0"
+                            class="hidden peer"
+                            data-target="higiene"
+                            data-show="false"
+                            checked /> <!-- 👈 Por defecto NO -->
+                        <label for="higiene-no"
+                            class="px-12 py-2 rounded-lg border cursor-pointer hover:text-white hover:bg-teal-600
+                       peer-checked:bg-teal-600 peer-checked:text-white">
+                            NO
+                        </label>
+                    </div>
+
+                    <!-- Botón SÍ -->
+                    <div>
+                        <input type="radio"
+                            name="data[Familia][higiene]"
+                            id="higiene-si"
+                            value="1"
+                            data-target="higiene"
+                            data-show="true"
+                            class="hidden peer cursor-pointer" />
+                        <label for="higiene-si"
+                            class="px-12 py-2 rounded-lg border hover:bg-teal-600 cursor-pointer hover:text-white
+                       peer-checked:bg-teal-600 peer-checked:text-white">
+                            SI
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex flex-col md:flex-row justify-center md:justify-between col-span-2 text-md font-semibold my-6 mr-4">
+                <div class="md:w-1/2 flex items-center mb-4">
+                    <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">3</span>
+                    <label for="higiene" class="font-semibold">¿Disponen de Almacenamiento y conservación adecuada de alimentos?</label>
+                </div>
+
+                <div class="flex space-x-4 items-center justify-center md:justify-start mt-4 pr-0 md:pr-[10%]  md:mt-0 ">
+                    <!-- Botón NO -->
+                    <div>
+                        <input type="radio"
+                            name="data[Familia][higienealimentos]"
+                            id="higienealimentos-no"
+                            value="0"
+                            class="hidden peer"
+                            data-target="higienealimentos"
+                            data-show="false"
+                            checked /> <!-- 👈 Por defecto NO -->
+                        <label for="higienealimentos-no"
+                            class="px-12 py-2 rounded-lg border cursor-pointer hover:text-white hover:bg-teal-600
+                       peer-checked:bg-teal-600 peer-checked:text-white">
+                            NO
+                        </label>
+                    </div>
+
+                    <!-- Botón SÍ -->
+                    <div>
+                        <input type="radio"
+                            name="data[Familia][higienealimentos]"
+                            id="higienealimentos-si"
+                            value="1"
+                            data-target="higienealimentos"
+                            data-show="true"
+                            class="hidden peer cursor-pointer" />
+                        <label for="higienealimentos-si"
+                            class="px-12 py-2 rounded-lg border hover:bg-teal-600 cursor-pointer hover:text-white
+                       peer-checked:bg-teal-600 peer-checked:text-white">
+                            SI
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex flex-col md:flex-row justify-center md:justify-between col-span-2 text-md font-semibold my-6 mr-4">
+                <div class="md:w-1/2 flex items-center mb-4">
+                    <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">4</span>
+                    <label for="aseococina" class="font-semibold">¿Procuran mantener limpia de la cocina?</label>
+                </div>
+
+                <div class="flex space-x-4 items-center justify-center md:justify-start mt-4 pr-0 md:pr-[10%]  md:mt-0 ">
+                    <!-- Botón NO -->
+                    <div>
+                        <input type="radio"
+                            name="data[Familia][aseococina]"
+                            id="aseococina-no"
+                            value="0"
+                            class="hidden peer"
+                            data-target="aseococina"
+                            data-show="false"
+                            checked /> <!-- 👈 Por defecto NO -->
+                        <label for="aseococina-no"
+                            class="px-12 py-2 rounded-lg border cursor-pointer hover:text-white hover:bg-teal-600
+                       peer-checked:bg-teal-600 peer-checked:text-white">
+                            NO
+                        </label>
+                    </div>
+
+                    <!-- Botón SÍ -->
+                    <div>
+                        <input type="radio"
+                            name="data[Familia][aseococina]"
+                            id="aseococina-si"
+                            value="1"
+                            data-target="aseococina"
+                            data-show="true"
+                            class="hidden peer cursor-pointer" />
+                        <label for="aseococina-si"
+                            class="px-12 py-2 rounded-lg border hover:bg-teal-600 cursor-pointer hover:text-white
+                       peer-checked:bg-teal-600 peer-checked:text-white">
+                            SI
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex flex-col md:flex-row justify-center md:justify-between col-span-2 text-md font-semibold my-6 mr-4">
+                <div class="md:w-1/2 flex items-center mb-4">
+                    <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">5</span>
+                    <label for="lavadomanos" class="font-semibold">¿Es frecuente el hábito del lavado de manos durante el día?</label>
+                </div>
+
+                <div class="flex space-x-4 items-center justify-center md:justify-start mt-4 pr-0 md:pr-[10%]  md:mt-0 ">
+                    <!-- Botón NO -->
+                    <div>
+                        <input type="radio"
+                            name="data[Familia][lavadomanos]"
+                            id="lavadomanos-no"
+                            value="0"
+                            class="hidden peer"
+                            data-target="lavadomanos"
+                            data-show="false"
+                            checked /> <!-- 👈 Por defecto NO -->
+                        <label for="lavadomanos-no"
+                            class="px-12 py-2 rounded-lg border cursor-pointer hover:text-white hover:bg-teal-600
+                       peer-checked:bg-teal-600 peer-checked:text-white">
+                            NO
+                        </label>
+                    </div>
+
+                    <!-- Botón SÍ -->
+                    <div>
+                        <input type="radio"
+                            name="data[Familia][lavadomanos]"
+                            id="lavadomanos-si"
+                            value="1"
+                            data-target="lavadomanos"
+                            data-show="true"
+                            class="hidden peer cursor-pointer" />
+                        <label for="lavadomanos-si"
+                            class="px-12 py-2 rounded-lg border hover:bg-teal-600 cursor-pointer hover:text-white
+                       peer-checked:bg-teal-600 peer-checked:text-white">
+                            SI
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex flex-col md:flex-row justify-center md:justify-between col-span-2 text-md font-semibold my-6 mr-4">
+                <div class="md:w-1/2 flex items-center mb-4">
+                    <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">6</span>
+                    <label for="cepillarse" class="font-semibold">¿Existe el hábito de cepillarse los dientes?</label>
+                </div>
+
+                <div class="flex space-x-4 items-center justify-center md:justify-start mt-4 pr-0 md:pr-[10%]  md:mt-0 ">
+                    <!-- Botón NO -->
+                    <div>
+                        <input type="radio"
+                            name="data[Familia][cepilladodientes]"
+                            id="cepilladodientes-no"
+                            value="0"
+                            class="hidden peer"
+                            data-target="cepilladodientes"
+                            data-show="false"
+                            checked /> <!-- 👈 Por defecto NO -->
+                        <label for="cepilladodientes-no"
+                            class="px-12 py-2 rounded-lg border cursor-pointer hover:text-white hover:bg-teal-600
+                       peer-checked:bg-teal-600 peer-checked:text-white">
+                            NO
+                        </label>
+                    </div>
+
+                    <!-- Botón SÍ -->
+                    <div>
+                        <input type="radio"
+                            name="data[Familia][cepilladodientes]"
+                            id="cepilladodientes-si"
+                            value="1"
+                            data-target="cepilladodientes"
+                            data-show="true"
+                            class="hidden peer cursor-pointer" />
+                        <label for="cepilladodientes-si"
+                            class="px-12 py-2 rounded-lg border hover:bg-teal-600 cursor-pointer hover:text-white
+                       peer-checked:bg-teal-600 peer-checked:text-white">
+                            SI
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+        </div>
     </div>
+</div>
 
-    <h2 class="subtitle-general-forms ">Encuesta a cuidadores ZARIT</h2>
+<div class="max-w-6xl mx-auto p-18 mt-12">
+    <div class="bg-white shadow-2xl rounded-xl  p-6  md:p-12">
+        <!-- Header -->
+        <div class="flex items-center mb-4">
+            <i class="fa-solid fa-upload text-teal-600 text-3xl bg-teal-100 p-3 rounded-lg"></i>
+            <div class="ml-4">
+                <h1 class="text-xl font-semibold">Carga de información</h1>
+                <p class="text-gray-500">Realiza la consolidacion del archivo segun tu disponibilidad de Internet recuerda asignar un id manual para la vivienda si lo exportas como JSON.</p>
+            </div>
+        </div>
 
-    <hr style=" border:0.1px solid rgba(0,0,0,.125);">
+        <div class="grid grid-cols-1 md:grid-cols-3">
 
-
-    <div class="grow justify-content-center" display="none" style="margin-top:20px">
-        <div id="si" class="panel panel-default form-group col-md-12" style="font-size:15px; display: none;">
-            <div class="form-group row">
-
-                <div class="form-group col-md-6" style="margin-top: 20px;">
-                    <?php
-                    $optionZarit = [
-                        'No aplica' =>  'Elegir',
-                        '1' => 'Nunca',
-                        '2' => 'Rara vez',
-                        '3' => 'Algunas veces',
-                        '4' => 'Bastantes veces',
-                        '5' => 'Casi siempre',
-
-                    ];
-                    echo $this->Form->input('1', array(
-                        'label' => '¿Piensa que su familiar solicita más ayuda de la que realmente necesita?',
-                        'class' => 'form-control sumar2',
-                        'style' => 'height:30px;  font-size: 15px ; width:100%',
-                        'options' => $optionZarit,
-                        'placeholder' => '',
-                        'type' => 'select',
-                        'id' => 'opcion1'
-
-                    )); ?>
-                </div>
-                <div class="form-group col-md-6" style="margin-top: 20px;">
-                    <?php
-                    echo $this->Form->input('2', array(
-                        'label' => '¿Piensa que debido al tiempo que dedica a su familiar ya no
-                                    dispone de tiempo suficiente para usted?',
-                        'class' => 'form-control sumar2',
-                        'style' => 'height:30px;  font-size: 15px ; width:100%',
-                        'options' => $optionZarit,
-                        'placeholder' => '',
-                        'type' => 'select',
-                        'id' => 'opcion2'
-
-                    )); ?>
-                </div>
-
-                <div class="form-group col-md-6" style="margin-top: 20px;">
-                    <?php
-                    echo $this->Form->input('3', array(
-                        'label' => '¿Se siente agobiado por intentar compatibilizar el cuidado de su familiar
-                                    con otras resposabilidades (trabajo, familia)?',
-                        'class' => 'form-control sumar2',
-                        'style' => 'height:30px;  font-size: 15px ; width:100%',
-                        'options' => $optionZarit,
-                        'placeholder' => '',
-                        'type' => 'select',
-                        'id' => 'opcion3'
-
-                    )); ?>
-                </div>
-                <div class="form-group col-md-6" style="margin-top: 20px;">
-                    <?php
-                    echo $this->Form->input('4', array(
-                        'label' => '¿Se siente vergüenza por la conducta de su familiar?',
-                        'class' => 'form-control sumar2',
-                        'style' => 'height:30px;  font-size: 15px ; width:100%',
-                        'options' => $optionZarit,
-                        'placeholder' => '',
-                        'type' => 'select',
-                        'id' => 'opcion4'
-
-                    )); ?>
-                </div>
-                <div class="form-group col-md-6" style="margin-top: 20px;">
-                    <?php
-                    echo $this->Form->input('5', array(
-                        'label' => '¿Se siente enfadado cuando está cerca de su familiar?',
-                        'class' => 'form-control sumar2',
-                        'style' => 'height:30px;  font-size: 15px ; width:100%',
-                        'options' => $optionZarit,
-                        'placeholder' => '',
-                        'type' => 'select',
-                        'id' => 'opcion5'
-
-                    )); ?>
-                </div>
-                <div class="form-group col-md-6" style="margin-top: 20px;">
-                    <?php
-                    echo $this->Form->input('6', array(
-                        'label' => '¿Cree que la situación actual afecta negativamente la relación que Ud
-                                    tiene con otros miembros de su familia?',
-                        'class' => 'form-control sumar2',
-                        'style' => 'height:30px;  font-size: 15px ; width:100%',
-                        'options' => $optionZarit,
-                        'placeholder' => '',
-                        'type' => 'select',
-                        'id' => 'opcion6'
-
-                    )); ?>
-                </div>
-                <div class="form-group col-md-6" style="margin-top: 20px;">
-                    <?php
-                    echo $this->Form->input('7', array(
-                        'label' => '¿Tiene miedo por el futuro de su familiar?',
-                        'class' => 'form-control sumar2',
-                        'style' => 'height:30px;  font-size: 15px ; width:100%',
-                        'options' => $optionZarit,
-                        'placeholder' => '',
-                        'type' => 'select',
-                        'id' => 'opcion7'
-
-                    )); ?>
-                </div>
-                <div class="form-group col-md-6" style="margin-top: 20px;">
-                    <?php
-                    echo $this->Form->input('8', array(
-                        'label' => '¿Piensa que su familiar depende de usted?',
-                        'class' => 'form-control sumar2',
-                        'style' => 'height:30px;  font-size: 15px ; width:100%',
-                        'options' => $optionZarit,
-                        'placeholder' => '',
-                        'type' => 'select',
-                        'id' => 'opcion8'
-
-                    )); ?>
-                </div>
-                <div class="form-group col-md-6" style="margin-top: 20px;">
-                    <?php
-                    echo $this->Form->input('9', array(
-                        'label' => '¿Piensa que su salud ha empeorado debido a tener que cuidar a su familiar?',
-                        'class' => 'form-control sumar2',
-                        'style' => 'height:30px;  font-size: 15px ; width:100%',
-                        'options' => $optionZarit,
-                        'placeholder' => '',
-                        'type' => 'select',
-                        'id' => 'opcion9'
-
-                    )); ?>
-                </div>
-                <div class="form-group col-md-6" style="margin-top: 20px;">
-                    <?php
-                    echo $this->Form->input('10', array(
-                        'label' => '¿Se siente tenso cuanto está cerca de su familiar?',
-                        'class' => 'form-control sumar2',
-                        'style' => 'height:30px;  font-size: 15px ; width:100%',
-                        'options' => $optionZarit,
-                        'placeholder' => '',
-                        'type' => 'select',
-                        'id' => 'opcion10'
-
-                    )); ?>
-                </div>
-                <div class="form-group col-md-6" style="margin-top: 20px;">
-                    <?php
-                    echo $this->Form->input('11', array(
-                        'label' => '¿Piensa que no tiene tanta intimidad como le gustaria debido a tener
-                                    que cuidar a su familiar?',
-                        'class' => 'form-control sumar2',
-                        'style' => 'height:30px;  font-size: 15px ; width:100%',
-                        'options' => $optionZarit,
-                        'placeholder' => '',
-                        'type' => 'select',
-                        'id' => 'opcion11'
-
-                    )); ?>
-                </div>
-                <div class="form-group col-md-6" style="margin-top: 20px;">
-                    <?php
-                    echo $this->Form->input('12', array(
-                        'label' => '¿Siente que su vida social se ha visto afectada negativamente por tener
-                                    que cuidar a su familiar?',
-                        'class' => 'form-control sumar2',
-                        'style' => 'height:30px;  font-size: 15px ; width:100%',
-                        'options' => $optionZarit,
-                        'placeholder' => '',
-                        'type' => 'select',
-                        'id' => 'opcion12'
-
-                    )); ?>
-                </div>
-                <div class="form-group col-md-6" style="margin-top: 20px;">
-                    <?php
-                    echo $this->Form->input('13', array(
-                        'label' => '¿Se siente incómodo por distanciarse de sus amistades debido a tener
-                                    que cuidar de su familiar?',
-                        'class' => 'form-control sumar2',
-                        'style' => 'height:30px;  font-size: 15px ; width:100%',
-                        'options' => $optionZarit,
-                        'placeholder' => '',
-                        'type' => 'select',
-                        'id' => 'opcion13'
-
-                    )); ?>
-                </div>
-                <div class="form-group col-md-6" style="margin-top: 20px;">
-                    <?php
-                    echo $this->Form->input('14', array(
-                        'label' => '¿Piensa que su familiar le considera a usted la única persona que le
-                                    puede cuidar?',
-                        'class' => 'form-control sumar2',
-                        'style' => 'height:30px;  font-size: 15px ; width:100%',
-                        'options' => $optionZarit,
-                        'placeholder' => '',
-                        'type' => 'select',
-                        'id' => 'opcion14'
-
-                    )); ?>
-                </div>
-                <div class="form-group col-md-6" style="margin-top: 20px;">
-                    <?php
-                    echo $this->Form->input('15', array(
-                        'label' => '¿Piensa que no tiene suficientes ingresos económicos para los gastos
-                                    de cuidar a su familiar, además de sus otros gastos?',
-                        'class' => 'form-control sumar2',
-                        'style' => 'height:30px;  font-size: 15px ; width:100%',
-                        'options' => $optionZarit,
-                        'placeholder' => '',
-                        'type' => 'select',
-                        'id' => 'opcion15'
-
-                    )); ?>
-                </div>
-                <div class="form-group col-md-6" style="margin-top: 20px;">
-                    <?php
-                    echo $this->Form->input('16', array(
-                        'label' => '¿Piensa que no será capaz de cuidar a su familiar por mucho más tiempo?',
-                        'class' => 'form-control sumar2',
-                        'style' => 'height:30px;  font-size: 15px ; width:100%',
-                        'options' => $optionZarit,
-                        'placeholder' => '',
-                        'type' => 'select',
-                        'id' => 'opcion16'
-
-                    )); ?>
-                </div>
-                <div class="form-group col-md-6" style="margin-top: 20px;">
-                    <?php
-                    echo $this->Form->input('17', array(
-                        'label' => '¿Siente que ha perdido el control de su vida desde que comenzó la
-                                    enfermedad de su familiar?',
-                        'class' => 'form-control sumar2',
-                        'style' => 'height:30px;  font-size: 15px ; width:100%',
-                        'options' => $optionZarit,
-                        'placeholder' => '',
-                        'type' => 'select',
-                        'id' => 'opcion17'
-                    )); ?>
-                </div>
-                <div class="form-group col-md-6" style="margin-top: 20px;">
-                    <?php
-                    echo $this->Form->input('18', array(
-                        'label' => '¿Desearía poder dejar el cuidado de su familiar a otra persona?',
-                        'class' => 'form-control sumar2',
-                        'style' => 'height:30px;  font-size: 15px ; width:100%',
-                        'options' => $optionZarit,
-                        'placeholder' => '',
-                        'type' => 'select',
-                        'id' => 'opcion18'
-                    )); ?>
-                </div>
-                <div class="form-group col-md-6" style="margin-top: 20px;">
-                    <?php
-                    echo $this->Form->input('19', array(
-                        'label' => '¿Se siente indeciso sobre qué hacer con su familiar?',
-                        'class' => 'form-control sumar2',
-                        'style' => 'height:30px;  font-size: 15px ; width:100%',
-                        'options' => $optionZarit,
-                        'placeholder' => '',
-                        'type' => 'select',
-                        'id' => 'opcion19'
-                    )); ?>
-                </div>
-                <div class="form-group col-md-6" style="margin-top: 20px;">
-                    <?php
-                    echo $this->Form->input('20', array(
-                        'label' => '¿Piensa que debería hacer más por su familiar?',
-                        'class' => 'form-control sumar2',
-                        'style' => 'height:30px;  font-size: 15px ; width:100%',
-                        'options' => $optionZarit,
-                        'placeholder' => '',
-                        'type' => 'select',
-                        'id' => 'opcion20'
-                    )); ?>
-                </div>
-                <div class="form-group col-md-6" style="margin-top: 20px;">
-                    <?php
-                    echo $this->Form->input('21', array(
-                        'label' => '¿Piensa que podría cuidar mejor a su familiar?',
-                        'class' => 'form-control sumar2',
-                        'style' => 'height:30px;  font-size: 15px ; width:100%',
-                        'options' => $optionZarit,
-                        'placeholder' => '',
-                        'type' => 'select',
-                        'id' => 'opcion21'
-
-                    )); ?>
-                </div>
-                <div class="form-group col-md-6" style="margin-top: 20px;">
-                    <?php
-                    echo $this->Form->input('22', array(
-                        'label' => 'Globalmente ¿Qué grado de “carga” experimenta por el hecho de cuidar a su familiar?',
-                        'class' => 'form-control sumar2',
-                        'style' => 'height:30px;  font-size: 15px ; width:100%',
-                        'options' => $optionZarit,
-                        'placeholder' => '',
-                        'type' => 'select',
-                        'id' => 'opcion22'
-                    )); ?>
-                </div>
-
-
+            <!-- Botón -->
+            <div class="w-full p-2">
+                <button name="btn" value="Guardar y continuar" type="submit" class="w-full bg-teal-600 text-white px-6 py-2 rounded-md hover:bg-green-700 transition font-medium flex items-center justify-center gap-2">
+                    <span>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-save-icon lucide-save">
+                            <path d="M15.2 3a2 2 0 0 1 1.4.6l3.8 3.8a2 2 0 0 1 .6 1.4V19a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z" />
+                            <path d="M17 21v-7a1 1 0 0 0-1-1H8a1 1 0 0 0-1 1v7" />
+                            <path d="M7 3v4a1 1 0 0 0 1 1h7" />
+                        </svg>
+                    </span>
+                    Guardar y continuar
+                </button>
             </div>
 
 
 
+            <!-- Botón -->
+            <div class="w-full  p-2">
+                <button name="btn" value="ver familia" type="submit" class="w-full bg-teal-600 text-white px-6 py-2 rounded-md hover:bg-green-700 transition font-medium flex items-center justify-center gap-2">
+                    <span>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-save-icon lucide-save">
+                            <path d="M21 17v2a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-2" />
+                            <path d="M21 7V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v2" />
+                            <circle cx="12" cy="12" r="1" />
+                            <path d="M18.944 12.33a1 1 0 0 0 0-.66 7.5 7.5 0 0 0-13.888 0 1 1 0 0 0 0 .66 7.5 7.5 0 0 0 13.888 0" />
+                        </svg>
 
+                    </span>
+                    ver familia
+                </button>
+            </div>
+
+            <!-- Botón -->
+            <div class="w-full  p-2">
+                <button name="btn" value="Ver Vivienda" type="submit" class="w-full bg-teal-600 text-white px-6 py-2 rounded-md hover:bg-green-700 transition font-medium flex items-center justify-center gap-2">
+                    <span>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-save-icon lucide-save">
+                            <path d="M21 17v2a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-2" />
+                            <path d="M21 7V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v2" />
+                            <circle cx="12" cy="12" r="1" />
+                            <path d="M18.944 12.33a1 1 0 0 0 0-.66 7.5 7.5 0 0 0-13.888 0 1 1 0 0 0 0 .66 7.5 7.5 0 0 0 13.888 0" />
+                        </svg>
+
+                    </span>
+                    Ver Vivienda
+                </button>
+            </div>
+
+
+            <!-- Botón -->
+            <div class="w-full p-2">
+                <button type="button" class="w-full bg-teal-600 text-white px-6 py-2 rounded-md hover:bg-green-700 transition font-medium flex items-center justify-center gap-2" onclick="">
+                    <span>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-save-icon lucide-save">
+                            <path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z" />
+                            <path d="M14 2v4a2 2 0 0 0 2 2h4" />
+                            <path d="M10 12a1 1 0 0 0-1 1v1a1 1 0 0 1-1 1 1 1 0 0 1 1 1v1a1 1 0 0 0 1 1" />
+                            <path d="M14 18a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1 1 1 0 0 1-1-1v-1a1 1 0 0 0-1-1" />
+
+                        </svg>
+
+                    </span>
+                    JSON
+                </button>
+            </div>
         </div>
     </div>
-
-    <h2 class="subtitle-general-forms">Aseo e Higiene
-    </h2>
-    <hr style="background-clip: border-box; border:0.1px solid rgba(0,0,0,.125);">
-
-    <div class="grow justify-content-center" display="none" style="margin-top:20px">
-        <div class="card col-sm-12" style=" font-size:15px;  border:1.5px solid rgba(0,0,0,.125);">
-
-            <div class="form-group row">
-                <div class="form-group col-md-6" style="margin-top: 20px;">
-                    <?php
-                    $alimentos = [
-                        '1.Cultivo' => 'Cultivo',
-                        '6.Compra' => 'Compra',
-                        '7.Asistencia del Estado' => 'Ayuda gubernamental',
-                        '8.Apoyo familiar' => 'Apoyo familiar',
-                    ];
-
-                    echo $this->Form->input('poblacionvulnerable1', [
-                        'label' => '¿Como obtienten los alimientos para el consumo?',
-                        'class' => 'form-control',
-                        'type' => 'select',
-                        'options' => $alimentos,
-                        'style' => 'height:30px;  font-size: 15px ; width:100%',
-                    ]);
-                    ?>
-                </div>
-                <div class="form-group col-md-6" style="margin-top: 20px;">
-                    <?php
-                    $optionYesNo = [
-                        '' => 'Elegir',
-                        'Si' => 'Si',
-                        'No' => 'No',
-                    ];
-
-                    echo $this->Form->input('higiene', [
-                        'label' => '¿Se observan adecuadas condiciones de higiene en la familia?',
-                        'class' => 'form-control',
-                        'type' => 'select',
-                        'options' => $optionYesNo,
-                        'style' => 'height:30px;  font-size: 15px ; width:100%',
-                    ]);
-                    ?>
-                </div>
-
-                <div class="form-group col-md-6" style="margin-top: 20px;">
-                    <?php
-                    echo $this->Form->input('higienealimentos', [
-                        'label' => '¿Disponen de Almacenamiento y conservación adecuada de alimentos?',
-                        'class' => 'form-control',
-                        'type' => 'select',
-                        'options' => $optionYesNo,
-                        'style' => 'height:30px;  font-size: 15px ; width:100%',
-                    ]);
-                    ?>
-                </div>
-
-                <div class="form-group col-md-6" style="margin-top: 20px;">
-                    <?php
-                    echo $this->Form->input('aseococina', [
-                        'label' => '¿Procuran mantener limpia de la cocina?',
-                        'class' => 'form-control',
-                        'type' => 'select',
-                        'options' => $optionYesNo,
-                        'style' => 'height:30px;  font-size: 15px ; width:100%',
-                    ]);
-                    ?>
-                </div>
-
-
-
-                <div class="form-group col-md-6" style="margin-top: 20px;">
-                    <?php
-                    $optionLavadoManos = [
-                        '' => 'Elegir',
-                        'Si' => 'Si',
-                        'No' => 'No',
-                    ];
-
-                    echo $this->Form->input('lavadomanos', [
-                        'label' => '¿Es frecuente el hábito del lavado de manos durante el día?',
-                        'class' => 'form-control',
-                        'type' => 'select',
-                        'options' => $optionLavadoManos,
-                        'style' => 'height:30px;  font-size: 15px ; width:100%',
-                    ]);
-                    ?>
-                </div>
-
-                <div class="form-group col-md-6" style="margin-top: 20px;">
-                    <?php
-                    $optionelementosHigiene = [
-                        'Cepillo de dientes' => 'Cepillo de dientes',
-                        'Máquina de afeitar' => 'Máquina de afeitar',
-                        'Toallas' => 'Toallas',
-                        'No' => 'No se comparte',
-                        'No refiere' => 'No refiere',
-                        'SD' => 'Sin dato'
-                    ];
-
-                    echo $this->Form->input('elementoshigiene', [
-                        'label' => '¿Se comparte algun implemento de higiene personal con otra persona?',
-                        'class' => 'form-control',
-                        'type' => 'select',
-                        'options' => $optionelementosHigiene,
-                        'style' => 'height:30px;  font-size: 15px ; width:100%',
-                    ]);
-                    ?>
-                </div>
-
-
-
-                <div class="form-group col-md-6" style="margin-top: 20px;">
-                    <?php
-                    $optionCepilladoDientes = [
-                        '' => 'Elegir',
-                        'Si' => 'Si',
-                        'No' => 'No',
-                    ];
-
-                    echo $this->Form->input('cepilladodientes', [
-                        'label' => '¿Existe el hábito de cepillarse los dientes?',
-                        'class' => 'form-control',
-                        'type' => 'select',
-                        'options' => $optionCepilladoDientes,
-                        'style' => 'height:30px;  font-size: 15px ; width:100%',
-                    ]);
-                    ?>
-                </div>
-            </div>
-            </fieldset>
-
-            <button class="my-button" style="">
-                Guardar<?php echo $this->Form->end(); ?>
-            </button>
-
-        </div>
-</body>
-
+</div>
+<?php echo $this->Form->end(); ?>
 
 <script type="text/javascript">
     function mostrarResguardo(id) {
@@ -1942,7 +1838,7 @@ $optionAlternativa = [
             placeholderValue: "Seleccione un vector..."
         });
 
-        const antecedenteenfermedad = new Choices("#antecedenteenfermedad", {
+        const choices_antecedente = new Choices("#antecedenteenfermedad", {
             searchEnabled: true,
             searchChoices: true,
             removeItemButton: true, // Permite eliminar seleccionados
@@ -1953,7 +1849,7 @@ $optionAlternativa = [
             removeItems: true, // Permite quitar seleccionados
             duplicateItemsAllowed: false,
             placeholder: true,
-            placeholderValue: "Seleccione un vector..."
+            placeholderValue: "Seleccione un antecedente..."
         });
 
         const riesgopsicosocial = new Choices("#riesgopsicosocial", {
@@ -1970,7 +1866,19 @@ $optionAlternativa = [
             placeholderValue: "Seleccione un vector..."
         });
 
-
+        const choices_alimentos = new Choices("#alimentosHogarAtentos", {
+            searchEnabled: true,
+            searchChoices: true,
+            removeItemButton: true, // Permite eliminar seleccionados
+            itemSelectText: '',
+            shouldSort: false,
+            searchPlaceholderValue: "Escriba para filtrar...",
+            maxItemCount: -1, // Sin límite
+            removeItems: true, // Permite quitar seleccionados
+            duplicateItemsAllowed: false,
+            placeholder: true,
+            placeholderValue: "Seleccione un vector..."
+        });
         // Aplicar estilos con Tailwind
         const inner = document.querySelector('.choices__inner');
         if (inner) {

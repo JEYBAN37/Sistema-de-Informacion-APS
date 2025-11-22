@@ -66,8 +66,63 @@ class FamiliasController extends AppController
 		if (!$this->Familia->exists($id)) {
 			throw new NotFoundException(__('Invalid familia'));
 		}
-		$options = array('conditions' => array('Familia.' . $this->Familia->primaryKey => $id));
-		$this->set('familia', $this->Familia->find('first', $options));
+
+		$ficha = $this->Familia->find('first', array(
+			'conditions' => array('Familia.' . $this->Familia->primaryKey => $id),
+			'fields' => array('Familia.id, Familia.apellidos, Familia.cursovidafamilia, Familia.nombres, Familia.celular, Familia.numeropersonas, Familia.poblacionvulnerable, Familia.correo'),
+			'contain' => array(
+				'Juventudadulto' => array( // <-- Esto trae los registros relacionados por familia_id
+					'fields' => array('id', 'primernombre', 'segundonombre', 'primerapellido', 'segundoapellido', 'fechanac', 'sexo', 'aseguradora', 'canalizacionuno', 'condicioncronica')
+				),
+				'Primerainfancia' =>
+				array( // <-- Esto trae los registros relacionados por familia_id
+					'fields' => array('id', 'primernombre', 'segundonombre', 'primerapellido', 'segundoapellido', 'fechanac', 'sexo', 'aseguradora', 'canalizacionuno', 'condicioncronica')
+				),
+				'Infantil' =>
+				array('id', 'primernombre', 'segundonombre', 'primerapellido', 'segundoapellido', 'fechanac', 'sexo', 'aseguradora', 'canalizacionuno', 'condicioncronica'),
+				'Adolescencia' =>
+				array(
+					'fields' => array('id', 'primernombre', 'segundonombre', 'primerapellido', 'segundoapellido', 'fechanac', 'sexo', 'aseguradora', 'canalizacionuno', 'condicioncronica')
+				),
+				'Sociambiental' => array(
+					'fields' => array('id', 'fecha', 'apellidosfamilia', 'direccion', 'numerohogares','longitud','latitud','manzana')
+				),
+				'Ubicacion' => array(
+					'fields' => array('microterritorio', 'cod_microterritorio')
+				),
+				'Responsable' => array(
+					'fields' => array('nombres')
+				),
+				'Observacion' => array(
+					'fields' => array('id', 'observacion', 'valoracionfamilia','canalizacionuno','resultadoFamiliograma','resultadoEcomapa','dirplancuidado','dirfamiliograma','fecha'))
+			)
+		));
+
+		$ficha['Integrantes'] = array_merge(
+			isset($ficha['Juventudadulto']) ? $ficha['Juventudadulto'] : [],
+			isset($ficha['Primerainfancia']) ? $ficha['Primerainfancia'] : [],
+			isset($ficha['Infantil']) ? $ficha['Infantil'] : [],
+			isset($ficha['Adolescencia']) ? $ficha['Adolescencia'] : []
+		);
+
+		usort($ficha['Integrantes'], function ($a, $b) {
+			return strtotime($b['fechanac']) - strtotime($a['fechanac']);
+		});
+
+		foreach ($ficha['Integrantes'] as &$integrante) {
+			if (!empty($integrante['fechanac'])) {
+				$fechaNac = new DateTime($integrante['fechanac']);
+				$hoy = new DateTime();
+				$integrante['edad'] = $fechaNac->diff($hoy)->y;
+			} else {
+				$integrante['edad'] = null;
+			}
+		}
+		unset($integrante); // Buenas prácticas
+
+		// Opcional: elimina los arrays originales para evitar duplicidad
+		unset($ficha['Juventudadulto'], $ficha['Primerainfancia'], $ficha['Infantil'], $ficha['Adolescencia']);
+		$this->set('familia', $ficha);
 	}
 
 	public function plancuidado($id = null)
@@ -86,18 +141,22 @@ class FamiliasController extends AppController
 	 */
 	public function add($sociambientals_id = null)
 	{
-		debug($sociambientals_id);
 		if ($this->request->is('post')) {
 			$this->request->data['Familia']['sociambientals_id'] = $sociambientals_id;
 			if ($this->Familia->save($this->request->data)) {
-				if ($this->request->data['btn'] == 'Guardar') {
+				if ($this->request->data['btn'] == 'Guardar y continuar') {
+					$this->Session->setFlash('Registro de familia se guradado con exito, continuar con informacion de los integrantes', 'flash_custom', array('class' => 'success', 'title' => 'El registro se ha completado correctamente'));
+					return $this->redirect(array('controller' => 'Juventudadultos', 'action' => 'add?familia=', $this->Familia->id));
+				}
+
+				if ($this->request->data['btn'] == 'ver familia') {
 					$this->Session->setFlash('Registro de familia se guradado con exito, continuar con informacion de los integrantes', 'flash_custom', array('class' => 'success', 'title' => 'El registro se ha completado correctamente'));
 					return $this->redirect(array('controller' => 'Familias', 'action' => 'view', $this->Familia->id));
 				}
 
-				if ($this->request->data['btn'] == 'Agregar integrante') {
-					$this->Session->setFlash('Registro de familia se guradado con exito, continuar con informacion de los integrantes', 'flash_custom', array('class' => 'success', 'title' => 'El registro se ha completado correctamente'));
-					return $this->redirect(array('controller' => 'Juventudadultos', 'action' => 'add?familia=' . $this->Familia->id));
+				if ($this->request->data['btn'] == 'Ver Vivienda') {
+					$this->Session->setFlash('Registro de familia se guradado con exito, puede agregar un nuevo registro', 'flash_custom', array('class' => 'success', 'title' => 'El registro se ha completado correctamente'));
+					return $this->redirect(array('controller' => 'Sociambientals', 'action' => 'add', $sociambientals_id));
 				}
 			} else {
 				$this->Session->setFlash('El registro no fue guardado o esta pendiente un campo del formulario', 'flash_custom', array('class' => 'error', 'title' => 'Error al guardar el registro'));
@@ -133,24 +192,35 @@ class FamiliasController extends AppController
 	public function edit($id = null)
 	{
 		if (!$this->Familia->exists($id)) {
-			throw new NotFoundException(__('Invalid familia'));
+			$this->Session->setFlash('La familia no existe', 'flash_custom', array('class' => 'error', 'title' => 'Error al cargar el registro'));
+			return $this->redirect(array('controller' => 'Familias', 'action' => 'index'));
 		}
+
+
 		if ($this->request->is(array('post', 'put'))) {
 			if ($this->Familia->save($this->request->data)) {
-				$this->Session->setFlash('Registro de hogar se actualizo correctamente', 'default', array('class' => 'alert alert-success'));
-				return $this->redirect(array('action' => 'index'));
+				if ($this->request->data['btn'] == 'Guardar') {
+					//$session->setFlash("registro guardado");
+					$this->Session->setFlash('Registro se actualizo con exito, continuar con informacion de la familia / hogar', 'flash_custom', array('class' => 'success', 'title' => 'El registro se ha completado correctamente'));					//return $this->redirect(array('action' => 'index'));
+					return $this->redirect(array('controller' => 'Familias', 'action' => 'view/' . $id));
+				}
+
+				if ($this->request->data['btn'] == 'ver familia') {
+					$this->Session->setFlash('Registro de familia se guradado con exito, continuar con informacion de los integrantes', 'flash_custom', array('class' => 'success', 'title' => 'El registro se ha completado correctamente'));
+					return $this->redirect(array('controller' => 'Familias', 'action' => 'view', $this->Familia->id));
+				}
+
+				if ($this->request->data['btn'] == 'Ver Vivienda') {
+					$this->Session->setFlash('Registro de familia se guradado con exito, puede agregar un nuevo registro', 'flash_custom', array('class' => 'success', 'title' => 'El registro se ha completado correctamente'));
+					return $this->redirect(array('controller' => 'Sociambientals', 'action' => 'view', $this->request->data['Familia']['sociambiental_id']));
+				}
 			} else {
-				$this->Session->setFlash(__('Error al guardar.'));
+				$this->Session->setFlash('El registro no fue guardado o esta pendiente un campo del formulario', 'flash_custom', array('class' => 'error', 'title' => 'Error al guardar el registro'));
 			}
 		} else {
 			$options = array('conditions' => array('Familia.' . $this->Familia->primaryKey => $id));
 			$this->request->data = $this->Familia->find('first', $options);
 		}
-		$sociambientals = $this->Familia->Sociambiental->find('list', array(
-			'order' => array('Sociambiental.id' => 'desc')
-		));
-
-		$this->set(compact('sociambientals'));
 	}
 
 	/**
