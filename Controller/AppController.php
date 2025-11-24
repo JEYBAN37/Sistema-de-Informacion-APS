@@ -167,4 +167,42 @@ class AppController extends Controller
         }
         return null;
     }
+    function getFirestoreAccessToken()
+    {
+        $json = json_decode(file_get_contents(APP . 'Config/serviceAccount.json'), true);
+
+        $header = base64_encode(json_encode([
+            'alg' => 'RS256',
+            'typ' => 'JWT'
+        ]));
+
+        $iat = time();
+        $exp = $iat + 3600;
+
+        $claim = base64_encode(json_encode([
+            'iss' => $json['client_email'],
+            'scope' => 'https://www.googleapis.com/auth/datastore',
+            'aud' => 'https://oauth2.googleapis.com/token',
+            'exp' => $exp,
+            'iat' => $iat
+        ]));
+
+        $signature = '';
+        openssl_sign("$header.$claim", $signature, $json['private_key'], 'SHA256');
+        $jwt = "$header.$claim." . base64_encode($signature);
+
+        $response = file_get_contents('https://oauth2.googleapis.com/token', false, stream_context_create([
+            'http' => [
+                'method' => 'POST',
+                'header' => "Content-Type: application/x-www-form-urlencoded\r\n",
+                'content' => http_build_query([
+                    'grant_type' => 'urn:ietf:params:oauth:grant-type:jwt-bearer',
+                    'assertion' => $jwt
+                ])
+            ]
+        ]));
+
+        $data = json_decode($response, true);
+        return $data['access_token'];
+    }
 }

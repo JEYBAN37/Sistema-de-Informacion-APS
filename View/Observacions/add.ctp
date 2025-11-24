@@ -292,6 +292,7 @@
                                 '' => 'Elegir',
                                 '0' => 'No',
                                 '3.0' => 'Persona con discapacidad sin cuidador',
+                                '2.3' => 'Poblacion Especial',
                                 '1' => 'Cuidador con sobrecarga',
                                 '3' => 'Menor sin estudiar',
                                 '2.1' => 'Persona si afiliacion a salud',
@@ -355,89 +356,8 @@
 
                             )); ?>
                         </div>
-                    </div>
-                </div>
-            </div>
 
-            <h3 class="subtitle-general-forms">Elementos para Plan de cuidado familiar</h3>
-            <hr style=" border:0.1px solid rgba(0,0,0,.125);">
-
-            <div class="grow justify-content-center" display="none" style="margin-top:20px">
-                <div class="card col-sm-12" style=" font-size:15px;  border:1.5px solid rgba(0,0,0,.125);">
-
-                    <div class="form-group row">
-
-                        <div class="form-group col-md-6" style="margin-top: 20px;">
-
-                            <?php
-                            echo $this->Form->input('observacion', array(
-                                'label' => 'Describa otra problemática identificada',
-                                'type' => 'textarea', // Cambiado a 'textarea'
-                                'class' => 'form-control',
-                                'style' => 'height:100px;  font-size: 15px ; width:100%', // Ajustado el estilo para un área de texto más grande
-
-                            ));
-                            ?>
-                        </div>
-
-
-
-                        <div class="form-group col-md-6" style="margin-top: 20px;">
-                            <?php echo $this->Form->input('objetivocortoplazo', array(
-                                'label' => 'Objetivo plan de cuidado corto plazo',
-                                'type' => 'textarea', // Cambiado a 'textarea'
-                                'class' => 'form-control',
-                                'style' => 'height:100px;  font-size: 15px ; width:100%', // Ajustado el estilo para un área de texto más grande
-
-
-                            )); ?>
-                        </div>
-
-                        <div class="form-group col-md-6" style="margin-top: 20px;">
-                            <?php echo $this->Form->input('objetivolargoplazo', array(
-                                'label' => 'Objetivo  plan de cuidado largo plazo',
-                                'type' => 'textarea', // Cambiado a 'textarea'
-                                'class' => 'form-control',
-                                'style' => 'height:100px;  font-size: 15px ; width:100%', // Ajustado el estilo para un área de texto más grande
-
-
-                            )); ?>
-                        </div>
-
-                        <div class="form-group col-md-6" style="margin-top: 20px;">
-                            <?php echo $this->Form->input('entornoafectado', array(
-                                'label' => 'Entorno afectado',
-                                'type' => 'textarea', // Cambiado a 'textarea'
-                                'class' => 'form-control',
-                                'style' => 'height:100px;  font-size: 15px ; width:100%', // Ajustado el estilo para un área de texto más grande
-
-                            )); ?>
-                        </div>
-                        <div class="form-group col-md-6" style="margin-top: 20px;">
-                            <?php echo $this->Form->input('actividaddesarrolar', array(
-                                'label' => 'Actividades a desarrollar',
-                                'type' => 'textarea', // Cambiado a 'textarea'
-                                'class' => 'form-control',
-                                'style' => 'height:100px;  font-size: 15px ; width:100%', // Ajustado el estilo para un área de texto más grande
-
-
-                            )); ?>
-                        </div>
-
-
-                        <div class="form-group col-md-6" style="margin-top: 20px;">
-                            <?php echo $this->Form->input('indicadorria', array(
-                                'label' => 'Indicador RIA',
-                                'type' => 'textarea', // Cambiado a 'textarea'
-                                'class' => 'form-control',
-                                'style' => 'height:100px;  font-size: 15px ; width:100%', // Ajustado el estilo para un área de texto más grande
-
-                            )); ?>
-                        </div>
-
-
-
-                        <div class="form-group col-md-6" style="margin-top: 20px;">
+                         <div class="form-group col-md-6" style="margin-top: 20px;">
                             <?php echo $this->Form->input('recursoscomunitarios', array(
                                 'label' => 'Recursos comuntarios',
                                 'type' => 'textarea', // Cambiado a 'textarea'
@@ -457,7 +377,7 @@
 
                             )); ?>
                         </div>
-                        <div class="form-group col-md-6" style="margin-top: 20px;">
+                        <!--div class="form-group col-md-6" style="margin-top: 20px;">
                             <?php echo $this->Form->input('apoyosocial', array(
                                 'label' => 'Apoyo Social',
                                 'type' => 'textarea', // Cambiado a 'textarea'
@@ -466,8 +386,8 @@
 
 
                             )); ?>
-                        </div>
-                        <div class="form-group col-md-6" style="margin-top: 20px;">
+                        </div-->
+                        <!--div class="form-group col-md-6" style="margin-top: 20px;">
                             <?php echo $this->Form->input('asistenciafinanciera', array(
                                 'label' => 'Apoyo o asistencia financiera',
                                 'type' => 'textarea', // Cambiado a 'textarea'
@@ -476,51 +396,12 @@
 
 
                             )); ?>
-                        </div>
-
-                        <div class="form-group col-md-6" style="margin-top: 20px;">
-                            <?php echo $this->Form->input('observacionesplancuidado', array(
-                                'label' => 'Observación plan de cuidado',
-                                'type' => 'textarea', // Cambiado a 'textarea'
-                                'class' => 'form-control',
-                                'style' => 'height:100px;  font-size: 15px ; width:100%', // Ajustado el estilo para un área de texto más grande
-
-
-                            )); ?>
-                        </div>
-
-                        <div class="form-group col-md-6" style="margin-top: 20px;">
-                            <?php echo $this->Form->input('firmaplancuidado', array(
-                                'label' => 'Nombres de representante familia',
-                                'style' => 'height:30px;  font-size: 15px ; width:100%',
-                                'style' => 'height:100px;  font-size: 15px ; width:100%', // Ajustado el estilo para un área de texto más grande
-
-                            )); ?>
-                        </div>
-                        <div class="form-group col-md-6" style="margin-top: 20px;">
-                            <?php echo $this->Form->input('disentimiento', array(
-                                'label' => 'Nombres y apellidos, numero CC no aceptan plan',
-                                'type' => 'textarea', // Cambiado a 'textarea'
-                                'class' => 'form-control',
-                                'style' => 'height:100px;  font-size: 15px ; width:100%', // Ajustado el estilo para un área de texto más grande
-
-                            )); ?>
-                        </div>
-                        <div class="form-group col-md-6" style="margin-top: 20px;">
-                            <?php echo $this->Form->input('motivodisentimiento', array(
-                                'label' => 'Motivos disentimiento',
-                                'type' => 'textarea', // Cambiado a 'textarea'
-                                'class' => 'form-control',
-                                'style' => 'height:100px;  font-size: 15px ; width:100%', // Ajustado el estilo para un área de texto más grande
-
-
-                            )); ?>
-                        </div>
-
+                        </div-->
                     </div>
                 </div>
-            </div>
+            </div>           
 
+        
             <h3 class="subtitle-general-forms">Identificación de necesidades oferta social</h3>
             <hr style=" border:0.1px solid rgba(0,0,0,.125);">
 
@@ -559,66 +440,7 @@
                             ));
                             ?>
                         </div>
-
-                        <div class="form-group col-md-6" style="margin-top: 20px;">
-                            <?php
-                            $canalizacion2 = [
-                                'No aplica' => '-',
-                                'No aplica ' => 'No aplica',
-                                'Bienestar social' => 'Bienestar social',
-                                'Certificación de Discapacidad' => 'Certificación de Discapacidad',
-                                'Proyecto Bien nacer' => 'Proyecto Bien nacer',
-                                'Aseguramiento' => 'Aseguramiento',
-                                'Renta ciudana' => 'Renta ciudana',
-                                'Jovenes en acción' => 'Jovenes en acción',
-                                'Adulto mayor' => 'Adulto mayor',
-                                'CDI NIDOS NUTRIR' => 'CDI NIDOS NUTRIR',
-                                'Comedores solidarios' =>    'Comedores solidarios',
-                                'Programa minimo vital' => 'Programa minimo vital',
-                                'INVIYA' => 'INVIYA',
-                                'SISBEN' => 'SISBEN',
-                                'FONDO EMPRENDER' => 'FONDO EMPRENDER',
-                                'Protección Migrantes' => 'Protección Migrantes',
-                                'Otro'
-                            ];
-                            echo $this->Form->input('canalizaciondos', array(
-                                'label' => 'Canalización a programa social',
-                                'class' => 'form-control',
-                                'style' => 'height:30px;  font-size: 15px ; width:100%',
-                                'options' => $canalizacion2,
-                            ));
-                            ?>
-                        </div>
-                        <div class="form-group col-md-6" style="margin-top: 20px;">
-                            <?php
-
-                            $canalizacion3 = [
-                                'No aplica' => '-',
-                                'No aplica ' => 'No aplica',
-                                'Bienestar social' => 'Bienestar social',
-                                'Certificación de Discapacidad' => 'Certificación de Discapacidad',
-                                'Proyecto Bien nacer' => 'Proyecto Bien nacer',
-                                'Aseguramiento' => 'Aseguramiento',
-                                'Renta ciudana' => 'Renta ciudana',
-                                'Jovenes en acción' => 'Jovenes en acción',
-                                'Adulto mayor' => 'Adulto mayor',
-                                'CDI NIDOS NUTRIR' => 'CDI NIDOS NUTRIR',
-                                'Comedores solidarios' =>    'Comedores solidarios',
-                                'Programa minimo vital' => 'Programa minimo vital',
-                                'INVIYA' => 'INVIYA',
-                                'SISBEN' => 'SISBEN',
-                                'FONDO EMPRENDER' => 'FONDO EMPRENDER',
-                                'Protección Migrantes' => 'Protección Migrantes',
-                                'Otro'
-                            ];
-                            echo $this->Form->input('canalizaciontres', array(
-                                'label' => 'Canalización a programa social',
-                                'class' => 'form-control',
-                                'style' => 'height:30px;  font-size: 15px ; width:100%',
-                                'options' => $canalizacion3,
-                            ));
-                            ?>
-                        </div>
+                       
                         <div class="form-group col-md-6" style="margin-top: 20px;">
                             <?php
                             $estado = [

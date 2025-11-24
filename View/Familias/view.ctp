@@ -1,1233 +1,615 @@
 <?php $this->layout = 'default_familia';
-echo $this->Html->script('validationFamilia'); ?>
 
-<?php
-// IMPORTANTE: Cambiar la informacion de datos de conexion
-$serv = 'localhost';
-$port = '3306';
-$userS = 'root';
-$passS = '';
-$bd = 'fichafamiliar20241709';
-?>
-
-<style>
-    .negrilla {
-        font-size: small;
-        font-weight: bold;
+$hasPlan = false;
+$hasObservation = false;
+if (!empty($familia['Observacion']) && is_array($familia['Observacion'])) {
+    $hasObservation = true;
+    foreach ($familia['Observacion'] as $obs) {
+        if (!empty($obs['dirplancuidado'])) {
+            $hasPlan = true;
+            break;
+        }
     }
-</style>
-
-<div>
-    <div class="form-group col-sm-12">
-        <fieldset>
-            <div class="col-12 text-center">
-                <h1 class="title-general-forms">Ficha Familiar</h1>
-            </div>
-
-            <div>
-
-                <div class="dataTable_wrapper">
-
-
-                    <div class="row">
-                        <div class="col-lg-12">
-
-                            <table width="100%" class="table table-responsive table-striped table-bordered  "
-                                style="margin-top: 30px;">
-                                <td colspan="6" style="text-align: center; color: #3366CC;"><strong>DATOS
-                                        GENERALES</strong>
-                                    <tr>
-                                        <td>
-                                            <strong>Fecha Registro:</strong>
-                                            <?php
-                                            echo ($familia['Sociambiental']['fecha']); ?>
-                                        </td>
-
-
-
-                                        <td><strong>Encuestador:</strong>
-                                            <?php
-                                            $link = mysqli_connect($serv, $userS, $passS, $bd);
-                                            $tildes = $link->query("SET NAMES 'utf8'"); // Para que se muestren las tildes correctamente
-                                            $result = mysqli_query($link, "SELECT nombres FROM Responsables WHERE id = " . $familia['Sociambiental']['responsable_id']);
-                                            if ($fila = mysqli_fetch_array($result)) {
-                                                echo $fila['nombres'];
-                                            }
-                                            mysqli_free_result($result);
-                                            mysqli_close($link);
-                                            ?>
-                                        </td>
-                                        <td>
-                                            <strong>ID:</strong>
-                                            <?php echo ($familia['Familia']['id']); ?>
-                                        </td>
-                                        <!--td>N° Hogares:
-                                        <?php echo ($familia['Sociambiental']['numerohogares']); ?></td-->
-                                    </tr>
-                                    <tr>
-                                        <td><strong>Familia:</strong>
-                                            <?php echo ($familia['Sociambiental']['apellidosfamilia']); ?>
-                                        </td>
-                                        <td> <strong> Representante:</strong>
-
-                                            <?php echo '<strong>' . $familia['Familia']['nombres'] . '</strong> <strong>' . $familia['Familia']['apellidos'] . '</strong>'; ?>
-                                        </td>
-                                        <td colspan="2"> <strong>Curso de Vida:</strong>
-                                            <?php echo ($familia['Familia']['cursovidafamilia']); ?></td>
-                                    </tr>
-
-                                    <tr>
-
-                                        <td><strong>Ubicación:</strong>
-                                            <?php
-                                            $link = mysqli_connect($serv, $userS, $passS, $bd);
-                                            $tildes = $link->query("SET NAMES 'utf8'"); // Para que se muestren las tildes correctamente
-                                            $result = mysqli_query($link, "SELECT microterritorio FROM Ubicaciones WHERE id = " . $familia['Sociambiental']['ubicacion_id']);
-                                            if ($fila = mysqli_fetch_array($result)) {
-                                                echo $fila['microterritorio'];
-                                            }
-                                            mysqli_free_result($result);
-                                            mysqli_close($link);
-                                            ?>
-                                        </td>
-                                        <td><strong>Dirección:</strong>
-                                            <?php echo ($familia['Sociambiental']['direccion']); ?></td>
-                                        <td><strong>Num Hogares:</strong>
-                                            <?php echo ($familia['Sociambiental']['numerohogares']); ?>
-                                        </td>
-
-                                    </tr>
-
-
-                                    <tr>
-
-
-                                        <td><strong>Num. celular:</strong>
-                                            <?php echo ($familia['Familia']['celular']); ?></td>
-                                        <td colspan="2"><strong>Email:</strong>
-                                            <?php echo ($familia['Familia']['correo']); ?></td>
-
-                                    </tr>
-                                    <tr>
-                                        <td colspan=""><strong>Num. integrantes:</strong>
-                                            <?php echo ($familia['Familia']['numeropersonas']); ?>
-                                        </td>
-
-                                        <td colspan="2"><strong>Población vulnerable:</strong>
-                                            <?php echo ($familia['Familia']['poblacionvulnerable']); ?>
-                                        </td>
-                                    </tr>
-
-                                <td colspan="12" style="text-align: center;">
-                                    <button id="verMasButton" class="my-button" onclick="toggleTableVisibility()">
-                                        <?php $imageUrl = $this->Html->url('/img/flecha-correcta.png', true);
-                                        ?>
-                                        <img src="<?= $imageUrl ?>" style=" transform: rotate(90deg);"
-                                            alt="Imagen de marcador genérico" width="100%" height="auto">
-
-                                    </button>
-                                </td>
-
-
-                            </table>
-
-
-
-                            <table id="miTabla" style="display: none; margin-top: 20px;" width="100%"
-                                class="table table-responsive table-striped table-bordered  ">
-                                <tr>
-                                    <td colspan="6" style="text-align: center; color: #3366CC;">
-                                        <strong>VIVIENDA</strong>
-
-                                    </td>
-
-                                </tr>
-
-                                <tr>
-
-                                    <td><strong>vivienda:</strong>
-                                        <?php echo ($familia['Familia']['vivienda']); ?></td>
-                                    <td><strong>Tenencia:</strong>
-                                        <?php echo ($familia['Familia']['tenencia']); ?></td>
-                                    <td><strong>Tiempo de residencia:</strong>
-                                        <?php echo '<span>' . $familia['Familia']['tiemporesidencia'] . '</span>'; ?>
-                                    </td>
-                                </tr>
-
-                                <tr>
-
-                                    <td><strong>combustible:</strong>
-                                        <?php echo ($familia['Familia']['combustible']); ?></td>
-                                    <td><strong>otrocombustible:</strong>
-                                        <?php echo ($familia['Familia']['otrocombustible']); ?></td>
-                                    <td><strong>Actividad económica:</strong>
-                                        <?php echo '<span>' . $familia['Sociambiental']['actividad'] . '</span>'; ?>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td colspan="6" style="text-align: center; color: #3366CC;">
-                                        <strong>CARACTERISTICAS DE LA FAMILIA</strong>
-                                    </td>
-
-
-
-                                </tr>
-
-                                <tr>
-
-                                    <td><strong>Tipo familia:</strong>
-                                        <?php echo ($familia['Familia']['tipofamilia']); ?></td>
-                                    <td><strong>Curso vida familia:</strong>
-                                        <?php echo ($familia['Familia']['cursovidafamilia']); ?></td>
-                                    <td><strong>Personas LGTBIQ+:</strong>
-                                        <?php echo '<span>' . $familia['Familia']['lgtbi'] . '</span>'; ?>
-                                    </td>
-                                </tr>
-                                <tr>
-
-                                    <td><strong>Estilo de vida:</strong>
-                                        <?php echo ($familia['Familia']['estilodevidapredominante']); ?></td>
-                                    <td><strong>Antecedente enfermedad:</strong>
-                                        <?php echo ($familia['Familia']['antecedenteenfermedad']); ?></td>
-                                    <td><strong>Antecedente enfermedad:</strong>
-                                        <?php echo '<span>' . $familia['Familia']['antecedenteenfermedad1'] . '</span>'; ?>
-                                    </td>
-                                </tr>
-                                <tr>
-
-                                    <td><strong>Antecedente enfermedad:</strong>
-                                        <?php echo ($familia['Familia']['antecedenteenfermedad2']); ?></td>
-                                    <td><strong>Enfermedad transmible::</strong>
-                                        <?php echo ($familia['Familia']['enfermedadtransmible']); ?></td>
-                                    <td><strong>Enfermedad transmible:</strong>
-                                        <?php echo '<span>' . $familia['Familia']['enfermedadtransmible1'] . '</span>'; ?>
-                                    </td>
-                                </tr>
-                                <tr>
-
-                                    <td><strong>Lavado de manos:</strong>
-                                        <?php echo ($familia['Familia']['lavadomanos']); ?></td>
-                                    <td><strong>Comparte elementos aseo personal:</strong>
-                                        <?php echo ($familia['Familia']['elementoshigiene']); ?></td>
-                                    <td><strong>Cultura de cepillado de dientes:</strong>
-                                        <?php echo '<span>' . $familia['Familia']['cepilladodientes'] . '</span>'; ?>
-                                    </td>
-                                </tr>
-
-                                <tr>
-
-                                    <td><strong>Riesgo Psicosocial:</strong>
-                                        <?php echo ($familia['Familia']['riesgopsicosocial']); ?></td>
-                                    <td><strong>Riesgo Psicosocial:</strong>
-                                        <?php echo ($familia['Familia']['riesgopsicosocial1']); ?></td>
-                                    <td><strong>Riesgo Psicosocial:</strong>
-                                        <?php echo '<span>' . $familia['Familia']['riesgopsicosocial2'] . '</span>'; ?>
-                                    </td>
-                                </tr>
-                                <tr>
-
-                                    <td><strong>Salud alternativa:</strong>
-                                        <?php echo ($familia['Familia']['saludalternativa']); ?></td>
-                                    <td><strong>Cuidador permante:</strong>
-                                        <?php echo ($familia['Familia']['cuidadorpermante']); ?></td>
-                                    <td><strong>Programa social:</strong>
-                                        <?php echo '<span>' . $familia['Familia']['programasocial'] . '</span>'; ?>
-                                    </td>
-                                </tr>
-                                <tr>
-
-                                    <td colspan="2"><strong>Programa social:</strong>
-                                        <?php echo ($familia['Familia']['programasocial1']); ?></td>
-                                    <td colspan=""><strong>Programa social:</strong>
-                                        <?php echo ($familia['Familia']['programasocial2']); ?></td>
-                                </tr>
-
-
-                                <tr>
-                                    <td colspan="6" style="text-align: center; color: #3366CC;">
-                                        <strong>HABITABILIDAD</strong>
-
-                                    </td>
-
-
-
-                                </tr>
-
-                                <tr>
-
-                                    <td><strong>Paredes:</strong>
-                                        <?php echo ($familia['Sociambiental']['estadoparedes']); ?></td>
-                                    <td><strong>Techo:</strong>
-                                        <?php echo ($familia['Sociambiental']['estadotecho']); ?></td>
-                                    <td id="hacinamiento"><strong>Hacinamiento:</strong>
-                                        <?php echo '<span>' . $familia['Sociambiental']['hacinamiento'] . '</span>'; ?>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td><strong>Riesgo externo:</strong>
-                                        <?php echo ($familia['Sociambiental']['riesgoexterno']); ?>
-                                    </td>
-                                    <td><strong>Riesgo externo:</strong>
-                                        <?php echo ($familia['Sociambiental']['otroriesgo']); ?>
-                                    </td>
-                                    <td><strong>Riesgo hogar:</strong>
-                                        <?php echo ($familia['Sociambiental']['riesgo']); ?>
-                                    </td>
-
-                                </tr>
-                                <tr>
-                                    <td><strong>Riesgo hogar:</strong>
-                                        <?php echo ($familia['Sociambiental']['otroriesgohogar']); ?></td>
-                                    <td><strong>Dificil acceso a:</strong>
-                                        <?php echo ($familia['Sociambiental']['acceso']); ?> -
-                                        <?php echo ($familia['Sociambiental']['accesoDos']); ?></td>
-                                    <td><strong>Servicio de agua:</strong>
-                                        <?php echo ($familia['Sociambiental']['aguaservicio']); ?></td>
-                                    </td>
-                                </tr>
-                                <tr>
-
-
-                                    <td><strong>Higiene en el hogar:</strong>
-                                        <?php echo '<span>' . $familia['Familia']['higiene'] . '</span>'; ?>
-                                    </td>
-                                    <td><strong>Aseo cocina:</strong>
-                                        <?php echo ($familia['Familia']['aseococina']); ?></td>
-                                    <td><strong>Higiene alimentos:</strong>
-                                        <?php echo ($familia['Familia']['higienealimentos']); ?></td>
-
-                                </tr>
-
-                                <tr>
-                                    <td><strong>Tratamiento agua:</strong>
-                                        <?php echo ($familia['Sociambiental']['aguatratamiento']); ?></td>
-                                    <td><strong>Limpieza Tanque se agua:</strong>
-                                        <?php echo ($familia['Sociambiental']['aguaalmacenamiento']); ?></td>
-
-                                    <td><strong>Diposicion excretas:</strong>
-                                        <?php echo ($familia['Sociambiental']['diposicionexcretas']); ?></td>
-
-                                </tr>
-                                <tr>
-                                    <td><strong>agua residual:</strong>
-                                        <?php echo ($familia['Sociambiental']['aguaresiduales']); ?></td>
-                                    <td><strong>Limpieza Tanque se agua:</strong>
-                                        <?php echo ($familia['Sociambiental']['basura']); ?></td>
-
-                                    <td><strong>Reciclaje:</strong>
-                                        <?php echo ($familia['Sociambiental']['reciclaje']); ?></td>
-
-                                </tr>
-
-                                <tr>
-                                    <td colspan="6" style="text-align: center; color: #3366CC;"><strong>MASCOTAS EN EL
-                                            HOGAR</strong>
-
-                                    </td>
-
-
-
-                                </tr>
-                                <tr>
-
-                                    <td><strong>Num. Perros:</strong>
-                                        <?php echo ($familia['Sociambiental']['numeroPerros']); ?></td>
-                                    <td><strong>Num.Gatos:</strong>
-                                        <?php echo ($familia['Sociambiental']['numeroGatos']); ?></td>
-                                    <td><strong>Num. otras mascotas:</strong>
-                                        <?php echo ($familia['Sociambiental']['otramascota']); ?></td>
-                                </tr>
-                                <tr>
-
-                                    <td><strong>Perros:</strong>
-                                        <?php echo ($familia['Sociambiental']['numeroPerros']); ?></td>
-                                    <td id="desparasitacion"><strong>desparasitación:</strong>
-                                        <?php echo '<span>' . $familia['Sociambiental']['desparasitamascotas'] . '</span>'; ?>
-                                    </td>
-                                    <td id="vacunacion"><strong>Vacunacion:</strong>
-                                        <?php echo '<span>' . $familia['Sociambiental']['vacunamascotas'] . '</span>'; ?>
-                                    </td>
-
-                                </tr>
-
-
-                                <td colspan="12" style="text-align: center;">
-                                    <button class="my-button" onclick="toggleTableVisibility()">
-                                        <img src="<?= $imageUrl ?>" style=" transform: rotate(-90deg);"
-                                            alt="Imagen de marcador genérico" width="100%" height="auto"> </button>
-                                    </button>
-                                </td>
-
-
-
-                            </table>
-
-                            <td class="actions">
-                                <div class="btn-group">
-                                    <button type="button" class="my-button" data-toggle="dropdown">
-                                        <?php echo ('Acciones'); ?> <span class="caret"></span>
-                                    </button>
-                                    <ul class="dropdown-menu" role="menu">
-
-                                        <li> <?php
-                                                echo $this->Html->link(
-                                                    'Editar inf.sociambiental',
-                                                    array(
-                                                        'controller' => 'sociambientals',
-                                                        'action' => 'edit',
-                                                        $familia['Sociambiental']['id']
-                                                    ),
-                                                    array(
-                                                        'onclick' => "return confirm('¿Estás seguro de que deseas editar la información sociambiental de la familia " . $familia['Sociambiental']['apellidosfamilia'] . "?');",
-                                                        'style' => 'color: blue; font-size: 16px; font-weight: bold;'
-                                                    )
-                                                );
-                                                ?>
-
-                                        </li>
-                                        <li> <?php echo $this->Html->link(
-                                                    __('Editar información Familiar'),
-                                                    array('action' => 'edit', $familia['Familia']['id']),
-                                                    array(
-                                                        'onclick' => "return confirm('¿Estás seguro de editar la información del hogar de " .  $familia['Familia']['nombres'] . ' ' . $familia['Familia']['apellidos'] . "?');",
-                                                        'style' => 'color: blue; font-size: 16px; font-weight: bold;'
-                                                    )
-                                                ); ?>
-
-                                        </li>
-                                        <li> <?php
-                                                echo $this->Html->link(('Agregar menor de 2 años'),
-                                                    array(
-                                                        'controller' => 'Primerainfancias',
-                                                        'action' => 'add?primerainfancia=' . $familia['Familia']['id']
-                                                    ),
-                                                    array(
-                                                        'onclick' => "return confirm('¿Estás seguro de agregar un menor de 2 años en el hogar de " .  $familia['Familia']['nombres'] . " " .  $familia['Familia']['apellidos'] . "?');",
-                                                        'style' => 'color: blue; font-size: 16px; font-weight: bold;'
-                                                    )
-                                                ); ?>
-
-                                        </li>
-                                        <li> <?php echo $this->Html->link(('Agregar menor de 2 a 5 años'),
-                                                    array(
-                                                        'controller' => 'Primerainfancias',
-                                                        'action' => 'add2_5?primerainfancia=' . $familia['Familia']['id']
-                                                    ),
-                                                    array(
-                                                        'onclick' => "return confirm('¿Estás seguro de agregar un menor de 2 a 5 años en el hogar de " .  $familia['Familia']['nombres'] . " " .  $familia['Familia']['apellidos'] . "?');",
-                                                        'style' => 'color: blue; font-size: 16px; font-weight: bold;'
-                                                    )
-
-                                                ); ?>
-                                        </li>
-                                        <li> <?php echo $this->Html->link(('Agregar menor de 6 a 11 años'),
-                                                    array(
-                                                        'controller' => 'Infantils',
-                                                        'action' => 'add?infantils=' . $familia['Familia']['id']
-                                                    ),
-                                                    array(
-                                                        'onclick' => "return confirm('¿Estás seguro de agregar un menor de 6 a 11 años en el hogar de " .  $familia['Familia']['nombres'] . " " .  $familia['Familia']['apellidos'] . "?');",
-                                                        'style' => 'color: blue; font-size: 16px; font-weight: bold;'
-                                                    )
-                                                ); ?>
-                                        </li>
-                                        <li> <?php echo $this->Html->link(('Agregar menor de 12 a 17 años'),
-                                                    array(
-                                                        'controller' => 'Adolescencias',
-                                                        'action' => 'add?adolescencias=' . $familia['Familia']['id']
-                                                    ),
-                                                    array(
-                                                        'onclick' => "return confirm('¿Estás seguro de agregar un menor de 12 a 17 años en el hogar de " .  $familia['Familia']['nombres'] . " " .   $familia['Familia']['apellidos'] . "?');",
-                                                        'style' => 'color: blue; font-size: 16px; font-weight: bold;'
-                                                    )
-                                                ); ?>
-                                        </li>
-                                        <li> <?php echo $this->Html->link(('Agregar adulto mayor de 18 años'),
-                                                    array(
-                                                        'controller' => 'Juventudadultos',
-                                                        'action' => 'add?juventudadultos=' . $familia['Familia']['id']
-                                                    ),
-                                                    array(
-                                                        'onclick' => "return confirm('¿Estás seguro de agregar un adulto mayor de 18 en el hogar de " .  $familia['Familia']['nombres'] . " " .  $familia['Familia']['apellidos'] . "?');",
-                                                        'style' => 'color: blue; font-size: 16px; font-weight: bold;'
-                                                    )
-                                                ); ?>
-                                        </li>
-                                        <li> <?php echo $this->Html->link(('Agregar Observación '),
-                                                    array(
-                                                        'controller' => 'Observacions',
-                                                        'action' => 'add?observaciones=' . $familia['Familia']['id']
-                                                    ),
-                                                    array(
-                                                        'onclick' => "return confirm('¿Estás seguro de agregar una observación en el hogar de " .  $familia['Familia']['nombres'] . " " .  $familia['Familia']['apellidos'] . "?');",
-                                                        'style' => 'color: blue; font-size: 16px; font-weight: bold;'
-                                                    )
-                                                ); ?>
-                                        </li>
-
-                                        <li> <?php echo $this->Html->link(('Generar plan cuidado '),
-                                                    array(
-                                                        'controller' => 'familias',
-                                                        'action' => 'plancuidado' . '/' . $familia['Familia']['id']
-                                                    ),
-                                                    array(
-                                                        'onclick' => "return confirm('¿Estás seguro de agregar una observación en el hogar de " .  $familia['Familia']['nombres'] . " " .  $familia['Familia']['apellidos'] . "?');",
-                                                        'style' => 'color: blue; font-size: 16px; font-weight: bold;'
-                                                    )
-                                                ); ?>
-                                        </li>
-
-                                    </ul>
-                                </div>
-                            </td>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-
-
-
-
-            <h2 class="subtitle-general-forms" style=" margin-top: 40px;">Personas en la Familia</h2>
-            <hr style=" background-clip: border-box; border:0.1px solid rgba(0,0,0,.125); margin-top: 1px;">
-
-            <div class="dataTable_wrapper">
-                <div class="row" style="margin: 5px;">
-                    <div class="col-lg-12">
-
-
-                        <div class="panel-body">
-                            <!-- Nav tabs -->
-
-                            <!-- Tab panes -->
-                            <div class="tab-content">
-
-                                <div class="card-body" style="margin-top: 20px;">
-                                    <?php if (!empty($familia['Primerainfancia'])) : ?>
-
-                                        <div>
-                                            <div style="margin: 20px; ">
-                                                <div class=" row">
-
-                                                    <div class="col-sm-12">
-                                                        <table id="dataTables-example" class="display responsive nowrap"
-                                                            style="width:100%">
-                                                            <!--table cellpatding="0" cellspacing="0" class="table-hover table-striped table-bordered"-->
-                                                            <thead>
-                                                                <tr>
-                                                                    <th>Id</th>
-                                                                    <th>Opciones</th>
-                                                                    <th>Nombres</th>
-                                                                    <th>Edad</th>
-                                                                    <th>Sexo</th>
-                                                                    <th>Aseguradora</th>
-                                                                    <th>Canalización</th>
-                                                                    <th>Condicioncronica </th>
-                                                                </tr>
-
-                                                            <tbody>
-                                                                <?php foreach ($familia['Primerainfancia'] as $primerainfancia) :
-                                                                    if (!empty($primerainfancia['id'])) {
-                                                                ?>
-                                                                        <tr class="gradeA odd">
-
-
-                                                                            <td class="sorting_1">
-                                                                                <?php echo $primerainfancia['id']; ?></td>
-
-                                                                            <td class="actions">
-
-                                                                                <div class="btn-group">
-                                                                                    <button type="button" class="my-button"
-                                                                                        style="margin-top: -2px;"
-                                                                                        data-toggle="dropdown">
-                                                                                        Opciones
-                                                                                    </button>
-                                                                                    <ul class="dropdown-menu" role="menu">
-                                                                                        <li>
-                                                                                            <?php echo $this->Html->link(
-                                                                                                "Ver",
-                                                                                                "../primerainfancias/view/" . $primerainfancia['id'],
-                                                                                                array(
-                                                                                                    'style' => 'font-size: 14px;'
-                                                                                                )
-                                                                                            ); ?>
-                                                                                        </li>
-                                                                                        <li>
-
-                                                                                            <?php echo $this->Html->link(('Editar'),
-                                                                                                "../primerainfancias/edit/" . $primerainfancia['id'],
-                                                                                                array('action' => 'edit', $primerainfancia['id']),
-                                                                                                array(
-                                                                                                    'style' => 'font-size: 14px;'
-                                                                                                )
-                                                                                            ); ?>
-
-
-                                                                                        </li>
-                                                                                        <li><?php echo $this->Form->postLink(
-                                                                                                __('Borrar'),
-                                                                                                array(
-                                                                                                    'controller' => 'primerainfancias',
-                                                                                                    'action' => 'delete',
-                                                                                                    $primerainfancia['id']
-                                                                                                ),
-                                                                                                array('style' => 'color: red; font-size: 14px; '),
-                                                                                                __('Esta seguro de eliminar el registro # %s?', $primerainfancia['id'] . ' ' . $primerainfancia['primernombre'] . ' ' . $primerainfancia['primerapellido'] . ' de la familia de con id # ' .  $primerainfancia['familia_id'])
-                                                                                            ); ?>
-                                                                                        </li>
-                                                                                    </ul>
-                                                                                </div>
-
-                                                                            </td>
-
-
-
-                                                                            <td><?php echo $primerainfancia['primernombre'] ?>
-                                                                                <?php echo $primerainfancia['primerapellido'] ?>
-                                                                            </td>
-
-                                                                            <td>
-                                                                                <?php echo $primerainfancia['edad']; ?>
-                                                                            </td>
-                                                                            <td> <?php echo $primerainfancia['sexo']; ?>
-                                                                            </td>
-                                                                            <td> <?php echo $primerainfancia['aseguradora']; ?>
-                                                                            </td>
-                                                                            <td> <?php echo $primerainfancia['canalizacionuno']; ?>,
-                                                                                <?php echo $primerainfancia['canalizaciondos']; ?>,
-                                                                                <?php echo $primerainfancia['canalizaciontres']; ?>
-                                                                            </td>
-                                                                            <td><?php echo $primerainfancia['condicioncronica']; ?>
-                                                                            </td>
-
-                                                                        </tr>
-                                                                <?php }
-                                                                endforeach; ?>
-                                                            </tbody>
-                                                            </thead>
-                                                        </table>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    <?php endif; ?>
-
-                                    <?php if (!empty($familia['Infantil'])) : ?>
-
-                                        <div>
-                                            <div style="margin: 20px; ">
-                                                <div class=" row">
-
-                                                    <div class="col-sm-12">
-                                                        <table id="dataTables-infantil" class="display responsive nowrap"
-                                                            style="width:100%">
-                                                            <!--table cellpatding="0" cellspacing="0" class="table-hover table-striped table-bordered"-->
-                                                            <thead>
-                                                                <tr>
-                                                                    <th>Id</th>
-                                                                    <th>Opciones</th>
-                                                                    <th>Nombres</th>
-                                                                    <th>Edad</th>
-                                                                    <th>Sexo</th>
-                                                                    <th>Aseguradora</th>
-                                                                    <th>Canalización</th>
-                                                                    <th>Condición Crónica</th>
-
-                                                                </tr>
-
-                                                            <tbody>
-                                                                <?php foreach ($familia['Infantil'] as $infantil) :
-                                                                    if (!empty($infantil['id'])) {
-                                                                ?>
-                                                                        <tr class="gradeA odd">
-                                                                            <td class="sorting_1">
-                                                                                <?php echo $infantil['id']; ?>
-                                                                            </td>
-                                                                            <td class="actions">
-
-                                                                                <div class="btn-group">
-                                                                                    <button type="button" class="my-button"
-                                                                                        style="margin-top: -2px;"
-                                                                                        data-toggle="dropdown">
-                                                                                        Opciones
-                                                                                    </button>
-                                                                                    <ul class="dropdown-menu" role="menu">
-                                                                                        <li><?php echo $this->Html->link("Ver", "../infantils/view/" . $infantil['id'], array('target' => '_blank')); ?>
-                                                                                        </li>
-                                                                                        <li><?php echo $this->Html->link("Editar ", "../infantils/edit/" . $infantil['id'], array('target' => '_blank')); ?>
-                                                                                        </li>
-                                                                                        <li><?php echo $this->Form->postLink(
-                                                                                                __('Borrar'),
-                                                                                                array(
-                                                                                                    'controller' => 'infantils',
-                                                                                                    'action' => 'delete',
-                                                                                                    $infantil['id']
-                                                                                                ),
-                                                                                                array('style' => 'color: red; font-size: 16px; font-weight: bold;'),
-                                                                                                __('Esta seguro de eliminar el registro # %s?', $infantil['id'] . ' ' . $infantil['primernombre'] . ' ' . $infantil['primerapellido'] . ' de la familia de con id # ' .  $infantil['familia_id'])
-                                                                                            ); ?>
-                                                                                        </li>
-                                                                                    </ul>
-                                                                                </div>
-
-                                                                            </td>
-
-                                                                            <td><?php echo $infantil['primernombre'] ?>
-                                                                                <?php echo $infantil['primerapellido'] ?>
-                                                                            </td>
-                                                                            <td>
-                                                                                <?php echo $infantil['edad']; ?>
-                                                                            </td>
-                                                                            <td> <?php echo $infantil['sexo']; ?>
-                                                                            </td>
-                                                                            <td> <?php echo $infantil['aseguradora']; ?>
-                                                                            </td>
-                                                                            <td> <?php echo $infantil['canalizacionuno']; ?>,
-                                                                                <?php echo $infantil['canalizaciondos']; ?>,
-                                                                                <?php echo $infantil['canalizaciontres']; ?>
-                                                                            </td>
-                                                                            <td> <?php echo $infantil['condicioncronica']; ?>
-                                                                            </td>
-
-
-                                                                        </tr>
-                                                                <?php }
-                                                                endforeach; ?>
-                                                            </tbody>
-                                                            </thead>
-                                                        </table>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    <?php endif; ?>
-                                </div>
-
-                                <div class="card-body" style="margin-top: 20px;">
-                                    <?php if (!empty($familia['Adolescencia'])) : ?>
-                                        <div>
-                                            <div style="margin: 20px; ">
-
-                                                <div class=" row">
-
-
-                                                    <div class="col-sm-12">
-                                                        <table id="dataTables-Adolescencia"
-                                                            class="display responsive nowrap" style="width:100%">
-                                                            <!--table cellpatding="0" cellspacing="0" class="table-hover table-striped table-bordered"-->
-                                                            <thead>
-                                                                <tr>
-                                                                    <th>Id</th>
-                                                                    <th>Acciones</th>
-                                                                    <th>Nombres</th>
-                                                                    <th>Edad</th>
-                                                                    <th>Sexo</th>
-                                                                    <th>Aseguradora</th>
-                                                                    <th>Canalización</th>
-                                                                    <th>Condición Crónica</th>
-                                                                </tr>
-
-                                                            <tbody>
-                                                                <?php foreach ($familia['Adolescencia'] as $adolescencia) :
-                                                                    if (!empty($adolescencia['id'])) {
-                                                                ?>
-                                                                        <tr class="gradeA odd">
-                                                                            <td class="sorting_1">
-                                                                                <?php echo $adolescencia['id']; ?></td>
-
-                                                                            <td class="actions">
-
-                                                                                <div class="btn-group">
-                                                                                    <button type="button" class="my-button"
-                                                                                        style="margin-top: -2px;"
-                                                                                        data-toggle="dropdown">
-                                                                                        Opciones
-                                                                                    </button>
-                                                                                    <ul class="dropdown-menu" role="menu">
-                                                                                        <li><?php echo $this->Html->link("Ver", "../adolescencias/view/" . $adolescencia['id'], array('target' => '_blank')); ?>
-                                                                                        </li>
-                                                                                        <li><?php echo $this->Html->link("Editar ", "../adolescencias/edit/" . $adolescencia['id'], array('target' => '_blank')); ?>
-                                                                                        </li>
-                                                                                        <li><?php echo $this->Form->postLink(
-                                                                                                __('Borrar'),
-                                                                                                array(
-                                                                                                    'controller' => 'adolescencias',
-                                                                                                    'action' => 'delete',
-                                                                                                    $adolescencia['id']
-                                                                                                ),
-                                                                                                array('style' => 'color: red; font-size: 16px; font-weight: bold;'),
-                                                                                                __('Esta seguro de eliminar el registro # %s?', $adolescencia['id'] . ' ' . $adolescencia['primernombre'] . ' ' . $adolescencia['primerapellido'] . ' de la familia de con id # ' .  $adolescencia['familia_id'])
-                                                                                            ); ?>
-                                                                                        </li>
-                                                                                    </ul>
-                                                                                </div>
-
-                                                                            </td>
-
-                                                                            <td><?php echo $adolescencia['primernombre'] ?>
-                                                                                <?php echo $adolescencia['primerapellido'] ?>
-                                                                            </td>
-                                                                            <td>
-                                                                                <?php echo $adolescencia['edad']; ?>
-                                                                            </td>
-                                                                            <td> <?php echo $adolescencia['sexo']; ?>
-                                                                            </td>
-                                                                            <td> <?php echo $adolescencia['aseguradora']; ?>
-                                                                            </td>
-                                                                            <td> <?php echo $adolescencia['canalizacionuno']; ?>,<?php echo $adolescencia['canalizaciondos']; ?>,
-                                                                                <?php echo $adolescencia['canalizaciontres']; ?>
-                                                                            </td>
-                                                                            <td> <?php echo $adolescencia['condicioncronica']; ?>
-                                                                            </td>
-                                                                        </tr>
-                                                                <?php }
-                                                                endforeach; ?>
-                                                            </tbody>
-                                                            </thead>
-                                                        </table>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    <?php endif; ?>
-                                </div>
-
-                                <div class="card-body" style="margin-top: 20px;">
-
-                                    <?php if (!empty($familia['Juventudadulto'])) : ?>
-                                        <div>
-                                            <div style="margin: 20px; ">
-                                                <div class=" row">
-
-                                                    <div class="col-sm-12">
-                                                        <table id="dataTables-juventudAdulto"
-                                                            class="display responsive nowrap" style="width:100%">
-                                                            <!--table cellpatding="0" cellspacing="0" class="table-hover table-striped table-bordered"-->
-                                                            <thead>
-                                                                <tr>
-                                                                    <th>Id</th>
-                                                                    <th>Opciones</th>
-                                                                    <th>Nombres</th>
-                                                                    <th>Edad</th>
-                                                                    <th>Sexo</th>
-                                                                    <th>Aseguradora</th>
-                                                                    <th>Canalización</th>
-                                                                    <th>Condición Crónica</th>
-
-
-                                                                </tr>
-
-                                                            <tbody>
-                                                                <?php foreach ($familia['Juventudadulto'] as $juventudadulto) :
-                                                                    if (!empty($juventudadulto['id'])) {
-                                                                ?>
-                                                                        <tr class="gradeA odd">
-
-                                                                            <td class="sorting_1">
-                                                                                <?php echo $juventudadulto['id']; ?></td>
-                                                                            <td class="actions">
-
-                                                                                <div class="btn-group">
-                                                                                    <button type="button" class="my-button"
-                                                                                        style="margin-top: -2px;"
-                                                                                        data-toggle="dropdown">
-                                                                                        Opciones
-                                                                                    </button>
-                                                                                    <ul class="dropdown-menu" role="menu">
-                                                                                        <li><?php echo $this->Html->link("Ver", "../juventudadultos/view/" . $juventudadulto['id'], array('target' => '_blank')); ?>
-                                                                                        </li>
-                                                                                        <li><?php echo $this->Html->link("Editar ", "../juventudadultos/edit/" . $juventudadulto['id'], array('target' => '_blank')); ?>
-                                                                                        </li>
-                                                                                        <li><?php echo $this->Form->postLink(
-                                                                                                __('Borrar'),
-                                                                                                array(
-                                                                                                    'controller' => 'juventudadultos',
-                                                                                                    'action' => 'delete',
-                                                                                                    $juventudadulto['id']
-                                                                                                ),
-                                                                                                array('style' => 'color: red; font-size: 16px; font-weight: bold;'),
-                                                                                                __('Esta seguro de eliminar el registro # %s?', $juventudadulto['id'] . ' ' . $juventudadulto['primernombre'] . ' ' . $juventudadulto['primerapellido'] . ' de la familia de con id # ' .  $juventudadulto['familia_id'])
-                                                                                            ); ?>
-                                                                                        </li>
-                                                                                    </ul>
-                                                                                </div>
-
-                                                                            </td>
-
-                                                                            <td><?php echo $juventudadulto['primernombre'] ?>
-                                                                                <?php echo $juventudadulto['primerapellido'] ?>
-                                                                            </td>
-                                                                            <td>
-                                                                                <?php echo $juventudadulto['edad']; ?>
-                                                                            </td>
-                                                                            <td> <?php echo $juventudadulto['sexo']; ?>
-                                                                            </td>
-                                                                            <td> <?php echo $juventudadulto['aseguradora']; ?>
-                                                                            </td>
-                                                                            <td> <?php echo $juventudadulto['canalizacionuno']; ?>,<?php echo $juventudadulto['canalizaciondos']; ?>,<?php echo $juventudadulto['canalizaciontres']; ?>
-                                                                            </td>
-                                                                            <td> <?php echo $juventudadulto['condicioncronica']; ?>
-                                                                            </td>
-
-
-
-                                                                        </tr>
-                                                                <?php }
-                                                                endforeach; ?>
-                                                            </tbody>
-                                                            </thead>
-                                                        </table>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    <?php endif; ?>
-
-
-                                </div>
-                                <div class="card-body" style="margin-top: 20px;">
-
-
-                                    <?php if (!empty($familia['Observacion'])) : ?>
-                                        <div>
-                                            <div style="margin: 20px; ">
-                                                <div class=" row">
-
-                                                    <div class="col-sm-12">
-                                                        <table id="dataTables-Observacion" class="display responsive nowrap"
-                                                            style="width:100%">
-                                                            <!--table cellpatding="0" cellspacing="0" class="table-hover table-striped table-bordered"-->
-                                                            <thead>
-                                                                <tr>
-                                                                    <th>id</th>
-                                                                    <th>Opciones</th>
-                                                                    <th>Prioridad</th>
-                                                                    <th>Canalización</th>
-                                                                    <th>Familiograma</th>
-                                                                    <th>Ecomapa</th>
-                                                                    <th>Observacion</th>
-                                                                    <th>Fecha</th>
-                                                                </tr>
-
-                                                            <tbody>
-
-                                                                <?php foreach ($familia['Observacion'] as $observacion) :
-                                                                    if (!empty($observacion['id'])) {
-                                                                ?>
-                                                                        <tr class="gradeA odd">
-
-                                                                            <td class="sorting_1">
-                                                                                <?php echo $observacion['id']; ?></td>
-
-                                                                            <td class="actions">
-
-                                                                                <div class="btn-group">
-                                                                                    <button type="button" class="my-button"
-                                                                                        style="margin-top: -2px;"
-                                                                                        data-toggle="dropdown">
-                                                                                        Opciones
-                                                                                    </button>
-                                                                                    <ul class="dropdown-menu" role="menu">
-                                                                                        <li><?php echo $this->Html->link("Ver", "../observacions/view/" . $observacion['id'], array('target' => '_blank')); ?>
-                                                                                        </li>
-                                                                                        <li><?php echo $this->Html->link("Editar ", "../observacions/edit/" . $observacion['id'], array('target' => '_blank')); ?>
-                                                                                        </li>
-                                                                                        <li><?php echo $this->Html->link("Cargar Plan Cuidado ", "../observacions/add_plancuidado/" . $observacion['id'], array('target' => '_blank')); ?>
-                                                                                        </li>
-                                                                                        <li><?php echo $this->Form->postLink(
-                                                                                                __('Borrar'),
-                                                                                                array(
-                                                                                                    'controller' => 'observacions',
-                                                                                                    'action' => 'delete',
-                                                                                                    $observacion['id']
-                                                                                                ),
-                                                                                                array('style' => 'color: red; font-size: 16px; font-weight: bold;'),
-                                                                                                __('Esta seguro de eliminar el registro # %s?', $observacion['id'] . ' ' . ' de la familia de con id # ' .  $observacion['familia_id'])
-                                                                                            ); ?>
-                                                                                        </li>
-                                                                                    </ul>
-                                                                                </div>
-
-                                                                            </td>
-                                                                            <td><?php echo ($observacion['valoracionfamilia']); ?>
-                                                                            </td>
-                                                                            <td><?php echo ($observacion['canalizacionuno']); ?>,<?php echo ($observacion['canalizaciondos']); ?>,<?php echo ($observacion['canalizaciontres']); ?>
-                                                                            </td>
-
-                                                                            <td><?php echo ($observacion['resultadoFamiliograma']); ?>&nbsp;
-                                                                            </td>
-                                                                            <td><?php echo ($observacion['resultadoEcomapa']); ?>&nbsp;
-                                                                            </td>
-                                                                            <td><?php echo ($observacion['observacion']); ?>&nbsp;
-                                                                            </td>
-                                                                            <td><?php echo ($observacion['fecha']); ?>&nbsp;
-                                                                            </td>
-
-                                                                        </tr>
-                                                                <?php }
-                                                                endforeach; ?>
-                                                            </tbody>
-                                                            </thead>
-                                                        </table>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    <?php endif; ?>
-
-
-
-
-
-        </fieldset>
-    </div>
+}
+
+$planUrl = $this->Html->url(['controller' => 'Familias', 'action' => 'plancuidado', $familia['Familia']['id']]);
+?>
+<link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
+<!-- JS de Leaflet -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.4.1/css/responsive.dataTables.min.css">
+<script src="https://cdn.datatables.net/responsive/2.4.1/js/dataTables.responsive.min.js"></script>
+
+
+<div class="max-w-5xl mx-auto text-center mb-8">
+    <h1 class="text-4xl md:text-5xl font-bold text-slate-800 mb-4 leading-tight">
+        Información de la Familia<br>
+        <span class="text-transparent bg-clip-text bg-gradient-to-r from-teal-600 to-cyan-600">
+            Ficha Familiar
+        </span>
+    </h1>
+    <p class="text-slate-600 text-lg max-w-2xl mx-auto leading-relaxed">
+        Visualización de la información de la familia.
+    </p>
 </div>
+
+<body class="bg-gray-50 p-2 sm:p-4">
+    <div class="flex max-w-6xl mx-auto text-center mb-4 gap-4">
+        <button title="Editar Vivienda" type="button" id="btn-print" class="flex items-center space-x-2 bg-teal-600 text-white px-4 py-2 rounded hover:bg-teal-700" onclick="window.location.href='<?php echo $this->Html->url(['controller' => 'Sociambientals', 'action' => 'edit', $familia['Sociambiental']['id']]); ?>'">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-printer-icon lucide-printer">
+                <path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z" />
+                <path d="m15 5 4 4" />
+            </svg>
+        </button>
+
+        <button title="Editar Familia" type="button" onclick="window.location.href='<?php echo $this->Html->url(['action' => 'edit', $familia['Familia']['id']]); ?>'"
+            class="flex items-center w-38 space-x-2 bg-teal-600 text-white px-4 py-2 rounded hover:bg-teal-700">
+            <i class="fas fa-users text-xl"></i>
+        </button>
+
+        <button title="Agregar Integrante" type="button" onclick="window.location.href='<?php echo $this->Html->url(['controller' => 'Juventudadultos', 'action' => 'add?juventudadultos=' . $familia['Familia']['id']]); ?>'"
+            class="flex items-center w-38 space-x-2 bg-teal-600 text-white px-4 py-2 rounded hover:bg-teal-700">
+            <i class="fa-solid fa-person text-2xl px-2"></i>
+        </button>
+
+        <?php
+        if (!$familia['Observacion'][0]['id']) :
+        ?>
+            <button title="Agregar Observaciones" type="button"
+                onclick="'<?php echo $this->Html->url(['controller' => 'Observacions', 'action' => 'add?observacions=' . $familia['Familia']['id']]); ?>'"
+                class=" flex items-center w-38 space-x-2 bg-teal-600 text-white px-4 py-2 rounded hover:bg-teal-700">
+                <i class="fa-solid fa-book-medical text-xl px-2"></i>
+            </button>
+        <?php
+        endif;
+        ?>
+
+
+        <button title="Generar Plan de Cuidado" type="button"
+            id="btn-plancuidado"
+            data-has-plan="<?php echo $hasPlan ? '1' : '0'; ?>"
+            data-url="<?php echo h($planUrl); ?>"
+            class="flex items-center w-38 space-x-2 bg-teal-600 text-white px-4 py-2 rounded hover:bg-teal-700"
+            onclick="if (this.dataset.hasPlan === '1') { window.location.href = this.dataset.url; } else { alert('No hay plan de cuidado asociado a esta familia. Por favor, agregue una observación con plan de cuidado primero.'); }">
+            <i class="fa-solid fa-hands-holding-child text-xl px-2"></i>
+        </button>
+    </div>
+
+    <!-- Document Container -->
+    <div class="max-w-6xl mx-auto bg-white overflow-hidden mt-4 sm:mt-4 p-4 shadow-2xl rounded-xl" id="print-area">
+        <div class="p-2 md:p-8">
+            <div class="flex items-center mb-4">
+                <i class="fas fa-users text-2xl text-teal-600 p-4 bg-teal-100 rounded-lg"></i>
+
+                <div class="ml-4">
+                    <h1 class="text-lg md:text-xl font-semibold flex">
+                        Información de la Familia
+                    </h1>
+                    <p class="text-sm md:text-base text-gray-500">Aqui se mostraran detalles importantes para la familia seleccionada.</p>
+                </div>
+
+            </div>
+            <!-- Header Section -->
+            <table class="w-full  border border-gray-300 text-sm text-gray-800">
+                <tbody>
+                    <!-- Encabezado con logo y datos -->
+                    <tr>
+                        <td class="border border-gray-300 font-semibold text-center px-8 py-2 text-slate-800 w-full uppercase" colspan="2">
+                            Caracterizacion Familiar
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="border border-gray-300 font-semibold text-center p-2 text-teal-600">
+                            ID
+                        </td>
+                        <td class="border border-gray-300 text-center p-2 text-gray-800 font-bold">
+                            <?php echo h($familia['Familia']['id']) ?>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="border border-gray-300 font-semibold text-center p-2 text-teal-600">
+                            ID Vivienda
+                        </td>
+                        <td class="border border-gray-300 text-center p-2 text-gray-800 font-bold">
+                            <?php echo h($familia['Sociambiental']['id']) ?>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="border border-gray-300 font-semibold text-center p-2 text-teal-600">
+                            Encuestador
+                        </td>
+                        <td class="border border-gray-300 text-center p-2 text-gray-800">
+                            <?php echo h($familia['Responsable']['nombres']) ?>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="border border-gray-300 font-semibold text-center p-2 text-teal-600">
+                            Fecha
+                        </td>
+                        <td class="border border-gray-300 text-center p-2 text-gray-800">
+                            <?php echo h(!empty($familia['Sociambiental']['fecha']) ? date('Y-m-d', strtotime($familia['Sociambiental']['fecha'])) : '') ?>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="border border-gray-300 font-semibold text-center p-2 text-teal-600">
+                            Apellidos de la Familia
+                        </td>
+                        <td class="border border-gray-300 text-center p-2 text-gray-800">
+                            <?php echo h(!empty($familia['Familia']['apellidos']) ? $familia['Familia']['apellidos'] : '') ?>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="border border-gray-300 font-semibold text-center p-2 text-teal-600">
+                            N° de Familias en vivienda
+                        </td>
+                        <td class="border border-gray-300 font-semibold text-center p-2 text-teal-600">
+                            N° de Personas
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="border border-gray-300 font-semibold text-center p-2 text-gray-800">
+                            <?php echo h($familia['Sociambiental']['numerohogares']) ?>
+                        </td>
+                        <td class="border border-gray-300 font-semibold text-center p-2 text-gray-800">
+                            <?php echo h($familia['Familia']['numeropersonas']) ?>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="border border-gray-300 font-semibold text-center p-2 text-teal-600" colspan="2">
+                            Ubicación
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="border border-gray-300 font-semibold text-center p-2 text-teal-600" colspan="2">
+                            <div id="mapContainer" style="width: 100%; height: 250px; margin-top: 10px;"></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="border border-gray-300 font-semibold text-center p-2 text-teal-600">
+                            Direccion
+                        </td>
+                        <td class="border border-gray-300 text-center p-2 text-gray-800">
+                            <?php echo h(!empty($familia['Sociambiental']['direccion']) ? $familia['Sociambiental']['direccion'] : '') ?>
+                        </td>
+
+                    </tr>
+                    <tr>
+                        <td class="border border-gray-300 font-semibold text-center p-2 text-teal-600">
+                            Numero de Celular
+                        </td>
+                        <td class="border border-gray-300 text-center p-2 text-gray-800">
+                            <?php if (!empty($familia['Familia']['celular'])): ?>
+                                <a href="tel:<?php echo h($familia['Familia']['celular']); ?>" class="text-teal-600 hover:underline"><?php echo h($familia['Familia']['celular']); ?></a>
+                            <?php else: ?>
+                                <?php echo h(''); ?>
+                            <?php endif; ?>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="border border-gray-300 font-semibold text-center p-2 text-teal-600">
+                            Microterritorio
+                        </td>
+                        <td class="border border-gray-300 text-center p-2 text-gray-800">
+                            <?php echo ($familia['Ubicacion']['microterritorio']) ?>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="border border-gray-300 font-semibold text-center p-2 text-teal-600">
+                            Manzana
+                        </td>
+                        <td class="border border-gray-300 text-center p-2 text-gray-800">
+                            <?php echo ($familia['Sociambiental']['manzana']) ?>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="border border-gray-300 font-semibold text-center p-2 text-teal-600">
+                            Población Vulnerable
+                        </td>
+                        <td class="border border-gray-300 text-center p-2 text-gray-800">
+                            <?php echo ($familia['Familia']['poblacionvulnerable']) ?>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="border border-gray-300 font-semibold text-center p-2 text-teal-600">
+                            Curso de Vida
+                        </td>
+                        <td class="border border-gray-300 text-center p-2 text-gray-800">
+                            <?php echo ($familia['Familia']['cursovidafamilia']) ?>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="max-w-6xl mx-auto bg-white overflow-hidden mt-4 sm:mt-8 p-4 shadow-2xl rounded-xl">
+        <div class="p-2 md:p-8">
+            <!-- Contenido a imprimir -->
+            <div class="flex items-center mb-2">
+                <i class="fas fa-users text-2xl text-teal-600 p-4 bg-teal-100 rounded-lg"></i>
+
+                <div class="ml-4">
+                    <h1 class="text-lg md:text-xl font-semibold flex">
+                        Integrantes Caracterizados
+                    </h1>
+                    <p class="text-sm md:text-base text-gray-500">Aqui se mostraran los integrantes caracterizadas de la vivienda.</p>
+                </div>
+
+            </div>
+            <?php if (!empty($familia['Integrantes'])) : ?>
+                <table id="miTabla" style="width:100%;" class="stripe hover mt-4 text-sm text-left text-gray-600 border border-gray-200 rounded-lg">
+                    <thead class="bg-gray-200 font-medium border-b border-gray-300">
+                        <tr class=" text-gray-900 font-light">
+                            <th class="dtr-control"></th>
+                            <th class="px-4 py-2 font-semibold text-center cursor-pointer hover:bg-gray-100">ID</th>
+                            <th class="px-4 py-2 font-semibold cursor-pointer hover:bg-gray-100">Nombres</th>
+                            <th class="px-4 py-2 font-semibold cursor-pointer hover:bg-gray-100">Edad</th>
+                            <th class="px-4 py-2 font-semibold cursor-pointer hover:bg-gray-100">Sexo</th>
+                            <th class="px-4 py-2 font-semibold cursor-pointer hover:bg-gray-100">Aseguradora</th>
+                            <th class="px-4 py-2 font-semibold cursor-pointer hover:bg-gray-100">Canalización</th>
+                            <th class="px-4 py-2 font-semibold cursor-pointer hover:bg-gray-100">Condicioncronica </th>
+                            <th class="px-4 py-2 font-semibold cursor-pointer hover:bg-gray-100">Opciones</th>
+                        </tr>
+
+                    <tbody class="bg-white divide-y divide-gray-300">
+                        <?php foreach ($familia['Integrantes'] as $primerainfancia) :
+                            if (!empty($primerainfancia['id'])) {
+                        ?>
+                                <tr>
+                                    <th class="dtr-control"></th>
+                                    <td><?php echo $primerainfancia['id']; ?></td>
+                                    <td><?php echo $primerainfancia['primernombre'] ?><?php echo $primerainfancia['primerapellido'] ?> </td>
+                                    <td><?php echo $primerainfancia['edad']; ?></td>
+                                    <td> <?php echo $primerainfancia['sexo']; ?></td>
+                                    <td> <?php echo $primerainfancia['aseguradora']; ?></td>
+                                    <td> <?php echo $primerainfancia['canalizacionuno']; ?>,</td>
+                                    <td><?php echo $primerainfancia['condicioncronica']; ?></td>
+                                    <td>
+                                        <ul class="dropdown-menu" role="menu">
+                                            <li>
+                                                <?php echo $this->Html->link(
+                                                    "Ver",
+                                                    "../primerainfancias/view/" . $primerainfancia['id'],
+                                                    array(
+                                                        'style' => 'font-size: 14px;'
+                                                    )
+                                                ); ?>
+                                            </li>
+                                            <li>
+
+                                                <?php echo $this->Html->link(('Editar'),
+                                                    "../primerainfancias/edit/" . $primerainfancia['id'],
+                                                    array('action' => 'edit', $primerainfancia['id']),
+                                                    array(
+                                                        'style' => 'font-size: 14px;'
+                                                    )
+                                                ); ?>
+
+
+                                            </li>
+                                            <li><?php echo $this->Form->postLink(
+                                                    __('Borrar'),
+                                                    array(
+                                                        'controller' => 'primerainfancias',
+                                                        'action' => 'delete',
+                                                        $primerainfancia['id']
+                                                    ),
+                                                    array('style' => 'color: red; font-size: 14px; '),
+                                                    __('Esta seguro de eliminar el registro # %s?', $primerainfancia['id'] . ' ' . $primerainfancia['primernombre'] . ' ' . $primerainfancia['primerapellido'] . ' de la familia de con id # ' .  $primerainfancia['familia_id'])
+                                                ); ?>
+                                            </li>
+                                        </ul>
+                                    </td>
+                                </tr>
+                        <?php }
+                        endforeach; ?>
+                    </tbody>
+                    </thead>
+                </table>
+            <?php else: ?>
+                <div class="text-center text-gray-500 py-8">
+                    <span class="font-semibold text-lg">No hay Integrantes agregados</span>
+                </div>
+            <?php endif; ?>
+        </div>
+    </div>
+
+    <div class="max-w-6xl mx-auto bg-white overflow-hidden mt-4 sm:mt-4 p-4 shadow-2xl rounded-xl">
+        <div class="p-2 md:p-8">
+            <!-- Contenido a imprimir -->
+            <div class="flex items-center mb-4">
+                <i class="fas fa-users text-2xl text-teal-600 p-4 bg-teal-100 rounded-lg"></i>
+
+                <div class="ml-4">
+                    <h1 class="text-lg md:text-xl font-semibold flex">
+                        Observaciones de la Familia
+                    </h1>
+                    <p class="text-sm md:text-base text-gray-500">Aqui se mostraran las familias caracterizadas de la vivienda.</p>
+                </div>
+
+            </div>
+
+            <div class="overflow-x-auto">
+                <?php if (!empty($familia['Observacion'])) : ?>
+                    <?php foreach ($familia['Observacion'] as $observacion) : ?>
+                        <div class="mb-6">
+                            <table class="w-full">
+                                <tbody>
+                                    <tr>
+                                        <td colspan="9">
+                                            <!-- Botón de menú de opciones -->
+                                            <div class="relative inline-block text-left">
+                                                <button type="button" class="flex items-center justify-center w-8 h-8 rounded-full hover:bg-gray-200 hover:rounded-md focus:outline-none" onclick="toggleMenu(this)">
+                                                    <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                                        <path d="M3 5h1" />
+                                                        <path d="M3 12h1" />
+                                                        <path d="M3 19h1" />
+                                                        <path d="M8 5h1" />
+                                                        <path d="M8 12h1" />
+                                                        <path d="M8 19h1" />
+                                                        <path d="M13 5h8" />
+                                                        <path d="M13 12h8" />
+                                                        <path d="M13 19h8" />
+                                                    </svg>
+                                                </button>
+                                                <div class="hidden absolute left-0 mt-2 w-32 bg-white border border-gray-200 rounded shadow-lg z-50 menu-options">
+                                                    <a href="<?php echo $this->Html->url(['controller' => 'Observacions', 'action' => 'add_plancuidado/' . $familia['Familia']['id']]); ?>" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 text-sm">Agregar Plan de Cuidado</a>
+                                                    <a href="<?php echo $this->Html->url(['controller' => 'Observacions', 'action' => 'view', $observacion['id']]); ?>" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 text-sm">Ver</a>
+                                                    <a href="<?php echo $this->Html->url(['controller' => 'Observacions', 'action' => 'edit', $observacion['id']]); ?>"
+                                                        class="block px-4 py-2 text-gray-700 hover:bg-gray-100 text-sm">Editar</a>
+                                                    <form method="post" action="<?php echo $this->Html->url(['controller' => 'Observacions', 'action' => 'delete', $observacion['id'], $observacion['id']]); ?>" onsubmit="return confirm('<?php echo __('¿Está seguro/a de eliminar el registro con ID# %s?', $observacion['id']); ?>');">
+                                                        <?php echo $this->Form->hidden('_method', ['value' => 'POST']); ?>
+                                                        <button type="submit" class="w-full text-left px-4 py-2 text-red-600 hover:bg-gray-100 text-sm">Borrar</button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                    <tr class="mt-4 bg-gray-100 ">
+                                        <td colspan="1" class="border border-gray-300 font-semibold p-2 text-center text-sm text-gray-700"> ID </td>
+                                        <td colspan="7" class="border border-gray-300 p-2 font-semibold text-teal-600 text-sm hover:underline">
+                                            <?php echo $this->Html->link(strtoupper($observacion['id']), array('controller' => 'Observacions', 'action' => 'view', $observacion['id'])); ?>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td colspan="1" class=" border border-gray-300 font-semibold p-2 text-center text-sm text-gray-700">Observacion</td>
+                                        <td colspan="2" class="border border-gray-300 p-2 font-semibold text-sm"><?php echo $observacion['observacion']; ?></td>
+                                        <td colspan="1" class=" border border-gray-300 font-semibold p-2 text-center text-sm text-gray-700">Valoracion de la Familia</td>
+                                        <td colspan="3" class="border border-gray-300 p-2 text-sm text-gray-700"><?php echo $observacion['valoracionfamilia']; ?></td>
+                                    </tr>
+                                    <tr class="mt-4 bg-gray-100 ">
+                                        <td colspan="1" class=" border border-gray-300 font-semibold p-2 text-center text-sm text-gray-700">Canalizaciones</td>
+                                        <td colspan="2" class="border border-gray-300 p-2 font-bold text-sm">
+                                            <?php echo $observacion['canalizacionuno']; ?>
+                                        </td>
+                                        <td colspan="1" class="border border-gray-300 font-semibold p-2 text-center text-sm text-gray-700"> Fecha </td>
+                                        <td colspan="7" class="border border-gray-300 p-2 font-semibold text-teal-600 text-sm hover:underline">
+                                            <?php echo $observacion['fecha'] ?>
+                                        </td>
+
+                                    </tr>
+
+                                    <tr>
+                                        <td colspan="1" class=" border border-gray-300 font-semibold p-2 text-center text-sm text-gray-700">Familiograma</td>
+                                        <td colspan="2" class="border border-gray-300 p-2 font-bold text-sm"><?php if (!empty($observacion['dirfamiliograma'])) {
+                                                                                                                    echo $this->Html->link(
+                                                                                                                        h($observacion['resultadoFamiliograma']),
+                                                                                                                        '../files/observacion/familiograma/' . $observacion['dirfamiliograma'] . '/' . $observacion['familiograma'],
+                                                                                                                        ['target' => '_blank', 'class' => 'underline text-blue-700 hover:text-blue-900']
+                                                                                                                    );
+                                                                                                                } else {
+                                                                                                                    echo '<span class="text-gray-400 italic">Sin familiograma</span>';
+                                                                                                                } ?></td>
+                                        <td colspan="1" class=" border border-gray-300 font-semibold p-2 text-center text-sm text-gray-700">Resultado Ecomapa</td>
+                                        <td colspan="3" class="border border-gray-300 p-2 text-sm text-gray-700"><?php echo $observacion['resultadoEcomapa']; ?></td>
+                                    </tr>
+
+                                    <tr>
+                                        <td colspan="1" class=" border border-gray-300 font-semibold p-2 text-center text-sm text-gray-700">Plan de Cuidado</td>
+                                        <td colspan="6" class="border border-gray-300 p-2 text-sm text-gray-700"><?php
+                                                                                                                    if (!empty($observacion['dirplancuidado'])) {
+                                                                                                                        echo $this->Html->link(
+                                                                                                                            h($observacion['resultadoPlanCuidado']),
+                                                                                                                            '../files/observacion/plancuidado/' . $observacion['dirplancuidado'] . '/' . $observacion['plancuidado'],
+                                                                                                                            ['target' => '_blank', 'class' => 'underline text-blue-700 hover:text-blue-900']
+                                                                                                                        );
+                                                                                                                    } else {
+                                                                                                                        echo '<span class="text-gray-400 italic">Sin plan de cuidado</span>';
+                                                                                                                    }
+                                                                                                                    ?></td>
+                                    </tr>
+                            </table>
+
+                        </div>
+                    <?php endforeach; ?>
+
+                <?php else: ?>
+                    <div class="text-center text-gray-500 py-8">
+                        <span class="font-semibold text-lg">No hay Familias agregadas</span>
+                    </div>
+                <?php endif; ?>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="max-w-4xl mx-auto mt-4 text-center text-sm text-gray-600 pb-4">
+        <p>Formato de Salud Pública - Sistematización de Actividades APS</p>
+    </div>
+</body>
+
 
 
 <script>
     $(document).ready(function() {
         // Inicialización de la primera tabla
-        $('#dataTables-example').DataTable({
+
+        const $miTabla = $('#miTabla');
+
+        const table = $miTabla.DataTable({
             responsive: true,
-            "pagingType": "simple",
-            "pageLength": 10,
+            createdRow: function(row, data, dataIndex) {
+                // Aplica clases a cada celda del body
+                $('td', row).each(function(index) {
+                    $(this).addClass('px-4 py-3 align-center-left');
+                    if (index === 1) $(this).addClass(
+                        'text-center text-black font-bold'); // ID
+
+                    if (index === 2) $(this).addClass('text-center'); // idproducto
+
+                    // Para columnas de texto largo (por ejemplo, nombreproducto, objactividad)
+                    if (index === 3 || index === 4) {
+                        const maxLength = 200;
+                        const cellText = $(this).text();
+                        if (cellText.length > maxLength) {
+                            const truncated = cellText.substring(0, maxLength) + '...';
+                            $(this).html(
+                                `<span class="texto-truncado">${truncated}</span>
+                                     <span class="texto-completo hidden">${cellText}</span>
+                                     <a href="#" class="ver-mas text-blue-500 underline ml-2">Ver más</a>
+                                     <a href="#" class="ver-menos text-blue-500 underline ml-2 hidden">Ver menos</a>`
+                            );
+                        }
+                    }
+
+                    if (index === 5) $(this).addClass(
+                        'text-center font-bold text-black text-xs'); // responsable
+                    if (index === 6) $(this).addClass('text-center'); // conCat
+                });
+                // Aplica clase a la fila completa si quieres
+                $(row).addClass('hover:bg-gray-50 transition ');
+            },
+            dom: 'rt',
             language: {
                 url: "//cdn.datatables.net/plug-ins/1.10.25/i18n/Spanish.json",
                 searchBuilder: {
                     button: 'Filter',
                 }
             },
-            buttons: [
-                'pageLength',
-                'copyHtml5',
-                'excelHtml5',
-                'csvHtml5',
-                'colvis',
-                'searchBuilder'
-            ]
+
         });
-
-        // Inicialización de la segunda tabla
-        $('#dataTables-infantil').DataTable({
-            responsive: true,
-            "pagingType": "simple",
-            "pageLength": 10,
-            language: {
-                url: "//cdn.datatables.net/plug-ins/1.10.25/i18n/Spanish.json",
-                searchBuilder: {
-                    button: 'Filter',
-                }
-            },
-            buttons: [
-                'pageLength',
-                'copyHtml5',
-                'excelHtml5',
-                'csvHtml5',
-                'colvis',
-                'searchBuilder'
-            ]
-        });
-
-        $('#dataTables-juventudAdulto').DataTable({
-            responsive: true,
-            "pagingType": "simple",
-            "pageLength": 10,
-            language: {
-                url: "//cdn.datatables.net/plug-ins/1.10.25/i18n/Spanish.json",
-                searchBuilder: {
-                    button: 'Filter',
-                }
-            },
-            buttons: [
-                'pageLength',
-                'copyHtml5',
-                'excelHtml5',
-                'csvHtml5',
-                'colvis',
-                'searchBuilder'
-            ]
-        });
-
-        $('#dataTables-Adolescencia').DataTable({
-            responsive: true,
-            "pagingType": "simple",
-            "pageLength": 10,
-            language: {
-                url: "//cdn.datatables.net/plug-ins/1.10.25/i18n/Spanish.json",
-                searchBuilder: {
-                    button: 'Filter',
-                }
-            },
-            buttons: [
-                'pageLength',
-                'copyHtml5',
-                'excelHtml5',
-                'csvHtml5',
-                'colvis',
-                'searchBuilder'
-            ]
-        });
-
-        $('#dataTables-Observacion').DataTable({
-            responsive: true,
-            "pagingType": "simple",
-            "pageLength": 10,
-            language: {
-                url: "//cdn.datatables.net/plug-ins/1.10.25/i18n/Spanish.json",
-                searchBuilder: {
-                    button: 'Filter',
-                }
-            },
-            buttons: [
-                'pageLength',
-                'copyHtml5',
-                'excelHtml5',
-                'csvHtml5',
-                'colvis',
-                'searchBuilder'
-            ]
-        });
+        $miTabla.removeClass("dataTable no-footer rounded-lg shadow-lg overflow-hidden");
+        table.on('draw');
 
 
-        // Agrega más inicializaciones para otras tablas según sea necesario
     });
 
-    function toggleTableVisibility() {
-        var tabla = document.getElementById("miTabla");
-        var boton = document.getElementById("verMasButton");
+    function setupDropdowns() {
 
-        // Cambia la visibilidad de la tabla
-        if (tabla.style.display === "none") {
-            tabla.style.display = "table";
-            boton.style.display = "none";
-            // Opcionalmente, puedes cambiar a "block" si prefieres
-        } else {
-            tabla.style.display = "none";
-            boton.style.display = "inline-block";
+        localStorage.removeItem('consentAccepted');
+
+        const buttons = document.querySelectorAll('[id^="menu-button-"]');
+
+        buttons.forEach(button => {
+            button.addEventListener('click', (event) => {
+                const buttonId = event.currentTarget.id;
+
+                const recordId = buttonId.split('-')[2];
+                console.log(buttonId);
+                const menu = document.getElementById(`menu-options-${recordId}`);
+
+                // Oculta todos los menús desplegables
+                document.querySelectorAll('[id^="menu-options-"]').forEach(m => {
+                    if (m.id !== menu.id) {
+                        m.classList.add('hidden');
+                    }
+                });
+
+                // Muestra o esconde el menú actual
+                menu.classList.toggle('hidden');
+            });
+        });
+
+        // Oculta los menús si se hace clic fuera de ellos
+        window.addEventListener('click', function(event) {
+            if (!event.target.matches('[id^="menu-button-"]')) {
+                document.querySelectorAll('[id^="menu-options-"]').forEach(menu => {
+                    if (!menu.classList.contains('hidden')) {
+                        menu.classList.add('hidden');
+                    }
+                });
+            }
+        });
+
+        document.querySelectorAll('.ver-mas').forEach(function(link) {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const td = link.closest('td');
+                td.querySelector('.texto-truncado').classList.add('hidden');
+                td.querySelector('.texto-completo').classList.remove('hidden');
+                td.querySelector('.ver-mas').classList.add('hidden');
+                td.querySelector('.ver-menos').classList.remove('hidden');
+            });
+        });
+
+        document.querySelectorAll('.ver-menos').forEach(function(link) {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const td = link.closest('td');
+                td.querySelector('.texto-truncado').classList.remove('hidden');
+                td.querySelector('.texto-completo').classList.add('hidden');
+                td.querySelector('.ver-mas').classList.remove('hidden');
+                td.querySelector('.ver-menos').classList.add('hidden');
+            });
+        });
+
+
+        const menu = document.getElementById('miTabla_processing');
+        if (menu) {
+            menu.classList.remove('dataTables_processing');
+            menu.classList.add('hidden');
         }
+
+
     }
 
-    function fnExcelReport() {
-        var tab_text = "<table border='2px'><tr bgcolor='#87AFC6'>";
-        var textRange;
-        var j = 0;
-        tab = document.getElementById('dataTables-example'); // id of table
-
-        for (j = 0; j < tab.rows.length; j++) {
-            tab_text = tab_text + tab.rows[j].innerHTML + "</tr>";
+    document.addEventListener("DOMContentLoaded", function() {
+        setupDropdowns();
+        const lat = parseFloat("<?php echo $familia['Sociambiental']['latitud']; ?>");
+        const lng = parseFloat("<?php echo $familia['Sociambiental']['longitud']; ?>");
+        var btnHide = document.getElementById('btn-hide');
+        var printContents = document.getElementById('print-area');
+        const btnIcon = document.getElementById('btn-icon');
+        if (!lat || !lng) {
+            alert("No hay coordenadas válidas para mostrar el mapa.");
+            return;
         }
 
-        tab_text = tab_text + "</table>";
+        // Crear el mapa centrado en las coordenadas
+        const map = L.map("mapContainer").setView([lat, lng], 15);
 
-        tab_text = tab_text.replace(/<A[^>]*>|<\/A>/g, ""); //remove if u want links in your table
-        tab_text = tab_text.replace(/<img[^>]*>/gi, ""); // remove if u want images in your table
-        tab_text = tab_text.replace(/<input[^>]*>|<\/input>/gi, ""); // reomves input params
+        // Capa base (OpenStreetMap)
+        L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+            attribution: "&copy; OpenStreetMap contributors",
+        }).addTo(map);
 
-        var ua = window.navigator.userAgent;
-        var msie = ua.indexOf("MSIE ");
+        // Agregar marcador en la ubicación
+        const marker = L.marker([lat, lng]).addTo(map);
+        marker.bindPopup(`<b>Ubicación registrada</b><br>Lat: ${lat}<br>Lng: ${lng}`).openPopup();
+        let isEdit = true; // estado inicial: "Editar"
+    });
 
-        if (msie > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./)) // If Internet Explorer
-        {
-            txtArea1.document.open("txt/html", "replace");
-            txtArea1.document.write(tab_text);
-            txtArea1.document.close();
-            txtArea1.focus();
-            sa = txtArea1.document.execCommand("SaveAs", true, "Say Thanks to Sumit.xls");
-        } else
-            sa = window.open('data:application/vnd.ms-excel,' + encodeURIComponent(tab_text));
-
-        //return (sa);
+    function toggleMenu(btn) {
+        // Cierra otros menús abiertos
+        document.querySelectorAll('.menu-options').forEach(function(menu) {
+            if (menu !== btn.nextElementSibling) menu.classList.add('hidden');
+        });
+        // Alterna el menú actual
+        btn.nextElementSibling.classList.toggle('hidden');
     }
-
-
-
-    var vacunacionSpan = document.querySelector('#vacunacion span');
-    var vacunacionValue = "<?php echo $familia['Sociambiental']['vacunamascotas']; ?>";
-
-    if (vacunacionValue === "No") {
-        vacunacionSpan.style.color = "red";
-    } else if (vacunacionValue === "Si") {
-        vacunacionSpan.style.color = "green"; // Cambiar el color a azul para "Si"
-    }
-
-    var hacinamientoSpan = document.querySelector('#hacinamiento span');
-    var hacinamientoValue = "<?php echo $familia['Sociambiental']['hacinamiento']; ?>";
-
-    if (hacinamientoValue === "Si") {
-        hacinamientoSpan.style.color = "red";
-    } else if (hacinamientoValue === "No") {
-        hacinamientoSpan.style.color = "green"; // Cambiar el color a azul para "Si"
-    }
-
-    var desparasitacionSpan = document.querySelector('#desparasitacion span');
-    var desparasitacionValue = "<?php echo $familia['Sociambiental']['desparasitamascotas']; ?>";
-
-    if (desparasitacionValue === "No") {
-        desparasitacionSpan.style.color = "red";
-    } else if (desparasitacionValue === "Si") {
-        desparasitacionSpan.style.color = "green"; // Cambiar el color a azul para "Si"
-    }
+    // Cierra el menú si se hace clic fuera
+    document.addEventListener('click', function(e) {
+        document.querySelectorAll('.menu-options').forEach(function(menu) {
+            if (!menu.contains(e.target) && !menu.previousElementSibling.contains(e.target)) {
+                menu.classList.add('hidden');
+            }
+        });
+    });
 </script>
-
-<style>
-    /* Estilos para la lista de píldoras */
-    .nav-pills {
-        list-style: none;
-        padding: 0;
-        display: flex;
-        justify-content: center;
-
-        border-radius: 5px;
-        text-align: center;
-    }
-
-    .nav-pills li {
-        margin: 0 10px;
-        justify-content: center;
-
-    }
-
-    .nav-pills a {
-        text-decoration: none;
-        color: #fff;
-        font-weight: bold;
-        padding: 10px 20px;
-        border-radius: 5px;
-        background-color: #3366CC;
-        transition: background-color 0.3s ease;
-
-    }
-
-
-
-
-
-    /* Estilos para hacer que la lista de píldoras sea responsiva */
-    @media (max-width: 768px) {
-        .nav-pills {
-            flex-wrap: wrap;
-        }
-
-        .nav-pills li {
-            flex: 0 0 100%;
-            margin: 10px 0;
-            justify-content: center;
-        }
-    }
-
-    /* Personaliza el botón desplegable en DataTables Responsive */
-    table.dataTable.dtr-inline.collapsed>tbody>tr[role="row"]>td.dtr-control:before,
-    table.dataTable.dtr-inline.collapsed>tbody>tr[role="row"]>th.dtr-control:before {
-
-        left: 20px;
-    }
-
-    table.dataTable.dtr-inline.collapsed>tbody>tr[role="row"]>td.dtr-control,
-    table.dataTable.dtr-inline.collapsed>tbody>tr[role="row"]>th.dtr-control {
-        position: relative;
-        padding-left: 49px;
-        cursor: pointer;
-    }
-</style>

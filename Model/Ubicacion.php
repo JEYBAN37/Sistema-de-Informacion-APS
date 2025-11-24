@@ -14,7 +14,9 @@ class Ubicacion extends AppModel
 		'microterritorio' => 'CONCAT(Ubicacion.microterritorio)'
 	);
 	public $displayField = 'microterritorio';
-
+	public $actsAs = array(
+		'Containable',
+	);
 	/**
 	 * Validation rules
 	 *

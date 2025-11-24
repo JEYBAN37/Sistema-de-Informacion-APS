@@ -5,10 +5,12 @@ class UsersController extends AppController
 {
     //put your code here
 
-    var $uses = array("User");
+    var $uses = array("User", "Responsable");
     var $helpers = array("Html", "Form");
     var $paginate = array("order" => "username", "limit" => 5);
     var $nivs = array("A" => "Administrador", "U" => "Investigador", "D" => "Digitador");
+    const ALERT_SUCCESS_CLASS = 'bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative'; // Puedes cambiar esto por clases Tailwind, por ejemplo: '';
+    const ALERT_ERROR_CLASS = 'bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative';
 
     public function home()
     {
@@ -75,63 +77,56 @@ class UsersController extends AppController
     function login()
     {
         if ($this->request->is('post')) {
-            $recaptchaResponse = $this->request->data['g-recaptcha-response'];
 
-            $url = 'https://www.google.com/recaptcha/api/siteverify';
-            $data = [
-                'secret' => '6LeoNUopAAAAAH0qFxTIX3XzvNsXvbYE9MrNGMb8',
-                'response' => $recaptchaResponse,
-            ];
+            if ((isset($this->data)) && (!empty($this->data))) {
+                $r = $this->User->find("first", array(
+                    "conditions" => array(
+                        "username" => $this->data["User"]["username"],
+                        "password" => md5($this->data["User"]["password"])
+                    )
+                ));
 
-            $options = [
-                'http' => [
-                    'header' => "Content-type: application/x-www-form-urlencoded\r\n",
-                    'method' => 'POST',
-                    'content' => http_build_query($data),
-                ],
-            ];
+                if (isset($r) && !empty($r)) {
+                    $this->Session->write("usr", $r["User"]["username"]);
+                    $this->Session->write("nvl", $r["User"]["nivel"]);
 
-            $context = stream_context_create($options);
-            $result = file_get_contents($url, false, $context);
+                    
 
-            $attributes = json_decode($result, true);
+                    $responsableId = $this->Responsable->find('first', [
+                        'conditions' => ['Responsable.numero' => $r['User']['username']],
+                        'fields' => ['Responsable.id', 'Responsable.nombres'],
+                        'recursive' => -1
+                    ]);
 
-            if (empty($attributes) || !$attributes['success']) {
-                $this->Session->setFlash('Por favor complete el reCAPTCHA', 'default', array('class' => 'alert alert-danger'));
-            } else {
-                if ((isset($this->data)) && (!empty($this->data))) {
-                    $r = $this->User->find("first", array(
-                        "conditions" => array(
-                            "username" => $this->data["User"]["username"],
-                            "password" => md5($this->data["User"]["password"])
-                        )
-                    ));
+                    $auxUser = [
+                        'username' => $r["User"]["username"],
+                        'password' => $r["User"]["password"],
+                        'group_id' => $r["User"]["group_id"],
+                        'responsable_id' => isset($responsableId['Responsable']['id']) ? $responsableId['Responsable']['id'] : 169,
+                        'nombre_responsable' => isset($responsableId['Responsable']['nombres']) ? $responsableId['Responsable']['nombres'] : 'LECTOR SISTEMA',
+                    ];
 
-                    if (isset($r) && !empty($r)) {
-                        $this->Session->write("usr", $r["User"]["nombre"]);
-                        $this->Session->write("nvl", $r["User"]["nivel"]);
-                        $auxUser = array('username' => $r["User"]["username"], 'password' => $r["User"]["password"], 'group_id' => $r["User"]["group_id"]);
-                        $this->Auth->login($auxUser);
-                        //$this->redirect("bienvenida");
-                        if ($this->Session->read('Auth.User')) {
-                            $this->Session->setFlash('Acceso exitoso, bienvenido', 'default', array('class' => 'alert alert-success'));
-                            // return $this->redirect('controller' => 'orders', 'action' => 'thanks');
-                            //$this->redirect("home");
-                            return $this->redirect(
-                                array('controller' => 'sociambientals', 'action' => 'index')
+
+                    $this->Auth->login($auxUser);
+                    //$this->redirect("bienvenida");
+                    if ($this->Session->read('Auth.User')) {
+                        $this->Session->setFlash('Acceso exitoso, bienvenido', 'flash_custom',     array('class' => 'success', 'title' => 'El registro se ha completado correctamente'));
+                        // return $this->redirect('controller' => 'orders', 'action' => 'thanks');
+                        //$this->redirect("home");
+                        return $this->redirect(
+                            array('controller' => 'Familias', 'action' => 'index')
                             );
-                        }
-                    } else {
-                        $this->Session->setFlash('Por favor verifique sus credenciales', 'default', array('class' => 'alert alert-warning'));
-                        //$this->Session->setFlash("SIN ACCESO AL SISTEMA");                
                     }
                 } else {
-                    //$this->Session->setFlash("SIN ACCESO AL SISTEMA");
-                    // echo "<script> alert('SIN ACCESO AL SISTEMA'); </script>";
+                    $this->Session->setFlash('Por favor verifique sus credenciales', 'default', array('class' => self::ALERT_ERROR_CLASS));
+                    //$this->Session->setFlash("SIN ACCESO AL SISTEMA");                
                 }
-
-                $this->layout = 'login';
+            } else {
+                //$this->Session->setFlash("SIN ACCESO AL SISTEMA");
+                // echo "<script> alert('SIN ACCESO AL SISTEMA'); </script>";
             }
+
+            $this->layout = 'login';
         }
     }
 

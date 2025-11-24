@@ -9,7 +9,10 @@ App::uses('AppModel', 'Model');
  */
 class Juventudadulto extends AppModel
 {
-
+	public $actsAs = array(
+			'Containable',
+	);
+	
 	public $validate = array(
 		'familia_id' => array(
 			'numeric' => array(

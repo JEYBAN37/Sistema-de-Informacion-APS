@@ -1,284 +1,614 @@
 <?php $this->layout = 'default_familia' ?>
-<div class="col-12 text-center " style="margin: 20px; margin-top: 40px;">
-    <h1 class="titulo-general-pwa-govco"
-        style="color: #3366CC;margin-top: 20px;font-size: 3.5rem ;font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
-        <h1 class="titulo-general-pwa-govco"
-            style="color: #3366CC;margin-top: 20px;font-size: 3.5rem ;font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
-            Atención Primaria en Salud
-        </h1>
-</div>
 
+<body class="bg-gradient-to-br from-slate-50 to-slate-100 min-h-screen">
 
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8 max-w-6xl">
 
-<div class="row" style="margin: 5px;">
-    <div class="col-lg-12" style="justify-items: center; ">
-        <div class="panel panel-default">
-            <!--div class="panel-heading">
-                <p>Anexo tecnico PIC-2020</p>
-                <div class="btn-group">
-                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                        <?php echo ('Acciones'); ?> <span class="caret"></span>
-                    </button>
-                    <ul class="dropdown-menu" role="menu">
-                        <li><?php echo $this->Html->link(('Home'), array('controller' => 'users', 'action' => 'home')); ?>
-                        </li>
-                        <li><?php echo $this->Html->link(('Regresar'),  array('controller' => 'productos', 'action' => 'index')); ?>
-                        </li>
-                        <li class="divider"></li>
-                        <li><a href="javascript:window.print();"> Imprimir</a> </li>
-                        <li><a class="copi" href="javascript:getlink();">Copiar URL</a> </li>
-                        < <li><a class="copi" href="javascript:fnExcelReport();"> Exportar </a> </li> >
-            </ul>
-            </div>
-
-         </div-->
-
-            </ul>
-            <!-- /.panel-heading -->
-            <div class="table-responsive" style="justify-items: center; margin-top: 10px; ">
-                <div class="row col-sm-12 JustifyCenter " style="margin: 20px; ">
-                    <div class=" row">
-                        <div class="col-sm-12">
-                            <table width="100%" class="table table-striped table-bordered table-hover"
-                                id="dataTables-example">
-                                <thead>
-                                    <tr>
-
-                                        <th>id</th>
-                                        <th>Encuestador</th>
-                                        <th>Familia</th>
-                                        <th>Nombres</th>
-                                        <th>Apellidos</th>
-                                        <th>Rol famliar</th>
-                                        <th>celular</th>
-                                        <!--Dato de tabla sociambiental junto con direccion , apellidos familia,encuestador,fecha y numero familia :) -->
-                                        <th>Ubicacion</th>
-                                        <th>Direccion</th>
-                                        <th>Apartamento</th>
-                                        <th>N° de hogar</th>
-                                        <th>fecha</th>
-                                        <th>Opciones</th>
-                                        <th>id_Socioambiental</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php
-                                    // Asumiendo que ambos arrays tienen la misma longitud
-                                    $numFamilias = count($familias);
-                                    for ($i = 0; $i < $numFamilias; $i++) :
-                                        $familia = $familias[$i];
-                                        $responsable = $responsables[$i];
-                                        $socioambiental = $sociambientals[$i];
-                                        $ubicacion = $ubicaciones[$i];
-                                    ?>
-                                        <tr>
-                                            <td><?php echo $familia['Familia']['id']; ?></td>
-                                            <td><?php echo $responsable['Responsable']['nombres']; ?></td>
-                                            <td><?php echo $this->Html->link($socioambiental['Sociambiental']['apellidosfamilia'], array('controller' => 'sociambientals', 'action' => 'view', $socioambiental['Sociambiental']['id'])); ?>
-                                            <td><?php echo $familia['Familia']['nombres']; ?></td>
-                                            <td><?php echo $familia['Familia']['apellidos']; ?></td>
-                                            <td><?php echo $familia['Familia']['rol']; ?></td>
-                                            <td><?php echo $familia['Familia']['celular']; ?></td>
-                                            <td><?php echo $ubicacion['Ubicacion']['microterritorio']; ?></td>
-                                            <td><?php echo $socioambiental['Sociambiental']['direccion']; ?></td>
-
-                                            <td><?php echo $familia['Familia']['hogar']; ?></td>
-
-                                            <td><?php echo $this->Time->format('d-m-Y h:i A', ($socioambiental['Sociambiental']['fecha'])); ?>
-                                            <td class="actions">
-                                                <div class="btn-group">
-                                                    <button type="button" class="my-button" data-toggle="dropdown">
-                                                        <?php echo ('Acciones'); ?> <span class="caret"></span>
-                                                    </button>
-                                                    <ul class="dropdown-menu" role="menu">
-                                                        <li><?php echo $this->Html->link(('Ver famlia'),
-                                                                array('action' => 'view', $familia['Familia']['id']),
-                                                                array(
-                                                                    'style' => 'font-size: 14px;'
-                                                                )
-                                                            ); ?>
-                                                        </li>
-                                                        <li><?php echo $this->Html->link(('Editar hogar'),
-                                                                array('action' => 'edit',  $familia['Familia']['id']),
-                                                                array(
-                                                                    'onclick' => "return confirm('¿Estás seguro que deseas editar la información del hogar de " .  $familia['Familia']['nombres'] . " " .  $familia['Familia']['apellidos'] . "?');",
-                                                                    'style' => 'font-size: 14px;'
-                                                                )
-                                                            ); ?>
-                                                        </li>
-                                                        <li><?php echo $this->Html->link(('Agregar hogar'),
-                                                                array('controller' => 'familias', 'action' => 'add?hogar=' . $socioambiental['Sociambiental']['id']),
-                                                                array(
-                                                                    'onclick' => "return confirm('¿Estás seguro de agregar un nuevo hogar en la familia " . $socioambiental['Sociambiental']['apellidosfamilia'] . "?');",
-                                                                    'style' => 'font-size: 14px;'
-                                                                )
-                                                            ); ?>
-                                                        </li>
-                                                        <li>
-                                                            <?php
-                                                            echo $this->Html->link(('Agregar menor de 2 años'),
-                                                                array(
-                                                                    'controller' => 'Primerainfancias',
-                                                                    'action' => 'add?primerainfancia=' . $familia['Familia']['id']
-                                                                ),
-                                                                array(
-                                                                    'onclick' => "return confirm('¿Estás seguro de agregar un menor de 2 años en el hogar de " .  $familia['Familia']['nombres'] . " " .  $familia['Familia']['apellidos'] . "?');",
-                                                                    'style' => 'font-size: 14px;'
-                                                                )
-                                                            ); ?>
-                                                        </li>
-
-
-
-                                                        <li><?php echo $this->Html->link(('Agregar menor de 2 a 5 años'),
-                                                                array(
-                                                                    'controller' => 'Primerainfancias',
-                                                                    'action' => 'add2_5?primerainfancia=' . $familia['Familia']['id']
-                                                                ),
-                                                                array(
-                                                                    'onclick' => "return confirm('¿Estás seguro de agregar un menor de 2 a 5 años en el hogar de " .  $familia['Familia']['nombres'] . " " .  $familia['Familia']['apellidos'] . "?');",
-                                                                    'style' => 'font-size: 14px;'
-                                                                )
-
-                                                            ); ?>
-                                                        </li>
-                                                        <li><?php echo $this->Html->link(('Agregar menor de 6 a 11 años'),
-                                                                array(
-                                                                    'controller' => 'Infantils',
-                                                                    'action' => 'add?infantils=' . $familia['Familia']['id']
-                                                                ),
-                                                                array(
-                                                                    'onclick' => "return confirm('¿Estás seguro de agregar un menor de 6 a 11 años en el hogar de " .  $familia['Familia']['nombres'] . " " .  $familia['Familia']['apellidos'] . "?');",
-                                                                    'style' => 'font-size: 14px;'
-                                                                )
-                                                            ); ?>
-                                                        </li>
-                                                        <li>
-                                                            <?php echo $this->Html->link(('Agregar menor de 12 a 17 años'),
-                                                                array(
-                                                                    'controller' => 'Adolescencias',
-                                                                    'action' => 'add?adolescencias=' . $familia['Familia']['id']
-                                                                ),
-                                                                array(
-                                                                    'onclick' => "return confirm('¿Estás seguro de agregar un menor de 12 a 17 años en el hogar de " .  $familia['Familia']['nombres'] . " " .   $familia['Familia']['apellidos'] . "?');",
-                                                                    'style' => 'font-size: 14px;'
-                                                                )
-                                                            ); ?>
-
-                                                        <li><?php echo $this->Html->link(('Agregar adulto mayor de 18 años'),
-                                                                array(
-                                                                    'controller' => 'Juventudadultos',
-                                                                    'action' => 'add?juventudadultos=' . $familia['Familia']['id']
-                                                                ),
-                                                                array(
-                                                                    'onclick' => "return confirm('¿Estás seguro de agregar un adulto mayor de 18 en el hogar de " .  $familia['Familia']['nombres'] . " " .  $familia['Familia']['apellidos'] . "?');",
-                                                                    'style' => 'font-size: 14px;'
-                                                                )
-                                                            ); ?>
-                                                        </li>
-                                                        <li>
-                                                            <?php
-                                                            echo $this->Html->link(
-                                                                'Editar inf.sociambiental',
-                                                                array(
-                                                                    'controller' => 'sociambientals',
-                                                                    'action' => 'edit',
-                                                                    $socioambiental['Sociambiental']['id']
-                                                                ),
-                                                                array(
-                                                                    'onclick' => "return confirm('¿Estás seguro de que deseas editar la información sociambiental de la familia " . $socioambiental['Sociambiental']['apellidosfamilia'] . "?');",
-                                                                    'style' => 'font-size: 14px;'
-                                                                )
-                                                            );
-                                                            ?>
-                                                        </li>
-
-
-                                                    </ul>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    <?php endfor; ?>
-
-
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-
-                </div>
-                <!-- /.table-responsive -->
-
-            </div>
-            <!-- /.panel-body -->
+        <!-- Title Section -->
+        <div class="text-center mb-12">
+            <h1 class="text-4xl md:text-5xl font-bold text-slate-800 mb-4 leading-tight">
+                Familias Registradas<br>
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-teal-600 to-cyan-600">
+                    a tu Nombre
+                </span>
+            </h1>
+            <p class="text-slate-600 text-lg max-w-2xl mx-auto leading-relaxed">
+                Aquí puedes ver las familias que has caracterizado a lo largo de tu recorrido como profesional en atención primaria en salud.
+            </p>
         </div>
-        <!-- /.panel -->
-    </div>
-    <!-- /.col-lg-12 -->
-</div>
-<script>
-    $(document).ready(function() {
-        $('#dataTables-example').DataTable({
-            "pagingType": "simple",
-            "pageLength": 10,
-            responsive: true,
-            dom: 'Bfrtip',
-            language: {
-                searchBuilder: {
-                    button: 'Filter',
-                }
-            },
-            buttons: [
-                'pageLength',
-                'copyHtml5',
-                'excelHtml5',
-                'csvHtml5',
-                'colvis',
-                'searchBuilder'
-            ]
 
-        });
+        <!-- Action Cards -->
+        <div class="grid md:grid-cols-2 gap-6 mb-8">
+            <!-- Agregar Vivienda Card -->
+            <button onclick="toSociambiental()" class="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 p-8 border-2 border-transparent hover:border-teal-500 transform hover:-translate-y-1">
+                <div class="flex flex-col items-center text-center gap-4">
+                    <div class="bg-gradient-to-br from-teal-100 to-cyan-100 p-6 rounded-2xl group-hover:scale-110 transition-transform duration-300">
+                        <i class="fas fa-home text-teal-600 text-5xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-slate-800 group-hover:text-teal-600 transition-colors">
+                        Agregar Vivienda
+                    </h3>
+                    <p class="text-slate-600 text-sm">
+                        Registra una nueva vivienda en el sistema
+                    </p>
+                    <div class="mt-2 flex items-center gap-2 text-teal-600 font-semibold opacity-0 group-hover:opacity-100 transition-opacity">
+                        <span>Comenzar</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </div>
+                </div>
+            </button>
 
-    });
+            <!-- Agregar Familia Card -->
+            <button onclick="toFamilia()" class="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 p-8 border-2 border-transparent hover:border-cyan-500 transform hover:-translate-y-1">
+                <div class="flex flex-col items-center text-center gap-4">
+                    <div class="bg-gradient-to-br from-cyan-100 to-blue-100 p-6 rounded-2xl group-hover:scale-110 transition-transform duration-300">
+                        <i class="fas fa-users text-cyan-600 text-5xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-slate-800 group-hover:text-cyan-600 transition-colors">
+                        Agregar Familia
+                    </h3>
+                    <p class="text-slate-600 text-sm">
+                        Registra una nueva familia en el sistema
+                    </p>
+                    <div class="mt-2 flex items-center gap-2 text-cyan-600 font-semibold opacity-0 group-hover:opacity-100 transition-opacity">
+                        <span>Comenzar</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </div>
+                </div>
+            </button>
+        </div>
 
-    function fnExcelReport() {
-        var tab_text = "<table border='2px'><tr bgcolor='#87AFC6'>";
-        var textRange;
-        var j = 0;
-        tab = document.getElementById('dataTables-example'); // id of table
+        <div class="grid md:grid-cols-2 gap-6 mb-8">
+            <!-- Agregar Vivienda Card -->
+            <button onclick="toNovedad()" class="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 p-8 border-2 border-transparent hover:border-teal-500 transform hover:-translate-y-1">
+                <div class="flex flex-col items-center text-center gap-4">
+                    <div class="bg-gradient-to-br from-green-100 to-green-100 p-6 rounded-2xl group-hover:scale-110 transition-transform duration-300">
+                        <i class="fa-solid fa-house-medical-circle-xmark text-green-600 text-5xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-slate-800 group-hover:text-teal-600 transition-colors">
+                        Agregar Novedad
+                    </h3>
+                    <p class="text-slate-600 text-sm">
+                        Registra una nueva novedad en el sistema
+                    </p>
+                    <div class="mt-2 flex items-center gap-2 text-teal-600 font-semibold opacity-0 group-hover:opacity-100 transition-opacity">
+                        <span>Comenzar</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </div>
+                </div>
+            </button>
 
-        for (j = 0; j < tab.rows.length; j++) {
-            tab_text = tab_text + tab.rows[j].innerHTML + "</tr>";
+                   
+        <div  class="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 p-8 border-2 border-transparent hover:border-teal-500 transform hover:-translate-y-1">
+            <iframe width="100%" height="100%" src="https://lookerstudio.google.com/embed/reporting/f70581e1-168b-41e5-b9c5-33a679e40b3c/page/p_gwatai39xd" frameborder="0" style="border:0" allowfullscreen sandbox="allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox"></iframe>
+        </div>
+        </div>
+
+
+        <!-- Stats Section -->
+        <div class="bg-white rounded-2xl shadow-lg p-6 mb-8">
+            <h3 class="text-xl font-bold text-slate-800 mb-4 flex items-center gap-2">
+                <i class="fas fa-chart-line text-teal-600"></i>
+                Resumen de Registros
+            </h3>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div class="text-center p-4 bg-gradient-to-br from-teal-50 to-cyan-50 rounded-xl">
+                    <p class="text-3xl font-bold text-teal-600"><?php echo isset($estadisticas['total_familias']) ? $estadisticas['total_familias'] : 0; ?></p>
+                    <p class="text-sm text-slate-600 mt-1">Familias</p>
+                </div>
+                <div class="text-center p-4 bg-gradient-to-br from-cyan-50 to-blue-50 rounded-xl">
+                    <p class="text-3xl font-bold text-cyan-600"><?php echo isset($estadisticas['total_sociambiental']) ? $estadisticas['total_sociambiental'] : 0; ?></p>
+                    <p class="text-sm text-slate-600 mt-1">Viviendas</p>
+                </div>
+                <div class="text-center p-4 bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl">
+                    <p class="text-3xl font-bold text-blue-600"><?php echo isset($estadisticas['total_personas']) ? $estadisticas['total_personas'] : 0; ?></p>
+                    <p class="text-sm text-slate-600 mt-1">Personas</p>
+                </div>
+                <div class="text-center p-4 bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl">
+                    <p class="text-3xl font-bold text-blue-600"><?php echo isset($estadisticas['total_novedades']) ? $estadisticas['total_novedades'] : 0; ?></p>
+                    <p class="text-sm text-slate-600 mt-1">Novedades</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="bg-gradient-to-r from-teal-600 to-cyan-600 rounded-t-2xl shadow-lg p-6 text-white">
+            <h3 class="text-2xl font-bold  flex items-center gap-2 mb-4">
+                <i class="fas fa-table"></i>
+                Consulta de Familias Registradas
+            </h3>
+
+        </div>
+        <!-- Search and Filter Section -->
+        <div class="w-[350px] md:w-full md:mt-6 mb-4">
+            <table id="miTabla" style="width:100%;" class="stripe hover text-sm text-left text-gray-600 border border-gray-200 rounded-lg overflow-hidden">
+                <thead class="bg-gray-200 font-medium border-b border-gray-300">
+                    <tr class=" text-gray-900 font-light">
+                        <th class="px-2 w-6"></th> <!-- control (+) -->
+                        <th class="px-4 py-2 font-semibold text-center cursor-pointer hover:bg-gray-100">ID</th>
+                        <th class="px-4 py-2 font-semibold text-center cursor-pointer hover:bg-gray-100">Apellidos</th>
+                        <th class="px-4 py-2 font-semibold text-center cursor-pointer hover:bg-green-100">Celular</th>
+                        <th class="px-16 py-2 font-semibold text-center cursor-pointer hover:bg-green-100">Fecha</th>
+                        <th class="px-16 py-2 font-semibold text-center cursor-pointer hover:bg-green-100">Microterritorio</th>
+                        <th class="px-16 py-2 font-semibold text-center cursor-pointer hover:bg-green-100">ID Vivienda</th>
+                        <th class="px-2 py-2 font-semibold text-center cursor-pointer hover:bg-green-100">Responsable</th>
+                        <th class="px-2 py-2 font-semibold text-center cursor-pointer hover:bg-green-100">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody class="bg-white divide-y divide-gray-300">
+                    <!-- DataTables llenará esta sección -->
+                </tbody>
+            </table>
+
+        </div>
+
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-slate-200 mt-12">
+        <div class="container mx-auto px-4 py-6">
+            <div class="text-center text-slate-600 text-sm">
+                <p class="mb-2">© 2025 Gobierno de Colombia - Atención Primaria en Salud</p>
+                <p class="text-xs text-slate-500">Sistema de Gestión de Familias y Viviendas</p>
+            </div>
+        </div>
+    </footer>
+
+    <style>
+        @keyframes fade-in {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
-        tab_text = tab_text + "</table>";
+        .animate-fade-in {
+            animation: fade-in 0.5s ease-out;
+        }
+    </style>
 
-        tab_text = tab_text.replace(/<A[^>]*>|<\/A>/g, ""); //remove if u want links in your table
-        tab_text = tab_text.replace(/<img[^>]*>/gi, ""); // remove if u want images in your table
-        tab_text = tab_text.replace(/<input[^>]*>|<\/input>/gi, ""); // reomves input params
+    <script>
+        function toSociambiental() {
+            if (confirm('¿Está seguro de realizar esta acción?')) {
+                window.location.href = '<?php echo $this->Html->url(['controller' => 'Sociambientals', 'action' => 'add']); ?>';
+            }
+        }
 
-        var ua = window.navigator.userAgent;
-        var msie = ua.indexOf("MSIE ");
+        function toFamilia() {
+            // Solicita al usuario el ID de vivienda
+            const input = prompt('Ingrese el ID de vivienda para crear la familia (ej: 123):');
+            if (input === null) return; // usuario canceló
 
-        if (msie > 0 || !!navigator.userAgent.matc(/Trident.*rv\:11\./)) // If Internet Explorer
-        {
-            txtArea1.document.open("txt/html", "replace");
-            txtArea1.document.write(tab_text);
-            txtArea1.document.close();
-            txtArea1.focus();
-            sa = txtArea1.document.execCommand("SaveAs", true, "Say Thanks to Sumit.xls");
-        } else
-            sa = window.open('data:application/vnd.ms-excel,' + encodeURIComponent(tab_text));
+            const idVivienda = input.trim();
+            if (idVivienda === '') {
+                alert('Debe ingresar un ID de vivienda para continuar.');
+                return;
+            }
 
-        //return (sa);
-    }
-</script>
+            // Validación básica: permitir solo números, pero dar opción si no es numérico
+            if (!/^\d+$/.test(idVivienda)) {
+                if (!confirm('El ID ingresado no parece numérico. ¿Desea continuar de todos modos?')) {
+                    return;
+                }
+            }
 
-<style>
-    /* Personaliza el botón desplegable en DataTables Responsive */
-    table.dataTable.dtr-inline.collapsed>tbody>tr[role="row"]>td.dtr-control:before,
-    table.dataTable.dtr-inline.collapsed>tbody>tr[role="row"]>th.dtr-control:before {
+            if (confirm('¿Está seguro de crear la familia con ID de vivienda ' + idVivienda + '?')) {
+                // Redirige a la acción add pasando el ID como segmento de URL
+                window.location.href = '<?php echo $this->Html->url(['controller' => 'Familias', 'action' => 'add']); ?>/' + idVivienda;
+            }
+        }
 
-        left: 15px;
-    }
-</style>
+        function toNovedad() {
+            if (confirm('¿Está seguro de realizar esta acción?')) {
+                window.location.href = '<?php echo $this->Html->url(['controller' => 'visitasnegadas', 'action' => 'add']); ?>';
+            }
+        }
+
+        $(function() {
+            $('#datetime_range').daterangepicker({
+                singleDatePicker: true,
+                showDropdowns: true,
+                autoApply: true,
+                locale: {
+                    format: 'YYYY-MM-DD',
+                    applyLabel: "Aplicar",
+                    cancelLabel: "Cancelar",
+                    daysOfWeek: ["Do", "Lu", "Ma", "Mi", "Ju", "Vi", "Sa"],
+                    monthNames: [
+                        "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
+                        "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
+                    ],
+
+                }
+            }, function(start) {
+                let fecha = start.format('YYYY-MM-DD');
+                console.log("Fecha seleccionada:", fecha);
+
+                // Si necesitas guardarlos en campos ocultos para enviarlos al backend:
+                if (!$("#fecha").length) {
+                    $("form").append('<?php echo $this->Form->hidden('fecha', ['id' => 'fecha']); ?>');
+                }
+                $("#fecha").val(fecha);
+            });
+        });
+
+        const URL_view = "<?php echo $this->Html->url(['action' => 'view', '__ID__']); ?>";
+        <?php if (!isset($tipoUsuario)) {
+            $tipoUsuario = null;
+        } ?>
+        const URL_edit = "<?php
+                            echo $this->Html->url(['action' => 'edit', '__ID__']);
+                            ?>";
+        const URL_delete = "<?php echo $this->Html->url(['action' => 'delete', '__ID__']); ?>";
+
+
+        $(document).ready(function() {
+            const $miTabla = $('#miTabla');
+
+            // Inicializar DataTable
+            const table = $miTabla.DataTable({
+                createdRow: function(row, data, dataIndex) {
+                    // Aplica clases a cada celda del body
+                    $('td', row).each(function(index) {
+                        $(this).addClass('px-4 py-3 align-center-left');
+                        if (index === 1) $(this).addClass(
+                            'text-center text-black font-bold'); // ID
+
+                        if (index === 2) $(this).addClass('text-center'); // idproducto
+
+                        // Para columnas de texto largo (por ejemplo, nombreproducto, objactividad)
+                        if (index === 3 || index === 4) {
+                            const maxLength = 200;
+                            const cellText = $(this).text();
+                            if (cellText.length > maxLength) {
+                                const truncated = cellText.substring(0, maxLength) + '...';
+                                $(this).html(
+                                    `<span class="texto-truncado">${truncated}</span>
+                                     <span class="texto-completo hidden">${cellText}</span>
+                                     <a href="#" class="ver-mas text-blue-500 underline ml-2">Ver más</a>
+                                     <a href="#" class="ver-menos text-blue-500 underline ml-2 hidden">Ver menos</a>`
+                                );
+                            }
+                        }
+
+                        if (index === 5) $(this).addClass(
+                            'text-center font-bold text-black text-xs'); // responsable
+                        if (index === 6) $(this).addClass('text-center'); // conCat
+                    });
+                    // Aplica clase a la fila completa si quieres
+                    $(row).addClass('hover:bg-gray-50 transition ');
+                },
+                responsive: {
+                    details: {
+                        type: 'column',
+                        target: 'td.dtr-control',
+                        renderer: function(api, rowIdx, columns) {
+                            // Construye el contenido del child row
+                            let data = api.row(rowIdx).data();
+                            return `
+                    <div class="bg-white rounded-xl shadow-lg p-4 mt-2 w-full max-w-md mx-auto">
+                        <h4 class="text-lg font-semibold text-teal-700 mb-2">Detalles de la Familia</h4>
+                        <ul class="space-y-2 text-gray-700">
+                            <li><strong>ID:</strong> ${data.id}</li>
+                            <li><strong>Apellidos:</strong> ${data.apellidos}</li>
+                            <li><strong>Celular:</strong> ${data.celular}</li>
+                            <li><strong>Fecha:</strong> ${(() => {
+                                const f = data.fecha;
+                                if (!f) return '';
+                                // Intentar parsear como fecha válida
+                                const dObj = new Date(f);
+                                if (!isNaN(dObj.getTime())) {
+                                    const y = dObj.getFullYear();
+                                    const m = ('0' + (dObj.getMonth() + 1)).slice(-2);
+                                    const d = ('0' + dObj.getDate()).slice(-2);
+                                    return `${y}-${m}-${d}`;
+                                }
+                                // Formatos dd/mm/yyyy o dd-mm-yyyy -> yyyy-mm-dd
+                                const m1 = f.match(/^(\d{2})[\/\-](\d{2})[\/\-](\d{4})$/);
+                                if (m1) return `
+                            $ {
+                                m1[3]
+                            } - $ {
+                                m1[2]
+                            } - $ {
+                                m1[1]
+                            }
+                            `;
+                                // Normalizar yyyy/mm/dd o yyyy-mm-dd
+                                const m2 = f.match(/^(\d{4})[\/\-](\d{2})[\/\-](\d{2})$/);
+                                if (m2) return `
+                            $ {
+                                m2[1]
+                            } - $ {
+                                m2[2]
+                            } - $ {
+                                m2[3]
+                            }
+                            `;
+                                // Fallback: devolver original
+                                return f;
+                            })()}</li>
+                            <li><strong>Microterritorio:</strong> ${data.microterritorio}</li>
+                            <li><strong>Responsable:</strong> ${data.nombre_responsable}</li>
+                        </ul>
+                        <div class="flex gap-2 mt-4">
+                            <a href="${URL_view.replace('__ID__', data.id)}" class="bg-gray-200 hover:bg-blue-600 text-teal-700 px-3 py-1 rounded text-sm">Ver</a>
+                            <a href="${URL_edit.replace('__ID__', data.id)}" class="bg-gray-200 hover:bg-amber-600 text-teal-700 px-3 py-1 rounded text-sm">Editar</a>
+                            <a href="${URL_delete.replace('__ID__', data.id)}" class="bg-gray-200 hover:bg-red-600 text-teal-700 px-3 py-1 rounded text-sm"
+                               onclick="return confirm('¿Seguro que quieres borrar #${data.id}?');">Borrar</a>
+                        </div>
+                    </div>
+                `;
+                        }
+                    }
+                },
+                dom: '<"flex flex-col md:flex-row items-center justify-between py-8"<"w-full md:w-2/3 flex"<"flex flex-row w-full mb-4 custom-search-container">><"flex items-center custom-pagination"p>>rt',
+                pageLength: 3,
+                processing: true,
+                serverSide: true,
+                ajax: {
+                    url: "<?php echo $this->Html->url(array('controller' => 'familias', 'action' => 'familiasResponsablesIndex')); ?>",
+                    type: "GET",
+                    error: function(xhr, error, code) {
+                        console.log('Error:', error);
+                        console.log('Code:', code);
+                        console.log('Response:', xhr.responseText);
+                    }
+                },
+                order: [
+                    [0, 'asc']
+                ],
+                columns: [
+                    // Columna control (+)
+                    {
+                        data: null,
+                        className: 'dtr-control',
+                        orderable: false,
+                        searchable: false,
+                        defaultContent: '',
+                        render: function() {
+                            return '<span class="text-gray-400">+</span>';
+                        }
+                    },
+                    {
+                        data: "id",
+                        name: "id"
+                    },
+                    {
+                        data: "apellidos",
+                        name: "apellidos"
+                    },
+                    {
+                        data: "celular",
+                        name: "celular"
+                    },
+                    {
+                        data: "fecha",
+                        name: "fecha"
+                    },
+                    {
+                        data: "microterritorio",
+                        name: "microterritorio"
+                    },
+                    {
+                        data: "sociambiental_id",
+                        name: "sociambiental_id"
+                    },
+                    {
+                        data: "nombre_responsable",
+                        name: "nombre_responsable"
+                    },
+                    {
+                        data: "id",
+                        orderable: false,
+                        searchable: false,
+                        render: function(data) {
+                            const viewUrl = URL_view.replace('__ID__', data);
+                            const editUrl = URL_edit.replace('__ID__', data);
+                            const deleteUrl = URL_delete.replace('__ID__', data);
+                            return `
+          <div class="relative inline-block text-left">
+            <a href="${viewUrl}" class="block px-4 py-2 text-sm hover:bg-gray-100">Ver</a>
+            <a href="${editUrl}" class="block px-4 py-2 text-sm hover:bg-gray-100">Editar</a>
+            <hr class="my-1 border-gray-200">
+            <a href="${deleteUrl}" class="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100"
+               onclick="return confirm('¿Seguro que quieres borrar #${data}?');">Borrar</a>
+          </div>`;
+                        }
+                    }
+                ],
+                // Opcional: prioridades de columnas (qué esconder primero)
+                columnDefs: [{
+                        responsivePriority: 1,
+                        targets: 2
+                    }, // nombreproducto
+                    {
+                        responsivePriority: 2,
+                        targets: 3
+                    }, // objactividad
+                    {
+                        responsivePriority: 3,
+                        targets: 1
+                    } // created
+                ]
+            });
+            $miTabla.removeClass("dataTable no-footer rounded-lg shadow-lg overflow-hidden");
+
+            // Reemplazar el input original por uno custom
+            $('.custom-search-container').html(`
+        <div class="relative w-full md:w-2/3">
+            <svg class="absolute left-2 top-2.5 text-gray-400" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-scan-search-icon lucide-scan-search"><path d="M3 7V5a2 2 0 0 1 2-2h2"/><path d="M17 3h2a2 2 0 0 1 2 2v2"/><path d="M21 17v2a2 2 0 0 1-2 2h-2"/><path d="M7 21H5a2 2 0 0 1-2-2v-2"/><circle cx="12" cy="12" r="3"/><path d="m16 16-1.9-1.9"/></svg>
+            <input 
+                type="search" 
+                id="customSearch" 
+                class="pl-10 pr-4 py-2 border border-gray-300 rounded-lg shadow-sm 
+                       focus:ring-2 focus:ring-blue-500 focus:outline-none w-full" 
+                placeholder="Buscar registros..."
+            >
+        </div>
+        `);
+
+            // Función para estilizar la paginación
+            $('.custom-pagination').html(`
+            <div class="pagination-container flex items-center space-x-2">
+                <button class="first-page bg-white border border-gray-300 text-gray-700 px-3 py-1 rounded hover:bg-gray-100" title="Primera página" id="first-page">&laquo;&laquo;</button>
+                <button class="previous-page bg-white border border-gray-300 text-gray-700 px-3 py-1 rounded hover:bg-gray-100" title="Página anterior" id="previous-page">&laquo;</button>
+                <span class="page-info text-gray-700 text-sm"></span>
+                <button class="next-page bg-white border border-gray-300 text-gray-700 px-3 py-1 rounded hover:bg-gray-100" title="Página siguiente" id="next-page">&raquo;</button>
+                <button class="last-page bg-white border border-gray-300 text-gray-700 px-3 py-1 rounded hover:bg-gray-100" title="Última página" id="last-page">&raquo;&raquo;</button>
+            </div>
+        `);
+
+            $('.custom-table-length').html(`
+        <table>
+           <tbody>
+               <tr>
+                   <td>
+                       <div class="flex items-center space-x-2">
+                           <label for="table-length" class="text-gray-700 text-sm">Mostrar</label>
+                           <select id="table-length" class="border border-gray-300 rounded px-2 py-1 focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                               <option value="5">5</option>
+                               <option value="7" selected>7</option>
+                               <option value="10">10</option>
+                               <option value="25">25</option>
+                               <option value="50">50</option>
+                               <option value="100">100</option>
+                           </select>
+                           <span class="text-gray-700 text-sm">registros</span>
+                       </div>
+                   </td>
+               </tr>
+           </tbody>
+        </table>
+        `);
+
+            // Conectar botones de paginación personalizados
+            $(document).on("click", ".first-page", function() {
+                table.page("first").draw("page");
+            });
+
+            $(document).on("click", ".previous-page", function() {
+                table.page("previous").draw("page");
+            });
+
+            $(document).on("click", ".next-page", function() {
+                table.page("next").draw("page");
+            });
+
+            $(document).on("click", ".last-page", function() {
+                table.page("last").draw("page");
+            });
+
+            // Actualizar info de la página actual
+            function updatePageInfo() {
+                let info = table.page.info();
+                $(".page-info").text(`Página ${info.page + 1} de ${info.pages}`);
+            }
+
+            // Llamar en cada cambio de página
+            table.on("draw", function() {
+                updatePageInfo();
+                setupDropdowns(); // <-- Vuelve a conectar los eventos cada vez que se dibuja la tabla
+            });
+            updatePageInfo();
+
+
+            // Conectar el nuevo input con DataTables
+            $('#customSearch').on('keyup', function() {
+                table.search(this.value).draw();
+            });
+
+            table.on('draw');
+        });
+
+
+        // Función para manejar el despliegue de los menús
+        function setupDropdowns() {
+
+            localStorage.removeItem('consentAccepted');
+
+            const buttons = document.querySelectorAll('[id^="menu-button-"]');
+
+            buttons.forEach(button => {
+                button.addEventListener('click', (event) => {
+                    const buttonId = event.currentTarget.id;
+
+                    const recordId = buttonId.split('-')[2];
+                    console.log(buttonId);
+                    const menu = document.getElementById(`menu-options-${recordId}`);
+
+                    // Oculta todos los menús desplegables
+                    document.querySelectorAll('[id^="menu-options-"]').forEach(m => {
+                        if (m.id !== menu.id) {
+                            m.classList.add('hidden');
+                        }
+                    });
+
+                    // Muestra o esconde el menú actual
+                    menu.classList.toggle('hidden');
+                });
+            });
+
+            // Oculta los menús si se hace clic fuera de ellos
+            window.addEventListener('click', function(event) {
+                if (!event.target.matches('[id^="menu-button-"]')) {
+                    document.querySelectorAll('[id^="menu-options-"]').forEach(menu => {
+                        if (!menu.classList.contains('hidden')) {
+                            menu.classList.add('hidden');
+                        }
+                    });
+                }
+            });
+
+            document.querySelectorAll('.ver-mas').forEach(function(link) {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const td = link.closest('td');
+                    td.querySelector('.texto-truncado').classList.add('hidden');
+                    td.querySelector('.texto-completo').classList.remove('hidden');
+                    td.querySelector('.ver-mas').classList.add('hidden');
+                    td.querySelector('.ver-menos').classList.remove('hidden');
+                });
+            });
+
+            document.querySelectorAll('.ver-menos').forEach(function(link) {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const td = link.closest('td');
+                    td.querySelector('.texto-truncado').classList.remove('hidden');
+                    td.querySelector('.texto-completo').classList.add('hidden');
+                    td.querySelector('.ver-mas').classList.remove('hidden');
+                    td.querySelector('.ver-menos').classList.add('hidden');
+                });
+            });
+
+
+            const menu = document.getElementById('miTabla_processing');
+            if (menu) {
+                menu.classList.remove('dataTables_processing');
+                menu.classList.add('hidden');
+            }
+
+
+        }
+
+        // Función para la confirmación de borrado
+        function confirmarBorrado(id) {
+            if (confirm('¿Estás seguro de que quieres eliminar este registro?')) {
+                // Si el usuario confirma, redirige o envía una solicitud a la ruta de borrado.
+                // Aquí debes reemplazar '/ruta/borrar/' con tu URL real.
+                window.location.href = '/ruta/borrar/' + id;
+            }
+        }
+
+        // Llama a la función de configuración cuando el DOM esté cargado
+        document.addEventListener('DOMContentLoaded', setupDropdowns);
+    </script>
+</body>

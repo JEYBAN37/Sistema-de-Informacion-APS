@@ -62,11 +62,7 @@
                                         id="UserUsername" name="UserUsername" class="form-control"
                                         placeholder="Contraseña" required>
                                 </div>
-                                <div class="mb-3">
-
-                                    <div class="g-recaptcha" data-sitekey="6LeoNUopAAAAAPxpAF0B_T4q7f0-IDfueVJluDda">
-                                    </div>
-                                </div>
+                                
                                 <div class="form-group" style="margin-top: 10px;">
                                     <button onfocus="verCod()" value="Entrar" type="submit"
                                         class="form-control btn btn-primary rounded submit px-3">Ingresar</button>

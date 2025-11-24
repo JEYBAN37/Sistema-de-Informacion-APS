@@ -15,6 +15,9 @@ class Sociambiental extends AppModel
 	);
 	public $displayField = 'apellidosfamilia';
 
+	public $actsAs = array(
+		'Containable',
+	);
 
 	public function getFamiliaSocioambientalFilter($conditions = array())
 	{
@@ -69,19 +72,17 @@ class Sociambiental extends AppModel
 			),
 		),
 		'ubicacion_id' => array(
-			'numeric' => array(
-				'rule' => array('numeric'),
-				//'message' => 'Your custom message here',
+			'notEmpty' => array(
+				'rule' => array('notEmpty'),
+				'message' => 'Seleccione una ubicación',
 				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+				//'required' => true,
 			),
 		),
 		'direccion' => array(
 			'alphaNumeric' => array(
-				'rule'     =>  'isUnique',
-				'message'  =>  'La dirección ya está asociada con una vivienda',
+				'rule'     =>  array('notEmpty'),
+				'message'  =>  'la dirección no puede estar vacía',
 				//'allowEmpty' => false,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule
@@ -91,7 +92,7 @@ class Sociambiental extends AppModel
 		'vivienda' => array(
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),
-				'message' => 'Ingrese dirección de residencia',
+				'message' => 'el tipo de vivienda no puede estar vacío',
 				//'allowEmpty' => false,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule
@@ -100,31 +101,31 @@ class Sociambiental extends AppModel
 		),
 
 		'latitud' => array(
+			'validFormat' => array(
+				'rule' => array('custom', '/^\d\.\d{6}$/'),
+				'message' => 'Ingrese una latitud válida 7 numeros con el formato n.nnnnnn',
+			),
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),
 				'message' => 'Ingrese latitud',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
 		),
 		'longitud' => array(
+			'validFormat' => array(
+				'rule' => array('custom', '/^-?\d{2}\.\d{6}$/'),
+				'message' => 'Ingrese una longitud válida 8 numeros con el formato -nn.nnnnnn',
+			),
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),
 				'message' => 'Ingrese longitud',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
 		),
 
 
 		'estrato' => array(
 			'numeric' => array(
-				'rule' => array('numeric'),
-				'message' => 'Solo valor numerico',
+				'rule' => array('notEmpty'),
+				'message' => 'El estrato no puede estar vacío',
 				//'allowEmpty' => false,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule
@@ -133,8 +134,8 @@ class Sociambiental extends AppModel
 		),
 		'numerohabitantes' => array(
 			'numeric' => array(
-				'rule' => array('numeric'),
-				'message' => 'Solo valor numerico',
+				'rule' => array('notEmpty'),
+				'message' => 'El número de habitantes no puede estar vacío',
 				//'allowEmpty' => false,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule
@@ -143,8 +144,8 @@ class Sociambiental extends AppModel
 		),
 		'numerohogares' => array(
 			'numeric' => array(
-				'rule' => array('numeric'),
-				'message' => 'Solo valor numerico',
+				'rule' => array('notEmpty'),
+				'message' => 'El número de hogares no puede estar vacío',
 				//'allowEmpty' => false,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule
@@ -154,7 +155,7 @@ class Sociambiental extends AppModel
 		'pared' => array(
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),
-				//'message' => 'Your custom message here',
+				'message' => 'La pared no puede estar vacía',
 				//'allowEmpty' => false,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule
@@ -164,7 +165,7 @@ class Sociambiental extends AppModel
 		'estadoparedes' => array(
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),
-				//'message' => 'Your custom message here',
+				'message' => 'El estado de las paredes no puede estar vacío',
 				//'allowEmpty' => false,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule
@@ -174,7 +175,7 @@ class Sociambiental extends AppModel
 		'piso' => array(
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),
-				//'message' => 'Your custom message here',
+				'message' => 'El piso no puede estar vacío',
 				//'allowEmpty' => false,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule
@@ -184,7 +185,7 @@ class Sociambiental extends AppModel
 		'techo' => array(
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),
-				//'message' => 'Your custom message here',
+				'message' => 'El techo no puede estar vacío',
 				//'allowEmpty' => false,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule
@@ -194,7 +195,7 @@ class Sociambiental extends AppModel
 		'estadotecho' => array(
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),
-				//'message' => 'Your custom message here',
+				'message' => 'El estado del techo no puede estar vacío',
 				//'allowEmpty' => false,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule
@@ -204,7 +205,7 @@ class Sociambiental extends AppModel
 		'dormitorios' => array(
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),
-				//'message' => 'Your custom message here',
+				'message' => 'El número de dormitorios no puede estar vacío',
 				//'allowEmpty' => false,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule
@@ -215,7 +216,7 @@ class Sociambiental extends AppModel
 		'hacinamiento' => array(
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),
-				//'message' => 'Your custom message here',
+				'message' => 'El hacinamiento no puede estar vacío',
 				//'allowEmpty' => false,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule
@@ -225,6 +226,8 @@ class Sociambiental extends AppModel
 		'riesgoexterno' => array(
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),
+				'rule' => array('multiple', array('min' => 1)),
+				'message' => 'Por favor seleccione al menos una opción',
 				//'message' => 'Your custom message here',
 				//'allowEmpty' => false,
 				//'required' => false,
@@ -236,7 +239,7 @@ class Sociambiental extends AppModel
 		'actividad' => array(
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),
-				//'message' => 'Your custom message here',
+				'message' => 'El tipo de actividad no puede estar vacío',
 				//'allowEmpty' => false,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule
@@ -245,7 +248,8 @@ class Sociambiental extends AppModel
 		),
 		'acceso' => array(
 			'notEmpty' => array(
-				'rule' => array('notEmpty'),
+				'rule' => array('multiple', array('min' => 1)),
+				'message' => 'Por favor seleccione al menos una opción',
 				//'message' => 'Your custom message here',
 				//'allowEmpty' => false,
 				//'required' => false,
@@ -253,39 +257,23 @@ class Sociambiental extends AppModel
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
 		),
-		/*'accesoDos' => array(
-			'notEmpty' => array(
-				'rule' => array('notEmpty'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			),
-		),*/
+
 		'apellidosfamilia' => array(
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),
-				//'message' => 'Your custom message here',
+				'message' => 'El apellido de la familia no puede estar vacío',
 				//'allowEmpty' => false,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
 		),
-		'transporte' => array(
-			'notEmpty' => array(
-				'rule' => array('notEmpty'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			),
-		),
+
 		'riesgo' => array(
 			'notEmpty' => array(
-				'rule' => array('notEmpty'),
+
+				'rule' => array('multiple', array('min' => 1)),
+				'message' => 'Por favor seleccione al menos una opción',
 				//'message' => 'Your custom message here',
 				//'allowEmpty' => false,
 				//'required' => false,
@@ -296,37 +284,7 @@ class Sociambiental extends AppModel
 		'aguaservicio' => array(
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			),
-		),
-		'aguatratamiento' => array(
-			'notEmpty' => array(
-				'rule' => array('notEmpty'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			),
-		),
-		'aguasiministro' => array(
-			'notEmpty' => array(
-				'rule' => array('notEmpty'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			),
-		),
-		'aguaalmacenamiento' => array(
-			'notEmpty' => array(
-				'rule' => array('notEmpty'),
-				//'message' => 'Your custom message here',
+				'message' => 'El servicio de agua no puede estar vacío',
 				//'allowEmpty' => false,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule
@@ -336,7 +294,7 @@ class Sociambiental extends AppModel
 		'diposicionexcretas' => array(
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),
-				//'message' => 'Your custom message here',
+				'message' => 'La disposición de excretas no puede estar vacía',
 				//'allowEmpty' => false,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule
@@ -346,7 +304,7 @@ class Sociambiental extends AppModel
 		'aguaresiduales' => array(
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),
-				//'message' => 'Your custom message here',
+				'message' => 'El servicio de aguas residuales no puede estar vacío',
 				//'allowEmpty' => false,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule
@@ -356,7 +314,7 @@ class Sociambiental extends AppModel
 		'basura' => array(
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),
-				//'message' => 'Your custom message here',
+				'message' => 'La disposición de basura no puede estar vacía',
 				//'allowEmpty' => false,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule
@@ -366,7 +324,7 @@ class Sociambiental extends AppModel
 		'reciclaje' => array(
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),
-				//'message' => 'Your custom message here',
+				'message' => 'El reciclaje no puede estar vacío',
 				//'allowEmpty' => false,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule
@@ -375,23 +333,19 @@ class Sociambiental extends AppModel
 		),
 
 		'mascotas' => array(
-			'notEmpty' => array(
-				'rule' => array('notEmpty'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			),
+			'rule' => array('multiple', array('min' => 1)),
+			//'message' => 'Your custom message here',
+			//'allowEmpty' => false,
+			//'required' => false,
+			//'last' => false, // Stop validation after this rule
+			//'on' => 'create', // Limit validation to 'create' or 'update' operations
 		),
 		'numeroGatos' => array(
-			'notEmpty' => array(
-				'rule' => array('notEmpty'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
+			'multiple' => array(
+				'rule' => array('multiple', array('min' => 0)),
+				'allowEmpty' => true,
 				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+				//'message' => 'Your custom message here',
 			),
 		),
 		'numeroPerros' => array(
@@ -446,7 +400,9 @@ class Sociambiental extends AppModel
 		),
 		'vector' => array(
 			'notEmpty' => array(
-				'rule' => array('notEmpty'),
+
+				'rule' => array('multiple', array('min' => 1)),
+				'message' => 'Por favor seleccione al menos una opción',
 				//'message' => 'Your custom message here',
 				//'allowEmpty' => false,
 				//'required' => false,
@@ -454,7 +410,8 @@ class Sociambiental extends AppModel
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
 		),
-		'vector' => array(
+
+		/*'numMicroterritorio' => array(
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),
 				//'message' => 'Your custom message here',
@@ -463,8 +420,9 @@ class Sociambiental extends AppModel
 				//'last' => false, // Stop validation after this rule
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
-		),
-		'numMicroterritorio' => array(
+		),*/
+
+		/*'manzana' => array(
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),
 				//'message' => 'Your custom message here',
@@ -473,48 +431,18 @@ class Sociambiental extends AppModel
 				//'last' => false, // Stop validation after this rule
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
-		),
-		'barriovereda' => array(
+		),*/
+
+		'fecha' => array(
 			'notEmpty' => array(
-				'rule' => array('notEmpty'),
-				//'message' => 'Your custom message here',
+				'rule' => array('date'),
+				'message' => 'Por favor verifique campo',
 				//'allowEmpty' => false,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
 		),
-		'manzana' => array(
-			'notEmpty' => array(
-				'rule' => array('notEmpty'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			),
-		),
-
-		'fechaRegistro' => array(
-			'notEmpty' => array(
-				'rule' => array('notEmpty'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			),
-		),
-
-
-
-
-
-
-
-
-
-
 	);
 
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
@@ -542,6 +470,31 @@ class Sociambiental extends AppModel
 		)
 	);
 
+	public function beforeSave($options = array())
+	{
+		if (isset($this->data[$this->alias]['acceso']) && is_array($this->data[$this->alias]['acceso'])) {
+			$this->data[$this->alias]['acceso'] = implode(',', $this->data[$this->alias]['acceso']);
+		}
+		if (isset($this->data[$this->alias]['riesgoexterno']) && is_array($this->data[$this->alias]['riesgoexterno'])) {
+			$this->data[$this->alias]['riesgoexterno'] = implode(',', $this->data[$this->alias]['riesgoexterno']);
+		}
+		if (isset($this->data[$this->alias]['riesgo']) && is_array($this->data[$this->alias]['riesgo'])) {
+			$this->data[$this->alias]['riesgo'] = implode(',', $this->data[$this->alias]['riesgo']);
+		}
+		if (isset($this->data[$this->alias]['mascotas']) && is_array($this->data[$this->alias]['mascotas'])) {
+			$this->data[$this->alias]['mascotas'] = implode(',', $this->data[$this->alias]['mascotas']);
+		}
+		if (isset($this->data[$this->alias]['vector']) && is_array($this->data[$this->alias]['vector'])) {
+			$this->data[$this->alias]['vector'] = implode(',', $this->data[$this->alias]['vector']);
+		}
+
+		if (isset($this->data[$this->alias]['numeroGatos']) && is_array($this->data[$this->alias]['numeroGatos'])) {
+			$this->data[$this->alias]['numeroGatos'] = implode(',', $this->data[$this->alias]['numeroGatos']);
+		}
+
+		return true;
+	}
+
 
 
 	public $hasMany = array(
@@ -558,4 +511,44 @@ class Sociambiental extends AppModel
 			'counterQuery' => ''
 		)
 	);
+
+
+	public function tranformData($data)
+	{
+		// Ejemplo: viene "2. Hombres,4. Niños y niñas"
+		if (!empty($data['Sociambiental']['acceso'])) {
+			$poblacionStr = $data['Sociambiental']['acceso'];
+			// Extraer cada palabra/frase hasta la coma
+			$tipos = array_map('trim', explode(',', $poblacionStr));
+			$data['Sociambiental']['acceso'] = $tipos;
+		}
+		if (!empty($data['Sociambiental']['numeroGatos'])) {
+			$poblacionStr = $data['Sociambiental']['numeroGatos'];
+			// Extraer cada palabra/frase hasta la coma
+			$tipos = array_map('trim', explode(',', $poblacionStr));
+			$data['Sociambiental']['numeroGatos'] = $tipos;
+		}
+		if (!empty($data['Sociambiental']['vector'])) {
+			$poblacionStr = $data['Sociambiental']['vector'];
+			// Extraer cada palabra/frase hasta la coma
+			$tipos = array_map('trim', explode(',', $poblacionStr));
+			$data['Sociambiental']['vector'] = $tipos;
+		}
+
+		if (!empty($data['Sociambiental']['riesgoexterno'])) {
+			$poblacionStr = $data['Sociambiental']['riesgoexterno'];
+			// Extraer cada palabra/frase hasta la coma
+			$tipos = array_map('trim', explode(',', $poblacionStr));
+			$data['Sociambiental']['riesgoexterno'] = $tipos;
+		}
+
+		if (!empty($data['Sociambiental']['riesgo'])) {
+			$poblacionStr = $data['Sociambiental']['riesgo'];
+			// Extraer cada palabra/frase hasta la coma
+			$tipos = array_map('trim', explode(',', $poblacionStr));
+			$data['Sociambiental']['riesgo'] = $tipos;
+		}
+
+		return $data;
+	}
 }

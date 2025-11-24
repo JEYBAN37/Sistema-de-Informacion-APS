@@ -5,6 +5,11 @@
 # Ignorar el directorio "node_modules" completamente
 tmp/
 Vendor/
+Test/
+Config/
+Webroot/files/
+includes/
+Config/database.php
 
 # Ignorar archivos generados por el sistema
 .DS_Store

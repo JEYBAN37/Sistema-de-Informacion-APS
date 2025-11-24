@@ -1,942 +1,1476 @@
-<?php $this->layout = 'default_familia' ?>
+<?php
 
+use function PHPSTORM_META\type;
+
+$this->layout = 'default_familia';  ?>
+
+
+<!-- Choices.js -->
+<div class="max-w-5xl mx-auto text-center mb-8">
+    <h1 class="text-4xl md:text-5xl font-bold text-slate-800 mb-4 leading-tight">
+        Información de la Vivienda<br>
+        <span class="text-transparent bg-clip-text bg-gradient-to-r from-teal-600 to-cyan-600">
+            Modulo Socioambiental
+        </span>
+    </h1>
+    <p class="text-slate-600 text-lg max-w-2xl mx-auto leading-relaxed">
+        Edite el formulario recuerde que se hace seguimiento de ediciones.
+    </p>
+</div>
 
 <?php
-// Enlaza el archivo JavaScript desde la carpeta webroot/js
-echo $this->Html->script('validationSocioAmbiental'); // 'validation' es el nombre del archivo sin la extensión .js
+
+echo $this->Form->create('Sociambiental',  [
+    'class' => 'space-y-6',
+    'novalidate' => true
+]);
+
+
+echo $this->Form->input('updateDate', array(
+    'type' => 'hidden',
+    'value' => date('Y-m-d H:i:s'),
+));
+
+echo $this->Form->input('responsable_id', [
+    'type' => 'hidden',
+]);
+
+$viviendaOptions = array(
+    '' => 'Elegir',
+    '1.Casa' => 'Casa',
+    '4.Apartamento' => 'Apartamento',
+    '5.Pieza' => 'Pieza',
+    '3.Cuarto improvisado' => 'Cuarto improvisado',
+    '5.Cuarto en inquilinato' => 'Cuarto en inquilinato',
+    '10.Cuevas' => 'Cuevas',
+    '11.En calle' => 'En calle, puente, rio, parque',
+);
+
+$estratoOptions = array('' => 'Elegir', '1' => '1', '2' => '2', '3' => '3', '4' => '4', '5' => '5', '6' => '6');
+
+$optionMaterialPared = array(
+    '' => 'Elegir',
+    '1.Bloque, cemento, ladrillo' => 'Bloque, cemento, ladrillo',
+    '2.Tierra, arena, barro' => 'Tierra, arena, barro',
+    '5.Madera' => 'Madera',
+    '7.Material plastico' => 'Material plástico ',
+    '7.Material Reciclado' => 'Material reciclado',
+    '7.Lata, Lamina metal' => 'Lata, Lamina metal',
+
+);
+
+$optionParedes = array(
+    '' => 'Elegir',
+    'Buen estado' => 'Buen estado',
+    'Descascaramiento, humedad' => 'Descascaramiento, humedad',
+    'Estructura inestable' => 'Estructura inestable',
+
+);
+
+$optionPiso = array(
+    '' => 'Elegir',
+    '3.Cemento, gravilla' => 'Cemento, gravilla',
+    '3.Ceramica' => 'Ceramica',
+    '1.Piso flotante' => 'Piso flotante',
+    '5.Tierra' => 'Tierra',
+    '4.Madera burda, tabla' => 'Madera burda, tabla',
+    '3.Baldosa, ladrillo' => 'baldosa, ladrillo',
+);
+
+$optionEstadoTecho = array(
+    '' => 'Elegir',
+    'Buen estado' => 'Buen estado',
+    'Agrietamiento, goteras o fisuras' => 'Agrietamiento, goteras o fisuras',
+
+);
+$numhabitantesOptions = array('' => 'Elegir', '1' => '1', '2' => '2', '3' => '3', '4' => '4', '5' => '5', '6' => '6', '7' => 'Mas de 7');
+
+$numhogaresOptions = array('' => 'Elegir', '1' => '1', '2' => '2', '3' => '3', '4' => '4', '5' => '5', '6' => '6');
+$optionHacinamiento = array('' => 'Elegir', '1.Si' => 'Si', '2.No' => 'No');
+$externalRiskOptions = [
+    '20.No se identifica' => 'No se identifica',
+    '8.Malos olores' => 'Malos olores',
+    '19.Iluminacion inadecuada' => 'Iluminación inadecuada',
+    '8.Ventilación inadecuada' => 'Ventilación inadecuada',
+    '3.Porquerizas' => 'Porquerizas',
+    '4.Galpones' => 'Galpones',
+    '5.Terrenos baldíos' => 'Terrenos baldíos',
+    '7.Ruido' => 'Ruido',
+    '10.Rellenos sanitarios, botaderos' => 'Rellenos sanitarios/botaderos',
+    '17.Excesivo trafico' => 'Excesivo trafico',
+];
+
+$accessOptions = [
+    '1.Transporte' => 'Transporte',
+    '2.Espacios deportivos' => 'Espacios deportivos, recretativos',
+    '3.Servicios Educativos' => 'Servicios Educativos',
+    '4.Servicios Salud' => 'Servicios Salud',
+    '5.Ninguno' => 'Ninguno'
+];
+
+$accidentRiskOptions = [
+    '11.Ninguno' => 'Ninguno',
+    '1.Objetos cortantes ' => 'Objetos cortantes ',
+    '2.Sustancias químicas_aseo a la vista' => 'Sustancias químicas_aseo a la vista',
+    '3.Medicamentos a la vista' => 'Medicamentos a la vista',
+    '4.Uso de Velas' => 'Uso de Velas',
+    '5.Conexiones Electricas inadecuadas' => 'Conexiones Electricas inadecuadas',
+    '8.Superficies resbaladizas' => 'Superficies resbaladizas',
+    '10.Escaleras sin proteccion' => 'Escaleras sin protección',
+];
+
+$waterSupplyOptions = [
+    '' => 'Elegir',
+    '1.Acueducto Empopasto' => 'Acueducto Empopasto',
+    '3.Acueducto Comunitario' => 'Acueducto Comunitario',
+    '2.Agua envasada ' => 'agua envasada',
+    '5.Carro tanque ' => 'Carro tanque',
+    '8.Pozo sin bomba, aljibe, jagüey o barreno' => 'Pozo sin bomba, aljibe, jagüey o barreno',
+    '10.Río, quebrada, manantial o nacimiento' => 'Río, quebrada, manantial o nacimiento',
+    '11.Aguas lluvias' => 'Aguas lluvias',
+
+];
+
+$excretaDisposalOptions = [
+    '' => 'Elegir',
+    '1.Inodoro conectado a alcantarillado' => 'Inodoro conectado a alcantarillado',
+    '2.Inodoro sin conexion a alcantarillado' => 'Inodoro sin conexion a alcantarillado',
+    '2.Pozo séptico' => 'Pozo séptico',
+    '7.Campo abierto' => 'Campo abierto',
+    '8.Basenilla, bolsas' => 'Basenilla, Bolsas',
+];
+
+$garbageDisposalOptions = [
+    '' => 'Elegir',
+    '1.Recolección por Emas' => 'Recolección por Empresa de aseo',
+    '3.Quema a campo abierto' => 'Quema a campo abierto',
+    '5.Disposición a campo abierto' => 'Disposición a campo abierto',
+];
+
+$recyclingOptions = [
+    '' => 'Elegir',
+    'Si' => 'Si',
+    'No' => 'No',
+    'ocasionalmente' => 'Ocasionalmente',
+
+];
+$vectoresOption = [
+    '2.No' => 'No',
+    '1.Moscos' => 'Moscos',
+    '1.Zancudos' => 'Zancudos',
+    '1.Pulgas' => 'Pulgas',
+    '1.Piojos' => 'Piojos',
+    '1.Ratones' => 'Ratones',
+    '1.Cucarachas' => 'Cucarachas',
+];
+
+$domesticWaterOptions = [
+    '' => 'Elegir',
+    '1.Conexión alcantarillado' => 'Conexión alcantarillado',
+    '5.Fuente hídrica ' => 'Fuente hídrica',
+    '6.Campo Abierto ' => 'Campo Abierto',
+];
+
+$animalesOptions = [
+    '1.Perros' => 'Perros',
+    '2.Gato' => 'Gato',
+    '3.Porcinos' => 'Porcinos',
+    '4.Bóvidos: Búfalos, vacas, toros' => 'Bóvidos: Búfalos, vacas, toros',
+    '5.Equidos: Asnos, mulas, caballos, burros' => 'Equidos: Asnos, mulas, caballos, burros',
+    '6.Ovinos / caprino' => 'Ovinos / caprino',
+    '7.Aves de producción' => 'Aves de producción',
+    '8.Aves ornamentales' => 'Aves ornamentales',
+    '9.Peces ornamentales, hamster' => 'Peces ornamentales, hamster',
+    '10.Cobayos, conejos' => 'Cobayos, conejos',
+    '11.Animales silvestres' => 'Animales silvestres',
+    '12.Otro' => 'Otro',
+];
 ?>
 
-<style>
-.modal-header-native {
-    padding: 1rem;
-    border-bottom: 1px solid #e9ecef;
-    border-top-left-radius: .3rem;
-    border-top-right-radius: .3rem;
-}
-</style>
 
 
+<div class="max-w-6xl mx-auto p-18">
+    <div class="bg-white shadow-2xl rounded-xl  p-6  md:p-12">
 
+        <!-- Header -->
+        <div class="flex items-center mb-4">
+            <i class="fa-solid fa-house-laptop text-teal-600 text-3xl bg-teal-100 p-3 rounded-lg"></i>
+            <div class="ml-4">
+                <h1 class="text-xl font-semibold">Informacion de Referencia</h1>
+                <p class="text-gray-500">Complementa la información de la vivienda.</p>
+            </div>
+        </div>
 
+        <div class="grid grid-cols-1 md:grid-cols-2">
 
-<body style="font-size: 14px;">
-
-
-    <div>
-        <?php echo $this->Form->create('Sociambiental'); ?>
-        <div class="form-group col-sm-12 center">
-
-
-
-
-            <fieldset>
-
-                <div class="col-12 text-center">
-                    <h1 class="title-general-forms">Módulo Socioambiental
-                    </h1>
+            <div class="col-span-2 md:col-span-1 text-md font-semibold my-4 sm:mr-4">
+                <div class="flex items-center">
+                    <span class="mr-2 px-2 rounded-lg bg-gray-200 text-md font-semibold">1</span>
+                    <label for="resultadoEcomapa" class="font-semibold">ID Vivienda</label>
                 </div>
+                <div class="col-span-2 text-md font-semibold mt-6">
+                    <div class="flex flex-col w-full">
+                        <?php
+                        echo $this->Form->input('id', [
+                            'type' => 'text',
+                            'label' => '',
+                            'class' => 'bg-gray-50 border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400 w-full',
+                            'readonly' => true
+                        ]);
+                        ?>
+                    </div>
+                </div>
+            </div>
 
-                <h2 style="color: #3366CC;  font-size:30px ; margin-top: 25px; ">Datos Básicos</h2>
-                <hr style=" border:0.1px solid rgba(0,0,0,.125);">
-
-                <div class="grow justify-content-center" display="none" style="margin-top:20px; ">
-                    <div class="card " style=" font-size:15px;  border:1.5px solid rgba(0,0,0,.125);">
-                        <div class="form-group row">
-
-
-
-
-
-
-                            <?php echo $this->Form->input('updateDate', array(
-                                'type' => 'hidden',
-                                'value' => date('Y-m-d H:i:s'),
-                            )); ?>
-
-                            <div class="form-group col-md-6" style="margin-top: 20px;">
-                                <?php echo $this->Form->input('fecha', array(
-                                    'label' => 'Fecha de registro:',
-                                    'type' => 'date',
-                                    'minYear' => date('Y'),
-                                    'maxYear' => date('Y'),
-                                    'style' => 'height:30px;  font-size: 15px ;',
-                                   
-                                
-                            )); ?>
-                            </div>
-
-
-                            <div class="form-group col-md-6" style="margin-top: 20px;">
-                                <?php
-                                echo $this->Form->input('id');
-                                echo $this->Form->input('responsable_id', array(
-                                    'label' => 'Responsable diligenciamiento Encuesta',
-                                    'style' => 'height:30px;  font-size: 15px ; width:100%',
-                                    'type' => 'select',
-                                    'class' => 'select-search'
-                                )); ?>
-                            </div>
-
-                            <div class="form-group col-md-6" style="margin-top: 20px;">
-                                <?php echo $this->Form->input('ubicacion_id', array(
-                                    'label' => 'Territorio',
-                                    'style' => 'height:30px;  font-size: 15px ; width:100%',
-                                    'type' => 'select',
-                                    'class' => 'select-search col-md-12'
-                                )); ?>
-
-                            </div>
-
-                            <div class="form-group col-md-6" style="margin-top: 20px;">
-                                <?php echo $this->Form->input('numMicroterritorio', array(
-                                    'label' => 'Numero de microterritorio',
-                                    'style' => 'height:30px;  font-size: 15px ; width:100%',
-
-                                )); ?>
-                                </p>
-                            </div>
-
-                            <div class="form-group col-md-6" style="margin-top: 20px;">
-                                <?php echo $this->Form->input('barriovereda', array(
-                                    'label' => 'Barrio/sector/vereda',
-                                    'style' => 'height:30px;  font-size: 15px ; width:100%',
-
-                                )); ?>
-                                </p>
-                            </div>
-
-                            <div class="form-group col-md-6" style="margin-top: 20px;">
-                                <?php echo $this->Form->input('manzana', array(
-                                    'label' => 'N.Cuadra o Manzana',
-                                    'style' => 'height:30px;  font-size: 15px ; width:100%',
-
-
-                                )); ?>
-
-                            </div>
-
-                            <div class="form-group col-md-6" style="margin-top: 20px;">
-                                <?php
-
-
-                                echo $this->Form->input('apartamento', array(
-                                    'label' => 'Num. Apartamento',
-                                    'class' => 'form-control',
-                                    'style' => 'height:30px;  font-size: 15px',
-
-                                )); ?>
-                            </div>
-
-                            <div class="form-group col-md-6" style="margin-top: 20px;">
-                                <?php echo $this->Form->input('direccion', array(
-                                    'label' => 'Nomenclatura de la Dirección',
-                                    'class' => 'form-control',
-                                    'style' => 'height:30px;  font-size: 15px',
-                                )); ?>
-
-                                <p class="help-block">Colocar la nomenclatura de un recibo de servicio publico del
-                                    domicilio
-                                </p>
-                            </div>
-                            <div class="form-group col-md-6" style="margin-top: 20px;">
-                                <?php echo $this->Form->input('latitud', array(
-                                    'label' => 'Geopunto latitud',
-                                    'class' => 'form-control',
-                                    'style' => 'height:30px;  font-size: 15px',
-                                )); ?>
-                                <p class="help-block">Coordenada de latitud en la ubicación geográfica. Ej.: 0.670348
-                                    Valor numérico con decimales, separador punto. Acepta valores negativos
-                                </p>
-                            </div>
-
-                            <div class="form-group col-md-6" style="margin-top: 20px;">
-                                <?php echo $this->Form->input('longitud', array(
-                                    'label' => 'Geopunto longitud',
-                                    'class' => 'form-control',
-                                    'style' => 'height:30px;  font-size: 15px',
-                                )); ?>
-                                <p class="help-block">Coordenada de longitud en la ubicación geográfica . Ejemplo:
-                                    -70.240149
-                                    Valor numérico con decimales, separador punto. Acepta valores negativos
-                                </p>
-                            </div>
-
-
-
-                            <div class="form-group col-md-6" style="margin-top: 20px;">
-                                <?php echo $this->Form->input('apellidosfamilia', array(
-                                    'label' => 'Apellidos de la familia',
-                                    'class' => 'form-control',
-                                    'style' => 'height:30px;  font-size: 15px',
-                                )); ?>
-                            </div>
-
-                            <div class="form-group col-md-6" style="margin-top: 20px;">
-                                <?php
-                                $viviendaOptions = array(
-                                    '' => 'Elegir',
-                                    '1.Casa' => 'Casa',
-                                    '4.Apartamento' => 'Apartamento',
-                                    '5.Pieza' => 'Pieza',
-                                    '3.Cuarto improvisado' => 'Cuarto improvisado',
-                                    '5.Cuarto en inquilinato' => 'Cuarto en inquilinato',
-                                    '10.Cuevas' => 'Cuevas',
-                                    '11.En calle' => 'En calle, puente, rio, parque',
-                                );
-                                echo $this->Form->input('vivienda', array(
-                                    'label' => 'Tipo de vivienda:',
-                                    'class' => 'form-control',
-                                    'style' => 'height:30px;  font-size: 15px',
-                                    'placeholder' => '',
-                                    'type' => 'select',
-                                    'options' => $viviendaOptions
-                                ));
-                                ?>
-                            </div>
-
-                            <div class="form-group col-md-6" style="margin-top: 20px;">
-                                <?php
-                                $estratoOptions = array('' => 'Elegir', '1' => '1', '2' => '2', '3' => '3', '4' => '4', '5' => '5', '6' => '6');
-                                echo $this->Form->input('estrato', array(
-                                    'label' => 'Estrato:',
-                                    'class' => 'form-control',
-                                    'style' => 'height:30px;  font-size: 15px',
-                                    'placeholder' => '',
-                                    'type' => 'select',
-                                    'options' => $estratoOptions
-                                ));
-                                ?>
-                                <p class="help-block">Se sugiere revisar recibo de agua o luz de la residencia</p>
-                            </div>
-
-                            <div class="form-group col-md-6" style="margin-top: 20px;">
-                                <?php
-                                $numhabitantesOptions = array('' => 'Elegir', '1' => '1', '2' => '2', '3' => '3', '4' => '4', '5' => '5', '6' => '6', '7' => 'Mas de 7');
-                                echo $this->Form->input('numerohabitantes', array(
-                                    'label' => '¿Cuantas personas habitan en la vivienda?',
-                                    'class' => 'form-control',
-                                    'style' => 'height:30px;  font-size: 15px',
-                                    'placeholder' => '',
-                                    'options' => $numhabitantesOptions,
-                                ));
-                                ?>
-                            </div>
-
-                            <div class="form-group col-md-6" style="margin-top: 20px;">
-                                <?php
-                                $numhogaresOptions = array('' => 'Elegir', '1' => '1', '2' => '2', '3' => '3', '4' => '4', '5' => '5', '6' => '6');
-                                echo $this->Form->input('numerohogares', array(
-                                    'label' => 'No. Hogares en la residencia',
-                                    'class' => 'form-control',
-                                    'style' => 'height:30px;  font-size: 15px',
-                                    'options' => $numhogaresOptions
-                                ));
-                                ?>
-                                <p class="help-block">Si todos comen de la misma olla se considera una sola
-                                    familia/hogar</p>
-                            </div>
+            <div class="col-span-2 md:col-span-1 text-md font-semibold my-4">
+                <div class="flex items-center">
+                    <span class="mr-2 px-2 rounded-lg bg-gray-200 text-md font-semibold">2</span>
+                    <label for="resultadoEcomapa" class="font-semibold">Responsable</label>
+                </div>
+                <div class="col-span-2 text-md font-semibold mt-6">
+                    <div class="flex flex-col w-full">
+                        <div class="bg-gray-50 border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400 w-full">
+                            <?= h(!empty($nombre) ? $nombre : 'Ya validado'); ?>
                         </div>
                     </div>
                 </div>
+            </div>
 
 
-                <h2 class="subtitle-general-forms">Habitabilidad</h2>
-                <hr style="background-clip: border-box; border:0.1px solid rgba(0,0,0,.125);">
-
-                <div class="grow justify-content-center" display="none" style="margin-top:20px">
-                    <div class="card col-sm-12" style=" font-size:15px;  border:1.5px solid rgba(0,0,0,.125);">
-
-                        <div class="form-group row">
-
-                            <div class="form-group col-md-6" style="margin-top: 20px;">
-                                <?php
-                                $optionMaterialPared = array(
-                                    '' => 'Elegir',
-                                    '1.Bloque, cemento, ladrillo' => 'Bloque, cemento, ladrillo',
-                                    '2.Tierra, arena, barro' => 'Tierra, arena, barro',
-                                    '5.Madera' => 'Madera',
-                                    '7.Material plastico ' => 'Material plástico ',
-                                    '7.Material Reciclado ' => 'Material reciclado',
-                                    '7.Lata, Lamina metal ' => 'Lata, Lamina metal',
-
-                                );
-                                echo $this->Form->input('pared', array(
-                                    'label' => '¿Cuál es el material predominante de las paredes?',
-                                    'options' => $optionMaterialPared,
-                                    'class' => 'form-control',
-                                    'style' => 'height:30px;  font-size: 15px ; width:100%',
-                                    'placeholder' => ""
-                                ));
-                                ?>
-                            </div>
-
-                            <div class="form-group col-md-6" style="margin-top: 20px;">
-
-                                <?php $optionParedes = array(
-                                    '' => 'Elegir',
-                                    'Buen estado' => 'Buen estado',
-                                    'Descascaramiento, humedad' => 'Descascaramiento, humedad',
-                                    'Estructura inestable' => 'Estructura inestable',
-                                    'SD' => 'Sin dato'
-                                );
-                                echo $this->Form->input('estadoparedes', array(
-                                    'label' => '¿El estado de las paredes es?',
-                                    'class' => 'form-control',
-                                    'style' => 'height:30px;  font-size: 15px ; width:100%',
-                                    'type' => 'select',
-                                    'options' => $optionParedes,
-
-                                ));
-                                ?>
-                            </div>
-                            <div class="form-group col-md-6" style="margin-top: 20px;">
-                                <?php
-                                $optionPiso = array(
-                                    '' => 'Elegir',
-                                    '3.Cemento, gravilla' => 'Cemento, gravilla',
-                                    '3.Ceramica' => 'Ceramica',
-                                    '1.Piso flotante' => 'Piso flotante',
-                                    '5.Tierra' => 'Tierra',
-                                    '4.Madera burda, tabla' => 'Madera burda, tabla',
-                                    '3.Baldosa, ladrillo' => 'baldosa, ladrillo',
-                                    '6.Otro' => 'Otro',
-                                    'SD' => 'Sin dato'
-                                );
-                                echo $this->Form->input('piso', array(
-                                    'label' => '¿Cuál es el material predominante del piso de la vivienda?',
-                                    'class' => 'form-control',
-                                    'style' => 'height:30px;  font-size: 15px ; width:100%',
-                                    'type' => 'select',
-                                    'options' => $optionPiso,
-
-                                ));
-                                ?>
-                            </div>
-                            <div class="form-group col-md-6" style="margin-top: 20px;">
-                                <?php
-                                $optionTecho = array(
-                                    '' => 'Elegir',
-                                    '1.Concreto' => 'Concreto',
-                                    '4.Eternit' => 'Eternit',
-                                    '2.Tejas de barro' => 'Tejas de barro',
-                                    '4.Zinc' => 'Zinc',
-                                    '6.Plastico' => 'Plástico',
-                                    '7.Desecho' => 'Desechos (cartón, lata, tela, sacos, etc)',
-                                    '8.Otro' => 'Otro',
-                                    'SD' => 'Sin dato'
-
-                                );
-                                echo $this->Form->input('techo', array(
-                                    'label' => '¿Cuál es el material predominante del techo?',
-                                    'class' => 'form-control',
-                                    'style' => 'height:30px;  font-size: 15px ; width:100%',
-                                    'type' => 'select',
-                                    'options' => $optionTecho,
-
-                                ));
-                                ?>
-                            </div>
-                            <div class="form-group col-md-6" style="margin-top: 20px;">
-                                <?php
-                                $optionEstadoTecho = array(
-                                    '' => 'Elegir',
-                                    'Buen estado' => 'Buen estado',
-                                    'Agrietamiento, goteras o fisuras' => 'Agrietamiento, goteras o fisuras',
-                                    'SD' => 'Sin dato'
-                                );
-                                echo $this->Form->input('estadotecho', array(
-                                    'label' => '¿Cuál es el estado en general del techo?',
-                                    'class' => 'form-control',
-                                    'style' => 'height:30px;  font-size: 15px ; width:100%',
-                                    'type' => 'select',
-                                    'options' => $optionEstadoTecho,
-
-                                ));
-                                ?>
-                            </div>
-                            <div class="form-group col-md-6" style="margin-top: 20px;">
-                                <?php
-                                $optionDormitorio = array('' => 'Elegir', '1' => '1', '2' => '2', '3' => '3', '4' => '4', 'SD' => 'Sin dato');
-                                echo $this->Form->input('dormitorios', array(
-                                    'label' => '¿Cuantos cuartos se utilizan para dormir?',
-                                    'class' => 'form-control',
-                                    'type' => 'select',
-                                    'options' => $optionDormitorio,
-                                    'style' => 'height:30px;  font-size: 15px ; width:100%',
-                                ));
-                                ?>
-                            </div>
-                            <div class="form-group col-md-6" style="margin-top: 20px; margin-bottom: 30px;">
-                                <?php $optionHacinamiento = array('' => 'Elegir', '1.Si' => 'Si', '2.No' => 'No', 'SD' => 'Sin dato');
-                                echo $this->Form->input('hacinamiento', array(
-                                    'label' => '¿En algunos de los dormitorios de la vivienda duermen tres o mas personas?',
-                                    'class' => 'form-control',
-                                    'type' => 'select',
-                                    'options' => $optionHacinamiento,
-                                    'style' => 'height:30px;  font-size: 15px ; width:100%',
-                                    'id' => 'hacinamiento'
-                                ));
-                                ?>
-                            </div>
-
-                        </div>
+            <!-- Fecha de visita -->
+            <div class="col-span-2 md:col-span-1 text-md font-semibold my-4 sm:mr-4">
+                <div class="flex items-center">
+                    <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">3</span>
+                    <label for="resultadoEcomapa" class="font-semibold">Fecha de visita</label>
+                    <p class="text-red-600">*</p>
+                </div>
+                <div class="col-span-2 text-md font-semibold mt-6">
+                    <div class="flex flex-col w-full">
+                        <input
+                            type="text"
+                            name="data[Sociambiental][fecha]"
+                            id="fecha"
+                            class="border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400 w-full"
+                            value="<?= ($this->Form->value('fecha')); ?>"
+                            placeholder="Selecciona la fecha" />
+                        <span class="text-sm text-red-600 ">
+                            <?= $this->Form->error('fecha') ?>
+                        </span>
                     </div>
+
+                </div>
+            </div>
+            <!-- Microterritorio -->
+            <div class="col-span-2 md:col-span-1 text-md font-semibold my-6">
+                <div class="flex items-center mb-4">
+                    <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">4</span>
+                    <label for="familiograma" class="font-semibold">Microterritorio</label>
+                    <p class="text-red-600">*</p>
                 </div>
 
-
-                <h2 class="subtitle-general-forms">Servicios y Riesgos de la vivienda </h2>
-                <hr style="background-clip: border-box; border:0.1px solid rgba(0,0,0,.125);">
-
-                <div class="grow justify-content-center" display="none" style="margin-top:20px">
-                    <div class="card col-sm-12" style=" font-size:15px;  border:1.5px solid rgba(0,0,0,.125);">
-
-                        <div class="form-group row">
-
-                            <div class="col-md-6" style="margin-top: 30px;">
-                                <?php
-                                $externalRiskOptions = [
-                                    '' => 'Elegir',
-                                    '20.No se identifica' => 'No se identifica',
-                                    '8.Malos olores' => 'Malos olores',
-                                    '19.Iluminacion inadecuada' => 'Iluminación inadecuada',
-                                    '8.Ventilación inadecuada' => 'Ventilación inadecuada',
-                                    '3.Porquerizas' => 'Porquerizas',
-                                    '4.Galpones' => 'Galpones',
-                                    '5.Terrenos baldíos' => 'Terrenos baldíos',
-                                    '7.Ruido' => 'Ruido',
-                                    '10.Rellenos sanitarios, botaderos' => 'Rellenos sanitarios/botaderos',
-                                    '17.Excesivo trafico' => 'Excesivo trafico',
-                                    '19.Otro' => 'Otro',
-                                    'SD' => 'Sin dato'
-                                ];
-                                echo $this->Form->input('riesgoexterno', [
-                                    'label' => 'Identifique en el entorno si hay:',
-                                    'class' => 'form-control',
-                                    'type' => 'select',
-                                    'options' => $externalRiskOptions,
-                                    'style' => 'height:30px;  font-size: 15px ; width:100%',
-                                ]);
-                                ?>
-                                <p class="help-block">Refiera el riesgo más evidente</p>
-                            </div>
-
-                            <div class="col-md-6" style="margin-top: 30px;">
-                                <?php
-                                echo $this->Form->input('otroriesgo', [
-                                    'label' => 'Registre otro riesgo interno o externo si considera',
-                                    'class' => 'form-control',
-                                    'style' => 'height:30px;  font-size: 15px ; width:100%',
-                                ]);
-                                ?>
-                            </div>
-
-                            <div class="col-md-6" style="margin-top: 30px;">
-                                <?php
-                                $yesNoOptions = [
-                                    '' => 'Elegir',
-                                    '1.Si' => 'Si',
-                                    '2.No' => 'No',
-                                    'SD' => 'Sin dato'
-                                ];
-                                echo $this->Form->input('actividad', [
-                                    'label' => '¿Hay Actividad productiva en la vivienda?',
-                                    'class' => 'form-control',
-                                    'type' => 'select',
-                                    'options' => $yesNoOptions,
-                                    'style' => 'height:30px;  font-size: 15px ; width:100%',
-                                ]);
-                                ?>
-                            </div>
-
-                            <div class="col-md-6" style="margin-top: 30px;">
-                                <?php
-                                $accessOptions = [
-                                    '' => 'Elegir',
-                                    'No' => 'No hay dificultdad',
-                                    '1.Transporte' => 'Transporte',
-                                    '2.Espacios deportivos' => 'Espacios deportivos',
-                                    '3.Servicios Educativos' => 'Servicios Educativos',
-                                    '4.Servicios Salud' => 'Servicios Salud',
-                                    '1,2,3,4. Acceso a todos' => 'Se tiene acceso a todos',
-                                    '5.Ninguno' => 'Ninguno'
-                                ];
-                                echo $this->Form->input('acceso', [
-                                    'label' => '¿En su sector es difícil acceder a?',
-                                    'class' => 'form-control',
-                                    'type' => 'select',
-                                    'options' => $accessOptions,
-                                    'style' => 'height:30px;  font-size: 15px ; width:100%',
-                                ]);
-                                ?>
-                                <p class="help-block"> Relacione el más importante
-                                </p>
-                            </div>
-
-                            <div class="col-md-6" style="margin-top: 30px;">
-                                <?php
-
-                                echo $this->Form->input('accesoDos', [
-                                    'label' => 'Agregue otra asepecto de dificil acceso',
-                                    'class' => 'form-control',
-                                    'type' => 'select',
-                                    'options' => $accessOptions,
-                                    'style' => 'height:30px;  font-size: 15px ; width:100%',
-                                ]);
-                                ?>
-                                <p class="help-block">Relacione el más importante
-                                </p>
-                            </div>
-
-                            <div class="col-md-6" style="margin-top: 30px;">
-                                <?php
-                                $transportOptions = [
-                                    '' => 'Elegir',
-                                    'Moto' => 'Moto',
-                                    'Carro' => 'Carro',
-                                    'Transporte publico' => 'Transporte publico',
-                                    'Bicicleta' => 'Bicicleta',
-                                    'Caminar' => 'Caminar'
-                                ];
-                                echo $this->Form->input('transporte', [
-                                    'label' => '¿El Medio de transporte principal que utiliza su familia es?',
-                                    'class' => 'form-control',
-                                    'type' => 'select',
-                                    'options' => $transportOptions,
-                                    'style' => 'height:30px;  font-size: 15px ; width:100%',
-                                ]);
-                                ?>
-                            </div>
-
-                            <div class="col-md-6" style="margin-top: 30px;">
-                                <?php
-                                $accidentRiskOptions = [
-                                    '' => 'Elegir',
-                                    '11.Ninguno' => 'Ninguno',
-                                    '1.Objetos cortantes ' => 'Objetos cortantes ',
-                                    '2.Sustancias químicas_aseo a la vista' => 'Sustancias químicas_aseo a la vista',
-                                    '3.Medicamentos a la vista' => 'Medicamentos a la vista',
-                                    '4.Uso de Velas' => 'Uso de Velas',
-                                    '5.Conexiones Electricas inadecuadas' => 'Conexiones Electricas inadecuadas',
-                                    '8.Superficies resbaladizas' => 'Superficies resbaladizas',
-                                    '10.Escaleras sin proteccion' => 'Escaleras sin protección',
-                                    'SD' => 'Sin dato'
-                                ];
-                                echo $this->Form->input('riesgo', [
-                                    'label' => 'Identifique en el entorno si hay riesgo de accidente en la vivienda',
-                                    'class' => 'form-control',
-                                    'type' => 'select',
-                                    'options' => $accidentRiskOptions,
-                                    'style' => 'height:30px;  font-size: 15px ; width:100%',
-                                ]);
-                                ?>
-                            </div>
-
-                            <div class="col-md-6" style="margin-top: 30px;">
-                                <?php
-                                echo $this->Form->input('otroriesgohogar', [
-                                    'label' => 'Registre otro riesgo interno o externo si considera',
-                                    'class' => 'form-control',
-                                    'style' => 'font-size: 12px'
-                                ]);
-                                ?>
-                            </div>
-
-                            <div class="col-md-6" style="margin-top: 30px;">
-                                <?php
-                                $waterSupplyOptions = [
-                                    '' => 'Elegir',
-                                    '1.Acueducto Empopasto' => 'Acueducto Empopasto',
-                                    '3.Acueducto Comunitario' => 'Acueducto Comunitario',
-                                    '2.Agua envasada ' => 'agua envasada',
-                                    '5.Carro tanque ' => 'Carro tanque',
-                                    '8.Pozo sin bomba, aljibe, jagüey o barreno' => 'Pozo sin bomba, aljibe, jagüey o barreno',
-                                    '10.Río, quebrada, manantial o nacimiento' => 'Río, quebrada, manantial o nacimiento',
-                                    '11.Aguas lluvias' => 'Aguas lluvias',
-                                    '13.Otro' => 'Otro',
-                                ];
-                                echo $this->Form->input('aguaservicio', [
-                                    'label' => '¿Cuál es la principal fuente de abastecimiento de agua para consumo?',
-                                    'class' => 'form-control',
-                                    'type' => 'select',
-                                    'options' => $waterSupplyOptions,
-                                    'style' => 'height:30px;  font-size: 15px ; width:100%',
-                                ]);
-                                ?>
-                            </div>
-
-                            <div class="col-md-6" style="margin-top: 30px;">
-                                <?php
-                                $waterTreatmentOptions = [
-                                    '' => 'Elegir',
-                                    'Directamente del grifo' => 'Directamente del grifo',
-                                    'Hirve' => 'Hierve',
-                                    'Filta' => 'Filtra',
-                                    'Ozonifica' => 'Ozonifica',
-                                    'Desinfección con cloro' => 'Desinfección con cloro ',
-                                    'SD' => 'Sin dato'
-                                ];
-                                echo $this->Form->input('aguatratamiento', [
-                                    'label' => '¿Realiza algún tratamiento al agua para su consumo?',
-                                    'class' => 'form-control',
-                                    'type' => 'select',
-                                    'options' => $waterTreatmentOptions,
-                                    'style' => 'height:30px;  font-size: 15px ; width:100%',
-                                ]);
-                                ?>
-                            </div>
-
-                            <div class="col-md-6" style="margin-top: 30px;">
-                                <?php
-                                $waterSupplyStatusOptions = [
-                                    '' => 'Elegir',
-                                    'Continuo' => 'Continuo',
-                                    'Intermitente' => 'Intermitente',
-                                    'Razonamientos prolongados' => 'Razonamientos prolongados',
-                                    'SD' => 'Sin dato'
-                                ];
-                                echo $this->Form->input('aguasiministro', [
-                                    'label' => '¿El suministro de agua es?',
-                                    'class' => 'form-control',
-                                    'type' => 'select',
-                                    'options' => $waterSupplyStatusOptions,
-                                    'style' => 'height:30px;  font-size: 15px ; width:100%',
-                                ]);
-                                ?>
-                            </div>
-
-                            <div class="col-md-6" style="margin-top: 30px;">
-                                <?php
-                                $tankCleaningOptions = [
-                                    '' => 'Elegir',
-                                    'Sin tanque' => 'No tiene tanque',
-                                    'Mensual' => 'Mensual',
-                                    'Semestral' => 'Semestral',
-                                    'No realiza lavado' => 'No realiza lavado',
-                                    'SD' => 'Sin dato'
-                                ];
-                                echo $this->Form->input('aguaalmacenamiento', [
-                                    'label' => '¿Lavado del tanque de almacenamiento de agua?',
-                                    'class' => 'form-control',
-                                    'type' => 'select',
-                                    'options' => $tankCleaningOptions,
-                                    'style' => 'height:30px;  font-size: 15px ; width:100%',
-                                ]);
-                                ?>
-                            </div>
-
-                            <div class="col-md-6" style="margin-top: 30px;">
-                                <?php
-                                $excretaDisposalOptions = [
-                                    '' => 'Elegir',
-                                    '1.Inodoro conectado a alcantarillado' => 'Inodoro conectado a alcantarillado',
-                                    '2.Inodoro sin conexion a alcantarillado' => 'Inodoro sin conexion a alcantarillado',
-                                    '2.Pozo séptico' => 'Pozo séptico',
-                                    '7.Campo abierto' => 'Campo abierto',
-                                    '8.Basenilla, bolsas' => 'Basenilla, Bolsas',
-                                    '8.Otro' => 'Otro'
-
-                                ];
-                                echo $this->Form->input('diposicionexcretas', [
-                                    'label' => 'Disposición de excretas en la vivienda',
-                                    'class' => 'form-control',
-                                    'type' => 'select',
-                                    'options' => $excretaDisposalOptions,
-                                    'style' => 'height:30px;  font-size: 15px ; width:100%',
-                                ]);
-                                ?>
-                            </div>
-
-                            <div class="col-md-6" style="margin-top: 30px;">
-                                <?php
-                                $domesticWaterOptions = [
-                                    '' => 'Elegir',
-                                    '1.Conexión alcantarillado' => 'Conexión alcantarillado',
-                                    '5.Fuente hídrica ' => 'Fuente hídrica',
-                                    '6.Campo Abierto ' => 'Campo Abierto',
-                                    '7.Otro' => 'Otro'
+                <?php
+                echo $this->Form->input('ubicacion_id', [
+                    'type' => 'select',
+                    'id' => 'producto_id',
+                    'class' => 'w-full',
+                    'label' => '',
+                    'empty' => 'Seleccione el microterritorio',
+                    'error' => false // No mostrar error aquí
+                ]);
 
 
-                                ];
-                                echo $this->Form->input('aguaresiduales', [
-                                    'label' => 'Aguas residuales domésticas',
-                                    'class' => 'form-control',
-                                    'type' => 'select',
-                                    'options' => $domesticWaterOptions,
-                                    'style' => 'height:30px;  font-size: 15px ; width:100%',
-                                ]);
-                                ?>
-                            </div>
+                if (!empty($this->Form->error('ubicacion_id'))) {
+                    echo '<div class="text-red-600 text-md mt-1 font-semibold">' . $this->Form->error('ubicacion_id') . '</div>';
+                }
+                ?>
+            </div>
 
-                            <div class="col-md-6" style="margin-top: 30px;">
-                                <?php
-                                $garbageDisposalOptions = [
-                                    '' => 'Elegir',
-                                    '1.Recolección por Emas' => 'Recolección por Empresa de aseo',
-                                    '3.Quema a campo abierto' => 'Quema a campo abierto',
-                                    '5.Disposición a campo abierto' => 'Disposición a campo abierto',
-                                    '6.Otro' => 'Otro'
+            <div class="col-span-2 md:col-span-2 text-md font-semibold my-6">
+                <div class="flex items-center mb-4">
+                    <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">5</span>
+                    <label for="familiograma" class="font-semibold">Ubicacion Geoespacial</label>
+                    <p class="text-red-600">*</p>
+                </div>
+                <div class="flex flex-col md:flex-row w-full">
 
-                                ];
-                                echo $this->Form->input('basura', [
-                                    'label' => 'Disposición final de basura',
-                                    'class' => 'form-control',
-                                    'type' => 'select',
-                                    'options' => $garbageDisposalOptions,
-                                    'style' => 'height:30px;  font-size: 15px ; width:100%',
-                                ]);
-                                ?>
-                            </div>
+                    <div class="w-full md:w-1/2" id="coords">
 
-                            <div class="col-md-6" style="margin-top: 30px;">
-                                <?php
-                                $recyclingOptions = [
-                                    '' => 'Elegir',
-                                    'Si' => 'Si',
-                                    'No' => 'No',
-                                    'ocasionalmente' => 'Ocasionalmente',
-                                    'SD' => 'Sin dato'
-                                ];
-                                echo $this->Form->input('reciclaje', [
-                                    'label' => '¿Se realiza el proceso de separación de los residuos en la fuente?',
-                                    'class' => 'form-control',
-                                    'type' => 'select',
-                                    'options' => $recyclingOptions,
-                                    'style' => 'height:30px;  font-size: 15px ; width:100%',
-                                ]);
-                                ?>
-                            </div>
-                            <div class="col-md-6" style="margin-top: 30px; margin-bottom: 30px;">
-                                <?php
-                                $vectoresOption = [
-                                    '' => 'Elegir',
-                                    '2.No' => 'No',
-                                    '1.Mosicos' => 'Moscos',
-                                    '1.Zancudos' => 'Zancudos',
-                                    '1.Pulgas' => 'Pulgas',
-                                    '1.Piojos' => 'Piojos',
-                                    '1.Ratones' => 'Ratones',
-                                    '1.Cucarachas' => 'Cucarachas',
-                                    'SD' => 'Sin dato'
-                                ];
-                                echo $this->Form->input('vector', [
-                                    'label' => 'Hay presencia vectores transmisores de enfermedades en la vivienda o en su entorno inmediato?',
-                                    'class' => 'form-control',
-                                    'type' => 'select',
-                                    'options' => $vectoresOption,
-                                    'style' => 'height:30px;  font-size: 15px ; width:100%',
-                                ]);
-                                ?>
-                            </div>
-                        </div>
+                        <?php
+                        echo $this->Form->input('latitud', [
+                            'type' => 'text',
+                            'id' => 'latitud',
+                            'name' => 'data[Sociambiental][latitud]',
+                            'label' => false,
+                            'class' => 'border border-gray-300 rounded-lg w-full p-2 focus:outline-none  focus:ring-1 focus:ring-blue-500 focus:border-blue-500 borde azul  mt-2 font-semibold text-gray-700  text-sm focus:text-gray-900',
+                            'error' => false
+                        ]);
+
+                        if (!empty($this->Form->error('latitud'))) {
+                            echo '<div class="text-red-600 text-md mt-1 font-semibold">' . $this->Form->error('latitud') . '</div>';
+                        }
+                        ?>
+                        <p class="text-gray-400 text-xs mt-2">Coordenada de latitud en la ubicación geográfica . Ejemplo:
+                            3.451646
+                            Valor numérico con decimales, separador punto. Acepta valores negativos
+                        </p>
+
+                        <?php
+                        echo $this->Form->input('longitud', [
+                            'type' => 'text',
+                            'id' => 'longitud',
+                            'name' => 'data[Sociambiental][longitud]',
+                            'label' => false,
+                            'class' => 'border border-gray-300 rounded-lg w-full p-2 focus:outline-none  focus:ring-1 focus:ring-blue-500 focus:border-blue-500 borde azul  mt-2 font-semibold text-gray-700  text-sm focus:text-gray-900',
+                            'error' => false
+                        ]);
+
+                        if (!empty($this->Form->error('longitud'))) {
+                            echo '<div class="text-red-600 text-md mt-1 font-semibold">' . $this->Form->error('longitud') . '</div>';
+                        }
+                        ?>
+                        <p class="text-gray-400 text-xs mt-2">Coordenada de longitud en la ubicación geográfica . Ejemplo:
+                            -70.240149
+                            Valor numérico con decimales, separador punto. Acepta valores negativos
+                        </p>
                     </div>
+
+                    <button class="flex w-full md:w-1/2  items-center justify-center mt-6" type="button" id="getLocation">
+                        <i class="w-32 fa-solid fa-location-crosshairs text-white bg-teal-600 p-3 rounded-lg hover:bg-blue-700"></i>
+                    </button>
                 </div>
 
 
 
+            </div>
 
+            <!-- Barrio / Vereda -->
+            <div class="col-span-2 text-md font-semibold mt-4 mb-6 sm:mr-4">
+                <div class="flex items-center mb-4">
+                    <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">6</span>
+                    <label for="objactividad" class="font-semibold">Barrio / Vereda</label>
+                </div>
+                <?php
+                echo $this->Form->input('barriovereda', [
+                    'label' => false,
+                    'class' => 'border border-gray-300 rounded-lg w-full p-2 focus:outline-none  focus:ring-1 focus:ring-blue-500 focus:border-blue-500 borde azul  mt-2 font-semibold text-gray-700  text-sm focus:text-gray-900',
+                    'error' => false
+                ]);
 
-                <h2 class="subtitle-general-forms">Mascotas o
-                    animales de crianza en el hogar </h2>
+                if (!empty($this->Form->error('barriovereda'))) {
+                    echo '<div class="text-red-600 text-md mt-1 font-semibold">' . $this->Form->error('barriovereda') . '</div>';
+                }
+                ?>
+            </div>
 
+            <!-- direccion -->
+            <div class="col-span-2 text-md font-semibold mt-4 mb-6">
+                <div class="flex items-center mb-4">
+                    <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">7</span>
+                    <label for="direccion" class="font-semibold">Nomenclatura de la Dirección</label>
+                    <p class="text-red-600">*</p>
+                </div>
+                <?php
+                echo $this->Form->input('direccion', [
+                    'label' => false,
+                    'class' => 'border border-gray-300 rounded-lg w-full p-2 focus:outline-none  focus:ring-1 focus:ring-blue-500 focus:border-blue-500 borde azul  mt-2 font-semibold text-gray-700  text-sm focus:text-gray-900',
+                    'error' => false
+                ]);
 
+                if (!empty($this->Form->error('direccion'))) {
+                    echo '<div class="text-red-600 text-md mt-1 font-semibold">' . $this->Form->error('direccion') . '</div>';
+                }
+                ?>
+                <p class="text-gray-400 text-xs mt-2">Colocar la nomenclatura de un recibo de servicio publico del
+                    domicilio
+                </p>
+            </div>
 
-                <div class="col-sm-12" style="margin-top: 20px; ">
-                    <div id="status" class="switch-button">
-                        <input type="checkbox" name="switch-button" id="switch-label" class="switch-button__checkbox">
-                        <label for="switch-label" class="switch-button__label"></label>
-                    </div>
+            <!-- Apellidos de la familia -->
+            <div class="col-span-2 text-md font-semibold mt-4 mb-6 sm:mr-4">
+                <div class="flex items-center mb-4">
+                    <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">8</span>
+                    <label for="apellidosfamilia" class="font-semibold">Apellidos de la familia</label>
+                    <p class="text-red-600">*</p>
+                </div>
+                <?php
+                echo $this->Form->input('apellidosfamilia', [
+                    'label' => false,
+                    'class' => 'border border-gray-300 rounded-lg w-full p-2 focus:outline-none  focus:ring-1 focus:ring-blue-500 focus:border-blue-500 borde azul  mt-2 font-semibold text-gray-700  text-sm focus:text-gray-900',
+                    'error' => false
+                ]);
 
+                if (!empty($this->Form->error('apellidosfamilia'))) {
+                    echo '<div class="text-red-600 text-md mt-1 font-semibold">' . $this->Form->error('apellidosfamilia') . '</div>';
+                }
+                ?>
+            </div>
+
+            <!-- Tipo de Vivienda -->
+            <div class="col-span-2 md:col-span-1 text-md font-semibold my-6 mr-4">
+                <div class="flex items-center mb-4">
+                    <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">9</span>
+                    <label for="proactividad_id" class="font-semibold">Tipo de Vivienda</label>
+                    <p class="text-red-600">*</p>
 
                 </div>
-                <div class="grow justify-content-center" display="none" style="margin-top:20px">
-                    <div id="si" class="panel panel-default form-group col-md-12"
-                        style="font-size:15px; display: none;">
+                <?php
+                echo $this->Form->input('vivienda', [
+                    'type' => 'select',
+                    'id' => 'vivienda',
+                    'class' => 'border border-gray-300 rounded-lg w-full p-2 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 text-sm text-gray-500 focus:text-gray-800',
+                    'onchange' => 'mostrarBarrio(this.value);',
+                    'error' => false,
+                    'options' => $viviendaOptions,
+                    'label' => '',
+                    'empty' => 'Seleccione tipo de vivienda',
+                ]);
+                if (!empty($this->Form->error('vivienda'))) {
+                    echo '<div class="text-red-600 text-md mt-1 font-semibold">' . $this->Form->error('vivienda') . '</div>';
+                }
+                ?>
+            </div>
 
-                        <div class="form-group row">
+            <!-- Estrato -->
+            <div class="col-span-2 md:col-span-1 text-md font-semibold my-6 mr-4">
+                <div class="flex items-center mb-4">
+                    <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">10</span>
+                    <label for="proactividad_id" class="font-semibold">Estrato</label>
+                    <p class="text-red-600">*</p>
 
-                            <div class="col-md-6" style="margin-top: 30px;">
-                                <?php
-                                $numMascotaOption = [
-                                    'No aplica' => 'Elegir',
-                                    '0' => '0',
-                                    '1' => '1',
-                                    '2' => '2',
-                                    '3' => '3',
-                                    '4' => '4',
-                                    '5' => '5 y mas',
-
-                                ];
-                                echo $this->Form->input('numeroGatos', [
-                                    'label' => '¿Cuantos Gatos tiene?',
-                                    'class' => 'form-control',
-                                    'type' => 'select',
-                                    'options' => $numMascotaOption,
-                                    'style' => 'height:30px;  font-size: 15px ; width:100%',
-                                ]);
-                                ?>
-                            </div>
-                            <div class="col-md-6" style="margin-top: 30px;">
-                                <?php
-                                echo $this->Form->input('numeroPerros', [
-                                    'label' => '¿Cuantos Perros tiene?',
-                                    'class' => 'form-control',
-                                    'type' => 'select',
-                                    'options' => $numMascotaOption,
-                                    'style' => 'height:30px;  font-size: 15px ; width:100%',
-                                ]);
-                                ?>
-                            </div>
-                            <div class="col-md-6" style="margin-top: 30px;">
-                                <?php
-                                $cuidadoMascotaOptions = [
-                                    'No aplica' => 'Elegir',
-                                    'Si' => 'Si',
-                                    'No' => 'No',
-                                    'SD' => 'Sin dato'
-                                ];
-                                echo $this->Form->input('desparasitamascotas', [
-                                    'label' => '¿Se desparasita a perros o gatos?',
-                                    'class' => 'form-control',
-                                    'type' => 'select',
-                                    'options' => $cuidadoMascotaOptions,
-                                    'style' => 'height:30px;  font-size: 15px ; width:100%',
-                                    'id' => 'desparasitacion'
-                                ]);
-                                ?>
-                            </div>
-                            <div class="col-md-6" style="margin-top: 30px;">
-                                <?php
-                                echo $this->Form->input('vacunamascotas', [
-                                    'label' => '¿Se ha vacunado a perros o gatos en el ultimo año?',
-                                    'class' => 'form-control',
-                                    'type' => 'select',
-                                    'options' =>  $cuidadoMascotaOptions,
-                                    'style' => 'height:30px;  font-size: 15px ; width:100%',
-                                    'id' => 'vacunacion',
-                                ]);
-                                ?>
-                            </div>
-                            <div class="col-md-6" style="margin-top: 30px;">
-                                <?php
-                                $mascotaOption = [
-                                    'No aplica ' => 'Elegir',
-                                    'No' => 'No',
-                                    'Aves' => 'Aves',
-                                    'Cerdos' => 'Cerdos',
-                                    'Cuyes_conejos' => 'Cuyes/conejos',
-                                    'Otro' => 'Otro'
-                                ];
-                                echo $this->Form->input('mascotas', [
-                                    'label' => '¿Tienen animales de producción?',
-                                    'class' => 'form-control',
-                                    'type' => 'select',
-                                    'options' => $mascotaOption,
-                                    'style' => 'height:30px;  font-size: 15px ; width:100%',
-                                ]);
-                                ?>
-                            </div>
-                            <div class="col-md-6" style="margin-top: 30px;">
-                                <?php
-                                echo $this->Form->input('otramascota', [
-                                    'label' => 'Agregue animales de producción si requiere',
-                                    'class' => 'form-control',
-                                    'type' => 'select',
-                                    'options' => $mascotaOption,
-                                    'style' => 'height:30px;  font-size: 15px ; width:100%',
-                                ]);
-                                ?>
-                            </div>
-
-
-                            <div class="col-md-6" style="margin-top: 30px;">
-                                <?php
-                                echo $this->Form->input('cuidadomascotas', [
-                                    'label' => '¿Las excretas de los animales de compañía se recogen y disponen adecuadamente? ',
-                                    'class' => 'form-control',
-                                    'type' => 'select',
-                                    'options' => $cuidadoMascotaOptions,
-                                    'style' => 'height:30px;  font-size: 15px ; width:100% ;margin-bottom: 30px;',
-                                ]);
-                                ?>
-                            </div>
-                        </div>
-                    </div>
                 </div>
-            </fieldset>
+                <?php
+                echo $this->Form->input('estrato', [
+                    'type' => 'select',
+                    'id' => 'estrato',
+                    'class' => 'border border-gray-300 rounded-lg w-full p-2 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 text-sm text-gray-500 focus:text-gray-800',
+                    'error' => false,
+                    'options' => $estratoOptions,
+                    'label' => '',
+                    'empty' => 'Seleccione estrato',
+                ]);
+                if (!empty($this->Form->error('estrato'))) {
+                    echo '<div class="text-red-600 text-md mt-1 font-semibold">' . $this->Form->error('estrato') . '</div>';
+                }
+                ?>
+                <p class="text-gray-400 text-xs mt-2">Se sugiere revisar recibo de agua o luz de la residencia</p>
+            </div>
 
+            <div class="col-span-2 md:col-span-1 text-md font-semibold my-6 mr-4">
+                <div class="flex items-center mb-4">
+                    <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">11</span>
+                    <label for="numerohabitantes" class="font-semibold">¿Cuantas personas habitan en la vivienda?</label>
+                    <p class="text-red-600">*</p>
+                </div>
+                <?php
+                echo $this->Form->input('numerohabitantes', [
+                    'type' => 'select',
+                    'id' => 'numerohogares',
+                    'class' => 'border border-gray-300 rounded-lg w-full p-2 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 text-sm text-gray-500 focus:text-gray-800',
+                    'error' => false,
+                    'label' => '',
+                    'options' => $numhabitantesOptions
+                ]);
+                if (!empty($this->Form->error('numerohabitantes'))) {
+                    echo '<div class="text-red-600 text-md mt-1 font-semibold">' . $this->Form->error('numerohabitantes') . '</div>';
+                }
+                ?>
+            </div>
 
-            <button class="my-button" style="">
-                Guardar<?php echo $this->Form->end(); ?>
-            </button>
+            <div class="col-span-2 md:col-span-1 text-md font-semibold my-6 mr-4">
+                <div class="flex items-center mb-4">
+                    <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">12</span>
+                    <label for="numerohogares" class="font-semibold">N°. familias en la vivienda</label>
+                    <p class="text-red-600">*</p>
+                </div>
+                <?php
 
+                echo $this->Form->input('numerohogares', [
+                    'type' => 'select',
+                    'id' => 'numerohogares',
+                    'class' => 'border border-gray-300 rounded-lg w-full p-2 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 text-sm text-gray-500 focus:text-gray-800',
+                    'error' => false,
+                    'label' => '',
+                    'options' => $numhogaresOptions,
+                ]);
+                if (!empty($this->Form->error('numerohogares'))) {
+                    echo '<div class="text-red-600 text-md mt-1 font-semibold">' . $this->Form->error('numerohogares') . '</div>';
+                }
+                ?>
 
-
-
+                <p class="text-gray-400 text-xs mt-2">Si todos comen de la misma olla se considera una sola
+                    familia</p>
+            </div>
         </div>
     </div>
+</div>
 
-</body>
-<?php
-$this->Html->css([
-    'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css',
-    'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css'
-], ['block' => 'css']);
-$this->Html->script([
-    'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js',
-    'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js'
-], ['block' => 'script']);
-?>
+<div class="max-w-6xl mx-auto p-18">
+    <div class="bg-white shadow-2xl rounded-xl  p-6  md:p-12">
+        <!-- Header -->
+        <div class="flex items-center mb-4">
+            <i class="fa-brands fa-pied-piper-hat text-teal-600 text-3xl bg-teal-100 p-3 rounded-lg"></i>
+            <div class="ml-4">
+                <h1 class="text-xl font-semibold">Informacion de Habitabilidad</h1>
+                <p class="text-gray-500">Complementa la información de la vivienda.</p>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2">
+
+            <!-- predominante paredes -->
+            <div class="col-span-2 md:col-span-1 text-md font-semibold my-6 mr-4">
+                <div class="flex items-center mb-4">
+                    <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">1</span>
+                    <label for="proactividad_id" class="font-semibold">¿Cuál es el material predominante de las paredes?</label>
+                    <p class="text-red-600">*</p>
+
+                </div>
+                <?php
+                echo $this->Form->input('pared', [
+                    'type' => 'select',
+                    'id' => 'pared',
+                    'class' => 'border border-gray-300 rounded-lg w-full p-2 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 text-sm text-gray-500 focus:text-gray-800',
+                    'error' => false,
+                    'options' => $optionMaterialPared,
+                    'label' => '',
+                    'empty' => 'Seleccione material',
+                ]);
+                if (!empty($this->Form->error('pared'))) {
+                    echo '<div class="text-red-600 text-md mt-1 font-semibold">' . $this->Form->error('pared') . '</div>';
+                }
+                ?>
+            </div>
+
+            <!-- estado paredes -->
+            <div class="col-span-2 md:col-span-1 text-md font-semibold my-6 mr-4">
+                <div class="flex items-center mb-4">
+                    <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">2</span>
+                    <label for="proactividad_id" class="font-semibold">¿El estado de las paredes es?</label>
+                    <p class="text-red-600">*</p>
+
+                </div>
+                <?php
+                echo $this->Form->input('estadoparedes', [
+                    'type' => 'select',
+                    'id' => 'estadoparedes',
+                    'class' => 'border border-gray-300 rounded-lg w-full p-2 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 text-sm text-gray-500 focus:text-gray-800',
+                    'error' => false,
+                    'options' => $optionParedes,
+                    'label' => '',
+                    'empty' => 'Seleccione material',
+                ]);
+                if (!empty($this->Form->error('estadoparedes'))) {
+                    echo '<div class="text-red-600 text-md mt-1 font-semibold">' . $this->Form->error('estadoparedes') . '</div>';
+                }
+                ?>
+            </div>
+
+            <!-- estado piso -->
+            <div class="col-span-2 md:col-span-1 text-md font-semibold my-6 mr-4">
+                <div class="flex items-center mb-4">
+                    <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">3</span>
+                    <label for="proactividad_id" class="font-semibold">¿Cuál es el material predominante del piso de la vivienda?</label>
+                    <p class="text-red-600">*</p>
+
+                </div>
+                <?php
+                echo $this->Form->input('piso', [
+                    'type' => 'select',
+                    'id' => 'piso',
+                    'class' => 'border border-gray-300 rounded-lg w-full p-2 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 text-sm text-gray-500 focus:text-gray-800',
+                    'error' => false,
+                    'options' => $optionPiso,
+                    'label' => '',
+                    'empty' => 'Seleccione material',
+                ]);
+                if (!empty($this->Form->error('piso'))) {
+                    echo '<div class="text-red-600 text-md mt-1 font-semibold">' . $this->Form->error('piso') . '</div>';
+                }
+                ?>
+            </div>
+
+            <!-- estado techo -->
+            <div class="col-span-2 md:col-span-1 text-md font-semibold my-6 mr-4">
+                <div class="flex items-center mb-4">
+                    <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">4</span>
+                    <label for="proactividad_id" class="font-semibold">¿Cuál es el material predominante del techo de la vivienda?</label>
+                    <p class="text-red-600">*</p>
+
+                </div>
+                <?php
+                echo $this->Form->input('techo', [
+                    'type' => 'select',
+                    'id' => 'techo',
+                    'class' => 'border border-gray-300 rounded-lg w-full p-2 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 text-sm text-gray-500 focus:text-gray-800',
+                    'error' => false,
+                    'options' => $optionPiso,
+                    'label' => '',
+                    'empty' => 'Seleccione material',
+                ]);
+                if (!empty($this->Form->error('techo'))) {
+                    echo '<div class="text-red-600 text-md mt-1 font-semibold">' . $this->Form->error('techo') . '</div>';
+                }
+                ?>
+            </div>
+
+            <!-- estado techo -->
+            <div class="col-span-2 md:col-span-1 text-md font-semibold my-6 mr-4">
+                <div class="flex items-center mb-4">
+                    <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">5</span>
+                    <label for="estadotecho" class="font-semibold">¿Cuál es el estado en general del techo?</label>
+                    <p class="text-red-600">*</p>
+                </div>
+                <?php
+                echo $this->Form->input('estadotecho', [
+                    'type' => 'select',
+                    'id' => 'estadotecho',
+                    'class' => 'border border-gray-300 rounded-lg w-full p-2 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 text-sm text-gray-500 focus:text-gray-800',
+                    'error' => false,
+                    'options' => $optionEstadoTecho,
+                    'label' => '',
+                    'empty' => 'Seleccione el estado',
+                ]);
+                if (!empty($this->Form->error('estadotecho'))) {
+                    echo '<div class="text-red-600 text-md mt-1 font-semibold">' . $this->Form->error('estadotecho') . '</div>';
+                }
+                ?>
+            </div>
+
+            <!-- dormitorios -->
+            <div class="col-span-2 md:col-span-1 text-md font-semibold my-6 mr-4">
+                <div class="flex items-center mb-4">
+                    <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">6</span>
+                    <label for="dormitorios" class="font-semibold">¿Cuantos cuartos se utilizan para dormir?</label>
+                    <p class="text-red-600">*</p>
+                </div>
+                <?php
+                echo $this->Form->input('dormitorios', [
+                    'type' => 'select',
+                    'id' => 'numerohogares',
+                    'class' => 'border border-gray-300 rounded-lg w-full p-2 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 text-sm text-gray-500 focus:text-gray-800',
+                    'error' => false,
+                    'label' => '',
+                    'options' => $numhogaresOptions
+
+                ]);
+                if (!empty($this->Form->error('dormitorios'))) {
+                    echo '<div class="text-red-600 text-md mt-1 font-semibold">' . $this->Form->error('dormitorios') . '</div>';
+                }
+                ?>
+            </div>
+
+            <!-- hacinamiento -->
+            <div class="flex flex-col md:flex-row justify-center md:justify-between col-span-1 md:col-span-2 text-md font-semibold my-6 mr-4">
+                <div class="flex items-center mb-4">
+                    <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">7</span>
+                    <label for="cuerpoterritorio" class="font-semibold">¿En algunos de los dormitorios de la vivienda duermen tres o mas personas?</label>
+                    <p class="text-red-600">*</p>
+                </div>
+
+                <div class="flex space-x-4 items-center justify-center md:justify-start mt-4 pr-0 md:pr-[10%]  md:mt-0 ">
+                    <!-- Botón NO -->
+                    <div>
+                        <input type="radio"
+                            name="data[Sociambiental][hacinamiento]"
+                            id="cuerpoterritorio-no"
+                            value="0"
+                            class="hidden peer"
+                            data-target="cuerpoterritorio"
+                            data-show="false"
+                            checked /> <!-- 👈 Por defecto NO -->
+                        <label for="cuerpoterritorio-no"
+                            class="px-12 py-2 rounded-lg border cursor-pointer hover:text-white hover:bg-teal-600
+                       peer-checked:bg-teal-600 peer-checked:text-white">
+                            -
+                        </label>
+                    </div>
+
+                    <!-- Botón SÍ -->
+                    <div>
+                        <input type="radio"
+                            name="data[Sociambiental][hacinamiento]"
+                            id="cuerpoterritorio-si"
+                            value="1"
+                            data-target="cuerpoterritorio"
+                            data-show="true"
+                            class="hidden peer cursor-pointer" />
+                        <label for="cuerpoterritorio-si"
+                            class="px-12 py-2 rounded-lg border hover:bg-teal-600 cursor-pointer hover:text-white
+                       peer-checked:bg-teal-600 peer-checked:text-white">
+                            X
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="max-w-6xl mx-auto p-18">
+    <div class="bg-white shadow-2xl rounded-xl  p-6  md:p-12">
+        <!-- Header -->
+        <div class="flex items-center mb-4">
+            <i class="fa-solid fa-circle-exclamation text-teal-600 text-3xl bg-teal-100 p-3 rounded-lg"></i>
+            <div class="ml-4">
+                <h1 class="text-xl font-semibold">Servicios y Riesgos de la vivienda</h1>
+                <p class="text-gray-500">Complementa la información de los servicios y riesgos de la vivienda.</p>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2">
+
+            <!-- Riesgos externos -->
+            <div class="col-span-2 md:col-span-1 text-md font-semibold my-6 mr-4">
+                <div class="flex items-center mb-4">
+                    <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">1</span>
+                    <label for="riesgoexterno" class="font-semibold">Riesgos externos cerca a la vivienda</label>
+                    <p class="text-red-600">*</p>
+
+                </div>
+                <?php
+                echo $this->Form->input('riesgoexterno', [
+                    'type' => 'select',
+                    'id' => 'riesgoexterno',
+                    'class' => 'border border-gray-300 rounded-lg w-full p-2 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 text-sm text-gray-500 focus:text-gray-800',
+                    'error' => false,
+                    'label' => false,
+                    'multiple' => true,
+                    'empty' => false,
+                    'options' => $externalRiskOptions,
+                    'class' => 'w-full',
+                    'id' => 'riesgoexterno',
+                ]);
+                if (!empty($this->Form->error('riesgoexterno'))) {
+                    echo '<div class="text-red-600 text-md mt-1 font-semibold">' . $this->Form->error('riesgoexterno') . '</div>';
+                }
+                ?>
+            </div>
+
+            <!-- Actividad productiva -->
+            <div class="flex flex-col md:flex-row justify-center md:justify-between col-span-1 md:col-span-2 text-md font-semibold my-6 mr-4">
+                <div class="flex items-center mb-4">
+                    <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">2</span>
+                    <label for="actividad" class="font-semibold">¿Hay Actividad productiva en la vivienda?</label>
+                    <p class="text-red-600">*</p>
+                </div>
+
+                <div class="flex space-x-4 items-center justify-center md:justify-start mt-4 pr-0 md:pr-[10%]  md:mt-0 ">
+                    <!-- Botón NO -->
+                    <div>
+                        <input type="radio"
+                            name="data[Sociambiental][actividad]"
+                            id="actividad-no"
+                            value="0"
+                            class="hidden peer"
+                            data-target="actividad"
+                            data-show="false"
+                            checked /> <!-- 👈 Por defecto NO -->
+                        <label for="actividad-no"
+                            class="px-12 py-2 rounded-lg border cursor-pointer hover:text-white hover:bg-teal-600
+                       peer-checked:bg-teal-600 peer-checked:text-white">
+                            -
+                        </label>
+                    </div>
+
+                    <!-- Botón SÍ -->
+                    <div>
+                        <input type="radio"
+                            name="data[Sociambiental][actividad]"
+                            id="actividad-si"
+                            value="1"
+                            data-target="actividad"
+                            data-show="true"
+                            class="hidden peer cursor-pointer" />
+                        <label for="actividad-si"
+                            class="px-12 py-2 rounded-lg border hover:bg-teal-600 cursor-pointer hover:text-white
+                       peer-checked:bg-teal-600 peer-checked:text-white">
+                            X
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Acceso a sitios de interes -->
+            <div class="col-span-2 md:col-span-1 text-md font-semibold my-6 mr-4">
+                <div class="flex items-center mb-4">
+                    <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">3</span>
+                    <label for="riesgoexterno" class="font-semibold">Sitios de interés de fácil acceso desde vivienda</label>
+                    <p class="text-red-600">*</p>
+
+                </div>
+                <?php
+                echo $this->Form->input('acceso', [
+                    'type' => 'select',
+                    'id' => 'acceso',
+                    'class' => 'border border-gray-300 rounded-lg w-full p-2 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 text-sm text-gray-500 focus:text-gray-800',
+                    'error' => false,
+                    'options' => $accessOptions,
+                    'label' => '',
+                    'empty' => 'Seleccione acceso',
+                ]);
+                if (!empty($this->Form->error('acceso'))) {
+                    echo '<div class="text-red-600 text-md mt-1 font-semibold">' . $this->Form->error('acceso') . '</div>';
+                }
+                ?>
+            </div>
+
+            <!-- Riesgo de accidente en la vivienda -->
+            <div class="col-span-2 md:col-span-1 text-md font-semibold my-6 mr-4">
+                <div class="flex items-center mb-4">
+                    <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">4</span>
+                    <label for="riesgoexterno" class="font-semibold">Riesgo de accidente en la vivienda</label>
+                    <p class="text-red-600">*</p>
+
+                </div>
+                <?php
+                echo $this->Form->input('riesgo', [
+                    'type' => 'select',
+                    'id' => 'riesgo',
+                    'class' => 'border border-gray-300 rounded-lg w-full p-2 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 text-sm text-gray-500 focus:text-gray-800',
+                    'error' => false,
+                    'options' => $accidentRiskOptions,
+                    'label' => '',
+                    'empty' => 'Seleccione riesgo',
+                ]);
+                if (!empty($this->Form->error('riesgo'))) {
+                    echo '<div class="text-red-600 text-md mt-1 font-semibold">' . $this->Form->error('riesgo') . '</div>';
+                }
+                ?>
+            </div>
+
+            <!-- Fuente de abastecimiento de agua -->
+            <div class="col-span-2 md:col-span-1 text-md font-semibold my-6 mr-4">
+                <div class="flex items-center mb-4">
+                    <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">5</span>
+                    <label for="riesgoexterno" class="font-semibold">¿Cuál es la principal fuente de abastecimiento de agua para consumo?</label>
+                    <p class="text-red-600">*</p>
+
+                </div>
+                <?php
+                echo $this->Form->input('aguaservicio', [
+                    'type' => 'select',
+                    'id' => 'aguaservicio',
+                    'class' => 'border border-gray-300 rounded-lg w-full p-2 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 text-sm text-gray-500 focus:text-gray-800',
+                    'error' => false,
+                    'options' => $waterSupplyOptions,
+                    'label' => '',
+                    'empty' => 'Seleccione fuente de agua',
+                ]);
+                if (!empty($this->Form->error('aguaservicio'))) {
+                    echo '<div class="text-red-600 text-md mt-1 font-semibold">' . $this->Form->error('aguaservicio') . '</div>';
+                }
+                ?>
+            </div>
+
+            <!-- Disposición de excretas en la vivienda -->
+            <div class="col-span-2 md:col-span-1 text-md font-semibold my-6 mr-4">
+                <div class="flex items-center mb-4">
+                    <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">6</span>
+                    <label for="diposicionexcretas" class="font-semibold">Disposición de excretas en la vivienda</label>
+                    <p class="text-red-600">*</p>
+
+                </div>
+                <?php
+                echo $this->Form->input('diposicionexcretas', [
+                    'type' => 'select',
+                    'id' => 'diposicionexcretas',
+                    'class' => 'border border-gray-300 rounded-lg w-full p-2 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 text-sm text-gray-500 focus:text-gray-800',
+                    'error' => false,
+                    'options' => $excretaDisposalOptions,
+                    'label' => '',
+                    'empty' => 'Seleccione excretas',
+                ]);
+                if (!empty($this->Form->error('diposicionexcretas'))) {
+                    echo '<div class="text-red-600 text-md mt-1 font-semibold">' . $this->Form->error('diposicionexcretas') . '</div>';
+                }
+                ?>
+            </div>
+
+            <!-- Disposición final de basura -->
+            <div class="col-span-2 md:col-span-1 text-md font-semibold my-6 mr-4">
+                <div class="flex items-center mb-4">
+                    <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">7</span>
+                    <label for="basura" class="font-semibold">Disposición final de basura</label>
+                    <p class="text-red-600">*</p>
+
+                </div>
+                <?php
+                echo $this->Form->input('basura', [
+                    'type' => 'select',
+                    'id' => 'basura',
+                    'class' => 'border border-gray-300 rounded-lg w-full p-2 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 text-sm text-gray-500 focus:text-gray-800',
+                    'error' => false,
+                    'options' => $garbageDisposalOptions,
+                    'label' => '',
+                    'empty' => 'Seleccione disposición final de basura',
+                ]);
+                if (!empty($this->Form->error('basura'))) {
+                    echo '<div class="text-red-600 text-md mt-1 font-semibold">' . $this->Form->error('basura') . '</div>';
+                }
+                ?>
+            </div>
+
+            <!-- Proceso de separación de residuos -->
+            <div class="col-span-2 md:col-span-1 text-md font-semibold my-6 mr-4">
+                <div class="flex items-center mb-4">
+                    <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">8</span>
+                    <label for="reciclaje" class="font-semibold">¿Se realiza el proceso de separación de los residuos en la fuente?</label>
+                    <p class="text-red-600">*</p>
+
+                </div>
+                <?php
+                echo $this->Form->input('reciclaje', [
+                    'type' => 'select',
+                    'id' => 'reciclaje',
+                    'class' => 'border border-gray-300 rounded-lg w-full p-2 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 text-sm text-gray-500 focus:text-gray-800',
+                    'error' => false,
+                    'options' => $recyclingOptions,
+                    'label' => '',
+                    'empty' => 'Seleccione reciclaje',
+                ]);
+                if (!empty($this->Form->error('reciclaje'))) {
+                    echo '<div class="text-red-600 text-md mt-1 font-semibold">' . $this->Form->error('reciclaje') . '</div>';
+                }
+                ?>
+            </div>
+
+            <!-- Presencia de vectores en la vivienda -->
+            <div class="col-span-2 md:col-span-1 text-md font-semibold my-6 mr-4">
+                <div class="flex items-center mb-4">
+                    <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">9</span>
+                    <label for="vector" class="font-semibold">Presencia de vectores en la vivienda</label>
+                    <p class="text-red-600">*</p>
+
+                </div>
+                <?php
+                echo $this->Form->input('vector', [
+                    'type' => 'select',
+                    'id' => 'vector',
+                    'error' => false,
+                    'options' => $vectoresOption,
+                    'label' => false,
+                    'multiple' => true,
+                    'empty' => false,
+                    'class' => 'w-full',
+                ]);
+                if (!empty($this->Form->error('vector'))) {
+                    echo '<div class="text-red-600 text-md mt-1 font-semibold">' . $this->Form->error('vector') . '</div>';
+                }
+                ?>
+            </div>
+
+            <!--  -->
+            <div class="col-span-2 md:col-span-1 text-md font-semibold my-6 mr-4">
+                <div class="flex items-center mb-4">
+                    <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">10</span>
+                    <label for="aguaresiduales" class="font-semibold">Aguas residuales domésticas</label>
+                    <p class="text-red-600">*</p>
+
+                </div>
+                <?php
+                echo $this->Form->input('aguaresiduales', [
+                    'type' => 'select',
+                    'id' => 'aguaresiduales',
+                    'class' => 'border border-gray-300 rounded-lg w-full p-2 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 text-sm text-gray-500 focus:text-gray-800',
+                    'error' => false,
+                    'options' => $domesticWaterOptions,
+                    'label' => '',
+                    'empty' => 'Seleccione aguas residuales',
+                ]);
+                if (!empty($this->Form->error('aguaresiduales'))) {
+                    echo '<div class="text-red-600 text-md mt-1 font-semibold">' . $this->Form->error('aguaresiduales') . '</div>';
+                }
+                ?>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="max-w-6xl mx-auto p-18">
+    <div class="bg-white shadow-2xl rounded-xl  p-6  md:p-12">
+        <!-- Header -->
+        <div class="flex items-center mb-4">
+            <i class="fa-solid fa-dog text-teal-600 text-3xl bg-teal-100 p-3 rounded-lg"></i>
+            <div class="ml-4">
+                <h1 class="text-xl font-semibold">Mascotas o
+                    animales de crianza en el hogar</h1>
+                <p class="text-gray-500">Complementa la información sobre la tenencia de mascotas o animales de crianza en el hogar.</p>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2">
+
+            <!-- Mascotas -->
+            <div class="flex flex-col md:flex-row justify-center md:justify-between col-span-1 md:col-span-2 text-md font-semibold my-6 mr-4">
+                <div class="flex items-center mb-4">
+                    <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">1</span>
+                    <label for="mascotas" class="font-semibold">¿Hay animales en el hogar?</label>
+                    <p class="text-red-600">*</p>
+                </div>
+
+                <div class="flex space-x-4 items-center justify-center md:justify-start mt-4 pr-0 md:pr-[10%]  md:mt-0 ">
+                    <!-- Botón NO -->
+                    <div>
+                        <input type="radio"
+                            name="data[Sociambiental][cuidadomascotas]"
+                            id="mascotas-no"
+                            value="0"
+                            class="hidden peer"
+                            data-target="mascotas"
+                            data-show="false"
+                            checked /> <!-- 👈 Por defecto NO -->
+                        <label for="mascotas-no"
+                            class="px-12 py-2 rounded-lg border cursor-pointer hover:text-white hover:bg-teal-600
+                       peer-checked:bg-teal-600 peer-checked:text-white">
+                            -
+                        </label>
+                    </div>
+
+                    <!-- Botón SÍ -->
+                    <div>
+                        <input type="radio"
+                            name="data[Sociambiental][cuidadomascotas]"
+                            id="mascotas-si"
+                            value="1"
+                            data-target="mascotas"
+                            data-show="true"
+                            class="hidden peer cursor-pointer" />
+                        <label for="mascotas-si"
+                            class="px-12 py-2 rounded-lg border hover:bg-teal-600 cursor-pointer hover:text-white
+                       peer-checked:bg-teal-600 peer-checked:text-white">
+                            X
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div id="mascotas" class="grid grid-cols-2 gap-4 col-span-2 md:col-span-2 text-md font-semibold">
+
+                <div class="col-span-2 md:col-span-1 text-md font-semibold my-6 mr-4">
+                    <div class="flex items-center mb-4">
+                        <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">2</span>
+                        <label for="numeroAnimales" class="font-semibold">¿Cuales animales hay en el hogar?</label>
+                    </div>
+                    <?php
+                    echo $this->Form->input('numeroGatos', [
+                        'type' => 'select',
+                        'label' => false,
+                        'multiple' => true,
+                        'empty' => false,
+                        'options' => $animalesOptions,
+                        'class' => 'w-full',
+                        'id' => 'numeroGatos',
+                        'error' => false,
+                        'label' => false,
+
+                    ]);
+                    if (!empty($this->Form->error('numeroGatos'))) {
+                        echo '<div class="text-red-600 text-md mt-1 font-semibold">' . $this->Form->error('numeroGatos') . '</div>';
+                    }
+                    ?>
+                </div>
+
+                <div class="col-span-2 md:col-span-1 text-md font-semibold my-6 mr-4">
+                    <div class="flex items-center mb-4">
+                        <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">3</span>
+                        <label for="numeroAnimales" class="font-semibold">¿Cuantos animales hay en el hogar?</label>
+                    </div>
+                    <?php
+                    $value = $this->Form->value('numeroPerros');
+                    if ($value === 'acion') {
+                        $value = 0;
+                    }
+                    echo $this->Form->input('numeroPerros', [
+                        'type' => 'number',
+                        'label' => false,
+                        'empty' => false,
+                        'value' => ($value !== null && $value !== '') ? $value : 0,
+                        'class' => 'border border-gray-300 rounded-lg w-full p-2 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 text-sm text-gray-500 focus:text-gray-800',
+                        'error' => false,
+                        'default' => 0,
+                    ]);
+                    if (!empty($this->Form->error('numeroPerros'))) {
+                        echo '<div class="text-red-600 text-md mt-1 font-semibold">' . $this->Form->error('numeroPerros') . '</div>';
+                    }
+                    ?>
+                </div>
+
+                <!-- de mascotas -->
+                <div class="flex flex-col md:flex-row justify-center md:justify-between col-span-1 md:col-span-2 text-md font-semibold my-6 mr-4">
+                    <div class="flex items-center mb-4">
+                        <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">4</span>
+                        <label for="desparasitamascotas" class="font-semibold">¿Se desparasita a perros o gatos?</label>
+                    </div>
+
+                    <div class="flex space-x-4 items-center justify-center md:justify-start mt-4 pr-0 md:pr-[10%]  md:mt-0 ">
+                        <!-- Botón NO -->
+                        <div>
+                            <input type="radio"
+                                name="data[Sociambiental][desparasitamascotas]"
+                                id="desparasitamascotas-no"
+                                value="0"
+                                class="hidden peer"
+                                data-target="desparasitamascotas"
+                                data-show="false"
+                                checked /> <!-- 👈 Por defecto NO -->
+                            <label for="desparasitamascotas-no"
+                                class="px-12 py-2 rounded-lg border cursor-pointer hover:text-white hover:bg-teal-600
+                       peer-checked:bg-teal-600 peer-checked:text-white">
+                                -
+                            </label>
+                        </div>
+
+                        <!-- Botón SÍ -->
+                        <div>
+                            <input type="radio"
+                                name="data[Sociambiental][desparasitamascotas]"
+                                id="desparasitamascotas-si"
+                                value="1"
+                                data-target="desparasitamascotas"
+                                data-show="true"
+                                class="hidden peer cursor-pointer" />
+                            <label for="desparasitamascotas-si"
+                                class="px-12 py-2 rounded-lg border hover:bg-teal-600 cursor-pointer hover:text-white
+                       peer-checked:bg-teal-600 peer-checked:text-white">
+                                X
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- vacunacion -->
+                <div class="flex flex-col md:flex-row justify-center md:justify-between col-span-1 md:col-span-2 text-md font-semibold my-6 mr-4">
+                    <div class="flex items-center mb-4">
+                        <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">5</span>
+                        <label for="vacunacionmascotas" class="font-semibold">¿Se ha vacunado a perros o gatos en el ultimo año?</label>
+                    </div>
+
+                    <div class="flex space-x-4 items-center justify-center md:justify-start mt-4 pr-0 md:pr-[10%]  md:mt-0 ">
+                        <!-- Botón NO -->
+                        <div>
+                            <input type="radio"
+                                name="data[Sociambiental][vacunamascotas]"
+                                id="vacunacionmascotas-no"
+                                value="0"
+                                class="hidden peer"
+                                data-target="vacunacionmascotas"
+                                data-show="false"
+                                checked /> <!-- 👈 Por defecto NO -->
+                            <label for="vacunacionmascotas-no"
+                                class="px-12 py-2 rounded-lg border cursor-pointer hover:text-white hover:bg-teal-600
+                       peer-checked:bg-teal-600 peer-checked:text-white">
+                                -
+                            </label>
+                        </div>
+
+                        <!-- Botón SÍ -->
+                        <div>
+                            <input type="radio"
+                                name="data[Sociambiental][vacunamascotas]"
+                                id="vacunacionmascotas-si"
+                                value="1"
+                                data-target="vacunacionmascotas"
+                                data-show="true"
+                                class="hidden peer cursor-pointer" />
+                            <label for="vacunacionmascotas-si"
+                                class="px-12 py-2 rounded-lg border hover:bg-teal-600 cursor-pointer hover:text-white
+                       peer-checked:bg-teal-600 peer-checked:text-white">
+                                X
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- cuidado excretas -->
+                <div class="flex flex-col md:flex-row justify-center md:justify-between col-span-1 md:col-span-2 text-md font-semibold my-6 mr-4">
+                    <div class="flex items-center mb-4">
+                        <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">6</span>
+                        <label for="vacunacionmascotas" class="font-semibold">¿Las excretas de los animales de compañía se recogen y disponen adecuadamente</label>
+                    </div>
+
+                    <div class="flex space-x-4 items-center justify-center md:justify-start mt-4 pr-0 md:pr-[10%]  md:mt-0 ">
+                        <!-- Botón NO -->
+                        <div>
+                            <input type="radio"
+                                name="data[Sociambiental][otramascota]"
+                                id="cuidadoexcretas-no"
+                                value="0"
+                                class="hidden peer"
+                                data-target="cuidadoexcretas"
+                                data-show="false"
+                                checked /> <!-- 👈 Por defecto NO -->
+                            <label for="cuidadoexcretas-no"
+                                class="px-12 py-2 rounded-lg border cursor-pointer hover:text-white hover:bg-teal-600
+                       peer-checked:bg-teal-600 peer-checked:text-white">
+                                -
+                            </label>
+                        </div>
+
+                        <!-- Botón SÍ -->
+                        <div>
+                            <input type="radio"
+                                name="data[Sociambiental][otramascota]"
+                                id="cuidadoexcretas-si"
+                                value="1"
+                                data-target="cuidadoexcretas"
+                                data-show="true"
+                                class="hidden peer cursor-pointer" />
+                            <label for="cuidadoexcretas-si"
+                                class="px-12 py-2 rounded-lg border hover:bg-teal-600 cursor-pointer hover:text-white
+                       peer-checked:bg-teal-600 peer-checked:text-white">
+                                X
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="max-w-6xl mx-auto p-18">
+    <div class="bg-white shadow-2xl rounded-xl  p-6  md:p-12">
+        <!-- Header -->
+        <div class="flex items-center mb-4">
+            <i class="fa-solid fa-upload text-teal-600 text-3xl bg-teal-100 p-3 rounded-lg"></i>
+            <div class="ml-4">
+                <h1 class="text-xl font-semibold">Confirmar cambios</h1>
+                <p class="text-gray-500">Por favor, revisa los cambios realizados antes de confirmar.</p>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3">
+
+            <!-- Botón -->
+            <div class="w-full p-2">
+                <button name="btn" value="Guardar cambios" type="submit" class="w-full bg-teal-600 text-white px-6 py-2 rounded-md hover:bg-green-700 transition font-medium flex items-center justify-center gap-2">
+                    <span>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-save-icon lucide-save">
+                            <path d="M15.2 3a2 2 0 0 1 1.4.6l3.8 3.8a2 2 0 0 1 .6 1.4V19a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z" />
+                            <path d="M17 21v-7a1 1 0 0 0-1-1H8a1 1 0 0 0-1 1v7" />
+                            <path d="M7 3v4a1 1 0 0 0 1 1h7" />
+                        </svg>
+                    </span>
+                    Guardar cambios
+                </button>
+            </div>
+
+
+
+            <!-- Botón -->
+            <div class="w-full  p-2">
+                <button name="btn" value="Salir" type="submit" class="w-full bg-teal-600 text-white px-6 py-2 rounded-md hover:bg-green-700 transition font-medium flex items-center justify-center gap-2">
+                    <span>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-save-icon lucide-save">
+                            <path d="M21 17v2a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-2" />
+                            <path d="M21 7V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v2" />
+                            <circle cx="12" cy="12" r="1" />
+                            <path d="M18.944 12.33a1 1 0 0 0 0-.66 7.5 7.5 0 0 0-13.888 0 1 1 0 0 0 0 .66 7.5 7.5 0 0 0 13.888 0" />
+                        </svg>
+
+                    </span>
+                    ver familias
+                </button>
+            </div>
+
+
+
+            <!-- Botón -->
+            <div class="w-full p-2">
+                <button type="button" class="w-full bg-red-600 text-white px-6 py-2 rounded-md hover:bg-red-700 transition font-medium flex items-center justify-center gap-2" onclick="preventBackNavigation()">
+                    <span>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-save-icon lucide-save">
+                            <circle cx="12" cy="12" r="10" />
+                            <path d="m15 9-6 6" />
+                            <path d="m9 9 6 6" />
+                        </svg>
+
+                    </span>
+                    Cancelar
+                </button>
+            </div>
+
+            <?php echo $this->Form->end(); ?>
+        </div>
+    </div>
+</div>
+
+
+
 <script type="text/javascript">
-$(document).ready(function() {
-    $('.select-search').select2();
-    agregarOpcionSeleccion();
-});
+    // Mostrar el modal al cargar la página
+    // ...existing code...
+    $(function() {
+        var fechaActual = $('#fecha').val() || moment().format('YYYY-MM-DD');
+        $('#fecha').daterangepicker({
+            singleDatePicker: true,
+            showDropdowns: true,
+            autoApply: true,
+            startDate: fechaActual,
+            locale: {
+                format: 'YYYY-MM-DD',
+                applyLabel: "Aplicar",
+                cancelLabel: "Cancelar",
+                daysOfWeek: ["Do", "Lu", "Ma", "Mi", "Ju", "Vi", "Sa"],
+                monthNames: [
+                    "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
+                    "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
+                ],
+                firstDay: 1
+            }
+        }, function(start) {
+            $('#fecha').val(start.format('YYYY-MM-DD'));
+        });
+    });
+
+    document.addEventListener("DOMContentLoaded", () => {
+        // Busca todos los radios con data-target
+        document.querySelectorAll('input[type="radio"][data-target]').forEach(function(radio) {
+            radio.addEventListener('change', function() {
+                var targetId = radio.getAttribute('data-target');
+                var show = radio.getAttribute('data-show') === 'true';
+                var target = document.getElementById(targetId);
+                if (target) {
+                    target.style.display = show ? 'block' : 'none';
+                }
+            });
+            // Mostrar/ocultar al cargar la página según el radio seleccionado
+            if (radio.checked) {
+                var targetId = radio.getAttribute('data-target');
+                var show = radio.getAttribute('data-show') === 'true';
+                var target = document.getElementById(targetId);
+                if (target) {
+                    target.style.display = show ? 'block' : 'none';
+                }
+            }
+        });
+        const btn = document.getElementById('getLocation');
+        const lat = document.getElementById('latitud');
+        const lon = document.getElementById('longitud');
+
+        btn.addEventListener('click', () => {
+            btn.disabled = true;
+            btn.textContent = "📡 Obteniendo ubicación...";
+
+            if (!navigator.geolocation) {
+                alert("❌ La geolocalización no es soportada en este navegador.");
+                btn.disabled = false;
+                btn.textContent = "Obtener ubicación actual manualmente";
+                return;
+            }
+
+            navigator.geolocation.getCurrentPosition(
+                (pos) => {
+                    const {
+                        latitude,
+                        longitude
+                    } = pos.coords;
+                    // Asignar valores directamente a los campos del formulario
+                    lat.value = latitude.toFixed(6);
+                    lon.value = longitude.toFixed(6);
+
+                    btn.textContent = "Ubicación capturada";
+                    btn.classList.add("bg-teal-500", "text-white", "rounded-lg", "px-3", "md:mx-8", "md:mb-8");
+                },
+                (err) => {
+                    alert("⚠️ Error al obtener ubicación: " + err.message);
+                    btn.disabled = false;
+                    btn.textContent = "Obtener ubicación actual";
+                }, {
+                    enableHighAccuracy: true,
+                    timeout: 10000,
+                    maximumAge: 0
+                }
+            );
+        });
+
+        const choices = new Choices("#producto_id", {
+            searchEnabled: true,
+            searchChoices: true,
+            removeItemButton: false,
+            itemSelectText: '',
+            shouldSort: false,
+            searchPlaceholderValue: "Escriba para filtrar...",
+            fuseOptions: {
+                includeScore: true,
+                threshold: 0.3,
+                keys: ['label', 'value']
+            },
+            renderChoiceLimit: -1, // Sin límite de renderizado
+            searchResultLimit: 20, // Puedes aumentar este valor si tienes muchos resultados
+        });
+
+        const choices_animales = new Choices("#numeroGatos", {
+            searchEnabled: true,
+            searchChoices: true,
+            removeItemButton: true, // Permite eliminar seleccionados
+            itemSelectText: '',
+            shouldSort: false,
+            searchPlaceholderValue: "Escriba para filtrar...",
+            maxItemCount: -1, // Sin límite
+            removeItems: true, // Permite quitar seleccionados
+            duplicateItemsAllowed: false,
+            placeholder: true,
+            placeholderValue: "Seleccione animales..."
+        });
+
+        const choices_vector = new Choices("#vector", {
+            searchEnabled: true,
+            searchChoices: true,
+            removeItemButton: true, // Permite eliminar seleccionados
+            itemSelectText: '',
+            shouldSort: false,
+            searchPlaceholderValue: "Escriba para filtrar...",
+            maxItemCount: -1, // Sin límite
+            removeItems: true, // Permite quitar seleccionados
+            duplicateItemsAllowed: false,
+            placeholder: true,
+            placeholderValue: "Seleccione un vector..."
+        });
+
+        const choices_riesgo = new Choices("#riesgoexterno", {
+            searchEnabled: true,
+            searchChoices: true,
+            removeItemButton: true, // Permite eliminar seleccionados
+            itemSelectText: '',
+            shouldSort: false,
+            searchPlaceholderValue: "Escriba para filtrar...",
+            maxItemCount: -1, // Sin límite
+            removeItems: true, // Permite quitar seleccionados
+            duplicateItemsAllowed: false,
+            placeholder: true,
+            placeholderValue: "Seleccione un vector..."
+        });
+        // Aplicar estilos con Tailwind
+        const inner = document.querySelector('.choices__inner');
+        if (inner) {
+            inner.classList.add(
+                'bg-white', 'border', 'border-gray-300', 'rounded-lg',
+                'px-3', 'py-2', 'focus:ring', 'focus:ring-blue-200', 'text-gray-700'
+            );
+        }
+
+        const dropdown = document.querySelector('.choices__list--dropdown');
+        if (dropdown) {
+            dropdown.classList.add('bg-white', 'shadow-lg', 'rounded-lg', 'border', 'border-gray-200');
+        }
+    });
 
 
-
-
-function agregarOpcionSeleccion() {
-    //  $("#SociambientalUbicacionId").prepend("<option value='' selected='selected'>Seleccione</option>");
-
-}
-
-$("#switch-label").change(function() {
-    var switchValue = this.checked ? "si" : "no";
-    mostrar(switchValue);
-});
-
-$("#switch-label-initial").change(function() {
-    var switchValue = this.checked ? "yes" : "nope";
-    mostrar(switchValue);
-});
-
-
-function mostrar(id) {
-    if (id == "si") {
-        $("#si").show();
-        $("#no").hide();
-
-    } else if (id == "no") {
-        $("#si").hide();
-        $("#no").show();
-
+    function preventBackNavigation() {
+        if (confirm('¿Está seguro que desea salir de la página? Se pueden perder los cambios no guardados.')) {
+            window.location.href = '<?php echo $this->Html->url(['controller' => 'Familias', 'action' => 'view', '31898']); ?>';
+        }
     }
 
-    if (id == "yes") {
-        $("#yes").show();
-        $("#nope").hide();
-        $("#validacion").val("si acepto");
+    history.pushState(null, null, location.href);
 
-    } else if (id == "nope") {
-        $("#yes").hide();
-        $("#nope").show();
-        $("#validacion").val(" ");
-
-    }
-}
-
-
-$(document).ready(function() {
-    $("#mostrarmodal").modal("show");
-});
+    window.addEventListener('popstate', function(event) {
+        if (confirm('¿Está seguro que desea salir de la página? Se pueden perder los cambios no guardados.')) {
+            // Permite retroceder
+            history.back();
+        } else {
+            // Vuelve a agregar el estado para bloquear el retroceso
+            history.pushState(null, null, location.href);
+        }
+    });
 </script>
