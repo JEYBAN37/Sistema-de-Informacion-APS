@@ -85,17 +85,24 @@ class VisitasnegadasController extends AppController
 	public function add()
 	{
 		if ($this->request->is('post')) {
-			$this->Visitasnegada->create();
 			if ($this->Visitasnegada->save($this->request->data)) {
-				$this->Session->setFlash('Registro de Vivienda sin visista fue guardado exitosamente', 'default', array('class' => 'alert alert-success'));
-				return $this->redirect(array('action' => 'index'));
+				if ($this->request->data['btn'] == 'Guardar y continuar') {
+					//$session->setFlash("registro guardado");
+					$this->Session->setFlash('Registro se creó con éxito, continuar con información de la Novedad / hogar', 'flash_custom', array('class' => 'success', 'title' => 'El registro se ha completado correctamente'));					//return $this->redirect(array('action' => 'index'));
+					return $this->redirect(array('controller' => 'Visitasnegadas', 'action' => 'index'));
+				} else {
+					$this->Session->setFlash('Registro se guardado con exito, continuar con informacion de la Novedad / hogar', 'flash_custom', array('class' => 'info', 'title' => 'Copia el ID de la vivienda: ' . $this->Sociambiental->id));
+					//return $this->redirect(array('controller' => 'plsesiones', 'action' => 'nuebus'));                error
+					return $this->redirect(array('controller' => 'Visitasnegadas', 'action' => 'index'));
+				}
 			} else {
-				$this->Session->setFlash('No se ha guardado, por favor revisar campos', 'default', array('class' => 'alert alert-danger'));
+				$this->Session->setFlash('El registro no fue actualizado o esta pendiente un campo del formulario', 'flash_custom', array('class' => 'error', 'title' => 'Error al guardar el registro'));
 			}
 		}
-		$ubicaciones = $this->Visitasnegada->Ubicacion->find('list');
-		$responsables = $this->Visitasnegada->Responsable->find('list');
-		$this->set(compact('ubicaciones', 'responsables'));
+		
+		$ubicaciones = $this->Visitasnegada->Ubicacion->getUbicacionesConFiltro('list');
+		
+		$this->set(compact('ubicaciones'));
 	}
 
 	/**

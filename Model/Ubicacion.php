@@ -32,7 +32,6 @@ class Ubicacion extends AppModel
 	public function getUbicacionesConFiltro()
 	{
 		return $this->find('list', array(
-			'conditions' => array('Ubicacion.microterritorio NOT IN' => array('Caicedonia', 'Panóramico I', 'Villa Nueva', 'Prados del Norte', 'Las Tablas', 'Quito López III', 'El Tejar', 'Corazón de Jesús')),
 			'fields' => array('id', 'microterritorio'),
 			'order' => ['microterritorio']
 		));

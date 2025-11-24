@@ -243,12 +243,12 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
                             <div class="submenu ml-8 mt-1 space-y-1">
                                 <button
                                     class="subitem block w-full text-left text-[13px] text-gray-500 hover:text-teal-600 hover:bg-gray-100 rounded p-1 cursor-pointer"
-                                    data-href="<?php echo $this->Html->url(['controller' => 'actas', 'action' => 'index']); ?>">
+                                    data-href="<?php echo $this->Html->url(['controller' => 'Visitasnegadas', 'action' => 'index']); ?>">
                                     Registros de Novedades
                                 </button>
                                 <button
                                     class="subitem block w-full text-left text-[13px] text-gray-500 hover:text-teal-600 hover:bg-gray-100 rounded p-1 cursor-pointer"
-                                    data-href="<?php echo $this->Html->url(['controller' => 'actas', 'action' => 'add']); ?>">
+                                    data-href="<?php echo $this->Html->url(['controller' => 'Visitasnegadas', 'action' => 'add']); ?>">
                                     Agregar Novedad
                                 </button>
 
