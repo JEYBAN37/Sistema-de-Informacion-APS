@@ -272,29 +272,29 @@ $animalesOptions = [
                     </div>
                 </div>
 
-<script>
-    // Sobrescribe/actualiza la función buscarCedula para mostrar JSON ordenado (pretty)
-    function buscarCedula() {
-        var ced = document.getElementById('cedula').value;
-        if (ced.length < 5) return;
+                <script>
+                    // Sobrescribe/actualiza la función buscarCedula para mostrar JSON ordenado (pretty)
+                    function buscarCedula() {
+                        var ced = document.getElementById('cedula').value;
+                        if (ced.length < 5) return;
 
-        fetch('./buscarCedula/' + ced)
-            .then(response => response.json())
-            .then(data => {
-                try {
-                    // formatear JSON con indentación de 2 espacios
-                    const pretty = JSON.stringify(data, null, 2);
-                    document.getElementById('resultado').textContent = pretty;
-                } catch (e) {
-                    // en caso de error, mostrar fallback
-                    document.getElementById('resultado').textContent = typeof data === 'string' ? data : JSON.stringify(data);
-                }
-            })
-            .catch(err => {
-                document.getElementById('resultado').textContent = 'Error: ' + err.message;
-            });
-    }
-</script>
+                        fetch('./buscarCedula/' + ced)
+                            .then(response => response.json())
+                            .then(data => {
+                                try {
+                                    // formatear JSON con indentación de 2 espacios
+                                    const pretty = JSON.stringify(data, null, 2);
+                                    document.getElementById('resultado').textContent = pretty;
+                                } catch (e) {
+                                    // en caso de error, mostrar fallback
+                                    document.getElementById('resultado').textContent = typeof data === 'string' ? data : JSON.stringify(data);
+                                }
+                            })
+                            .catch(err => {
+                                document.getElementById('resultado').textContent = 'Error: ' + err.message;
+                            });
+                    }
+                </script>
             </div>
         </div>
     </div>
