@@ -1,4 +1,19 @@
-<?php $this->layout = 'default_familia'; ?>
+<?php $this->layout = 'default_familia';
+
+$hasPlan = false;
+$hasObservation = false;
+if (!empty($familia['Observacion']) && is_array($familia['Observacion'])) {
+    $hasObservation = true;
+    foreach ($familia['Observacion'] as $obs) {
+        if (!empty($obs['dirplancuidado'])) {
+            $hasPlan = true;
+            break;
+        }
+    }
+}
+
+$planUrl = $this->Html->url(['controller' => 'Familias', 'action' => 'plancuidado', $familia['Familia']['id']]);
+?>
 <link
     rel="stylesheet"
     href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
@@ -41,16 +56,27 @@
             <i class="fa-solid fa-person text-2xl px-2"></i>
         </button>
 
-        <button title="Agregar Observaciones" type="button" onclick="window.location.href='<?php echo $this->Html->url(['controller' => 'Observacions', 'action' => 'add?observacions=' . $familia['Familia']['id']]); ?>'"
-            class="flex items-center w-38 space-x-2 bg-teal-600 text-white px-4 py-2 rounded hover:bg-teal-700">
-            <i class="fa-solid fa-book-medical text-xl px-2"></i>
-        </button>
+        <?php
+        if (!$familia['Observacion'][0]['id']) :
+        ?>
+            <button title="Agregar Observaciones" type="button"
+                onclick="'<?php echo $this->Html->url(['controller' => 'Observacions', 'action' => 'add?observacions=' . $familia['Familia']['id']]); ?>'"
+                class=" flex items-center w-38 space-x-2 bg-teal-600 text-white px-4 py-2 rounded hover:bg-teal-700">
+                <i class="fa-solid fa-book-medical text-xl px-2"></i>
+            </button>
+        <?php
+        endif;
+        ?>
 
-        <button title="Agregar Plan de Cuidado" type="button" onclick="window.location.href='<?php echo $this->Html->url(['controller' => 'Observacions', 'action' => 'add?observacions=' . $familia['Familia']['id']]); ?>'"
-            class="flex items-center w-38 space-x-2 bg-teal-600 text-white px-4 py-2 rounded hover:bg-teal-700">
+
+        <button title="Generar Plan de Cuidado" type="button"
+            id="btn-plancuidado"
+            data-has-plan="<?php echo $hasPlan ? '1' : '0'; ?>"
+            data-url="<?php echo h($planUrl); ?>"
+            class="flex items-center w-38 space-x-2 bg-teal-600 text-white px-4 py-2 rounded hover:bg-teal-700"
+            onclick="if (this.dataset.hasPlan === '1') { window.location.href = this.dataset.url; } else { alert('No hay plan de cuidado asociado a esta familia. Por favor, agregue una observación con plan de cuidado primero.'); }">
             <i class="fa-solid fa-hands-holding-child text-xl px-2"></i>
         </button>
-
     </div>
 
     <!-- Document Container -->
@@ -149,8 +175,9 @@
                         <td class="border border-gray-300 text-center p-2 text-gray-800">
                             <?php echo h(!empty($familia['Sociambiental']['direccion']) ? $familia['Sociambiental']['direccion'] : '') ?>
                         </td>
+
                     </tr>
-                                        <tr>
+                    <tr>
                         <td class="border border-gray-300 font-semibold text-center p-2 text-teal-600">
                             Numero de Celular
                         </td>
@@ -276,23 +303,19 @@
                                                 ); ?>
                                             </li>
                                         </ul>
-        </div>
-
-        </td>
-        </tr>
-<?php }
+                                    </td>
+                                </tr>
+                        <?php }
                         endforeach; ?>
-</tbody>
-</thead>
-</table>
-<?php else: ?>
-    <div class="text-center text-gray-500 py-8">
-        <span class="font-semibold text-lg">No hay Integrantes agregados</span>
-    </div>
-<?php endif; ?>
-
-
-    </div>
+                    </tbody>
+                    </thead>
+                </table>
+            <?php else: ?>
+                <div class="text-center text-gray-500 py-8">
+                    <span class="font-semibold text-lg">No hay Integrantes agregados</span>
+                </div>
+            <?php endif; ?>
+        </div>
     </div>
 
     <div class="max-w-6xl mx-auto bg-white overflow-hidden mt-4 sm:mt-4 p-4 shadow-2xl rounded-xl">
@@ -334,6 +357,8 @@
                                                     </svg>
                                                 </button>
                                                 <div class="hidden absolute left-0 mt-2 w-32 bg-white border border-gray-200 rounded shadow-lg z-50 menu-options">
+                                                    <a href="<?php echo $this->Html->url(['controller' => 'Observacions', 'action' => 'add_plancuidado/' . $familia['Familia']['id']]); ?>" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 text-sm">Agregar Plan de Cuidado</a>
+                                                    <a href="<?php echo $this->Html->url(['controller' => 'Observacions', 'action' => 'view', $observacion['id']]); ?>" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 text-sm">Ver</a>
                                                     <a href="<?php echo $this->Html->url(['controller' => 'Observacions', 'action' => 'edit', $observacion['id']]); ?>"
                                                         class="block px-4 py-2 text-gray-700 hover:bg-gray-100 text-sm">Editar</a>
                                                     <form method="post" action="<?php echo $this->Html->url(['controller' => 'Observacions', 'action' => 'delete', $observacion['id'], $observacion['id']]); ?>" onsubmit="return confirm('<?php echo __('¿Está seguro/a de eliminar el registro con ID# %s?', $observacion['id']); ?>');">
@@ -372,16 +397,32 @@
 
                                     <tr>
                                         <td colspan="1" class=" border border-gray-300 font-semibold p-2 text-center text-sm text-gray-700">Familiograma</td>
-                                        <td colspan="2" class="border border-gray-300 p-2 font-bold text-sm"><?php echo $observacion['resultadoFamiliograma']; ?></td>
+                                        <td colspan="2" class="border border-gray-300 p-2 font-bold text-sm"><?php if (!empty($observacion['dirfamiliograma'])) {
+                                                                                                                    echo $this->Html->link(
+                                                                                                                        h($observacion['resultadoFamiliograma']),
+                                                                                                                        '../files/observacion/familiograma/' . $observacion['dirfamiliograma'] . '/' . $observacion['familiograma'],
+                                                                                                                        ['target' => '_blank', 'class' => 'underline text-blue-700 hover:text-blue-900']
+                                                                                                                    );
+                                                                                                                } else {
+                                                                                                                    echo '<span class="text-gray-400 italic">Sin familiograma</span>';
+                                                                                                                } ?></td>
                                         <td colspan="1" class=" border border-gray-300 font-semibold p-2 text-center text-sm text-gray-700">Resultado Ecomapa</td>
                                         <td colspan="3" class="border border-gray-300 p-2 text-sm text-gray-700"><?php echo $observacion['resultadoEcomapa']; ?></td>
                                     </tr>
 
                                     <tr>
-                                        <td colspan="1" class=" border border-gray-300 font-semibold p-2 text-center text-sm text-gray-700">Ver Familiograma</td>
-                                        <td colspan="2" class="border border-gray-300 p-2 font-bold text-sm"><?php echo $observacion['dirfamiliograma']; ?></td>
                                         <td colspan="1" class=" border border-gray-300 font-semibold p-2 text-center text-sm text-gray-700">Plan de Cuidado</td>
-                                        <td colspan="3" class="border border-gray-300 p-2 text-sm text-gray-700"><?php echo $observacion['dirplancuidado']; ?></td>
+                                        <td colspan="6" class="border border-gray-300 p-2 text-sm text-gray-700"><?php
+                                                                                                                    if (!empty($observacion['dirplancuidado'])) {
+                                                                                                                        echo $this->Html->link(
+                                                                                                                            h($observacion['resultadoPlanCuidado']),
+                                                                                                                            '../files/observacion/plancuidado/' . $observacion['dirplancuidado'] . '/' . $observacion['plancuidado'],
+                                                                                                                            ['target' => '_blank', 'class' => 'underline text-blue-700 hover:text-blue-900']
+                                                                                                                        );
+                                                                                                                    } else {
+                                                                                                                        echo '<span class="text-gray-400 italic">Sin plan de cuidado</span>';
+                                                                                                                    }
+                                                                                                                    ?></td>
                                     </tr>
                             </table>
 
@@ -397,8 +438,6 @@
 
         </div>
     </div>
-
-
 
     <!-- Footer -->
     <div class="max-w-4xl mx-auto mt-4 text-center text-sm text-gray-600 pb-4">
@@ -555,5 +594,22 @@
         const marker = L.marker([lat, lng]).addTo(map);
         marker.bindPopup(`<b>Ubicación registrada</b><br>Lat: ${lat}<br>Lng: ${lng}`).openPopup();
         let isEdit = true; // estado inicial: "Editar"
+    });
+
+    function toggleMenu(btn) {
+        // Cierra otros menús abiertos
+        document.querySelectorAll('.menu-options').forEach(function(menu) {
+            if (menu !== btn.nextElementSibling) menu.classList.add('hidden');
+        });
+        // Alterna el menú actual
+        btn.nextElementSibling.classList.toggle('hidden');
+    }
+    // Cierra el menú si se hace clic fuera
+    document.addEventListener('click', function(e) {
+        document.querySelectorAll('.menu-options').forEach(function(menu) {
+            if (!menu.contains(e.target) && !menu.previousElementSibling.contains(e.target)) {
+                menu.classList.add('hidden');
+            }
+        });
     });
 </script>

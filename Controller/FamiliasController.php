@@ -94,7 +94,7 @@ class FamiliasController extends AppController
 					'fields' => array('nombres')
 				),
 				'Observacion' => array(
-					'fields' => array('id', 'observacion', 'valoracionfamilia','canalizacionuno','resultadoFamiliograma','resultadoEcomapa','dirplancuidado','dirfamiliograma','fecha'))
+					'fields' => array('id', 'observacion', 'valoracionfamilia','canalizacionuno','resultadoFamiliograma','resultadoEcomapa','dirplancuidado','dirfamiliograma','fecha','familiograma'))
 			)
 		));
 
