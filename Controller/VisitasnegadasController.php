@@ -80,8 +80,28 @@ class VisitasnegadasController extends AppController
 		if (!$this->Visitasnegada->exists($id)) {
 			throw new NotFoundException(__('Invalid visitasnegada'));
 		}
-		$options = array('conditions' => array('Visitasnegada.' . $this->Visitasnegada->primaryKey => $id));
-		$this->set('visitasnegada', $this->Visitasnegada->find('first', $options));
+		$options = array(
+			'conditions' => array('Visitasnegada.' . $this->Visitasnegada->primaryKey => $id),
+			'fields' => array(
+				'Visitasnegada.id',
+				'Visitasnegada.estadocasa',
+				'Visitasnegada.fecha',
+				'Visitasnegada.telefono',
+				'Visitasnegada.nombreshabitante',
+				'Visitasnegada.numerodocumento',
+				'Visitasnegada.direccion',
+				'Visitasnegada.observacion',
+				'Visitasnegada.barriovereda',
+				'Ubicacion.microterritorio',
+				'Responsable.nombres',
+				'Responsable.profesion',
+				'Responsable.celular'
+			),
+		);
+		$Visitasnegada = $this->Visitasnegada->find(
+			'first', $options);
+
+		$this->set('visitasnegada', $Visitasnegada);
 	}
 
 	/**

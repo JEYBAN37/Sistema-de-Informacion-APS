@@ -33,10 +33,10 @@
                     <tr class=" text-gray-900 font-light">
                         <th class="px-2 w-6"></th> <!-- control (+) -->
                         <th class="px-4 py-2 font-semibold text-center cursor-pointer hover:bg-gray-100">ID Novedad</th>
-                        <th class="px-4 py-2 font-semibold text-center cursor-pointer hover:bg-gray-100">Fecha</th>
+                        <th class="px-4 py-2 font-semibold text-center cursor-pointer hover:bg-gray-100">Motivo</th>
                         <th class="px-4 py-2 font-semibold text-center cursor-pointer hover:bg-gray-100">Microterritorio</th>
-                        <th class="px-4 py-2 font-semibold text-center cursor-pointer hover:bg-green-100">Motivo</th>
-                        <th class="px-16 py-2 font-semibold text-center cursor-pointer hover:bg-green-100">Celular</th>
+                        <th class="px-4 py-2 font-semibold text-center cursor-pointer hover:bg-green-100">Celular</th>
+                        <th class="px-16 py-2 font-semibold text-center cursor-pointer hover:bg-green-100">Fecha</th>
                         <th class="px-2 py-2 font-semibold text-center cursor-pointer hover:bg-green-100">Responsable</th>
                         <th class="px-2 py-2 font-semibold text-center cursor-pointer hover:bg-green-100">Acciones</th>
                     </tr>
@@ -286,24 +286,24 @@
                         name: "id"
                     },
                     {
-                        data: "fecha",
-                        name: "fecha"
-                    },
-                    {
-                        data: "telefono",
-                        name: "telefono"
+                        data: "estadocasa",
+                        name: "estadocasa"
                     },
                     {
                         data: "microterritorio",
                         name: "microterritorio"
                     },
                     {
-                        data: "nombre_responsable",
-                        name: "nombre_responsable"
+                        data: "telefono",
+                        name: "telefono"
                     },
                     {
-                        data: "estadocasa",
-                        name: "estadocasa"
+                        data: "fecha",
+                        name: "fecha"
+                    },
+                    {
+                        data: "nombre_responsable",
+                        name: "nombre_responsable"
                     },
                     {
                         data: "id",
@@ -327,15 +327,15 @@
                 // Opcional: prioridades de columnas (qué esconder primero)
                 columnDefs: [{
                         responsivePriority: 1,
-                        targets: 2
+                        targets: 1
                     }, // nombreproducto
                     {
                         responsivePriority: 2,
-                        targets: 3
+                        targets: 2
                     }, // objactividad
                     {
                         responsivePriority: 3,
-                        targets: 1
+                        targets: 3
                     } // created
                 ]
             });
