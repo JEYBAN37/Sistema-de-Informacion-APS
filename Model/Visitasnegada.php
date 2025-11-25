@@ -44,13 +44,11 @@ class Visitasnegada extends AppModel
 	 */
 	public $validate = array(
 		'ubicacion_id' => array(
-			'numeric' => array(
-				'rule' => array('numeric'),
-				//'message' => 'Your custom message here',
+			'notEmpty' => array(
+				'rule' => array('notEmpty'),
+				'message' => 'Seleccione una ubicación',
 				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+				//'required' => true,
 			),
 		),
 		'responsable_id' => array(
@@ -80,7 +78,7 @@ class Visitasnegada extends AppModel
 		'direccion' => array(
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),
-				//'message' => 'Your custom message here',
+				'message' => 'La refencia de la ubicacion no puede estar vacia',
 				//'allowEmpty' => false,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule
@@ -89,31 +87,30 @@ class Visitasnegada extends AppModel
 		),
 
 		'latitud' => array(
+			'validFormat' => array(
+				'rule' => array('custom', '/^\d\.\d{6}$/'),
+				'message' => 'Ingrese una latitud válida 7 numeros con el formato n.nnnnnn',
+			),
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+				'message' => 'Ingrese latitud',
 			),
 		),
-
 		'longitud' => array(
+			'validFormat' => array(
+				'rule' => array('custom', '/^-?\d{2}\.\d{6}$/'),
+				'message' => 'Ingrese una longitud válida 8 numeros con el formato -nn.nnnnnn',
+			),
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+				'message' => 'Ingrese longitud',
 			),
 		),
 
 		'estadocasa' => array(
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),
-				//'message' => 'Your custom message here',
+				'message' => 'El estado de la casa no puede estar vacio',
 				//'allowEmpty' => false,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule
@@ -143,7 +140,7 @@ class Visitasnegada extends AppModel
 			),
 		),*/
 
-		'numMicroterritorio' => array(
+		/*'barriovereda' => array(
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),
 				//'message' => 'Your custom message here',
@@ -152,27 +149,17 @@ class Visitasnegada extends AppModel
 				//'last' => false, // Stop validation after this rule
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
-		),
-		'barriovereda' => array(
+		),*/
+		/*'manzana' => array(
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),
-				//'message' => 'Your custom message here',
+				'message' => 'La refencia de la ubicacion no puede estar vacia',
 				//'allowEmpty' => false,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
-		),
-		'manzana' => array(
-			'notEmpty' => array(
-				'rule' => array('notEmpty'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			),
-		),
+		),*/
 
 
 

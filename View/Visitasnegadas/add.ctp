@@ -112,14 +112,15 @@ $EstateHome = array(
 
                     <div class="w-full md:w-1/2" id="coords">
 
-                        <input type="text"
-                            id='latitud' ,
-                            name='data[Visitasnegada][latitud]' ,
-                            label=false,
-                            class='border border-gray-300 rounded-lg w-full p-2 focus:outline-none  focus:ring-1 focus:ring-blue-500 focus:border-blue-500 borde azul  mt-2 font-semibold text-gray-700  text-sm focus:text-gray-900' ,
-                            error=false>
                         <?php
-
+                        echo $this->Form->input('latitud', [
+                            'type' => 'text',
+                            'id' => 'latitud',
+                            'name' => 'data[Visitasnegada][latitud]',
+                            'label' => false,
+                            'class' => 'border border-gray-300 rounded-lg w-full p-2 focus:outline-none  focus:ring-1 focus:ring-blue-500 focus:border-blue-500 borde azul  mt-2 font-semibold text-gray-700  text-sm focus:text-gray-900',
+                            'error' => false
+                        ]);
                         if (!empty($this->Form->error('latitud'))) {
                             echo '<div class="text-red-600 text-md mt-1 font-semibold">' . $this->Form->error('latitud') . '</div>';
                         }
@@ -195,8 +196,7 @@ $EstateHome = array(
                     echo '<div class="text-red-600 text-md mt-1 font-semibold">' . $this->Form->error('direccion') . '</div>';
                 }
                 ?>
-                <p class="text-gray-400 text-xs mt-2">Colocar la nomenclatura de un recibo de servicio publico del
-                    domicilio
+                <p class="text-gray-400 text-xs mt-2">Colocar la nomenclatura o referencia para proxima visita
                 </p>
             </div>
 
@@ -317,6 +317,26 @@ $EstateHome = array(
                 }
                 ?>
 
+                <div class="relative inline-block w-full">
+                    <button type="button"
+                        id="ayudaButtonTIPO"
+                        class="mt-4 bg-blue-100 text-blue-700 hover:bg-blue-200 rounded-full w-10 h-10 flex items-center justify-center"
+                        aria-label="Ayuda" aria-expanded="false">
+                        ?
+                    </button>
+                    <div id="helpContentTIPO"
+                        class="absolute left-0 top-16 mb-2 w-80 bg-blue-50 border border-blue-200 rounded-lg z-50 hidden shadow-lg p-4"
+                        role="dialog" aria-hidden="true">
+                        <p>
+                            <!-- Aquí tu contenido de ayuda -->
+                            <strong>Cerrada:</strong> No atienden pero se reconoce que si habitan en la residencia. <br>
+                            <strong>Vacia:</strong> La residencia esta desocupada o no habita nadie. <br>
+                            <strong>No aceptó ficha:</strong> La persona manifiesta que no desea participar. <br>
+                            <strong>Local Comercial:</strong> Vivienda de uso comercial(Taller, tienda, bodega) donde no habitan famlias.
+                        </p>
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>
@@ -335,8 +355,29 @@ $EstateHome = array(
 
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2">
 
+        <div class="grid grid-cols-1 md:grid-cols-2">
+            <!-- Objetivos específicos -->
+            <div class="col-span-2 text-md font-semibold my-6">
+                <div class="flex items-center mb-4">
+                    <span class="mr-2 px-2 rounded-lg bg-gray-200 text-md font-semibold">1</span>
+                    <label for="producto_id" class="font-semibold">Observacion general</label>
+                    <p class="text-red-600">*</p>
+                </div>
+                <?php
+                echo $this->Form->input('observacion', [
+                    'label' => '',
+                    'type' => 'textarea',
+                    'id' => 'VisitasnegadaObservacion',
+                    'data-maxlength' => 800,
+                    'class' => 'ckeditor border rounded-lg w-full p-2 focus:ring focus:ring-blue-200',
+                    'error' => false // No mostrar error aquí
+                ]);
+                if (!empty($this->Form->error('observacion'))) {
+                    echo '<div class="text-red-600 text-md mt-1 font-semibold">' . $this->Form->error('observacion') . '</div>';
+                }
+                ?>
+            </div>
         </div>
     </div>
 </div>
@@ -390,7 +431,6 @@ $EstateHome = array(
 </div>
 
 <script type="text/javascript">
-
     // Mostrar el modal al cargar la página
     $(function() {
         $('#fecha').daterangepicker({
@@ -491,7 +531,7 @@ $EstateHome = array(
             searchResultLimit: 20, // Puedes aumentar este valor si tienes muchos resultados
         });
 
-                // Aplicar estilos con Tailwind
+        // Aplicar estilos con Tailwind
         const inner = document.querySelector('.choices__inner');
         if (inner) {
             inner.classList.add(
@@ -504,6 +544,86 @@ $EstateHome = array(
         if (dropdown) {
             dropdown.classList.add('bg-white', 'shadow-lg', 'rounded-lg', 'border', 'border-gray-200');
         }
+
+        document.querySelectorAll('[id^="ayudaButton"]').forEach(function(btn) {
+            btn.addEventListener('click', function(e) {
+                var id = this.id.replace('ayudaButton', 'helpContent');
+                var helpContent = document.getElementById(id);
+                var expanded = this.getAttribute('aria-expanded') === 'true';
+                this.setAttribute('aria-expanded', String(!expanded));
+                helpContent.classList.toggle('hidden');
+                helpContent.setAttribute('aria-hidden', String(expanded));
+                e.stopPropagation();
+            });
+        });
+
+
+
+        // Cerrar al hacer clic fuera
+        document.addEventListener('click', function(e) {
+            document.querySelectorAll('[id^="helpContent"]').forEach(function(help) {
+                var btnId = help.id.replace('helpContent', 'ayudaButton');
+                var btn = document.getElementById(btnId);
+                if (!help.classList.contains('hidden') && !help.contains(e.target) && !btn.contains(e.target)) {
+                    help.classList.add('hidden');
+                    btn.setAttribute('aria-expanded', 'false');
+                    help.setAttribute('aria-hidden', 'true');
+                }
+            });
+        });
+
+    });
+
+    CKEDITOR.on('instanceReady', function(ev) {
+        var editor = ev.editor;
+        var textarea = editor.element.$;
+        var maxChars = textarea.getAttribute("data-maxlength"); // Lee el límite de cada campo
+        maxChars = maxChars ? parseInt(maxChars) : 300; // Default 300 si no se define
+
+        // Crear un contador debajo del campo
+        var counter = document.createElement("div");
+        counter.className = "text-gray-600 mt-1 text-sm";
+        counter.id = "charCount_" + textarea.id;
+        textarea.parentNode.appendChild(counter);
+
+        function updateCount() {
+            var text = editor.getData().replace(/<[^>]*>/g, '');
+            var length = text.length;
+            var remaining = maxChars - length;
+
+            counter.innerHTML = "Caracteres usados: " + length + " / " + maxChars;
+
+            if (remaining < 0) {
+                counter.style.color = "red";
+                editor.setData(text.substring(0, maxChars));
+            } else {
+                counter.style.color = "gray";
+            }
+        }
+
+        // Bloquear si excede
+        editor.on('key', function(evt) {
+            var text = editor.getData().replace(/<[^>]*>/g, '');
+            if (text.length >= maxChars && evt.data.keyCode != 8 && evt.data.keyCode != 46) {
+                evt.cancel();
+                alert("Máximo permitido: " + maxChars + " caracteres.");
+            }
+        });
+
+        // Bloquear pegar excedido
+        editor.on('paste', function(evt) {
+            var text = evt.data.dataValue.replace(/<[^>]*>/g, '');
+            if (text.length > maxChars) {
+                evt.cancel();
+                alert("No puedes pegar más de " + maxChars + " caracteres.");
+            }
+        });
+
+        editor.on('key', updateCount);
+        editor.on('paste', updateCount);
+        editor.on('change', updateCount);
+
+        updateCount(); // inicializar contador
     });
 
     history.pushState(null, null, location.href);
