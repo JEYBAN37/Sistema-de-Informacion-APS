@@ -1,7 +1,6 @@
 <?php $this->layout = 'default_familia' ?>
 
 
-
 <div class="max-w-5xl mx-auto text-center mb-8">
     <h1 class="text-4xl md:text-5xl font-bold text-slate-800 mb-4 leading-tight">
         Formato de Novedades<br>
@@ -43,13 +42,13 @@
                     <!-- Encabezado con logo y datos -->
                     <tr>
                         <td rowspan="1" colspan="3" class="p-2 text-center align-center border border-gray-300">
-                            <img src="../../img/aps_v2025/logo_Pasto.png" alt="Logo Pasto" class="w-[200px] mx-auto">
+                            <img src="<?php echo $this->Html->url('/img/aps_v2025/logo_Pasto.png', true); ?>" alt="Logo Pasto" class="logo-pasto w-[200px] mx-auto">
                         </td>
                         <td rowspan="1" colspan="3" class="p-2 text-center align-center border border-gray-300">
-                            <img src="../../img/aps_v2025/Logo_del_Ministerio.png" alt="Logo Pasto" class="w-[100px] mx-auto">
+                            <img src="<?php echo $this->Html->url('/img/aps_v2025/Logo_del_Ministerio.png', true); ?>" alt="Logo Ministerio" class="logo-ministerio w-[100px] mx-auto">
                         </td>
                         <td rowspan="1" colspan="3" class="p-2 text-center align-center border border-gray-300">
-                            <img src="../../img/aps_v2025/logo_pst_2025.png" alt="Logo Pasto" class="w-[200px] mx-auto">
+                            <img src="<?php echo $this->Html->url('/img/aps_v2025/logo_pst_2025.png', true); ?>" alt="Logo PST" class="logo-pst mx-auto w-[200px]">
                         </td>
                     </tr>
                     <tr>
@@ -150,9 +149,6 @@
     document.addEventListener("DOMContentLoaded", function() {
         var btn = document.getElementById('btn-print');
         var printContents = document.getElementById('print-area');
-        var btnHide = document.getElementById('btn-hide');
-        const btnText = document.getElementById('btn-text');
-        const btnIcon = document.getElementById('btn-icon');
 
         btn.addEventListener('click', function(e) {
             e.preventDefault();
@@ -161,19 +157,54 @@
                 return;
             }
 
+            // Abrir nueva ventana
             var w = window.open('', '', 'height=900,width=1200');
             w.document.write('<html><head><title>Impresión</title>');
-            w.document.write('<script src="https://cdn.tailwindcss.com"><\/script>');
+            // Inyectar Tailwind y tu CSS
+            w.document.write('<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">');
             w.document.write('<link rel="stylesheet" href="/css/app.css" />');
-            // Estilos para impresión: ajusta márgenes y fuerza salto de página
-            w.document.write('<style>@media print { body { margin: 0; } .bg-white { box-shadow: none !important; } table { page-break-inside:auto; } tr { page-break-inside:avoid; page-break-after:auto; } .page-break { page-break-before:always; } }</style>');
+            // Estilos para impresión
+            w.document.write(`
+    <style>
+        @media print {
+            body { margin: 0; }
+            .bg-white { box-shadow: none !important; }
+            table { page-break-inside:auto; }
+            tr { page-break-inside:avoid; page-break-after:auto; }
+            .page-break { page-break-before:always; }
+            .logo-pasto { max-width: 200px !important; }
+            .logo-ministerio { max-width: 100px !important; }
+            .logo-pst { max-width: 200px !important; }
+            img {
+                height: auto !important;
+                display: block;
+                margin-left: auto;
+                margin-right: auto;
+            }
+        }
+        .logo-pasto { max-width: 200px !important; }
+        .logo-ministerio { max-width: 100px !important; }
+        .logo-pst { max-width: 200px !important; }
+        img {
+            height: auto !important;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+    </style>
+`);
             w.document.write('</head><body style="margin:0;padding:0;">');
             w.document.write('<div style="width:100vw;max-width:100%;box-sizing:border-box;">' + printContents.innerHTML + '</div>');
             w.document.write('</body></html>');
             w.document.close();
-            w.focus();
-            w.print();
+
+
+            // Esperar a que los estilos carguen antes de imprimir
+            w.onload = function() {
+                w.focus();
+                w.print();
+                // w.close(); // Descomenta si quieres cerrar la ventana después de imprimir
+            };
         });
     });
-
 </script>

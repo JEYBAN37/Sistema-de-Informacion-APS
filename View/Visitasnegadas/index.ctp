@@ -243,10 +243,10 @@
                             <li><strong>Responsable:</strong> ${data.nombre_responsable}</li>
                         </ul>
                         <div class="flex gap-2 mt-4">
-                            <a href="${URL_view.replace('__ID__', data.sociambiental_id)}" class="bg-gray-200 hover:bg-blue-600 text-teal-700 px-3 py-1 rounded text-sm">Ver</a>
-                            <a href="${URL_edit.replace('__ID__', data.sociambiental_id)}" class="bg-gray-200 hover:bg-amber-600 text-teal-700 px-3 py-1 rounded text-sm">Editar</a>
-                            <a href="${URL_delete.replace('__ID__', data.sociambiental_id)}" class="bg-gray-200 hover:bg-red-600 text-teal-700 px-3 py-1 rounded text-sm"
-                               onclick="return confirm('¿Seguro que quieres borrar #${data.sociambiental_id}?');">Borrar</a>
+                            <a href="${URL_view.replace('__ID__', data.id)}" class="bg-gray-200 hover:bg-blue-600 text-teal-700 px-3 py-1 rounded text-sm">Ver</a>
+                            <a href="${URL_edit.replace('__ID__', data.id)}" class="bg-gray-200 hover:bg-amber-600 text-teal-700 px-3 py-1 rounded text-sm">Editar</a>
+                            <a href="${URL_delete.replace('__ID__', data.id)}" class="bg-gray-200 hover:bg-red-600 text-teal-700 px-3 py-1 rounded text-sm"
+                               onclick="return confirm('¿Seguro que quieres borrar #${data.id}?');">Borrar</a>
                         </div>
                     </div>
                 `;
