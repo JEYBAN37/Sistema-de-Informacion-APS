@@ -85,7 +85,7 @@ class FamiliasController extends AppController
 					'fields' => array('id', 'primernombre', 'segundonombre', 'primerapellido', 'segundoapellido', 'fechanac', 'sexo', 'aseguradora', 'canalizacionuno', 'condicioncronica')
 				),
 				'Sociambiental' => array(
-					'fields' => array('id', 'fecha', 'apellidosfamilia', 'direccion', 'numerohogares','longitud','latitud','manzana')
+					'fields' => array('id', 'fecha', 'apellidosfamilia', 'direccion', 'numerohogares', 'longitud', 'latitud', 'manzana')
 				),
 				'Ubicacion' => array(
 					'fields' => array('microterritorio', 'cod_microterritorio')
@@ -94,7 +94,8 @@ class FamiliasController extends AppController
 					'fields' => array('nombres')
 				),
 				'Observacion' => array(
-					'fields' => array('id', 'observacion', 'valoracionfamilia','canalizacionuno','resultadoFamiliograma','resultadoEcomapa','dirplancuidado','dirfamiliograma','fecha','familiograma'))
+					'fields' => array('id', 'observacion', 'valoracionfamilia', 'canalizacionuno', 'resultadoFamiliograma', 'resultadoEcomapa', 'dirplancuidado', 'dirfamiliograma', 'fecha', 'familiograma')
+				)
 			)
 		));
 
@@ -223,9 +224,13 @@ class FamiliasController extends AppController
 				$this->Session->setFlash('El registro no fue guardado o esta pendiente un campo del formulario', 'flash_custom', array('class' => 'error', 'title' => 'Error al guardar el registro'));
 			}
 		} else {
-			$options = array('conditions' => array('Familia.' . $this->Familia->primaryKey => $id));
-			$this->request->data = $this->Familia->find('first', $options);
+			$options = array(
+				'conditions' => array('Familia.' . $this->Familia->primaryKey => $id),
+				'recursive' => -1
+			);
+			$familia = $this->Familia->find('first', $options);
 		}
+		$this->request->data = $familia;
 	}
 
 	/**
@@ -443,5 +448,4 @@ class FamiliasController extends AppController
 		));
 		exit();
 	}
-
 }
