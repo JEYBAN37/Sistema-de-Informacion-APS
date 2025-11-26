@@ -57,7 +57,7 @@ $planUrl = $this->Html->url(['controller' => 'Familias', 'action' => 'plancuidad
         </button>
 
         <?php
-        if (!$familia['Observacion'][0]['id']) :
+        if (empty($familia['Observacion']) || !$familia['Observacion'][0]['id'] ) :
         ?>
             <button title="Agregar Observaciones" type="button"
                 onclick="'<?php echo $this->Html->url(['controller' => 'Observacions', 'action' => 'add?observacions=' . $familia['Familia']['id']]); ?>'"
