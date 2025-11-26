@@ -262,7 +262,7 @@ $alimentosHogar = [
             <div class="col-span-2 md:col-span-1 text-md font-semibold mt-4 mb-6 md:mr-4">
                 <div class="flex items-center mb-4">
                     <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">1</span>
-                    <label for="nombre" class="font-semibold">Nombre del Encuestado</label>
+                    <label for="nombre" class="font-semibold">Tipo de documento</label>
                     <p class="text-red-600">*</p>
                 </div>
                 <?php
