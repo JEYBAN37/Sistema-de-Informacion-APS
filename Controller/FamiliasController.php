@@ -105,9 +105,13 @@ class FamiliasController extends AppController
 			isset($ficha['Adolescencia']) ? $ficha['Adolescencia'] : []
 		);
 
-		usort($ficha['Integrantes'], function ($a, $b) {
-			return strtotime($b['fechanac']) - strtotime($a['fechanac']);
-		});
+		if (empty($ficha['o'])) {
+			$this->Session->setFlash('No hay integrantes registrados para esta familia.', 'flash_custom', array('class' => 'warning', 'title' => 'Información'));
+		}
+
+		if ($ficha['Observacion'] == null) {
+			$ficha['Observacion'] = [];
+		}
 
 		foreach ($ficha['Integrantes'] as &$integrante) {
 			if (!empty($integrante['fechanac'])) {
@@ -139,10 +143,11 @@ class FamiliasController extends AppController
 	 *
 	 * @return void
 	 */
-	public function add($sociambientals_id = null)
+	public function add($sociambientals_id)
 	{
 		if ($this->request->is('post')) {
-			$this->request->data['Familia']['sociambientals_id'] = $sociambientals_id;
+			$this->request->data['Familia']['sociambiental_id'] = $sociambientals_id;
+			debug($this->request->data);
 			if ($this->Familia->save($this->request->data)) {
 				if ($this->request->data['btn'] == 'Guardar y continuar') {
 					$this->Session->setFlash('Registro de familia se guradado con exito, continuar con informacion de los integrantes', 'flash_custom', array('class' => 'success', 'title' => 'El registro se ha completado correctamente'));
@@ -156,7 +161,7 @@ class FamiliasController extends AppController
 
 				if ($this->request->data['btn'] == 'Ver Vivienda') {
 					$this->Session->setFlash('Registro de familia se guradado con exito, puede agregar un nuevo registro', 'flash_custom', array('class' => 'success', 'title' => 'El registro se ha completado correctamente'));
-					return $this->redirect(array('controller' => 'Sociambientals', 'action' => 'add', $sociambientals_id));
+					return $this->redirect(array('controller' => 'Sociambientals', 'action' => 'view', $sociambientals_id));
 				}
 			} else {
 				$this->Session->setFlash('El registro no fue guardado o esta pendiente un campo del formulario', 'flash_custom', array('class' => 'error', 'title' => 'Error al guardar el registro'));
