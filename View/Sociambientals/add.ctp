@@ -109,6 +109,18 @@ $optionPiso = array(
     '3.Baldosa, ladrillo' => 'baldosa, ladrillo',
 );
 
+$optionTecho = array(
+    '' => 'Elegir',
+    '1.Concreto' => 'Concreto',
+    '4.Eternit' => 'Eternit',
+    '2.Tejas de barro' => 'Tejas de barro',
+    '4.Zinc' => 'Zinc',
+    '6.Plastico' => 'Plástico',
+    '7.Desecho' => 'Desechos (cartón, lata, tela, sacos, etc)',
+    '8.Otro' => 'Otro',
+    'SD' => 'Sin dato'
+
+);
 $optionEstadoTecho = array(
     '' => 'Elegir',
     'Buen estado' => 'Buen estado',
@@ -679,7 +691,7 @@ $animalesOptions = [
                     'id' => 'techo',
                     'class' => 'border border-gray-300 rounded-lg w-full p-2 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 text-sm text-gray-500 focus:text-gray-800',
                     'error' => false,
-                    'options' => $optionPiso,
+                    'options' => $optionTecho,
                     'label' => '',
                     'empty' => 'Seleccione material',
                 ]);
@@ -878,6 +890,7 @@ $animalesOptions = [
                     'id' => 'acceso',
                     'class' => 'border border-gray-300 rounded-lg w-full p-2 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 text-sm text-gray-500 focus:text-gray-800',
                     'error' => false,
+                    'multiple' => true,
                     'options' => $accessOptions,
                     'label' => '',
                     'empty' => 'Seleccione acceso',
@@ -904,6 +917,7 @@ $animalesOptions = [
                     'error' => false,
                     'options' => $accidentRiskOptions,
                     'label' => '',
+                    'multiple' => true,
                     'empty' => 'Seleccione riesgo',
                 ]);
                 if (!empty($this->Form->error('riesgo'))) {
@@ -1513,7 +1527,7 @@ $animalesOptions = [
             placeholderValue: "Seleccione un vector..."
         });
 
-        const choices_riesgo = new Choices("#riesgoexterno", {
+        const choices_riesgoexterno = new Choices("#riesgoexterno", {
             searchEnabled: true,
             searchChoices: true,
             removeItemButton: true, // Permite eliminar seleccionados
@@ -1526,6 +1540,36 @@ $animalesOptions = [
             placeholder: true,
             placeholderValue: "Seleccione un vector..."
         });
+
+        const choices_acceso = new Choices("#acceso", {
+            searchEnabled: true,
+            searchChoices: true,
+            removeItemButton: true, // Permite eliminar seleccionados
+            itemSelectText: '',
+            shouldSort: false,
+            searchPlaceholderValue: "Escriba para filtrar...",
+            maxItemCount: -1, // Sin límite
+            removeItems: true, // Permite quitar seleccionados
+            duplicateItemsAllowed: false,
+            placeholder: true,
+            placeholderValue: "Seleccione un vector..."
+        });
+
+        const choices_riesgo = new Choices("#riesgo", {
+            searchEnabled: true,
+            searchChoices: true,
+            removeItemButton: true, // Permite eliminar seleccionados
+            itemSelectText: '',
+            shouldSort: false,
+            searchPlaceholderValue: "Escriba para filtrar...",
+            maxItemCount: -1, // Sin límite
+            removeItems: true, // Permite quitar seleccionados
+            duplicateItemsAllowed: false,
+            placeholder: true,
+            placeholderValue: "Seleccione un vector..."
+        });
+
+
         // Aplicar estilos con Tailwind
         const inner = document.querySelector('.choices__inner');
         if (inner) {

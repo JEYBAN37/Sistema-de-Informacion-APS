@@ -583,7 +583,8 @@ class Familia extends AppModel
 		'enfermedadtransmible' => array(
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),
-				'message' => 'La enfermedad transmisible no puede estar vacía',
+				'rule' => array('multiple', array('min' => 1)),
+				'message' => 'El antecedente de enfermedad no puede estar vacío',
 				//'allowEmpty' => false,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule
@@ -778,6 +779,9 @@ class Familia extends AppModel
 		if (isset($this->data[$this->alias]['alimentos']) && is_array($this->data[$this->alias]['alimentos'])) {
 			$this->data[$this->alias]['alimentos'] = implode(',', $this->data[$this->alias]['alimentos']);
 		}
+		if (isset($this->data[$this->alias]['enfermedadtransmible']) && is_array($this->data[$this->alias]['enfermedadtransmible'])) {
+			$this->data[$this->alias]['enfermedadtransmible'] = implode(',', $this->data[$this->alias]['enfermedadtransmible']);
+		}
 
 		return true;
 	}
@@ -817,6 +821,13 @@ class Familia extends AppModel
 			// Extraer cada palabra/frase hasta la coma
 			$tipos = array_map('trim', explode(',', $poblacionStr));
 			$data['Familia']['alimentos'] = $tipos;
+		}
+
+		if (!empty($data['Familia']['enfermedadtransmible'])) {
+			$poblacionStr = $data['Familia']['enfermedadtransmible'];
+			// Extraer cada palabra/frase hasta la coma
+			$tipos = array_map('trim', explode(',', $poblacionStr));
+			$data['Familia']['enfermedadtransmible'] = $tipos;
 		}
 
 		return $data;

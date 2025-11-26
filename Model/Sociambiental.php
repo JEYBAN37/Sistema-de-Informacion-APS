@@ -271,7 +271,6 @@ class Sociambiental extends AppModel
 
 		'riesgo' => array(
 			'notEmpty' => array(
-
 				'rule' => array('multiple', array('min' => 1)),
 				'message' => 'Por favor seleccione al menos una opción',
 				//'message' => 'Your custom message here',
@@ -492,6 +491,14 @@ class Sociambiental extends AppModel
 			$this->data[$this->alias]['numeroGatos'] = implode(',', $this->data[$this->alias]['numeroGatos']);
 		}
 
+		if (isset($this->data[$this->alias]['acceso']) && is_array($this->data[$this->alias]['acceso'])) {
+			$this->data[$this->alias]['acceso'] = implode(',', $this->data[$this->alias]['acceso']);
+		}
+
+		if (isset($this->data[$this->alias]['riesgo']) && is_array($this->data[$this->alias]['riesgo'])) {
+			$this->data[$this->alias]['riesgo'] = implode(',', $this->data[$this->alias]['riesgo']);
+		}
+
 		return true;
 	}
 
@@ -547,6 +554,13 @@ class Sociambiental extends AppModel
 			// Extraer cada palabra/frase hasta la coma
 			$tipos = array_map('trim', explode(',', $poblacionStr));
 			$data['Sociambiental']['riesgo'] = $tipos;
+		}
+
+		if (!empty($data['Sociambiental']['acceso'])) {
+			$poblacionStr = $data['Sociambiental']['acceso'];
+			// Extraer cada palabra/frase hasta la coma
+			$tipos = array_map('trim', explode(',', $poblacionStr));
+			$data['Sociambiental']['acceso'] = $tipos;
 		}
 
 		return $data;

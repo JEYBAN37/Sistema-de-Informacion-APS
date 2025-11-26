@@ -81,7 +81,7 @@
                         Apellidos de la Familia
                     </td>
                     <td class="border border-gray-300 text-center p-2 text-gray-800">
-                        <?php echo h(!empty($sociambiental['Sociambiental']['apellidosfamilia']) ? $sociambiental['Sociambiental']['apellidosfamilia'] : '') ?>
+                        <?php echo h(!empty($sociambiental['Sociambiental']['apellidosfamilia'])) ?>
                     </td>
                 </tr>
                 <tr>

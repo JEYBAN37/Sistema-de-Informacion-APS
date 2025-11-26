@@ -205,7 +205,6 @@ $EstateHome = array(
                 <div class="flex items-center mb-4">
                     <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">6</span>
                     <label for="nombreshabitante" class="font-semibold">Nombre de la Persona Presente</label>
-                    <p class="text-red-600">*</p>
                 </div>
                 <?php
                 echo $this->Form->input('nombreshabitante', [
@@ -225,8 +224,6 @@ $EstateHome = array(
                 <div class="flex items-center mb-4">
                     <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">7</span>
                     <label for="proactividad_id" class="font-semibold">Tipo de Documento</label>
-                    <p class="text-red-600">*</p>
-
                 </div>
                 <?php
                 echo $this->Form->input('tipodocumento', [
@@ -249,8 +246,6 @@ $EstateHome = array(
                 <div class="flex items-center mb-4">
                     <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">8</span>
                     <label for="proactividad_id" class="font-semibold">Numero de documento</label>
-                    <p class="text-red-600">*</p>
-
                 </div>
                 <?php
                 echo $this->Form->input('numerodocumento', [
