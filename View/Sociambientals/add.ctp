@@ -1734,7 +1734,7 @@ $animalesOptions = [
             dataObject['data[Sociambiental][id_sociambiental_temporal]'] = idVivienda;
             saveVivienda(dataObject);
             alert('✅ Datos guardados en el almacenamiento local como JSON.');
-            window.location.href = 'http://localhost/APS_DEMO/';
+            window.location.href = 'https://agsolutic.com/aps/aps_2025_v1/';
         }
     };
 </script>
