@@ -2066,7 +2066,7 @@ $alimentosHogar = [
             dataObject['data[Familia][id_familia_temporal]'] = idVivienda;
             saveFamilia(dataObject);
             alert('✅ Datos guardados en el almacenamiento local como JSON.');
-            window.location.href = 'http://localhost/APS_DEMO/offline.html';
+            window.location.href = 'https://agsolutic.com/aps/aps_2025_v1/offline.html';
         }
     };
 </script>
