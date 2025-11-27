@@ -23,6 +23,18 @@ $option = [
     '6' => '6'
 ];
 
+$option_obtencion = [
+    '1.Cultiva' => 'Cultiva',
+    '2.Cría de animales' => 'Cría de animales',
+    '3.Cacería' => 'Cacería',
+    '4.Recolección de alimentos' => 'Recolección de alimentos',
+    '5.Trueque o intercambio' => 'Trueque o intercambio',
+    '6.Compra' => 'Compra',
+    '7.Asistencia del Estado' => 'Asistencia del Estado',
+    '8.Ayuda humanitaria' => 'Ayuda humanitaria',
+    '9.Otro' => 'Otro'
+];
+
 $viviendaOptions = [
     '' => 'Elegir',
     '1.Casa' => 'Toda la Casa',
@@ -829,6 +841,7 @@ echo $this->Form->input('sociambiental_id', ['type' => 'hidden']);
                     'type' => 'select',
                     'id' => 'enfermedadtransmible',
                     'error' => false,
+                    'multiple' => true,
                     'options' => $optionTranmisibles,
                     'class' => 'border border-gray-300 rounded-lg w-full p-2 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 text-sm text-gray-500 focus:text-gray-800',
                     'label' => false,
@@ -1103,7 +1116,7 @@ echo $this->Form->input('sociambiental_id', ['type' => 'hidden']);
             <div class="col-span-2 md:col-span-1 text-md font-semibold mt-4 mb-6">
                 <div class="flex items-center mb-4">
                     <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">1</span>
-                    <label for="celular" class="font-semibold">¿Como obtienten los alimientos para el consumo?</label>
+                    <label for="celular" class="font-semibold">¿Como obtienen los alimentos para el consumo?</label>
                     <p class="text-red-600">*</p>
                 </div>
                 <?php
@@ -1111,7 +1124,7 @@ echo $this->Form->input('sociambiental_id', ['type' => 'hidden']);
                     'type' => 'select',
                     'id' => 'alimentosHogarAtentos',
                     'error' => false,
-                    'options' => $option_combustible,
+                    'options' => $option_obtencion,
                     'class' => 'border border-gray-300 rounded-lg w-full p-2 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 text-sm text-gray-500 focus:text-gray-800',
                     'label' => false,
                     'multiple' => true,
@@ -1753,6 +1766,20 @@ echo $this->Form->input('sociambiental_id', ['type' => 'hidden']);
         });
 
         const choices_alimentos = new Choices("#alimentosHogarAtentos", {
+            searchEnabled: true,
+            searchChoices: true,
+            removeItemButton: true, // Permite eliminar seleccionados
+            itemSelectText: '',
+            shouldSort: false,
+            searchPlaceholderValue: "Escriba para filtrar...",
+            maxItemCount: -1, // Sin límite
+            removeItems: true, // Permite quitar seleccionados
+            duplicateItemsAllowed: false,
+            placeholder: true,
+            placeholderValue: "Seleccione un vector..."
+        });
+
+        const choices_enfermedadtransmible = new Choices("#enfermedadtransmible", {
             searchEnabled: true,
             searchChoices: true,
             removeItemButton: true, // Permite eliminar seleccionados

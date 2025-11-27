@@ -57,24 +57,20 @@ class JuventudadultosController extends AppController
 		if ($this->request->is('post')) {
 			$this->Juventudadulto->create();
 
-			$fechaNacimiento = $this->request->data['Juventudadulto']['fechanac'];
-			$edad = $this->calcularEdad($fechaNacimiento);
-			$this->request->data['Juventudadulto']['edad'] = $edad;
-
+			$id_familia = $this->request->data['Juventudadulto']['familia_id'];
 			if ($this->Juventudadulto->save($this->request->data)) {
-				$this->Session->setFlash('Se ha guardado correctamente, por favor actulizar datos personales', 'default', array('class' => 'alert alert-success'));
-				$familiaId = isset($this->data["Juventudadulto"]["familia_id"]) ? $this->data["Juventudadulto"]["familia_id"] : null;
+				if ($this->request->data['btn'] == 'Guardar y agregar integrante') {
+					$this->Session->setFlash('Registro de familia se guradado con exito, continuar con informacion del siguiente integrante', 'flash_custom', array('class' => 'success', 'title' => 'El registro se ha completado correctamente'));
+					return $this->redirect(array('controller' => 'Juventudadultos', 'action' => 'add?familia=', $id_familia));
+				}
 
-				return $this->redirect(array(
-					'controller' => 'familias',
-					'action' => 'view',
-					$this->data["Juventudadulto"]["familia_id"],
-					'?' => array(
-						'familia_id' => $familiaId
-					)
-				));
+				if ($this->request->data['btn'] == 'ver familia') {
+					$this->Session->setFlash('Registro de Persona se guradado con exito', 'flash_custom', array('class' => 'success', 'title' => 'El registro se ha completado correctamente'));
+					return $this->redirect(array('controller' => 'Familias', 'action' => 'view', $id_familia));
+				}
+
 			} else {
-				$this->Session->setFlash('No se ha guardado, por favor revisar campos', 'default', array('class' => 'alert alert-danger'));
+				$this->Session->setFlash('El registro no fue guardado o esta pendiente un campo del formulario', 'flash_custom', array('class' => 'error', 'title' => 'Error al guardar el registro'));
 			}
 		}
 
@@ -84,17 +80,7 @@ class JuventudadultosController extends AppController
 		$this->set(compact('familias',  'canalizaciones'));
 	}
 
-	private function calcularEdad($fechaNacimiento)
-	{
-		$fechaActual = new DateTime();
-		$fechaNacimiento = new DateTime($fechaNacimiento['year'] . '-' . $fechaNacimiento['month'] . '-' . $fechaNacimiento['day']);
-		$diferencia = $fechaNacimiento->diff($fechaActual);
 
-		$anosTotales = $diferencia->y;
-
-
-		return number_format($anosTotales, 1);
-	}
 
 
 	/**

@@ -1,12 +1,14 @@
 // 🆕 Cambia la versión del caché si actualizas archivos
 const BASE_URL = "/aps/aps_2025_v1";
-const CACHE_NAME = "aps-cache-v46";
+const CACHE_NAME = "aps-cache-v47";
+
 
 // 🗂️ Archivos a cachear
 const urlsToCache = [
-  `${BASE_URL}/`,
-  `${BASE_URL}/Familias`,
+  `${BASE_URL}/Familias/add`,
   `${BASE_URL}/Sociambientals/add`,
+  `${BASE_URL}/Juventudadultos/add`,
+  `${BASE_URL}/Visitasnegadas/add`,
   `${BASE_URL}/css/tailwind.min.css`,
   `${BASE_URL}/img/cake.icon.png`,
   `${BASE_URL}/offline.html`

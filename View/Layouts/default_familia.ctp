@@ -280,7 +280,7 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
                             <div class="submenu ml-8 mt-1 space-y-1">
                                 <button
                                     class="subitem block w-full text-left text-[13px] text-gray-500 hover:text-teal-600 hover:bg-gray-100 rounded p-1 cursor-pointer"
-                                    data-href="<?php echo $this->Html->url(['controller' => 'productos', 'action' => 'index']); ?>">
+                                    data-href="">
                                     Consultar Planes de Cuidado
                                 </button>
                             </div>
@@ -289,7 +289,6 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
                         <div class="menu-item" data-id="dashboard">
                             <button
                                 type="button"
-                                data-href="/react/#/homePage"
                                 class="trigger flex items-center justify-between w-full p-2 hover:bg-gray-50 rounded-lg cursor-pointer group focus:outline-none">
                                 <div class="flex items-center gap-3">
                                     <svg class="text-teal-600" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-log-out-icon lucide-log-out">
@@ -298,7 +297,7 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
                                         <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
                                     </svg>
                                     <span class="label font-normal text-sm text-gray-600 group-hover:text-teal-600">
-                                        Cerra Sesión
+                                        SUSPENDIDO
                                     </span>
                                 </div>
                             </button>

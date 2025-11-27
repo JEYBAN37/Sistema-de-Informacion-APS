@@ -109,6 +109,18 @@ $optionPiso = array(
     '3.Baldosa, ladrillo' => 'baldosa, ladrillo',
 );
 
+$optionTecho = array(
+    '' => 'Elegir',
+    '1.Concreto' => 'Concreto',
+    '4.Eternit' => 'Eternit',
+    '2.Tejas de barro' => 'Tejas de barro',
+    '4.Zinc' => 'Zinc',
+    '6.Plastico' => 'Plástico',
+    '7.Desecho' => 'Desechos (cartón, lata, tela, sacos, etc)',
+    '8.Otro' => 'Otro',
+    'SD' => 'Sin dato'
+
+);
 $optionEstadoTecho = array(
     '' => 'Elegir',
     'Buen estado' => 'Buen estado',
@@ -679,7 +691,7 @@ $animalesOptions = [
                     'id' => 'techo',
                     'class' => 'border border-gray-300 rounded-lg w-full p-2 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 text-sm text-gray-500 focus:text-gray-800',
                     'error' => false,
-                    'options' => $optionPiso,
+                    'options' => $optionTecho,
                     'label' => '',
                     'empty' => 'Seleccione material',
                 ]);
@@ -878,6 +890,7 @@ $animalesOptions = [
                     'id' => 'acceso',
                     'class' => 'border border-gray-300 rounded-lg w-full p-2 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 text-sm text-gray-500 focus:text-gray-800',
                     'error' => false,
+                    'multiple' => true,
                     'options' => $accessOptions,
                     'label' => '',
                     'empty' => 'Seleccione acceso',
@@ -904,6 +917,7 @@ $animalesOptions = [
                     'error' => false,
                     'options' => $accidentRiskOptions,
                     'label' => '',
+                    'multiple' => true,
                     'empty' => 'Seleccione riesgo',
                 ]);
                 if (!empty($this->Form->error('riesgo'))) {
@@ -1347,7 +1361,7 @@ $animalesOptions = [
 
             <!-- Botón -->
             <div class="w-full p-2">
-                <button type="button" class="w-full bg-teal-600 text-white px-6 py-2 rounded-md hover:bg-green-700 transition font-medium flex items-center justify-center gap-2" onclick="preventBackNavigation()">
+                <button type="button" class="w-full bg-teal-600 text-white px-6 py-2 rounded-md hover:bg-green-700 transition font-medium flex items-center justify-center gap-2" onclick="cargarEnStorage()">
                     <span>
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-save-icon lucide-save">
                             <path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z" />
@@ -1513,7 +1527,7 @@ $animalesOptions = [
             placeholderValue: "Seleccione un vector..."
         });
 
-        const choices_riesgo = new Choices("#riesgoexterno", {
+        const choices_riesgoexterno = new Choices("#riesgoexterno", {
             searchEnabled: true,
             searchChoices: true,
             removeItemButton: true, // Permite eliminar seleccionados
@@ -1526,6 +1540,36 @@ $animalesOptions = [
             placeholder: true,
             placeholderValue: "Seleccione un vector..."
         });
+
+        const choices_acceso = new Choices("#acceso", {
+            searchEnabled: true,
+            searchChoices: true,
+            removeItemButton: true, // Permite eliminar seleccionados
+            itemSelectText: '',
+            shouldSort: false,
+            searchPlaceholderValue: "Escriba para filtrar...",
+            maxItemCount: -1, // Sin límite
+            removeItems: true, // Permite quitar seleccionados
+            duplicateItemsAllowed: false,
+            placeholder: true,
+            placeholderValue: "Seleccione un vector..."
+        });
+
+        const choices_riesgo = new Choices("#riesgo", {
+            searchEnabled: true,
+            searchChoices: true,
+            removeItemButton: true, // Permite eliminar seleccionados
+            itemSelectText: '',
+            shouldSort: false,
+            searchPlaceholderValue: "Escriba para filtrar...",
+            maxItemCount: -1, // Sin límite
+            removeItems: true, // Permite quitar seleccionados
+            duplicateItemsAllowed: false,
+            placeholder: true,
+            placeholderValue: "Seleccione un vector..."
+        });
+
+
         // Aplicar estilos con Tailwind
         const inner = document.querySelector('.choices__inner');
         if (inner) {
@@ -1642,4 +1686,55 @@ $animalesOptions = [
             characterData: true
         });
     })();
+
+    function saveVivienda(data) {
+        let viviendas = JSON.parse(localStorage.getItem("viviendas")) || [];
+        viviendas.push(data);
+        localStorage.setItem("viviendas", JSON.stringify(viviendas));
+    }
+
+    cargarEnStorage = function() {
+        const form = document.querySelector('form');
+        const formData = new FormData(form);
+        const dataObject = {};
+
+        formData.forEach((value, key) => {
+            // Manejar múltiples selecciones (arrays)
+            if (dataObject[key]) {
+                if (Array.isArray(dataObject[key])) {
+                    dataObject[key].push(value);
+                } else {
+                    dataObject[key] = [dataObject[key], value];
+                }
+            } else {
+                dataObject[key] = value;
+            }
+        });
+
+        alert('⏳ Procesando datos para almacenamiento local...');
+        // un mensaje para ponerle un id temporal y esribr un numero de vivienda
+        const input = prompt('Ingrese el ID de vivienda para crear la familia (ej: 123):');
+        if (input === null) return; // usuario canceló
+
+        const idVivienda = input.trim();
+        if (idVivienda === '') {
+            alert('Debe ingresar un ID de vivienda para continuar.');
+            return;
+        }
+
+        // Validación básica: permitir solo números, pero dar opción si no es numérico
+        if (!/^\d+$/.test(idVivienda)) {
+            if (!confirm('El ID ingresado no parece numérico. ¿Desea continuar de todos modos?')) {
+                return;
+            }
+        }
+
+        if (confirm('¿Está seguro de crear la familia con ID de vivienda ' + idVivienda + '?')) {
+            // Redirige a la acción add pasando el ID como segmento de URL
+            dataObject['data[Sociambiental][id_sociambiental_temporal]'] = idVivienda;
+            saveVivienda(dataObject);
+            alert('✅ Datos guardados en el almacenamiento local como JSON.');
+            window.location.href = 'http://localhost/APS_DEMO/';
+        }
+    };
 </script>

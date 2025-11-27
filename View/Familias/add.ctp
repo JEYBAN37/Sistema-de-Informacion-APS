@@ -68,6 +68,18 @@ $option_combustible = [
     '7.Material_Desecho' => 'Material de Desecho'
 ];
 
+$option_obtencion = [
+    '1.Cultiva' => 'Cultiva',
+    '2.Cría de animales' => 'Cría de animales',
+    '3.Cacería' => 'Cacería',
+    '4.Recolección de alimentos' => 'Recolección de alimentos',
+    '5.Trueque o intercambio' => 'Trueque o intercambio',
+    '6.Compra' => 'Compra',
+    '7.Asistencia del Estado' => 'Asistencia del Estado',
+    '8.Ayuda humanitaria' => 'Ayuda humanitaria',
+    '9.Otro' => 'Otro'
+];
+
 $option_tipofamilia = [
     '' => 'Elegir',
     '1.Nuclear biparental' => 'Nuclear',
@@ -826,6 +838,7 @@ $alimentosHogar = [
                     'type' => 'select',
                     'id' => 'enfermedadtransmible',
                     'error' => false,
+                    'multiple' => true,
                     'options' => $optionTranmisibles,
                     'class' => 'border border-gray-300 rounded-lg w-full p-2 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 text-sm text-gray-500 focus:text-gray-800',
                     'label' => false,
@@ -1306,7 +1319,7 @@ $alimentosHogar = [
             <div class="col-span-2 md:col-span-1 text-md font-semibold mt-4 mb-6">
                 <div class="flex items-center mb-4">
                     <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">1</span>
-                    <label for="celular" class="font-semibold">¿Como obtienten los alimientos para el consumo?</label>
+                    <label for="celular" class="font-semibold">¿Como obtienen los alimentos para el consumo?</label>
                     <p class="text-red-600">*</p>
                 </div>
                 <?php
@@ -1314,7 +1327,7 @@ $alimentosHogar = [
                     'type' => 'select',
                     'id' => 'alimentosHogarAtentos',
                     'error' => false,
-                    'options' => $option_combustible,
+                    'options' => $option_obtencion,
                     'class' => 'border border-gray-300 rounded-lg w-full p-2 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 text-sm text-gray-500 focus:text-gray-800',
                     'label' => false,
                     'multiple' => true,
@@ -1605,7 +1618,7 @@ $alimentosHogar = [
 
             <!-- Botón -->
             <div class="w-full p-2">
-                <button type="button" class="w-full bg-teal-600 text-white px-6 py-2 rounded-md hover:bg-green-700 transition font-medium flex items-center justify-center gap-2" onclick="">
+                <button type="button" class="w-full bg-teal-600 text-white px-6 py-2 rounded-md hover:bg-green-700 transition font-medium flex items-center justify-center gap-2" onclick="cargarEnStorage()">
                     <span>
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-save-icon lucide-save">
                             <path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z" />
@@ -1879,6 +1892,20 @@ $alimentosHogar = [
             placeholder: true,
             placeholderValue: "Seleccione un vector..."
         });
+
+        const choices_enfermedadtransmible = new Choices("#enfermedadtransmible", {
+            searchEnabled: true,
+            searchChoices: true,
+            removeItemButton: true, // Permite eliminar seleccionados
+            itemSelectText: '',
+            shouldSort: false,
+            searchPlaceholderValue: "Escriba para filtrar...",
+            maxItemCount: -1, // Sin límite
+            removeItems: true, // Permite quitar seleccionados
+            duplicateItemsAllowed: false,
+            placeholder: true,
+            placeholderValue: "Seleccione un vector..."
+        });
         // Aplicar estilos con Tailwind
         const inner = document.querySelector('.choices__inner');
         if (inner) {
@@ -1990,4 +2017,57 @@ $alimentosHogar = [
             history.pushState(null, null, location.href);
         }
     });
+
+    function saveFamilia(data) {
+        let id_sociambiental = localStorage.getItem("id_sociambiental_temporal") || 1;
+        data['data[Familia][id_sociambiental_temporal]'] = id_sociambiental;
+        let familias = JSON.parse(localStorage.getItem("familias")) || [];
+        familias.push(data);
+        localStorage.setItem("familias", JSON.stringify(familias));
+        localStorage.removeItem("id_sociambiental_temporal");
+    }
+
+    cargarEnStorage = function() {
+        const form = document.querySelector('form');
+        const formData = new FormData(form);
+        const dataObject = {};
+
+        formData.forEach((value, key) => {
+            // Manejar múltiples selecciones (arrays)
+            if (dataObject[key]) {
+                if (Array.isArray(dataObject[key])) {
+                    dataObject[key].push(value);
+                } else {
+                    dataObject[key] = [dataObject[key], value];
+                }
+            } else {
+                dataObject[key] = value;
+            }
+        });
+
+        alert('⏳ Procesando datos para almacenamiento local...');
+        // un mensaje para ponerle un id temporal y esribr un numero de vivienda
+        const input = prompt('Ingrese el ID de vivienda para crear la familia (ej: 123):');
+        if (input === null) return; // usuario canceló
+
+        const idVivienda = input.trim();
+        if (idVivienda === '') {
+            alert('Debe ingresar un ID de Familia para continuar.');
+            return;
+        }
+
+        // Validación básica: permitir solo números, pero dar opción si no es numérico
+        if (!/^\d+$/.test(idVivienda)) {
+            if (!confirm('El ID ingresado no parece numérico. ¿Desea continuar de todos modos?')) {
+                return;
+            }
+        }
+
+        if (confirm('¿Está seguro de crear las personas con ID de familia ' + idVivienda + '?')) {
+            dataObject['data[Familia][id_familia_temporal]'] = idVivienda;
+            saveFamilia(dataObject);
+            alert('✅ Datos guardados en el almacenamiento local como JSON.');
+            window.location.href = 'http://localhost/APS_DEMO/';
+        }
+    };
 </script>

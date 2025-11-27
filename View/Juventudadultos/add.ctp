@@ -160,6 +160,13 @@ $aseguradoraOption = [
 	'CONVENIO CAMACOL COMFAMA UT' => 'CONVENIO CAMACOL COMFAMA UT',
 ];
 
+$estadoAfiliacionOption = [
+	' ' => 'Elegir',
+	'Activo' => 'Activo',
+	'Inactivo' => 'Inactivo',
+	'No aplica' => 'No aplica',
+];
+
 $regimenOption = [
 	'Subsidiado' => 'Subsidiado',
 	'Contributivo' => 'Contributivo',
@@ -699,7 +706,278 @@ $optionCronica = array(
 	'Renal, otras enferemdades cronicas' => 'renal otras enferemdades cronicas',
 	'No informa' => 'Desconoce la información',
 );
+
+$optionGinecologico = [
+	'No aplica ' => 'Elegir',
+	'No' => 'No',
+	'No embarazos' => 'No ha tenido embarazos',
+	'Antecedente de abortos' => 'Antecedente de 2 o más abortos',
+	'Muerte perinatal' => 'Muerte perinatal',
+	'Bajo peso al nacer' => 'Recien nacido con Bajo peso al nacer',
+	'Prematurez' => 'Recien nacido Prematuro',
+	'Multiparidad' => 'Multiparidad (5 o más partos)',
+	'Edad Materna Avanzada' => 'Embarazo mujer mayor de 35 años',
+	'Preclampsia' => 'Antecendente de Preclampsia',
+	'Eclampsia' => 'Antecendente de eclampsia',
+	'No aplica' => 'No Aplica',
+];
+
+$optionCitologia = [
+	'No' => 'No',
+	'Citologia VPH' => 'Si, Citología VPH',
+	'Citologia convencional' => 'Si, Citología convencional',
+	'No informa' => 'No informa',
+	'No aplica' => 'No aplica',
+];
+
+$optionVidaSexual = [
+	'No aplica ' =>  'Elegir',
+	'Si' => 'Si',
+	'No' => 'No',
+	'No informa' => 'No informa',
+];
+
+$optionAnticonceptivos = [
+	'No aplica ' => 'Elegir',
+	'No' => 'No',
+	'Sin pareja' => 'No tiene pareja en el momento',
+	'Si control' => 'Si, con supervisión',
+	'Si No control' => 'Si, sin supervisión',
+	'Responsabilidad Pareja' => 'Deja la responsabilidad a la pareja',
+	'Vasectomía' => 'Vasectomía',
+	'Pomeroy' => 'Pomeroy',
+	'No informa' => 'No informa',
+	'No aplica' => 'No aplica',
+];
+
+$optionits = [
+	'No' => 'No',
+	'Si' => 'Si',
+	'No informa' => 'No informa',
+];
+
+$optionControlPrenatal = [
+	'' =>  'Elegir',
+	'No inscrita' => 'No inscrita en control de embarazo',
+	'Asistente CPN' => 'Si, Control al día',
+	'Inasistente CPN' => 'Si, inasistente a último control',
+	'Puerperio' => 'En etapa de puerperio',
+	'No informa' => 'No sabe/No informa',
+];
+
+$optionRiesgoEmbarazo = [
+	'No aplica ' =>  'Elegir',
+	'Bajo' => 'Bajo',
+	'Alto' => 'Alto',
+	'No informa' => 'No informa',
+];
+
+$optionAlarmaEmbarazo = [
+	'No aplica ' =>  'Elegir',
+	'No' => 'No',
+	'Dolor de Cabeza' => 'Dolor de cabeza',
+	'Mareo_zumbido' => 'Mareo/zumbido en el oido',
+	'Dolor del vientre' => 'Dolor del vientre tipo contracción',
+	'Disminucion o ausencia de movimientos del bebe' => 'Disminución o ausencia de movimientos del bebé',
+	'Hinchazon de cara y extremidades' => 'Hinchazón de manos, cara, piernas y pies',
+	'Visión borrosa o luces parpadeantes' => 'Visión borrosa o luces parpadeantes',
+	'Visión borrosa o luces parpadeantes' => 'Visión borrosa o luces parpadeantes',
+	'Sangrado vaginal' => 'Sangrado vaginal',
+	'No informa' => 'No informa',
+];
+
+$optionVacuna = array(
+	'' => 'Elegir',
+	'No' => 'No',
+	'Toxoide tétanico' => 'Toxoide tétanico',
+	'Covid' => 'Vacuna Covid-19',
+	'Influenza' => 'Influenza Estacional',
+	'Fiebre Amarilla' => 'Fiebre Amarilla',
+	'No informa' => 'Desconoce la información',
+	'SD' => 'Sin dato',
+
+);
+
+$optionMalnutricion = array(
+	'' => 'Elegir',
+	'No informa' => 'Desconoce la información/no presenta carnet de CYD',
+	'Peso adecuado para la talla' => ' Peso adecuado para la talla',
+	'Talla adecuada para la edad' => ' Talla adecuada para la edad',
+	'Desnutricion Aguda' => 'Bajo peso para la edad',
+	'Desnutricion Cronica' => 'Baja talla para la edad',
+	'Desnutricion Aguda' => 'Bajo peso para la edad',
+	'Desnutricion Cronica' => 'Baja talla para la edad',
+	'Sobrepeso' => 'Sobrepeso',
+	'Obesidad' => 'Obesidad',
+);
+
+$optionLactancia = array(
+	'' => 'Elegir',
+	'Lactancia materna exclusiva' => 'Solo Leche materna',
+	'Lactancia materna y Alimentacion complementaria' => 'Lactancia materna Alimentación complementaria',
+	'Leche de formula y Alimentacion complementaria' => 'Leche de formula Alimentación complementaria',
+	'Leche materna y leche de formula' => 'Leche materna y leche de formula',
+	'Leche materna y otros liquidos' => 'Leche materna y otros liquidos(jugos, agua, aromatica, colada)',
+	'Solo Leche de formula' => 'Solo Leche de formula',
+	'leche de formula y alimentos solidos' => 'leche de formula y alimentos solidos',
+	'Leche materna y canasta básica familiar' => 'Leche materna y alimentos solidos(huevo, arroz, pollo, carne)',
+	'Alimentación de la canasta básica familiar' => 'Alimentación de la canasta básica familiar',
+);
+
+$optionValoracionMedica = array(
+	'' => 'Elegir',
+	'Consulta Morbilidad' => 'Consulta de Morbilidad',
+	'Consulta Cronicos' => 'Consulta de Crónicos',
+	'Consulta PYP' => 'Consulta Promoción y prevención',
+	'Consulta Urgencias' => 'Consulta Urgencias',
+	'No asistido' => 'No ha asistido',
+	'No informa' => 'No informa'
+);
+
+$opcionNoAtencion = [
+	'1.Lugar de atención lejano, cerrado o ausencia del profesional de salud' => 'Lugar de atención lejano, cerrado o ausencia del profesional de salud',
+	'2.Horarios de atención restringidos' => 'Horarios de atención restringidos',
+	'3.Largos tiempos de espera' => 'Largos tiempos de espera',
+	'4.No había disponibilidad de la tecnología' => 'No había disponibilidad de la tecnología',
+	'5.Desconocimiento del derecho a las intervenciones de DTPE' => 'Desconocimiento del derecho a las intervenciones de DTPE',
+	'6.Desconocimiento que las intervenciones son gratuitas' => 'Desconocimiento que las intervenciones son gratuitas',
+	'7.Persona enferma' => 'Persona enferma',
+	'8.Persona hospitalizada' => 'Persona hospitalizada',
+	'9.Orden médica por enfermedad' => 'Orden médica por enfermedad',
+	'10.Falta de tiempo del cuidador' => 'Falta de tiempo del cuidador',
+	'11.Rechazo de la atención por tradición o cultura' => 'Rechazo de la atención por tradición o cultura',
+	'12.No afiliado' => 'No afiliado',
+];
+
+$optionAlternativa = [
+	'No aplica ' => 'Elegir',
+	'No refiere' => 'No refiere',
+	'Medicina indigena' => 'Medicina Tradicional/indigena',
+	'Homeopatía' => 'Homeopatía',
+	'Medicina tradicional china' => 'Medicina tradicional china',
+	'Acupuntura' => 'Acupuntura',
+	'Quiropraxia' => 'Quiropraxia',
+	'Otro' => 'Otro'
+];
+
+$optionCuidado = [
+	'' => 'Elegir',
+	'Continuo familiar reponsable' => 'Continuo por un familiar adulto',
+	'Continuo familiar vulnerable' => 'Continuo por un familiar menor/persona mayor',
+	'Continuo acompañante' => 'Continuo por un acompañante no familiar',
+	'Cuidado institucional' => 'Continuo en una institución o grupo',
+	'Permanece solo' => 'Permanece solo',
+	'No refiere' => 'No informa',
+	'SD' => 'Sin dato'
+];
+
+$optionEstudio = [
+	'' => 'Elegir',
+	'Jardín Infantil' => 'Jardín Infantil',
+	'Hogar Comuitario' => 'Hogar Comunitario',
+	'CDI' => 'CDI',
+	'No' => 'Mantiene en casa',
+	'No refiere' => 'No informa',
+	'SD' => 'Sin dato'
+];
+
+$optionConsumospa = [
+	'' =>  'Elegir',
+	'No' => 'No',
+	'Cigarrillo' => 'Cigarrillo',
+	'Licor' => 'Licor',
+	'Licor_cigarrillo' => 'Licor/Cigarrillo',
+	'Sustancias Psicoactivas' => 'Marihuana, basuco, otras',
+	'Uso indebido de Medicamentos' => 'Medicamentos sin prescripción médica(Opioides,Depresores,Estimulantes)',
+	'No aplica' => 'No aplica',
+];
+
+$optionConflictos = [
+	'No aplica ' => 'Elegir',
+	'No' => 'No refiere',
+	'Difucultades Economicas' => 'Dificultad económica para suplir necesidades básicas',
+	'Conflictos entre padres e hijos' => 'Conflictos entre padres e hijos',
+	'Conflictos entre hermanos' => 'Conflictos entre hermanos',
+	'Conflictos entre Familia' => 'Conflictos entre Familia',
+	'Violencias de género' => 'Violencias de género',
+	'Problemas o Transtornos mentales diagnosticados' => 'Problemas o Transtornos mentales diagnosticados',
+	'Consumo de alcohol o psicoactivos' => 'Consumo de alcohol o psicoactivos'
+];
+
+$optionTiposViolencia = [
+	'' => 'Elegir',
+	'No' => 'No se identifica',
+	'Sospecha Violencia Fisica' => 'Signos de maltrato físico(golpes, quemadura, heridas)',
+	'Sospecha Violencia Emocional' => 'Persona retraida, timida o agresiva',
+	'sospecha Violencia Sexual' => 'Tocamientos de personas, relaciones sexuales sin consentimiento ',
+	'Sospecha Abondono_Negligencia' => 'Falta de atención a necesidades básicas(alimentación, salud, educación)',
+	'No informa' => 'No informa',
+];
+
+$optionCanlizacion =
+	[
+		'1.Valoración Integral para la PYMS' => 'Valoración Integral para la PYMS',
+		'2.Valoración integral por profesional en odontología para la PYMS' => 'Valoración integral por profesional en odontología para la PYMS',
+		'3.Promoción y apoyo a lactancia materna' => 'Promoción y apoyo a lactancia materna',
+		'4.Aplicación de flúor' => 'Aplicación de flúor',
+		'5.Profilaxis y remoción de placa bacteriana' => 'Profilaxis y remoción de placa bacteriana',
+		'6.Vacunación' => 'Vacunación',
+		'5.Profilaxis y remoción de placa bacteriana' => 'Salud oral',
+		'12.Tamizaje de riesgo cardiovascular' => 'Tamizaje de riesgo cardiovascular',
+		'14.Tamizaje cáncer cuello uterino' => 'Citologia',
+		'15.Tamizaje de cáncer de mama' => 'Tamizaje para cancer de mama',
+		'16.Tamizaje de cáncer de próstata' => 'Tamizaje para cancer de prostata',
+		'17.Tamizaje de cáncer de colon' => 'Tamizaje para cancer de colon',
+
+		// Planificación familiar
+
+		'11.Planificación familiar' => 'Asesoria en anticoncepcion',
+		'11.Planificación familiar' => 'Suministro de anticonceptivos',
+		'11.Planificación familiar' => 'Suministro de preservativos',
+		'11.Planificación familiar' => 'Prueba de embarazo',
+		// ITS
+		'13.Tamizaje de ITS' => 'Prueba rapida treponemica',
+		'13.Tamizaje de ITS' => 'Prueba rapida para VIH',
+		'13.Tamizaje de ITS' => 'Asesoria pre y post test VIH',
+		'13.Tamizaje de ITS' => 'Prueba rápida hepatitis B',
+		'13.Tamizaje de ITS' => 'Prueba rápida hepatitis C',
+		// Educación
+		'24.Educación para la salud' => 'Activacion de ruta por sospecha de violencias',
+		'25.Ninguno' => 'Ninguno',
+
+		'18.Atención para el cuidado preconcepcional' => 'Atención para el cuidado preconcepcional',
+		'19.Atención para el cuidado prenatal – Controles prenatales' => 'Atención para el cuidado prenatal – Controles prenatales',
+		'20.Preparación para la maternidad y paternidad' => 'Preparación para la maternidad y paternidad',
+		'21.Interrupción Voluntaria del Embarazo' => 'Interrupción Voluntaria del Embarazo',
+		'22.Atención del puerperio' => 'Atención del puerperio',
+		'23.Atención para el seguimiento del recién nacido' => 'Atención para el seguimiento del recién nacido',
+	];
+
+$optionEducacion = [
+	'No',
+	'Educación para la salud individual',
+	'Educación para la salud familiar',
+	'Educación para la salud grupal',
+	'Valoración medíca',
+	'Valoración odontológica',
+	'Valoración Nutricional',
+	'Valoración Piscologica',
+	'Valoración Integral',
+	'Remision a urgencias',
+];
+
+$optionEstadoCanalizacion = [
+	'' => 'Elegir',
+	'No aplica ' => 'No aplica',
+	'En proceso ' => 'En proceso',
+	'Pendiente' => 'Pendiente',
+	'Efectiva' => 'Efectiva',
+	'No Efectiva' => 'No efectiva',
+
+];
 ?>
+
+
 
 <div class="max-w-5xl mx-auto text-center mb-8">
 	<h1 class="text-4xl md:text-5xl font-bold text-slate-800 mb-4 leading-tight">
@@ -712,7 +990,12 @@ $optionCronica = array(
 		Ingresar el formulario completamente de otra manera se invalidara la ficha.
 	</p>
 </div>
-
+<?php
+echo $this->Form->input('fechaRegistro', [
+	'type' => 'hidden',
+	'value' => date('Y-m-d')
+]);
+?>
 <div class="max-w-6xl mx-auto p-18">
 	<div class="bg-white shadow-2xl rounded-xl  p-6  md:p-12">
 
@@ -728,6 +1011,7 @@ $optionCronica = array(
 
 		<div class="grid grid-cols-1 md:grid-cols-2">
 
+			<!-- Tipo de Documento -->
 			<div class="col-span-2 md:col-span-1 text-md font-semibold mt-4 mb-6 md:mr-4">
 				<div class="flex items-center mb-4">
 					<span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">1</span>
@@ -751,6 +1035,7 @@ $optionCronica = array(
 				?>
 			</div>
 
+			<!-- Documento -->
 			<div class="col-span-2 md:col-span-1 text-md font-semibold mt-4 mb-6">
 				<div class="flex items-center mb-4">
 					<span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">2</span>
@@ -770,6 +1055,7 @@ $optionCronica = array(
 				?>
 			</div>
 
+			<!-- Primer Apellido -->
 			<div class="col-span-2 md:col-span-1 text-md font-semibold mt-4 mb-6 md:mr-4">
 				<div class="flex items-center mb-4">
 					<span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">3</span>
@@ -789,7 +1075,8 @@ $optionCronica = array(
 				?>
 			</div>
 
-			<div class="col-span-2 md:col-span-1 text-md font-semibold mt-4 mb-6 md:mr-4">
+			<!-- Segundo Apellido -->
+			<div class="col-span-2 md:col-span-1 text-md font-semibold mt-4 mb-6">
 				<div class="flex items-center mb-4">
 					<span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">4</span>
 					<label for="nombre" class="font-semibold">Segundo Apellido</label>
@@ -807,6 +1094,7 @@ $optionCronica = array(
 				?>
 			</div>
 
+			<!-- Primer Nombre -->
 			<div class="col-span-2 md:col-span-1 text-md font-semibold mt-4 mb-6 md:mr-4">
 				<div class="flex items-center mb-4">
 					<span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">5</span>
@@ -826,7 +1114,8 @@ $optionCronica = array(
 				?>
 			</div>
 
-			<div class="col-span-2 md:col-span-1 text-md font-semibold mt-4 mb-6 md:mr-4">
+			<!-- Segundo Nombre -->
+			<div class="col-span-2 md:col-span-1 text-md font-semibold mt-4 mb-6">
 				<div class="flex items-center mb-4">
 					<span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">6</span>
 					<label for="nombre" class="font-semibold">Segundo Nombre</label>
@@ -844,9 +1133,10 @@ $optionCronica = array(
 				?>
 			</div>
 
-			<div class="col-span-2 md:col-span-1 text-md font-semibold my-4 mb-6 md:mr-4">
+			<!-- Fecha de Nacimiento -->
+			<div class="col-span-2 md:col-span-2 text-md font-semibold my-4 mb-6 md:mr-4">
 				<div class="flex items-center">
-					<span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">7</span>
+					<span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">8</span>
 					<label for="resultadoEcomapa" class="font-semibold">Fecha de nacimiento</label>
 					<p class="text-red-600">*</p>
 				</div>
@@ -866,9 +1156,10 @@ $optionCronica = array(
 				</div>
 			</div>
 
+			<!-- Sexo -->
 			<div class="flex flex-col md:flex-row justify-center md:justify-between col-span-1 md:col-span-2 text-md font-semibold my-6 mr-4">
 				<div class="flex items-center mb-4">
-					<span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">8</span>
+					<span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">7</span>
 					<label for="sexo" class="font-semibold">¿Cúal es su sexo?</label>
 				</div>
 
@@ -908,7 +1199,8 @@ $optionCronica = array(
 				</div>
 			</div>
 
-			<div class="col-span-2 md:col-span-1 text-md font-semibold mt-4 mb-6 md:mr-4">
+			<!-- Género -->
+			<div class="col-span-2 md:col-span-1 text-md font-semibold mt-4 md:mr-4">
 				<div class="flex items-center mb-4">
 					<span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">9</span>
 					<label for="nombre" class="font-semibold">¿Cúal es su género?</label>
@@ -930,7 +1222,8 @@ $optionCronica = array(
 				?>
 			</div>
 
-			<div class="col-span-2 md:col-span-1 text-md font-semibold my-6">
+			<!-- Aseguradora -->
+			<div class="col-span-2 md:col-span-1 text-md font-semibold my-6 mb-6 md:mr-4">
 				<div class="flex items-center mb-4">
 					<span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">10</span>
 					<label for="familiograma" class="font-semibold">Aseguradora</label>
@@ -955,6 +1248,33 @@ $optionCronica = array(
 				?>
 			</div>
 
+			<!-- Estado de Afiliacion -->
+			<div class="col-span-2 md:col-span-1 text-md font-semibold my-6 mb-6 md:mr-4">
+				<div class="flex items-center mb-4">
+					<span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">11</span>
+					<label for="familiograma" class="font-semibold">Estado de Afiliacion</label>
+					<p class="text-red-600">*</p>
+				</div>
+
+				<?php
+				echo $this->Form->input('estadoafiliacion', [
+					'type' => 'select',
+					'id' => 'producto_id',
+					'options' => $estadoAfiliacionOption,
+					'class' => 'border border-gray-300 rounded-lg w-full p-2 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 text-sm text-gray-500 focus:text-gray-800',
+					'label' => '',
+					'empty' => 'Seleccione el estado de afiliacion',
+					'error' => false // No mostrar error aquí
+				]);
+
+
+				if (!empty($this->Form->error('estadoafiliacion'))) {
+					echo '<div class="text-red-600 text-md mt-1 font-semibold">' . $this->Form->error('estadoafiliacion') . '</div>';
+				}
+				?>
+			</div>
+
+			<!-- Regimen -->
 			<div class="col-span-2 md:col-span-1 text-md font-semibold mt-4 mb-6 md:mr-4">
 				<div class="flex items-center mb-4">
 					<span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">11</span>
@@ -978,6 +1298,7 @@ $optionCronica = array(
 				?>
 			</div>
 
+			<!-- Rol -->
 			<div class="col-span-2 md:col-span-1 text-md font-semibold mt-4 mb-6 md:mr-4">
 				<div class="flex items-center mb-4">
 					<span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">12</span>
@@ -1001,6 +1322,7 @@ $optionCronica = array(
 				?>
 			</div>
 
+			<!-- Etnia -->
 			<div class="col-span-2 md:col-span-1 text-md font-semibold mt-4 mb-6 md:mr-4">
 				<div class="flex items-center mb-4">
 					<span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">13</span>
@@ -1024,6 +1346,7 @@ $optionCronica = array(
 				?>
 			</div>
 
+			<!-- Grupo Poblacional -->
 			<div class="col-span-2 md:col-span-1 text-md font-semibold mt-4 mb-6 md:mr-4">
 				<div class="flex items-center mb-4">
 					<span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">14</span>
@@ -1047,6 +1370,7 @@ $optionCronica = array(
 				?>
 			</div>
 
+			<!-- Nivel Educativo -->
 			<div class="col-span-2 md:col-span-1 text-md font-semibold mt-4 mb-6 md:mr-4">
 				<div class="flex items-center mb-4">
 					<span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">15</span>
@@ -1070,7 +1394,8 @@ $optionCronica = array(
 				?>
 			</div>
 
-			<div class="col-span-2 md:col-span-1 text-md font-semibold my-6">
+			<!-- Ocupacion -->
+			<div class="col-span-2 md:col-span-1 text-md font-semibold my-6 md:mr-4">
 				<div class="flex items-center mb-4">
 					<span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">16</span>
 					<label for="familiograma" class="font-semibold">Ocupacion</label>
@@ -1094,6 +1419,8 @@ $optionCronica = array(
 				}
 				?>
 			</div>
+
+			<!-- Telefono -->
 			<div class="col-span-2 md:col-span-1 text-md font-semibold mt-4 mb-6 md:mr-4">
 				<div class="flex items-center mb-4">
 					<span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">17</span>
@@ -1124,6 +1451,7 @@ $optionCronica = array(
 				</div>
 			</div>
 
+			<!-- Email -->
 			<div class="col-span-2 md:col-span-1 text-md font-semibold mt-4 mb-6 md:mr-4">
 				<div class="flex items-center mb-4">
 					<span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">18</span>
@@ -1132,6 +1460,7 @@ $optionCronica = array(
 				</div>
 				<?php
 				echo $this->Form->input('email', [
+					'type' => 'text',
 					'label' => false,
 					'class' => 'border border-gray-300 rounded-lg w-full p-2 focus:outline-none  focus:ring-1 focus:ring-blue-500 focus:border-blue-500 borde azul  mt-2 font-semibold text-gray-700  text-sm focus:text-gray-900',
 					'error' => false
@@ -1162,7 +1491,9 @@ $optionCronica = array(
 
 		<div class="grid grid-cols-1 md:grid-cols-2">
 
-			<div class="col-span-2 md:col-span-1 text-md font-semibold mt-4 mb-6 md:mr-4">
+
+			<!-- Discapacidad -->
+			<div class="col-span-2 md:col-span-2 text-md font-semibold mt-4 mb-6">
 				<div class="flex items-center mb-4">
 					<span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">1</span>
 					<label for="nombre" class="font-semibold">¿Presenta alguna de las siguientes discapacidades?</label>
@@ -1216,7 +1547,8 @@ $optionCronica = array(
 				</div>
 			</div>
 
-			<div class="col-span-2 md:col-span-2 text-md font-semibold mt-4 mb-6">
+			<!-- Peso -->
+			<div class="col-span-2 md:col-span-1 text-md font-semibold mt-4 mb-6 md:mr-4">
 				<div class="flex items-center mb-4">
 					<span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">2</span>
 					<label for="nombre" class="font-semibold">Registre Peso en Kg.</label>
@@ -1237,7 +1569,8 @@ $optionCronica = array(
 				?>
 			</div>
 
-			<div class="col-span-2 md:col-span-2 text-md font-semibold mt-4 mb-6">
+			<!-- Talla -->
+			<div class="col-span-2 md:col-span-1 text-md font-semibold mt-4 mb-6">
 				<div class="flex items-center mb-4">
 					<span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">3</span>
 					<label for="nombre" class="font-semibold">Registre talla en cm</label>
@@ -1262,6 +1595,7 @@ $optionCronica = array(
 				<button type="button" id="calcularIMC" class="bg-teal-600 text-white px-6 py-2 rounded-md hover:bg-green-700 transition font-medium flex items-center justify-center gap-2">Calcular IMC</button>
 			</div>
 
+			<!-- Indice de masa corporal -->
 			<div class="col-span-2 md:col-span-1 text-md font-semibold mt-4 mb-6">
 				<div class="flex items-center mb-4">
 					<span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">4</span>
@@ -1285,45 +1619,31 @@ $optionCronica = array(
 				<p id="mensajeIMC"></p>
 			</div>
 
-			<?php
-
-			$fecha = $this->request->data('fechanac');
-			$edad = null;
-			if (!empty($fecha)) {
-				try {
-					$dob = new \DateTime($fecha);
-					$hoy = new \DateTime();
-					$edad = $hoy->diff($dob)->y;
-				} catch (\Exception $e) {
-					$edad = null;
-				}
-			} ?>
-
-			<?php if ($edad !== null && $edad > 5): ?>
-				<div class="col-span-2 md:col-span-2 text-md font-semibold mt-4 mb-6">
-					<div class="flex items-center mb-4">
-						<span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">?</span>
-						<label for="nombre" class="font-semibold">Registre Tensión arterial 0/0</label>
-						<p class="text-red-600">*</p>
-					</div>
-					<?php
-					echo $this->Form->input('tensionarterial', [
-						'label' => false,
-						'class' => 'border border-gray-300 rounded-lg w-full p-2 focus:outline-none  focus:ring-1 focus:ring-blue-500 focus:border-blue-500 borde azul  mt-2 font-semibold text-gray-700  text-sm focus:text-gray-900',
-						'error' => false,
-						'placeholder' => '',
-						'id' => 'tensionarterial',
-					]);
-
-					if (!empty($this->Form->error('tensionarterial'))) {
-						echo '<div class="text-red-600 text-md mt-1 font-semibold">' . $this->Form->error('tensionarterial') . '</div>';
-					}
-					?>
-
-					<p id="mensaje-tension-arterial"></p>
+			<!-- Tension Arterial mayores de 2 años -->
+			<div class="col-span-2 md:col-span-2 text-md font-semibold mt-4 mb-6 md:mr-4" id="campo-tension" style="display: none;">
+				<div class="flex items-center mb-4">
+					<span class="mr-2 px-2 rounded-lg bg-blue-200 text-md font-semibold">?</span>
+					<label for="nombre" class="font-semibold">Registre Tensión arterial 0/0</label>
+					<p class="text-red-600">*</p>
 				</div>
-			<?php endif; ?>
+				<?php
+				echo $this->Form->input('tensionarterial', [
+					'label' => false,
+					'class' => 'border border-gray-300 rounded-lg w-full p-2 focus:outline-none  focus:ring-1 focus:ring-blue-500 focus:border-blue-500 borde azul  mt-2 font-semibold text-gray-700  text-sm focus:text-gray-900',
+					'error' => false,
+					'placeholder' => '',
+					'id' => 'tensionarterial',
+				]);
 
+				if (!empty($this->Form->error('tensionarterial'))) {
+					echo '<div class="text-red-600 text-md mt-1 font-semibold">' . $this->Form->error('tensionarterial') . '</div>';
+				}
+				?>
+
+				<p id="mensaje-tension-arterial"></p>
+			</div>
+
+			<!-- Enfermedades Cronicas -->
 			<div class="col-span-2 md:col-span-1 text-md font-semibold mt-4 mb-6 md:mr-4">
 				<div class="flex items-center mb-4">
 					<span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">5</span>
@@ -1347,1006 +1667,1367 @@ $optionCronica = array(
 				?>
 			</div>
 
-			
-			<?php if ($edad !== null && $edad > 18 & $this->data['sexo'] == '1.Mujer'): ?>
-				<div class="col-span-2 md:col-span-2 text-md font-semibold mt-4 mb-6">
-					<div class="flex items-center mb-4">
-						<span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">?</span>
-						<label for="nombre" class="font-semibold">¿Presenta alguna de las siguientes enfermedades crónicas?</label>
-						<p class="text-red-600">*</p>
-					</div>
-					<?php
-					echo $this->Form->input('condicioncronica1', [
-						'label' => false,
-						'class' => 'border border-gray-300 rounded-lg w-full p-2 focus:outline-none  focus:ring-1 focus:ring-blue-500 focus:border-blue-500 borde azul  mt-2 font-semibold text-gray-700  text-sm focus:text-gray-900',
-						'error' => false,
-						'placeholder' => '',
-						'id' => 'condicioncronica1',
-					]);
-
-					if (!empty($this->Form->error('condicioncronica1'))) {
-						echo '<div class="text-red-600 text-md mt-1 font-semibold">' . $this->Form->error('condicioncronica1') . '</div>';
-					}
-					?>
-
-					<p id="mensaje-tension-arterial"></p>
+			<!-- Antecedente Ginecologico -->
+			<div class="col-span-2 md:col-span-1 text-md font-semibold mt-4 mb-6 md:mr-4" id="campo-antecedenteginecologico" style="display: none;">
+				<div class="flex items-center mb-4">
+					<span class="mr-2 px-2 rounded-lg bg-blue-200 text-md font-semibold">?</span>
+					<label for="nombre" class="font-semibold">¿Le han realizado alguna cirugia ginecológica?</label>
+					<p class="text-red-600">*</p>
 				</div>
-			<?php endif; ?>
+				<?php
+				echo $this->Form->input('antecedenteginecologico', [
+					'type' => 'select',
+					'id' => 'antecedenteginecologico',
+					'class' => 'border border-gray-300 rounded-lg w-full p-2 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 text-sm text-gray-500 focus:text-gray-800',
+					'error' => false,
+					'multiple' => true,
+					'options' => $optionGinecologico,
+					'label' => '',
+					'empty' => 'Selecciona una opción',
+				]);
+
+				if (!empty($this->Form->error('antecedenteginecologico'))) {
+					echo '<div class="text-red-600 text-md mt-1 font-semibold">' . $this->Form->error('antecedenteginecologico') . '</div>';
+				}
+				?>
+			</div>
+
+			<!-- Tomacitologia -->
+			<div class="col-span-2 md:col-span-1 text-md font-semibold mt-4 mb-6 md:mr-4" id="campo-tomacitologia" style="display: none;">
+				<div class="flex items-center mb-4">
+					<span class="mr-2 px-2 rounded-lg bg-blue-200 text-md font-semibold">?</span>
+					<label for="nombre" class="font-semibold">¿Se ha realizado el exámen de citología de acuerdo a esquema?</label>
+					<p class="text-red-600">*</p>
+				</div>
+				<?php
+				echo $this->Form->input('tomacitologia', [
+					'type' => 'select',
+					'id' => 'rol',
+					'class' => 'border border-gray-300 rounded-lg w-full p-2 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 text-sm text-gray-500 focus:text-gray-800',
+					'error' => false,
+					'options' => $optionCitologia,
+					'label' => '',
+					'empty' => 'Selecciona una opción',
+				]);
+
+				if (!empty($this->Form->error('tomacitologia'))) {
+					echo '<div class="text-red-600 text-md mt-1 font-semibold">' . $this->Form->error('tomacitologia') . '</div>';
+				}
+				?>
+
+				<p class="text-gray-400 text-xs mt-2">Esquema: Citología convencional esquema 1-3-3 edad 25 a 29 años y
+					Citología VPH 1-5-5 edad de 30 a 65 años, Esquemas ante resultado negativo
+				</p>
+			</div>
+
+			<!-- Mamografia -->
+			<div class="flex flex-col md:flex-row justify-center md:justify-between col-span-1 md:col-span-1 text-md font-semibold my-6 mr-4" id="campo-mamografia" style="display: none;">
+				<div class="flex items-center mb-4">
+					<span class="mr-2 px-2 rounded-lg bg-blue-200 text-md font-semibold">?</span>
+					<label for="mamografia" class="font-semibold">Le han realizado Mamografía en los 5 últimos años (Mujer de 50 y más años)</label>
+				</div>
+
+				<div class="flex space-x-4 items-center justify-center md:justify-start mt-4 pr-0 md:pr-[10%]  md:mt-0 ">
+					<!-- Botón NO -->
+					<div>
+						<input type="radio"
+							name="data[Juventudadulto][mamografia]"
+							id="mamografia-no"
+							value="Hombre"
+							class="hidden peer"
+							data-target="mamografia"
+							data-show="false"
+							checked /> <!-- 👈 Por defecto NO -->
+						<label for="mamografia-no"
+							class="px-12 py-2 rounded-lg border cursor-pointer hover:text-white hover:bg-teal-600
+                       peer-checked:bg-teal-600 peer-checked:text-white">
+							NO
+						</label>
+					</div>
+
+					<!-- Botón SÍ -->
+					<div>
+						<input type="radio"
+							name="data[Juventudadulto][mamografia]"
+							id="mamografia-si"
+							value="Mujer"
+							data-target="mamografia"
+							data-show="true"
+							class="hidden peer cursor-pointer" />
+						<label for="mamografia-si"
+							class="px-12 py-2 rounded-lg border hover:bg-teal-600 cursor-pointer hover:text-white
+                       peer-checked:bg-teal-600 peer-checked:text-white">
+							SI
+						</label>
+					</div>
+				</div>
+			</div>
+
 		</div>
 	</div>
 </div>
 
-<body style="font-size: 14px;">
-	<div class="form-group col-sm-12">
-		<?php echo $this->Form->create('Juventudadulto'); ?>
-		<fieldset>
+<div class="max-w-6xl mx-auto p-18" id="seccion-sexual" style="display: none;">
+	<div class="bg-white shadow-2xl rounded-xl  p-6  md:p-12">
 
+		<!-- Header -->
+		<div class="flex items-center mb-4">
+			<i class="fa-solid fa-person-half-dress text-teal-600 text-3xl bg-teal-100 px-5 py-3 rounded-lg"></i>
+			<div class="ml-4">
+				<h1 class="text-xl font-semibold">Salud Sexual</h1>
+				<p class="text-gray-500">Complementa la información correspondiente a la salud sexual.</p>
+			</div>
 
-			<h2 class="subtitle-general-forms">
-				Valoración de Salud</h2>
-			<hr style=" border:0.1px solid rgba(0,0,0,.125);">
+		</div>
 
-			<div class="grow justify-content-center" display="none" style="margin-top:20px">
-				<div class="card col-sm-12" style=" font-size:15px;  border:1.5px solid rgba(0,0,0,.125);">
+		<div class="grid grid-cols-1 md:grid-cols-2">
 
-					<div class="form-group row">
+			<!-- Vida Sexual -->
+			<div class="col-span-2 md:col-span-1 text-md font-semibold mt-4 mb-6 md:mr-4" id="campo-iniciovidasexual" style="display: none;">
+				<div class="flex items-center mb-4">
+					<span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">1</span>
+					<label for="nombre" class="font-semibold">¿Usted ha iniciado su vida sexual?</label>
+					<p class="text-red-600">*</p>
+				</div>
+				<?php
+				echo $this->Form->input('iniciovidasexual', [
+					'type' => 'select',
+					'id' => 'rol',
+					'class' => 'border border-gray-300 rounded-lg w-full p-2 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 text-sm text-gray-500 focus:text-gray-800',
+					'error' => false,
+					'options' => $optionVidaSexual,
+					'label' => '',
+					'empty' => 'Selecciona una opción',
+				]);
 
-						<div class="form-group col-md-6" style="margin-top: 20px;">
+				if (!empty($this->Form->error('iniciovidasexual'))) {
+					echo '<div class="text-red-600 text-md mt-1 font-semibold">' . $this->Form->error('iniciovidasexual') . '</div>';
+				}
+				?>
+			</div>
 
+			<!-- Métodos Anticonceptivos -->
+			<div class="col-span-2 md:col-span-1 text-md font-semibold mt-4 mb-6 md:mr-4" id="campo-metodosanticonceptivos" style="display: none;">
+				<div class="flex items-center mb-4">
+					<span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">2</span>
+					<label for="nombre" class="font-semibold">¿Utiliza algún método de planificación familiar?</label>
+					<p class="text-red-600">*</p>
+				</div>
+				<?php
+				echo $this->Form->input('metodosanticonceptivos', [
+					'type' => 'select',
+					'id' => 'rol',
+					'class' => 'border border-gray-300 rounded-lg w-full p-2 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 text-sm text-gray-500 focus:text-gray-800',
+					'error' => false,
+					'options' => $optionAnticonceptivos,
+					'label' => '',
+					'empty' => 'Selecciona una opción',
+				]);
 
-							<button type="button" id="ayudaButton" class="btn btn-success rounded-circle"
-								data-toggle="popover" data-placement="top" data-content="Físicas: Limitaciones o dificultades en la movilidad o funcionamiento físico.
+				if (!empty($this->Form->error('metodosanticonceptivos'))) {
+					echo '<div class="text-red-600 text-md mt-1 font-semibold">' . $this->Form->error('metodosanticonceptivos') . '</div>';
+				}
+				?>
+			</div>
 
-                                        Auditivas: Dificultades o limitaciones en la capacidad de escuchar o procesar el sonido.
+			<!-- Infecciones de Transmisión Sexual -->
+			<div class="col-span-2 md:col-span-1 text-md font-semibold mt-4 mb-6 md:mr-4" id="campo-infeccionestransmisionsexual" style="display: none;">
+				<div class="flex items-center mb-4">
+					<span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">3</span>
+					<label for="nombre" class="font-semibold">¿Le han diagnosticado alguna Infección de transmisión Sexual?</label>
+					<p class="text-red-600">*</p>
+				</div>
+				<?php
+				echo $this->Form->input('infeccionestransmisionsexual', [
+					'type' => 'select',
+					'id' => 'rol',
+					'class' => 'border border-gray-300 rounded-lg w-full p-2 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 text-sm text-gray-500 focus:text-gray-800',
+					'error' => false,
+					'options' => $optionits,
+					'label' => '',
+					'empty' => 'Selecciona una opción',
+				]);
 
-                                        Visuales: Limitaciones o dificultades en la visión.
+				if (!empty($this->Form->error('infeccionestransmisionsexual'))) {
+					echo '<div class="text-red-600 text-md mt-1 font-semibold">' . $this->Form->error('infeccionestransmisionsexual') . '</div>';
+				}
+				?>
+			</div>
 
-                                        Sordoceguera: Condición en la que una persona tiene tanto discapacidad auditiva como discapacidad visual.
+			<!-- Gestacion -->
+			<div class="flex flex-col md:flex-row justify-center md:justify-between col-span-1 md:col-span-2 text-md font-semibold my-6 mr-4" id="campo-gestacion" style="display: none;">
+				<div class="flex items-center mb-4">
+					<span class="mr-2 px-2 rounded-lg bg-blue-200 text-md font-semibold">?</span>
+					<label for="sexo" class="font-semibold">¿Mujer en embarazo?</label>
+				</div>
 
-                                        Cognitivas o intelectuales: Limitaciones en el funcionamiento del cerebro que afectan el procesamiento, comprensión, aprendizaje y memoria de la información.
+				<div class="flex space-x-4 items-center justify-center md:justify-start mt-4 pr-0 md:pr-[10%]  md:mt-0 ">
+					<!-- Botón NO -->
+					<div>
+						<input type="radio"
+							name="data[Juventudadulto][gestacion]"
+							id="gestacion-no"
+							value="No"
+							class="hidden peer"
+							data-target="gestacion"
+							data-show="false"
+							checked /> <!-- 👈 Por defecto NO -->
+						<label for="gestacion-no"
+							class="px-12 py-2 rounded-lg border cursor-pointer hover:text-white hover:bg-teal-600
+                       peer-checked:bg-teal-600 peer-checked:text-white">
+							NO
+						</label>
+					</div>
 
-                                        Mentales: Limitaciones en las habilidades cognitivas, emocionales y de comportamiento.
-                                        "
-								style="width: 30px; height: 30px; padding: 0; font-size: 18px; margin-top: 5px; margin-left: 15px;">
-								?
-							</button>
+					<!-- Botón SÍ -->
+					<div>
+						<input type="radio"
+							name="data[Juventudadulto][gestacion]"
+							id="gestacion-si"
+							value="Si"
+							data-target="gestacion"
+							data-show="true"
+							class="hidden peer cursor-pointer" />
+						<label for="gestacion-si"
+							class="px-12 py-2 rounded-lg border hover:bg-teal-600 cursor-pointer hover:text-white
+                       peer-checked:bg-teal-600 peer-checked:text-white">
+							SI
+						</label>
+					</div>
+				</div>
+				<p class="text-gray-400 text-xs mt-2">Registre información de mujer en gestación o puerperio</p>
+			</div>
+		</div>
+	</div>
+</div>
 
-						</div>
+<div class="max-w-6xl mx-auto p-18" id="seccion-gestacion" style="display: none;">
+	<div class="bg-white shadow-2xl rounded-xl  p-6  md:p-12">
 
+		<!-- Header -->
+		<div class="flex items-center mb-4">
+			<i class="fa-solid fa-person-pregnant text-teal-600 text-3xl bg-teal-100 px-5 py-3 rounded-lg"></i>
+			<div class="ml-4">
+				<h1 class="text-xl font-semibold">Gestacion</h1>
+				<p class="text-gray-500">Complementa la información si la personas es gestante.</p>
+			</div>
+		</div>
 
+		<div class="grid grid-cols-1 md:grid-cols-2">
 
-						<div class="form-group col-md-6">
-							<button class="my-button" style="margin-left: 5px;" id="calcularIMC">Calcular IMC</button>
-						</div>
+			<!-- Control Prenatal -->
+			<div class="col-span-2 md:col-span-1 text-md font-semibold mt-4 mb-6 md:mr-4">
+				<div class="flex items-center mb-4">
+					<span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">1</span>
+					<label for="nombre" class="font-semibold">¿Esta inscrita en control prenatal?</label>
+					<p class="text-red-600">*</p>
+				</div>
+				<?php
+				echo $this->Form->input('controlprenatal', [
+					'type' => 'select',
+					'id' => 'rol',
+					'class' => 'border border-gray-300 rounded-lg w-full p-2 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 text-sm text-gray-500 focus:text-gray-800',
+					'error' => false,
+					'options' => $optionControlPrenatal,
+					'label' => '',
+					'empty' => 'Selecciona una opción',
+				]);
 
-						<div class="form-group col-md-6" style="margin-top: 20px;">
-							<?php
-							echo $this->Form->input('indicemasacorporal', array(
-								'label' => 'Indice de masa corporal',
-								'class' => 'form-control',
-								'style' => 'height:30px;  font-size: 15px ; width:100%',
-								'placeholder' => '',
-								'readonly' => 'readonly',
-								'id' => 'indicemasacorporal',
-							)); ?>
+				if (!empty($this->Form->error('controlprenatal'))) {
+					echo '<div class="text-red-600 text-md mt-1 font-semibold">' . $this->Form->error('controlprenatal') . '</div>';
+				}
+				?>
+			</div>
 
-							<p id="mensajeIMC"></p>
-						</div>
+			<!-- Riesgo del Embarazo -->
+			<div class="col-span-2 md:col-span-1 text-md font-semibold mt-4 mb-6 md:mr-4">
+				<div class="flex items-center mb-4">
+					<span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">2</span>
+					<label for="nombre" class="font-semibold">¿El riesgo del embarazo es?</label>
+					<p class="text-red-600">*</p>
+				</div>
+				<?php
+				echo $this->Form->input('riesgoembarazo', [
+					'type' => 'select',
+					'id' => 'rol',
+					'class' => 'border border-gray-300 rounded-lg w-full p-2 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 text-sm text-gray-500 focus:text-gray-800',
+					'error' => false,
+					'options' => $optionRiesgoEmbarazo,
+					'label' => '',
+					'empty' => 'Selecciona una opción',
+				]);
 
-						<div class="form-group col-md-6" style="margin-top: 20px;">
-							<?php
-							echo $this->Form->input('tensionarterial', array(
-								'label' => 'Registre Tensión arterial 0/0',
-								'class' => 'form-control tension-arterial-input',
-								'style' => 'height:30px;  font-size: 15px ; width:100%',
-								'placeholder' => ''
+				if (!empty($this->Form->error('riesgoembarazo'))) {
+					echo '<div class="text-red-600 text-md mt-1 font-semibold">' . $this->Form->error('riesgoembarazo') . '</div>';
+				}
+				?>
+			</div>
 
-							)); ?>
-							<p id="mensaje-tension-arterial"></p>
-						</div>
+			<!-- Signos o Síntomas de Alarma -->
+			<div class="col-span-2 md:col-span-1 text-md font-semibold mt-4 mb-6 md:mr-4">
+				<div class="flex items-center mb-4">
+					<span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">3</span>
+					<label for="nombre" class="font-semibold">¿En el momento presenta alguno de los siguientes signos o síntomas de alarma?</label>
+					<p class="text-red-600">*</p>
+				</div>
+				<?php
+				echo $this->Form->input('signoAlarma', [
+					'type' => 'select',
+					'id' => 'rol',
+					'class' => 'border border-gray-300 rounded-lg w-full p-2 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 text-sm text-gray-500 focus:text-gray-800',
+					'error' => false,
+					'options' => $optionAlarmaEmbarazo,
+					'label' => '',
+					'empty' => 'Selecciona una opción',
+				]);
 
-						<div class="form-group col-md-6" style="margin-top: 20px;">
-							<?php
-							$optionCronica = array(
-								'' => 'Elegir',
-								'No' => 'No',
-								'Hipertensión' => 'Hipertensión',
-								'Diabetes' => 'Diabetes',
-								'Hipertiroidismo' => 'Hipertiroidismo',
-								'Hipotiroidismo' => 'Hipotiroidismo',
-								'Dislipidemia' => 'colesterol, triglicéridos elevados',
-								'Neurologica' => 'Neurológica',
-								'Cardiovascular' => 'Cardiovascular',
-								'Respiratoria' => 'Respiratoria',
-								'Metabólica' => 'Metabólica',
-								'Endocrinológica' => 'Endocrinológica',
-								'Epilepsia' => 'Epilepsia',
-								'Gastrointestinal' => 'Gastrointestinal',
-								'Renal, otras enferemdades cronicas' => 'renal otras enferemdades cronicas',
-								'No informa' => 'Desconoce la información',
-								'SD' => 'Sin dato',
-							);
-							echo $this->Form->input('condicioncronica', array(
-								'label' => '¿Presenta alguna de las siguientes enfermedades crónicas?',
-								'class' => 'form-control',
-								'placeholder' => '',
-								'type' => 'select',
-								'options' => $optionCronica,
-								'style' => 'height:30px;  font-size: 15px ; width:100%',
-								'id' => 'condicioncronica',
-								'onChange' => 'cronica(this.value);', // Agrega el atributo onChange para llamar a la función JavaScript
+				if (!empty($this->Form->error('signoAlarma'))) {
+					echo '<div class="text-red-600 text-md mt-1 font-semibold">' . $this->Form->error('signoAlarma') . '</div>';
+				}
+				?>
+			</div>
+		</div>
+	</div>
+</div>
 
-							)); ?>
-						</div>
+<div class="max-w-6xl mx-auto p-18">
+	<div class="bg-white shadow-2xl rounded-xl p-6 md:p-12">
 
-						<div id="Cronica" class="form-group col-md-6">
+		<div class="flex items-center mb-4">
+			<i class="fa-solid fa-circle-exclamation text-teal-600 text-3xl bg-teal-100 px-5 py-3 rounded-lg"></i>
+			<div class="ml-4">
+				<h1 class="text-xl font-semibold">Atenciones</h1>
+				<p class="text-gray-500">Complementa la información de las atenciones.</p>
+			</div>
 
-							<?php
+		</div>
 
+		<div class="grid grid-cols-1 md:grid-cols-2">
 
-							echo $this->Form->input('condicioncronica1', array(
-								'label' => '¿Presenta alguna de las siguientes enfermedades crónicas?',
-								'class' => 'form-control',
-								'placeholder' => '',
-								'type' => 'select',
-								'options' => $optionCronica,
-								'style' => 'height:30px;  font-size: 15px ; width:100%',
-								'id' => 'condicioncronica1',
+			<!--  -->
+			<div class="flex flex-col md:flex-row justify-center md:justify-between col-span-1 md:col-span-2 text-md font-semibold my-6 mr-4">
+				<div class="flex items-center mb-4">
+					<span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">1</span>
+					<label for="sexo" class="font-semibold">¿Asistió a consulta de odontología en el último año?</label>
+				</div>
 
+				<div class="flex space-x-4 items-center justify-center md:justify-start mt-4 pr-0 md:pr-[10%]  md:mt-0 ">
+					<!-- Botón NO -->
+					<div>
+						<input type="radio"
+							name="data[Juventudadulto][saludoral]"
+							id="saludoral-no"
+							value="No"
+							class="hidden peer"
+							data-target="saludoral"
+							data-show="false"
+							checked /> <!-- 👈 Por defecto NO -->
+						<label for="saludoral-no"
+							class="px-12 py-2 rounded-lg border cursor-pointer hover:text-white hover:bg-teal-600
+                       peer-checked:bg-teal-600 peer-checked:text-white">
+							NO
+						</label>
+					</div>
 
-							)); ?>
-						</div>
-
-						<div class="form-group col-md-6" style="margin-top: 20px;">
-							<?php
-							$optionVacuna = array(
-								'' => 'Elegir',
-								'No' => 'No',
-								'Toxoide tétanico' => 'Toxoide tétanico',
-								'Covid' => 'Vacuna Covid-19',
-								'Influenza' => 'Influenza Estacional',
-								'Fiebre Amarilla' => 'Fiebre Amarilla',
-								'No informa' => 'Desconoce la información',
-								'SD' => 'Sin dato',
-
-							);
-							echo $this->Form->input('esquemavacunacion', array(
-								'label' => '¿Le han aplicado alguna de las siguientes vacunas en el último año? ',
-								'class' => 'form-control',
-								'placeholder' => '',
-								'type' => 'select',
-								'options' => $optionVacuna,
-								'style' => 'height:30px;  font-size: 15px ; width:100%',
-								'id' => 'esquemavacunacion'
-
-							)); ?>
-						</div>
-
-						<div class="form-group col-md-6" style="margin-top: 20px;">
-							<?php
-							echo $this->Form->input('desparasitacion', array(
-								'label' => '¿Se ha desparasitado en los últimos seis meses?',
-								'class' => 'form-control',
-								'style' => 'height:30px;  font-size: 15px ; width:100%',
-								'options' => $optionYesNo,
-								'placeholder' => '',
-								'id' => 'desparasitacion',
-							)); ?> </div>
-
-						<div class="form-group col-md-6" style="margin-top: 20px;">
-							<?php
-							$optionValoracionMedica = array(
-								'' => 'Elegir',
-								'Consulta Morbilidad' => 'Consulta de Morbilidad',
-								'Consulta Cronicos' => 'Consulta de Crónicos',
-								'Consulta PYP' => 'Consulta Promoción y prevención',
-								'Consulta Urgencias' => 'Consulta Urgencias',
-								'No asistido' => 'No ha asistido',
-								'No informa' => 'No informa',
-								'SD' => 'Sin Dato',
-
-							);
-							echo $this->Form->input('valoracionmedica', array(
-								'label' => '¿Ha asistido a Valoración Médica en el ultimo año?',
-								'class' => 'form-control',
-								'style' => 'height:30px;  font-size: 15px ; width:100%',
-								'placeholder' => '',
-								'options' => $optionValoracionMedica,
-							)); ?>
-						</div>
-
-
-
-
-						<div class="form-group col-md-6" style="margin-top: 20px;">
-							<?php
-							echo $this->Form->input('saludoral', array(
-								'label' => '¿Asistió a consulta de odontología en el último año?',
-								'class' => 'form-control',
-								'style' => 'height:30px;  font-size: 15px ; width:100%',
-								'options' => $optionYesNo,
-								'placeholder' => '',
-								'id' => 'saludoral',
-							)); ?>
-						</div>
+					<!-- Botón SÍ -->
+					<div>
+						<input type="radio"
+							name="data[Juventudadulto][saludoral]"
+							id="saludoral-si"
+							value="Si"
+							data-target="saludoral"
+							data-show="true"
+							class="hidden peer cursor-pointer" />
+						<label for="saludoral-si"
+							class="px-12 py-2 rounded-lg border hover:bg-teal-600 cursor-pointer hover:text-white
+                       peer-checked:bg-teal-600 peer-checked:text-white">
+							SI
+						</label>
 					</div>
 				</div>
 			</div>
 
+			<!-- Vacunas Aplicadas -->
+			<div class="col-span-2 md:col-span-1 text-md font-semibold mt-4 mb-6 md:mr-4">
+				<div class="flex items-center mb-4">
+					<span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">2</span>
+					<label for="nombre" class="font-semibold">¿Le han aplicado alguna de las siguientes vacunas en el último año?</label>
+					<p class="text-red-600">*</p>
+				</div>
+				<?php
+				echo $this->Form->input('riesgoembarazo', [
+					'type' => 'select',
+					'id' => 'rol',
+					'class' => 'border border-gray-300 rounded-lg w-full p-2 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 text-sm text-gray-500 focus:text-gray-800',
+					'error' => false,
+					'options' => $optionVacuna,
+					'label' => '',
+					'empty' => 'Selecciona una opción',
+				]);
 
-			<h2 class="subtitle-general-forms ">Salud
-				Sexual y Reproductiva</h2>
-			<hr style=" border:0.1px solid rgba(0,0,0,.125);">
-			<div class="grow justify-content-center" display="none" style="margin-top:20px">
-				<div class="card col-sm-12" style=" font-size:15px;  border:1.5px solid rgba(0,0,0,.125);">
+				if (!empty($this->Form->error('riesgoembarazo'))) {
+					echo '<div class="text-red-600 text-md mt-1 font-semibold">' . $this->Form->error('riesgoembarazo') . '</div>';
+				}
+				?>
+			</div>
+		</div>
+	</div>
+</div>
 
-					<div class="form-group row">
+<div class="max-w-6xl mx-auto p-18" id="seccion-menores" style="display: none;">
+	<div class="bg-white shadow-2xl rounded-xl p-6 md:p-12">
 
-						<div class="form-group col-md-6" style="margin-top: 20px;">
+		<div class="flex items-center mb-4">
+			<i class="fa-solid fa-baby text-teal-600 text-3xl bg-teal-100 px-5 py-3 rounded-lg"></i>
+			<div class="ml-4">
+				<h1 class="text-xl font-semibold">Salud Menores</h1>
+				<p class="text-gray-500">Complementa la información de salud orientada a los menores de edad.</p>
+			</div>
 
-							<?php
-							$optionVidaSexual = [
-								'No aplica ' =>  'Elegir',
-								'Si' => 'Si',
-								'No' => 'No',
-								'No informa' => 'No informa',
-								'SD' => 'Sin dato',
+		</div>
 
-							];
-							echo $this->Form->input('iniciovidasexual', array(
-								'label' => '¿Usted ha iniciado su vida sexual?',
-								'class' => 'form-control',
-								'style' => 'height:30px;  font-size: 15px ; width:100%',
-								'options' => $optionVidaSexual,
-								'placeholder' => '',
-								'type' => 'select',
-								'id' => 'status', // Agrega el atributo id para que coincida con el select en JavaScript
-								'onChange' => 'iniciovidasexual(this.value); mujer(this.value);', // Combina ambas funciones en una sola función onchange
-							)); ?>
-						</div>
+		<div class="grid grid-cols-1 md:grid-cols-2">
 
+			<!--  -->
+			<div class="flex flex-col md:flex-row justify-center md:justify-between col-span-2 md:col-span-2 text-md font-semibold my-6 mr-4">
+				<div class="flex items-center mb-4">
+					<span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">1</span>
+					<label for="sexo" class="font-semibold">¿Se ha desparasitado en los últimos seis meses?</label>
+				</div>
 
+				<div class="flex space-x-4 items-center justify-center md:justify-start mt-4 pr-0 md:pr-[10%] md:mt-0 ">
+					<!-- Botón NO -->
+					<div>
+						<input type="radio"
+							name="data[Juventudadulto][desparasitacion]"
+							id="desparasitacion-no"
+							value="No"
+							class="hidden peer"
+							data-target="desparasitacion"
+							data-show="false"
+							checked /> <!-- 👈 Por defecto NO -->
+						<label for="desparasitacion-no"
+							class="px-12 py-2 rounded-lg border cursor-pointer hover:text-white hover:bg-teal-600
+                       peer-checked:bg-teal-600 peer-checked:text-white">
+							NO
+						</label>
 					</div>
-					<div id="yess" class="form-group row">
 
-						<div class="form-group col-md-6" style="margin-top: 20px;">
-							<?php
-							$optionAnticonceptivos = [
-								'No aplica ' => 'Elegir',
-								'No' => 'No',
-								'Sin pareja' => 'No tiene pareja en el momento',
-								'Si control' => 'Si, con supervisión',
-								'Si No control' => 'Si, sin supervisión',
-								'Responsabilidad Pareja' => 'Deja la responsabilidad a la pareja',
-								'Vasectomía' => 'Vasectomía',
-								'Pomeroy' => 'Pomeroy',
-								'No informa' => 'No informa',
-								'No aplica' => 'No aplica',
-								'SD' => 'Sin dato',
-
-							];
-							echo $this->Form->input('metodosanticonceptivos', array(
-								'label' => '¿Utiliza algún método de planificación familiar?',
-								'class' => 'form-control',
-								'style' => 'height:30px;  font-size: 15px ; width:100%',
-								'options' => $optionAnticonceptivos,
-								'placeholder' => '',
-								'id' => 'metodosanticonceptivos'
-
-							)); ?>
-						</div>
-						<div class="form-group col-md-6" style="margin-top: 20px;">
-							<?php
-							$optionits = [
-								'No aplica ' =>  'Elegir',
-								'No' => 'No',
-								'Si' => 'Si',
-								'No informa' => 'No informa',
-								'SD' => 'Sin dato',
-
-							];
-							echo $this->Form->input('infeccionestransmisionsexual', array(
-								'label' => '¿Le han diagnosticado alguna Infección de transmisión Sexual?',
-								'class' => 'form-control',
-								'style' => 'height:30px;  font-size: 15px ; width:100%',
-								'options' => $optionits,
-								'placeholder' => '',
-								'id' => 'infeccionestransmisionsexual'
-
-							)); ?>
-						</div>
-
-
-
+					<!-- Botón SÍ -->
+					<div>
+						<input type="radio"
+							name="data[Juventudadulto][desparasitacion]"
+							id="desparasitacion-si"
+							value="Si"
+							data-target="desparasitacion"
+							data-show="true"
+							class="hidden peer cursor-pointer" />
+						<label for="desparasitacion-si"
+							class="px-12 py-2 rounded-lg border hover:bg-teal-600 cursor-pointer hover:text-white
+                       peer-checked:bg-teal-600 peer-checked:text-white">
+							SI
+						</label>
 					</div>
 				</div>
 			</div>
 
-			<div id="yesss">
-				<div id="si" class="grow justify-content-center" display="none" style="margin-top:20px">
-					<h2 class="subtitle-general-forms " style="margin-bottom: 10px;">Salud de la Mujer</h2>
-					<hr style=" border:0.1px solid rgba(0,0,0,.125);margin-bottom: 20px;">
-					<div class="card col-sm-12" style=" font-size:15px;  border:1.5px solid rgba(0,0,0,.125);">
-						<div class="form-group row">
-							<div class="form-group col-md-6" style="margin-top: 20px;">
-								<?php
-								$optionCitologia = [
-									'No aplica ' =>  'Elegir',
-									'No' => 'No',
-									'Citologia VPH' => 'Si, Citología VPH',
-									'Citologia convencional' => 'Si, Citología convencional',
-									'No informa' => 'No informa',
-									'No aplica' => 'No aplica',
-									'SD' => 'Sin dato',
+			<!-- Estado de Nutrición -->
+			<div class="col-span-2 md:col-span-1 text-md font-semibold mt-4 mb-6 md:mr-4">
+				<div class="flex items-center mb-4">
+					<span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">2</span>
+					<label for="nombre" class="font-semibold">¿Le han informado sobre el estado de nutrición del menor?</label>
+					<p class="text-red-600">*</p>
+				</div>
+				<?php
+				echo $this->Form->input('desnutricion', [
+					'type' => 'select',
+					'id' => 'rol',
+					'class' => 'border border-gray-300 rounded-lg w-full p-2 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 text-sm text-gray-500 focus:text-gray-800',
+					'error' => false,
+					'options' => $optionMalnutricion,
+					'label' => '',
+					'empty' => 'Selecciona una opción',
+				]);
 
+				if (!empty($this->Form->error('desnutricion'))) {
+					echo '<div class="text-red-600 text-md mt-1 font-semibold">' . $this->Form->error('desnutricion') . '</div>';
+				}
+				?>
+			</div>
 
-								];
-								echo $this->Form->input('tomacitologia', array(
-									'label' => '¿Se ha realizado el exámen de citología de acuerdo a esquema?',
-									'class' => 'form-control',
-									'style' => 'height:30px;  font-size: 15px ; width:100%',
-									'type' => 'select',
-									'options' => $optionCitologia,
-									'placeholder' => '',
-									'id' => 'tomacitologia'
-								)); ?>
-								<p class="help-block"> Esquema: Citología convencional esquema 1-3-3 edad 25 a 29 años y
-									Citología VPH
-									1-5-5 edad de 30 a 65 años, Esquemas ante resultado negativo</p>
-							</div>
+			<!-- Objetivos específicos -->
+			<div class="col-span-2 text-md font-semibold my-6">
+				<div class="flex items-center mb-4">
+					<span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">3</span>
+					<label for="producto_id" class="font-semibold">Informa sobre alguna dificultad del desarrollo</label>
+					<p class="text-red-600">*</p>
+				</div>
+				<?php
+				echo $this->Form->input('desarrolloinfantil', [
+					'label' => '',
+					'type' => 'textarea',
+					'id' => 'desarrolloinfantil',
+					'data-maxlength' => 800,
+					'class' => 'ckeditor border rounded-lg w-full p-2 focus:ring focus:ring-blue-200',
+					'error' => false // No mostrar error aquí
+				]);
+				if (!empty($this->Form->error('desarrolloinfantil'))) {
+					echo '<div class="text-red-600 text-md mt-1 font-semibold">' . $this->Form->error('desarrolloinfantil') . '</div>';
+				}
+				?>
+			</div>
 
-							<div class="form-group col-md-6" style="margin-top: 20px;">
+			<!-- Enfermedad respiratoria Aguda -->
+			<div class="flex flex-col md:flex-row justify-center md:justify-between col-span-2 md:col-span-2 text-md font-semibold my-6 mr-4" id="campo-era" style="display: none;">
+				<div class="flex items-center mb-4">
+					<span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">?</span>
+					<label for="sexo" class="font-semibold">En el momento presenta algún signo de Enfermedad respiratoria Aguda</label>
+				</div>
 
-								<?php
-								$optionYesNo1 = [
-									'No aplica ' => 'Elegir',
-									'Si' => 'Si',
-									'No' => 'No',
-									'No informa' => 'No informa',
-									'No aplica' => 'No aplica',
-									'SD' => 'Sin dato',
-
-								];
-
-								echo $this->Form->input('mamografia', array(
-									'label' => 'Le han realizado Mamografía en los 5 últimos años (Mujer de 50 y más años)',
-									'class' => 'form-control',
-									'style' => 'height:30px;  font-size: 15px ; width:100%',
-									'type' => 'select',
-									'options' => $optionYesNo1,
-									'placeholder' => ''
-								)); ?>
-							</div>
-						</div>
+				<div class="flex space-x-4 items-center justify-center md:justify-start mt-4 pr-0 md:pr-[10%]  md:mt-0 ">
+					<!-- Botón NO -->
+					<div>
+						<input type="radio"
+							name="data[Juventudadulto][era]"
+							id="era-no"
+							value="No"
+							class="hidden peer"
+							data-target="era"
+							data-show="false"
+							checked /> <!-- 👈 Por defecto NO -->
+						<label for="era-no"
+							class="px-12 py-2 rounded-lg border cursor-pointer hover:text-white hover:bg-teal-600
+                       peer-checked:bg-teal-600 peer-checked:text-white">
+							NO
+						</label>
 					</div>
 
-					<h2 class="subtitle-general-forms " style="margin-bottom: 10px;">Antecedentes ginecológicos
-						/obsetétricos</h2>
-					<hr style=" border:0.1px solid rgba(0,0,0,.125);margin-bottom: 20px;">
-					<div class="card col-sm-12" style=" font-size:15px;  border:1.5px solid rgba(0,0,0,.125);">
-						<div class="form-group row">
-							<div class="form-group col-md-6" style="margin-top: 20px;">
-								<?php
+					<!-- Botón SÍ -->
+					<div>
+						<input type="radio"
+							name="data[Juventudadulto][era]"
+							id="era-si"
+							value="Si"
+							data-target="era"
+							data-show="true"
+							class="hidden peer cursor-pointer" />
+						<label for="era-si"
+							class="px-12 py-2 rounded-lg border hover:bg-teal-600 cursor-pointer hover:text-white
+                       peer-checked:bg-teal-600 peer-checked:text-white">
+							SI
+						</label>
+					</div>
+				</div>
 
-								echo $this->Form->input('antecedenteginecologico', array(
-									'label' => '¿Le han realizado alguna cirugia ginecológica?',
-									'class' => 'form-control',
-									'style' => 'height:30px;  font-size: 15px ; width:100%',
-									'type' => 'select',
-									'options' => $optionYesNo1,
-									'placeholder' => ''
-								)); ?>
-								<p class="help-block"> Procedimientos en el sistema reproductivo, ovarios, útero,
-									trompas de
-									Falopio, cuello uterino </p>
-							</div>
-							<div class="form-group col-md-6" style="margin-top: 20px;">
-								<?php
-								$optionGinecologico = [
-									'No aplica ' => 'Elegir',
-									'No' => 'No',
-									'No embarazos' => 'No ha tenido embarazos',
-									'Antecedente de abortos' => 'Antecedente de 2 o más abortos',
-									'Muerte perinatal' => 'Muerte perinatal',
-									'Bajo peso al nacer' => 'Recien nacido con Bajo peso al nacer',
-									'Prematurez' => 'Recien nacido Prematuro',
-									'Multiparidad' => 'Multiparidad (5 o más partos)',
-									'Edad Materna Avanzada' => 'Embarazo mujer mayor de 35 años',
-									'Preclampsia' => 'Antecendente de Preclampsia',
-									'Eclampsia' => 'Antecendente de eclampsia',
-									'No aplica' => 'No Aplica',
-									'SD' => 'Sin dato',
+				<p class="text-gray-400 text-xs mt-2"> NOTA:Tener en cuenta signos y síntomas de alarma AIEPI</p>
+			</div>
 
-								];
-								echo $this->Form->input('antecedenteginecologico', array(
-									'label' => '¿Ha presentado alguna de las siguientes situaciones en el embarazo? ',
-									'class' => 'form-control',
-									'style' => 'height:30px;  font-size: 15px ; width:100%',
-									'type' => 'select',
-									'options' => $optionGinecologico,
-									'placeholder' => ''
-								)); ?>
-							</div>
-							<div class="form-group col-md-6" style="margin-top: 20px;">
-								<p class="help-block">Selecione otra respuesta si requiere, de lo contrario elija la
-									opción
-									'No ' </p>
-								<?php
-								echo $this->Form->input('ancedenteginecologico1', array(
-									'label' => '¿Ha presentado alguna de las siguientes situaciones en el embarazo? ',
-									'class' => 'form-control',
-									'style' => 'height:30px;  font-size: 15px ; width:100%',
-									'type' => 'select',
-									'options' => $optionGinecologico,
-									'placeholder' => ''
-								)); ?>
-							</div>
+			<!-- Enfermedad diárreica Aguda -->
+			<div class="flex flex-col md:flex-row justify-center md:justify-between col-span-2 md:col-span-2 text-md font-semibold my-6 mr-4" id="campo-ira" style="display: none;">
+				<div class="flex items-center mb-4">
+					<span class="mr-2 px-2 rounded-lg bg-blue-200 text-md font-semibold">?</span>
+					<label for="sexo" class="font-semibold">En el momento presenta algún signo de Enfermedad diárreica Aguda</label>
+				</div>
 
-							<div class="form-group col-md-6" style="margin-top: 20px;">
-								<?php
-								$gestanteOption = [
-									'No aplica ' => 'Elegir',
-									'No' => 'No',
-									'Si' => 'Si',
-								];
-								echo $this->Form->input('gestacion', [
-									'label' => '¿Mujer en embarazo?',
-									'class' => 'form-control',
-									'placeholder' => '',
-									'type' => 'select',
-									'options' => $gestanteOption,
-									'style' => 'height:30px;  font-size: 15px ; width:100%',
-
-									'id' => 'status', // Agrega el atributo id para que coincida con el select en JavaScript
-									'onChange' => 'gestacion(this.value);', // Agrega el atributo onChange para llamar a la función JavaScript
-								]);
-								?>
-								<p class="help-block"> Registre información de mujer en gestación o puerperio</p>
-							</div>
-						</div>
+				<div class="flex space-x-4 items-center justify-center md:justify-start mt-4 pr-0 md:pr-[10%]  md:mt-0 ">
+					<!-- Botón NO -->
+					<div>
+						<input type="radio"
+							name="data[Juventudadulto][eda]"
+							id="eda-no"
+							value="No"
+							class="hidden peer"
+							data-target="eda"
+							data-show="false"
+							checked /> <!-- 👈 Por defecto NO -->
+						<label for="eda-no"
+							class="px-12 py-2 rounded-lg border cursor-pointer hover:text-white hover:bg-teal-600
+                       peer-checked:bg-teal-600 peer-checked:text-white">
+							NO
+						</label>
 					</div>
 
-					<div id="yes">
-						<h2 class="subtitle-general-forms " style="margin-bottom: 10px;">Gestación</h2>
-						<hr style=" border:0.1px solid rgba(0,0,0,.125);margin-bottom: 20px;">
-						<div class="card col-sm-12" style=" font-size:15px;  border:1.5px solid rgba(0,0,0,.125);">
-							<div class="form-group col-md-6" style="margin-top: 20px;">
-								<?php
-								$optionControlPrenatal = [
-									'No aplica ' =>  'Elegir',
-									'No inscrita' => 'No inscrita en control de embarazo',
-									'Asistente CPN' => 'Si, Control al día',
-									'Inasistente CPN' => 'Si, inasistente a último control',
-									'Puerperio' => 'En etapa de puerperio',
-									'No informa' => 'No sabe/No informa',
-									'SD' => 'Sin dato',
-								];
-								echo $this->Form->input('controlprenatal', array(
-									'label' => '¿Esta inscrita en control prenatal?',
-									'class' => 'form-control',
-									'style' => 'height:30px;  font-size: 15px ; width:100%',
-									'type' => 'select',
-									'options' => $optionControlPrenatal,
-									'placeholder' => '',
+					<!-- Botón SÍ -->
+					<div>
+						<input type="radio"
+							name="data[Juventudadulto][eda]"
+							id="eda-si"
+							value="Si"
+							data-target="eda"
+							data-show="true"
+							class="hidden peer cursor-pointer" />
+						<label for="eda-si"
+							class="px-12 py-2 rounded-lg border hover:bg-teal-600 cursor-pointer hover:text-white
+                       peer-checked:bg-teal-600 peer-checked:text-white">
+							SI
+						</label>
+					</div>
+				</div>
 
-								)); ?>
+				<p class="text-gray-400 text-xs mt-2"> NOTA:Tener en cuenta signos y síntomas de alarma AIEPI</p>
+			</div>
 
-							</div>
-							<div class="form-group col-md-6" style="margin-top: 20px;">
-								<?php
-								$optionRiesgoEmbarazo = [
-									'No aplica ' =>  'Elegir',
-									'Bajo' => 'Bajo',
-									'Alto' => 'Alto',
-									'No informa' => 'No informa',
-									'SD' => 'Sin dato',
+			<!-- Prematuro -->
+			<div class="flex flex-col md:flex-row justify-center md:justify-between col-span-2 md:col-span-2 text-md font-semibold my-6 mr-4" id="campo-prematuro" style="display: none;">
+				<div class="flex items-center mb-4">
+					<span class="mr-2 px-2 rounded-lg bg-blue-200 text-md font-semibold">?</span>
+					<label for="prematuro" class="font-semibold">¿El/la menor nació prematuro?</label>
+				</div>
 
+				<div class="flex space-x-4 items-center justify-center md:justify-start mt-4 pr-0 md:pr-[10%]  md:mt-0 ">
+					<!-- Botón NO -->
+					<div>
+						<input type="radio"
+							name="data[Juventudadulto][prematuro]"
+							id="prematuro-no"
+							value="No"
+							class="hidden peer"
+							data-target="prematuro"
+							data-show="false"
+							checked /> <!-- 👈 Por defecto NO -->
+						<label for="prematuro-no"
+							class="px-12 py-2 rounded-lg border cursor-pointer hover:text-white hover:bg-teal-600
+                       peer-checked:bg-teal-600 peer-checked:text-white">
+							NO
+						</label>
+					</div>
 
-								];
-								echo $this->Form->input('riesgoembarazo', array(
-									'label' => '¿El riesgo del embarazo es?',
-									'class' => 'form-control',
-									'style' => 'height:30px;  font-size: 15px ; width:100%',
-									'type' => 'select',
-									'options' => $optionRiesgoEmbarazo,
-									'placeholder' => '',
-
-
-								)); ?>
-
-							</div>
-							<div class="form-group col-md-6" style="margin-top: 20px;">
-								<?php
-								$optionAlarmaEmbarazo = [
-									'No aplica ' =>  'Elegir',
-									'No' => 'No',
-									'Dolor de Cabeza' => 'Dolor de cabeza',
-									'Mareo_zumbido' => 'Mareo/zumbido en el oido',
-									'Dolor del vientre' => 'Dolor del vientre tipo contracción',
-									'Disminucion o ausencia de movimientos del bebe' => 'Disminución o ausencia de movimientos del bebé',
-									'Hinchazon de cara y extremidades' => 'Hinchazón de manos, cara, piernas y pies',
-									'Visión borrosa o luces parpadeantes' => 'Visión borrosa o luces parpadeantes',
-									'Visión borrosa o luces parpadeantes' => 'Visión borrosa o luces parpadeantes',
-									'Sangrado vaginal' => 'Sangrado vaginal',
-									'No informa' => 'No informa',
-									'SD' => 'Sin dato',
-
-
-								];
-								echo $this->Form->input('signoAlarma', array(
-									'label' => '¿En el momento presenta alguno de los siguientes signos o síntomas de alarma?',
-									'class' => 'form-control',
-									'style' => 'height:30px;  font-size: 15px ; width:100%',
-									'type' => 'select',
-									'options' => $optionAlarmaEmbarazo,
-									'placeholder' => '',
-									'id' => 'riesgoembarazo'
-
-								)); ?>
-
-							</div>
-
-							<div class="form-group col-md-6" style="margin-top: 20px;">
-
-								<?php
-								$optionCursoVida = [
-									'No aplica ' => 'Elegir',
-									'Juventud' => 'Juventud',
-									'Adultez' => 'adultez',
-								];
-
-								echo $this->Form->input('cursovida', array(
-									'label' => '¿El curso de vida de la gestante es?',
-									'class' => 'form-control',
-									'style' => 'height:30px;  font-size: 15px ; width:100%',
-									'type' => 'select',
-									'options' => $optionCursoVida,
-									'placeholder' => ''
-								)); ?>
-							</div>
-
-							<div class="form-group col-md-6" style="margin-top: 20px;">
-								<?php
-								$optionAlternativa = [
-									'No aplica ' => 'Elegir',
-									'No refiere' => 'No refiere',
-									'Medicina indigena' => 'Medicina Tradicional/indigena',
-									'Homeopatía' => 'Homeopatía',
-									'Medicina tradicional china' => 'Medicina tradicional china',
-									'Acupuntura' => 'Acupuntura',
-									'Quiropraxia' => 'Quiropraxia',
-									'Otro' => 'Otro',
-									'SD' => 'Sin dato'
-								];
-								echo $this->Form->input('saludalternativa', [
-									'label' => '¿Hacen uso de otras opciones para el cuidado de su salud durante su embarazo?',
-									'class' => 'form-control',
-									'type' => 'select',
-									'options' => $optionAlternativa,
-									'style' => 'height:30px;  font-size: 15px ; width:100%',
-								]);
-								?>
-							</div>
-
-
-						</div>
+					<!-- Botón SÍ -->
+					<div>
+						<input type="radio"
+							name="data[Juventudadulto][prematuro]"
+							id="prematuro-si"
+							value="Si"
+							data-target="prematuro"
+							data-show="true"
+							class="hidden peer cursor-pointer" />
+						<label for="prematuro-si"
+							class="px-12 py-2 rounded-lg border hover:bg-teal-600 cursor-pointer hover:text-white
+                       peer-checked:bg-teal-600 peer-checked:text-white">
+							SI
+						</label>
 					</div>
 				</div>
 			</div>
 
+			<!-- anomaliacongenita -->
+			<div class="flex flex-col md:flex-row justify-center md:justify-between col-span-2 md:col-span-2 text-md font-semibold my-6 mr-4" id="campo-anomaliacongenita" style="display: none;">
+				<div class="flex items-center mb-4">
+					<span class="mr-2 px-2 rounded-lg bg-blue-200 text-md font-semibold">?</span>
+					<label for="prematuro" class="font-semibold">Presenta una anomalía congénita</label>
+				</div>
 
+				<div class="flex space-x-4 items-center justify-center md:justify-start mt-4 pr-0 md:pr-[10%]  md:mt-0 ">
+					<!-- Botón NO -->
+					<div>
+						<input type="radio"
+							name="data[Juventudadulto][anomaliacongenita]"
+							id="anomaliacongenita-no"
+							value="No"
+							class="hidden peer"
+							data-target="anomaliacongenita"
+							data-show="false"
+							checked /> <!-- 👈 Por defecto NO -->
+						<label for="anomaliacongenita-no"
+							class="px-12 py-2 rounded-lg border cursor-pointer hover:text-white hover:bg-teal-600
+                       peer-checked:bg-teal-600 peer-checked:text-white">
+							NO
+						</label>
+					</div>
 
-			<h2 class="subtitle-general-forms ">Riesgo
-				Psicosocial</h2>
-			<hr style=" border:0.1px solid rgba(0,0,0,.125);">
-
-			<div class="grow justify-content-center" display="none" style="margin-top:20px">
-				<div class="card col-sm-12" style=" font-size:15px;  border:1.5px solid rgba(0,0,0,.125);">
-
-					<div class="form-group row">
-
-
-
-						<div class="form-group col-md-6" style="margin-top: 20px;">
-							<?php
-							$optionConsumospa = [
-								'No aplica ' =>  'Elegir',
-								'No' => 'No',
-								'Cigarrillo' => 'Cigarrillo',
-								'Licor' => 'Licor',
-								'Licor_cigarrillo' => 'Licor/Cigarrillo',
-								'Sustancias Psicoactivas' => 'Marihuana, basuco, otras',
-								'Uso indebido de Medicamentos' => 'Medicamentos sin prescripción médica(Opioides,Depresores,Estimulantes)',
-								'SD' => 'Sin dato',
-								'No aplica' => 'No aplica',
-
-							];
-
-							echo $this->Form->input('consumospa', array(
-								'label' => 'Consumo de Alcohol/Cigarrillo, sustancias Psicoactivas, uso indebido de medicamentos ',
-								'class' => 'form-control',
-								'style' => 'height:30px;  font-size: 15px ; width:100%',
-								'options' => $optionConsumospa,
-								'placeholder' => '',
-								'id' => 'consumospa',
-								'onChange' => 'spa(this.value);', // Agrega el atributo onChange para llamar a la función JavaScript
-							)); ?>
-						</div>
-						<div id="Consumospa" class="form-group col-md-6">
-							<?php
-							echo $this->Form->input('consumospa1', array(
-								'label' => 'Consumo de Alcohol/Cigarrillo, sustancias Psicoactivas, uso indebido de medicamentos ',
-								'class' => 'form-control',
-								'style' => 'height:30px;  font-size: 15px ; width:100%',
-								'options' => $optionConsumospa,
-								'placeholder' => '',
-								'id' => 'consumospa1'
-
-							)); ?>
-						</div>
-						<div class="form-group col-md-6" style="margin-top: 20px;">
-							<?php
-							$optionConflictos = [
-								'No aplica ' => 'Elegir',
-								'No' => 'No refiere',
-								'Difucultades Economicas' => 'Dificultad económica para suplir necesidades básicas',
-								'Conflictos entre padres e hijos' => 'Conflictos entre padres e hijos',
-								'Conflictos entre hermanos' => 'Conflictos entre hermanos',
-								'Conflictos entre Familia' => 'Conflictos entre Familia',
-								'Violencias de género' => 'Violencias de género',
-								'Problemas o Transtornos mentales diagnosticados' => 'Problemas o Transtornos mentales diagnosticados',
-								'Consumo de alcohol o psicoactivos' => 'Consumo de alcohol o psicoactivos',
-								'SD' => 'Sin dato'
-							];
-
-							echo $this->Form->input('riesgopsicosocial', [
-								'label' => '¿Ha presentado alguna de las siguientes situaciones en el último mes?',
-								'class' => 'form-control',
-								'type' => 'select',
-								'options' => $optionConflictos,
-
-								'style' => 'height:30px;  font-size: 15px ; width:100%',
-								'id' => 'riesgopsicosocial',
-								'onChange' => 'psicosocial(this.value);', // Agrega el atributo onChange para llamar a la función JavaScript
-							]);
-							?>
-						</div>
-						<div id="Psicosocial" class="form-group col-md-6">
-							<p class="help-block">Selecione otra respuesta si requiere, de lo contrario elija la opción
-								'No refiere' </p>
-							<?php
-							echo $this->Form->input('riesgopsicosocial1', array(
-								'label' => '¿Ha presentado alguna de las siguientes situaciones en el ultimo mes?',
-								'class' => 'form-control',
-								'style' => 'height:30px;  font-size: 15px ; width:100%',
-								'options' => $optionConflictos,
-								'placeholder' => '',
-								'id' => 'riesgopsicosocial1'
-							)); ?>
-						</div>
-
-						<div class="form-group col-md-6" style="margin-top: 20px;">
-							<?php
-							$optionTiposViolencia = [
-								'' => 'Elegir',
-								'No' => 'No se identifica',
-								'Sospecha Violencia Fisica' => 'Signos de maltrato físico(golpes, quemadura, heridas)',
-								'Sospecha Violencia Emocional' => 'Persona retraida, timida o agresiva',
-								'sospecha Violencia Sexual' => 'Tocamientos de personas, relaciones sexuales sin consentimiento ',
-								'Sospecha Abondono_Negligencia' => 'Falta de atención a necesidades básicas(alimentación, salud, educación)',
-								'No informa' => 'No informa',
-								'SD' => 'Sin dato'
-							];
-
-							echo $this->Form->input('sopechamaltrato', array(
-								'label' => '¿Sospecha de algún tipo de vulneración o violencia?',
-								'class' => 'form-control',
-								'placeholder' => '',
-
-								'options' => $optionTiposViolencia,
-								'type' => 'select',
-								'style' => 'height:30px;  font-size: 15px ; width:100%',
-								'id' => 'sopechamaltrato'
-
-
-							)); ?>
-						</div>
+					<!-- Botón SÍ -->
+					<div>
+						<input type="radio"
+							name="data[Juventudadulto][anomaliacongenita]"
+							id="anomaliacongenita-si"
+							value="Si"
+							data-target="anomaliacongenita"
+							data-show="true"
+							class="hidden peer cursor-pointer" />
+						<label for="anomaliacongenita-si"
+							class="px-12 py-2 rounded-lg border hover:bg-teal-600 cursor-pointer hover:text-white
+                       peer-checked:bg-teal-600 peer-checked:text-white">
+							SI
+						</label>
 					</div>
 				</div>
 			</div>
 
+			<!-- Perimetro braquial-->
+			<div class="col-span-2 md:col-span-1 text-md font-semibold mt-4 mb-6 md:mr-4" id="campo-perimetrobraquial" style="display: none;">
+				<div class="flex items-center mb-4">
+					<span class="mr-2 px-2 rounded-lg bg-blue-200 text-md font-semibold">?</span>
+					<label for="nombre" class="font-semibold">Registre su perímetro braquial (cm)</label>
+					<p class="text-red-600">*</p>
+				</div>
+				<?php
+				echo $this->Form->input('perimetrobraquial', [
+					'label' => false,
+					'class' => 'border border-gray-300 rounded-lg w-full p-2 focus:outline-none  focus:ring-1 focus:ring-blue-500 focus:border-blue-500 borde azul  mt-2 font-semibold text-gray-700  text-sm focus:text-gray-900',
+					'error' => false,
+					'placeholder' => '',
+					'id' => 'perimetrobraquial',
+				]);
 
-			<h2 class="subtitle-general-forms ">APGAR Familiar</h2>
-			<hr style=" border:0.1px solid rgba(0,0,0,.125);">
+				if (!empty($this->Form->error('perimetrobraquial'))) {
+					echo '<div class="text-red-600 text-md mt-1 font-semibold">' . $this->Form->error('perimetrobraquial') . '</div>';
+				}
+				?>
+			</div>
 
-			<div class="grow justify-content-center" display="none" style="margin-top:20px">
-				<div class="card col-sm-12" style=" font-size:15px;  border:1.5px solid rgba(0,0,0,.125);">
+			<!-- Perimetro cefalico -->
+			<div class="col-span-2 md:col-span-1 text-md font-semibold mt-4 mb-6 md:mr-4" id="campo-perimetrocefalico" style="display: none;">
+				<div class="flex items-center mb-4">
+					<span class="mr-2 px-2 rounded-lg bg-blue-200 text-md font-semibold">?</span>
+					<label for="nombre" class="font-semibold">Registre su perímetro cefálico (cm)</label>
+					<p class="text-red-600">*</p>
+				</div>
+				<?php
+				echo $this->Form->input('perimetrocefalico', [
+					'label' => false,
+					'class' => 'border border-gray-300 rounded-lg w-full p-2 focus:outline-none  focus:ring-1 focus:ring-blue-500 focus:border-blue-500 borde azul  mt-2 font-semibold text-gray-700  text-sm focus:text-gray-900',
+					'error' => false,
+					'placeholder' => '',
+					'id' => 'perimetrocefalico',
+				]);
 
-					<div class="form-group row">
-						<div class="form-group col-md-6" style="margin-top: 20px;">
-							<?php
-							$optionApgar = [
-								'' =>  'Elegir',
-								'4' => 'Siempre',
-								'3' => 'La mayoría de veces',
-								'2' => 'Algunas veces',
-								'1' => 'Muy pocas veces',
-								'0' => 'Nunca',
-								'0' => 'No informa',
-								'0' => 'Sin dato',
+				if (!empty($this->Form->error('perimetrocefalico'))) {
+					echo '<div class="text-red-600 text-md mt-1 font-semibold">' . $this->Form->error('perimetrocefalico') . '</div>';
+				}
+				?>
+			</div>
 
-							];
-							echo $this->Form->input('ayudafamiliar', array(
-								'label' => 'Me satisface la ayuda que recibo de mi familia cuando tengo algún problema o necesidad',
-								'class' => 'form-control sumar',
-								'style' => 'height:30px;  font-size: 15px ; width:100%',
-								'options' => $optionApgar,
-								'placeholder' => '',
-								'type' => 'select',
-								'id' => 'opcion1'
+			<!-- Perimetro perimetrocintura-->
+			<div class="col-span-2 md:col-span-1 text-md font-semibold mt-4 mb-6 md:mr-4" id="campo-perimetrocintura" style="display: none;">
+				<div class="flex items-center mb-4">
+					<span class="mr-2 px-2 rounded-lg bg-blue-200 text-md font-semibold">?</span>
+					<label for="nombre" class="font-semibold">Registre su perímetro perimetrocintura (cm)</label>
+					<p class="text-red-600">*</p>
+				</div>
+				<?php
+				echo $this->Form->input('perimetrocintura', [
+					'label' => false,
+					'class' => 'border border-gray-300 rounded-lg w-full p-2 focus:outline-none  focus:ring-1 focus:ring-blue-500 focus:border-blue-500 borde azul  mt-2 font-semibold text-gray-700  text-sm focus:text-gray-900',
+					'error' => false,
+					'placeholder' => '',
+					'id' => 'perimetrocintura',
+				]);
 
-							)); ?>
-						</div>
-						<div class="form-group col-md-6" style="margin-top: 20px;">
-							<?php
-							echo $this->Form->input('participacionfamiliar', array(
-								'label' => 'Me satisface la participación que mi
-								familia brinda y permite
-								Me satisface cómo mi',
-								'class' => 'form-control sumar',
-								'style' => 'height:30px;  font-size: 15px ; width:100%',
-								'options' => $optionApgar,
-								'placeholder' => '',
-								'type' => 'select',
-								'id' => 'opcion2'
+				if (!empty($this->Form->error('perimetrocintura'))) {
+					echo '<div class="text-red-600 text-md mt-1 font-semibold">' . $this->Form->error('perimetrocintura') . '</div>';
+				}
+				?>
+			</div>
 
-							)); ?>
-						</div>
+			<!-- Perimetro perimetrocadera -->
+			<div class="col-span-2 md:col-span-1 text-md font-semibold mt-4 mb-6 md:mr-4" id="campo-perimetrocadera" style="display: none;">
+				<div class="flex items-center mb-4">
+					<span class="mr-2 px-2 rounded-lg bg-blue-200 text-md font-semibold">?</span>
+					<label for="nombre" class="font-semibold">Registre su perímetro perimetrocadera (cm)</label>
+					<p class="text-red-600">*</p>
+				</div>
+				<?php
+				echo $this->Form->input('perimetrocadera', [
+					'label' => false,
+					'class' => 'border border-gray-300 rounded-lg w-full p-2 focus:outline-none  focus:ring-1 focus:ring-blue-500 focus:border-blue-500 borde azul  mt-2 font-semibold text-gray-700  text-sm focus:text-gray-900',
+					'error' => false,
+					'placeholder' => '',
+					'id' => 'perimetrocadera',
+				]);
 
-						<div class="form-group col-md-6" style="margin-top: 20px;">
-							<?php
-							echo $this->Form->input('aceptacionapoyo', array(
-								'label' => 'Me satisface cómo mi familia
-								acepta y apoya mis deseos de
-								emprender nuevas actividades',
-								'class' => 'form-control sumar',
-								'style' => 'height:30px;  font-size: 15px ; width:100%',
-								'options' => $optionApgar,
-								'placeholder' => '',
-								'type' => 'select',
-								'id' => 'opcion3'
+				if (!empty($this->Form->error('perimetrocadera'))) {
+					echo '<div class="text-red-600 text-md mt-1 font-semibold">' . $this->Form->error('perimetrocadera') . '</div>';
+				}
+				?>
+			</div>
 
-							)); ?>
-						</div>
-						<div class="form-group col-md-6" style="margin-top: 20px;">
-							<?php
-							echo $this->Form->input('afectoemociones', array(
-								'label' => 'Me satisface cómo mi familia
-								expresa afectos y responde a mis
-								emociones como rabia, tristeza y
-								amor',
-								'class' => 'form-control sumar',
-								'style' => 'height:30px;  font-size: 15px ; width:100%',
-								'options' => $optionApgar,
-								'placeholder' => '',
-								'type' => 'select',
-								'id' => 'opcion4'
+			<!-- Lactancia Materna -->
+			<div class="col-span-2 md:col-span-1 text-md font-semibold mt-4 mb-6 md:mr-4" id="campo-lactanciamaterna" style="display: none;">
+				<div class="flex items-center mb-4">
+					<span class="mr-2 px-2 rounded-lg bg-blue-200 text-md font-semibold">?</span>
+					<label for="nombre" class="font-semibold">¿El alimento en El/La menor es: ?</label>
+					<p class="text-red-600">*</p>
+				</div>
+				<?php
+				echo $this->Form->input('lactanciamaterna', [
+					'type' => 'select',
+					'id' => 'lactanciamaterna',
+					'class' => 'border border-gray-300 rounded-lg w-full p-2 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 text-sm text-gray-500 focus:text-gray-800',
+					'error' => false,
+					'options' => $optionLactancia,
+					'label' => '',
+					'empty' => 'Selecciona una opción',
+				]);
 
-							)); ?>
-						</div>
-						<div class="form-group col-md-6" style="margin-top: 20px;">
-							<?php
-							echo $this->Form->input('compartirfamilia', array(
-								'label' => 'Me satisface cómo compartimos en
-								familia:
-								El tiempo para estar juntos.
-								Los espacios en casa
-								El dinero',
-								'class' => 'form-control sumar',
-								'style' => 'height:30px;  font-size: 15px ; width:100%',
-								'options' => $optionApgar,
-								'placeholder' => '',
-								'type' => 'select',
-								'id' => 'opcion5'
+				if (!empty($this->Form->error('lactanciamaterna'))) {
+					echo '<div class="text-red-600 text-md mt-1 font-semibold">' . $this->Form->error('lactanciamaterna') . '</div>';
+				}
+				?>
+			</div>
 
-							)); ?>
-						</div>
+		</div>
+
+	</div>
+</div>
+
+<div class="max-w-6xl mx-auto p-18">
+	<div class="bg-white shadow-2xl rounded-xl  p-6  md:p-12">
+
+		<div class="flex items-center mb-4">
+			<i class="fa-solid fa-head-side-mask text-teal-600 text-3xl bg-teal-100 px-5 py-3 rounded-lg"></i>
+			<div class="ml-4">
+				<h1 class="text-xl font-semibold">Servicios de salud</h1>
+				<p class="text-gray-500">Complementa la información de los servicios de salud.</p>
+			</div>
+
+		</div>
+
+		<div class="grid grid-cols-1 md:grid-cols-2">
+
+			<!-- Valoración Médica -->
+			<div class="col-span-2 md:col-span-1 text-md font-semibold mt-4 mb-6 md:mr-4">
+				<div class="flex items-center mb-4">
+					<span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">1</span>
+					<label for="nombre" class="font-semibold">¿Ha asistido a Valoración Médica en el ultimo año?</label>
+					<p class="text-red-600">*</p>
+				</div>
+				<?php
+				echo $this->Form->input('valoracionmedica', [
+					'type' => 'select',
+					'id' => 'valoracionmedica',
+					'class' => 'border border-gray-300 rounded-lg w-full p-2 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 text-sm text-gray-500 focus:text-gray-800',
+					'error' => false,
+					'options' => $optionValoracionMedica,
+					'label' => '',
+					'empty' => 'Selecciona una opción',
+				]);
+
+				if (!empty($this->Form->error('valoracionmedica'))) {
+					echo '<div class="text-red-600 text-md mt-1 font-semibold">' . $this->Form->error('valoracionmedica') . '</div>';
+				}
+				?>
+			</div>
+
+			<!-- Motivo de anasistencia -->
+			<div class="col-span-2 md:col-span-1 text-md font-semibold my-6 mr-4">
+				<div class="flex items-center mb-4">
+					<span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">?</span>
+					<label for="motivoinasistencia" class="font-semibold">Motivo de inasistencia</label>
+				</div>
+				<?php
+				echo $this->Form->input('motivoinasistencia', [
+					'type' => 'select',
+					'label' => false,
+					'multiple' => true,
+					'empty' => false,
+					'options' => $opcionNoAtencion,
+					'class' => 'w-full',
+					'id' => 'motivoinasistencia',
+					'error' => false,
+					'label' => false,
+
+				]);
+				if (!empty($this->Form->error('motivoinasistencia'))) {
+					echo '<div class="text-red-600 text-md mt-1 font-semibold">' . $this->Form->error('motivoinasistencia') . '</div>';
+				}
+				?>
+			</div>
+
+			<!-- Motivo de anasistencia -->
+			<div class="col-span-2 md:col-span-1 text-md font-semibold my-6 mr-4">
+				<div class="flex items-center mb-4">
+					<span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">2</span>
+					<label for="saludalternativa" class="font-semibold">¿Hacen uso de otras opciones para el cuidado de su salud durante su embarazo?</label>
+				</div>
+				<?php
+				echo $this->Form->input('saludalternativa', [
+					'type' => 'select',
+					'label' => false,
+					'multiple' => true,
+					'empty' => false,
+					'options' => $optionAlternativa,
+					'class' => 'w-full',
+					'id' => 'saludalternativa',
+					'error' => false,
+					'label' => false,
+
+				]);
+				if (!empty($this->Form->error('saludalternativa'))) {
+					echo '<div class="text-red-600 text-md mt-1 font-semibold">' . $this->Form->error('saludalternativa') . '</div>';
+				}
+				?>
+			</div>
+
+
+		</div>
+
+	</div>
+</div>
+
+<div class="max-w-6xl mx-auto p-18">
+	<div class="bg-white shadow-2xl rounded-xl  p-6  md:p-12">
+
+		<div class="flex items-center mb-4">
+			<i class="fa-solid fa-brain text-teal-600 text-3xl bg-teal-100 px-5 py-3 rounded-lg"></i>
+			<div class="ml-4">
+				<h1 class="text-xl font-semibold">Psicosocial</h1>
+				<p class="text-gray-500">Complementa la información psicosocial.</p>
+			</div>
+
+		</div>
+
+		<div class="grid grid-cols-1 md:grid-cols-2">
+
+			<div class="flex flex-col md:flex-row justify-center md:justify-between col-span-1 md:col-span-2 text-md font-semibold my-6 mr-4">
+				<div class="flex items-center mb-4">
+					<span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">1</span>
+					<label for="sexo" class="font-semibold">Practica actividad física</label>
+					<p class="text-red-600">*</p>
+				</div>
+
+				<div class="flex space-x-4 items-center justify-center md:justify-start mt-4 pr-0 md:pr-[10%]  md:mt-0 ">
+					<!-- Botón NO -->
+					<div>
+						<input type="radio"
+							name="data[Juventudadulto][actividadfisica]"
+							id="actividadfisica-no"
+							value="No"
+							class="hidden peer"
+							data-target="actividadfisica"
+							data-show="false"
+							checked /> <!-- 👈 Por defecto NO -->
+						<label for="actividadfisica-no"
+							class="px-12 py-2 rounded-lg border cursor-pointer hover:text-white hover:bg-teal-600
+                       peer-checked:bg-teal-600 peer-checked:text-white">
+							NO
+						</label>
 					</div>
 
-					<div class="form-group col-md-6" style="margin-top: -10px;">
-						<?php
-						echo $this->Form->input('calculoapgar', array(
-							'label' => 'Resultado Apgar',
-							'class' => 'form-control',
-							'style' => 'height:30px; font-size: 15px; width:100%',
-							'placeholder' => '',
-							'id' => 'resultado-input' // Cambiado el ID a 'resultado-input'
-						));
-						?>
+					<!-- Botón SÍ -->
+					<div>
+						<input type="radio"
+							name="data[Juventudadulto][actividadfisica]"
+							id="actividadfisica-si"
+							value="Si"
+							data-target="actividadfisica"
+							data-show="true"
+							class="hidden peer cursor-pointer" />
+						<label for="actividadfisica-si"
+							class="px-12 py-2 rounded-lg border hover:bg-teal-600 cursor-pointer hover:text-white
+                       peer-checked:bg-teal-600 peer-checked:text-white">
+							SI
+						</label>
+					</div>
+				</div>
+			</div>
+
+			<!-- cuidador -->
+			<div class="col-span-2 md:col-span-1 text-md font-semibold mt-4 mb-6 md:mr-4" id="campo-cuidador" style="display: none;">
+				<div class="flex items-center mb-4">
+					<span class="mr-2 px-2 rounded-lg bg-blue-200 text-md font-semibold">?</span>
+					<label for="nombre" class="font-semibold">¿El cuidado del menor está a cargo principalmente de?</label>
+					<p class="text-red-600">*</p>
+				</div>
+				<?php
+				echo $this->Form->input('cuidador', [
+					'type' => 'select',
+					'id' => 'cuidador',
+					'class' => 'border border-gray-300 rounded-lg w-full p-2 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 text-sm text-gray-500 focus:text-gray-800',
+					'error' => false,
+					'options' => $optionCuidado,
+					'label' => '',
+					'empty' => 'Selecciona una opción',
+				]);
+
+				if (!empty($this->Form->error('cuidador'))) {
+					echo '<div class="text-red-600 text-md mt-1 font-semibold">' . $this->Form->error('cuidador') . '</div>';
+				}
+				?>
+			</div>
+
+			<!-- Hijo de padres con consumo de sustancias psicoactivas -->
+			<div class="flex flex-col md:flex-row justify-center md:justify-between col-span-1 md:col-span-2 text-md font-semibold my-6 mr-4" id="campo-padresconsumo" style="display: none;">
+				<div class="flex items-center mb-4">
+					<span class="mr-2 px-2 rounded-lg bg-blue-200 text-md font-semibold">?</span>
+					<label for="sexo" class="font-semibold">Hijo de padres (especialmente la madre) con consumo de sustancias psicoactivas</label>
+				</div>
+
+				<div class="flex space-x-4 items-center justify-center md:justify-start mt-4 pr-0 md:pr-[10%]  md:mt-0 ">
+					<!-- Botón NO -->
+					<div>
+						<input type="radio"
+							name="data[Juventudadulto][padresconsumo]"
+							id="padresconsumo-no"
+							value="No"
+							class="hidden peer"
+							data-target="padresconsumo"
+							data-show="false"
+							checked /> <!-- 👈 Por defecto NO -->
+						<label for="padresconsumo-no"
+							class="px-12 py-2 rounded-lg border cursor-pointer hover:text-white hover:bg-teal-600
+                       peer-checked:bg-teal-600 peer-checked:text-white">
+							NO
+						</label>
+					</div>
+
+					<!-- Botón SÍ -->
+					<div>
+						<input type="radio"
+							name="data[Juventudadulto][padresconsumo]"
+							id="padresconsumo-si"
+							value="Si"
+							data-target="padresconsumo"
+							data-show="true"
+							class="hidden peer cursor-pointer" />
+						<label for="padresconsumo-si"
+							class="px-12 py-2 rounded-lg border hover:bg-teal-600 cursor-pointer hover:text-white
+                       peer-checked:bg-teal-600 peer-checked:text-white">
+							SI
+						</label>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-span-2 md:col-span-1 text-md font-semibold mt-4 mb-6 md:mr-4" id="campo-estudio" style="display: none;">
+				<div class="flex items-center mb-4">
+					<span class="mr-2 px-2 rounded-lg bg-blue-200 text-md font-semibold">?</span>
+					<label for="nombre" class="font-semibold">¿El menor asiste a una institución educativa o de cuidado?</label>
+					<p class="text-red-600">*</p>
+				</div>
+				<?php
+				echo $this->Form->input('estudio', [
+					'type' => 'select',
+					'id' => 'estudio',
+					'class' => 'border border-gray-300 rounded-lg w-full p-2 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 text-sm text-gray-500 focus:text-gray-800',
+					'error' => false,
+					'options' => $optionEstudio,
+					'label' => '',
+					'empty' => 'Selecciona una opción',
+				]);
+
+				if (!empty($this->Form->error('estudio'))) {
+					echo '<div class="text-red-600 text-md mt-1 font-semibold">' . $this->Form->error('estudio') . '</div>';
+				}
+				?>
+			</div>
+
+			<!-- Consumo SPA	 -->
+			<div class="col-span-2 md:col-span-1 text-md font-semibold my-6 mr-4" id="campo-consumospa" style="display: none;">
+				<div class="flex items-center mb-4">
+					<span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">?</span>
+					<label for="consumospa" class="font-semibold">Consumo de Alcohol/Cigarrillo, sustancias Psicoactivas, uso indebido de medicamentos</label>
+				</div>
+				<?php
+				echo $this->Form->input('consumospa', [
+					'type' => 'select',
+					'label' => false,
+					'multiple' => true,
+					'empty' => false,
+					'options' => $optionConsumospa,
+					'class' => 'w-full',
+					'id' => 'consumospa',
+					'error' => false,
+					'label' => false,
+
+				]);
+				if (!empty($this->Form->error('consumospa'))) {
+					echo '<div class="text-red-600 text-md mt-1 font-semibold">' . $this->Form->error('consumospa') . '</div>';
+				}
+				?>
+			</div>
+
+			<!-- Consumo Riesgo	 -->
+			<div class="col-span-2 md:col-span-1 text-md font-semibold my-6 mr-4">
+				<div class="flex items-center mb-4">
+					<span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">2</span>
+					<label for="riesgopsicosocial" class="font-semibold">¿Ha presentado alguna de las siguientes situaciones en el último mes?</label>
+					<p class="text-red-600">*</p>
+				</div>
+				<?php
+				echo $this->Form->input('riesgopsicosocial', [
+					'type' => 'select',
+					'label' => false,
+					'multiple' => true,
+					'empty' => false,
+					'options' => $optionConflictos,
+					'class' => 'w-full',
+					'id' => 'riesgopsicosocial',
+					'error' => false,
+					'label' => false,
+
+				]);
+				if (!empty($this->Form->error('riesgopsicosocial'))) {
+					echo '<div class="text-red-600 text-md mt-1 font-semibold">' . $this->Form->error('riesgopsicosocial') . '</div>';
+				}
+				?>
+			</div>
+
+			<!-- Sospecha de maltrato	 -->
+			<div class="col-span-2 md:col-span-1 text-md font-semibold my-6 mr-4">
+				<div class="flex items-center mb-4">
+					<span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">3</span>
+					<label for="riesgopsicosocial" class="font-semibold">¿Sospecha de algún tipo de vulneración o violencia?</label>
+					<p class="text-red-600">*</p>
+				</div>
+				<?php
+				echo $this->Form->input('sopechamaltrato', [
+					'type' => 'select',
+					'label' => false,
+					'multiple' => true,
+					'empty' => false,
+					'options' => $optionTiposViolencia,
+					'class' => 'w-full',
+					'id' => 'sopechamaltrato',
+					'error' => false,
+					'label' => false,
+
+				]);
+				if (!empty($this->Form->error('sopechamaltrato'))) {
+					echo '<div class="text-red-600 text-md mt-1 font-semibold">' . $this->Form->error('sopechamaltrato') . '</div>';
+				}
+				?>
+			</div>
+		</div>
+
+	</div>
+</div>
+
+
+<div class="max-w-6xl mx-auto p-18">
+	<div class="bg-white shadow-2xl rounded-xl  p-6  md:p-12">
+
+		<div class="flex items-center mb-4">
+			<i class="fa-solid fa-hands-holding-child text-teal-600 text-3xl bg-teal-100 px-5 py-3 rounded-lg"></i>
+			<div class="ml-4">
+				<h1 class="text-xl font-semibold">Plan de Cuidado</h1>
+				<p class="text-gray-500">Para diligenciar el plan de cuidado es necesario realizar un análisis integral de la persona, ya que este paso es fundamental para definir de manera precisa el impacto esperado de la caracterización.</p>
+			</div>
+
+		</div>
+
+		<div class="grid grid-cols-1 md:grid-cols-2">
+
+			<!-- canalización  -->
+			<div class="col-span-2 md:col-span-1 text-md font-semibold my-6 mr-4">
+				<div class="flex items-center mb-4">
+					<span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">1</span>
+					<label for="canalizacionuno" class="font-semibold">Canalización</label>
+				</div>
+				<?php
+				echo $this->Form->input('canalizacionuno', [
+					'type' => 'select',
+					'label' => false,
+					'multiple' => true,
+					'empty' => false,
+					'options' => $optionCanlizacion,
+					'class' => 'w-full',
+					'id' => 'canalizacionuno',
+					'error' => false,
+					'label' => false,
+
+				]);
+				if (!empty($this->Form->error('canalizacionuno'))) {
+					echo '<div class="text-red-600 text-md mt-1 font-semibold">' . $this->Form->error('consumospa') . '</div>';
+				}
+				?>
+			</div>
+
+			<!-- Estado de canalizacion	 -->
+			<div class="col-span-2 md:col-span-1 text-md font-semibold my-6 mr-4">
+				<div class="flex items-center mb-4">
+					<span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">2</span>
+					<label for="riesgopsicosocial" class="font-semibold">Estado de canalizacion</label>
+					<p class="text-red-600">*</p>
+				</div>
+				<?php
+				echo $this->Form->input('estadocanalizacion', [
+					'type' => 'select',
+					'label' => false,
+					'empty' => false,
+					'options' => $optionEstadoCanalizacion,
+					'class' => 'border border-gray-300 rounded-lg w-full p-2 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 text-sm text-gray-500 focus:text-gray-800',
+					'id' => 'estadocanalizacion',
+					'error' => false,
+					'label' => false,
+
+				]);
+				if (!empty($this->Form->error('estadocanalizacion'))) {
+					echo '<div class="text-red-600 text-md mt-1 font-semibold">' . $this->Form->error('estadocanalizacion') . '</div>';
+				}
+				?>
+			</div>
+
+			<!-- Objetivos específicos -->
+			<div class="col-span-2 text-md font-semibold my-6">
+				<div class="flex items-center mb-4">
+					<span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">3</span>
+					<label for="producto_id" class="font-semibold">Observacion de la atencion </label>
+					<p class="text-red-600">*</p>
+				</div>
+				<?php
+				echo $this->Form->input('observacion', [
+					'label' => '',
+					'type' => 'textarea',
+					'id' => 'VisitasnegadaObservacion',
+					'data-maxlength' => 800,
+					'class' => 'ckeditor border rounded-lg w-full p-2 focus:ring focus:ring-blue-200',
+					'error' => false // No mostrar error aquí
+				]);
+				if (!empty($this->Form->error('observacion'))) {
+					echo '<div class="text-red-600 text-md mt-1 font-semibold">' . $this->Form->error('observacion') . '</div>';
+				}
+				?>
+			</div>
+
+			<!-- Educación	 -->
+			<div class="col-span-2 md:col-span-1 text-md font-semibold my-6 mr-4">
+				<div class="flex items-center mb-4">
+					<span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">4</span>
+					<label for="educacion" class="font-semibold">Refiera el tipo de Educación a desarrollar</label>
+					<p class="text-red-600">*</p>
+				</div>
+				<?php
+				echo $this->Form->input('educacion', [
+					'type' => 'select',
+					'label' => false,
+					'empty' => false,
+					'multiple' => true,
+					'options' => $optionEducacion,
+					'class' => 'border border-gray-300 rounded-lg w-full p-2 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 text-sm text-gray-500 focus:text-gray-800',
+					'id' => 'educacion',
+					'error' => false,
+					'label' => false,
+
+				]);
+				if (!empty($this->Form->error('educacion'))) {
+					echo '<div class="text-red-600 text-md mt-1 font-semibold">' . $this->Form->error('educacion') . '</div>';
+				}
+				?>
+			</div>
+
+
+			<div class="col-span-2 md:col-span-1 text-md font-semibold my-6 mb-6 md:mr-4">
+				<div class="flex items-center mb-4">
+					<span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">5</span>
+					<label for="familiograma" class="font-semibold">IPS referida</label>
+					<p class="text-red-600">*</p>
+				</div>
+
+				<?php
+				echo $this->Form->input('canalizacion_id', [
+					'type' => 'select',
+					'id' => 'canalizacion_id',
+					'class' => 'w-full',
+					'label' => '',
+					'empty' => 'Seleccione el IPS',
+					'error' => false // No mostrar error aquí
+				]);
+
+
+				if (!empty($this->Form->error('canalizacion_id'))) {
+					echo '<div class="text-red-600 text-md mt-1 font-semibold">' . $this->Form->error('canalizacion_id') . '</div>';
+				}
+				?>
+			</div>
+
+			<div class="col-span-2 md:col-span-1 text-md font-semibold my-4 sm:mr-4">
+				<div class="flex items-center">
+					<span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">6</span>
+					<label for="resultadoEcomapa" class="font-semibold">Fecha de Canalizacion</label>
+					<p class="text-red-600">*</p>
+				</div>
+				<div class="col-span-2 text-md font-semibold mt-6">
+					<div class="flex flex-col w-full">
+						<input
+							type="text"
+							name="data[Juventudadulto][registroCanalizacion]"
+							id="registroCanalizacion"
+							class="border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400 w-full"
+							placeholder="Selecciona rango de fecha" />
+						<span class="text-sm text-red-600 ">
+							<?= $this->Form->error('registroCanalizacion') ?>
+						</span>
 					</div>
 
 				</div>
 			</div>
 
+		</div>
+	</div>
+</div>
 
-			<h2 class="subtitle-general-forms ">Plan de
-				Atención integral</h2>
-			<hr style=" border:0.1px solid rgba(0,0,0,.125);">
+<div class="max-w-6xl mx-auto p-18 mt-12">
+	<div class="bg-white shadow-2xl rounded-xl  p-6  md:p-12">
+		<!-- Header -->
+		<div class="flex items-center mb-4">
+			<i class="fa-solid fa-upload text-teal-600 text-3xl bg-teal-100 p-3 rounded-lg"></i>
+			<div class="ml-4">
+				<h1 class="text-xl font-semibold">Carga de información</h1>
+				<p class="text-gray-500">Realiza la consolidacion del archivo segun tu disponibilidad de Internet recuerda asignar un id manual para la vivienda si lo exportas como JSON.</p>
+			</div>
+		</div>
 
-			<div class="grow justify-content-center" display="none" style="margin-top:20px">
-				<div class="card col-sm-12" style=" font-size:15px;  border:1.5px solid rgba(0,0,0,.125);">
+		<div class="grid grid-cols-1 md:grid-cols-3">
 
-					<div class="form-group row">
-
-						<div class="form-group col-md-6" style="margin-top: 20px;">
-							<?php
-							$optionCanlizacion = [
-								'No aplica ' => 'Elegir',
-								'No' => 'No',
-								'Vacunacion ' => 'Vacunación ',
-								'Atencion de PyM Medico' => 'Atención en salud de promoción y mantenimiento por médico',
-								'Atencion medicina general' => ' Atención en salud por medicina general',
-								'Atencion  Urgencias ' => 'Atención en salud en un servicio de Urgencias ',
-								'Salud oral' => 'profilaxis y remoción de placa bacteriana y/o detartraje supragingival.',
-								'Activacion de ruta por sospecha de violencias' => 'Activación de ruta por sospecha de violencias',
-								'Prueba rapida treponemica' => 'Prueba rápida treponémica',
-								'Prueba rapida para VIH' => 'Prueba rápida para VIH',
-								'Asesoria pre y post test VIH' => 'Asesoría pre y post test VIH',
-								'Prueba rápida hepatitis B' => 'Prueba rápida de hepatitis B',
-								'Prueba rápida hepatitis C' => 'Prueba rápida de hepatitis C',
-								'Prueba de embarazo' => 'Prueba de embarazo',
-								'Asesoría en anticoncepcion' => 'Asesoría en anticoncepción por médico o enfermera',
-								'Tamizaje de riesgo cardiovascular' => 'Tamizaje de riesgo cardiovascular',
-								'Citologia' => 'Tamizaje de cáncer de cuello uterino (citología)',
-								'Suministro de anticonceptivos  ' => 'Suministro de anticonceptivos  ',
-								'Suministro de preservativos' => 'Suministro de preservativos',
-								'Asesoria en anticoncepcion' => 'Asesoría en anticoncepción',
-								'Tamizaje para cancer de mama' => 'Tamizaje para cáncer de mama',
-								'Tamizaje para cancer de prostata ' => 'Tamizaje para cáncer de próstata (PSA)',
-								'Tamizaje para cancer de colon' => 'Tamizaje para cáncer de colon',
-
-							];
-
-							echo $this->Form->input('canalizacionuno', array(
-								'label' => 'Canalización',
-								'class' => 'form-control',
-								'style' => 'height:30px;  font-size: 15px ; width:100%',
-								'placeholder' => '',
-								'class' => 'form-control select-search',
-								'options' => $optionCanlizacion,
-								'type' => 'select',
-								'style' => 'height:30px;  font-size: 15px ; width:100%',
-								'id' => 'status', // Agrega el atributo id para que coincida con el select en JavaScript
-								'onChange' => 'canalizacion(this.value);', // Agrega el atributo onChange para llamar a la función JavaScript
-							)); ?>
-						</div>
-
-
-					</div>
-					<div id="Canalizacion" class="form-group row">
-						<div class="form-group col-md-6" style="margin-top: 20px;">
-							<?php
-							echo $this->Form->input('canalizaciondos', array(
-								'label' => 'Canalización',
-								'class' => 'form-control',
-								'style' => 'height:30px;  font-size: 15px ; width:100%',
-								'placeholder' => '',
-								'class' => 'form-control select-search',
-								'options' => $optionCanlizacion,
-								'type' => 'select',
-
-
-							));
-							?>
-						</div>
-
-						<div class="form-group col-md-6" style="margin-top: 20px;">
-							<?php
-
-							echo $this->Form->input('canalizaciontres', array(
-								'label' => 'Canalización',
-								'class' => 'form-control',
-								'style' => 'height:30px;  font-size: 15px ; width:100%',
-								'placeholder' => '',
-								'class' => 'form-control select-search',
-								'options' => $optionCanlizacion,
-								'type' => 'select',
-								'style' => 'height:30px;  font-size: 15px ; width:100%',
-
-							)); ?>
-						</div>
-
-						<div class="form-group col-md-6" style="margin-top: 20px;">
-							<?php
-							$optionEducacion = [
-								'No aplica ' => 'Elegir',
-								'No aplica' => 'No aplica',
-								'Educacion individual' => 'Educación para la salud individual',
-								'Educacion familiar' => 'Educación para la salud familiar',
-								'Educacion grupal' => 'Educación para la salud grupal',
-
-							];
-							echo $this->Form->input('educacion', array(
-								'label' => 'Refiera el tipo de Educación a desarrollar',
-								'class' => 'form-control',
-								'style' => 'height:30px;  font-size: 15px ; width:100%',
-								'placeholder' => '',
-								'options' => $optionEducacion,
-								'type' => 'select',
-								'style' => 'height:30px;  font-size: 15px ; width:100%',
-
-							)); ?>
-						</div>
-
-
-						<?php
-						echo $this->Form->input('fechaRegistro', array(
-							'type' => 'hidden',
-						)); ?>
-
-					</div>
-
-					<div class="form-group col-md-6" style="margin-top: 20px;">
-						<?php
-						echo $this->Form->input('canalizacion_id', array(
-							'label' => 'Enlace de canalización',
-							'class' => 'form-control',
-							'style' => 'height:30px;  font-size: 15px ; width:100%',
-							'class' => 'form-control select-search',
-							'placeholder' => '',
-							'type' => 'select',
-							'style' => 'height:30px;  font-size: 15px ; width:100%',
-
-						)); ?>
-					</div>
-
-
-				</div>
-
-				<button class="my-button">
-					Guardar<?php echo $this->Form->end(); ?>
+			<!-- Botón -->
+			<div class="w-full p-2">
+				<button name="btn" value="Guardar y continuar" type="submit" class="w-full bg-teal-600 text-white px-6 py-2 rounded-md hover:bg-green-700 transition font-medium flex items-center justify-center gap-2">
+					<span>
+						<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-save-icon lucide-save">
+							<path d="M15.2 3a2 2 0 0 1 1.4.6l3.8 3.8a2 2 0 0 1 .6 1.4V19a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z" />
+							<path d="M17 21v-7a1 1 0 0 0-1-1H8a1 1 0 0 0-1 1v7" />
+							<path d="M7 3v4a1 1 0 0 0 1 1h7" />
+						</svg>
+					</span>
+					Guardar y Agregar nueva Persona
 				</button>
 			</div>
+
+
+
+			<!-- Botón -->
+			<div class="w-full  p-2">
+				<button name="btn" value="ver familia" type="submit" class="w-full bg-teal-600 text-white px-6 py-2 rounded-md hover:bg-green-700 transition font-medium flex items-center justify-center gap-2">
+					<span>
+						<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-save-icon lucide-save">
+							<path d="M21 17v2a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-2" />
+							<path d="M21 7V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v2" />
+							<circle cx="12" cy="12" r="1" />
+							<path d="M18.944 12.33a1 1 0 0 0 0-.66 7.5 7.5 0 0 0-13.888 0 1 1 0 0 0 0 .66 7.5 7.5 0 0 0 13.888 0" />
+						</svg>
+
+					</span>
+					ver familia
+				</button>
+			</div>
+
+			<!-- Botón -->
+			<div class="w-full p-2">
+				<button type="button" class="w-full bg-teal-600 text-white px-6 py-2 rounded-md hover:bg-green-700 transition font-medium flex items-center justify-center gap-2" onclick="cargarEnStorage()">
+					<span>
+						<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-save-icon lucide-save">
+							<path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z" />
+							<path d="M14 2v4a2 2 0 0 0 2 2h4" />
+							<path d="M10 12a1 1 0 0 0-1 1v1a1 1 0 0 1-1 1 1 1 0 0 1 1 1v1a1 1 0 0 0 1 1" />
+							<path d="M14 18a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1 1 1 0 0 1-1-1v-1a1 1 0 0 0-1-1" />
+
+						</svg>
+
+					</span>
+					JSON
+				</button>
+			</div>
+		</div>
 	</div>
+</div>
 
-	</fieldset>
+<?php echo $this->Form->end(); ?>
 
-</body>
-
-
-
-
-<!--div class="actions">
-		<h3><?php echo __('Actions'); ?></h3>
-		<ul>
-
-			<li><?php echo $this->Html->link(__('List Juventudadultos'), array('action' => 'index')); ?></li>
-			<li><?php echo $this->Html->link(__('List Familias'), array('controller' => 'familias', 'action' => 'index')); ?>
-			</li>
-			<li><?php echo $this->Html->link(__('New Familia'), array('controller' => 'familias', 'action' => 'add')); ?>
-			</li>
-			<li><?php echo $this->Html->link(__('List Personas'), array('controller' => 'personas', 'action' => 'index')); ?>
-			</li>
-			<li><?php echo $this->Html->link(__('New Persona'), array('controller' => 'personas', 'action' => 'add')); ?>
-			</li>
-		</ul>
-	</div-->
-
-
-
-<?php
-$this->Html->css([
-	'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css',
-	'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css'
-], ['block' => 'css']);
-$this->Html->script([
-	'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js',
-	'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js'
-], ['block' => 'script']);
-?>
 
 <script type="text/javascript">
 	$(function() {
+		nacimiento = null; // Aquí guardamos la fecha elegida
+
 		$('#fecha').daterangepicker({
 			singleDatePicker: true,
 			showDropdowns: true,
@@ -2363,56 +3044,142 @@ $this->Html->script([
 				firstDay: 1
 			}
 		}, function(start) {
-			let fecha = start.format('YYYY-MM-DD');
+			nacimiento = start.toDate();
+			evaluarCampos(); // Se ejecuta cada vez que eligen fecha
 		});
 
 		$('#fecha').val('');
-	});
+
+		// Escuchar cambios en los radios de género
+		const radio_genero = document.getElementsByName('data[Juventudadulto][sexo]');
+		const radio_gestante = document.getElementsByName('data[Juventudadulto][gestacion]');
 
 
-	$(document).ready(function() {
-		function calcularSuma() {
-			suma = 0;
-
-			// Obtener el valor seleccionado de cada opción y sumarlo
-			$('select.sumar').each(function() {
-				suma += parseInt($(this).val()) || 0;
-			});
-
-			// Mostrar el resultado en el campo de entrada con id 'resultado-input'
-			$('#resultado-input').val(suma);
-			var imcField = document.getElementById('resultado-input');
-			switch (true) {
-				case suma <= 9:
-					imcField.style.color = 'red';
-					break;
-				case suma >= 10 && suma <= 13:
-					imcField.style.color = 'orange';
-					break;
-				case suma >= 14 && suma <= 17:
-					imcField.style.color = '#FAA80D';
-					break;
-				case suma >= 18:
-					imcField.style.color = 'green';
-					break;
-				default:
-					imcField.style.color = 'black';
-			}
-
-		}
-
-		// Llamar a la función al cargar la página
-		calcularSuma();
-
-		// Vincular la función al evento change de los elementos select
-		$('select.sumar').on('change', function() {
-			calcularSuma();
+		radio_genero.forEach(r => {
+			r.addEventListener('change', evaluarCampos);
 		});
 
+		radio_gestante.forEach(r => {
+			r.addEventListener('change', evaluarCampos);
+		});
 
-		$('.select-search').select2();
-		agregarOpcionSeleccion();
+		function evaluarCampos() {
+
+			if (!nacimiento) return;
+
+			const hoy = new Date();
+			let edad = hoy.getFullYear() - nacimiento.getFullYear();
+			const mes = hoy.getMonth() - nacimiento.getMonth();
+
+			if (mes < 0 || (mes === 0 && hoy.getDate() < nacimiento.getDate())) {
+				edad--;
+			}
+
+			console.log("Edad:", edad);
+
+			// obtener género seleccionado
+			let genero = "";
+			radio_genero.forEach(r => {
+				if (r.checked) genero = r.value;
+			});
+
+			let gestacion = "";
+			radio_gestante.forEach(r => {
+				if (r.checked) gestacion = r.value;
+			});
+
+			console.log("Género:", genero);
+
+			// Aplicar reglas
+			if (edad > 5) {
+				document.getElementById("campo-tension").style.display = "block";
+
+				if (edad >= 12) {
+					document.getElementById("seccion-sexual").style.display = "block";
+					document.getElementById("campo-iniciovidasexual").style.display = "block";
+					document.getElementById("campo-metodosanticonceptivos").style.display = "block";
+					document.getElementById("campo-infeccionestransmisionsexual").style.display = "block";
+					document.getElementById("campo-consumospa").style.display = "block";
+				}
+
+				if (edad < 12) {
+					document.getElementById("seccion-sexual").style.display = "none";
+					document.getElementById("campo-iniciovidasexual").style.display = "none";
+					document.getElementById("campo-metodosanticonceptivos").style.display = "none";
+					document.getElementById("campo-infeccionestransmisionsexual").style.display = "none";
+					document.getElementById("seccion-menores").style.display = "block";
+					document.getElementById("campo-cuidador").style.display = "block";
+				}
+
+				if (edad < 18) {
+					document.getElementById("campo-padresconsumo").style.display = "block";
+					document.getElementById("campo-estudio").style.display = "block";
+				}
+
+				if (genero == "Mujer" && edad >= 12) {
+					document.getElementById("campo-gestacion").style.display = "flex";
+					if (gestacion === "Si") {
+						document.getElementById("seccion-gestacion").style.display = "block";
+					}
+				}
+
+				if (genero === "Mujer" && edad >= 18) {
+
+					if (edad >= 25) {
+						document.getElementById("campo-tomacitologia").style.display = "block";
+						document.getElementById("campo-antecedenteginecologico").style.display = "block";
+						campo - tomacitologia
+					}
+
+					if (edad >= 50) {
+						document.getElementById("campo-mamografia").style.display = "block";
+					}
+
+				}
+
+			} else {
+				document.getElementById("campo-tension").style.display = "none";
+				document.getElementById("campo-antecedenteginecologico").style.display = "none";
+				document.getElementById("campo-tomacitologia").style.display = "none";
+				document.getElementById("campo-mamografia").style.display = "none";
+				document.getElementById("campo-iniciovidasexual").style.display = "none";
+				document.getElementById("campo-infeccionestransmisionsexual").style.display = "none";
+				document.getElementById("campo-metodosanticonceptivos").style.display = "none";
+				document.getElementById("seccion-gestacion").style.display = "none";
+				document.getElementById("seccion-menores").style.display = "block";
+				document.getElementById("campo-era").style.display = "flex";
+				document.getElementById("campo-ira").style.display = "flex";
+				document.getElementById("campo-prematuro").style.display = "flex";
+				document.getElementById("campo-anomaliacongenita").style.display = "flex";
+				document.getElementById("campo-perimetrobraquial").style.display = "block";
+				document.getElementById("campo-perimetrocefalico").style.display = "block";
+				document.getElementById("campo-perimetrocintura").style.display = "block";
+				document.getElementById("campo-perimetrocadera").style.display = "block";
+				document.getElementById("campo-lactanciamaterna").style.display = "block";
+
+			}
+		}
+
+		$('#registroCanalizacion').daterangepicker({
+			singleDatePicker: true,
+			showDropdowns: true,
+			autoApply: true,
+			locale: {
+				format: 'YYYY-MM-DD',
+				applyLabel: "Aplicar",
+				cancelLabel: "Cancelar",
+				daysOfWeek: ["Do", "Lu", "Ma", "Mi", "Ju", "Vi", "Sa"],
+				monthNames: [
+					"Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
+					"Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
+				],
+				firstDay: 1
+			}
+		}, function(start) {
+			nacimiento = start.toDate();
+		});
 	});
+
 
 
 
@@ -2449,6 +3216,137 @@ $this->Html->script([
 			renderChoiceLimit: -1, // Sin límite de renderizado
 			searchResultLimit: 20, // Puedes aumentar este valor si tienes muchos resultados
 		});
+
+		const choices_riesgoexterno = new Choices("#antecedenteginecologico", {
+			searchEnabled: true,
+			searchChoices: true,
+			removeItemButton: true, // Permite eliminar seleccionados
+			itemSelectText: '',
+			shouldSort: false,
+			searchPlaceholderValue: "Escriba para filtrar...",
+			maxItemCount: -1, // Sin límite
+			removeItems: true, // Permite quitar seleccionados
+			duplicateItemsAllowed: false,
+			placeholder: true,
+			placeholderValue: "Seleccione un vector..."
+		});
+
+
+		const choices_motivoinasistencia = new Choices("#motivoinasistencia", {
+			searchEnabled: true,
+			searchChoices: true,
+			removeItemButton: true, // Permite eliminar seleccionados
+			itemSelectText: '',
+			shouldSort: false,
+			searchPlaceholderValue: "Escriba para filtrar...",
+			maxItemCount: -1, // Sin límite
+			removeItems: true, // Permite quitar seleccionados
+			duplicateItemsAllowed: false,
+			placeholder: true,
+			placeholderValue: "Seleccione motivo de inasistencia..."
+		});
+
+		const choices_saludalternativa = new Choices("#saludalternativa", {
+			searchEnabled: true,
+			searchChoices: true,
+			removeItemButton: true, // Permite eliminar seleccionados
+			itemSelectText: '',
+			shouldSort: false,
+			searchPlaceholderValue: "Escriba para filtrar...",
+			maxItemCount: -1, // Sin límite
+			removeItems: true, // Permite quitar seleccionados
+			duplicateItemsAllowed: false,
+			placeholder: true,
+			placeholderValue: "Seleccione salud alternativa..."
+		});
+
+
+		const choices_consumospa = new Choices("#consumospa", {
+			searchEnabled: true,
+			searchChoices: true,
+			removeItemButton: true, // Permite eliminar seleccionados
+			itemSelectText: '',
+			shouldSort: false,
+			searchPlaceholderValue: "Escriba para filtrar...",
+			maxItemCount: -1, // Sin límite
+			removeItems: true, // Permite quitar seleccionados
+			duplicateItemsAllowed: false,
+			placeholder: true,
+			placeholderValue: "Seleccione consumo..."
+		});
+
+		const choices_riesgopsicosocial = new Choices("#riesgopsicosocial", {
+			searchEnabled: true,
+			searchChoices: true,
+			removeItemButton: true, // Permite eliminar seleccionados
+			itemSelectText: '',
+			shouldSort: false,
+			searchPlaceholderValue: "Escriba para filtrar...",
+			maxItemCount: -1, // Sin límite
+			removeItems: true, // Permite quitar seleccionados
+			duplicateItemsAllowed: false,
+			placeholder: true,
+			placeholderValue: "Seleccione riesgo psicosocial..."
+		});
+
+		const choices_sopechamaltrato = new Choices("#sopechamaltrato", {
+			searchEnabled: true,
+			searchChoices: true,
+			removeItemButton: true, // Permite eliminar seleccionados
+			itemSelectText: '',
+			shouldSort: false,
+			searchPlaceholderValue: "Escriba para filtrar...",
+			maxItemCount: -1, // Sin límite
+			removeItems: true, // Permite quitar seleccionados
+			duplicateItemsAllowed: false,
+			placeholder: true,
+			placeholderValue: "Seleccione tipo de vulneración..."
+		});
+
+		const choices_canalizacionuno = new Choices("#canalizacionuno", {
+			searchEnabled: true,
+			searchChoices: true,
+			removeItemButton: true, // Permite eliminar seleccionados
+			itemSelectText: '',
+			shouldSort: false,
+			searchPlaceholderValue: "Escriba para filtrar...",
+			maxItemCount: 3, // Límite a 3 items
+			removeItems: true, // Permite quitar seleccionados
+			duplicateItemsAllowed: false,
+			placeholder: true,
+			placeholderValue: "Seleccione canalización...",
+		});
+
+		const choices_educacion = new Choices("#educacion", {
+			searchEnabled: true,
+			searchChoices: true,
+			removeItemButton: true, // Permite eliminar seleccionados
+			itemSelectText: '',
+			shouldSort: false,
+			searchPlaceholderValue: "Escriba para filtrar...",
+			maxItemCount: 3, // Límite a 3 items
+			removeItems: true, // Permite quitar seleccionados
+			duplicateItemsAllowed: false,
+			placeholder: true,
+			placeholderValue: "Seleccione educación...",
+		});
+
+
+
+		const choices_canalizacion_id = new Choices("#canalizacion_id", {
+			searchEnabled: true,
+			searchChoices: true,
+			removeItemButton: true, // Permite eliminar seleccionados
+			itemSelectText: '',
+			shouldSort: false,
+			searchPlaceholderValue: "Escriba para filtrar...",
+			maxItemCount: 3, // Límite a 3 items
+			removeItems: true, // Permite quitar seleccionados
+			duplicateItemsAllowed: false,
+			placeholder: true,
+			placeholderValue: "Seleccione IPS...",
+		});
+
 
 
 		document.querySelectorAll('[id^="ayudaButton"]').forEach(function(btn) {
@@ -2570,4 +3468,58 @@ $this->Html->script([
 	$(function() {
 		$('#ayudaButton').popover();
 	});
+
+
+	function savePersona(data) {
+        let id_familia = localStorage.getItem("id_familia_temporal") || 1;
+        data['data[Juventudadulto][id_familia_temporal]'] = id_familia;
+        let personas = JSON.parse(localStorage.getItem("personas")) || [];
+        personas.push(data);
+        localStorage.setItem("personas", JSON.stringify(personas));
+        localStorage.removeItem("id_familia_temporal");
+    }
+
+    cargarEnStorage = function() {
+        const form = document.querySelector('form');
+        const formData = new FormData(form);
+        const dataObject = {};
+
+        formData.forEach((value, key) => {
+            // Manejar múltiples selecciones (arrays)
+            if (dataObject[key]) {
+                if (Array.isArray(dataObject[key])) {
+                    dataObject[key].push(value);
+                } else {
+                    dataObject[key] = [dataObject[key], value];
+                }
+            } else {
+                dataObject[key] = value;
+            }
+        });
+
+        alert('⏳ Procesando datos para almacenamiento local...');
+        // un mensaje para ponerle un id temporal y esribr un numero de vivienda
+        const input = prompt('Ingrese el ID de vivienda para crear la familia (ej: 123):');
+        if (input === null) return; // usuario canceló
+
+        const idVivienda = input.trim();
+        if (idVivienda === '') {
+            alert('Debe ingresar un ID de Familia para continuar.');
+            return;
+        }
+
+        // Validación básica: permitir solo números, pero dar opción si no es numérico
+        if (!/^\d+$/.test(idVivienda)) {
+            if (!confirm('El ID ingresado no parece numérico. ¿Desea continuar de todos modos?')) {
+                return;
+            }
+        }
+
+        if (confirm('¿Está seguro de crear las personas con ID de la persona ' + idVivienda + '?')) {
+            dataObject['data[Juventudadulto][id_persona_temporal]'] = idVivienda;
+            savePersona(dataObject);
+            alert('✅ Datos guardados en el almacenamiento local como JSON.');
+            window.location.href = 'http://localhost/APS_DEMO/';
+        }
+    };
 </script>

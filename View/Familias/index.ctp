@@ -79,10 +79,10 @@
                 </div>
             </button>
 
-                   
-        <div  class="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 p-8 border-2 border-transparent hover:border-teal-500 transform hover:-translate-y-1">
-            <iframe width="100%" height="100%" src="https://lookerstudio.google.com/embed/reporting/f70581e1-168b-41e5-b9c5-33a679e40b3c/page/p_gwatai39xd" frameborder="0" style="border:0" allowfullscreen sandbox="allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox"></iframe>
-        </div>
+
+            <div class="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 p-8 border-2 border-transparent hover:border-teal-500 transform hover:-translate-y-1">
+                <iframe width="100%" height="100%" src="https://lookerstudio.google.com/embed/reporting/f70581e1-168b-41e5-b9c5-33a679e40b3c/page/p_gwatai39xd" frameborder="0" style="border:0" allowfullscreen sandbox="allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox"></iframe>
+            </div>
         </div>
 
 
@@ -143,7 +143,28 @@
 
         </div>
 
+        <div class="grid md:grid-cols-2 gap-6 mb-8 mt-8">
 
+
+            <!-- Agregar Familia Card -->
+            <button onclick="uploadData()" class="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 p-8 border-2 border-transparent hover:border-cyan-500 transform hover:-translate-y-1">
+                <div class="flex flex-col items-center text-center gap-4">
+                    <div class="bg-gradient-to-br from-cyan-100 to-blue-100 p-6 rounded-2xl group-hover:scale-110 transition-transform duration-300">
+                        <i class="fa-solid fa-signal text-cyan-600 text-5xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-slate-800 group-hover:text-cyan-600 transition-colors">
+                        Descargar fichas Offline
+                    </h3>
+                    <p class="text-slate-600 text-sm">
+                        Baja todas las fichas registradas en modo offline
+                    </p>
+                    <div class="mt-2 flex items-center gap-2 text-cyan-600 font-semibold opacity-0 group-hover:opacity-100 transition-opacity">
+                        <span>Comenzar</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </div>
+                </div>
+            </button>
+        </div>
     </main>
 
     <!-- Footer -->
@@ -175,6 +196,141 @@
     </style>
 
     <script>
+        function normalizarVivienda(raw) {
+            const viv = {};
+
+            Object.keys(raw).forEach((key) => {
+                if (key.startsWith("data[Sociambiental][")) {
+                    let campo = key
+                        .replace("data[Sociambiental][", "")
+                        .replace("]", "");
+                    viv[campo] = raw[key];
+                }
+            });
+
+            return viv;
+        }
+
+        function normalizarFamilia(raw) {
+            const viv = {};
+
+            Object.keys(raw).forEach((key) => {
+                if (key.startsWith("data[Familia][")) {
+                    let campo = key.replace("data[Familia][", "").replace("]", "");
+                    viv[campo] = raw[key];
+                }
+            });
+
+            return viv;
+        }
+
+        function normalizarPersona(raw) {
+            const viv = {};
+
+            Object.keys(raw).forEach((key) => {
+                if (key.startsWith("data[Juventudadulto][")) {
+                    let campo = key
+                        .replace("data[Juventudadulto][", "")
+                        .replace("]", "");
+                    viv[campo] = raw[key];
+                }
+            });
+
+            return viv;
+        }
+
+        // listar los id de familias en localstorage
+
+        async function enviarA_Drive(dataObject) {
+            const url = "https://script.google.com/macros/s/AKfycbwb_4lBMeWjOESJ7Fq7fcL96JYkGAMuHM3KAuolFL_vxlZq3a2jp8ZLXGVi5eh-GcWxJA/exec";
+
+            try {
+                console.log(JSON.stringify({
+                    fichas
+                }));
+                const dataStr = JSON.stringify(dataObject, null, 2);
+                const blob = new Blob([dataStr], {
+                    type: "application/json"
+                });
+                const downloadUrl = URL.createObjectURL(blob);
+                const a = document.createElement("a");
+                const filename = `fichas_${new Date().toISOString().slice(0,19).replace(/[:T]/g, "-")}.json`;
+                a.href = downloadUrl;
+                a.download = filename;
+                document.body.appendChild(a);
+                a.click();
+                a.remove();
+                URL.revokeObjectURL(downloadUrl);
+
+                // Simula una respuesta para mantener el flujo existente
+                const resp = {
+                    json: async () => ({
+                        status: "ok",
+                        msg: "Descargado localmente",
+                        filename
+                    })
+                };
+
+                const json = await resp.json();
+                console.log(json);
+
+                if (json.status === "ok") {
+                    alert("Datos guardados ");
+                    localStorage.clear();
+                } else {
+                    alert("Error: " + json.msg);
+                }
+            } catch (err) {
+                alert("Fallo la conexión");
+                console.error(err);
+            }
+        }
+
+        function uploadData() {
+            const viviendas = JSON.parse(localStorage.getItem("viviendas")) || [];
+            const familias = JSON.parse(localStorage.getItem("familias")) || [];
+            const personas = JSON.parse(localStorage.getItem("personas")) || [];
+
+            viviendas_data = viviendas.map((v) => {
+                return normalizarVivienda(v);
+            });
+
+            familias_data = familias.map((f) => {
+                return normalizarFamilia(f);
+            });
+
+            personas_data = personas.map((p) => {
+                return normalizarPersona(p);
+            });
+
+            fichas = viviendas_data.map((vivienda) => {
+                const familiasDeVivienda = familias_data.filter(
+                    (f) =>
+                    f.id_sociambiental_temporal == vivienda.id_sociambiental_temporal
+                );
+
+                const familiasConPersonas = familiasDeVivienda.map((fam) => {
+                    const personasDeFamilia = personas_data.filter(
+                        (p) => p.id_familia_temporal == fam.id_familia_temporal
+                    );
+                    return {
+                        ...fam,
+                        personas: personasDeFamilia,
+                    };
+                });
+
+                return {
+                    ...vivienda,
+                    familias: familiasConPersonas,
+                };
+            });
+
+            console.log("Fichas a subir:", fichas);
+            enviarA_Drive({
+                fichas
+            });
+        }
+
         function toSociambiental() {
             if (confirm('¿Está seguro de realizar esta acción?')) {
                 window.location.href = '<?php echo $this->Html->url(['controller' => 'Sociambientals', 'action' => 'add']); ?>';
