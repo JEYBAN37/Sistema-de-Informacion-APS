@@ -203,7 +203,6 @@
 
     <script>
       const URL_BASE = "http://localhost/APS_DEMO/";
-      const BACKEND_URL_BASE = "https://script.google.com/macros/s/AKfycbyu3orPLTeWn7hF3ziKjCh_gaEG6OVffF4Z5XgH9WZ4TVC5RrwBvT_G7z7qNpkbC4N0Ag/exec";
 
       function goTo(path) {
         // Si la persona hace clic sin internet, solo se intenta cargar la ruta local
@@ -246,7 +245,7 @@
             "id_sociambiental_temporal",
             id_sociambiental_temporal
           );
-          window.location.href = "http://localhost/APS_DEMO/Familias/add";
+          window.location.href = URL_BASE + "Familias/add";
         }
       }
 
@@ -284,7 +283,7 @@
           id_familia_temporal = JSON.parse(idVivienda);
           localStorage.setItem("id_familia_temporal", id_familia_temporal);
           window.location.href =
-            "http://localhost/APS_DEMO/Juventudadultos/add";
+            URL_BASE + "Juventudadultos/add";
         }
       }
 
