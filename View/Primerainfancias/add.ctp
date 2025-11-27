@@ -417,17 +417,7 @@ input[type="checkbox"] {
                             </div>
 
                         </div>
-                        <div class="form-group col-md-6" style="margin-top: 20px;">
-                            <?php echo $this->Form->input('anomaliacongenita', array(
-                                'label' => 'Presenta una anomalía congénita',
-                                'class' => 'form-control',
-                                'placeholder' => '',
-                                'type' => 'select',
-                                'options' => $optionYesNo,
-                                'style' => 'height:30px;  font-size: 15px ; width:100%',
 
-                            )); ?>
-                        </div>
                         <div class="form-group col-md-6" style="margin-top: 20px;">
                             <?php
 

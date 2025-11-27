@@ -1,11 +1,490 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <meta charset="utf-8">
-  <title>Sin conexión</title>
-</head>
-<body style="font-family: sans-serif; text-align: center; margin-top: 10%;">
-  <h2>🚫 No hay conexión a internet</h2>
-  <p>Por favor, verifica tu conexión y vuelve a intentar.</p>
-</body>
+  <head>
+    <meta charset="utf-8" />
+    <title>Sin conexión</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+        margin-top: 5%;
+        background: #f7f7f7;
+      }
+
+      h2 {
+        font-size: 24px;
+        color: #333;
+      }
+
+      p {
+        color: #666;
+        margin-bottom: 30px;
+      }
+
+      .menu-container {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        max-width: 320px;
+        margin: auto;
+      }
+
+      .btn {
+        padding: 14px;
+        border-radius: 10px;
+        background: white;
+        border: 2px solid #ddd;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: 0.2s;
+      }
+
+      .btn:hover {
+        border-color: #444;
+        background: #e9e9e9;
+      }
+
+      .btn:active {
+        background: #dcdcdc;
+      }
+
+      body {
+        font-family: sans-serif;
+        margin: 20px;
+      }
+
+      .accordion-item {
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        margin-bottom: 10px;
+        overflow: hidden;
+      }
+
+      .accordion-header {
+        padding: 12px;
+        background: #f0f0f0;
+        cursor: pointer;
+        font-weight: bold;
+      }
+
+      .accordion-content {
+        display: none;
+        padding: 12px;
+        background: #fafafa;
+      }
+
+      .sub-item {
+        margin-left: 15px;
+        padding: 8px;
+        border-left: 3px solid #2196f3;
+        margin-bottom: 5px;
+        background: #fff;
+      }
+
+      .person-item {
+        margin-left: 30px;
+        padding: 5px;
+        border-left: 3px solid #4caf50;
+        background: #fff;
+        margin-bottom: 3px;
+      }
+
+      .bg-gradient-custom {
+        min-height: 100vh; /* min-h-screen */
+        background-image: linear-gradient(
+          to bottom right,
+          #f8fafc,
+          #f1f5f9
+        ); /* from-slate-50 to-slate-100 */
+      }
+      .main-container {
+        /* container */
+        width: 100%;
+
+        /* mx-auto */
+        margin-left: auto;
+        margin-right: auto;
+
+        /* px-4 */
+        padding-left: 1rem; /* 16px */
+
+        /* py-8 */
+        padding-top: 2rem; /* 32px */
+        padding-bottom: 2rem; /* 32px */
+
+        /* max-w-6xl */
+        max-width: 72rem; /* 1152px */
+      }
+
+      .title-section {
+        text-align: center;
+        margin-bottom: 3rem; /* mb-12 */
+      }
+
+      /* h1 */
+      .title-main {
+        font-size: 2.25rem; /* text-4xl */
+        font-weight: 700; /* font-bold */
+        color: #1e293b; /* text-slate-800 */
+        margin-bottom: 1rem; /* mb-4 */
+        line-height: 1.25; /* leading-tight */
+      }
+
+      /* responsive md:text-5xl (>=768px) */
+      @media (min-width: 768px) {
+        .title-main {
+          font-size: 3rem; /* text-5xl */
+        }
+      }
+
+      /* span con texto transparente y gradiente */
+      .title-gradient {
+        color: transparent; /* text-transparent */
+        background-clip: text; /* bg-clip-text */
+        -webkit-background-clip: text;
+        background-image: linear-gradient(
+          to right,
+          #0d9488,
+          #06b6d4
+        ); /* from-teal-600 to-cyan-600 */
+      }
+
+      /* párrafo */
+      .title-description {
+        color: #475569; /* text-slate-600 */
+        font-size: 1.125rem; /* text-lg */
+        max-width: 42rem; /* max-w-2xl */
+        margin-left: auto; /* mx-auto */
+        margin-right: auto;
+        line-height: 1.625; /* leading-relaxed */
+      }
+    </style>
+  </head>
+
+  <body class="bg-gradient-custom">
+    <main class="main-container">
+      <div class="title-section">
+        <h1 class="title-main">
+          Modulo Offline<br />
+          <span class="title-gradient"> Viviendas Rurales </span>
+        </h1>
+        <p class="title-description">
+          Este es el modulo offline de APS para recolección de datos en zonas
+          sin conexión a internet.
+        </p>
+      </div>
+    </main>
+
+    <div class="menu-container">
+      <button class="btn" onclick="goTo('Sociambientals/add')">
+        🏠 Agregar Vivienda
+      </button>
+
+      <button class="btn" onclick="toFamilia()">➕ Agregar Familia</button>
+
+      <button class="btn" onclick="toPersona()">
+        👤 Agregar Persona a Familia
+      </button>
+
+      <button class="btn" onclick="goTo('Visitasnegadas/add')">
+        📌 Registrar Novedad
+      </button>
+
+      <button class="btn" onclick="uploadData('Visitasnegadas/add')">
+        Crgar Datos al Aplicativo
+      </button>
+    </div>
+
+    <h2>📦 Datos Guardados Localmente</h2>
+    <p>(Viviendas → Familias → Personas)</p>
+
+    <div id="accordion-container"></div>
+
+    <script>
+      const URL_BASE = "http://localhost/APS_DEMO/";
+      const BACKEND_URL_BASE = "https://script.google.com/macros/s/AKfycbyu3orPLTeWn7hF3ziKjCh_gaEG6OVffF4Z5XgH9WZ4TVC5RrwBvT_G7z7qNpkbC4N0Ag/exec";
+
+      function goTo(path) {
+        // Si la persona hace clic sin internet, solo se intenta cargar la ruta local
+        window.location.href = URL_BASE + path;
+      }
+
+      function toFamilia() {
+        // Solicita al usuario el ID de vivienda
+        const input = prompt(
+          "Ingrese el ID de vivienda para crear la familia (ej: 123):"
+        );
+        if (input === null) return; // usuario canceló
+
+        const idVivienda = input.trim();
+        if (idVivienda === "") {
+          alert("Debe ingresar un ID de vivienda para continuar.");
+          return;
+        }
+
+        // Validación básica: permitir solo números, pero dar opción si no es numérico
+        if (!/^\d+$/.test(idVivienda)) {
+          if (
+            !confirm(
+              "El ID ingresado no parece numérico. ¿Desea continuar de todos modos?"
+            )
+          ) {
+            return;
+          }
+        }
+
+        if (
+          confirm(
+            "¿Está seguro de crear la familia con ID de vivienda " +
+              idVivienda +
+              "?"
+          )
+        ) {
+          id_sociambiental_temporal = JSON.parse(idVivienda);
+          localStorage.setItem(
+            "id_sociambiental_temporal",
+            id_sociambiental_temporal
+          );
+          window.location.href = "http://localhost/APS_DEMO/Familias/add";
+        }
+      }
+
+      function toPersona() {
+        // Solicita al usuario el ID de vivienda
+        const input = prompt(
+          "Ingrese el ID de vivienda para crear la persona (ej: 123):"
+        );
+        if (input === null) return; // usuario canceló
+
+        const idVivienda = input.trim();
+        if (idVivienda === "") {
+          alert("Debe ingresar un ID de vivienda para continuar.");
+          return;
+        }
+
+        // Validación básica: permitir solo números, pero dar opción si no es numérico
+        if (!/^\d+$/.test(idVivienda)) {
+          if (
+            !confirm(
+              "El ID ingresado no parece numérico. ¿Desea continuar de todos modos?"
+            )
+          ) {
+            return;
+          }
+        }
+
+        if (
+          confirm(
+            "¿Está seguro de crear la persona con ID de familia " +
+              idVivienda +
+              "?"
+          )
+        ) {
+          id_familia_temporal = JSON.parse(idVivienda);
+          localStorage.setItem("id_familia_temporal", id_familia_temporal);
+          window.location.href =
+            "http://localhost/APS_DEMO/Juventudadultos/add";
+        }
+      }
+
+      function normalizarVivienda(raw) {
+        const viv = {};
+
+        Object.keys(raw).forEach((key) => {
+          if (key.startsWith("data[Sociambiental][")) {
+            let campo = key
+              .replace("data[Sociambiental][", "")
+              .replace("]", "");
+            viv[campo] = raw[key];
+          }
+        });
+
+        return viv;
+      }
+
+      function normalizarFamilia(raw) {
+        const viv = {};
+
+        Object.keys(raw).forEach((key) => {
+          if (key.startsWith("data[Familia][")) {
+            let campo = key.replace("data[Familia][", "").replace("]", "");
+            viv[campo] = raw[key];
+          }
+        });
+
+        return viv;
+      }
+
+      function normalizarPersona(raw) {
+        const viv = {};
+
+        Object.keys(raw).forEach((key) => {
+          if (key.startsWith("data[Juventudadulto][")) {
+            let campo = key
+              .replace("data[Juventudadulto][", "")
+              .replace("]", "");
+            viv[campo] = raw[key];
+          }
+        });
+
+        return viv;
+      }
+
+      // listar los id de familias en localstorage
+
+      function loadOfflineData() {
+        const viviendas = JSON.parse(localStorage.getItem("viviendas")) || [];
+        const familias = JSON.parse(localStorage.getItem("familias")) || [];
+        const personas = JSON.parse(localStorage.getItem("personas")) || [];
+
+        let container = document.getElementById("accordion-container");
+        container.innerHTML = "";
+
+        viviendas.forEach((raw) => {
+          const viv = normalizarVivienda(raw); // ← limpia los datos
+
+          let vivId = viv.id_sociambiental_temporal || "TEMP";
+
+          // Crear contenedor de vivienda
+          let viviendaHtml = `
+            <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    🏠 Vivienda: ${
+                      viv.direccion || "Sin dirección"
+                    } (ID: ${vivId})
+                </div>
+                <div class="accordion-content">
+        `;
+
+          familias_limpias = familias.map((rawFam) => {
+            return normalizarFamilia(rawFam); // ← limpia los datos
+          });
+
+          const familiasDeVivienda = familias_limpias.filter(
+            (f) => f.id_sociambiental_temporal == vivId
+          );
+
+          if (familiasDeVivienda.length === 0) {
+            viviendaHtml += `<p class="sub-item">Sin familias registradas.</p>`;
+          }
+
+          familiasDeVivienda.forEach((fam) => {
+            let famId = fam.id_familia_temporal || "TEMP-F";
+            viviendaHtml += `
+                <div class="sub-item">
+                    👨‍👩‍👧 Familia: ${fam.nombres || "Sin nombre"} (ID: ${famId})
+            `;
+
+            personas_limpias = personas.map((rawPer) => {
+              return normalizarPersona(rawPer); // ← limpia los datos
+            });
+
+            console.log("Personas limpias:", personas_limpias);
+            // Filtrar personas de esta familia
+            const personasDeFamilia = personas_limpias.filter(
+              (p) => p.id_familia_temporal == famId
+            );
+
+            if (personasDeFamilia.length === 0) {
+              viviendaHtml += `<p class="person-item">Sin personas.</p>`;
+            }
+
+            personasDeFamilia.forEach((per) => {
+              viviendaHtml += `
+                    <div class="person-item">
+                        👤 ${per.primernombre || "Persona sin nombre"}
+                        (Documento: ${per.numerodoc || "N/A"})
+                    </div>
+                `;
+            });
+
+            viviendaHtml += `</div>`; // cierre familia
+          });
+
+          viviendaHtml += `
+                </div>
+            </div>
+        `;
+
+          container.innerHTML += viviendaHtml;
+        });
+      }
+
+      function toggleAccordion(header) {
+        const content = header.nextElementSibling;
+        content.style.display =
+          content.style.display === "block" ? "none" : "block";
+      }
+
+      async function enviarA_Drive(dataObject) {
+        const url = "https://script.google.com/macros/s/AKfycbwb_4lBMeWjOESJ7Fq7fcL96JYkGAMuHM3KAuolFL_vxlZq3a2jp8ZLXGVi5eh-GcWxJA/exec";
+
+        try {
+          const resp = await fetch(url, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(dataObject),
+          });
+
+          const json = await resp.json();
+          console.log(json);
+
+          if (json.status === "ok") {
+            alert("Datos guardados temporalmente en Drive");
+          } else {
+            alert("Error: " + json.msg);
+          }
+        } catch (err) {
+          alert("Fallo la conexión");
+          console.error(err);
+        }
+      }
+
+      function uploadData() {
+        const viviendas = JSON.parse(localStorage.getItem("viviendas")) || [];
+        const familias = JSON.parse(localStorage.getItem("familias")) || [];
+        const personas = JSON.parse(localStorage.getItem("personas")) || [];
+
+        viviendas_data = viviendas.map((v) => {
+          return normalizarVivienda(v);
+        });
+
+        familias_data = familias.map((f) => {
+          return normalizarFamilia(f);
+        });
+
+        personas_data = personas.map((p) => {
+          return normalizarPersona(p);
+        });
+
+        fichas = viviendas_data.map((vivienda) => {
+          const familiasDeVivienda = familias_data.filter(
+            (f) =>
+              f.id_sociambiental_temporal == vivienda.id_sociambiental_temporal
+          );
+
+          const familiasConPersonas = familiasDeVivienda.map((fam) => {
+            const personasDeFamilia = personas_data.filter(
+              (p) => p.id_familia_temporal == fam.id_familia_temporal
+            );
+            return {
+              ...fam,
+              personas: personasDeFamilia,
+            };
+          });
+
+          return {
+            ...vivienda,
+            familias: familiasConPersonas,
+          };
+        });
+
+        console.log("Fichas a subir:", fichas);
+        enviarA_Drive(fichas);
+      }
+
+      loadOfflineData();
+    </script>
+  </body>
 </html>
