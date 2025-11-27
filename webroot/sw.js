@@ -1,6 +1,7 @@
 // 🆕 Cambia la versión del caché si actualizas archivos
-const BASE_URL = "/APS_DEMO";
-const CACHE_NAME = "aps-cache-v92";
+const BASE_URL = "/aps/aps_2025_v1";
+const CACHE_NAME = "aps-cache-v47";
+
 
 // 🗂️ Archivos a cachear
 const urlsToCache = [
