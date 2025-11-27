@@ -290,6 +290,7 @@
             const viviendas = JSON.parse(localStorage.getItem("viviendas")) || [];
             const familias = JSON.parse(localStorage.getItem("familias")) || [];
             const personas = JSON.parse(localStorage.getItem("personas")) || [];
+            const novedades = JSON.parse(localStorage.getItem("novedades")) || [];
 
             viviendas_data = viviendas.map((v) => {
                 return normalizarVivienda(v);
@@ -329,6 +330,12 @@
             enviarA_Drive({
                 fichas
             });
+
+            enviarA_Drive({
+                novedades
+            });
+            
+
         }
 
         function toSociambiental() {

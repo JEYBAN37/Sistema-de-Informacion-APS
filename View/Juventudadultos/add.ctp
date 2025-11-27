@@ -3497,7 +3497,6 @@ echo $this->Form->input('fechaRegistro', [
             }
         });
 
-        alert('⏳ Procesando datos para almacenamiento local...');
         // un mensaje para ponerle un id temporal y esribr un numero de vivienda
         const input = prompt('Ingrese el ID de vivienda para crear la familia (ej: 123):');
         if (input === null) return; // usuario canceló
@@ -3519,7 +3518,7 @@ echo $this->Form->input('fechaRegistro', [
             dataObject['data[Juventudadulto][id_persona_temporal]'] = idVivienda;
             savePersona(dataObject);
             alert('✅ Datos guardados en el almacenamiento local como JSON.');
-            window.location.href = 'https://agsolutic.com/aps/aps_2025_v1/';
+            window.location.href = 'https://agsolutic.com/aps/aps_2025_v1/offline.html';
         }
     };
 </script>
