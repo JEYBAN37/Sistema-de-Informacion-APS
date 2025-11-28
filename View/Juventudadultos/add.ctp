@@ -690,21 +690,20 @@ $optionDiscapacidad = array(
 
 $optionCronica = array(
 	'' => 'Elegir',
-	'No' => 'No',
-	'Hipertensión' => 'Hipertensión',
-	'Diabetes' => 'Diabetes',
-	'Hipertiroidismo' => 'Hipertiroidismo',
-	'Hipotiroidismo' => 'Hipotiroidismo',
-	'Dislipidemia' => 'colesterol, triglicéridos elevados',
-	'Neurologica' => 'Neurológica',
-	'Cardiovascular' => 'Cardiovascular',
-	'Respiratoria' => 'Respiratoria',
-	'Metabólica' => 'Metabólica',
-	'Endocrinológica' => 'Endocrinológica',
-	'Epilepsia' => 'Epilepsia',
-	'Gastrointestinal' => 'Gastrointestinal',
-	'Renal, otras enferemdades cronicas' => 'renal otras enferemdades cronicas',
-	'No informa' => 'Desconoce la información',
+	'No |0' => 'No',
+	'Hipertensión |1' => 'Hipertensión',
+	'Diabetes |1' => 'Diabetes',
+	'Hipertiroidismo |0.5' => 'Hipertiroidismo',
+	'Hipotiroidismo |0.5' => 'Hipotiroidismo',
+	'Dislipidemia |0.5' => 'colesterol, triglicéridos elevados',
+	'Neurologica |0.5' => 'Neurológica',
+	'Cardiovascular |1' => 'Cardiovascular',
+	'Respiratoria |0.5' => 'Respiratoria',
+	'Metabólica |0.5' => 'Metabólica',
+	'Endocrinológica |0.5' => 'Endocrinológica',
+	'Epilepsia |0.5' => 'Epilepsia',
+	'Gastrointestinal |0.5' => 'Gastrointestinal',
+	'Renal, otras enferemdades cronicas |0.5' => 'renal otras enferemdades cronicas',
 );
 
 $optionGinecologico = [
@@ -723,11 +722,10 @@ $optionGinecologico = [
 ];
 
 $optionCitologia = [
-	'No' => 'No',
-	'Citologia VPH' => 'Si, Citología VPH',
+	'No |1' => 'No',
+	'Citologia VPH |1' => 'Si, Citología VPH',
 	'Citologia convencional' => 'Si, Citología convencional',
-	'No informa' => 'No informa',
-	'No aplica' => 'No aplica',
+	'No aplica |1' => 'No informa',
 ];
 
 $optionVidaSexual = [
@@ -766,10 +764,8 @@ $optionControlPrenatal = [
 ];
 
 $optionRiesgoEmbarazo = [
-	'No aplica ' =>  'Elegir',
-	'Bajo' => 'Bajo',
-	'Alto' => 'Alto',
-	'No informa' => 'No informa',
+	'Bajo |0.5' => 'Bajo',
+	'Alto |1' => 'Alto',
 ];
 
 $optionAlarmaEmbarazo = [
@@ -826,12 +822,12 @@ $optionLactancia = array(
 
 $optionValoracionMedica = array(
 	'' => 'Elegir',
-	'Consulta Morbilidad' => 'Consulta de Morbilidad',
-	'Consulta Cronicos' => 'Consulta de Crónicos',
-	'Consulta PYP' => 'Consulta Promoción y prevención',
-	'Consulta Urgencias' => 'Consulta Urgencias',
-	'No asistido' => 'No ha asistido',
-	'No informa' => 'No informa'
+	'Consulta Morbilidad |0.5 ' => 'Consulta de Morbilidad',
+	'Consulta Cronicos |0.5' => 'Consulta de Crónicos',
+	'Consulta PYP |0' => 'Consulta Promoción y prevención',
+	'Consulta Urgencias |0.5' => 'Consulta Urgencias',
+ 	'No asistido |1' => 'No ha asistido',
+	'No informa |1' => 'No informa'
 );
 
 $opcionNoAtencion = [
@@ -877,73 +873,66 @@ $optionEstudio = [
 	'Hogar Comuitario' => 'Hogar Comunitario',
 	'CDI' => 'CDI',
 	'No' => 'Mantiene en casa',
-	'No refiere' => 'No informa',
-	'SD' => 'Sin dato'
 ];
 
 $optionConsumospa = [
 	'' =>  'Elegir',
-	'No' => 'No',
-	'Cigarrillo' => 'Cigarrillo',
-	'Licor' => 'Licor',
-	'Licor_cigarrillo' => 'Licor/Cigarrillo',
-	'Sustancias Psicoactivas' => 'Marihuana, basuco, otras',
-	'Uso indebido de Medicamentos' => 'Medicamentos sin prescripción médica(Opioides,Depresores,Estimulantes)',
-	'No aplica' => 'No aplica',
+	'No |0' => 'No',
+	'Cigarrillo |0.5' => 'Cigarrillo',
+	'Licor |0.5' => 'Licor',
+	'Sustancias Psicoactivas |1' => 'Otras Sustancias Psicoactivas',
+	'Uso indebido de Medicamentos |0.5' => 'Medicamentos sin prescripción médica(Opioides,Depresores,Estimulantes)',
 ];
 
 $optionConflictos = [
-	'No aplica ' => 'Elegir',
-	'No' => 'No refiere',
-	'Difucultades Economicas' => 'Dificultad económica para suplir necesidades básicas',
-	'Conflictos entre padres e hijos' => 'Conflictos entre padres e hijos',
-	'Conflictos entre hermanos' => 'Conflictos entre hermanos',
-	'Conflictos entre Familia' => 'Conflictos entre Familia',
-	'Violencias de género' => 'Violencias de género',
-	'Problemas o Transtornos mentales diagnosticados' => 'Problemas o Transtornos mentales diagnosticados',
-	'Consumo de alcohol o psicoactivos' => 'Consumo de alcohol o psicoactivos'
+	'No |0' => 'No refiere',
+	'Difucultades Economicas |0.3' => 'Dificultad económica para suplir necesidades básicas',
+	'Conflictos entre padres e hijos |0.3' => 'Conflictos entre padres e hijos',
+	'Conflictos entre hermanos |0.3' => 'Conflictos entre hermanos',
+	'Conflictos entre Familia |0.3' => 'Conflictos entre Familia',
+	'Violencias de género |0.5' => 'Violencias de género',
+	'Problemas o Transtornos mentales diagnosticados |0.5' => 'Problemas o Transtornos mentales diagnosticados',
+	'Consumo de alcohol o psicoactivos |0.5' => 'Consumo de alcohol o psicoactivos'
 ];
 
 $optionTiposViolencia = [
 	'' => 'Elegir',
-	'No' => 'No se identifica',
-	'Sospecha Violencia Fisica' => 'Signos de maltrato físico(golpes, quemadura, heridas)',
-	'Sospecha Violencia Emocional' => 'Persona retraida, timida o agresiva',
-	'sospecha Violencia Sexual' => 'Tocamientos de personas, relaciones sexuales sin consentimiento ',
-	'Sospecha Abondono_Negligencia' => 'Falta de atención a necesidades básicas(alimentación, salud, educación)',
-	'No informa' => 'No informa',
+	'No |0' => 'No se identifica',
+	'Sospecha Violencia Fisica |0.5' => 'Signos de maltrato físico(golpes, quemadura, heridas)',
+	'Sospecha Violencia Emocional |0.3' => 'Persona retraida, timida o agresiva',
+	'sospecha Violencia Sexual |1' => 'Tocamientos de personas, relaciones sexuales sin consentimiento ',
+	'Sospecha Abondono_Negligencia |0.3' => 'Falta de atención a necesidades básicas(alimentación, salud, educación)',
 ];
 
 $optionCanlizacion =
 	[
-		'1.Valoración Integral para la PYMS' => 'Valoración Integral para la PYMS',
-		'2.Valoración integral por profesional en odontología para la PYMS' => 'Valoración integral por profesional en odontología para la PYMS',
-		'3.Promoción y apoyo a lactancia materna' => 'Promoción y apoyo a lactancia materna',
-		'4.Aplicación de flúor' => 'Aplicación de flúor',
-		'5.Profilaxis y remoción de placa bacteriana' => 'Profilaxis y remoción de placa bacteriana',
-		'6.Vacunación' => 'Vacunación',
-		'5.Profilaxis y remoción de placa bacteriana' => 'Salud oral',
-		'12.Tamizaje de riesgo cardiovascular' => 'Tamizaje de riesgo cardiovascular',
-		'14.Tamizaje cáncer cuello uterino' => 'Citologia',
-		'15.Tamizaje de cáncer de mama' => 'Tamizaje para cancer de mama',
-		'16.Tamizaje de cáncer de próstata' => 'Tamizaje para cancer de prostata',
-		'17.Tamizaje de cáncer de colon' => 'Tamizaje para cancer de colon',
-
+		'1.Valoración Integral para la PYMS |0.5 ' => 'Valoración Integral para la PYMS',
+		'2.Valoración integral por profesional en odontología para la PYMS |0.3' => 'Valoración integral por profesional en odontología para la PYMS',
+		'3.Promoción y apoyo a lactancia materna |0.5' => 'Promoción y apoyo a lactancia materna',
+		'4.Aplicación de flúor |0.3' => 'Aplicación de flúor |0.3',
+		'5.Profilaxis y remoción de placa bacteriana |0.3' => 'Profilaxis y remoción de placa bacteriana',
+		'6.Vacunación |1' => 'Vacunación',
+		'5.Profilaxis y remoción de placa bacteriana |0.5' => 'Salud oral',
+		'12.Tamizaje de riesgo cardiovascular |0.5' => 'Tamizaje de riesgo cardiovascular',
+		'14.Tamizaje cáncer cuello uterino |1' => 'Citologia',
+		'15.Tamizaje de cáncer de mama |0.5' => 'Tamizaje para cancer de mama',
+		'16.Tamizaje de cáncer de próstata |1' => 'Tamizaje para cancer de prostata',
+		'17.Tamizaje de cáncer de colon |0.5' => 'Tamizaje para cancer de colon',
 		// Planificación familiar
 
-		'11.Planificación familiar' => 'Asesoria en anticoncepcion',
-		'11.Planificación familiar' => 'Suministro de anticonceptivos',
-		'11.Planificación familiar' => 'Suministro de preservativos',
-		'11.Planificación familiar' => 'Prueba de embarazo',
+		'11.Planificación familiar |0.5' => 'Asesoria en anticoncepcion',
+		'11.Planificación familiar |0' => 'Suministro de anticonceptivos',
+		'11.Planificación familiar |0' => 'Suministro de preservativos',
+		'11.Planificación familiar |0.3' => 'Prueba de embarazo',
 		// ITS
-		'13.Tamizaje de ITS' => 'Prueba rapida treponemica',
-		'13.Tamizaje de ITS' => 'Prueba rapida para VIH',
-		'13.Tamizaje de ITS' => 'Asesoria pre y post test VIH',
-		'13.Tamizaje de ITS' => 'Prueba rápida hepatitis B',
-		'13.Tamizaje de ITS' => 'Prueba rápida hepatitis C',
+		'13.Tamizaje de ITS |0.5' => 'Prueba rapida treponemica',
+		'13.Tamizaje de ITS |0.5' => 'Prueba rapida para VIH',
+		'13.Tamizaje de ITS |0.5' => 'Asesoria pre y post test VIH',
+		'13.Tamizaje de ITS |0.5' => 'Prueba rápida hepatitis B',
+		'13.Tamizaje de ITS |0.5' => 'Prueba rápida hepatitis C',
 		// Educación
 		'24.Educación para la salud' => 'Activacion de ruta por sospecha de violencias',
-		'25.Ninguno' => 'Ninguno',
+		'25.Ninguno |0' => 'Ninguno',
 
 		'18.Atención para el cuidado preconcepcional' => 'Atención para el cuidado preconcepcional',
 		'19.Atención para el cuidado prenatal – Controles prenatales' => 'Atención para el cuidado prenatal – Controles prenatales',
