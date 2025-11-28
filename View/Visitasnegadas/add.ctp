@@ -767,7 +767,7 @@ $EstateHome = array(
         if (confirm('¿Está seguro de crear las personas con ID de la persona ' + idVivienda + '?')) {
             savePersona(dataObject);
             alert('✅ Datos guardados en el almacenamiento local como JSON.');
-            window.location.href = 'http://localhost/APS_DEMO/offline.html';
+            window.location.href = 'https://agsolutic.com/aps/aps_2025_v1/offline.html';
         }
     };
     </script>
