@@ -885,7 +885,7 @@ $optionConsumospa = [
 ];
 
 $optionConflictos = [
-	'No |0' => 'No refiere',
+	'No |0' => 'No se identifica',
 	'Difucultades Economicas |0.3' => 'Dificultad económica para suplir necesidades básicas',
 	'Conflictos entre padres e hijos |0.3' => 'Conflictos entre padres e hijos',
 	'Conflictos entre hermanos |0.3' => 'Conflictos entre hermanos',
@@ -906,13 +906,14 @@ $optionTiposViolencia = [
 
 $optionCanlizacion =
 	[
+		'0.No |0' => 'No se requiere canalización',
 		'1.Valoración Integral para la PYMS |0.5 ' => 'Valoración Integral para la PYMS',
-		'2.Valoración integral por profesional en odontología para la PYMS |0.3' => 'Valoración integral por profesional en odontología para la PYMS',
+		'2.Valoración integral por profesional en odontología para la PYMS |0.3' => 'Odontología P Y M',
 		'3.Promoción y apoyo a lactancia materna |0.5' => 'Promoción y apoyo a lactancia materna',
-		'4.Aplicación de flúor |0.3' => 'Aplicación de flúor |0.3',
-		'5.Profilaxis y remoción de placa bacteriana |0.3' => 'Profilaxis y remoción de placa bacteriana',
+		'4.Aplicación de flúor |0.1' => 'Aplicación de flúor',
+		'5.Profilaxis y remoción de placa bacteriana |0.1' => 'Profilaxis y remoción de placa bacteriana',
+		'Odontología general |0.2' => 'Odontología general',
 		'6.Vacunación |1' => 'Vacunación',
-		'5.Profilaxis y remoción de placa bacteriana |0.5' => 'Salud oral',
 		'12.Tamizaje de riesgo cardiovascular |0.5' => 'Tamizaje de riesgo cardiovascular',
 		'14.Tamizaje cáncer cuello uterino |1' => 'Citologia',
 		'15.Tamizaje de cáncer de mama |0.5' => 'Tamizaje para cancer de mama',
@@ -920,26 +921,28 @@ $optionCanlizacion =
 		'17.Tamizaje de cáncer de colon |0.5' => 'Tamizaje para cancer de colon',
 		// Planificación familiar
 
-		'11.Planificación familiar |0.5' => 'Asesoria en anticoncepcion',
+		'11.Planificación familiar |0.5' => 'Asesoría en anticoncepcion',
 		'11.Planificación familiar |0' => 'Suministro de anticonceptivos',
 		'11.Planificación familiar |0' => 'Suministro de preservativos',
 		'11.Planificación familiar |0.3' => 'Prueba de embarazo',
 		// ITS
-		'13.Tamizaje de ITS |0.5' => 'Prueba rapida treponemica',
-		'13.Tamizaje de ITS |0.5' => 'Prueba rapida para VIH',
-		'13.Tamizaje de ITS |0.5' => 'Asesoria pre y post test VIH',
-		'13.Tamizaje de ITS |0.5' => 'Prueba rápida hepatitis B',
-		'13.Tamizaje de ITS |0.5' => 'Prueba rápida hepatitis C',
+		'13.Tamizaje de ITS |0.3' => 'Prueba rapida treponemica',
+		'13.Tamizaje de ITS |0.3' => 'Prueba rapida para VIH',
+		'13.Tamizaje de ITS |0.3' => 'Asesoria pre y post test VIH',
+		'13.Tamizaje de ITS |0.3' => 'Prueba rápida hepatitis B',
+		'13.Tamizaje de ITS |0.3' => 'Prueba rápida hepatitis C',
 		// Educación
-		'24.Educación para la salud' => 'Activacion de ruta por sospecha de violencias',
+		'24.Educación para la salud|Salud Mental |0.5' => 'Primeros auxilios psicologicos',
+		'24.Educación para la salud|Salud Mental |1' => 'Activacion de ruta por sospecha de violencias',
 		'25.Ninguno |0' => 'Ninguno',
+		
 
-		'18.Atención para el cuidado preconcepcional' => 'Atención para el cuidado preconcepcional',
-		'19.Atención para el cuidado prenatal – Controles prenatales' => 'Atención para el cuidado prenatal – Controles prenatales',
-		'20.Preparación para la maternidad y paternidad' => 'Preparación para la maternidad y paternidad',
-		'21.Interrupción Voluntaria del Embarazo' => 'Interrupción Voluntaria del Embarazo',
-		'22.Atención del puerperio' => 'Atención del puerperio',
-		'23.Atención para el seguimiento del recién nacido' => 'Atención para el seguimiento del recién nacido',
+		'18.Atención para el cuidado preconcepcional|0.1' => 'Atención para el cuidado preconcepcional',
+		'19.Atención para el cuidado prenatal – Controles prenatales |1' => 'Atención para el cuidado prenatal – Controles prenatales',
+		'20.Preparación para la maternidad y paternidad|0.3' => 'Preparación para la maternidad y paternidad',
+		'21.Interrupción Voluntaria del Embarazo |1' => 'Interrupción Voluntaria del Embarazo',
+		'22.Atención del puerperio |1' => 'Atención del puerperio',
+		'23.Atención para el seguimiento del recién nacido |1' => 'Atención para el seguimiento del recién nacido',
 	];
 
 $optionEducacion = [
