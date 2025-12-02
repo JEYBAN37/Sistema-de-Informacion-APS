@@ -826,7 +826,7 @@ $optionValoracionMedica = array(
 	'Consulta Cronicos |0.5' => 'Consulta de Crónicos',
 	'Consulta PYP |0' => 'Consulta Promoción y prevención',
 	'Consulta Urgencias |0.5' => 'Consulta Urgencias',
- 	'No asistido |1' => 'No ha asistido',
+	'No asistido |1' => 'No ha asistido',
 	'No informa |1' => 'No informa'
 );
 
@@ -1054,6 +1054,7 @@ echo $this->Form->input('fechaRegistro', [
 				<?php
 				echo $this->Form->input('primerapellido', [
 					'label' => false,
+					'uppercase' => true,
 					'class' => 'border border-gray-300 rounded-lg w-full p-2 focus:outline-none  focus:ring-1 focus:ring-blue-500 focus:border-blue-500 borde azul  mt-2 font-semibold text-gray-700  text-sm focus:text-gray-900',
 					'error' => false
 				]);
@@ -1073,6 +1074,7 @@ echo $this->Form->input('fechaRegistro', [
 				<?php
 				echo $this->Form->input('segundoapellido', [
 					'label' => false,
+					'uppercase' => true,
 					'class' => 'border border-gray-300 rounded-lg w-full p-2 focus:outline-none  focus:ring-1 focus:ring-blue-500 focus:border-blue-500 borde azul  mt-2 font-semibold text-gray-700  text-sm focus:text-gray-900',
 					'error' => false
 				]);
@@ -1093,6 +1095,7 @@ echo $this->Form->input('fechaRegistro', [
 				<?php
 				echo $this->Form->input('primernombre', [
 					'label' => false,
+					'uppercase' => true,
 					'class' => 'border border-gray-300 rounded-lg w-full p-2 focus:outline-none  focus:ring-1 focus:ring-blue-500 focus:border-blue-500 borde azul  mt-2 font-semibold text-gray-700  text-sm focus:text-gray-900',
 					'error' => false
 				]);
@@ -1112,6 +1115,7 @@ echo $this->Form->input('fechaRegistro', [
 				<?php
 				echo $this->Form->input('segundonombre', [
 					'label' => false,
+					'uppercase' => true,
 					'class' => 'border border-gray-300 rounded-lg w-full p-2 focus:outline-none  focus:ring-1 focus:ring-blue-500 focus:border-blue-500 borde azul  mt-2 font-semibold text-gray-700  text-sm focus:text-gray-900',
 					'error' => false
 				]);
@@ -1414,7 +1418,6 @@ echo $this->Form->input('fechaRegistro', [
 				<div class="flex items-center mb-4">
 					<span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">17</span>
 					<label for="telefono" class="font-semibold">Telefono</label>
-					<p class="text-red-600">*</p>
 				</div>
 				<?php
 				echo $this->Form->input('telefono', [
@@ -1445,7 +1448,6 @@ echo $this->Form->input('fechaRegistro', [
 				<div class="flex items-center mb-4">
 					<span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">18</span>
 					<label for="nombre" class="font-semibold">Email</label>
-					<p class="text-red-600">*</p>
 				</div>
 				<?php
 				echo $this->Form->input('email', [
@@ -2498,7 +2500,7 @@ echo $this->Form->input('fechaRegistro', [
 			</div>
 
 			<!-- Motivo de anasistencia -->
-			<div class="col-span-2 md:col-span-1 text-md font-semibold my-6 mr-4">
+			<div class="col-span-2 md:col-span-1 text-md font-semibold my-6 mr-4" id="campo-motivoinasistencia" style="display: none;">
 				<div class="flex items-center mb-4">
 					<span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">?</span>
 					<label for="motivoinasistencia" class="font-semibold">Motivo de inasistencia</label>
@@ -3014,6 +3016,22 @@ echo $this->Form->input('fechaRegistro', [
 
 
 <script type="text/javascript">
+	function ocultarYLimpiar(id) {
+		const el = document.getElementById(id);
+
+		// Oculta el contenedor
+		el.style.display = "none";
+
+		// Limpia TODOS los inputs, selects y textareas dentro
+		el.querySelectorAll("input, select, textarea").forEach(item => {
+			if (item.type === "checkbox" || item.type === "radio") {
+				item.checked = false;
+			} else {
+				item.value = "";
+			}
+		});
+	}
+
 	$(function() {
 		nacimiento = null; // Aquí guardamos la fecha elegida
 
@@ -3082,6 +3100,15 @@ echo $this->Form->input('fechaRegistro', [
 			// Aplicar reglas
 			if (edad > 5) {
 				document.getElementById("campo-tension").style.display = "block";
+				ocultarYLimpiar("campo-era");
+				ocultarYLimpiar("campo-ira");
+				ocultarYLimpiar("campo-prematuro");
+				ocultarYLimpiar("campo-anomaliacongenita");
+				ocultarYLimpiar("campo-perimetrobraquial");
+				ocultarYLimpiar("campo-perimetrocefalico");
+				ocultarYLimpiar("campo-perimetrocintura");
+				ocultarYLimpiar("campo-perimetrocadera");
+				ocultarYLimpiar("campo-lactanciamaterna");
 
 				if (edad >= 12) {
 					document.getElementById("seccion-sexual").style.display = "block";
@@ -3089,13 +3116,26 @@ echo $this->Form->input('fechaRegistro', [
 					document.getElementById("campo-metodosanticonceptivos").style.display = "block";
 					document.getElementById("campo-infeccionestransmisionsexual").style.display = "block";
 					document.getElementById("campo-consumospa").style.display = "block";
+
+					if (genero == "Mujer") {
+						document.getElementById("campo-gestacion").style.display = "flex";
+						if (gestacion === "Si") {
+							document.getElementById("seccion-gestacion").style.display = "block";
+						} else {
+							ocultarYLimpiar("seccion-gestacion");
+						}
+					} else {
+						ocultarYLimpiar("campo-gestacion");
+						ocultarYLimpiar("seccion-gestacion");
+					}
+
 				}
 
 				if (edad < 12) {
-					document.getElementById("seccion-sexual").style.display = "none";
-					document.getElementById("campo-iniciovidasexual").style.display = "none";
-					document.getElementById("campo-metodosanticonceptivos").style.display = "none";
-					document.getElementById("campo-infeccionestransmisionsexual").style.display = "none";
+					ocultarYLimpiar("seccion-sexual");
+					ocultarYLimpiar("campo-iniciovidasexual");
+					ocultarYLimpiar("campo-metodosanticonceptivos");
+					ocultarYLimpiar("campo-infeccionestransmisionsexual");
 					document.getElementById("seccion-menores").style.display = "block";
 					document.getElementById("campo-cuidador").style.display = "block";
 				}
@@ -3105,19 +3145,13 @@ echo $this->Form->input('fechaRegistro', [
 					document.getElementById("campo-estudio").style.display = "block";
 				}
 
-				if (genero == "Mujer" && edad >= 12) {
-					document.getElementById("campo-gestacion").style.display = "flex";
-					if (gestacion === "Si") {
-						document.getElementById("seccion-gestacion").style.display = "block";
-					}
-				}
+
 
 				if (genero === "Mujer" && edad >= 18) {
 
 					if (edad >= 25) {
 						document.getElementById("campo-tomacitologia").style.display = "block";
 						document.getElementById("campo-antecedenteginecologico").style.display = "block";
-						campo - tomacitologia
 					}
 
 					if (edad >= 50) {
@@ -3127,14 +3161,16 @@ echo $this->Form->input('fechaRegistro', [
 				}
 
 			} else {
-				document.getElementById("campo-tension").style.display = "none";
-				document.getElementById("campo-antecedenteginecologico").style.display = "none";
-				document.getElementById("campo-tomacitologia").style.display = "none";
-				document.getElementById("campo-mamografia").style.display = "none";
-				document.getElementById("campo-iniciovidasexual").style.display = "none";
-				document.getElementById("campo-infeccionestransmisionsexual").style.display = "none";
-				document.getElementById("campo-metodosanticonceptivos").style.display = "none";
-				document.getElementById("seccion-gestacion").style.display = "none";
+				ocultarYLimpiar("campo-tension");
+				ocultarYLimpiar("campo-antecedenteginecologico");
+				ocultarYLimpiar("campo-antecedenteginecologico");
+				ocultarYLimpiar("campo-tomacitologia");
+				ocultarYLimpiar("campo-mamografia");
+				ocultarYLimpiar("campo-iniciovidasexual");
+				ocultarYLimpiar("campo-infeccionestransmisionsexual");
+				ocultarYLimpiar("campo-metodosanticonceptivos");
+				ocultarYLimpiar("seccion-gestacion");
+
 				document.getElementById("seccion-menores").style.display = "block";
 				document.getElementById("campo-era").style.display = "flex";
 				document.getElementById("campo-ira").style.display = "flex";
@@ -3173,6 +3209,19 @@ echo $this->Form->input('fechaRegistro', [
 
 
 	document.addEventListener('DOMContentLoaded', function() {
+
+		valoracionmedica = document.getElementById("valoracionmedica");
+		motivoinasistencia = document.getElementById("campo-motivoinasistencia");
+		valoracionmedica.addEventListener('change', function() {
+			if (valoracionmedica.value === 'No asistido |1') {
+				console.log("Valoración médica cambiada a:", valoracionmedica.value);
+				motivoinasistencia.style.display = "block";
+			} else {
+				motivoinasistencia.style.display = "none";
+			}
+
+		});
+
 
 		const choices = new Choices("#producto_id", {
 			searchEnabled: true,
@@ -3460,54 +3509,54 @@ echo $this->Form->input('fechaRegistro', [
 
 
 	function savePersona(data) {
-        let id_familia = localStorage.getItem("id_familia_temporal") || 1;
-        data['data[Juventudadulto][id_familia_temporal]'] = id_familia;
-        let personas = JSON.parse(localStorage.getItem("personas")) || [];
-        personas.push(data);
-        localStorage.setItem("personas", JSON.stringify(personas));
-        localStorage.removeItem("id_familia_temporal");
-    }
+		let id_familia = localStorage.getItem("id_familia_temporal") || 1;
+		data['data[Juventudadulto][id_familia_temporal]'] = id_familia;
+		let personas = JSON.parse(localStorage.getItem("personas")) || [];
+		personas.push(data);
+		localStorage.setItem("personas", JSON.stringify(personas));
+		localStorage.removeItem("id_familia_temporal");
+	}
 
-    cargarEnStorage = function() {
-        const form = document.querySelector('form');
-        const formData = new FormData(form);
-        const dataObject = {};
+	cargarEnStorage = function() {
+		const form = document.querySelector('form');
+		const formData = new FormData(form);
+		const dataObject = {};
 
-        formData.forEach((value, key) => {
-            // Manejar múltiples selecciones (arrays)
-            if (dataObject[key]) {
-                if (Array.isArray(dataObject[key])) {
-                    dataObject[key].push(value);
-                } else {
-                    dataObject[key] = [dataObject[key], value];
-                }
-            } else {
-                dataObject[key] = value;
-            }
-        });
+		formData.forEach((value, key) => {
+			// Manejar múltiples selecciones (arrays)
+			if (dataObject[key]) {
+				if (Array.isArray(dataObject[key])) {
+					dataObject[key].push(value);
+				} else {
+					dataObject[key] = [dataObject[key], value];
+				}
+			} else {
+				dataObject[key] = value;
+			}
+		});
 
-        // un mensaje para ponerle un id temporal y esribr un numero de vivienda
-        const input = prompt('Ingrese el ID de vivienda para crear la familia (ej: 123):');
-        if (input === null) return; // usuario canceló
+		// un mensaje para ponerle un id temporal y esribr un numero de vivienda
+		const input = prompt('Ingrese el ID de vivienda para crear la familia (ej: 123):');
+		if (input === null) return; // usuario canceló
 
-        const idVivienda = input.trim();
-        if (idVivienda === '') {
-            alert('Debe ingresar un ID de Familia para continuar.');
-            return;
-        }
+		const idVivienda = input.trim();
+		if (idVivienda === '') {
+			alert('Debe ingresar un ID de Familia para continuar.');
+			return;
+		}
 
-        // Validación básica: permitir solo números, pero dar opción si no es numérico
-        if (!/^\d+$/.test(idVivienda)) {
-            if (!confirm('El ID ingresado no parece numérico. ¿Desea continuar de todos modos?')) {
-                return;
-            }
-        }
+		// Validación básica: permitir solo números, pero dar opción si no es numérico
+		if (!/^\d+$/.test(idVivienda)) {
+			if (!confirm('El ID ingresado no parece numérico. ¿Desea continuar de todos modos?')) {
+				return;
+			}
+		}
 
-        if (confirm('¿Está seguro de crear las personas con ID de la persona ' + idVivienda + '?')) {
-            dataObject['data[Juventudadulto][id_persona_temporal]'] = idVivienda;
-            savePersona(dataObject);
-            alert('✅ Datos guardados en el almacenamiento local como JSON.');
-            window.location.href = 'https://agsolutic.com/aps/aps_2025_v1/offline.html';
-        }
-    };
+		if (confirm('¿Está seguro de crear las personas con ID de la persona ' + idVivienda + '?')) {
+			dataObject['data[Juventudadulto][id_persona_temporal]'] = idVivienda;
+			savePersona(dataObject);
+			alert('✅ Datos guardados en el almacenamiento local como JSON.');
+			window.location.href = 'https://agsolutic.com/aps/aps_2025_v1/offline.html';
+		}
+	};
 </script>

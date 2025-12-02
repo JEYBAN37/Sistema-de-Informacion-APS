@@ -54,9 +54,9 @@ class JuventudadultosController extends AppController
 	 */
 	public function add()
 	{
+		debug($this->request->data);
 		if ($this->request->is('post')) {
 			$this->Juventudadulto->create();
-
 			$id_familia = $this->request->data['Juventudadulto']['familia_id'];
 			if ($this->Juventudadulto->save($this->request->data)) {
 				if ($this->request->data['btn'] == 'Guardar y agregar integrante') {

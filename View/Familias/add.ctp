@@ -278,14 +278,14 @@ $alimentosHogar = [
                     <p class="text-red-600">*</p>
                 </div>
                 <?php
-                echo $this->Form->input('nombres', [
+                echo $this->Form->input('tipodocumento', [
                     'label' => false,
                     'class' => 'border border-gray-300 rounded-lg w-full p-2 focus:outline-none  focus:ring-1 focus:ring-blue-500 focus:border-blue-500 borde azul  mt-2 font-semibold text-gray-700  text-sm focus:text-gray-900',
                     'error' => false
                 ]);
 
-                if (!empty($this->Form->error('nombres'))) {
-                    echo '<div class="text-red-600 text-md mt-1 font-semibold">' . $this->Form->error('nombres') . '</div>';
+                if (!empty($this->Form->error('tipodocumento'))) {
+                    echo '<div class="text-red-600 text-md mt-1 font-semibold">' . $this->Form->error('tipodocumento') . '</div>';
                 }
                 ?>
             </div>
