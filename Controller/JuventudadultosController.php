@@ -54,7 +54,6 @@ class JuventudadultosController extends AppController
 	 */
 	public function add()
 	{
-		debug($this->request->data);
 		if ($this->request->is('post')) {
 			$this->Juventudadulto->create();
 			$id_familia = $this->request->data['Juventudadulto']['familia_id'];
