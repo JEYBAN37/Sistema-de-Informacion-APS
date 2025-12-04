@@ -180,8 +180,7 @@ $rolOption = [
 	'2.Cónyuge o compañero(a)' => 'Cónyuge o compañero(a)',
 	'3.Hijo(a)' => 'Hijo(a)',
 	'4.Hermano(a)' => 'Hermano(a)',
-	'5.Padre o madre' => 'Padre o madre',
-	'6.Otros' => 'Otros',
+	'5.Padre o madre' => 'Padre o madre'
 ];
 
 $etniaOption = [
@@ -789,8 +788,6 @@ $optionVacuna = array(
 	'Influenza' => 'Influenza Estacional',
 	'Fiebre Amarilla' => 'Fiebre Amarilla',
 	'No informa' => 'Desconoce la información',
-	'SD' => 'Sin dato',
-
 );
 
 $optionMalnutricion = array(
@@ -845,14 +842,9 @@ $opcionNoAtencion = [
 ];
 
 $optionAlternativa = [
-	'No aplica ' => 'Elegir',
-	'No refiere' => 'No refiere',
-	'Medicina indigena' => 'Medicina Tradicional/indigena',
-	'Homeopatía' => 'Homeopatía',
-	'Medicina tradicional china' => 'Medicina tradicional china',
-	'Acupuntura' => 'Acupuntura',
-	'Quiropraxia' => 'Quiropraxia',
-	'Otro' => 'Otro'
+	'4.No aplica ' => 'Elegir',
+	'4.No refiere' => 'No',
+	'1.Medicina indigena' => 'SI',
 ];
 
 $optionCuidado = [
@@ -875,7 +867,6 @@ $optionEstudio = [
 ];
 
 $optionConsumospa = [
-	'' =>  'Elegir',
 	'No |0' => 'No',
 	'Cigarrillo |0.5' => 'Cigarrillo',
 	'Licor |0.5' => 'Licor',
@@ -934,7 +925,7 @@ $optionCanalizacion =
 		'24.Educación para la salud | Primeros auxilios psicologicos |0.5' => 'Primeros auxilios psicologicos',
 		'24.Educación para la salud | Activacion de ruta por sospecha de violencias |1' => 'Activacion de ruta por sospecha de violencias',
 		'25.Ninguno |0' => 'Ninguno',
-		
+		'25.Tramite de autorización de servicios de salud |0.3' => 'Tramite de autorización de servicios de salud',
 
 		'18.Atención para el cuidado preconcepcional |0.1' => 'Atención para el cuidado preconcepcional',
 		'19.Atención para el cuidado prenatal – Controles prenatales |1' => 'Atención para el cuidado prenatal – Controles prenatales',
@@ -945,16 +936,16 @@ $optionCanalizacion =
 	];
 
 $optionEducacion = [
-	'No',
-	'Educación para la salud individual',
-	'Educación para la salud familiar',
-	'Educación para la salud grupal',
-	'Valoración medíca',
-	'Valoración odontológica',
-	'Valoración Nutricional',
-	'Valoración Piscologica',
-	'Valoración Integral',
-	'Remision a urgencias',
+	'No' => 'No',
+	'Educacion para la salud individual' => 'Educación para la salud individual',
+	'Educacion para la salud familiar' => 'Educación para la salud familiar',
+	'Educacion para la salud grupal' => 'Educación para la salud grupal',
+	'Valoracion medica' => 'Valoración medíca',
+	'Valoracion odontologica' => 'Valoración odontológica',
+	'Valoracion Nutricional' => 'Valoración Nutricional',
+	'Valoracion Psicologica' => 'Valoración Psicologica',
+	'Valoracion Integral' => 'Valoración Integral',
+	'Remision a urgencias' => 'Remision a urgencias',
 ];
 
 $optionEstadoCanalizacion = [
@@ -1725,7 +1716,7 @@ echo $this->Form->input('fechaRegistro', [
 						<input type="radio"
 							name="data[Juventudadulto][mamografia]"
 							id="mamografia-no"
-							value="Hombre"
+							value="NO"
 							class="hidden peer"
 							data-target="mamografia"
 							data-show="false"
@@ -1742,7 +1733,7 @@ echo $this->Form->input('fechaRegistro', [
 						<input type="radio"
 							name="data[Juventudadulto][mamografia]"
 							id="mamografia-si"
-							value="Mujer"
+							value="SI"
 							data-target="mamografia"
 							data-show="true"
 							class="hidden peer cursor-pointer" />
@@ -2529,7 +2520,7 @@ echo $this->Form->input('fechaRegistro', [
 			<div class="col-span-2 md:col-span-1 text-md font-semibold my-6 mr-4">
 				<div class="flex items-center mb-4">
 					<span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">2</span>
-					<label for="saludalternativa" class="font-semibold">¿Hacen uso de otras opciones para el cuidado de su salud?</label>
+					<label for="saludalternativa" class="font-semibold">¿Hace uso de medicina tradicional Indígena?</label>
 				</div>
 				<?php
 				echo $this->Form->input('saludalternativa', [
@@ -2804,6 +2795,8 @@ echo $this->Form->input('fechaRegistro', [
 				<div class="flex items-center mb-4">
 					<span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">1</span>
 					<label for="canalizacionuno" class="font-semibold">Canalización</label>
+					<p class="text-red-600">*</p>
+
 				</div>
 				<?php
 				echo $this->Form->input('canalizacionuno', [

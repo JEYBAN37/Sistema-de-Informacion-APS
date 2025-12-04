@@ -131,7 +131,7 @@
                         Manzana
                     </td>
                     <td class="border border-gray-300 text-center p-2 text-gray-800">
-                        <?php echo ($sociambiental['Sociambiental']['manzana']) ?>
+                        <?php echo ($sociambiental['Sociambiental']['barriovereda']) ?>
                     </td>
                 </tr>
             </tbody>

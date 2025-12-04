@@ -5,6 +5,7 @@ App::uses('AppController', 'Controller');
  *
  * @property Juventudadulto $Juventudadulto
  * @property PaginatorComponent $Paginator
+ * @property Intervecion $Intervecion
  */
 class JuventudadultosController extends AppController
 {
@@ -57,6 +58,7 @@ class JuventudadultosController extends AppController
 		if ($this->request->is('post')) {
 			$this->Juventudadulto->create();
 			$id_familia = $this->request->data['Juventudadulto']['familia_id'];
+			debug($this->request->data);
 			if ($this->Juventudadulto->save($this->request->data)) {
 				if ($this->request->data['btn'] == 'Guardar y agregar integrante') {
 					$this->Session->setFlash('Registro de familia se guradado con exito, continuar con informacion del siguiente integrante', 'flash_custom', array('class' => 'success', 'title' => 'El registro se ha completado correctamente'));
@@ -76,7 +78,7 @@ class JuventudadultosController extends AppController
 		$familias = $this->Juventudadulto->Familia->find('list');
 		$canalizaciones = $this->Juventudadulto->Canalizacion->find('list');
 
-		$this->set(compact('familias',  'canalizaciones'));
+		$this->set(compact('familias',  'canalizaciones', 'intervenciones'));
 	}
 
 
@@ -94,6 +96,7 @@ class JuventudadultosController extends AppController
 		if (!$this->Juventudadulto->exists($id)) {
 			throw new NotFoundException(__('Invalid juventudadulto'));
 		}
+
 		if ($this->request->is(array('post', 'put'))) {
 			if ($this->Juventudadulto->save($this->request->data)) {
 				$this->Session->setFlash('Se ha guardado correctamente', 'default', array('class' => 'alert alert-success'));
@@ -104,11 +107,14 @@ class JuventudadultosController extends AppController
 		} else {
 			$options = array('conditions' => array('Juventudadulto.' . $this->Juventudadulto->primaryKey => $id));
 			$this->request->data = $this->Juventudadulto->find('first', $options);
+			$this->request->data = $this->Juventudadulto->tranformData($this->request->data);
+
 		}
-		$familias = $this->Juventudadulto->Familia->find('list');
+		// Ensure the Intervecion model is loaded before calling find()
+		$this->loadModel('Intervecion');
+		$intervenciones = $this->Intervecion->find('all');
 		$canalizaciones = $this->Juventudadulto->Canalizacion->find('list');
-		$personas = $this->Juventudadulto->Persona->find('list');
-		$this->set(compact('familias', 'personas', 'canalizaciones'));
+		$this->set(compact('canalizaciones', 'intervenciones'));
 	}
 
 	public function edit1($id = null)
@@ -190,3 +196,6 @@ class JuventudadultosController extends AppController
 		return $this->redirect(array('controller' => 'familias', 'action' => 'view', $familiaId));
 	}
 }
+
+
+

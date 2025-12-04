@@ -69,7 +69,7 @@ class FamiliasController extends AppController
 
 		$ficha = $this->Familia->find('first', array(
 			'conditions' => array('Familia.' . $this->Familia->primaryKey => $id),
-			'fields' => array('Familia.id, Familia.apellidos, Familia.cursovidafamilia, Familia.nombres, Familia.celular, Familia.numeropersonas, Familia.poblacionvulnerable, Familia.correo'),
+			'fields' => array('Familia.id, Familia.apellidos, Familia.cursovidafamilia, Familia.nombres, Familia.celular, Familia.numeropersonas, Familia.poblacionvulnerable'),
 			'contain' => array(
 				'Juventudadulto' => array( // <-- Esto trae los registros relacionados por familia_id
 					'fields' => array('id', 'primernombre', 'segundonombre', 'primerapellido', 'segundoapellido', 'fechanac', 'sexo', 'aseguradora', 'canalizacionuno', 'condicioncronica')
@@ -85,7 +85,7 @@ class FamiliasController extends AppController
 					'fields' => array('id', 'primernombre', 'segundonombre', 'primerapellido', 'segundoapellido', 'fechanac', 'sexo', 'aseguradora', 'canalizacionuno', 'condicioncronica')
 				),
 				'Sociambiental' => array(
-					'fields' => array('id', 'fecha', 'apellidosfamilia', 'direccion', 'numerohogares', 'longitud', 'latitud', 'manzana')
+					'fields' => array('id', 'fecha', 'apellidosfamilia', 'direccion', 'numerohogares', 'longitud', 'latitud', 'barriovereda')
 				),
 				'Ubicacion' => array(
 					'fields' => array('microterritorio', 'cod_microterritorio')
@@ -448,5 +448,24 @@ class FamiliasController extends AppController
 		));
 		exit();
 	}
+
+	public function index_general()
+	{
+		// Obtener el ID del responsable del usuario logueado
+		$responsable = isset($_SESSION['Auth']['User']['responsable_id']) ? $_SESSION['Auth']['User']['responsable_id'] : '';
+		// Si no hay usuario logueado, usar un valor por defecto o redirigir
+		if (!$responsable) {
+			$this->Session->setFlash(
+				'Debes iniciar sesión para ver las estadísticas',
+				'custom_flash',
+				array('class' => 'warning', 'title' => 'Acceso requerido')
+			);
+			return $this->redirect(array('controller' => 'users', 'action' => 'login'));
+		}
+
+		$estadisticas = $this->Familia->getEstadisticasResponsable($responsable);
+		$this->set('estadisticas', $estadisticas);
+	}
+
 
 }

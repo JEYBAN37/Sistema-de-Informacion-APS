@@ -5,26 +5,16 @@ App::uses('AppModel', 'Model');
  *
  * @property Familia $Familia
  * 
- * @property Persona $Canalizacion
+ * @property Intervecion $Intervecion
  */
 class Juventudadulto extends AppModel
 {
 	public $actsAs = array(
 		'Containable',
 	);
-
+	public $useTable = 'juventudadultos';
 	public $validate = array(
 		'familia_id' => array(
-			'numeric' => array(
-				'rule' => array('numeric'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			),
-		),
-		'persona_id' => array(
 			'numeric' => array(
 				'rule' => array('numeric'),
 				//'message' => 'Your custom message here',
@@ -339,14 +329,19 @@ class Juventudadulto extends AppModel
 			'fields' => '',
 			'order' => ''
 		),
-		'Persona' => array(
-			'className' => 'Persona',
-			'foreignKey' => 'persona_id',
-			'conditions' => '',
-			'fields' => '',
-			'order' => ''
-		)
 	);
+
+	/**
+	 * hasMany associations
+	 *
+	 * @var array
+	 */
+
+	public function traerIntervenciones($juventudadultoId)
+	{
+		debug($juventudadultoId);
+		return 'asdasd';
+	}
 
 	public function beforeSave($options = array())
 	{
@@ -365,10 +360,6 @@ class Juventudadulto extends AppModel
 
 		if (isset($this->data[$this->alias]['consumospa']) && is_array($this->data[$this->alias]['consumospa'])) {
 			$this->data[$this->alias]['consumospa'] = implode(',', $this->data[$this->alias]['consumospa']);
-		}
-
-		if (isset($this->data[$this->alias]['educacion']) && is_array($this->data[$this->alias]['educacion'])) {
-			$this->data[$this->alias]['educacion'] = implode(',', $this->data[$this->alias]['educacion']);
 		}
 
 		if (isset($this->data[$this->alias]['educacion']) && is_array($this->data[$this->alias]['educacion'])) {

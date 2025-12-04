@@ -200,10 +200,10 @@ $planUrl = $this->Html->url(['controller' => 'Familias', 'action' => 'plancuidad
                     </tr>
                     <tr>
                         <td class="border border-gray-300 font-semibold text-center p-2 text-teal-600">
-                            Manzana
+                            Barrio / Vereda
                         </td>
                         <td class="border border-gray-300 text-center p-2 text-gray-800">
-                            <?php echo ($familia['Sociambiental']['manzana']) ?>
+                            <?php echo ($familia['Sociambiental']['barriovereda']) ?>
                         </td>
                     </tr>
                     <tr>
