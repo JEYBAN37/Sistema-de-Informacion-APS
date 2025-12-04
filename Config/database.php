@@ -67,9 +67,9 @@ class DATABASE_CONFIG {
 	public $default = array(
 		'datasource' => 'Database/Mysql',
 		'persistent' => false,
-		'host' => 'localhost',
-		'login' => 'root',
-		'password' => '',
+		'host' => '195.250.27.25',
+		'login' => 'agsolutic_fichafamilarbdresolucionnueva',
+		'password' => 'FichaFamiliar2023*',
 		//'database' => 'bienestarmarzo15pic2018',
 		'database' => 'agsolutic_alpha_2025',
 		              

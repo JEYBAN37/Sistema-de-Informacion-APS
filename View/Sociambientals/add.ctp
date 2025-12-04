@@ -769,7 +769,7 @@ $animalesOptions = [
                         <label for="cuerpoterritorio-no"
                             class="px-12 py-2 rounded-lg border cursor-pointer hover:text-white hover:bg-teal-600
                        peer-checked:bg-teal-600 peer-checked:text-white">
-                            -
+                            NO
                         </label>
                     </div>
 
@@ -785,7 +785,7 @@ $animalesOptions = [
                         <label for="cuerpoterritorio-si"
                             class="px-12 py-2 rounded-lg border hover:bg-teal-600 cursor-pointer hover:text-white
                        peer-checked:bg-teal-600 peer-checked:text-white">
-                            X
+                            SI
                         </label>
                     </div>
                 </div>
@@ -854,7 +854,7 @@ $animalesOptions = [
                         <label for="actividad-no"
                             class="px-12 py-2 rounded-lg border cursor-pointer hover:text-white hover:bg-teal-600
                        peer-checked:bg-teal-600 peer-checked:text-white">
-                            -
+                            NO
                         </label>
                     </div>
 
@@ -870,7 +870,7 @@ $animalesOptions = [
                         <label for="actividad-si"
                             class="px-12 py-2 rounded-lg border hover:bg-teal-600 cursor-pointer hover:text-white
                        peer-checked:bg-teal-600 peer-checked:text-white">
-                            X
+                            SI
                         </label>
                     </div>
                 </div>
@@ -1110,7 +1110,7 @@ $animalesOptions = [
                         <label for="mascotas-no"
                             class="px-12 py-2 rounded-lg border cursor-pointer hover:text-white hover:bg-teal-600
                        peer-checked:bg-teal-600 peer-checked:text-white">
-                            -
+                            NO
                         </label>
                     </div>
 
@@ -1126,7 +1126,7 @@ $animalesOptions = [
                         <label for="mascotas-si"
                             class="px-12 py-2 rounded-lg border hover:bg-teal-600 cursor-pointer hover:text-white
                        peer-checked:bg-teal-600 peer-checked:text-white">
-                            X
+                            SI
                         </label>
                     </div>
                 </div>
@@ -1200,7 +1200,7 @@ $animalesOptions = [
                             <label for="desparasitamascotas-no"
                                 class="px-12 py-2 rounded-lg border cursor-pointer hover:text-white hover:bg-teal-600
                        peer-checked:bg-teal-600 peer-checked:text-white">
-                                -
+                                NO
                             </label>
                         </div>
 
@@ -1216,7 +1216,7 @@ $animalesOptions = [
                             <label for="desparasitamascotas-si"
                                 class="px-12 py-2 rounded-lg border hover:bg-teal-600 cursor-pointer hover:text-white
                        peer-checked:bg-teal-600 peer-checked:text-white">
-                                X
+                                SI
                             </label>
                         </div>
                     </div>
@@ -1243,7 +1243,7 @@ $animalesOptions = [
                             <label for="vacunacionmascotas-no"
                                 class="px-12 py-2 rounded-lg border cursor-pointer hover:text-white hover:bg-teal-600
                        peer-checked:bg-teal-600 peer-checked:text-white">
-                                -
+                                NO
                             </label>
                         </div>
 
@@ -1259,7 +1259,7 @@ $animalesOptions = [
                             <label for="vacunacionmascotas-si"
                                 class="px-12 py-2 rounded-lg border hover:bg-teal-600 cursor-pointer hover:text-white
                        peer-checked:bg-teal-600 peer-checked:text-white">
-                                X
+                                SI
                             </label>
                         </div>
                     </div>
@@ -1269,7 +1269,7 @@ $animalesOptions = [
                 <div class="flex flex-col md:flex-row justify-center md:justify-between col-span-1 md:col-span-2 text-md font-semibold my-6 mr-4">
                     <div class="flex items-center mb-4">
                         <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">6</span>
-                        <label for="vacunacionmascotas" class="font-semibold">¿Las excretas de los animales de compañía se recogen y disponen adecuadamente</label>
+                        <label for="vacunacionmascotas" class="font-semibold">¿Las excretas de los animales de compañía se recogen y disponen adecuadamente?</label>
                     </div>
 
                     <div class="flex space-x-4 items-center justify-center md:justify-start mt-4 pr-0 md:pr-[10%]  md:mt-0 ">
@@ -1286,7 +1286,7 @@ $animalesOptions = [
                             <label for="cuidadoexcretas-no"
                                 class="px-12 py-2 rounded-lg border cursor-pointer hover:text-white hover:bg-teal-600
                        peer-checked:bg-teal-600 peer-checked:text-white">
-                                -
+                                NO
                             </label>
                         </div>
 
@@ -1302,7 +1302,7 @@ $animalesOptions = [
                             <label for="cuidadoexcretas-si"
                                 class="px-12 py-2 rounded-lg border hover:bg-teal-600 cursor-pointer hover:text-white
                        peer-checked:bg-teal-600 peer-checked:text-white">
-                                X
+                                SI
                             </label>
                         </div>
                     </div>
@@ -1356,26 +1356,6 @@ $animalesOptions = [
                     Guardar y Salir
                 </button>
             </div>
-
-
-
-            <!-- Botón -->
-            <div class="w-full p-2">
-                <button type="button" class="w-full bg-teal-600 text-white px-6 py-2 rounded-md hover:bg-green-700 transition font-medium flex items-center justify-center gap-2" onclick="cargarEnStorage()">
-                    <span>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-save-icon lucide-save">
-                            <path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z" />
-                            <path d="M14 2v4a2 2 0 0 0 2 2h4" />
-                            <path d="M10 12a1 1 0 0 0-1 1v1a1 1 0 0 1-1 1 1 1 0 0 1 1 1v1a1 1 0 0 0 1 1" />
-                            <path d="M14 18a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1 1 1 0 0 1-1-1v-1a1 1 0 0 0-1-1" />
-
-                        </svg>
-
-                    </span>
-                    JSON
-                </button>
-            </div>
-
             <?php echo $this->Form->end(); ?>
         </div>
     </div>

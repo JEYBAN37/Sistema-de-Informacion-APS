@@ -733,19 +733,6 @@ class Familia extends AppModel
 			'finderQuery' => '',
 			'counterQuery' => ''
 		),
-		'Persona' => array(
-			'className' => 'Persona',
-			'foreignKey' => 'familia_id',
-			'dependent' => false,
-			'conditions' => '',
-			'fields' => '',
-			'order' => '',
-			'limit' => '',
-			'offset' => '',
-			'exclusive' => '',
-			'finderQuery' => '',
-			'counterQuery' => ''
-		),
 		'Primerainfancia' => array(
 			'className' => 'Primerainfancia',
 			'foreignKey' => 'familia_id',
