@@ -673,7 +673,6 @@ $optionOcupacion = [
 	'9629- Otras ocupaciones elementales no clasificadas en otros grupos primarios' => '9629- Otras ocupaciones elementales no clasificadas en otros grupos primarios',
 	'9998- Jubilado, desempleado, ama de casa, estudiante, dedicación al hogar, menor de edad' => '9998- Jubilado, desempleado, ama de casa, estudiante, dedicación al hogar, menor de edad',
 	'9999- En los casos en que no se tiene esta información registrar' => '9999- En los casos en que no se tiene esta información registrar',
-	'SD' => 'Sin dato'
 ];
 
 $optionDiscapacidad = array(
@@ -826,7 +825,7 @@ $optionValoracionMedica = array(
 	'Consulta Cronicos |0.5' => 'Consulta de Crónicos',
 	'Consulta PYP |0' => 'Consulta Promoción y prevención',
 	'Consulta Urgencias |0.5' => 'Consulta Urgencias',
- 	'No asistido |1' => 'No ha asistido',
+	'No asistido |1' => 'No ha asistido',
 	'No informa |1' => 'No informa'
 );
 
@@ -904,10 +903,10 @@ $optionTiposViolencia = [
 	'Sospecha Abondono_Negligencia |0.3' => 'Falta de atención a necesidades básicas(alimentación, salud, educación)',
 ];
 
-$optionCanlizacion =
+$optionCanalizacion =
 	[
 		'0.No |0' => 'No se requiere canalización',
-		'1.Valoración Integral para la PYMS |0.5 ' => 'Valoración Integral para la PYMS',
+		'1.Valoración Integral para la PYMS |0.5' => 'Valoración Integral para la PYMS',
 		'2.Valoración integral por profesional en odontología para la PYMS |0.3' => 'Odontología P Y M',
 		'3.Promoción y apoyo a lactancia materna |0.5' => 'Promoción y apoyo a lactancia materna',
 		'4.Aplicación de flúor |0.1' => 'Aplicación de flúor',
@@ -926,20 +925,20 @@ $optionCanlizacion =
 		'11.Planificación familiar |0' => 'Suministro de preservativos',
 		'11.Planificación familiar |0.3' => 'Prueba de embarazo',
 		// ITS
-		'13.Tamizaje de ITS |0.3' => 'Prueba rapida treponemica',
-		'13.Tamizaje de ITS |0.3' => 'Prueba rapida para VIH',
-		'13.Tamizaje de ITS |0.3' => 'Asesoria pre y post test VIH',
-		'13.Tamizaje de ITS |0.3' => 'Prueba rápida hepatitis B',
-		'13.Tamizaje de ITS |0.3' => 'Prueba rápida hepatitis C',
+		'13.Tamizaje de ITS | Prueba rapida treponemica |0.3' => 'Prueba rapida treponemica',
+		'13.Tamizaje de ITS | Prueba rapida para VIH |0.3' => 'Prueba rapida para VIH',
+		'13.Tamizaje de ITS | Asesoria pre y post test VIH |0.3' => 'Asesoria pre y post test VIH',
+		'13.Tamizaje de ITS | Prueba rápida hepatitis B |0.3' => 'Prueba rápida hepatitis B',
+		'13.Tamizaje de ITS | Prueba rápida hepatitis C |0.3' => 'Prueba rápida hepatitis C',
 		// Educación
-		'24.Educación para la salud|Salud Mental |0.5' => 'Primeros auxilios psicologicos',
-		'24.Educación para la salud|Salud Mental |1' => 'Activacion de ruta por sospecha de violencias',
+		'24.Educación para la salud | Primeros auxilios psicologicos |0.5' => 'Primeros auxilios psicologicos',
+		'24.Educación para la salud | Activacion de ruta por sospecha de violencias |1' => 'Activacion de ruta por sospecha de violencias',
 		'25.Ninguno |0' => 'Ninguno',
 		
 
-		'18.Atención para el cuidado preconcepcional|0.1' => 'Atención para el cuidado preconcepcional',
+		'18.Atención para el cuidado preconcepcional |0.1' => 'Atención para el cuidado preconcepcional',
 		'19.Atención para el cuidado prenatal – Controles prenatales |1' => 'Atención para el cuidado prenatal – Controles prenatales',
-		'20.Preparación para la maternidad y paternidad|0.3' => 'Preparación para la maternidad y paternidad',
+		'20.Preparación para la maternidad y paternidad |0.3' => 'Preparación para la maternidad y paternidad',
 		'21.Interrupción Voluntaria del Embarazo |1' => 'Interrupción Voluntaria del Embarazo',
 		'22.Atención del puerperio |1' => 'Atención del puerperio',
 		'23.Atención para el seguimiento del recién nacido |1' => 'Atención para el seguimiento del recién nacido',
@@ -1057,6 +1056,7 @@ echo $this->Form->input('fechaRegistro', [
 				<?php
 				echo $this->Form->input('primerapellido', [
 					'label' => false,
+					'uppercase' => true,
 					'class' => 'border border-gray-300 rounded-lg w-full p-2 focus:outline-none  focus:ring-1 focus:ring-blue-500 focus:border-blue-500 borde azul  mt-2 font-semibold text-gray-700  text-sm focus:text-gray-900',
 					'error' => false
 				]);
@@ -1076,6 +1076,7 @@ echo $this->Form->input('fechaRegistro', [
 				<?php
 				echo $this->Form->input('segundoapellido', [
 					'label' => false,
+					'uppercase' => true,
 					'class' => 'border border-gray-300 rounded-lg w-full p-2 focus:outline-none  focus:ring-1 focus:ring-blue-500 focus:border-blue-500 borde azul  mt-2 font-semibold text-gray-700  text-sm focus:text-gray-900',
 					'error' => false
 				]);
@@ -1096,6 +1097,7 @@ echo $this->Form->input('fechaRegistro', [
 				<?php
 				echo $this->Form->input('primernombre', [
 					'label' => false,
+					'uppercase' => true,
 					'class' => 'border border-gray-300 rounded-lg w-full p-2 focus:outline-none  focus:ring-1 focus:ring-blue-500 focus:border-blue-500 borde azul  mt-2 font-semibold text-gray-700  text-sm focus:text-gray-900',
 					'error' => false
 				]);
@@ -1115,6 +1117,7 @@ echo $this->Form->input('fechaRegistro', [
 				<?php
 				echo $this->Form->input('segundonombre', [
 					'label' => false,
+					'uppercase' => true,
 					'class' => 'border border-gray-300 rounded-lg w-full p-2 focus:outline-none  focus:ring-1 focus:ring-blue-500 focus:border-blue-500 borde azul  mt-2 font-semibold text-gray-700  text-sm focus:text-gray-900',
 					'error' => false
 				]);
@@ -1387,11 +1390,10 @@ echo $this->Form->input('fechaRegistro', [
 			</div>
 
 			<!-- Ocupacion -->
-			<div class="col-span-2 md:col-span-1 text-md font-semibold my-6 md:mr-4">
+			<div class="col-span-2 md:col-span-1 text-md font-semibold my-6 md:mr-4" id="seccion-ocupacion" style="display: none;">
 				<div class="flex items-center mb-4">
 					<span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">16</span>
 					<label for="familiograma" class="font-semibold">Ocupacion</label>
-					<p class="text-red-600">*</p>
 				</div>
 
 				<?php
@@ -1413,11 +1415,10 @@ echo $this->Form->input('fechaRegistro', [
 			</div>
 
 			<!-- Telefono -->
-			<div class="col-span-2 md:col-span-1 text-md font-semibold mt-4 mb-6 md:mr-4">
+			<div class="col-span-2 md:col-span-1 text-md font-semibold mt-4 mb-6 md:mr-4" id="seccion-telefono" style="display: none;">
 				<div class="flex items-center mb-4">
 					<span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">17</span>
 					<label for="telefono" class="font-semibold">Telefono</label>
-					<p class="text-red-600">*</p>
 				</div>
 				<?php
 				echo $this->Form->input('telefono', [
@@ -1444,11 +1445,10 @@ echo $this->Form->input('fechaRegistro', [
 			</div>
 
 			<!-- Email -->
-			<div class="col-span-2 md:col-span-1 text-md font-semibold mt-4 mb-6 md:mr-4">
+			<div class="col-span-2 md:col-span-1 text-md font-semibold mt-4 mb-6 md:mr-4" id="seccion-email" style="display: none;">
 				<div class="flex items-center mb-4">
 					<span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">18</span>
 					<label for="nombre" class="font-semibold">Email</label>
-					<p class="text-red-600">*</p>
 				</div>
 				<?php
 				echo $this->Form->input('email', [
@@ -2047,7 +2047,7 @@ echo $this->Form->input('fechaRegistro', [
 					<p class="text-red-600">*</p>
 				</div>
 				<?php
-				echo $this->Form->input('riesgoembarazo', [
+				echo $this->Form->input('esquemavacunacion', [
 					'type' => 'select',
 					'id' => 'rol',
 					'class' => 'border border-gray-300 rounded-lg w-full p-2 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 text-sm text-gray-500 focus:text-gray-800',
@@ -2057,8 +2057,8 @@ echo $this->Form->input('fechaRegistro', [
 					'empty' => 'Selecciona una opción',
 				]);
 
-				if (!empty($this->Form->error('riesgoembarazo'))) {
-					echo '<div class="text-red-600 text-md mt-1 font-semibold">' . $this->Form->error('riesgoembarazo') . '</div>';
+				if (!empty($this->Form->error('esquemavacunacion'))) {
+					echo '<div class="text-red-600 text-md mt-1 font-semibold">' . $this->Form->error('esquemavacunacion') . '</div>';
 				}
 				?>
 			</div>
@@ -2501,7 +2501,7 @@ echo $this->Form->input('fechaRegistro', [
 			</div>
 
 			<!-- Motivo de anasistencia -->
-			<div class="col-span-2 md:col-span-1 text-md font-semibold my-6 mr-4">
+			<div class="col-span-2 md:col-span-1 text-md font-semibold my-6 mr-4" id="campo-motivoinasistencia" style="display: none;">
 				<div class="flex items-center mb-4">
 					<span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">?</span>
 					<label for="motivoinasistencia" class="font-semibold">Motivo de inasistencia</label>
@@ -2529,7 +2529,7 @@ echo $this->Form->input('fechaRegistro', [
 			<div class="col-span-2 md:col-span-1 text-md font-semibold my-6 mr-4">
 				<div class="flex items-center mb-4">
 					<span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">2</span>
-					<label for="saludalternativa" class="font-semibold">¿Hacen uso de otras opciones para el cuidado de su salud durante su embarazo?</label>
+					<label for="saludalternativa" class="font-semibold">¿Hacen uso de otras opciones para el cuidado de su salud?</label>
 				</div>
 				<?php
 				echo $this->Form->input('saludalternativa', [
@@ -2791,7 +2791,7 @@ echo $this->Form->input('fechaRegistro', [
 		<div class="flex items-center mb-4">
 			<i class="fa-solid fa-hands-holding-child text-teal-600 text-3xl bg-teal-100 px-5 py-3 rounded-lg"></i>
 			<div class="ml-4">
-				<h1 class="text-xl font-semibold">Plan de Cuidado</h1>
+				<h1 class="text-xl font-semibold">Canalización para el Plan de Cuidado</h1>
 				<p class="text-gray-500">Para diligenciar el plan de cuidado es necesario realizar un análisis integral de la persona, ya que este paso es fundamental para definir de manera precisa el impacto esperado de la caracterización.</p>
 			</div>
 
@@ -2811,7 +2811,7 @@ echo $this->Form->input('fechaRegistro', [
 					'label' => false,
 					'multiple' => true,
 					'empty' => false,
-					'options' => $optionCanlizacion,
+					'options' => $optionCanalizacion,
 					'class' => 'w-full',
 					'id' => 'canalizacionuno',
 					'error' => false,
@@ -2819,7 +2819,7 @@ echo $this->Form->input('fechaRegistro', [
 
 				]);
 				if (!empty($this->Form->error('canalizacionuno'))) {
-					echo '<div class="text-red-600 text-md mt-1 font-semibold">' . $this->Form->error('consumospa') . '</div>';
+					echo '<div class="text-red-600 text-md mt-1 font-semibold">' . $this->Form->error('canalizacionuno') . '</div>';
 				}
 				?>
 			</div>
@@ -3017,6 +3017,22 @@ echo $this->Form->input('fechaRegistro', [
 
 
 <script type="text/javascript">
+	function ocultarYLimpiar(id) {
+		const el = document.getElementById(id);
+
+		// Oculta el contenedor
+		el.style.display = "none";
+
+		// Limpia TODOS los inputs, selects y textareas dentro
+		el.querySelectorAll("input, select, textarea").forEach(item => {
+			if (item.type === "checkbox" || item.type === "radio") {
+				item.checked = false;
+			} else {
+				item.value = "";
+			}
+		});
+	}
+
 	$(function() {
 		nacimiento = null; // Aquí guardamos la fecha elegida
 
@@ -3085,6 +3101,15 @@ echo $this->Form->input('fechaRegistro', [
 			// Aplicar reglas
 			if (edad > 5) {
 				document.getElementById("campo-tension").style.display = "block";
+				ocultarYLimpiar("campo-era");
+				ocultarYLimpiar("campo-ira");
+				ocultarYLimpiar("campo-prematuro");
+				ocultarYLimpiar("campo-anomaliacongenita");
+				ocultarYLimpiar("campo-perimetrobraquial");
+				ocultarYLimpiar("campo-perimetrocefalico");
+				ocultarYLimpiar("campo-perimetrocintura");
+				ocultarYLimpiar("campo-perimetrocadera");
+				ocultarYLimpiar("campo-lactanciamaterna");
 
 				if (edad >= 12) {
 					document.getElementById("seccion-sexual").style.display = "block";
@@ -3092,13 +3117,32 @@ echo $this->Form->input('fechaRegistro', [
 					document.getElementById("campo-metodosanticonceptivos").style.display = "block";
 					document.getElementById("campo-infeccionestransmisionsexual").style.display = "block";
 					document.getElementById("campo-consumospa").style.display = "block";
+					document.getElementById("seccion-email").style.display = "block";
+					document.getElementById("seccion-telefono").style.display = "block"; 
+					document.getElementById("seccion-ocupacion").style.display = "block";
+
+					if (genero == "Mujer") {
+						document.getElementById("campo-gestacion").style.display = "flex";
+						if (gestacion === "Si") {
+							document.getElementById("seccion-gestacion").style.display = "block";
+						} else {
+							ocultarYLimpiar("seccion-gestacion");
+						}
+					} else {
+						ocultarYLimpiar("campo-gestacion");
+						ocultarYLimpiar("seccion-gestacion");
+					}
+
 				}
 
 				if (edad < 12) {
-					document.getElementById("seccion-sexual").style.display = "none";
-					document.getElementById("campo-iniciovidasexual").style.display = "none";
-					document.getElementById("campo-metodosanticonceptivos").style.display = "none";
-					document.getElementById("campo-infeccionestransmisionsexual").style.display = "none";
+					ocultarYLimpiar("seccion-sexual");
+					ocultarYLimpiar("campo-iniciovidasexual");
+					ocultarYLimpiar("campo-metodosanticonceptivos");
+					ocultarYLimpiar("campo-infeccionestransmisionsexual");
+					ocultarYLimpiar("seccion-email");
+					ocultarYLimpiar("seccion-telefono")
+					ocultarYLimpiar("seccion-ocupacion")
 					document.getElementById("seccion-menores").style.display = "block";
 					document.getElementById("campo-cuidador").style.display = "block";
 				}
@@ -3108,19 +3152,13 @@ echo $this->Form->input('fechaRegistro', [
 					document.getElementById("campo-estudio").style.display = "block";
 				}
 
-				if (genero == "Mujer" && edad >= 12) {
-					document.getElementById("campo-gestacion").style.display = "flex";
-					if (gestacion === "Si") {
-						document.getElementById("seccion-gestacion").style.display = "block";
-					}
-				}
+
 
 				if (genero === "Mujer" && edad >= 18) {
 
 					if (edad >= 25) {
 						document.getElementById("campo-tomacitologia").style.display = "block";
 						document.getElementById("campo-antecedenteginecologico").style.display = "block";
-						campo - tomacitologia
 					}
 
 					if (edad >= 50) {
@@ -3130,14 +3168,16 @@ echo $this->Form->input('fechaRegistro', [
 				}
 
 			} else {
-				document.getElementById("campo-tension").style.display = "none";
-				document.getElementById("campo-antecedenteginecologico").style.display = "none";
-				document.getElementById("campo-tomacitologia").style.display = "none";
-				document.getElementById("campo-mamografia").style.display = "none";
-				document.getElementById("campo-iniciovidasexual").style.display = "none";
-				document.getElementById("campo-infeccionestransmisionsexual").style.display = "none";
-				document.getElementById("campo-metodosanticonceptivos").style.display = "none";
-				document.getElementById("seccion-gestacion").style.display = "none";
+				ocultarYLimpiar("campo-tension");
+				ocultarYLimpiar("campo-antecedenteginecologico");
+				ocultarYLimpiar("campo-antecedenteginecologico");
+				ocultarYLimpiar("campo-tomacitologia");
+				ocultarYLimpiar("campo-mamografia");
+				ocultarYLimpiar("campo-iniciovidasexual");
+				ocultarYLimpiar("campo-infeccionestransmisionsexual");
+				ocultarYLimpiar("campo-metodosanticonceptivos");
+				ocultarYLimpiar("seccion-gestacion");
+
 				document.getElementById("seccion-menores").style.display = "block";
 				document.getElementById("campo-era").style.display = "flex";
 				document.getElementById("campo-ira").style.display = "flex";
@@ -3176,6 +3216,20 @@ echo $this->Form->input('fechaRegistro', [
 
 
 	document.addEventListener('DOMContentLoaded', function() {
+
+		valoracionmedica = document.getElementById("valoracionmedica");
+		motivoinasistencia = document.getElementById("campo-motivoinasistencia");
+		valoracionmedica.addEventListener('change', function() {
+			if (valoracionmedica.value === 'No asistido |1') {
+				console.log("Valoración médica cambiada a:", valoracionmedica.value);
+				motivoinasistencia.style.display = "block";
+			} else {
+				motivoinasistencia.style.display = "none";
+				motivoinasistencia.value = ""; // Limpiar el valor cuando se oculta
+			}
+
+		});
+
 
 		const choices = new Choices("#producto_id", {
 			searchEnabled: true,
@@ -3463,54 +3517,54 @@ echo $this->Form->input('fechaRegistro', [
 
 
 	function savePersona(data) {
-        let id_familia = localStorage.getItem("id_familia_temporal") || 1;
-        data['data[Juventudadulto][id_familia_temporal]'] = id_familia;
-        let personas = JSON.parse(localStorage.getItem("personas")) || [];
-        personas.push(data);
-        localStorage.setItem("personas", JSON.stringify(personas));
-        localStorage.removeItem("id_familia_temporal");
-    }
+		let id_familia = localStorage.getItem("id_familia_temporal") || 1;
+		data['data[Juventudadulto][id_familia_temporal]'] = id_familia;
+		let personas = JSON.parse(localStorage.getItem("personas")) || [];
+		personas.push(data);
+		localStorage.setItem("personas", JSON.stringify(personas));
+		localStorage.removeItem("id_familia_temporal");
+	}
 
-    cargarEnStorage = function() {
-        const form = document.querySelector('form');
-        const formData = new FormData(form);
-        const dataObject = {};
+	cargarEnStorage = function() {
+		const form = document.querySelector('form');
+		const formData = new FormData(form);
+		const dataObject = {};
 
-        formData.forEach((value, key) => {
-            // Manejar múltiples selecciones (arrays)
-            if (dataObject[key]) {
-                if (Array.isArray(dataObject[key])) {
-                    dataObject[key].push(value);
-                } else {
-                    dataObject[key] = [dataObject[key], value];
-                }
-            } else {
-                dataObject[key] = value;
-            }
-        });
+		formData.forEach((value, key) => {
+			// Manejar múltiples selecciones (arrays)
+			if (dataObject[key]) {
+				if (Array.isArray(dataObject[key])) {
+					dataObject[key].push(value);
+				} else {
+					dataObject[key] = [dataObject[key], value];
+				}
+			} else {
+				dataObject[key] = value;
+			}
+		});
 
-        // un mensaje para ponerle un id temporal y esribr un numero de vivienda
-        const input = prompt('Ingrese el ID de vivienda para crear la familia (ej: 123):');
-        if (input === null) return; // usuario canceló
+		// un mensaje para ponerle un id temporal y esribr un numero de vivienda
+		const input = prompt('Ingrese el ID de vivienda para crear la familia (ej: 123):');
+		if (input === null) return; // usuario canceló
 
-        const idVivienda = input.trim();
-        if (idVivienda === '') {
-            alert('Debe ingresar un ID de Familia para continuar.');
-            return;
-        }
+		const idVivienda = input.trim();
+		if (idVivienda === '') {
+			alert('Debe ingresar un ID de Familia para continuar.');
+			return;
+		}
 
-        // Validación básica: permitir solo números, pero dar opción si no es numérico
-        if (!/^\d+$/.test(idVivienda)) {
-            if (!confirm('El ID ingresado no parece numérico. ¿Desea continuar de todos modos?')) {
-                return;
-            }
-        }
+		// Validación básica: permitir solo números, pero dar opción si no es numérico
+		if (!/^\d+$/.test(idVivienda)) {
+			if (!confirm('El ID ingresado no parece numérico. ¿Desea continuar de todos modos?')) {
+				return;
+			}
+		}
 
-        if (confirm('¿Está seguro de crear las personas con ID de la persona ' + idVivienda + '?')) {
-            dataObject['data[Juventudadulto][id_persona_temporal]'] = idVivienda;
-            savePersona(dataObject);
-            alert('✅ Datos guardados en el almacenamiento local como JSON.');
-            window.location.href = 'https://agsolutic.com/aps/aps_2025_v1/offline.html';
-        }
-    };
+		if (confirm('¿Está seguro de crear las personas con ID de la persona ' + idVivienda + '?')) {
+			dataObject['data[Juventudadulto][id_persona_temporal]'] = idVivienda;
+			savePersona(dataObject);
+			alert('✅ Datos guardados en el almacenamiento local como JSON.');
+			window.location.href = 'https://agsolutic.com/aps/aps_2025_v1/offline.html';
+		}
+	};
 </script>

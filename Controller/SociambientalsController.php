@@ -177,6 +177,7 @@ class SociambientalsController extends AppController
 	public function add()
 	{
 		if ($this->request->is(array('post'))) {
+			debug($this->request->data);
 			if ($this->Sociambiental->save($this->request->data)) {
 				if ($this->request->data['btn'] == 'Guardar y continuar') {
 					//$session->setFlash("registro guardado");
