@@ -359,7 +359,7 @@ class FamiliasController extends AppController
 				'Sociambiental.id',
 				'Sociambiental.fecha',
 				'Ubicacion.microterritorio',
-				'Responsable.nombres'
+    			'CONCAT(Familia.numeropersonas, "/", COUNT(Juventudadulto.id)) AS integrantes'
 			),
 			'joins' => array(
 				array(
@@ -379,8 +379,15 @@ class FamiliasController extends AppController
 					'alias' => 'Responsable',
 					'type' => 'LEFT',
 					'conditions' => array('Sociambiental.responsable_id = Responsable.id')
+				),
+				array(
+					'table' => 'juventudadultos',
+					'alias' => 'Juventudadulto',
+					'type' => 'LEFT',
+					'conditions' => array('Juventudadulto.familia_id = Familia.id')
 				)
 			),
+			'group' => array('Familia.id'),
 			'limit' => $length,
 			'offset' => $start,
 			'order' => $orderBy,
@@ -398,6 +405,8 @@ class FamiliasController extends AppController
 
 
 
+
+
 		foreach ($data as $row) {
 			$result['data'][] = array(
 				'id' => isset($row['Familia']['id']) ? $row['Familia']['id'] : '',
@@ -406,7 +415,7 @@ class FamiliasController extends AppController
 				'celular' => isset($row['Familia']['celular']) ? $row['Familia']['celular'] : '',
 				'apellidos' => isset($row['Familia']['apellidos']) ? $row['Familia']['apellidos'] : '',
 				'microterritorio' => isset($row['Ubicacion']['microterritorio']) ? $row['Ubicacion']['microterritorio'] : '',
-				'nombre_responsable' => isset($row['Responsable']['nombres']) ? $row['Responsable']['nombres'] : ''
+				'integrantes' => isset($row[0]['integrantes']) ? $row[0]['integrantes'] : '',
 			);
 		}
 		echo json_encode($result);
@@ -466,6 +475,4 @@ class FamiliasController extends AppController
 		$estadisticas = $this->Familia->getEstadisticasResponsable($responsable);
 		$this->set('estadisticas', $estadisticas);
 	}
-
-
 }

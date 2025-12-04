@@ -128,11 +128,11 @@
                         <th class="px-2 w-6"></th> <!-- control (+) -->
                         <th class="px-4 py-2 font-semibold text-center cursor-pointer hover:bg-gray-100">ID</th>
                         <th class="px-4 py-2 font-semibold text-center cursor-pointer hover:bg-gray-100">Apellidos</th>
+                        <th class="px-4 py-2 font-semibold text-center cursor-pointer hover:bg-gray-100">Integrantes</th>
                         <th class="px-4 py-2 font-semibold text-center cursor-pointer hover:bg-green-100">Celular</th>
                         <th class="px-16 py-2 font-semibold text-center cursor-pointer hover:bg-green-100">Fecha</th>
                         <th class="px-16 py-2 font-semibold text-center cursor-pointer hover:bg-green-100">Microterritorio</th>
                         <th class="px-16 py-2 font-semibold text-center cursor-pointer hover:bg-green-100">ID Vivienda</th>
-                        <th class="px-2 py-2 font-semibold text-center cursor-pointer hover:bg-green-100">Responsable</th>
                         <th class="px-2 py-2 font-semibold text-center cursor-pointer hover:bg-green-100">Acciones</th>
                     </tr>
                 </thead>
@@ -141,29 +141,6 @@
                 </tbody>
             </table>
 
-        </div>
-
-        <div class="grid md:grid-cols-2 gap-6 mb-8 mt-8">
-
-
-            <!-- Agregar Familia Card -->
-            <button onclick="uploadData()" class="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 p-8 border-2 border-transparent hover:border-cyan-500 transform hover:-translate-y-1">
-                <div class="flex flex-col items-center text-center gap-4">
-                    <div class="bg-gradient-to-br from-cyan-100 to-blue-100 p-6 rounded-2xl group-hover:scale-110 transition-transform duration-300">
-                        <i class="fa-solid fa-signal text-cyan-600 text-5xl"></i>
-                    </div>
-                    <h3 class="text-2xl font-bold text-slate-800 group-hover:text-cyan-600 transition-colors">
-                        Descargar fichas Offline
-                    </h3>
-                    <p class="text-slate-600 text-sm">
-                        Baja todas las fichas registradas en modo offline
-                    </p>
-                    <div class="mt-2 flex items-center gap-2 text-cyan-600 font-semibold opacity-0 group-hover:opacity-100 transition-opacity">
-                        <span>Comenzar</span>
-                        <i class="fas fa-arrow-right"></i>
-                    </div>
-                </div>
-            </button>
         </div>
     </main>
 
@@ -461,6 +438,7 @@
                         <ul class="space-y-2 text-gray-700">
                             <li><strong>ID:</strong> ${data.id}</li>
                             <li><strong>Apellidos:</strong> ${data.apellidos}</li>
+                            <li><strong>Integrantes:</strong> ${data.integrantes}</li>
                             <li><strong>Celular:</strong> ${data.celular}</li>
                             <li><strong>Fecha:</strong> ${(() => {
                                 const f = data.fecha;
@@ -499,7 +477,6 @@
                                 return f;
                             })()}</li>
                             <li><strong>Microterritorio:</strong> ${data.microterritorio}</li>
-                            <li><strong>Responsable:</strong> ${data.nombre_responsable}</li>
                         </ul>
                         <div class="flex gap-2 mt-4">
                             <a href="${URL_view.replace('__ID__', data.id)}" class="bg-gray-200 hover:bg-blue-600 text-teal-700 px-3 py-1 rounded text-sm">Ver</a>
@@ -549,6 +526,10 @@
                         name: "apellidos"
                     },
                     {
+                        data: "integrantes",
+                        name: "integrantes"
+                    },
+                    {
                         data: "celular",
                         name: "celular"
                     },
@@ -563,10 +544,6 @@
                     {
                         data: "sociambiental_id",
                         name: "sociambiental_id"
-                    },
-                    {
-                        data: "nombre_responsable",
-                        name: "nombre_responsable"
                     },
                     {
                         data: "id",
