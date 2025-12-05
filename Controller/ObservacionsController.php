@@ -83,8 +83,7 @@ class ObservacionsController extends AppController
 		}
 
 		// Obtener listas de familias y responsables
-		$familias = $this->Observacion->Familia->find('list');
-		$responsables = $this->Observacion->Responsable->find('list');
+
 
 		// Pasar datos a la vista
 		$this->set(compact('familias', 'responsables'));

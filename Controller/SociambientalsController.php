@@ -265,7 +265,7 @@ class SociambientalsController extends AppController
 			$familia = $this->Sociambiental->find('first', [
 				'conditions' => ['Sociambiental.id' => $id],
 				'fields' => ['Sociambiental.*', 'Responsable.nombres'],
-				'contain' => ['Sociambiental', 'Responsable']
+				'contain' => ['Responsable']
 			]);
 			$nombre = '';
 			if (!empty($familia['Sociambiental'])) {

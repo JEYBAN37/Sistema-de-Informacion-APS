@@ -5,15 +5,11 @@ App::uses('AppModel', 'Model');
  *
  * @property Responsable $Responsable
  * @property Ubicacion $Ubicacion
+ * @property Sociambiental $Sociambiental
  */
 class Sociambiental extends AppModel
 {
-	public $useTable = 'sociambientals';
 
-	public $virtualFields = array(
-		'apellidosfamilia' => 'CONCAT(Sociambiental.apellidosfamilia)'
-	);
-	public $displayField = 'apellidosfamilia';
 
 	public $actsAs = array(
 		'Containable',
@@ -332,7 +328,8 @@ class Sociambiental extends AppModel
 		),
 
 		'mascotas' => array(
-			'rule' => array('multiple', array('min' => 1)),
+			'rule' => array('multiple', array('min' => 0)),
+			'allowEmpty' => true,	
 			//'message' => 'Your custom message here',
 			//'allowEmpty' => false,
 			//'required' => false,
@@ -399,7 +396,6 @@ class Sociambiental extends AppModel
 		),
 		'vector' => array(
 			'notEmpty' => array(
-
 				'rule' => array('multiple', array('min' => 1)),
 				'message' => 'Por favor seleccione al menos una opción',
 				//'message' => 'Your custom message here',
@@ -491,14 +487,6 @@ class Sociambiental extends AppModel
 			$this->data[$this->alias]['numeroGatos'] = implode(',', $this->data[$this->alias]['numeroGatos']);
 		}
 
-		if (isset($this->data[$this->alias]['acceso']) && is_array($this->data[$this->alias]['acceso'])) {
-			$this->data[$this->alias]['acceso'] = implode(',', $this->data[$this->alias]['acceso']);
-		}
-
-		if (isset($this->data[$this->alias]['riesgo']) && is_array($this->data[$this->alias]['riesgo'])) {
-			$this->data[$this->alias]['riesgo'] = implode(',', $this->data[$this->alias]['riesgo']);
-		}
-
 		return true;
 	}
 
@@ -522,47 +510,19 @@ class Sociambiental extends AppModel
 
 	public function tranformData($data)
 	{
-		// Ejemplo: viene "2. Hombres,4. Niños y niñas"
-		if (!empty($data['Sociambiental']['acceso'])) {
-			$poblacionStr = $data['Sociambiental']['acceso'];
-			// Extraer cada palabra/frase hasta la coma
-			$tipos = array_map('trim', explode(',', $poblacionStr));
-			$data['Sociambiental']['acceso'] = $tipos;
-		}
-		if (!empty($data['Sociambiental']['numeroGatos'])) {
-			$poblacionStr = $data['Sociambiental']['numeroGatos'];
-			// Extraer cada palabra/frase hasta la coma
-			$tipos = array_map('trim', explode(',', $poblacionStr));
-			$data['Sociambiental']['numeroGatos'] = $tipos;
-		}
-		if (!empty($data['Sociambiental']['vector'])) {
-			$poblacionStr = $data['Sociambiental']['vector'];
-			// Extraer cada palabra/frase hasta la coma
-			$tipos = array_map('trim', explode(',', $poblacionStr));
-			$data['Sociambiental']['vector'] = $tipos;
-		}
-
-		if (!empty($data['Sociambiental']['riesgoexterno'])) {
-			$poblacionStr = $data['Sociambiental']['riesgoexterno'];
-			// Extraer cada palabra/frase hasta la coma
-			$tipos = array_map('trim', explode(',', $poblacionStr));
-			$data['Sociambiental']['riesgoexterno'] = $tipos;
-		}
-
-		if (!empty($data['Sociambiental']['riesgo'])) {
-			$poblacionStr = $data['Sociambiental']['riesgo'];
-			// Extraer cada palabra/frase hasta la coma
-			$tipos = array_map('trim', explode(',', $poblacionStr));
-			$data['Sociambiental']['riesgo'] = $tipos;
-		}
-
-		if (!empty($data['Sociambiental']['acceso'])) {
-			$poblacionStr = $data['Sociambiental']['acceso'];
-			// Extraer cada palabra/frase hasta la coma
-			$tipos = array_map('trim', explode(',', $poblacionStr));
-			$data['Sociambiental']['acceso'] = $tipos;
-		}
-
-		return $data;
+		   // Solo procesar si el valor es string, si es array lo deja igual
+		   $campos = ['acceso', 'numeroGatos', 'vector', 'riesgoexterno', 'riesgo', 'mascotas'];
+		   foreach ($campos as $campo) {
+			   if (!empty($data['Sociambiental'][$campo])) {
+				   $valor = $data['Sociambiental'][$campo];
+				   if (is_string($valor)) {
+					   $tipos = array_map('trim', explode(',', $valor));
+					   $data['Sociambiental'][$campo] = $tipos;
+				   } else if (is_array($valor)) {
+					   $data['Sociambiental'][$campo] = $valor;
+				   }
+			   }
+		   }
+		   return $data;
 	}
 }
