@@ -1498,7 +1498,7 @@ $animalesOptions = [
 
     function preventBackNavigation() {
         if (confirm('¿Está seguro que desea salir de la página? Se pueden perder los cambios no guardados.')) {
-            window.location.href = '<?php echo $this->Html->url(['controller' => 'Familias', 'action' => 'view', '31898']); ?>';
+            window.location.href = '<?php echo $this->Html->url(['controller' => 'Familias', 'action' => 'index', ]); ?>';
         }
     }
 

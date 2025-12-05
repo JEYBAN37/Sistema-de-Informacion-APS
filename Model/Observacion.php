@@ -18,7 +18,48 @@ class Observacion extends AppModel
 
 	public $useTable = 'observacions';
 
+	public function beforeSave($options = array())
+	{
+		if (isset($this->data[$this->alias]['resultadoFamiliograma']) && is_array($this->data[$this->alias]['resultadoFamiliograma'])) {
+			$this->data[$this->alias]['resultadoFamiliograma'] = implode(',', $this->data[$this->alias]['resultadoFamiliograma']);
+		}
 
+		if (isset($this->data[$this->alias]['menoresriegosalud']) && is_array($this->data[$this->alias]['menoresriegosalud'])) {
+			$this->data[$this->alias]['menoresriegosalud'] = implode(',', $this->data[$this->alias]['menoresriegosalud']);
+		}
+
+		if (isset($this->data[$this->alias]['riesgovulnerabilidad']) && is_array($this->data[$this->alias]['riesgovulnerabilidad'])) {
+			$this->data[$this->alias]['riesgovulnerabilidad'] = implode(',', $this->data[$this->alias]['riesgovulnerabilidad']);
+		}
+
+		if (isset($this->data[$this->alias]['fortalezas']) && is_array($this->data[$this->alias]['fortalezas'])) {
+			$this->data[$this->alias]['fortalezas'] = implode(',', $this->data[$this->alias]['fortalezas']);
+		}
+
+		if (isset($this->data[$this->alias]['canalizacionuno']) && is_array($this->data[$this->alias]['canalizacionuno'])) {
+			$this->data[$this->alias]['canalizacionuno'] = implode(',', $this->data[$this->alias]['canalizacionuno']);
+		}
+
+		return true;
+	}
+
+	public function tranformData($data)
+	{
+		// Solo procesar si el valor es string, si es array lo deja igual
+		$campos = ['resultadoFamiliograma', 'menoresriegosalud', 'riesgovulnerabilidad', 'fortalezas', 'canalizacionuno'];
+		foreach ($campos as $campo) {
+			if (!empty($data['Observacion'][$campo])) {
+				$valor = $data['Observacion'][$campo];
+				if (is_string($valor)) {
+					$tipos = array_map('trim', explode(',', $valor));
+					$data['Observacion'][$campo] = $tipos;
+				} else if (is_array($valor)) {
+					$data['Observacion'][$campo] = $valor;
+				}
+			}
+		}
+		return $data;
+	}
 
 	public $validate = array(
 		'familia_id' => array(
@@ -45,6 +86,8 @@ class Observacion extends AppModel
 		'canalizacionuno' => array(
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),
+				'rule' => array('multiple', array('min' => 1)),
+				'message' => 'Por favor seleccione al menos una opción',
 				//'message' => 'Your custom message here',
 				//'allowEmpty' => false,
 				//'required' => false,
@@ -77,7 +120,7 @@ class Observacion extends AppModel
 		'estado' => array(
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),
-				//'message' => 'Your custom message here',
+				'message' => 'Por favor seleccione un estado',
 				//'allowEmpty' => false,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule
@@ -87,8 +130,8 @@ class Observacion extends AppModel
 
 		'resultadoEcomapa' => array(
 			'notEmpty' => array(
-				//'rule' => array('notEmpty'),
-				//'message' => 'Your custom message here',
+				'rule' => array('notEmpty'),
+				'message' => 'El resultado del ecomapa no puede estar vacío',
 				//'allowEmpty' => false,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule
@@ -96,14 +139,17 @@ class Observacion extends AppModel
 			),
 		),
 		'resultadoFamiliograma' => array(
-			//'notEmpty' => array(
-				//'rule' => array('notEmpty'),
-				//'message' => 'Seleccione al menos un criterio',
+			'notEmpty' => array(
+				'rule' => array('notEmpty'),
+				'rule' => array('multiple', array('min' => 1)),
+				'message' => 'Por favor seleccione al menos una opción',
+				//'message' => 'Your custom message here',
 				//'allowEmpty' => false,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-		
+			),
+
 		),
 
 		/*'objetivocortoplazo' => array(
@@ -126,10 +172,11 @@ class Observacion extends AppModel
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
 		),*/
-		'menoresriesgosalud' => array(
+		'menoresriegosalud' => array(
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),
-				//'message' => 'Your custom message here',
+				'rule' => array('multiple', array('min' => 1)),
+				'message' => 'Por favor seleccione al menos una opción',
 				//'allowEmpty' => false,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule
@@ -181,6 +228,8 @@ class Observacion extends AppModel
 		'riesgovulnerabilidad' => array(
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),
+				'rule' => array('multiple', array('min' => 1)),
+				'message' => 'Por favor seleccione al menos una opción',
 				//'message' => 'Your custom message here',
 				//'allowEmpty' => false,
 				//'required' => false,
@@ -201,7 +250,7 @@ class Observacion extends AppModel
 		'puntuacionfamilia' => array(
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),
-				//'message' => 'Your custom message here',
+				'message' => 'Por favor genere una puntuación',
 				//'allowEmpty' => false,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule
@@ -211,12 +260,24 @@ class Observacion extends AppModel
 		'valoracionfamilia' => array(
 			//'notEmpty' => array(
 			//	'rule' => array('notEmpty'),
+			//'message' => 'Your custom message here',
+			//'allowEmpty' => false,
+			//'required' => false,
+			//'last' => false, // Stop validation after this rule
+			//'on' => 'create', // Limit validation to 'create' or 'update' operations
+			//),
+		),
+		'fortalezas' => array(
+			'notEmpty' => array(
+				'rule' => array('notEmpty'),
+				'rule' => array('multiple', array('min' => 1)),
+				'message' => 'Por favor seleccione al menos una opción',
 				//'message' => 'Your custom message here',
 				//'allowEmpty' => false,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			//),
+			),
 		),
 		/*'problematicafamilia1' => array(
 			'notEmpty' => array(
@@ -395,7 +456,7 @@ class Observacion extends AppModel
 			'isValidMimeType' => array(
 
 				'rule' => array('isValidExtension', array('pdf', 'jpg', 'png', 'jpeg')),
-				'message' => 'El archivo debe ser de tipo pdf'
+				'message' => 'El archivo debe ser de tipo pdf, jpg, png o jpeg'
 			),
 			'isBelowMaxSize' => array(
 				'rule' => array('isBelowMaxSize', 8000000),

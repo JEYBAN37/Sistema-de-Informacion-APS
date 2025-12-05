@@ -20,7 +20,7 @@ class Responsable extends AppModel
     }
 
 	public $virtualFields = array(
-		'encuestador' => 'CONCAT(responsable.nombres)'
+		'encuestador' => 'CONCAT(Responsable.nombres)'
 	);
 	public $displayField = 'encuestador';
 	/**

@@ -139,7 +139,7 @@ echo $this->Form->input('responsable_id', array('value' => $nombreUsuario, 'type
                 ];
 
 
-                echo $this->Form->input('menoresriesgosalud', [
+                echo $this->Form->input('menoresriegosalud', [
                     'type' => 'select',
                     'label' => false,
                     'multiple' => 'multiple',
@@ -149,8 +149,8 @@ echo $this->Form->input('responsable_id', array('value' => $nombreUsuario, 'type
                     'options' => $riesgosalud,
                     'error' => false // No mostrar error aquí
                 ]);
-                if (!empty($this->Form->error('riesgosalud'))) {
-                    echo '<div class="text-red-600 text-md mt-1 font-semibold">' . $this->Form->error('riesgosalud') . '</div>';
+                if (!empty($this->Form->error('menoresriegosalud'))) {
+                    echo '<div class="text-red-600 text-md mt-1 font-semibold">' . $this->Form->error('menoresriegosalud') . '</div>';
                 }
                 ?>
             </div>

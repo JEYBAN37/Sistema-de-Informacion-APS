@@ -56,37 +56,34 @@ class ObservacionsController extends AppController
 	 * 
 	 * 
 	 */
-	  
+
 	public function add()
 	{
-		if ($this->request->is('post')) {
-			$this->Observacion->create(); // Crear una nueva instancia del modelo
-
-			// Intentar guardar los datos
+		if ($this->request->is(array('post'))) {
 			if ($this->Observacion->save($this->request->data)) {
-				$this->Session->setFlash('La observación se ha guardado correctamente', 'default', array('class' => 'alert alert-success'));
-				$familiaId = isset($this->request->data["Observacion"]["familia_id"]) ? $this->request->data["Observacion"]["familia_id"] : null;
+				if ($this->request->data['btn'] == 'Guardar y continuar') {
+					//$session->setFlash("registro guardado");
+					$this->Session->setFlash('Registro se creó con éxito, continuar con la creacion del plan de cuidado', 'flash_custom', array('class' => 'success', 'title' => 'El registro se ha completado correctamente'));
+					$familiaId = isset($this->request->data["Observacion"]["familia_id"]) ? $this->request->data["Observacion"]["familia_id"] : null;
 
-				// Redireccionar a la vista de la familia
-				return $this->redirect(array(
-					'controller' => 'familias',
-					'action' => 'view',
-					$familiaId, // Usa la variable directamente
-					'?' => array(
-						'familia_id' => $familiaId
-					)
-				));
+					// Redireccionar a la vista de la familia
+					return $this->redirect(array(
+						'controller' => 'familias',
+						'action' => 'view',
+						$familiaId, // Usa la variable directamente
+						'?' => array(
+							'familia_id' => $familiaId
+						)
+					));
+				} else {
+					$this->Session->setFlash('Registro se guardado con exito, continuar con informacion de la familia / hogar', 'flash_custom', array('class' => 'info', 'title' => 'Copia el ID de la vivienda: ' . $this->Sociambiental->id));
+					//return $this->redirect(array('controller' => 'plsesiones', 'action' => 'nuebus'));                error
+					return $this->redirect(array('controller' => 'Familias', 'action' => 'index'));
+				}
 			} else {
-				// Mensaje de error si no se pudo guardar
-				$this->Session->setFlash('No se ha guardado, por favor revisar campos', 'default', array('class' => 'alert alert-danger'));
+				$this->Session->setFlash('El registro no fue actualizado o esta pendiente un campo del formulario', 'flash_custom', array('class' => 'error', 'title' => 'Error al guardar el registro'));
 			}
 		}
-
-		// Obtener listas de familias y responsables
-
-
-		// Pasar datos a la vista
-		$this->set(compact('familias', 'responsables'));
 	}
 
 	public function add_plancuidado($id = null)
@@ -110,7 +107,7 @@ class ObservacionsController extends AppController
 					'Observacion.resultadoEcomapa',
 					'Observacion.resultadoFamiliograma',
 					'Observacion.fecha',
-					'Observacion.menoresriesgosalud',
+					'Observacion.menoresriegosalud',
 					'Observacion.riesgovulnerabilidad',
 					'Observacion.puntuacionfamilia',
 					'Observacion.valoracionfamilia',
@@ -131,7 +128,7 @@ class ObservacionsController extends AppController
 				)
 			);
 			$this->request->data = $this->Observacion->find('first', $options);
-			
+
 
 			// Si el campo viene almacenado como CSV, convertirlo a array para que los checkboxes estén seleccionados
 			if (!empty($this->request->data['Observacion']['entornoafectado']) && is_string($this->request->data['Observacion']['entornoafectado'])) {

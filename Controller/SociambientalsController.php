@@ -177,17 +177,11 @@ class SociambientalsController extends AppController
 	public function add()
 	{
 		if ($this->request->is(array('post'))) {
-			debug($this->request->data);
 			if ($this->Sociambiental->save($this->request->data)) {
-				if ($this->request->data['btn'] == 'Guardar y continuar') {
+				if ($this->request->data['btn'] == 'Guardar y continuar') 
 					//$session->setFlash("registro guardado");
 					$this->Session->setFlash('Registro se creó con éxito, continuar con información de la familia / hogar', 'flash_custom', array('class' => 'success', 'title' => 'El registro se ha completado correctamente'));					//return $this->redirect(array('action' => 'index'));
 					return $this->redirect(array('controller' => 'Familias', 'action' => 'add/' . $this->Sociambiental->id));
-				} else {
-					$this->Session->setFlash('Registro se guardado con exito, continuar con informacion de la familia / hogar', 'flash_custom', array('class' => 'info', 'title' => 'Copia el ID de la vivienda: ' . $this->Sociambiental->id));
-					//return $this->redirect(array('controller' => 'plsesiones', 'action' => 'nuebus'));                error
-					return $this->redirect(array('controller' => 'Familias', 'action' => 'index'));
-				}
 			} else {
 				$this->Session->setFlash('El registro no fue actualizado o esta pendiente un campo del formulario', 'flash_custom', array('class' => 'error', 'title' => 'Error al guardar el registro'));
 			}
