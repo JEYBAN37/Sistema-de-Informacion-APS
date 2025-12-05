@@ -139,7 +139,7 @@ echo $this->Form->input('responsable_id', array('value' => $nombreUsuario, 'type
                 ];
 
 
-                echo $this->Form->input('menoresriesgosalud', [
+                echo $this->Form->input('menoresriegosalud', [
                     'type' => 'select',
                     'label' => false,
                     'multiple' => 'multiple',
