@@ -2964,7 +2964,7 @@ echo $this->Form->input('fechaRegistro', [
                 </div>
                 <?php
 
-                echo $this->Form->input('observacionGestion', [
+                echo $this->Form->input('observacion', [
                     'label' => '',
                     'type' => 'textarea',
                     'id' => 'IntervencionObservacion',
