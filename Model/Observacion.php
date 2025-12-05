@@ -497,7 +497,7 @@ class Observacion extends AppModel
 			'className' => 'Responsable',
 			'foreignKey' => 'responsable_id',
 			'conditions' => '',
-			'fields' => '',
+			'fields' => array('id', 'contrato', 'tipodoc', 'numero', 'nombres', 'fecha_nac', 'celular', 'correo', 'profesion', 'nodo', 'ebs', '(CONCAT(Responsable.nombres)) AS Responsable__encuestador'),
 			'order' => ''
 		)
 	);

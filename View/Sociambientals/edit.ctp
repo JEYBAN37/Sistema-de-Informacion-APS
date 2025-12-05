@@ -1,7 +1,5 @@
 <?php
 
-use function PHPSTORM_META\type;
-
 $this->layout = 'default_familia';  ?>
 
 

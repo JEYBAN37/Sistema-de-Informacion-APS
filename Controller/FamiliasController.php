@@ -106,7 +106,7 @@ class FamiliasController extends AppController
 			isset($ficha['Adolescencia']) ? $ficha['Adolescencia'] : []
 		);
 
-		if (empty($ficha['o'])) {
+		if (empty($ficha['Integrantes'])) {
 			$this->Session->setFlash('No hay integrantes registrados para esta familia.', 'flash_custom', array('class' => 'warning', 'title' => 'Información'));
 		}
 
