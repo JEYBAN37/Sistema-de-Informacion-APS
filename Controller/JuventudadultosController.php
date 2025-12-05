@@ -110,9 +110,7 @@ class JuventudadultosController extends AppController
 			$this->request->data = $this->Juventudadulto->tranformData($this->request->data);
 
 		}
-		// Ensure the Intervecion model is loaded before calling find()
-		$this->loadModel('Intervecion');
-		$intervenciones = $this->Intervecion->find('all');
+
 		$canalizaciones = $this->Juventudadulto->Canalizacion->find('list');
 		$this->set(compact('canalizaciones', 'intervenciones'));
 	}

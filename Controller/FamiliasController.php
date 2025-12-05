@@ -133,10 +133,18 @@ class FamiliasController extends AppController
 	public function plancuidado($id = null)
 	{
 		if (!$this->Familia->exists($id)) {
-			throw new NotFoundException(__('Invalid familia'));
+			$this->Session->setFlash('La familia no existe', 'flash_custom', array('class' => 'error', 'title' => 'Error al cargar el registro'));
+			return $this->redirect(array('controller' => 'Familias', 'action' => 'index'));
 		}
-		$options = array('conditions' => array('Familia.' . $this->Familia->primaryKey => $id));
-		$this->set('familia', $this->Familia->find('first', $options));
+
+		$ficha = $this->Familia->find('first', array(
+			'conditions' => array('Familia.' . $this->Familia->primaryKey => $id),
+			'recursive' => -1
+			)
+		);
+
+		debug($ficha);
+		$this->set('familia', $ficha);
 	}
 
 	/**
@@ -475,4 +483,5 @@ class FamiliasController extends AppController
 		$estadisticas = $this->Familia->getEstadisticasResponsable($responsable);
 		$this->set('estadisticas', $estadisticas);
 	}
+
 }

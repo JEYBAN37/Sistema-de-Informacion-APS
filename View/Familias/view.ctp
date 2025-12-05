@@ -51,6 +51,11 @@ $planUrl = $this->Html->url(['controller' => 'Familias', 'action' => 'plancuidad
             <i class="fas fa-users text-xl"></i>
         </button>
 
+        <button title="Ver detalles de familia" type="button" onclick="window.location.href='<?php echo $this->Html->url(['action' => 'plancuidado', $familia['Familia']['id']]); ?>'"
+            class="flex items-center w-38 space-x-2 bg-teal-600 text-white px-4 py-2 rounded hover:bg-teal-700">
+            <i class="fa-solid fa-info text-2xl px-2"></i>
+        </button>
+
         <button title="Agregar Integrante" type="button" onclick="window.location.href='<?php echo $this->Html->url(['controller' => 'Juventudadultos', 'action' => 'add?juventudadultos=' . $familia['Familia']['id']]); ?>'"
             class="flex items-center w-38 space-x-2 bg-teal-600 text-white px-4 py-2 rounded hover:bg-teal-700">
             <i class="fa-solid fa-person text-2xl px-2"></i>
@@ -81,14 +86,14 @@ $planUrl = $this->Html->url(['controller' => 'Familias', 'action' => 'plancuidad
     </div>
 
     <!-- Document Container -->
-    <div class="max-w-6xl mx-auto bg-white overflow-hidden mt-4 sm:mt-4 p-4 shadow-2xl rounded-xl" id="print-area">
+    <div class="max-w-6xl mx-auto bg-white overflow-hidden mt-4 sm:mt-4 p-4 shadow-2xl rounded-xl">
         <div class="p-2 md:p-8">
             <div class="flex items-center mb-4">
                 <i class="fas fa-users text-2xl text-teal-600 p-4 bg-teal-100 rounded-lg"></i>
 
                 <div class="ml-4">
                     <h1 class="text-lg md:text-xl font-semibold flex">
-                        Información de la Familia
+                        Información General de la Familia
                     </h1>
                     <p class="text-sm md:text-base text-gray-500">Aqui se mostraran detalles importantes para la familia seleccionada.</p>
                 </div>
@@ -115,8 +120,8 @@ $planUrl = $this->Html->url(['controller' => 'Familias', 'action' => 'plancuidad
                         <td class="border border-gray-300 font-semibold text-center p-2 text-teal-600">
                             ID Vivienda
                         </td>
-                        <td class="border border-gray-300 text-center p-2 text-gray-800 font-bold">
-                            <?php echo h($familia['Sociambiental']['id']) ?>
+                        <td class="border border-gray-300 text-center p-2 text-teal-600 font-bold hover:underline">
+                            <?php echo $this->Html->link($familia['Sociambiental']['id'], ['controller' => 'Sociambientals', 'action' => 'view', $familia['Sociambiental']['id']]); ?>
                         </td>
                     </tr>
                     <tr>
@@ -227,7 +232,7 @@ $planUrl = $this->Html->url(['controller' => 'Familias', 'action' => 'plancuidad
         </div>
     </div>
 
-    <div class="max-w-6xl mx-auto bg-white overflow-hidden mt-4 sm:mt-8 p-4 shadow-2xl rounded-xl">
+    <div class="max-w-6xl mx-auto bg-white overflow-hidden mt-4 sm:mt-8 p-4 shadow-2xl rounded-xl  mb-12">
         <div class="p-2 md:p-8">
             <!-- Contenido a imprimir -->
             <div class="flex items-center mb-2">
@@ -242,75 +247,56 @@ $planUrl = $this->Html->url(['controller' => 'Familias', 'action' => 'plancuidad
 
             </div>
             <?php if (!empty($familia['Integrantes'])) : ?>
-                <table id="miTabla" style="width:100%;" class="stripe hover mt-4 text-sm text-left text-gray-600 border border-gray-200 rounded-lg">
+            <div class="w-[350px] md:w-full md:mt-6 mb-4">
+                <table id="integrantesTabla" style="width:100%;" class="stripe hover text-sm text-left text-gray-600 border border-gray-200 rounded-lg overflow-hidden">
                     <thead class="bg-gray-200 font-medium border-b border-gray-300">
-                        <tr class=" text-gray-900 font-light">
-                            <th class="dtr-control"></th>
+                        <tr class="text-gray-900 font-light">
+                            <th class="px-2 w-6"></th> <!-- control (+) -->
                             <th class="px-4 py-2 font-semibold text-center cursor-pointer hover:bg-gray-100">ID</th>
-                            <th class="px-4 py-2 font-semibold cursor-pointer hover:bg-gray-100">Nombres</th>
-                            <th class="px-4 py-2 font-semibold cursor-pointer hover:bg-gray-100">Edad</th>
-                            <th class="px-4 py-2 font-semibold cursor-pointer hover:bg-gray-100">Sexo</th>
-                            <th class="px-4 py-2 font-semibold cursor-pointer hover:bg-gray-100">Aseguradora</th>
-                            <th class="px-4 py-2 font-semibold cursor-pointer hover:bg-gray-100">Canalización</th>
-                            <th class="px-4 py-2 font-semibold cursor-pointer hover:bg-gray-100">Condicioncronica </th>
-                            <th class="px-4 py-2 font-semibold cursor-pointer hover:bg-gray-100">Opciones</th>
+                            <th class="px-4 py-2 font-semibold text-center cursor-pointer hover:bg-gray-100">Nombres</th>
+                            <th class="px-4 py-2 font-semibold text-center cursor-pointer hover:bg-gray-100">Edad</th>
+                            <th class="px-4 py-2 font-semibold text-center cursor-pointer hover:bg-gray-100">Sexo</th>
+                            <th class="px-4 py-2 font-semibold text-center cursor-pointer hover:bg-gray-100">Aseguradora</th>
+                            <th class="px-4 py-2 font-semibold text-center cursor-pointer hover:bg-gray-100">Condición Crónica</th>
+                            <th class="px-4 py-2 font-semibold text-center cursor-pointer hover:bg-gray-100">Acciones</th>
                         </tr>
-
+                    </thead>
                     <tbody class="bg-white divide-y divide-gray-300">
-                        <?php foreach ($familia['Integrantes'] as $primerainfancia) :
-                            if (!empty($primerainfancia['id'])) {
+                        <?php foreach ($familia['Integrantes'] as $integrante) :
+                            if (!empty($integrante['id'])) {
                         ?>
-                                <tr>
-                                    <th class="dtr-control"></th>
-                                    <td><?php echo $primerainfancia['id']; ?></td>
-                                    <td><?php echo $primerainfancia['primernombre'] ?><?php echo $primerainfancia['primerapellido'] ?> </td>
-                                    <td><?php echo $primerainfancia['edad']; ?></td>
-                                    <td> <?php echo $primerainfancia['sexo']; ?></td>
-                                    <td> <?php echo $primerainfancia['aseguradora']; ?></td>
-                                    <td> <?php echo $primerainfancia['canalizacionuno']; ?>,</td>
-                                    <td><?php echo $primerainfancia['condicioncronica']; ?></td>
-                                    <td>
-                                        <ul class="dropdown-menu" role="menu">
-                                            <li>
-                                                <?php echo $this->Html->link(
-                                                    "Ver",
-                                                    "../primerainfancias/view/" . $primerainfancia['id'],
-                                                    array(
-                                                        'style' => 'font-size: 14px;'
-                                                    )
-                                                ); ?>
-                                            </li>
-                                            <li>
-
-                                                <?php echo $this->Html->link(('Editar'),
-                                                    "../primerainfancias/edit/" . $primerainfancia['id'],
-                                                    array('action' => 'edit', $primerainfancia['id']),
-                                                    array(
-                                                        'style' => 'font-size: 14px;'
-                                                    )
-                                                ); ?>
-
-
-                                            </li>
-                                            <li><?php echo $this->Form->postLink(
-                                                    __('Borrar'),
-                                                    array(
-                                                        'controller' => 'primerainfancias',
-                                                        'action' => 'delete',
-                                                        $primerainfancia['id']
-                                                    ),
-                                                    array('style' => 'color: red; font-size: 14px; '),
-                                                    __('Esta seguro de eliminar el registro # %s?', $primerainfancia['id'] . ' ' . $primerainfancia['primernombre'] . ' ' . $primerainfancia['primerapellido'] . ' de la familia de con id # ' .  $primerainfancia['familia_id'])
-                                                ); ?>
-                                            </li>
-                                        </ul>
-                                    </td>
-                                </tr>
+                        <tr>
+                            <td></td>
+                            <td class="text-center text-black font-bold"><?php echo $integrante['id']; ?></td>
+                            <td class="text-center"><?php echo $integrante['primernombre'] . ' ' . $integrante['primerapellido']; ?></td>
+                            <td class="text-center"><?php echo $integrante['edad']; ?></td>
+                            <td class="text-center"><?php echo $integrante['sexo']; ?></td>
+                            <td class="text-center"><?php echo $integrante['aseguradora']; ?></td>
+                            <td class="text-center"><?php echo $integrante['condicioncronica']; ?></td>
+                            <td>
+                                <div class="relative inline-block text-left">
+                                    <?php echo $this->Html->link('Ver', ["controller" => "juventudadultos", "action" => "view", $integrante['id']], ["class" => "block px-4 py-2 text-sm hover:bg-gray-100"]); ?>
+                                    <?php echo $this->Html->link('Editar', ["controller" => "juventudadultos", "action" => "edit", $integrante['id']], ["class" => "block px-4 py-2 text-sm hover:bg-gray-100"]); ?>
+                                    <hr class="my-1 border-gray-200">
+                                    <?php echo $this->Form->postLink('Borrar', ["controller" => "juventudadultos", "action" => "delete", $integrante['id']], ["class" => "block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100"], __('¿Seguro que quieres borrar #%s?', $integrante['id'])); ?>
+                                </div>
+                            </td>
+                        </tr>
                         <?php }
                         endforeach; ?>
                     </tbody>
-                    </thead>
                 </table>
+            </div>
+            <script>
+            $(document).ready(function() {
+                $('#integrantesTabla').DataTable({
+                    responsive: true,
+                    pageLength: 5,
+                    dom: '<"flex flex-col md:flex-row items-center justify-between"<"w-full md:w-2/3 flex"<"flex flex-row w-full custom-search-container">><"flex items-center custom-pagination">>rt',
+                    order: [[1, 'asc']],
+                });
+            });
+            </script>
             <?php else: ?>
                 <div class="text-center text-gray-500 py-8">
                     <span class="font-semibold text-lg">No hay Integrantes agregados</span>
@@ -319,7 +305,7 @@ $planUrl = $this->Html->url(['controller' => 'Familias', 'action' => 'plancuidad
         </div>
     </div>
 
-    <div class="max-w-6xl mx-auto bg-white overflow-hidden mt-4 sm:mt-4 p-4 shadow-2xl rounded-xl">
+    <div class="max-w-6xl mx-auto bg-white overflow-hidden mt-4 sm:mt-4 p-4 shadow-2xl rounded-xl  mb-8">
         <div class="p-2 md:p-8">
             <!-- Contenido a imprimir -->
             <div class="flex items-center mb-4">
