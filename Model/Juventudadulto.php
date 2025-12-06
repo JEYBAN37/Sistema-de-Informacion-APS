@@ -45,13 +45,17 @@ class Juventudadulto extends AppModel
 			),
 		),
 		'numerodoc' => array(
-			'numeric' => array(
-				'rule' => array('isUnique'),
+			'isUnique' => array(
+				'rule' => 'isUnique',
 				'message' => 'La persona con este número de documento ya está asociada a un hogar',
 			),
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),
 				'message' => 'El numero de documento no puede estar vacio',
+			),
+			'numeric' => array(
+				'rule' => array('numeric'),
+				'message' => 'El número de documento debe ser numérico',
 			),
 		),
 		'segundoapellido' => array(
@@ -146,7 +150,15 @@ class Juventudadulto extends AppModel
 		'talla' => array(
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),
-				'message' => 'La talla no puede estar vacío'
+				'message' => 'La talla no puede estar vacía',
+			),
+			'numeric' => array(
+				'rule' => 'numeric',
+				'message' => 'La talla debe ser numérica',
+			),
+			'threeDigits' => array(
+				'rule' => array('custom', '/^[0-9]{3}$/'),
+				'message' => 'La talla debe tener exactamente 3 dígitos',
 			),
 		),
 		'condicioncronica' => array(

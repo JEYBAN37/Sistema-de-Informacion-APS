@@ -215,8 +215,8 @@ $alimentosHogar = [
     '8.Apoyo familiar' => 'Apoyo familiar',
 ];
 
-echo $this->Form->input('id');
-echo $this->Form->input('sociambiental_id', ['type' => 'hidden']);
+echo $this->Form->hidden('id');
+echo $this->Form->hidden('sociambiental_id');
 ?>
 
 
@@ -722,6 +722,7 @@ echo $this->Form->input('sociambiental_id', ['type' => 'hidden']);
                     <label for="programasocial" class="font-semibold">¿En la familia hay integrantes que pertenezcan a la comunidad LGBTI?</label>
                 </div>
 
+                <?php $selected = $this->Form->value('lgtbi'); ?>
                 <div class="flex space-x-4 items-center justify-center md:justify-start mt-4 pr-0 md:pr-[10%]  md:mt-0 ">
                     <!-- Botón NO -->
                     <div>
@@ -730,6 +731,7 @@ echo $this->Form->input('sociambiental_id', ['type' => 'hidden']);
                             id="lgtbi-no"
                             value="0"
                             class="hidden peer"
+                            <?php if ($selected === '0') echo 'checked'; ?>
                             data-target="lgtbi"
                             data-show="false"
                             checked /> <!-- 👈 Por defecto NO -->
@@ -747,6 +749,7 @@ echo $this->Form->input('sociambiental_id', ['type' => 'hidden']);
                             id="lgtbi-si"
                             value="1"
                             data-target="lgtbi"
+                            <?php if ($selected === '1') echo 'checked'; ?>
                             data-show="true"
                             class="hidden peer cursor-pointer" />
                         <label for="lgtbi-si"
@@ -1002,6 +1005,7 @@ echo $this->Form->input('sociambiental_id', ['type' => 'hidden']);
                     <label for="programasocial" class="font-semibold">¿Su familia hace parte de programas sociales del gobierno?</label>
                 </div>
 
+                <?php $selected = $this->Form->value('programasocial'); ?>
                 <div class="flex space-x-4 items-center justify-center md:justify-start mt-4 pr-0 md:pr-[10%]  md:mt-0 ">
                     <!-- Botón NO -->
                     <div>
@@ -1010,6 +1014,7 @@ echo $this->Form->input('sociambiental_id', ['type' => 'hidden']);
                             id="programasocial-no"
                             value="0"
                             class="hidden peer"
+                            <?php if ($selected === '0') echo 'checked'; ?>
                             data-target="programasocial"
                             data-show="false"
                             checked /> <!-- 👈 Por defecto NO -->
@@ -1026,6 +1031,7 @@ echo $this->Form->input('sociambiental_id', ['type' => 'hidden']);
                             name="data[Familia][programasocial]"
                             id="programasocial-si"
                             value="1"
+                            <?php if ($selected === '1') echo 'checked'; ?>
                             data-target="programasocial"
                             data-show="true"
                             class="hidden peer cursor-pointer" />
@@ -1143,6 +1149,7 @@ echo $this->Form->input('sociambiental_id', ['type' => 'hidden']);
                     <label for="higiene" class="font-semibold">¿Se realizan buenos habitos de higiene y aseo en la familia?</label>
                 </div>
 
+                <?php $selected = $this->Form->value('higiene'); ?>      
                 <div class="flex space-x-4 items-center justify-center md:justify-start mt-4 pr-0 md:pr-[10%]  md:mt-0 ">
                     <!-- Botón NO -->
                     <div>
@@ -1150,6 +1157,7 @@ echo $this->Form->input('sociambiental_id', ['type' => 'hidden']);
                             name="data[Familia][higiene]"
                             id="higiene-no"
                             value="0"
+                            <?php if ($selected === '0') echo 'checked'; ?>
                             class="hidden peer"
                             data-target="higiene"
                             data-show="false"
@@ -1167,6 +1175,7 @@ echo $this->Form->input('sociambiental_id', ['type' => 'hidden']);
                             name="data[Familia][higiene]"
                             id="higiene-si"
                             value="1"
+                            <?php if ($selected === '1') echo 'checked'; ?>
                             data-target="higiene"
                             data-show="true"
                             class="hidden peer cursor-pointer" />
@@ -1185,12 +1194,14 @@ echo $this->Form->input('sociambiental_id', ['type' => 'hidden']);
                     <label for="higiene" class="font-semibold">¿Disponen de Almacenamiento y conservación adecuada de alimentos?</label>
                 </div>
 
+                <?php $selected = $this->Form->value('higienealimentos'); ?>
                 <div class="flex space-x-4 items-center justify-center md:justify-start mt-4 pr-0 md:pr-[10%]  md:mt-0 ">
                     <!-- Botón NO -->
                     <div>
                         <input type="radio"
                             name="data[Familia][higienealimentos]"
                             id="higienealimentos-no"
+                            <?php if ($selected === '0') echo 'checked'; ?>
                             value="0"
                             class="hidden peer"
                             data-target="higienealimentos"
@@ -1208,6 +1219,7 @@ echo $this->Form->input('sociambiental_id', ['type' => 'hidden']);
                         <input type="radio"
                             name="data[Familia][higienealimentos]"
                             id="higienealimentos-si"
+                            <?php if ($selected === '1') echo 'checked'; ?>
                             value="1"
                             data-target="higienealimentos"
                             data-show="true"
@@ -1227,12 +1239,14 @@ echo $this->Form->input('sociambiental_id', ['type' => 'hidden']);
                     <label for="aseococina" class="font-semibold">¿Procuran mantener limpia de la cocina?</label>
                 </div>
 
+                <?php $selected = $this->Form->value('aseococina'); ?>
                 <div class="flex space-x-4 items-center justify-center md:justify-start mt-4 pr-0 md:pr-[10%]  md:mt-0 ">
                     <!-- Botón NO -->
                     <div>
                         <input type="radio"
                             name="data[Familia][aseococina]"
                             id="aseococina-no"
+                            <?php if ($selected === '0') echo 'checked'; ?>
                             value="0"
                             class="hidden peer"
                             data-target="aseococina"
@@ -1251,6 +1265,7 @@ echo $this->Form->input('sociambiental_id', ['type' => 'hidden']);
                             name="data[Familia][aseococina]"
                             id="aseococina-si"
                             value="1"
+                            <?php if ($selected === '1') echo 'checked'; ?>
                             data-target="aseococina"
                             data-show="true"
                             class="hidden peer cursor-pointer" />
@@ -1275,6 +1290,7 @@ echo $this->Form->input('sociambiental_id', ['type' => 'hidden']);
                         <input type="radio"
                             name="data[Familia][lavadomanos]"
                             id="lavadomanos-no"
+                            <?php if ($selected === '0') echo 'checked'; ?>
                             value="0"
                             class="hidden peer"
                             data-target="lavadomanos"
@@ -1294,6 +1310,7 @@ echo $this->Form->input('sociambiental_id', ['type' => 'hidden']);
                             id="lavadomanos-si"
                             value="1"
                             data-target="lavadomanos"
+                            <?php if ($selected === '1') echo 'checked'; ?>
                             data-show="true"
                             class="hidden peer cursor-pointer" />
                         <label for="lavadomanos-si"
@@ -1311,6 +1328,7 @@ echo $this->Form->input('sociambiental_id', ['type' => 'hidden']);
                     <label for="cepillarse" class="font-semibold">¿Existe el hábito de cepillarse los dientes?</label>
                 </div>
 
+                <?php $selected = $this->Form->value('cepilladodientes'); ?>
                 <div class="flex space-x-4 items-center justify-center md:justify-start mt-4 pr-0 md:pr-[10%]  md:mt-0 ">
                     <!-- Botón NO -->
                     <div>
@@ -1318,6 +1336,7 @@ echo $this->Form->input('sociambiental_id', ['type' => 'hidden']);
                             name="data[Familia][cepilladodientes]"
                             id="cepilladodientes-no"
                             value="0"
+                            <?php if ($selected === '0') echo 'checked'; ?>
                             class="hidden peer"
                             data-target="cepilladodientes"
                             data-show="false"
@@ -1334,6 +1353,7 @@ echo $this->Form->input('sociambiental_id', ['type' => 'hidden']);
                         <input type="radio"
                             name="data[Familia][cepilladodientes]"
                             id="cepilladodientes-si"
+                            <?php if ($selected === '1') echo 'checked'; ?>
                             value="1"
                             data-target="cepilladodientes"
                             data-show="true"
@@ -1374,7 +1394,7 @@ echo $this->Form->input('sociambiental_id', ['type' => 'hidden']);
                             <path d="M7 3v4a1 1 0 0 0 1 1h7" />
                         </svg>
                     </span>
-                    Guardar
+                    Actualizar
                 </button>
             </div>
 
@@ -1409,24 +1429,6 @@ echo $this->Form->input('sociambiental_id', ['type' => 'hidden']);
 
                     </span>
                     Ver Vivienda
-                </button>
-            </div>
-
-
-            <!-- Botón -->
-            <div class="w-full p-2">
-                <button type="button" class="w-full bg-teal-600 text-white px-6 py-2 rounded-md hover:bg-green-700 transition font-medium flex items-center justify-center gap-2" onclick="">
-                    <span>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-save-icon lucide-save">
-                            <path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z" />
-                            <path d="M14 2v4a2 2 0 0 0 2 2h4" />
-                            <path d="M10 12a1 1 0 0 0-1 1v1a1 1 0 0 1-1 1 1 1 0 0 1 1 1v1a1 1 0 0 0 1 1" />
-                            <path d="M14 18a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1 1 1 0 0 1-1-1v-1a1 1 0 0 0-1-1" />
-
-                        </svg>
-
-                    </span>
-                    JSON
                 </button>
             </div>
         </div>

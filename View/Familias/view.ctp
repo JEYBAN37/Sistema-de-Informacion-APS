@@ -40,15 +40,15 @@ $planUrl = $this->Html->url(['controller' => 'Familias', 'action' => 'plancuidad
 <body class="bg-gray-50 p-2 sm:p-4">
     <div class="flex max-w-6xl mx-auto text-center mb-4 gap-4">
         <button title="Editar Vivienda" type="button" id="btn-print" class="flex items-center space-x-2 bg-teal-600 text-white px-4 py-2 rounded hover:bg-teal-700" onclick="window.location.href='<?php echo $this->Html->url(['controller' => 'Sociambientals', 'action' => 'edit', $familia['Sociambiental']['id']]); ?>'">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-printer-icon lucide-printer">
-                <path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z" />
-                <path d="m15 5 4 4" />
-            </svg>
+            <i class="fa-solid fa-house-flag text-xl"></i>
         </button>
 
         <button title="Editar Familia" type="button" onclick="window.location.href='<?php echo $this->Html->url(['action' => 'edit', $familia['Familia']['id']]); ?>'"
             class="flex items-center w-38 space-x-2 bg-teal-600 text-white px-4 py-2 rounded hover:bg-teal-700">
-            <i class="fas fa-users text-xl"></i>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-printer-icon lucide-printer">
+                <path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z" />
+                <path d="m15 5 4 4" />
+            </svg>
         </button>
 
         <button title="Ver detalles de familia" type="button" onclick="window.location.href='<?php echo $this->Html->url(['action' => 'plancuidado', $familia['Familia']['id']]); ?>'"
@@ -145,7 +145,7 @@ $planUrl = $this->Html->url(['controller' => 'Familias', 'action' => 'plancuidad
                             Apellidos de la Familia
                         </td>
                         <td class="border border-gray-300 text-center p-2 text-gray-800">
-                            <?php echo h(!empty($familia['Familia']['apellidos']) ? $familia['Familia']['apellidos'] : '') ?>
+                            <?php echo h(!empty($familia['Sociambiental']['apellidosfamilia']) ? $familia['Sociambiental']['apellidosfamilia'] : '') ?>
                         </td>
                     </tr>
                     <tr>
@@ -247,56 +247,58 @@ $planUrl = $this->Html->url(['controller' => 'Familias', 'action' => 'plancuidad
 
             </div>
             <?php if (!empty($familia['Integrantes'])) : ?>
-            <div class="w-[350px] md:w-full md:mt-6 mb-4">
-                <table id="integrantesTabla" style="width:100%;" class="stripe hover text-sm text-left text-gray-600 border border-gray-200 rounded-lg overflow-hidden">
-                    <thead class="bg-gray-200 font-medium border-b border-gray-300">
-                        <tr class="text-gray-900 font-light">
-                            <th class="px-2 w-6"></th> <!-- control (+) -->
-                            <th class="px-4 py-2 font-semibold text-center cursor-pointer hover:bg-gray-100">ID</th>
-                            <th class="px-4 py-2 font-semibold text-center cursor-pointer hover:bg-gray-100">Nombres</th>
-                            <th class="px-4 py-2 font-semibold text-center cursor-pointer hover:bg-gray-100">Edad</th>
-                            <th class="px-4 py-2 font-semibold text-center cursor-pointer hover:bg-gray-100">Sexo</th>
-                            <th class="px-4 py-2 font-semibold text-center cursor-pointer hover:bg-gray-100">Aseguradora</th>
-                            <th class="px-4 py-2 font-semibold text-center cursor-pointer hover:bg-gray-100">Condición Crónica</th>
-                            <th class="px-4 py-2 font-semibold text-center cursor-pointer hover:bg-gray-100">Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody class="bg-white divide-y divide-gray-300">
-                        <?php foreach ($familia['Integrantes'] as $integrante) :
-                            if (!empty($integrante['id'])) {
-                        ?>
-                        <tr>
-                            <td></td>
-                            <td class="text-center text-black font-bold"><?php echo $integrante['id']; ?></td>
-                            <td class="text-center"><?php echo $integrante['primernombre'] . ' ' . $integrante['primerapellido']; ?></td>
-                            <td class="text-center"><?php echo $integrante['edad']; ?></td>
-                            <td class="text-center"><?php echo $integrante['sexo']; ?></td>
-                            <td class="text-center"><?php echo $integrante['aseguradora']; ?></td>
-                            <td class="text-center"><?php echo $integrante['condicioncronica']; ?></td>
-                            <td>
-                                <div class="relative inline-block text-left">
-                                    <?php echo $this->Html->link('Ver', ["controller" => "juventudadultos", "action" => "view", $integrante['id']], ["class" => "block px-4 py-2 text-sm hover:bg-gray-100"]); ?>
-                                    <?php echo $this->Html->link('Editar', ["controller" => "juventudadultos", "action" => "edit", $integrante['id']], ["class" => "block px-4 py-2 text-sm hover:bg-gray-100"]); ?>
-                                    <hr class="my-1 border-gray-200">
-                                    <?php echo $this->Form->postLink('Borrar', ["controller" => "juventudadultos", "action" => "delete", $integrante['id']], ["class" => "block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100"], __('¿Seguro que quieres borrar #%s?', $integrante['id'])); ?>
-                                </div>
-                            </td>
-                        </tr>
-                        <?php }
-                        endforeach; ?>
-                    </tbody>
-                </table>
-            </div>
-            <script>
-            $(document).ready(function() {
-                $('#integrantesTabla').DataTable({
-                    responsive: true,
-                    pageLength: 5,
-                    dom: '<"flex flex-col md:flex-row items-center justify-between"<"w-full md:w-2/3 flex"<"flex flex-row w-full custom-search-container">><"flex items-center custom-pagination">>rt',
-                    order: [[1, 'asc']],
-                });
-            });
-            </script>
+                <div class="w-[350px] md:w-full md:mt-6 mb-4">
+                    <table id="integrantesTabla" style="width:100%;" class="stripe hover text-sm text-left text-gray-600 border border-gray-200 rounded-lg overflow-hidden">
+                        <thead class="bg-gray-200 font-medium border-b border-gray-300">
+                            <tr class="text-gray-900 font-light">
+                                <th class="px-2 w-6"></th> <!-- control (+) -->
+                                <th class="px-4 py-2 font-semibold text-center cursor-pointer hover:bg-gray-100">ID</th>
+                                <th class="px-4 py-2 font-semibold text-center cursor-pointer hover:bg-gray-100">Nombres</th>
+                                <th class="px-4 py-2 font-semibold text-center cursor-pointer hover:bg-gray-100">Edad</th>
+                                <th class="px-4 py-2 font-semibold text-center cursor-pointer hover:bg-gray-100">Sexo</th>
+                                <th class="px-4 py-2 font-semibold text-center cursor-pointer hover:bg-gray-100">Aseguradora</th>
+                                <th class="px-4 py-2 font-semibold text-center cursor-pointer hover:bg-gray-100">Condición Crónica</th>
+                                <th class="px-4 py-2 font-semibold text-center cursor-pointer hover:bg-gray-100">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-300">
+                            <?php foreach ($familia['Integrantes'] as $integrante) :
+                                if (!empty($integrante['id'])) {
+                            ?>
+                                    <tr>
+                                        <td></td>
+                                        <td class="text-center text-black font-bold"><?php echo $integrante['id']; ?></td>
+                                        <td class="text-center"><?php echo $integrante['primernombre'] . ' ' . $integrante['primerapellido']; ?></td>
+                                        <td class="text-center"><?php echo $integrante['edad']; ?></td>
+                                        <td class="text-center"><?php echo $integrante['sexo']; ?></td>
+                                        <td class="text-center"><?php echo $integrante['aseguradora']; ?></td>
+                                        <td class="text-center"><?php echo $integrante['condicioncronica']; ?></td>
+                                        <td>
+                                            <div class="relative inline-block text-left">
+                                                <?php echo $this->Html->link('Ver', ["controller" => "juventudadultos", "action" => "view", $integrante['id']], ["class" => "block px-4 py-2 text-sm hover:bg-gray-100"]); ?>
+                                                <?php echo $this->Html->link('Editar', ["controller" => "juventudadultos", "action" => "edit", $integrante['id']], ["class" => "block px-4 py-2 text-sm hover:bg-gray-100"]); ?>
+                                                <hr class="my-1 border-gray-200">
+                                                <?php echo $this->Form->postLink('Borrar', ["controller" => "juventudadultos", "action" => "delete", $integrante['id']], ["class" => "block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100"], __('¿Seguro que quieres borrar #%s?', $integrante['id'])); ?>
+                                            </div>
+                                        </td>
+                                    </tr>
+                            <?php }
+                            endforeach; ?>
+                        </tbody>
+                    </table>
+                </div>
+                <script>
+                    $(document).ready(function() {
+                        $('#integrantesTabla').DataTable({
+                            responsive: true,
+                            pageLength: 5,
+                            dom: '<"flex flex-col md:flex-row items-center justify-between"<"w-full md:w-2/3 flex"<"flex flex-row w-full custom-search-container">><"flex items-center custom-pagination">>rt',
+                            order: [
+                                [1, 'asc']
+                            ],
+                        });
+                    });
+                </script>
             <?php else: ?>
                 <div class="text-center text-gray-500 py-8">
                     <span class="font-semibold text-lg">No hay Integrantes agregados</span>

@@ -223,6 +223,7 @@ $animalesOptions = [
                         echo $this->Form->input('id', [
                             'type' => 'text',
                             'label' => '',
+                            'value' => $this->Form->value('id'),
                             'class' => 'bg-gray-50 border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400 w-full',
                             'readonly' => true
                         ]);
@@ -676,6 +677,7 @@ $animalesOptions = [
                     <p class="text-red-600">*</p>
                 </div>
 
+                <?php $selected = $this->Form->value('hacinamiento'); ?>
                 <div class="flex space-x-4 items-center justify-center md:justify-start mt-4 pr-0 md:pr-[10%]  md:mt-0 ">
                     <!-- Botón NO -->
                     <div>
@@ -684,13 +686,14 @@ $animalesOptions = [
                             id="cuerpoterritorio-no"
                             value="0"
                             class="hidden peer"
+                            <?php if ($selected === '0') echo 'checked'; ?>
                             data-target="cuerpoterritorio"
                             data-show="false"
                             checked /> <!-- 👈 Por defecto NO -->
                         <label for="cuerpoterritorio-no"
                             class="px-12 py-2 rounded-lg border cursor-pointer hover:text-white hover:bg-teal-600
                        peer-checked:bg-teal-600 peer-checked:text-white">
-                            -
+                            NO
                         </label>
                     </div>
 
@@ -701,12 +704,13 @@ $animalesOptions = [
                             id="cuerpoterritorio-si"
                             value="1"
                             data-target="cuerpoterritorio"
+                            <?php if ($selected === '1') echo 'checked'; ?>
                             data-show="true"
                             class="hidden peer cursor-pointer" />
                         <label for="cuerpoterritorio-si"
                             class="px-12 py-2 rounded-lg border hover:bg-teal-600 cursor-pointer hover:text-white
                        peer-checked:bg-teal-600 peer-checked:text-white">
-                            X
+                            SI
                         </label>
                     </div>
                 </div>
@@ -763,6 +767,7 @@ $animalesOptions = [
                     <p class="text-red-600">*</p>
                 </div>
 
+                <?php $selected = $this->Form->value('actividad'); ?>
                 <div class="flex space-x-4 items-center justify-center md:justify-start mt-4 pr-0 md:pr-[10%]  md:mt-0 ">
                     <!-- Botón NO -->
                     <div>
@@ -771,13 +776,14 @@ $animalesOptions = [
                             id="actividad-no"
                             value="0"
                             class="hidden peer"
+                            <?php if ($selected === '0') echo 'checked'; ?>
                             data-target="actividad"
                             data-show="false"
                             checked /> <!-- 👈 Por defecto NO -->
                         <label for="actividad-no"
                             class="px-12 py-2 rounded-lg border cursor-pointer hover:text-white hover:bg-teal-600
                        peer-checked:bg-teal-600 peer-checked:text-white">
-                            -
+                           NO
                         </label>
                     </div>
 
@@ -787,13 +793,14 @@ $animalesOptions = [
                             name="data[Sociambiental][actividad]"
                             id="actividad-si"
                             value="1"
+                            <?php if ($selected === '1') echo 'checked'; ?>
                             data-target="actividad"
                             data-show="true"
                             class="hidden peer cursor-pointer" />
                         <label for="actividad-si"
                             class="px-12 py-2 rounded-lg border hover:bg-teal-600 cursor-pointer hover:text-white
                        peer-checked:bg-teal-600 peer-checked:text-white">
-                            X
+                            SI
                         </label>
                     </div>
                 </div>
@@ -1012,6 +1019,7 @@ $animalesOptions = [
         <div class="grid grid-cols-1 md:grid-cols-2">
 
             <!-- Mascotas -->
+            <?php $selected = $this->Form->value('cuidadomascotas'); ?>
             <div class="flex flex-col md:flex-row justify-center md:justify-between col-span-1 md:col-span-2 text-md font-semibold my-6 mr-4">
                 <div class="flex items-center mb-4">
                     <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">1</span>
@@ -1029,11 +1037,11 @@ $animalesOptions = [
                             class="hidden peer"
                             data-target="mascotas"
                             data-show="false"
-                            checked /> <!-- 👈 Por defecto NO -->
+                            <?php if ($selected === null || $selected === '' || $selected === '0') echo 'checked'; ?> />
                         <label for="mascotas-no"
                             class="px-12 py-2 rounded-lg border cursor-pointer hover:text-white hover:bg-teal-600
                        peer-checked:bg-teal-600 peer-checked:text-white">
-                            -
+                            NO
                         </label>
                     </div>
 
@@ -1045,11 +1053,12 @@ $animalesOptions = [
                             value="1"
                             data-target="mascotas"
                             data-show="true"
-                            class="hidden peer cursor-pointer" />
+                            class="hidden peer cursor-pointer"
+                            <?php if ($selected === '1') echo 'checked'; ?> />
                         <label for="mascotas-si"
                             class="px-12 py-2 rounded-lg border hover:bg-teal-600 cursor-pointer hover:text-white
                        peer-checked:bg-teal-600 peer-checked:text-white">
-                            X
+                            SI
                         </label>
                     </div>
                 </div>
@@ -1111,7 +1120,7 @@ $animalesOptions = [
                         <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">4</span>
                         <label for="desparasitamascotas" class="font-semibold">¿Se desparasita a perros o gatos?</label>
                     </div>
-
+                    <?php $selected = $this->Form->value('desparasitamascotas'); ?>
                     <div class="flex space-x-4 items-center justify-center md:justify-start mt-4 pr-0 md:pr-[10%]  md:mt-0 ">
                         <!-- Botón NO -->
                         <div>
@@ -1122,11 +1131,11 @@ $animalesOptions = [
                                 class="hidden peer"
                                 data-target="desparasitamascotas"
                                 data-show="false"
-                                checked /> <!-- 👈 Por defecto NO -->
+                                <?php if ($selected === '0') echo 'checked'; ?> /> <!-- 👈 Por defecto NO -->
                             <label for="desparasitamascotas-no"
                                 class="px-12 py-2 rounded-lg border cursor-pointer hover:text-white hover:bg-teal-600
                        peer-checked:bg-teal-600 peer-checked:text-white">
-                                -
+                                NO
                             </label>
                         </div>
 
@@ -1138,11 +1147,12 @@ $animalesOptions = [
                                 value="1"
                                 data-target="desparasitamascotas"
                                 data-show="true"
+                                <?php if ($selected === '1') echo 'checked'; ?>
                                 class="hidden peer cursor-pointer" />
                             <label for="desparasitamascotas-si"
                                 class="px-12 py-2 rounded-lg border hover:bg-teal-600 cursor-pointer hover:text-white
                        peer-checked:bg-teal-600 peer-checked:text-white">
-                                X
+                                SI
                             </label>
                         </div>
                     </div>
@@ -1155,6 +1165,7 @@ $animalesOptions = [
                         <label for="vacunacionmascotas" class="font-semibold">¿Se ha vacunado a perros o gatos en el ultimo año?</label>
                     </div>
 
+                    <?php $selected = $this->Form->value('vacunamascotas'); ?>
                     <div class="flex space-x-4 items-center justify-center md:justify-start mt-4 pr-0 md:pr-[10%]  md:mt-0 ">
                         <!-- Botón NO -->
                         <div>
@@ -1163,13 +1174,14 @@ $animalesOptions = [
                                 id="vacunacionmascotas-no"
                                 value="0"
                                 class="hidden peer"
+                                <?php if ($selected === '0') echo 'checked'; ?>
                                 data-target="vacunacionmascotas"
                                 data-show="false"
                                 checked /> <!-- 👈 Por defecto NO -->
                             <label for="vacunacionmascotas-no"
                                 class="px-12 py-2 rounded-lg border cursor-pointer hover:text-white hover:bg-teal-600
                        peer-checked:bg-teal-600 peer-checked:text-white">
-                                -
+                                NO
                             </label>
                         </div>
 
@@ -1181,11 +1193,12 @@ $animalesOptions = [
                                 value="1"
                                 data-target="vacunacionmascotas"
                                 data-show="true"
+                                <?php if ($selected === '1') echo 'checked'; ?>
                                 class="hidden peer cursor-pointer" />
                             <label for="vacunacionmascotas-si"
                                 class="px-12 py-2 rounded-lg border hover:bg-teal-600 cursor-pointer hover:text-white
                        peer-checked:bg-teal-600 peer-checked:text-white">
-                                X
+                                SI
                             </label>
                         </div>
                     </div>
@@ -1198,6 +1211,7 @@ $animalesOptions = [
                         <label for="vacunacionmascotas" class="font-semibold">¿Las excretas de los animales de compañía se recogen y disponen adecuadamente</label>
                     </div>
 
+                    <?php $selected = $this->Form->value('otramascota'); ?>
                     <div class="flex space-x-4 items-center justify-center md:justify-start mt-4 pr-0 md:pr-[10%]  md:mt-0 ">
                         <!-- Botón NO -->
                         <div>
@@ -1205,6 +1219,7 @@ $animalesOptions = [
                                 name="data[Sociambiental][otramascota]"
                                 id="cuidadoexcretas-no"
                                 value="0"
+                                <?php if ($selected === '0') echo 'checked'; ?>
                                 class="hidden peer"
                                 data-target="cuidadoexcretas"
                                 data-show="false"
@@ -1212,7 +1227,7 @@ $animalesOptions = [
                             <label for="cuidadoexcretas-no"
                                 class="px-12 py-2 rounded-lg border cursor-pointer hover:text-white hover:bg-teal-600
                        peer-checked:bg-teal-600 peer-checked:text-white">
-                                -
+                                NO
                             </label>
                         </div>
 
@@ -1224,11 +1239,12 @@ $animalesOptions = [
                                 value="1"
                                 data-target="cuidadoexcretas"
                                 data-show="true"
+                                <?php if ($selected === '1') echo 'checked'; ?>
                                 class="hidden peer cursor-pointer" />
                             <label for="cuidadoexcretas-si"
                                 class="px-12 py-2 rounded-lg border hover:bg-teal-600 cursor-pointer hover:text-white
                        peer-checked:bg-teal-600 peer-checked:text-white">
-                                X
+                                SI
                             </label>
                         </div>
                     </div>

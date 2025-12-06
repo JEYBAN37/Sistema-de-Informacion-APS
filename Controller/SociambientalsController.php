@@ -5,6 +5,11 @@ App::uses('AppController', 'Controller');
  *
  * @property Sociambiental $Sociambiental
  * @property PaginatorComponent $Paginator
+ * @property SessionComponent $Session
+ * @property CakeRequest $request
+ * @property CakeResponse $response
+ * @method CakeResponse redirect($url = null, $status = null, $exit = true)
+ * @method void set($one, $two = null)
  */
 class SociambientalsController extends AppController
 {
@@ -178,10 +183,10 @@ class SociambientalsController extends AppController
 	{
 		if ($this->request->is(array('post'))) {
 			if ($this->Sociambiental->save($this->request->data)) {
-				if ($this->request->data['btn'] == 'Guardar y continuar') 
+				if ($this->request->data['btn'] == 'Guardar y continuar')
 					//$session->setFlash("registro guardado");
 					$this->Session->setFlash('Registro se creó con éxito, continuar con información de la familia / hogar', 'flash_custom', array('class' => 'success', 'title' => 'El registro se ha completado correctamente'));					//return $this->redirect(array('action' => 'index'));
-					return $this->redirect(array('controller' => 'Familias', 'action' => 'add/' . $this->Sociambiental->id));
+				return $this->redirect(array('controller' => 'Familias', 'action' => 'add/' . $this->Sociambiental->id));
 			} else {
 				$this->Session->setFlash('El registro no fue actualizado o esta pendiente un campo del formulario', 'flash_custom', array('class' => 'error', 'title' => 'Error al guardar el registro'));
 			}
@@ -240,6 +245,10 @@ class SociambientalsController extends AppController
 
 	public function edit($id = null)
 	{
+		if (!$this->Sociambiental->exists($id)) {
+			throw new NotFoundException(__('Invalid Sociambiental'));
+		}
+
 		if ($this->request->is(array('post', 'put'))) {
 			if ($this->Sociambiental->save($this->request->data)) {
 				if ($this->request->data['btn'] == 'Guardar y continuar') {
@@ -256,16 +265,16 @@ class SociambientalsController extends AppController
 			}
 		} else {
 
-			$familia = $this->Sociambiental->find('first', [
+			$vivienda = $this->Sociambiental->find('first', [
 				'conditions' => ['Sociambiental.id' => $id],
 				'fields' => ['Sociambiental.*', 'Responsable.nombres'],
 				'contain' => ['Responsable']
 			]);
 			$nombre = '';
-			if (!empty($familia['Sociambiental'])) {
+			if (!empty($vivienda['Sociambiental'])) {
 
-				$this->request->data['Sociambiental'] = $familia['Sociambiental'];
-				$nombre = $familia['Responsable']['nombres'];
+				$this->request->data['Sociambiental'] = $vivienda['Sociambiental'];
+				$nombre = $vivienda['Responsable']['nombres'];
 
 				// Si necesitas transformar los datos:
 				$this->request->data = $this->Sociambiental->tranformData($this->request->data);
@@ -495,7 +504,7 @@ class SociambientalsController extends AppController
 		exit();
 	}
 
-		public function index_general()
+	public function index_general()
 	{
 		$this->loadModel('Responsable'); // Cargar el modelo Responsable
 		$this->loadModel('Ubicacion'); // Cargar el modelo Ubicacion
