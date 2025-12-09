@@ -2968,11 +2968,21 @@ echo $this->Form->input('fechaRegistro', [
 				</button>
 			</div>
 
-
-
+			<div class="w-full p-2">
+				<button name="btn" value="Guardar" type="submit" class="w-full bg-teal-600 text-white px-6 py-2 rounded-md hover:bg-green-700 transition font-medium flex items-center justify-center gap-2">
+					<span>
+						<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-save-icon lucide-save">
+							<path d="M15.2 3a2 2 0 0 1 1.4.6l3.8 3.8a2 2 0 0 1 .6 1.4V19a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z" />
+							<path d="M17 21v-7a1 1 0 0 0-1-1H8a1 1 0 0 0-1 1v7" />
+							<path d="M7 3v4a1 1 0 0 0 1 1h7" />
+						</svg>
+					</span>
+					Guardar
+				</button>
+			</div>
 			<!-- Botón -->
 			<div class="w-full  p-2">
-				<button name="btn" value="ver familia" type="button" class="w-full bg-teal-600 text-white px-6 py-2 rounded-md hover:bg-green-700 transition font-medium flex items-center justify-center gap-2" onclick="preventBackNavigation()"> 
+				<button name="btn" value="ver familia" type="button" class="w-full bg-teal-600 text-white px-6 py-2 rounded-md hover:bg-green-700 transition font-medium flex items-center justify-center gap-2" onclick="preventBackNavigation()">
 					<span>
 						<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-save-icon lucide-save">
 							<path d="M21 17v2a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-2" />
@@ -3092,7 +3102,7 @@ echo $this->Form->input('fechaRegistro', [
 					document.getElementById("campo-infeccionestransmisionsexual").style.display = "block";
 					document.getElementById("campo-consumospa").style.display = "block";
 					document.getElementById("seccion-email").style.display = "block";
-					document.getElementById("seccion-telefono").style.display = "block"; 
+					document.getElementById("seccion-telefono").style.display = "block";
 					document.getElementById("seccion-ocupacion").style.display = "block";
 					ocultarYLimpiar("seccion-menores");
 					if (genero == "Mujer") {
@@ -3187,23 +3197,23 @@ echo $this->Form->input('fechaRegistro', [
 		});
 	});
 
-    function preventBackNavigation() {
-        if (confirm('¿Está seguro que desea salir de la página? Se pueden perder los cambios no guardados.')) {
-            window.location.href = '<?php echo $this->Html->url(['controller' => 'Familias', 'action' => 'view', $idAux ]); ?>';
-        }
-    }
+	function preventBackNavigation() {
+		if (confirm('¿Está seguro que desea salir de la página? Se pueden perder los cambios no guardados.')) {
+			window.location.href = '<?php echo $this->Html->url(['controller' => 'Familias', 'action' => 'view', $idAux]); ?>';
+		}
+	}
 
-    history.pushState(null, null, location.href);
+	history.pushState(null, null, location.href);
 
-    window.addEventListener('popstate', function(event) {
-        if (confirm('¿Está seguro que desea salir de la página? Se pueden perder los cambios no guardados.')) {
-            // Permite retroceder
-            history.back();
-        } else {
-            // Vuelve a agregar el estado para bloquear el retroceso
-            history.pushState(null, null, location.href);
-        }
-    });
+	window.addEventListener('popstate', function(event) {
+		if (confirm('¿Está seguro que desea salir de la página? Se pueden perder los cambios no guardados.')) {
+			// Permite retroceder
+			history.back();
+		} else {
+			// Vuelve a agregar el estado para bloquear el retroceso
+			history.pushState(null, null, location.href);
+		}
+	});
 
 
 	document.addEventListener('DOMContentLoaded', function() {

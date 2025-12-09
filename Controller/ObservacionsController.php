@@ -60,7 +60,9 @@ class ObservacionsController extends AppController
 	public function add()
 	{
 		if ($this->request->is(array('post'))) {
+			debug($this->request->data);
 			if ($this->Observacion->save($this->request->data)) {
+				
 				if ($this->request->data['btn'] == 'Guardar y continuar') {
 					//$session->setFlash("registro guardado");
 					$this->Session->setFlash('Registro se creó con éxito, continuar con la creacion del plan de cuidado', 'flash_custom', array('class' => 'success', 'title' => 'El registro se ha completado correctamente'));

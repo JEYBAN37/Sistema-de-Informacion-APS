@@ -20,7 +20,8 @@ echo $this->Form->create('Observacion',  [
 ]);
 
 // se utiliza para llamar el id responsable donde sea necesario
-$nombreUsuario = isset($_SESSION['Auth']['User']['id_responsable']) ? $_SESSION['Auth']['User']['id_responsable'] : '';
+$nombreUsuario = isset($_SESSION['Auth']['User']['responsable_id']) ? $_SESSION['Auth']['User']['responsable_id'] : '';
+
 echo $this->Form->input('responsable_id', array('value' => $nombreUsuario, 'type' => 'hidden'));
 
 $idAux = $_GET['observacions'];
