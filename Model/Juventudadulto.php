@@ -15,26 +15,26 @@ class Juventudadulto extends AppModel
 	 */
 	public function uniqueDocumento($check)
 	{
-		   $numerodoc = array_values($check)[0];
-		   // Si es edición, no validar unicidad
-		   $currentId = null;
-		   if (!empty($this->data[$this->alias]['id'])) {
-			   $currentId = $this->data[$this->alias]['id'];
-		   } elseif (!empty($this->id)) {
-			   $currentId = $this->id;
-		   } elseif (!empty($check['id'])) {
-			   $currentId = $check['id'];
-		   }
-		   if (!empty($currentId)) {
-			   return true; // No validar unicidad en edit
-		   }
-		   $conditions = array(
-			   'Juventudadulto.numerodoc' => $numerodoc
-		   );
+		$numerodoc = array_values($check)[0];
+		// Si es edición, no validar unicidad
+		$currentId = null;
+		if (!empty($this->data[$this->alias]['id'])) {
+			$currentId = $this->data[$this->alias]['id'];
+		} elseif (!empty($this->id)) {
+			$currentId = $this->id;
+		} elseif (!empty($check['id'])) {
+			$currentId = $check['id'];
+		}
+		if (!empty($currentId)) {
+			return true; // No validar unicidad en edit
+		}
+		$conditions = array(
+			'Juventudadulto.numerodoc' => $numerodoc
+		);
 
-		   // Buscar el id en todas las ubicaciones posibles
-		   $count = $this->find('count', array('conditions' => $conditions, 'recursive' => -1));
-		   return $count == 0;
+		// Buscar el id en todas las ubicaciones posibles
+		$count = $this->find('count', array('conditions' => $conditions, 'recursive' => -1));
+		return $count == 0;
 	}
 	public $actsAs = array(
 		'Containable',
@@ -271,6 +271,12 @@ class Juventudadulto extends AppModel
 				'message' => 'El campo de canalización es obligatorio',
 			),
 		),
+		'antecedenteginecologico' => array(
+			'multiple' => array(
+				'rule' => array('multiple', array('min' => 0)),
+				'message' => 'El campo de canalización es obligatorio',
+			),
+		),
 		'educacion' => array(
 			'multiple' => array(
 				'rule' => array('multiple', array('min' => 1)),
@@ -399,6 +405,10 @@ class Juventudadulto extends AppModel
 			$this->data[$this->alias]['motivoinasistencia'] = implode(',', $this->data[$this->alias]['motivoinasistencia']);
 		}
 
+		if (isset($this->data[$this->alias]['antecedenteginecologico']) && is_array($this->data[$this->alias]['antecedenteginecologico'])) {
+			$this->data[$this->alias]['antecedenteginecologico'] = implode(',', $this->data[$this->alias]['antecedenteginecologico']);
+		}
+
 		return true;
 	}
 
@@ -410,6 +420,13 @@ class Juventudadulto extends AppModel
 			// Extraer cada palabra/frase hasta la coma
 			$tipos = array_map('trim', explode(',', $poblacionStr));
 			$data['Juventudadulto']['saludalternativa'] = $tipos;
+		}
+
+		if(!empty($data['Juventudadulto']['antecedenteginecologico'])) {
+			$poblacionStr = $data['Juventudadulto']['antecedenteginecologico'];
+			// Extraer cada palabra/frase hasta la coma
+			$tipos = array_map('trim', explode(',', $poblacionStr));
+			$data['Juventudadulto']['antecedenteginecologico'] = $tipos;
 		}
 		if (!empty($data['Juventudadulto']['riesgopsicosocial'])) {
 			$poblacionStr = $data['Juventudadulto']['riesgopsicosocial'];

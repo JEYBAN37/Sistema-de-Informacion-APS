@@ -2972,7 +2972,7 @@ echo $this->Form->input('fechaRegistro', [
 
 			<!-- Botón -->
 			<div class="w-full  p-2">
-				<button name="btn" value="ver familia" type="submit" class="w-full bg-teal-600 text-white px-6 py-2 rounded-md hover:bg-green-700 transition font-medium flex items-center justify-center gap-2">
+				<button name="btn" value="ver familia" type="button" class="w-full bg-teal-600 text-white px-6 py-2 rounded-md hover:bg-green-700 transition font-medium flex items-center justify-center gap-2" onclick="preventBackNavigation()"> 
 					<span>
 						<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-save-icon lucide-save">
 							<path d="M21 17v2a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-2" />
@@ -3094,7 +3094,7 @@ echo $this->Form->input('fechaRegistro', [
 					document.getElementById("seccion-email").style.display = "block";
 					document.getElementById("seccion-telefono").style.display = "block"; 
 					document.getElementById("seccion-ocupacion").style.display = "block";
-
+					ocultarYLimpiar("seccion-menores");
 					if (genero == "Mujer") {
 						document.getElementById("campo-gestacion").style.display = "flex";
 						if (gestacion === "Si") {
@@ -3115,8 +3115,8 @@ echo $this->Form->input('fechaRegistro', [
 					ocultarYLimpiar("campo-metodosanticonceptivos");
 					ocultarYLimpiar("campo-infeccionestransmisionsexual");
 					ocultarYLimpiar("seccion-email");
-					ocultarYLimpiar("seccion-telefono")
-					ocultarYLimpiar("seccion-ocupacion")
+					ocultarYLimpiar("seccion-telefono");
+					ocultarYLimpiar("seccion-ocupacion");
 					document.getElementById("seccion-menores").style.display = "block";
 					document.getElementById("campo-cuidador").style.display = "block";
 				}
@@ -3133,10 +3133,12 @@ echo $this->Form->input('fechaRegistro', [
 					if (edad >= 25) {
 						document.getElementById("campo-tomacitologia").style.display = "block";
 						document.getElementById("campo-antecedenteginecologico").style.display = "block";
+						ocultarYLimpiar("seccion-menores");
 					}
 
 					if (edad >= 50) {
 						document.getElementById("campo-mamografia").style.display = "block";
+						ocultarYLimpiar("seccion-menores");
 					}
 
 				}
@@ -3151,7 +3153,6 @@ echo $this->Form->input('fechaRegistro', [
 				ocultarYLimpiar("campo-infeccionestransmisionsexual");
 				ocultarYLimpiar("campo-metodosanticonceptivos");
 				ocultarYLimpiar("seccion-gestacion");
-
 				document.getElementById("seccion-menores").style.display = "block";
 				document.getElementById("campo-era").style.display = "flex";
 				document.getElementById("campo-ira").style.display = "flex";
@@ -3186,7 +3187,23 @@ echo $this->Form->input('fechaRegistro', [
 		});
 	});
 
+    function preventBackNavigation() {
+        if (confirm('¿Está seguro que desea salir de la página? Se pueden perder los cambios no guardados.')) {
+            window.location.href = '<?php echo $this->Html->url(['controller' => 'Familias', 'action' => 'view', $idAux ]); ?>';
+        }
+    }
 
+    history.pushState(null, null, location.href);
+
+    window.addEventListener('popstate', function(event) {
+        if (confirm('¿Está seguro que desea salir de la página? Se pueden perder los cambios no guardados.')) {
+            // Permite retroceder
+            history.back();
+        } else {
+            // Vuelve a agregar el estado para bloquear el retroceso
+            history.pushState(null, null, location.href);
+        }
+    });
 
 
 	document.addEventListener('DOMContentLoaded', function() {
