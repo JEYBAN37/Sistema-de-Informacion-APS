@@ -92,9 +92,7 @@ class ObservacionsController extends AppController
 			throw new NotFoundException(__('Invalid observacion'));
 		}
 
-		if ($this->request->is(array('post', 'put'))) {
-						debug($this->request->data);
-			// Procesar otros campos específicos del formulario si es necesario
+		if ($this->request->is(array('post', 'put'))) {			// Procesar otros campos específicos del formulario si es necesario
 			if ($this->Observacion->save($this->request->data)) {
 				$this->Session->setFlash('Registro se guardó con éxito, continuar con información de la familia / hogar', 'flash_custom', array('class' => 'success', 'title' => 'El registro se ha completado correctamente'));					//return $this->redirect(array('action' => 'index'));
 				return $this->redirect(array('controller' => 'familias', 'action' => 'view', $this->request->data["Observacion"]["familia_id"]));
