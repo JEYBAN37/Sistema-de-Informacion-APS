@@ -48,17 +48,9 @@ echo $this->Form->input('responsable_id', array('value' => $nombreUsuario, 'type
         <div class="grid grid-cols-1 md:grid-cols-2">
 
 
-            <?php echo $this->Form->input('id', ['type' => 'hidden']); ?>
-
-            <?php echo $this->Form->input(
-                'familia_id',
-                [
-                    'label' => 'ID_Familia/N° Hogar/Nombres',
-                    'type' => 'hidden',
-
-                ]
-            );
-            ?>
+            <?php echo $this->Form->hidden('id'); ?>
+            <?php echo $this->Form->hidden('familia_id'); ?>
+            
             <!-- Resultados de ficha familiar-->
             <div class="col-span-2 md:col-span-1 text-md font-semibold my-6 mr-4">
                 <div class="flex items-center mb-4">
@@ -122,7 +114,7 @@ echo $this->Form->input('responsable_id', array('value' => $nombreUsuario, 'type
 
                 <?php
                 $riesgosalud = [
-                    '0' => 'Ninguno',
+                    '0.0' => 'Ninguno',
                     '5.1' => 'Menor con Riesgo desnutrición',
                     '5.2' => 'Menor sin esquema de vacunación completo',
                     '3.3' => 'Menor con Signos de peligro EDA o IRA',
@@ -149,8 +141,8 @@ echo $this->Form->input('responsable_id', array('value' => $nombreUsuario, 'type
                     'options' => $riesgosalud,
                     'error' => false // No mostrar error aquí
                 ]);
-                if (!empty($this->Form->error('riesgosalud'))) {
-                    echo '<div class="text-red-600 text-md mt-1 font-semibold">' . $this->Form->error('riesgosalud') . '</div>';
+                if (!empty($this->Form->error('menoresriegosalud'))) {
+                    echo '<div class="text-red-600 text-md mt-1 font-semibold">' . $this->Form->error('menoresriegosalud') . '</div>';
                 }
                 ?>
             </div>
@@ -166,7 +158,7 @@ echo $this->Form->input('responsable_id', array('value' => $nombreUsuario, 'type
 
                 <?php
                 $riesgovulnerabilidad = [
-                    '0' => 'Ninguna',
+                    '0.0' => 'Ninguna',
                     '2.0' => 'Persona con discapacidad sin cuidador',
                     '2.1' => 'Menor sin estudiar',
                     '1.3' => 'Población Especial en riesgo',
@@ -214,6 +206,10 @@ echo $this->Form->input('responsable_id', array('value' => $nombreUsuario, 'type
                     'class' => 'border border-gray-300 rounded-lg w-full p-2 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 text-sm text-gray-700',
                     'readonly' => 'readonly', // Hacer el campo de solo lectura
                 ]);
+
+                if (!empty($this->Form->error('puntuacionfamilia'))) {
+                    echo '<div class="text-red-600 text-md mt-1 font-semibold">' . $this->Form->error('puntuacionfamilia') . '</div>';
+                }
                 ?>
             </div>
 
@@ -233,6 +229,10 @@ echo $this->Form->input('responsable_id', array('value' => $nombreUsuario, 'type
                     'class' => 'border border-gray-300 rounded-lg w-full p-2 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 text-sm text-gray-700',
 
                 ]);
+
+                if (!empty($this->Form->error('valoracionfamilia'))) {
+                    echo '<div class="text-red-600 text-md mt-1 font-semibold">' . $this->Form->error('valoracionfamilia') . '</div>';
+                }
                 ?>
             </div>
 
@@ -259,7 +259,7 @@ echo $this->Form->input('responsable_id', array('value' => $nombreUsuario, 'type
                     'Entorno familiar seguro y libre de violencia' => 'Entorno familiar seguro y libre de violencia',
                 ];
 
-                echo $this->Form->input('observacion', [
+                echo $this->Form->input('fortalezas', [
                     'label' => false,
                     'type' => 'select',
                     'multiple' => 'multiple',
@@ -497,7 +497,12 @@ echo $this->Form->input('responsable_id', array('value' => $nombreUsuario, 'type
                     'class' => 'ckeditor border rounded-lg w-full p-2 focus:ring focus:ring-blue-200',
                     'error' => false // No mostrar error aquí    
 
-                )); ?>
+                ));
+                
+                if (!empty($this->Form->error('observacionesplancuidado'))) {
+                    echo '<div class="text-red-600 text-md mt-1 font-semibold">' . $this->Form->error('observacionesplancuidado') . '</div>';
+                }
+                ?>
             </div>
 
             <div class="col-span-2 text-md font-semibold my-6">
@@ -512,7 +517,12 @@ echo $this->Form->input('responsable_id', array('value' => $nombreUsuario, 'type
                     'style' => 'height:40px; font-size:16px;',
                     'error' => false // No mostrar error aquí
 
-                )); ?>
+                ));
+                
+                if (!empty($this->Form->error('firmaplancuidado'))) {
+                    echo '<div class="text-red-600 text-md mt-1 font-semibold">' . $this->Form->error('firmaplancuidado') . '</div>';
+                }
+                ?>
             </div>
             <div class="col-span-2 text-md font-semibold my-6">
                 <div class="flex items-center mb-4">
@@ -568,7 +578,7 @@ echo $this->Form->input('responsable_id', array('value' => $nombreUsuario, 'type
                     <label for="responsables" class="font-semibold">Responsable EBS</label>
                 </div>
                 <?php echo $this->Form->input(
-                    'responsable_id',
+                   'nombres_responsables',
                     [
                         'type' => 'select',
                         'label' => false,
@@ -738,8 +748,6 @@ echo $this->Form->input('responsable_id', array('value' => $nombreUsuario, 'type
             }
         }, function(start) {
             let fecha = start.format('YYYY-MM-DD');
-            console.log("Fecha seleccionada:", fecha);
-
             // Si necesitas guardarlos en campos ocultos para enviarlos al backend:
             if (!$("#fecha").length) {
                 $("form").append('<?php echo $this->Form->hidden('fecha', ['id' => 'fecha']); ?>');

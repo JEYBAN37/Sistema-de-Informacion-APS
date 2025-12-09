@@ -1,14 +1,16 @@
 <?php $this->layout = 'default_familia';  ?>
 
-<div class="max-w-5xl mx-auto text-center mb-8">
-    <h1 class="text-5xl font-bold mb-4 text-teal-600">
-        Observación general de caracterización Familiar
-    </h1>
-    <p class="text-gray-500 mb-4 text-lg">
-        Registre observaciones y conclusiones generales
-    </p>
-</div>
 
+<div class="max-w-5xl mx-auto text-center mb-8">
+    <h1 class="text-4xl md:text-5xl font-bold text-slate-800 mb-4 leading-tight">
+        Observación general de caracterización Familiar<br>
+        <span class="text-transparent bg-clip-text bg-gradient-to-r from-teal-600 to-cyan-600">
+            Modulo de Observación
+        </span>
+    </h1>
+    <p class="text-slate-600 text-lg max-w-2xl mx-auto leading-relaxed">
+        Registre observaciones y conclusiones generales </p>
+</div>
 <?php
 
 echo $this->Form->create('Observacion',  [
@@ -21,10 +23,10 @@ echo $this->Form->create('Observacion',  [
 $nombreUsuario = isset($_SESSION['Auth']['User']['id_responsable']) ? $_SESSION['Auth']['User']['id_responsable'] : '';
 echo $this->Form->input('responsable_id', array('value' => $nombreUsuario, 'type' => 'hidden'));
 
- $idAux = $_GET['observacions'];
+$idAux = $_GET['observacions'];
 echo $this->Form->input('familia_id', array('value' => ''
-                            . $idAux, 'type' => 'hidden'));
-                        ?>
+    . $idAux, 'type' => 'hidden'));
+?>
 <div class="max-w-6xl mx-auto p-18 mb-4">
     <div class="bg-white shadow-2xl rounded-xl  p-6  md:p-12">
 
@@ -352,7 +354,7 @@ echo $this->Form->input('familia_id', array('value' => ''
                     <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">10</span>
                     <label for="actividad" class="font-semibold">Observación</label>
                 </div>
-                <?php echo $this->Form->input('observacionesplancuidado', array(
+                <?php echo $this->Form->input('observacion', array(
                     'label' => false,
                     'type' => 'textarea', // Cambiado a 'textarea'
                     'class' => 'form-control',
@@ -368,7 +370,7 @@ echo $this->Form->input('familia_id', array('value' => ''
 
 
             <!-- Coloca el campo en una mitad de la pantalla en dispositivos medianos y grandes -->
-            <?php echo $this->Form->input('date', array(
+            <?php echo $this->Form->input('fecha', array(
                 'label' => 'Fecha de visita : ',
                 'style' => 'height:30px;  font-size: 15px ; width:100%',
                 'type' => 'hidden',
@@ -427,6 +429,16 @@ echo $this->Form->input('familia_id', array('value' => ''
                         * Nomenclatura recomendada IDFAMILIA_APELLIDOS <br>
                         El nombre del archivo no debe tener tildes o diéresis.
                     </span>
+                </div>
+                <div class="relative w-full mt-4">
+                    <?php if (!empty($this->request->data['Observacion']['familiograma'])): ?>
+                        <div class="block w-full text-sm text-gray-700 border border-gray-300 rounded-lg cursor-pointer bg-white focus:outline-none focus:ring-2 focus:ring-blue-400 p-3 file:mr-4 file:py-6 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
+                            Archivo actual:
+                            <a href="<?php echo $this->webroot . 'files/Observacion/familiograma/' . $this->request->data['Observacion']['dirfamiliograma'] . '/' . $this->request->data['Observacion']['familiograma']; ?>" target="_blank" class="text-blue-600 underline ml-2">
+                                <?php echo $this->request->data['Observacion']['familiograma']; ?>
+                            </a>
+                        </div>
+                    <?php endif; ?>
                 </div>
             </div>
 
@@ -545,7 +557,6 @@ echo $this->Form->input('familia_id', array('value' => ''
             dataTransfer.items.add(compressedFile);
             auxFile.files = dataTransfer.files;
 
-            console.log('Imagen comprimida:', file.size, '->', compressedFile.size);
         } catch (err) {
             console.error(err);
             alert('Error al procesar la imagen. Intente con otro archivo.');
@@ -672,12 +683,6 @@ echo $this->Form->input('familia_id', array('value' => ''
             }
         }, function(start) {
             let fecha = start.format('YYYY-MM-DD');
-            console.log("Fecha seleccionada:", fecha);
-
-            // Si necesitas guardarlos en campos ocultos para enviarlos al backend:
-            if (!$("#fecha").length) {
-                $("form").append('<?php echo $this->Form->hidden('fecha', ['id' => 'fecha']); ?>');
-            }
             $("#fecha").val(fecha);
         });
     });

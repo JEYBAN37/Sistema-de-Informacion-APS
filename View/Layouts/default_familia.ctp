@@ -336,16 +336,6 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
         </main>
 
     </div>
-
-    <script>
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('/aps/aps_2025_v1/sw.js')
-                    .then(reg => console.log('✅ Service Worker registrado:', reg.scope))
-                    .catch(err => console.error('❌ Error al registrar el Service Worker:', err));
-            });
-        }
-    </script>
 </body>
 
 <script>

@@ -453,7 +453,6 @@ $EstateHome = array(
             }
         }, function(start) {
             let fecha = start.format('YYYY-MM-DD');
-            console.log("Fecha seleccionada:", fecha);
         });
     });
 

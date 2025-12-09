@@ -36,6 +36,30 @@ class Familia extends AppModel
 		return $query;
 	}
 
+		public function uniqueDocumento($check)
+	{
+		   $numerodoc = array_values($check)[0];
+		   // Si es edición, no validar unicidad
+		   $currentId = null;
+		   if (!empty($this->data[$this->alias]['id'])) {
+			   $currentId = $this->data[$this->alias]['id'];
+		   } elseif (!empty($this->id)) {
+			   $currentId = $this->id;
+		   } elseif (!empty($check['id'])) {
+			   $currentId = $check['id'];
+		   }
+		   if (!empty($currentId)) {
+			   return true; // No validar unicidad en edit
+		   }
+		   $conditions = array(
+			   'Familia.numerodocumento' => $numerodoc
+		   );
+
+		   // Buscar el id en todas las ubicaciones posibles
+		   $count = $this->find('count', array('conditions' => $conditions, 'recursive' => -1));
+		   return $count == 0;
+	}
+
 
 	public function getEstadisticasResponsable($responsableId)
 	{
@@ -245,14 +269,9 @@ class Familia extends AppModel
 				'rule' => array('notEmpty'),
 				'message' => 'El número de documento no puede estar vacío',
 			),
-			'numeric' => array(
-				'rule' => array('isUnique'),
-				'message' => 'La persona con este número de documento ya está asociada a un hogar',
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+			'uniqueDocumento' => array(
+				'rule' => array('uniqueDocumento'),
+				'message' => 'La persona con este número de documento ya está asociada a un hogar 1',
 			),
 		),
 

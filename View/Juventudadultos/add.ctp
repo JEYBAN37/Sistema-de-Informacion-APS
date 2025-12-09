@@ -3059,7 +3059,6 @@ echo $this->Form->input('fechaRegistro', [
 				edad--;
 			}
 
-			console.log("Edad:", edad);
 
 			// obtener género seleccionado
 			let genero = "";
@@ -3072,7 +3071,6 @@ echo $this->Form->input('fechaRegistro', [
 				if (r.checked) gestacion = r.value;
 			});
 
-			console.log("Género:", genero);
 
 			// Aplicar reglas
 			if (edad > 5) {
@@ -3197,7 +3195,6 @@ echo $this->Form->input('fechaRegistro', [
 		motivoinasistencia = document.getElementById("campo-motivoinasistencia");
 		valoracionmedica.addEventListener('change', function() {
 			if (valoracionmedica.value === 'No asistido |1') {
-				console.log("Valoración médica cambiada a:", valoracionmedica.value);
 				motivoinasistencia.style.display = "block";
 			} else {
 				motivoinasistencia.style.display = "none";

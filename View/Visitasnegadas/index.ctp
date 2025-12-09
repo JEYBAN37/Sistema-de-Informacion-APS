@@ -133,7 +133,6 @@
                 }
             }, function(start) {
                 let fecha = start.format('YYYY-MM-DD');
-                console.log("Fecha seleccionada:", fecha);
 
                 // Si necesitas guardarlos en campos ocultos para enviarlos al backend:
                 if (!$("#fecha").length) {
@@ -261,9 +260,9 @@
                     url: "<?php echo $this->Html->url(array('controller' => 'Visitasnegadas', 'action' => 'VisitasNegadasResponsableIndex')); ?>",
                     type: "GET",
                     error: function(xhr, error, code) {
-                        console.log('Error:', error);
-                        console.log('Code:', code);
-                        console.log('Response:', xhr.responseText);
+                        console.error("Error al cargar los datos:", error, code);
+                        alert("Error al cargar los datos. Por favor, inténtalo de nuevo más tarde.");
+                        // Puedes manejar el error de otra manera si lo deseas
                     }
                 },
                 order: [
@@ -441,7 +440,6 @@
                     const buttonId = event.currentTarget.id;
 
                     const recordId = buttonId.split('-')[2];
-                    console.log(buttonId);
                     const menu = document.getElementById(`menu-options-${recordId}`);
 
                     // Oculta todos los menús desplegables

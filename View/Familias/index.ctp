@@ -222,9 +222,6 @@
             const url = "https://script.google.com/macros/s/AKfycbwb_4lBMeWjOESJ7Fq7fcL96JYkGAMuHM3KAuolFL_vxlZq3a2jp8ZLXGVi5eh-GcWxJA/exec";
 
             try {
-                console.log(JSON.stringify({
-                    fichas
-                }));
                 const dataStr = JSON.stringify(dataObject, null, 2);
                 const blob = new Blob([dataStr], {
                     type: "application/json"
@@ -249,7 +246,6 @@
                 };
 
                 const json = await resp.json();
-                console.log(json);
 
                 if (json.status === "ok") {
                     alert("Datos guardados ");
@@ -303,7 +299,6 @@
                 };
             });
 
-            console.log("Fichas a subir:", fichas);
             enviarA_Drive({
                 fichas
             });
@@ -369,7 +364,6 @@
                 }
             }, function(start) {
                 let fecha = start.format('YYYY-MM-DD');
-                console.log("Fecha seleccionada:", fecha);
 
                 // Si necesitas guardarlos en campos ocultos para enviarlos al backend:
                 if (!$("#fecha").length) {
@@ -497,9 +491,8 @@
                     url: "<?php echo $this->Html->url(array('controller' => 'familias', 'action' => 'familiasResponsablesIndex')); ?>",
                     type: "GET",
                     error: function(xhr, error, code) {
-                        console.log('Error:', error);
-                        console.log('Code:', code);
-                        console.log('Response:', xhr.responseText);
+                        console.error("Error al cargar los datos:", error, code);
+                        alert("Error al cargar los datos. Por favor, inténtalo de nuevo más tarde.");
                     }
                 },
                 order: [
@@ -681,7 +674,6 @@
                     const buttonId = event.currentTarget.id;
 
                     const recordId = buttonId.split('-')[2];
-                    console.log(buttonId);
                     const menu = document.getElementById(`menu-options-${recordId}`);
 
                     // Oculta todos los menús desplegables

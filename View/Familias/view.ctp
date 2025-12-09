@@ -504,7 +504,6 @@ $planUrl = $this->Html->url(['controller' => 'Familias', 'action' => 'plancuidad
                 const buttonId = event.currentTarget.id;
 
                 const recordId = buttonId.split('-')[2];
-                console.log(buttonId);
                 const menu = document.getElementById(`menu-options-${recordId}`);
 
                 // Oculta todos los menús desplegables

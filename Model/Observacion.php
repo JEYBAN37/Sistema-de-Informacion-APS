@@ -40,13 +40,25 @@ class Observacion extends AppModel
 			$this->data[$this->alias]['canalizacionuno'] = implode(',', $this->data[$this->alias]['canalizacionuno']);
 		}
 
+		if (isset($this->data[$this->alias]['responsables']) && is_array($this->data[$this->alias]['responsables'])) {
+			$this->data[$this->alias]['responsables'] = implode(',', $this->data[$this->alias]['responsables']);
+		}
+
+		if (isset($this->data[$this->alias]['entornoafectado'])) {
+			$this->data[$this->alias]['entornoafectado'] = str_replace(',', '.', $this->data[$this->alias]['entornoafectado']);
+		}
+
+		if (isset($this->data[$this->alias]['indicadorria']) && is_array($this->data[$this->aias]['indicadorria'])) {
+			$this->data[$this->alias]['indicadorria'] = implode(',', $this->data[$this->alias]['indicadorria']);
+		}
+
 		return true;
 	}
 
 	public function tranformData($data)
 	{
 		// Solo procesar si el valor es string, si es array lo deja igual
-		$campos = ['resultadoFamiliograma', 'menoresriegosalud', 'riesgovulnerabilidad', 'fortalezas', 'canalizacionuno'];
+		$campos = ['resultadoFamiliograma', 'menoresriegosalud', 'riesgovulnerabilidad', 'fortalezas', 'canalizacionuno', 'responsables','entornoafectado','indicadorria'];
 		foreach ($campos as $campo) {
 			if (!empty($data['Observacion'][$campo])) {
 				$valor = $data['Observacion'][$campo];
@@ -174,49 +186,8 @@ class Observacion extends AppModel
 		),*/
 		'menoresriegosalud' => array(
 			'notEmpty' => array(
-				'rule' => array('notEmpty'),
-				'rule' => array('multiple', array('min' => 1)),
+				'rule' => array('multiple'),
 				'message' => 'Por favor seleccione al menos una opción',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			),
-		),
-		'mujerriesgosalud' => array(
-			'notEmpty' => array(
-				'rule' => array('notEmpty'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			),
-		),
-		'personamayorriesgosalud' => array(
-			'notEmpty' => array(
-				'rule' => array('notEmpty'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			),
-		),
-		'adolescenteriesgosalud' => array(
-			'notEmpty' => array(
-				'rule' => array('notEmpty'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			),
-		),
-		'jovenriesgosalud' => array(
-			'notEmpty' => array(
-				'rule' => array('notEmpty'),
-				//'message' => 'Your custom message here',
 				//'allowEmpty' => false,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule
@@ -227,9 +198,7 @@ class Observacion extends AppModel
 
 		'riesgovulnerabilidad' => array(
 			'notEmpty' => array(
-				'rule' => array('notEmpty'),
-				'rule' => array('multiple', array('min' => 1)),
-				'message' => 'Por favor seleccione al menos una opción',
+				'rule' => array('multiple'),
 				//'message' => 'Your custom message here',
 				//'allowEmpty' => false,
 				//'required' => false,
@@ -237,16 +206,7 @@ class Observacion extends AppModel
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
 		),
-		'tamizajeriesgo' => array(
-			'notEmpty' => array(
-				'rule' => array('notEmpty'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			),
-		),
+		
 		'puntuacionfamilia' => array(
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),

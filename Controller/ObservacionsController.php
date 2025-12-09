@@ -93,52 +93,42 @@ class ObservacionsController extends AppController
 		}
 
 		if ($this->request->is(array('post', 'put'))) {
+						debug($this->request->data);
 			// Procesar otros campos específicos del formulario si es necesario
 			if ($this->Observacion->save($this->request->data)) {
-				$this->Session->setFlash('Se ha guardado correctamente', 'default', array('class' => 'alert alert-success'));
+				$this->Session->setFlash('Registro se guardó con éxito, continuar con información de la familia / hogar', 'flash_custom', array('class' => 'success', 'title' => 'El registro se ha completado correctamente'));					//return $this->redirect(array('action' => 'index'));
 				return $this->redirect(array('controller' => 'familias', 'action' => 'view', $this->request->data["Observacion"]["familia_id"]));
 			} else {
-				$this->Session->setFlash('No se ha guardado, por favor revisar campos', 'default', array('class' => 'alert alert-danger'));
-			}
-		} else {
-			$options = array(
-				'conditions' => array('Observacion.' . $this->Observacion->primaryKey => $id),
-				'fields' => array(
-					'Observacion.resultadoEcomapa',
-					'Observacion.resultadoFamiliograma',
-					'Observacion.fecha',
-					'Observacion.menoresriegosalud',
-					'Observacion.riesgovulnerabilidad',
-					'Observacion.puntuacionfamilia',
-					'Observacion.valoracionfamilia',
-					'Observacion.observacion',
-					'Observacion.objetivocortoplazo',
-					'Observacion.objetivolargoplazo',
-					'Observacion.entornoafectado',
-					'Observacion.indicadorria',
-					'Observacion.actividaddesarrollar',
-					'Observacion.observacionesplancuidado',
-					'Observacion.firmaplancuidado',
-					'Observacion.disentimiento',
-					'Observacion.date',
-					'Responsable.nombres',
-				),
-				'Responsable' => array(
-					'fields' => array('Responsable.id', 'Responsable.nombres')
-				)
-			);
-			$this->request->data = $this->Observacion->find('first', $options);
-
-
-			// Si el campo viene almacenado como CSV, convertirlo a array para que los checkboxes estén seleccionados
-			if (!empty($this->request->data['Observacion']['entornoafectado']) && is_string($this->request->data['Observacion']['entornoafectado'])) {
-				$this->request->data['Observacion']['entornoafectado'] = explode(',', $this->request->data['Observacion']['entornoafectado']);
+				$this->Session->setFlash('No se ha guardado, por favor revisar campos', 'flash_custom', array('class' => 'error', 'title' => 'Error al guardar el registro'));
 			}
 		}
+		$options = array(
+			'conditions' => array('Observacion.' . $this->Observacion->primaryKey => $id),
+			'fields' => array(
+				'Observacion.responsable_id',
+				'Observacion.familia_id',
+				'Observacion.resultadoEcomapa',
+				'Observacion.resultadoFamiliograma',
+				'Observacion.date',
+				'Observacion.id',
+				'Observacion.menoresriegosalud',
+				'Observacion.riesgovulnerabilidad',
+				'Observacion.puntuacionfamilia',
+				'Observacion.valoracionfamilia',
+				'Observacion.fortalezas',
+				'Observacion.objetivocortoplazo',
+				'Observacion.objetivolargoplazo',
+				'Observacion.entornoafectado',
+				'Observacion.indicadorria',
+				'Observacion.observacionesplancuidado',
+				'Observacion.firmaplancuidado',
+				'Observacion.responsables',
+			)
+		);
+		$this->request->data = $this->Observacion->tranformData($this->Observacion->find('first', $options));
 
-		$familias = $this->Observacion->Familia->find('list');
 		$responsables = $this->Observacion->Responsable->find('list');
-		$this->set(compact('familias', 'responsables'));
+		$this->set(compact('responsables'));
 	}
 
 	public function addanexo()
@@ -177,23 +167,52 @@ class ObservacionsController extends AppController
 	public function edit($id = null)
 	{
 		if (!$this->Observacion->exists($id)) {
-			throw new NotFoundException(__('Invalid observacion'));
+			$this->Session->setFlash('La familia no existe', 'flash_custom', array('class' => 'error', 'title' => 'Error al cargar el registro'));
+			return $this->redirect(array('controller' => 'Familias', 'action' => 'index'));
 		}
 
 		if ($this->request->is(array('post', 'put'))) {
+			if (empty($this->request->data['Observacion']['familiograma']['name'])) {
+				unset($this->request->data['Observacion']['familiograma']); // CakePHP no reemplaza
+			} else {
+				// Aquí procesar la subida de archivo
+				$archivo = $this->request->data['Observacion']['familiograma'];
+				$nombreArchivo = time() . '_' . $archivo['name'];
+				move_uploaded_file($archivo['tmp_name'], WWW_ROOT . 'uploads' . DS . $nombreArchivo);
+				$this->request->data['Observacion']['familiograma'] = $nombreArchivo;
+			}
+
 			if ($this->Observacion->save($this->request->data)) {
-				$this->Session->setFlash('Se ha guardado correctamente', 'default', array('class' => 'alert alert-success'));
+				$this->Session->setFlash('Registro se actualizo con exito, continuar con informacion de la familia / Observacion', 'flash_custom', array('class' => 'success', 'title' => 'El registro se ha completado correctamente'));					//return $this->redirect(array('action' => 'index'));
 				return $this->redirect(array('controller' => 'familias', 'action' => 'view/' . $this->data["Observacion"]["familia_id"]));
 			} else {
-				$this->Session->setFlash('No se ha guardado, por favor revisar campos', 'default', array('class' => 'alert alert-danger'));
+				$this->Session->setFlash('El registro no fue actualizado o esta pendiente un campo del formulario', 'flash_custom', array('class' => 'error', 'title' => 'Error al guardar el registro'));
 			}
-		} else {
-			$options = array('conditions' => array('Observacion.' . $this->Observacion->primaryKey => $id));
-			$this->request->data = $this->Observacion->find('first', $options);
 		}
+		$options = array(
+			'conditions' => array('Observacion.' . $this->Observacion->primaryKey => $id),
+			'fields' => array(
+				'Observacion.responsable_id',
+				'Observacion.familia_id',
+				'Observacion.resultadoEcomapa',
+				'Observacion.resultadoFamiliograma',
+				'Observacion.fecha',
+				'Observacion.id',
+				'Observacion.menoresriegosalud',
+				'Observacion.riesgovulnerabilidad',
+				'Observacion.puntuacionfamilia',
+				'Observacion.valoracionfamilia',
+				'Observacion.fortalezas',
+				'Observacion.canalizacionuno',
+				'Observacion.estado',
+				'Observacion.observacion',
+				'Observacion.familiograma',
+				'Observacion.ecomapa',
+				'Observacion.dirfamiliograma',
+			)
+		);
+		$this->request->data = $this->Observacion->tranformData($this->Observacion->find('first', $options));
 
-		$familias = $this->Observacion->Familia->find('list');
-		$responsables = $this->Observacion->Responsable->find('list');
 		$this->set(compact('familias', 'responsables'));
 	}
 

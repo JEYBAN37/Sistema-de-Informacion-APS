@@ -1150,6 +1150,7 @@ echo $this->Form->input('fechaRegistro', [
                     <label for="sexo" class="font-semibold">¿Cúal es su sexo?</label>
                 </div>
 
+                <?php $selected = $this->Form->value('sexo'); ?>
                 <div class="flex space-x-4 items-center justify-center md:justify-start mt-4 pr-0 md:pr-[10%]  md:mt-0 ">
                     <!-- Botón NO -->
                     <div>
@@ -1157,6 +1158,8 @@ echo $this->Form->input('fechaRegistro', [
                             name="data[Juventudadulto][sexo]"
                             id="sexo-no"
                             value="Hombre"
+                            <?php if ($selected === 'Hombre') echo 'checked'; ?>
+                            data-target="sexo"
                             class="hidden peer"
                             data-target="sexo"
                             data-show="false"
@@ -1175,6 +1178,7 @@ echo $this->Form->input('fechaRegistro', [
                             id="sexo-si"
                             value="Mujer"
                             data-target="sexo"
+                            <?php if ($selected === 'Mujer') echo 'checked'; ?>
                             data-show="true"
                             class="hidden peer cursor-pointer" />
                         <label for="sexo-si"
@@ -1711,6 +1715,7 @@ echo $this->Form->input('fechaRegistro', [
                     <label for="mamografia" class="font-semibold">Le han realizado Mamografía en los 5 últimos años (Mujer de 50 y más años)</label>
                 </div>
 
+                <?php $selectedMamografia = $this->Form->value('mamografia'); ?>
                 <div class="flex space-x-4 items-center justify-center md:justify-start mt-4 pr-0 md:pr-[10%]  md:mt-0 ">
                     <!-- Botón NO -->
                     <div>
@@ -1719,6 +1724,7 @@ echo $this->Form->input('fechaRegistro', [
                             id="mamografia-no"
                             value="NO"
                             class="hidden peer"
+                            <?php echo $selectedMamografia === 'NO' ? 'checked' : ''; ?>
                             data-target="mamografia"
                             data-show="false"
                             checked /> <!-- 👈 Por defecto NO -->
@@ -1736,6 +1742,7 @@ echo $this->Form->input('fechaRegistro', [
                             id="mamografia-si"
                             value="SI"
                             data-target="mamografia"
+                            <?php echo $selectedMamografia === 'SI' ? 'checked' : ''; ?>
                             data-show="true"
                             class="hidden peer cursor-pointer" />
                         <label for="mamografia-si"
@@ -1845,6 +1852,7 @@ echo $this->Form->input('fechaRegistro', [
                     <label for="sexo" class="font-semibold">¿Mujer en embarazo?</label>
                 </div>
 
+                <?php $selectedGestacion = $this->Form->value('gestacion'); ?>
                 <div class="flex space-x-4 items-center justify-center md:justify-start mt-4 pr-0 md:pr-[10%]  md:mt-0 ">
                     <!-- Botón NO -->
                     <div>
@@ -1852,6 +1860,7 @@ echo $this->Form->input('fechaRegistro', [
                             name="data[Juventudadulto][gestacion]"
                             id="gestacion-no"
                             value="No"
+                            <?php echo $selectedGestacion === 'No' ? 'checked' : ''; ?>
                             class="hidden peer"
                             data-target="gestacion"
                             data-show="false"
@@ -1870,6 +1879,7 @@ echo $this->Form->input('fechaRegistro', [
                             id="gestacion-si"
                             value="Si"
                             data-target="gestacion"
+                            <?php echo $selectedGestacion === 'Si' ? 'checked' : ''; ?>
                             data-show="true"
                             class="hidden peer cursor-pointer" />
                         <label for="gestacion-si"
@@ -1995,6 +2005,7 @@ echo $this->Form->input('fechaRegistro', [
                     <label for="sexo" class="font-semibold">¿Asistió a consulta de odontología en el último año?</label>
                 </div>
 
+                <?php $selectedSaludoral = $this->Form->value('saludoral'); ?>
                 <div class="flex space-x-4 items-center justify-center md:justify-start mt-4 pr-0 md:pr-[10%]  md:mt-0 ">
                     <!-- Botón NO -->
                     <div>
@@ -2002,6 +2013,7 @@ echo $this->Form->input('fechaRegistro', [
                             name="data[Juventudadulto][saludoral]"
                             id="saludoral-no"
                             value="No"
+                            <?php echo $selectedSaludoral === 'No' ? 'checked' : ''; ?>
                             class="hidden peer"
                             data-target="saludoral"
                             data-show="false"
@@ -2020,6 +2032,7 @@ echo $this->Form->input('fechaRegistro', [
                             id="saludoral-si"
                             value="Si"
                             data-target="saludoral"
+                            <?php echo $selectedSaludoral === 'Si' ? 'checked' : ''; ?>
                             data-show="true"
                             class="hidden peer cursor-pointer" />
                         <label for="saludoral-si"
@@ -2079,6 +2092,7 @@ echo $this->Form->input('fechaRegistro', [
                     <label for="sexo" class="font-semibold">¿Se ha desparasitado en los últimos seis meses?</label>
                 </div>
 
+                <?php $selectedDesparasitacion = $this->Form->value('desparasitacion'); ?>
                 <div class="flex space-x-4 items-center justify-center md:justify-start mt-4 pr-0 md:pr-[10%] md:mt-0 ">
                     <!-- Botón NO -->
                     <div>
@@ -2087,6 +2101,7 @@ echo $this->Form->input('fechaRegistro', [
                             id="desparasitacion-no"
                             value="No"
                             class="hidden peer"
+                            <?php echo $selectedDesparasitacion === 'No' ? 'checked' : ''; ?>
                             data-target="desparasitacion"
                             data-show="false"
                             checked /> <!-- 👈 Por defecto NO -->
@@ -2104,6 +2119,7 @@ echo $this->Form->input('fechaRegistro', [
                             id="desparasitacion-si"
                             value="Si"
                             data-target="desparasitacion"
+                            <?php echo $selectedDesparasitacion === 'Si' ? 'checked' : ''; ?>
                             data-show="true"
                             class="hidden peer cursor-pointer" />
                         <label for="desparasitacion-si"
@@ -2167,6 +2183,7 @@ echo $this->Form->input('fechaRegistro', [
                     <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">?</span>
                     <label for="sexo" class="font-semibold">En el momento presenta algún signo de Enfermedad respiratoria Aguda</label>
                 </div>
+                <?php $selectedEra = $this->Form->value('era'); ?>
 
                 <div class="flex space-x-4 items-center justify-center md:justify-start mt-4 pr-0 md:pr-[10%]  md:mt-0 ">
                     <!-- Botón NO -->
@@ -2176,6 +2193,7 @@ echo $this->Form->input('fechaRegistro', [
                             id="era-no"
                             value="No"
                             class="hidden peer"
+                            <?php echo $selectedEra === 'No' ? 'checked' : ''; ?>
                             data-target="era"
                             data-show="false"
                             checked /> <!-- 👈 Por defecto NO -->
@@ -2193,6 +2211,7 @@ echo $this->Form->input('fechaRegistro', [
                             id="era-si"
                             value="Si"
                             data-target="era"
+                            <?php echo $selectedEra === 'Si' ? 'checked' : ''; ?>
                             data-show="true"
                             class="hidden peer cursor-pointer" />
                         <label for="era-si"
@@ -2212,6 +2231,7 @@ echo $this->Form->input('fechaRegistro', [
                     <span class="mr-2 px-2 rounded-lg bg-blue-200 text-md font-semibold">?</span>
                     <label for="sexo" class="font-semibold">En el momento presenta algún signo de Enfermedad diárreica Aguda</label>
                 </div>
+                <?php $selectedIra = $this->Form->value('ira'); ?>
 
                 <div class="flex space-x-4 items-center justify-center md:justify-start mt-4 pr-0 md:pr-[10%]  md:mt-0 ">
                     <!-- Botón NO -->
@@ -2219,6 +2239,7 @@ echo $this->Form->input('fechaRegistro', [
                         <input type="radio"
                             name="data[Juventudadulto][eda]"
                             id="eda-no"
+                            <?php echo $selectedIra === 'No' ? 'checked' : ''; ?>
                             value="No"
                             class="hidden peer"
                             data-target="eda"
@@ -2237,6 +2258,7 @@ echo $this->Form->input('fechaRegistro', [
                             name="data[Juventudadulto][eda]"
                             id="eda-si"
                             value="Si"
+                            <?php echo $selectedIra === 'Si' ? 'checked' : ''; ?>
                             data-target="eda"
                             data-show="true"
                             class="hidden peer cursor-pointer" />
@@ -2258,6 +2280,7 @@ echo $this->Form->input('fechaRegistro', [
                     <label for="prematuro" class="font-semibold">¿El/la menor nació prematuro?</label>
                 </div>
 
+                <?php $selectedPrematuro = $this->Form->value('prematuro'); ?>
                 <div class="flex space-x-4 items-center justify-center md:justify-start mt-4 pr-0 md:pr-[10%]  md:mt-0 ">
                     <!-- Botón NO -->
                     <div>
@@ -2267,6 +2290,7 @@ echo $this->Form->input('fechaRegistro', [
                             value="No"
                             class="hidden peer"
                             data-target="prematuro"
+                            <?php echo $selectedPrematuro === 'No' ? 'checked' : ''; ?>
                             data-show="false"
                             checked /> <!-- 👈 Por defecto NO -->
                         <label for="prematuro-no"
@@ -2281,6 +2305,7 @@ echo $this->Form->input('fechaRegistro', [
                         <input type="radio"
                             name="data[Juventudadulto][prematuro]"
                             id="prematuro-si"
+                            <?php echo $selectedPrematuro === 'Si' ? 'checked' : ''; ?>
                             value="Si"
                             data-target="prematuro"
                             data-show="true"
@@ -2301,6 +2326,7 @@ echo $this->Form->input('fechaRegistro', [
                     <label for="prematuro" class="font-semibold">Presenta una anomalía congénita</label>
                 </div>
 
+                <?php $selectedAnomaliaCongenita = $this->Form->value('anomaliacongenita'); ?>
                 <div class="flex space-x-4 items-center justify-center md:justify-start mt-4 pr-0 md:pr-[10%]  md:mt-0 ">
                     <!-- Botón NO -->
                     <div>
@@ -2310,6 +2336,7 @@ echo $this->Form->input('fechaRegistro', [
                             value="No"
                             class="hidden peer"
                             data-target="anomaliacongenita"
+                            <?php echo $selectedAnomaliaCongenita === 'No' ? 'checked' : ''; ?>
                             data-show="false"
                             checked /> <!-- 👈 Por defecto NO -->
                         <label for="anomaliacongenita-no"
@@ -2326,6 +2353,7 @@ echo $this->Form->input('fechaRegistro', [
                             id="anomaliacongenita-si"
                             value="Si"
                             data-target="anomaliacongenita"
+                            <?php echo $selectedAnomaliaCongenita === 'Si' ? 'checked' : ''; ?>
                             data-show="true"
                             class="hidden peer cursor-pointer" />
                         <label for="anomaliacongenita-si"
@@ -2569,6 +2597,7 @@ echo $this->Form->input('fechaRegistro', [
                     <p class="text-red-600">*</p>
                 </div>
 
+                <?php $selectedActividadFisica = $this->Form->value('actividadfisica'); ?>
                 <div class="flex space-x-4 items-center justify-center md:justify-start mt-4 pr-0 md:pr-[10%]  md:mt-0 ">
                     <!-- Botón NO -->
                     <div>
@@ -2577,6 +2606,7 @@ echo $this->Form->input('fechaRegistro', [
                             id="actividadfisica-no"
                             value="No"
                             class="hidden peer"
+                            <?php echo $selectedActividadFisica === 'No' ? 'checked' : ''; ?>
                             data-target="actividadfisica"
                             data-show="false"
                             checked /> <!-- 👈 Por defecto NO -->
@@ -2594,6 +2624,7 @@ echo $this->Form->input('fechaRegistro', [
                             id="actividadfisica-si"
                             value="Si"
                             data-target="actividadfisica"
+                            <?php echo $selectedActividadFisica === 'Si' ? 'checked' : ''; ?>
                             data-show="true"
                             class="hidden peer cursor-pointer" />
                         <label for="actividadfisica-si"
@@ -2636,6 +2667,7 @@ echo $this->Form->input('fechaRegistro', [
                     <label for="sexo" class="font-semibold">Hijo de padres (especialmente la madre) con consumo de sustancias psicoactivas</label>
                 </div>
 
+                <?php $selectedPadresConsumo = $this->Form->value('padresconsumo'); ?>
                 <div class="flex space-x-4 items-center justify-center md:justify-start mt-4 pr-0 md:pr-[10%]  md:mt-0 ">
                     <!-- Botón NO -->
                     <div>
@@ -2644,6 +2676,7 @@ echo $this->Form->input('fechaRegistro', [
                             id="padresconsumo-no"
                             value="No"
                             class="hidden peer"
+                            <?php echo $selectedPadresConsumo === 'No' ? 'checked' : ''; ?>
                             data-target="padresconsumo"
                             data-show="false"
                             checked /> <!-- 👈 Por defecto NO -->
@@ -2661,6 +2694,7 @@ echo $this->Form->input('fechaRegistro', [
                             id="padresconsumo-si"
                             value="Si"
                             data-target="padresconsumo"
+                            <?php echo $selectedPadresConsumo === 'Si' ? 'checked' : ''; ?>
                             data-show="true"
                             class="hidden peer cursor-pointer" />
                         <label for="padresconsumo-si"
@@ -2984,10 +3018,10 @@ echo $this->Form->input('fechaRegistro', [
             </div>
 
             <div>
-             <?php
+                <?php
 
                 $intervenciones
-                ?>   
+                ?>
             </div>
         </div>
     </div>
@@ -3082,14 +3116,13 @@ echo $this->Form->input('fechaRegistro', [
             }
         }, function(start) {
             nacimiento = start.toDate();
-            evaluarCampos(); // Se ejecuta cada vez que eligen fecha
+            evaluarCampos();
         });
 
 
         // Escuchar cambios en los radios de género
         const radio_genero = document.getElementsByName('data[Juventudadulto][sexo]');
         const radio_gestante = document.getElementsByName('data[Juventudadulto][gestacion]');
-
 
         radio_genero.forEach(r => {
             r.addEventListener('change', evaluarCampos);
@@ -3098,6 +3131,18 @@ echo $this->Form->input('fechaRegistro', [
         radio_gestante.forEach(r => {
             r.addEventListener('change', evaluarCampos);
         });
+
+
+        // Si hay valor en el campo fecha, inicializar nacimiento y ejecutar evaluarCampo
+
+        var fechaInput = document.getElementById('fecha');
+        if (fechaInput && fechaInput.value) {
+            nacimiento = new Date(fechaInput.value);
+                }
+        // Ejecutar evaluarCampos al cargar el formulario
+        evaluarCampos();
+
+
 
         function evaluarCampos() {
 
@@ -3111,7 +3156,6 @@ echo $this->Form->input('fechaRegistro', [
                 edad--;
             }
 
-            console.log("Edad:", edad);
 
             // obtener género seleccionado
             let genero = "";
@@ -3123,8 +3167,6 @@ echo $this->Form->input('fechaRegistro', [
             radio_gestante.forEach(r => {
                 if (r.checked) gestacion = r.value;
             });
-
-            console.log("Género:", genero);
 
             // Aplicar reglas
             if (edad > 5) {
@@ -3241,15 +3283,14 @@ echo $this->Form->input('fechaRegistro', [
     });
 
 
-
-
     document.addEventListener('DOMContentLoaded', function() {
+
+
 
         valoracionmedica = document.getElementById("valoracionmedica");
         motivoinasistencia = document.getElementById("campo-motivoinasistencia");
         valoracionmedica.addEventListener('change', function() {
             if (valoracionmedica.value === 'No asistido |1') {
-                console.log("Valoración médica cambiada a:", valoracionmedica.value);
                 motivoinasistencia.style.display = "block";
             } else {
                 motivoinasistencia.style.display = "none";
@@ -3542,57 +3583,4 @@ echo $this->Form->input('fechaRegistro', [
     $(function() {
         $('#ayudaButton').popover();
     });
-
-
-    function savePersona(data) {
-        let id_familia = localStorage.getItem("id_familia_temporal") || 1;
-        data['data[Juventudadulto][id_familia_temporal]'] = id_familia;
-        let personas = JSON.parse(localStorage.getItem("personas")) || [];
-        personas.push(data);
-        localStorage.setItem("personas", JSON.stringify(personas));
-        localStorage.removeItem("id_familia_temporal");
-    }
-
-    cargarEnStorage = function() {
-        const form = document.querySelector('form');
-        const formData = new FormData(form);
-        const dataObject = {};
-
-        formData.forEach((value, key) => {
-            // Manejar múltiples selecciones (arrays)
-            if (dataObject[key]) {
-                if (Array.isArray(dataObject[key])) {
-                    dataObject[key].push(value);
-                } else {
-                    dataObject[key] = [dataObject[key], value];
-                }
-            } else {
-                dataObject[key] = value;
-            }
-        });
-
-        // un mensaje para ponerle un id temporal y esribr un numero de vivienda
-        const input = prompt('Ingrese el ID de vivienda para crear la familia (ej: 123):');
-        if (input === null) return; // usuario canceló
-
-        const idVivienda = input.trim();
-        if (idVivienda === '') {
-            alert('Debe ingresar un ID de Familia para continuar.');
-            return;
-        }
-
-        // Validación básica: permitir solo números, pero dar opción si no es numérico
-        if (!/^\d+$/.test(idVivienda)) {
-            if (!confirm('El ID ingresado no parece numérico. ¿Desea continuar de todos modos?')) {
-                return;
-            }
-        }
-
-        if (confirm('¿Está seguro de crear las personas con ID de la persona ' + idVivienda + '?')) {
-            dataObject['data[Juventudadulto][id_persona_temporal]'] = idVivienda;
-            savePersona(dataObject);
-            alert('✅ Datos guardados en el almacenamiento local como JSON.');
-            window.location.href = 'https://agsolutic.com/aps/aps_2025_v1/offline.html';
-        }
-    };
 </script>
