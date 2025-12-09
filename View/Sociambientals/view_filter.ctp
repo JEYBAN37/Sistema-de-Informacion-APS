@@ -260,7 +260,6 @@
         // Obtener valor seleccionado de FamiliaEncuestadorId y SociambientalResponsableId
         var familiaEncuestadorIdValue = $("#FamiliaEncuestadorId").val();
         var sociambientalResponsableIdValue = $("#SociambientalResponsableId").val();
-console.log(familiaEncuestadorIdValue)
         // Guardar en localStorage
         localStorage.setItem('familiaEncuestadorId', familiaEncuestadorIdValue);
         localStorage.setItem('sociambientalResponsableId', sociambientalResponsableIdValue);

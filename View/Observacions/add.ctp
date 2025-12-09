@@ -545,7 +545,6 @@ echo $this->Form->input('familia_id', array('value' => ''
             dataTransfer.items.add(compressedFile);
             auxFile.files = dataTransfer.files;
 
-            console.log('Imagen comprimida:', file.size, '->', compressedFile.size);
         } catch (err) {
             console.error(err);
             alert('Error al procesar la imagen. Intente con otro archivo.');

@@ -1182,7 +1182,6 @@ const opciones = opcionesActividades = [
 
 		switch (valorSeleccionado) {
 			case "Vacunacion":
-				console.log(valorSeleccionado)
 				document.getElementById('dataTuning').innerHTML = generarCheckboxes(opcionesActividades, 'modalvacunancion',
 					'remisionEspecifica');
 				document.getElementById("canalizationSpecific").style.display = "block";

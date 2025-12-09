@@ -738,8 +738,6 @@ echo $this->Form->input('responsable_id', array('value' => $nombreUsuario, 'type
             }
         }, function(start) {
             let fecha = start.format('YYYY-MM-DD');
-            console.log("Fecha seleccionada:", fecha);
-
             // Si necesitas guardarlos en campos ocultos para enviarlos al backend:
             if (!$("#fecha").length) {
                 $("form").append('<?php echo $this->Form->hidden('fecha', ['id' => 'fecha']); ?>');
