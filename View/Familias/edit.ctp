@@ -394,7 +394,7 @@ echo $this->Form->hidden('sociambiental_id');
             <div class="col-span-2 md:col-span-1 text-md font-semibold mt-4 mb-6">
                 <div class="flex items-center mb-4">
                     <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">2</span>
-                    <label for="nombre" class="font-semibold">¿Su núcleo familiar dentro de la vivienda habita en: ?</label>
+                    <label for="nombre" class="font-semibold">¿Su núcleo familiar dentro de la vivienda habita en?</label>
                     <p class="text-red-600">*</p>
                 </div>
                 <?php
@@ -1284,6 +1284,7 @@ echo $this->Form->hidden('sociambiental_id');
                     <label for="lavadomanos" class="font-semibold">¿Es frecuente el hábito del lavado de manos durante el día?</label>
                 </div>
 
+                 <?php $selected = $this->Form->value('lavadomanos'); ?>
                 <div class="flex space-x-4 items-center justify-center md:justify-start mt-4 pr-0 md:pr-[10%]  md:mt-0 ">
                     <!-- Botón NO -->
                     <div>
@@ -1438,7 +1439,7 @@ echo $this->Form->hidden('sociambiental_id');
 
 <script type="text/javascript">
     function mostrarResguardo(id) {
-        if (id != "No aplica" && id != '')
+        if (id != "7.No aplica" && id != '')
             $("#resguardo").show();
         else
             $("#resguardo").hide();

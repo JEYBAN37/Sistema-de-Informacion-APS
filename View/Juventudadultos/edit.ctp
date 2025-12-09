@@ -3,8 +3,8 @@
     'class' => 'space-y-6',
     'novalidate' => true
 ]);
-echo $this->Form->input('id');
-echo $this->Form->input('familia_id', ['type' => 'hidden']);
+echo $this->Form->hidden('id');
+echo $this->Form->hidden('familia_id');
 
 $TipoDeDocumentoOptions = array(
     'CC' => 'Cedula de ciudadania',
@@ -3008,7 +3008,7 @@ echo $this->Form->input('fechaRegistro', [
 
             <!-- Botón -->
             <div class="w-full p-2">
-                <button name="btn" value="Guardar y continuar" type="submit" class="w-full bg-teal-600 text-white px-6 py-2 rounded-md hover:bg-green-700 transition font-medium flex items-center justify-center gap-2">
+                <button name="btn" value="Guardar" type="submit" class="w-full bg-teal-600 text-white px-6 py-2 rounded-md hover:bg-green-700 transition font-medium flex items-center justify-center gap-2">
                     <span>
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-save-icon lucide-save">
                             <path d="M15.2 3a2 2 0 0 1 1.4.6l3.8 3.8a2 2 0 0 1 .6 1.4V19a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z" />

@@ -258,6 +258,7 @@ $planUrl = $this->Html->url(['controller' => 'Familias', 'action' => 'plancuidad
                                 <th class="px-4 py-2 font-semibold text-center cursor-pointer hover:bg-gray-100">Sexo</th>
                                 <th class="px-4 py-2 font-semibold text-center cursor-pointer hover:bg-gray-100">Aseguradora</th>
                                 <th class="px-4 py-2 font-semibold text-center cursor-pointer hover:bg-gray-100">Condición Crónica</th>
+                                <th class="px-4 py-2 font-semibold text-center cursor-pointer hover:bg-gray-100">Canalización</th>
                                 <th class="px-4 py-2 font-semibold text-center cursor-pointer hover:bg-gray-100">Acciones</th>
                             </tr>
                         </thead>
@@ -273,6 +274,8 @@ $planUrl = $this->Html->url(['controller' => 'Familias', 'action' => 'plancuidad
                                         <td class="text-center"><?php echo $integrante['sexo']; ?></td>
                                         <td class="text-center"><?php echo $integrante['aseguradora']; ?></td>
                                         <td class="text-center"><?php echo $integrante['condicioncronica']; ?></td>
+                                        <td class="text-center">
+                                            <?php echo $integrante['canalizacionuno'] ?>
                                         <td>
                                             <div class="relative inline-block text-left">
                                                 <?php echo $this->Html->link('Ver', ["controller" => "juventudadultos", "action" => "view", $integrante['id']], ["class" => "block px-4 py-2 text-sm hover:bg-gray-100"]); ?>
