@@ -58,7 +58,6 @@ class JuventudadultosController extends AppController
 		if ($this->request->is('post')) {
 			$this->Juventudadulto->create();
 			$id_familia = $this->request->data['Juventudadulto']['familia_id'];
-			debug($this->request->data);
 			if ($this->Juventudadulto->save($this->request->data)) {
 				if ($this->request->data['btn'] == 'Guardar y agregar integrante') {
 					$this->Session->setFlash('Registro de familia se guradado con exito, continuar con informacion del siguiente integrante', 'flash_custom', array('class' => 'success', 'title' => 'El registro se ha completado correctamente'));
@@ -75,10 +74,8 @@ class JuventudadultosController extends AppController
 			}
 		}
 
-		$familias = $this->Juventudadulto->Familia->find('list');
 		$canalizaciones = $this->Juventudadulto->Canalizacion->find('list');
-
-		$this->set(compact('familias',  'canalizaciones', 'intervenciones'));
+		$this->set(compact('canalizaciones', 'intervenciones'));
 	}
 
 
@@ -94,25 +91,31 @@ class JuventudadultosController extends AppController
 	public function edit($id = null)
 	{
 		if (!$this->Juventudadulto->exists($id)) {
-			throw new NotFoundException(__('Invalid juventudadulto'));
+			$this->Session->setFlash('La persona no existe', 'flash_custom', array('class' => 'error', 'title' => 'Error al cargar el registro'));
+			return $this->redirect(array('controller' => 'Familias', 'action' => 'index'));
 		}
 
 		if ($this->request->is(array('post', 'put'))) {
 			if ($this->Juventudadulto->save($this->request->data)) {
-				$this->Session->setFlash('Se ha guardado correctamente', 'default', array('class' => 'alert alert-success'));
-				return $this->redirect(array('controller' => 'familias', 'action' => 'view/' . $this->data["Juventudadulto"]["familia_id"]));
+				if (isset($this->request->data['btn']) == 'Guardar') {
+					$this->Session->setFlash('Registro de Persona se actualizo con exito', 'flash_custom', array('class' => 'success', 'title' => 'El registro se ha actualizado correctamente'));
+					return $this->redirect(array('controller' => 'familias', 'action' => 'view/', $this->data["Juventudadulto"]["familia_id"]));
+				}
 			} else {
-				$this->Session->setFlash('No se ha guardado, por favor revisar campos', 'default', array('class' => 'alert alert-danger'));
+				$this->Session->setFlash('El registro no fue guardado o esta pendiente un campo del formulario', 'flash_custom', array('class' => 'error', 'title' => 'Error al guardar el registro'));
 			}
 		} else {
 			$options = array('conditions' => array('Juventudadulto.' . $this->Juventudadulto->primaryKey => $id));
 			$this->request->data = $this->Juventudadulto->find('first', $options);
 			$this->request->data = $this->Juventudadulto->tranformData($this->request->data);
-
+			// Asegurar que el campo id esté presente para el formulario
+			if (!empty($this->request->data['Juventudadulto'][$this->Juventudadulto->primaryKey])) {
+				$this->request->data['Juventudadulto']['id'] = $this->request->data['Juventudadulto'][$this->Juventudadulto->primaryKey];
+			}
 		}
 
 		$canalizaciones = $this->Juventudadulto->Canalizacion->find('list');
-		$this->set(compact('canalizaciones', 'intervenciones'));
+		$this->set(compact('canalizaciones'));
 	}
 
 	public function edit1($id = null)

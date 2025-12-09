@@ -232,13 +232,20 @@ class FamiliasController extends AppController
 				$this->Session->setFlash('El registro no fue guardado o esta pendiente un campo del formulario', 'flash_custom', array('class' => 'error', 'title' => 'Error al guardar el registro'));
 			}
 		} else {
-			$options = array(
-				'conditions' => array('Familia.' . $this->Familia->primaryKey => $id),
+			$familia = $this->Familia->find('first', [
+				'conditions' => array('Familia.id' => $id),
 				'recursive' => -1
-			);
-			$familia = $this->Familia->find('first', $options);
+			]);
+
+			if (!empty($familia)) {
+				// Si se encuentra la familia, asignarla a la solicitud
+				$this->request->data = $familia;
+			} else {
+				// Si no se encuentra, mostrar un mensaje de error
+				$this->Session->setFlash('No se encontró la familia con el ID proporcionado.', 'flash_custom', array('class' => 'error', 'title' => 'Error'));
+				return $this->redirect(array('action' => 'index'));
+			}
 		}
-		$this->request->data = $familia;
 	}
 
 	/**

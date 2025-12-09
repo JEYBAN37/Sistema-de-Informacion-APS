@@ -3,8 +3,8 @@
     'class' => 'space-y-6',
     'novalidate' => true
 ]);
-echo $this->Form->input('id');
-echo $this->Form->input('familia_id', ['type' => 'hidden']);
+echo $this->Form->hidden('id');
+echo $this->Form->hidden('familia_id');
 
 $TipoDeDocumentoOptions = array(
     'CC' => 'Cedula de ciudadania',
@@ -1132,6 +1132,7 @@ echo $this->Form->input('fechaRegistro', [
                             type="text"
                             name="data[Juventudadulto][fechanac]"
                             id="fecha"
+                            value="<?= h($this->Form->value('fechanac')); ?>"
                             class="border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400 w-full"
                             placeholder="Selecciona rango de fecha" />
                         <span class="text-sm text-red-600 ">
@@ -2927,6 +2928,7 @@ echo $this->Form->input('fechaRegistro', [
                             type="text"
                             name="data[Juventudadulto][registroCanalizacion]"
                             id="registroCanalizacion"
+                            value="<?= h($this->Form->value('registroCanalizacion')); ?>"
                             class="border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400 w-full"
                             placeholder="Selecciona rango de fecha" />
                         <span class="text-sm text-red-600 ">
@@ -3006,7 +3008,7 @@ echo $this->Form->input('fechaRegistro', [
 
             <!-- Botón -->
             <div class="w-full p-2">
-                <button name="btn" value="Guardar y continuar" type="submit" class="w-full bg-teal-600 text-white px-6 py-2 rounded-md hover:bg-green-700 transition font-medium flex items-center justify-center gap-2">
+                <button name="btn" value="Guardar" type="submit" class="w-full bg-teal-600 text-white px-6 py-2 rounded-md hover:bg-green-700 transition font-medium flex items-center justify-center gap-2">
                     <span>
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-save-icon lucide-save">
                             <path d="M15.2 3a2 2 0 0 1 1.4.6l3.8 3.8a2 2 0 0 1 .6 1.4V19a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z" />
@@ -3014,7 +3016,7 @@ echo $this->Form->input('fechaRegistro', [
                             <path d="M7 3v4a1 1 0 0 0 1 1h7" />
                         </svg>
                     </span>
-                    Guardar y Agregar nueva Persona
+                    Actualizar
                 </button>
             </div>
 
@@ -3033,23 +3035,6 @@ echo $this->Form->input('fechaRegistro', [
 
                     </span>
                     ver familia
-                </button>
-            </div>
-
-            <!-- Botón -->
-            <div class="w-full p-2">
-                <button type="button" class="w-full bg-teal-600 text-white px-6 py-2 rounded-md hover:bg-green-700 transition font-medium flex items-center justify-center gap-2" onclick="cargarEnStorage()">
-                    <span>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-save-icon lucide-save">
-                            <path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z" />
-                            <path d="M14 2v4a2 2 0 0 0 2 2h4" />
-                            <path d="M10 12a1 1 0 0 0-1 1v1a1 1 0 0 1-1 1 1 1 0 0 1 1 1v1a1 1 0 0 0 1 1" />
-                            <path d="M14 18a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1 1 1 0 0 1-1-1v-1a1 1 0 0 0-1-1" />
-
-                        </svg>
-
-                    </span>
-                    JSON
                 </button>
             </div>
         </div>
@@ -3100,7 +3085,6 @@ echo $this->Form->input('fechaRegistro', [
             evaluarCampos(); // Se ejecuta cada vez que eligen fecha
         });
 
-        $('#fecha').val('');
 
         // Escuchar cambios en los radios de género
         const radio_genero = document.getElementsByName('data[Juventudadulto][sexo]');

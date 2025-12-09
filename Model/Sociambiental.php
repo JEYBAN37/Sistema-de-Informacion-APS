@@ -344,16 +344,6 @@ class Sociambiental extends AppModel
 				//'message' => 'Your custom message here',
 			),
 		),
-		'numeroPerros' => array(
-			'notEmpty' => array(
-				'rule' => array('notEmpty'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			),
-		),
 		/*'otramascota' => array(
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),
