@@ -93,12 +93,13 @@ class ObservacionsController extends AppController
 		}
 
 		if ($this->request->is(array('post', 'put'))) {
+						debug($this->request->data);
 			// Procesar otros campos específicos del formulario si es necesario
 			if ($this->Observacion->save($this->request->data)) {
-				$this->Session->setFlash('Se ha guardado correctamente', 'default', array('class' => 'alert alert-success'));
+				$this->Session->setFlash('Registro se guardó con éxito, continuar con información de la familia / hogar', 'flash_custom', array('class' => 'success', 'title' => 'El registro se ha completado correctamente'));					//return $this->redirect(array('action' => 'index'));
 				return $this->redirect(array('controller' => 'familias', 'action' => 'view', $this->request->data["Observacion"]["familia_id"]));
 			} else {
-				$this->Session->setFlash('No se ha guardado, por favor revisar campos', 'default', array('class' => 'alert alert-danger'));
+				$this->Session->setFlash('No se ha guardado, por favor revisar campos', 'flash_custom', array('class' => 'error', 'title' => 'Error al guardar el registro'));
 			}
 		}
 		$options = array(
@@ -108,7 +109,7 @@ class ObservacionsController extends AppController
 				'Observacion.familia_id',
 				'Observacion.resultadoEcomapa',
 				'Observacion.resultadoFamiliograma',
-				'Observacion.fecha',
+				'Observacion.date',
 				'Observacion.id',
 				'Observacion.menoresriegosalud',
 				'Observacion.riesgovulnerabilidad',
@@ -116,14 +117,11 @@ class ObservacionsController extends AppController
 				'Observacion.valoracionfamilia',
 				'Observacion.fortalezas',
 				'Observacion.objetivocortoplazo',
+				'Observacion.objetivolargoplazo',
 				'Observacion.entornoafectado',
 				'Observacion.indicadorria',
-				'Observacion.canalizacionuno',
-				'Observacion.estado',
 				'Observacion.observacionesplancuidado',
-				'Observacion.familiograma',
-				'Observacion.ecomapa',
-				'Observacion.dirfamiliograma',
+				'Observacion.firmaplancuidado',
 				'Observacion.responsables',
 			)
 		);
@@ -207,7 +205,7 @@ class ObservacionsController extends AppController
 				'Observacion.fortalezas',
 				'Observacion.canalizacionuno',
 				'Observacion.estado',
-				'Observacion.observacionesplancuidado',
+				'Observacion.observacion',
 				'Observacion.familiograma',
 				'Observacion.ecomapa',
 				'Observacion.dirfamiliograma',

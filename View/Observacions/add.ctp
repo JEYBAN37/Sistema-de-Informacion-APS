@@ -370,7 +370,7 @@ echo $this->Form->input('familia_id', array('value' => ''
 
 
             <!-- Coloca el campo en una mitad de la pantalla en dispositivos medianos y grandes -->
-            <?php echo $this->Form->input('date', array(
+            <?php echo $this->Form->input('fecha', array(
                 'label' => 'Fecha de visita : ',
                 'style' => 'height:30px;  font-size: 15px ; width:100%',
                 'type' => 'hidden',
@@ -683,12 +683,6 @@ echo $this->Form->input('familia_id', array('value' => ''
             }
         }, function(start) {
             let fecha = start.format('YYYY-MM-DD');
-            console.log("Fecha seleccionada:", fecha);
-
-            // Si necesitas guardarlos en campos ocultos para enviarlos al backend:
-            if (!$("#fecha").length) {
-                $("form").append('<?php echo $this->Form->hidden('fecha', ['id' => 'fecha']); ?>');
-            }
             $("#fecha").val(fecha);
         });
     });

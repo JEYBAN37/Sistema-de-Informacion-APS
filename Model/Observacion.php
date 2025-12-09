@@ -44,13 +44,21 @@ class Observacion extends AppModel
 			$this->data[$this->alias]['responsables'] = implode(',', $this->data[$this->alias]['responsables']);
 		}
 
+		if (isset($this->data[$this->alias]['entornoafectado'])) {
+			$this->data[$this->alias]['entornoafectado'] = str_replace(',', '.', $this->data[$this->alias]['entornoafectado']);
+		}
+
+		if (isset($this->data[$this->alias]['indicadorria']) && is_array($this->data[$this->aias]['indicadorria'])) {
+			$this->data[$this->alias]['indicadorria'] = implode(',', $this->data[$this->alias]['indicadorria']);
+		}
+
 		return true;
 	}
 
 	public function tranformData($data)
 	{
 		// Solo procesar si el valor es string, si es array lo deja igual
-		$campos = ['resultadoFamiliograma', 'menoresriegosalud', 'riesgovulnerabilidad', 'fortalezas', 'canalizacionuno', 'responsables'];
+		$campos = ['resultadoFamiliograma', 'menoresriegosalud', 'riesgovulnerabilidad', 'fortalezas', 'canalizacionuno', 'responsables','entornoafectado','indicadorria'];
 		foreach ($campos as $campo) {
 			if (!empty($data['Observacion'][$campo])) {
 				$valor = $data['Observacion'][$campo];
@@ -186,46 +194,6 @@ class Observacion extends AppModel
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
 		),
-		'mujerriesgosalud' => array(
-			'notEmpty' => array(
-				'rule' => array('notEmpty'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			),
-		),
-		'personamayorriesgosalud' => array(
-			'notEmpty' => array(
-				'rule' => array('notEmpty'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			),
-		),
-		'adolescenteriesgosalud' => array(
-			'notEmpty' => array(
-				'rule' => array('notEmpty'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			),
-		),
-		'jovenriesgosalud' => array(
-			'notEmpty' => array(
-				'rule' => array('notEmpty'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			),
-		),
 
 
 		'riesgovulnerabilidad' => array(
@@ -238,16 +206,7 @@ class Observacion extends AppModel
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
 		),
-		'tamizajeriesgo' => array(
-			'notEmpty' => array(
-				'rule' => array('notEmpty'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			),
-		),
+		
 		'puntuacionfamilia' => array(
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),
