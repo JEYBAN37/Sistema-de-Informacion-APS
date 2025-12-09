@@ -59,14 +59,15 @@ class JuventudadultosController extends AppController
 			$this->Juventudadulto->create();
 			$id_familia = $this->request->data['Juventudadulto']['familia_id'];
 			if ($this->Juventudadulto->save($this->request->data)) {
-				if ($this->request->data['btn'] == 'Guardar y agregar integrante') {
+				if (isset($this->request->data['btn']) && $this->request->data['btn'] == 'Guardar y agregar integrante') {
 					$this->Session->setFlash('Registro de familia se guradado con exito, continuar con informacion del siguiente integrante', 'flash_custom', array('class' => 'success', 'title' => 'El registro se ha completado correctamente'));
-					return $this->redirect(array('controller' => 'Juventudadultos', 'action' => 'add?familia=', $id_familia));
-				}
-
-				if ($this->request->data['btn'] == 'ver familia') {
-					$this->Session->setFlash('Registro de Persona se guradado con exito', 'flash_custom', array('class' => 'success', 'title' => 'El registro se ha completado correctamente'));
-					return $this->redirect(array('controller' => 'Familias', 'action' => 'view', $id_familia));
+					// Asegurar que no quede data previa en el siguiente formulario
+					$this->request->data = array();
+					return $this->redirect(array(
+						'controller' => 'Juventudadultos',
+						'action' => 'add',
+						'?' => array('familia' => $id_familia)
+					));
 				}
 
 			} else {
@@ -75,7 +76,7 @@ class JuventudadultosController extends AppController
 		}
 
 		$canalizaciones = $this->Juventudadulto->Canalizacion->find('list');
-		$this->set(compact('canalizaciones', 'intervenciones'));
+		$this->set(compact('canalizaciones'));
 	}
 
 
