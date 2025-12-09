@@ -277,16 +277,6 @@ class Juventudadulto extends AppModel
 				'message' => 'El campo de educación es obligatorio',
 			),
 		),
-		'observacioncanalizacion' => array(
-			'notEmpty' => array(
-				'rule' => array('notEmpty'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			),
-		),
 		'estadocanalizacion' => array(
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),
