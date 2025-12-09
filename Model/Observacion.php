@@ -40,13 +40,17 @@ class Observacion extends AppModel
 			$this->data[$this->alias]['canalizacionuno'] = implode(',', $this->data[$this->alias]['canalizacionuno']);
 		}
 
+		if (isset($this->data[$this->alias]['responsables']) && is_array($this->data[$this->alias]['responsables'])) {
+			$this->data[$this->alias]['responsables'] = implode(',', $this->data[$this->alias]['responsables']);
+		}
+
 		return true;
 	}
 
 	public function tranformData($data)
 	{
 		// Solo procesar si el valor es string, si es array lo deja igual
-		$campos = ['resultadoFamiliograma', 'menoresriegosalud', 'riesgovulnerabilidad', 'fortalezas', 'canalizacionuno'];
+		$campos = ['resultadoFamiliograma', 'menoresriegosalud', 'riesgovulnerabilidad', 'fortalezas', 'canalizacionuno', 'responsables'];
 		foreach ($campos as $campo) {
 			if (!empty($data['Observacion'][$campo])) {
 				$valor = $data['Observacion'][$campo];
@@ -174,8 +178,7 @@ class Observacion extends AppModel
 		),*/
 		'menoresriegosalud' => array(
 			'notEmpty' => array(
-				'rule' => array('notEmpty'),
-				'rule' => array('multiple', array('min' => 1)),
+				'rule' => array('multiple'),
 				'message' => 'Por favor seleccione al menos una opción',
 				//'allowEmpty' => false,
 				//'required' => false,
@@ -227,9 +230,7 @@ class Observacion extends AppModel
 
 		'riesgovulnerabilidad' => array(
 			'notEmpty' => array(
-				'rule' => array('notEmpty'),
-				'rule' => array('multiple', array('min' => 1)),
-				'message' => 'Por favor seleccione al menos una opción',
+				'rule' => array('multiple'),
 				//'message' => 'Your custom message here',
 				//'allowEmpty' => false,
 				//'required' => false,

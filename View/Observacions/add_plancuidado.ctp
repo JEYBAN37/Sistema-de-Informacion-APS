@@ -122,7 +122,7 @@ echo $this->Form->input('responsable_id', array('value' => $nombreUsuario, 'type
 
                 <?php
                 $riesgosalud = [
-                    '0' => 'Ninguno',
+                    '0.0' => 'Ninguno',
                     '5.1' => 'Menor con Riesgo desnutrición',
                     '5.2' => 'Menor sin esquema de vacunación completo',
                     '3.3' => 'Menor con Signos de peligro EDA o IRA',
@@ -166,7 +166,7 @@ echo $this->Form->input('responsable_id', array('value' => $nombreUsuario, 'type
 
                 <?php
                 $riesgovulnerabilidad = [
-                    '0' => 'Ninguna',
+                    '0.0' => 'Ninguna',
                     '2.0' => 'Persona con discapacidad sin cuidador',
                     '2.1' => 'Menor sin estudiar',
                     '1.3' => 'Población Especial en riesgo',
@@ -568,7 +568,7 @@ echo $this->Form->input('responsable_id', array('value' => $nombreUsuario, 'type
                     <label for="responsables" class="font-semibold">Responsable EBS</label>
                 </div>
                 <?php echo $this->Form->input(
-                    'responsable_id',
+                    'responsables',
                     [
                         'type' => 'select',
                         'label' => false,
