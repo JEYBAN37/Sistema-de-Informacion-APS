@@ -62,6 +62,7 @@ echo $this->Form->input('responsable_id', array('value' => $nombreUsuario, 'type
                 echo $this->Form->input('resultadoEcomapa', [
                     'label' => false,
                     'type' => 'text',
+                    'value' => 'data[Observacion][resultadoEcomapa]',
                     'id' => 'resultadoEcomapa',
                     'class' => 'border border-gray-300 rounded-lg w-full p-2 focus:outline-none text-sm text-gray-700',
                     'readonly' => 'readonly'
@@ -81,9 +82,9 @@ echo $this->Form->input('responsable_id', array('value' => $nombreUsuario, 'type
                 echo $this->Form->input('resultadoFamiliograma', [
                     'label' => false,
                     'type' => 'text',
+                    'value' => 'data[Observacion][resultadoFamiliograma]',
                     'id' => 'resultadoFamiliograma',
                     'class' => 'border border-gray-300 rounded-lg w-full p-2 focus:outline-none text-sm text-gray-700',
-
                     'readonly' => 'readonly',
                 ]);
                 ?>
