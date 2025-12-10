@@ -70,6 +70,16 @@ class JuventudadultosController extends AppController
 					));
 				}
 
+				if (isset($this->request->data['btn']) && $this->request->data['btn'] == 'Guardar') {
+					$this->Session->setFlash('Registro de familia se guradado con exito, continuar con informacion del siguiente integrante', 'flash_custom', array('class' => 'success', 'title' => 'El registro se ha completado correctamente'));
+
+					return $this->redirect(array(
+						'controller' => 'Familias',
+						'action' => 'view/' . $id_familia,
+						'?' => array('familia' => $id_familia)
+					));
+				}
+
 			} else {
 				$this->Session->setFlash('El registro no fue guardado o esta pendiente un campo del formulario', 'flash_custom', array('class' => 'error', 'title' => 'Error al guardar el registro'));
 			}
