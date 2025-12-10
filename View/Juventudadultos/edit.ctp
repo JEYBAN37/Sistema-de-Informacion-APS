@@ -2805,6 +2805,78 @@ echo $this->Form->input('fechaRegistro', [
                 }
                 ?>
             </div>
+
+            <!-- riegodepresion -->
+			<div class="flex flex-col md:flex-row justify-center md:justify-between col-span-1 md:col-span-2 text-md font-semibold my-6 mr-4" id="campo-psicosocial" style="display: none;">
+				<div class="flex items-center mb-4">
+					<span class="mr-2 px-2 rounded-lg bg-blue-200 text-md font-semibold">?</span>
+					<label for="riesgodepresion" class="font-semibold">¿Durante los últimos 30 dias ha sentido a menudo desanimado, deprimido o sin esperanza?</label>
+				</div>
+
+                <?php $selectedRiesgoDepresion = $this->Form->value('riesgodepresion'); ?>
+				<div class="flex space-x-4 items-center justify-center md:justify-start mt-4 pr-0 md:pr-[10%]  md:mt-0 ">
+					<!-- Botón NO -->
+					<div>
+						<input type="radio"
+							name="data[Juventudadulto][riesgodepresion]"
+							id="riesgodepresion-no"
+							value="No"
+							class="hidden peer"
+                            <?php echo $selectedRiesgoDepresion === 'No' ? 'checked' : ''; ?>
+							data-target="riesgodepresion"
+							data-show="false"
+							checked /> <!-- 👈 Por defecto NO -->
+						<label for="riesgodepresion-no"
+							class="px-12 py-2 rounded-lg border cursor-pointer hover:text-white hover:bg-teal-600
+                       peer-checked:bg-teal-600 peer-checked:text-white">
+							NO
+						</label>
+					</div>
+
+					<!-- Botón SÍ -->
+					<div>
+						<input type="radio"
+							name="data[Juventudadulto][riesgodepresion]"
+							id="riesgodepresion-si"
+							value="Si"
+							data-target="riesgodepresion"
+							data-show="true"
+                            <?php echo $selectedRiesgoDepresion === 'Si' ? 'checked' : ''; ?>
+							class="hidden peer cursor-pointer" />
+						<label for="riesgodepresion-si"
+							class="px-12 py-2 rounded-lg border hover:bg-teal-600 cursor-pointer hover:text-white
+                       peer-checked:bg-teal-600 peer-checked:text-white">
+							SI
+						</label>
+					</div>
+				</div>
+			</div>
+
+			<!-- riegodansiedad-->
+			<div class="col-span-2 md:col-span-1 text-md font-semibold my-6 mr-4" id="campo-ansiedad" style="display: none;">
+				<div class="flex items-center mb-4">
+					<span class="mr-2 px-2 rounded-lg bg-blue-200 text-md font-semibold">?</span>
+					<label for="riegodansiedad" class="font-semibold">¿Que tan seguido se ha molestado por los siguientes problemas? (Sentirse nervioso(a), ansionso(a), o inquieto)</label>
+					<p class="text-red-600">*</p>
+				</div>
+				<?php
+				echo $this->Form->input('riegodansiedad', [
+					'type' => 'select',
+					'id' => 'riegodansiedad',
+					'class' => 'border border-gray-300 rounded-lg w-full p-2 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 text-sm text-gray-500 focus:text-gray-800',
+					'error' => false,
+					'options' => $optionAnsiedad,
+					'label' => '',
+					'empty' => 'Selecciona una opción',
+
+				]);
+				if (!empty($this->Form->error('riegodansiedad'))) {
+					echo '<div class="text-red-600 text-md mt-1 font-semibold">' . $this->Form->error('riegodansiedad') . '</div>';
+				}
+				?>
+			</div>
+
+
         </div>
 
     </div>
@@ -3190,6 +3262,8 @@ echo $this->Form->input('fechaRegistro', [
                     document.getElementById("seccion-email").style.display = "block";
                     document.getElementById("seccion-telefono").style.display = "block";
                     document.getElementById("seccion-ocupacion").style.display = "block";
+                    document.getElementById("campo-psicosocial").style.display = "block";
+                    document.getElementById("campo-ansiedad").style.display = "block";
 
                     if (genero == "Mujer") {
                         document.getElementById("campo-gestacion").style.display = "flex";
@@ -3211,8 +3285,10 @@ echo $this->Form->input('fechaRegistro', [
                     ocultarYLimpiar("campo-metodosanticonceptivos");
                     ocultarYLimpiar("campo-infeccionestransmisionsexual");
                     ocultarYLimpiar("seccion-email");
-                    ocultarYLimpiar("seccion-telefono")
-                    ocultarYLimpiar("seccion-ocupacion")
+                    ocultarYLimpiar("seccion-telefono");
+                    ocultarYLimpiar("seccion-ocupacion");
+                    ocultarYLimpiar("campo-ansiedad");
+                    ocultarYLimpiar("campo-psicosocial");
                     document.getElementById("seccion-menores").style.display = "block";
                     document.getElementById("campo-cuidador").style.display = "block";
                 }
@@ -3247,6 +3323,8 @@ echo $this->Form->input('fechaRegistro', [
                 ocultarYLimpiar("campo-infeccionestransmisionsexual");
                 ocultarYLimpiar("campo-metodosanticonceptivos");
                 ocultarYLimpiar("seccion-gestacion");
+                ocultarYLimpiar("campo-psicosocial");
+                ocultarYLimpiar("campo-ansiedad");
 
                 document.getElementById("seccion-menores").style.display = "block";
                 document.getElementById("campo-era").style.display = "flex";
