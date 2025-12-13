@@ -10,6 +10,13 @@ App::uses('AppModel', 'Model');
 class Juventudadulto extends AppModel
 {
 
+	// concatenar campos de nombre completo
+	public function virtualFields() {
+		return array(
+			'nombre_completo' => "CONCAT(Juventudadulto.primernombre, ' ', Juventudadulto.segundonombre, ' ', Juventudadulto.primerapellido, ' ', Juventudadulto.segundoapellido)"
+		);
+	}
+
 	/**
 	 * Valida que el número de documento sea único, excepto para el registro actual en edición
 	 */

@@ -291,6 +291,31 @@ $nombreUsuario = isset($_SESSION['Auth']['User']['id_responsable']) ? $_SESSION[
 
         <div class="grid grid-cols-1 md:grid-cols-2">
 
+        
+            <div class="col-span-2 text-md font-semibold my-6">
+                <div class="flex items-center mb-4">
+                    <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">1</span>
+                    <label for="direccion" class="font-semibold">Objetivo </label>
+                </div>
+
+                <?php
+                echo $this->Form->input('data', [
+                    'label' => false,
+                    'type' => 'select', // Cambiado a 'textarea'
+                    'id' => 'objetivocortoplazo',
+                    'options' => $opciones,
+                    'class' => 'border border-gray-300 rounded-lg w-full p-2 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 text-sm text-gray-700',
+                    'class' => 'border rounded-lg w-full p-2 focus:ring focus:ring-blue-200',
+                    'error' => false // No mostrar error aquí            
+                ]);
+
+                if (!empty($this->Form->error('objetivocortoplazo'))) {
+                    echo '<div class="text-red-600 text-md mt-1 font-semibold">' . $this->Form->error('objetivocortoplazo') . '</div>';
+                }
+                ?>
+
+            </div>
+
             <div class="col-span-2 text-md font-semibold my-6">
                 <div class="flex items-center mb-4">
                     <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">1</span>
@@ -338,6 +363,8 @@ $nombreUsuario = isset($_SESSION['Auth']['User']['id_responsable']) ? $_SESSION[
                 ?>
 
             </div>
+
+
 
             <div class="col-span-2 text-md font-semibold my-6">
                 <div class="flex items-center mb-4">
