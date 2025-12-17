@@ -21,6 +21,13 @@ $generoOption = [
 
 ];
 
+$optionAnsiedad = [
+	'0' => 'para nada',
+	'1' => 'Algunos días',
+	'2' => 'Mas de la mitad de los días',
+	'3' => 'Casi todos los días',
+];
+
 $aseguradoraOption = [
     'Sanitas' => 'Sanitas',
     'Emssanar' => 'Emssanar',
