@@ -16,7 +16,7 @@ class Intervecion extends AppModel {
  * @var string
  */
 	public $displayField = 'id';
-
+	public $useTable = 'interveciones';
 	public $actsAs = array(
 		'Containable',
 	);

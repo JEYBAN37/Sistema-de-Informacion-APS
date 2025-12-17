@@ -4,6 +4,7 @@ App::uses('AppController', 'Controller');
  * Observacions Controller
  *
  * @property Observacion $Observacion
+ * @property Juventudadulto $Juventudadulto
  * @property PaginatorComponent $Paginator
  */
 class ObservacionsController extends AppController
@@ -15,6 +16,8 @@ class ObservacionsController extends AppController
 	 * @var array
 	 */
 	public $components = array('Paginator');
+
+
 
 	/**
 	 * index method
@@ -60,9 +63,8 @@ class ObservacionsController extends AppController
 	public function add()
 	{
 		if ($this->request->is(array('post'))) {
-			debug($this->request->data);
 			if ($this->Observacion->save($this->request->data)) {
-				
+
 				if ($this->request->data['btn'] == 'Guardar y continuar') {
 					//$session->setFlash("registro guardado");
 					$this->Session->setFlash('Registro se creó con éxito, continuar con la creacion del plan de cuidado', 'flash_custom', array('class' => 'success', 'title' => 'El registro se ha completado correctamente'));
@@ -90,6 +92,7 @@ class ObservacionsController extends AppController
 
 	public function add_plancuidado($id = null)
 	{
+		$this->loadModel('Juventudadulto');
 		if (!$this->Observacion->exists($id)) {
 			throw new NotFoundException(__('Invalid observacion'));
 		}
@@ -127,8 +130,27 @@ class ObservacionsController extends AppController
 		);
 		$this->request->data = $this->Observacion->tranformData($this->Observacion->find('first', $options));
 
+		$personas = $this->Juventudadulto->find('all', array(
+			'conditions' => array('Juventudadulto.familia_id' => $this->request->data['Observacion']['familia_id']),
+			'fields' => array(
+				'Juventudadulto.id',
+				'CONCAT(Juventudadulto.primernombre, " ",
+				 Juventudadulto.segundonombre, " ",
+				  Juventudadulto.primerapellido, " ",
+				   Juventudadulto.segundoapellido) AS nombre_completo',
+			)
+		));
+
+		$opciones = [];
+
+		foreach ($personas as $item) {
+			$id = $item['Juventudadulto']['id'];
+			$nombre = $item[0]['nombre_completo'];
+
+			$opciones[$id] = $nombre;
+		}
 		$responsables = $this->Observacion->Responsable->find('list');
-		$this->set(compact('responsables'));
+		$this->set(compact('responsables', 'opciones'));
 	}
 
 	public function addanexo()
@@ -165,53 +187,53 @@ class ObservacionsController extends AppController
 	 * @return void
 	 */
 	public function edit($id = null)
-{
-    if (!$this->Observacion->exists($id)) {
-        $this->Session->setFlash(
-            'La familia no existe',
-            'flash_custom',
-            array('class' => 'error', 'title' => 'Error al cargar el registro')
-        );
-        return $this->redirect(array('controller' => 'Familias', 'action' => 'index'));
-    }
+	{
+		if (!$this->Observacion->exists($id)) {
+			$this->Session->setFlash(
+				'La familia no existe',
+				'flash_custom',
+				array('class' => 'error', 'title' => 'Error al cargar el registro')
+			);
+			return $this->redirect(array('controller' => 'Familias', 'action' => 'index'));
+		}
 
-    if ($this->request->is(array('post', 'put'))) {
+		if ($this->request->is(array('post', 'put'))) {
 
-        // 👇 Si NO se sube archivo, eliminar campo para evitar errores
-        if (empty($this->request->data['Observacion']['familiograma']['name'])) {
-            unset($this->request->data['Observacion']['familiograma']);
-        }
+			// 👇 Si NO se sube archivo, eliminar campo para evitar errores
+			if (empty($this->request->data['Observacion']['familiograma']['name'])) {
+				unset($this->request->data['Observacion']['familiograma']);
+			}
 
-        // 👇 DEJAR A UploadBehavior HACER SU TRABAJO (NO mover archivo manualmente)
-        if ($this->Observacion->save($this->request->data)) {
-            $this->Session->setFlash(
-                'Registro actualizado con éxito',
-                'flash_custom',
-                array('class' => 'success', 'title' => 'Éxito')
-            );
-            return $this->redirect(array(
-                'controller' => 'familias',
-                'action' => 'view/' . $this->data["Observacion"]["familia_id"]
-            ));
-        } else {
-            $this->Session->setFlash(
-                'El registro no fue actualizado o falta un campo',
-                'flash_custom',
-                array('class' => 'error', 'title' => 'Error')
-            );
-        }
-    }
+			// 👇 DEJAR A UploadBehavior HACER SU TRABAJO (NO mover archivo manualmente)
+			if ($this->Observacion->save($this->request->data)) {
+				$this->Session->setFlash(
+					'Registro actualizado con éxito',
+					'flash_custom',
+					array('class' => 'success', 'title' => 'Éxito')
+				);
+				return $this->redirect(array(
+					'controller' => 'familias',
+					'action' => 'view/' . $this->data["Observacion"]["familia_id"]
+				));
+			} else {
+				$this->Session->setFlash(
+					'El registro no fue actualizado o falta un campo',
+					'flash_custom',
+					array('class' => 'error', 'title' => 'Error')
+				);
+			}
+		}
 
-    $options = array(
-        'conditions' => array('Observacion.' . $this->Observacion->primaryKey => $id)
-    );
+		$options = array(
+			'conditions' => array('Observacion.' . $this->Observacion->primaryKey => $id)
+		);
 
-    $this->request->data = $this->Observacion->tranformData(
-        $this->Observacion->find('first', $options)
-    );
+		$this->request->data = $this->Observacion->tranformData(
+			$this->Observacion->find('first', $options)
+		);
 
-    $this->set(compact('familias', 'responsables'));
-}
+		$this->set(compact('familias', 'responsables'));
+	}
 
 
 	/**
