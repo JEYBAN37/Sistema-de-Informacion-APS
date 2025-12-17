@@ -1,4 +1,127 @@
 <?php $this->layout = 'default_familia';  ?>
+<style>
+    .card {
+        background: white;
+        border: 1px solid #e5e7eb;
+        border-radius: 0.5rem;
+        overflow: hidden;
+    }
+
+    .card-header {
+        padding: 1rem;
+        border-bottom: 1px solid #e5e7eb;
+    }
+
+    .badge {
+        display: inline-flex;
+        align-items: center;
+        padding: 0.25rem 0.75rem;
+        font-size: 0.75rem;
+        font-weight: 600;
+        border-radius: 9999px;
+        border: 1px solid;
+    }
+
+    .badge-outline {
+        background: transparent;
+        border-color: #d1d5db;
+        color: #6b7280;
+    }
+
+    .badge-alcanzado {
+        background: rgba(34, 197, 94, 0.1);
+        color: #15803d;
+        border-color: rgba(34, 197, 94, 0.2);
+    }
+
+    .badge-pendiente {
+        background: rgba(234, 179, 8, 0.1);
+        color: #a16207;
+        border-color: rgba(234, 179, 8, 0.2);
+    }
+
+    .badge-en-proceso {
+        background: rgba(59, 130, 246, 0.1);
+        color: #1e40af;
+        border-color: rgba(59, 130, 246, 0.2);
+    }
+
+    .btn-icon {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 2rem;
+        height: 2rem;
+        padding: 0;
+        border: none;
+        background: transparent;
+        cursor: pointer;
+        border-radius: 0.375rem;
+        transition: background-color 0.2s;
+    }
+
+    .btn-icon:hover {
+        background: rgba(0, 0, 0, 0.05);
+    }
+
+    .btn-icon:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+
+    .btn-icon.destructive {
+        color: #dc2626;
+    }
+
+    .btn-icon.destructive:hover {
+        background: rgba(220, 38, 38, 0.1);
+    }
+
+    textarea,
+    input,
+    select {
+        width: 100%;
+        padding: 0.5rem 0.75rem;
+        border: 1px solid #d1d5db;
+        border-radius: 0.375rem;
+        font-size: 0.875rem;
+        transition: border-color 0.2s;
+    }
+
+    textarea:focus,
+    input:focus,
+    select:focus {
+        outline: none;
+        border-color: #3b82f6;
+        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    }
+
+    textarea {
+        resize: none;
+        font-family: inherit;
+    }
+
+    label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-size: 0.875rem;
+        font-weight: 500;
+        color: #374151;
+    }
+
+    .collapsed {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.3s ease-out;
+    }
+
+    .expanded {
+        max-height: 2000px;
+        transition: max-height 0.3s ease-in;
+    }
+</style>
+
+
 
 <div class="max-w-5xl mx-auto text-center mb-8">
     <h1 class="text-4xl md:text-5xl font-bold text-slate-800 mb-4 leading-tight">
@@ -22,6 +145,7 @@ echo $this->Form->create('Observacion',  [
 
 // se utiliza para llamar el id responsable donde sea necesario
 $nombreUsuario = isset($_SESSION['Auth']['User']['id_responsable']) ? $_SESSION['Auth']['User']['id_responsable'] : '';
+$idAux = $this->request->data['Observacion']['familia_id'];
 ?>
 
 <div class="max-w-6xl mx-auto p-18">
@@ -44,6 +168,7 @@ $nombreUsuario = isset($_SESSION['Auth']['User']['id_responsable']) ? $_SESSION[
             <?php echo $this->Form->hidden('id'); ?>
             <?php echo $this->Form->hidden('familia_id'); ?>
             <?php echo $this->Form->hidden('responsable_id'); ?>
+            <?php echo $this->Form->hidden('actividaddesarrollar'); ?>
 
             <!-- Resultados de ficha familiar-->
             <div class="col-span-2 md:col-span-1 text-md font-semibold my-6 mr-4">
@@ -291,7 +416,7 @@ $nombreUsuario = isset($_SESSION['Auth']['User']['id_responsable']) ? $_SESSION[
 
         <div class="grid grid-cols-1 md:grid-cols-2">
 
-        
+
             <div class="col-span-2 text-md font-semibold my-6">
                 <div class="flex items-center mb-4">
                     <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">1</span>
@@ -305,7 +430,6 @@ $nombreUsuario = isset($_SESSION['Auth']['User']['id_responsable']) ? $_SESSION[
                     'id' => 'objetivocortoplazo',
                     'options' => $opciones,
                     'class' => 'border border-gray-300 rounded-lg w-full p-2 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 text-sm text-gray-700',
-                    'class' => 'border rounded-lg w-full p-2 focus:ring focus:ring-blue-200',
                     'error' => false // No mostrar error aquí            
                 ]);
 
@@ -439,99 +563,298 @@ $nombreUsuario = isset($_SESSION['Auth']['User']['id_responsable']) ? $_SESSION[
                 ?>
             </div>
 
+        </div>
+    </div>
+
+    <div class="bg-white shadow-2xl rounded-xl p-6 md:p-12 mt-16">
+
+        <!-- Header -->
+        <div class="flex items-center mb-4">
+            <i class="fa-solid fa-person-dots-from-line text-teal-600 text-3xl bg-teal-100 p-3 rounded-lg"></i>
+            <div class="ml-4">
+                <h1 class="text-xl font-semibold">Definiciones Individuales</h1>
+                <p class="text-gray-500">Complementa la información segun los logros concertados con la familia</p>
+            </div>
+
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2">
+
 
             <div class="col-span-2 text-md font-semibold my-6">
                 <div class="flex items-center mb-4">
-                    <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">6</span>
-                    <label for="actividad" class="font-semibold">Observación del desarrollo de plan de cuidado primario</label>
+                    <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">1</span>
+                    <label for="direccion" class="font-semibold">Definicion de Logros concertados con la familia </label>
                 </div>
-                <?php echo $this->Form->input('observacionesplancuidado', array(
-                    'label' => false,
-                    'type' => 'textarea', // Cambiado a 'textarea'
-                    'class' => 'form-control',
-                    'style' => 'height:100px;  font-size: 15px ; width:100%', // Ajustado el estilo para un área de texto más grande
-                    'data-maxlength' => 5000,
-                    'class' => 'ckeditor border rounded-lg w-full p-2 focus:ring focus:ring-blue-200',
-                    'error' => false // No mostrar error aquí    
 
-                ));
+                <div class="p-2">
 
-                if (!empty($this->Form->error('observacionesplancuidado'))) {
-                    echo '<div class="text-red-600 text-md mt-1 font-semibold">' . $this->Form->error('observacionesplancuidado') . '</div>';
-                }
+                    <!-- Desktop: Table Layout -->
+                    <div id="desktopView" class="block overflow-x-auto">
+                        <table class="w-full border-collapse">
+                            <tbody id="tableBody" class="divide-y divide-gray-200">
+                                <!-- Table rows will be rendered here by JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
 
-                ?>
+                    <!-- Action Buttons -->
+                    <div class="flex flex-col sm:flex-row gap-3 pt-4 border-t border-gray-200">
+                        <button type="button" id="addRowBtn" class="flex items-center justify-center gap-2 px-6 py-3 bg-teal-600 text-white rounded-lg hover:bg-green-700 transition-colors font-medium">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                            </svg>
+                            Agregar fila
+                        </button>
+                        <button type="button" id="removeLastBtn" class="flex items-center justify-center gap-2 px-6 py-3 bg-white text-gray-700 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors font-medium cursor-pointer">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                            </svg>
+                            Quitar última fila
+                        </button>
+                    </div>
+                </div>
             </div>
 
             <div class="col-span-2 text-md font-semibold my-6">
                 <div class="flex items-center mb-4">
-                    <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">7</span>
-                    <label for="actividad" class="font-semibold">Nombres de representante familia que concerta plan de cuidado primario</label>
+                    <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">2</span>
+                    <label for="direccion" class="font-semibold">Registre opersonas que no desean participar en el Plan</label>
                 </div>
-                <?php echo $this->Form->input('firmaplancuidado', array(
+
+                <div class="p-2">
+
+                    <!-- Desktop: Table Layout -->
+                    <!-- Campo oculto para almacenar los datos de disentimiento serializados -->
+                    <?php echo $this->Form->hidden('disentimiento', [
+                        'id' => 'disentimiento_hidden',
+                    ]); ?>
+
+                    <!-- Desktop: Table Layout para disentimiento -->
+                    <div id="desktopViewdisentimiento" class="block overflow-x-auto">
+                        <table class="w-full border-collapse">
+                            <thead>
+                                <tr>
+                                    <th class="p-2 font-medium">Nombre</th>
+                                    <th class="p-2 font-medium">Documento</th>
+                                    <th class="p-2 font-medium">Rol</th>
+                                    <th class="p-2 font-medium">Motivo</th>
+                                    <th class="p-2 font-medium">Acción</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tableBodyDisentimiento" class="divide-y divide-gray-200">
+                                <!-- Table rows will be rendered here by JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Action Buttons para disentimiento -->
+                    <div class="flex flex-col sm:flex-row gap-3 pt-4 border-t border-gray-200 mt-4">
+                        <button type="button" id="addRowBtnDisentimiento" class="flex items-center justify-center gap-2 px-6 py-3 bg-teal-600 text-white rounded-lg hover:bg-green-700 transition-colors font-medium">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                            </svg>
+                            Agregar fila
+                        </button>
+                        <button type="button" id="removeLastBtnDisentimiento" class="flex items-center justify-center gap-2 px-6 py-3 bg-white text-gray-700 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors font-medium cursor-pointer">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                            </svg>
+                            Quitar última fila
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+<div class="bg-white shadow-2xl rounded-xl p-6 md:p-12 mt-16">
+
+    <!-- Header -->
+    <div class="flex items-center mb-4">
+        <i class="fa-solid fa-suitcase-medical text-teal-600 text-3xl bg-teal-100 p-3 rounded-lg"></i>
+        <div class="ml-4">
+            <h1 class="text-xl font-semibold">Observaciones Finales</h1>
+            <p class="text-gray-500">Completa la información según la necesidad.</p>
+        </div>
+
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2">
+
+        <div class="col-span-2 text-md font-semibold my-6">
+            <div class="flex items-center mb-4">
+                <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">1</span>
+                <label for="actividad" class="font-semibold">Observación del desarrollo de plan de cuidado primario</label>
+            </div>
+            <?php echo $this->Form->input('observacionesplancuidado', array(
+                'label' => false,
+                'type' => 'textarea', // Cambiado a 'textarea'
+                'class' => 'form-control',
+                'style' => 'height:100px;  font-size: 15px ; width:100%', // Ajustado el estilo para un área de texto más grande
+                'data-maxlength' => 5000,
+                'class' => 'ckeditor border rounded-lg w-full p-2 focus:ring focus:ring-blue-200',
+                'error' => false // No mostrar error aquí    
+
+            ));
+
+            if (!empty($this->Form->error('observacionesplancuidado'))) {
+                echo '<div class="text-red-600 text-md mt-1 font-semibold">' . $this->Form->error('observacionesplancuidado') . '</div>';
+            }
+
+            ?>
+        </div>
+
+        <div class="col-span-2 text-md font-semibold my-6">
+            <div class="flex items-center mb-4">
+                <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">2</span>
+                <label for="actividad" class="font-semibold">Nombres de representante familia que concerta plan de cuidado primario</label>
+            </div>
+            <?php echo $this->Form->input('firmaplancuidado', array(
+                'label' => false,
+                'type' => 'text',
+                'class' => 'border border-gray-300 rounded-lg w-full p-2 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 text-sm text-gray-700',
+                'style' => 'height:40px; font-size:16px;',
+                'error' => false // No mostrar error aquí
+
+            ));
+
+            if (!empty($this->Form->error('firmaplancuidado'))) {
+                echo '<div class="text-red-600 text-md mt-1 font-semibold">' . $this->Form->error('firmaplancuidado') . '</div>';
+            }
+
+            ?>
+        </div>
+
+
+        <?php echo $this->Form->hidden('date'); ?>
+
+
+        <div class="col-span-2 text-md font-semibold my-6">
+            <div class="flex items-center mb-4">
+                <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">3</span>
+                <label for="responsables" class="font-semibold">Responsable EBS</label>
+            </div>
+            <?php echo $this->Form->input(
+                'responsables',
+                [
+                    'type' => 'select',
                     'label' => false,
-                    'type' => 'text',
-                    'class' => 'border border-gray-300 rounded-lg w-full p-2 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 text-sm text-gray-700',
-                    'style' => 'height:40px; font-size:16px;',
+                    'multiple' => 'multiple', // Permitir selección múltiple
+                    'id' => 'responsables',
+                    'class' => 'w-full',
+                    'empty' => false,
+                    'options' => $responsables,
                     'error' => false // No mostrar error aquí
+                ]
+            );
+            if (!empty($this->Form->error('responsables'))) {
+                echo '<div class="text-red-600 text-md mt-1 font-semibold">' . $this->Form->error('responsables') . '</div>';
+            }
 
-                ));
-
-                if (!empty($this->Form->error('firmaplancuidado'))) {
-                    echo '<div class="text-red-600 text-md mt-1 font-semibold">' . $this->Form->error('firmaplancuidado') . '</div>';
-                }
-
-                ?>
-            </div>
-
-
-            <?php echo $this->Form->hidden('date'); ?>
-
-
-            <div class="col-span-2 text-md font-semibold my-6">
-                <div class="flex items-center mb-4">
-                    <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">9</span>
-                    <label for="responsables" class="font-semibold">Responsable EBS</label>
-                </div>
-                <?php echo $this->Form->input(
-                    'responsables',
-                    [
-                        'type' => 'select',
-                        'label' => false,
-                        'multiple' => 'multiple', // Permitir selección múltiple
-                        'id' => 'responsables',
-                        'class' => 'w-full',
-                        'empty' => false,
-                        'options' => $responsables,
-                        'error' => false // No mostrar error aquí
-                    ]
-                );
-                if (!empty($this->Form->error('responsables'))) {
-                    echo '<div class="text-red-600 text-md mt-1 font-semibold">' . $this->Form->error('responsables') . '</div>';
-                }
-
-                ?>
-            </div>
-
-
-            <!-- Botón -->
-            <div class="w-full p-2">
-                <button name="btn" value="Guardar Plan" type="submit" class="w-full bg-teal-600 text-white px-6 py-2 rounded-md hover:bg-green-700 transition font-medium flex items-center justify-center gap-2">
-                    <span>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-save-icon lucide-save">
-                            <path d="M15.2 3a2 2 0 0 1 1.4.6l3.8 3.8a2 2 0 0 1 .6 1.4V19a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z" />
-                            <path d="M17 21v-7a1 1 0 0 0-1-1H8a1 1 0 0 0-1 1v7" />
-                            <path d="M7 3v4a1 1 0 0 0 1 1h7" />
-                        </svg>
-                    </span>
-                    Guardar Plan
-                </button>
-            </div>
-
-
+            ?>
         </div>
     </div>
 </div>
+
+
+<div class="max-w-6xl mx-auto p-18 mt-8">
+    <div class="bg-white shadow-2xl rounded-xl p-12">
+        <!-- Header -->
+        <div class="flex items-center mb-4">
+            <i class="fa-solid fa-file-waveform text-teal-600 text-3xl bg-teal-100 p-4 rounded-lg"></i>
+            <div class="ml-4">
+                <h1 class="text-xl font-semibold">Cargue de Plan de Cuidado</h1>
+                <p class="text-gray-500">Anexe el archivo comprimido correspondiente.</p>
+            </div>
+
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2">
+
+            <div class="col-span-2 text-md font-semibold my-6">
+                <div class="flex items-center mb-4">
+                    <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">1</span>
+                    <label for="proactividad_id" class="font-semibold">Plan de Cuidado Firmado</label>
+                    <p class="text-red-600">*</p>
+
+                </div>
+
+                <div class="flex flex-col gap-2">
+                    <label for="familiograma" class="block text-gray-700 font-semibold text-sm mb-2">
+                        Adjuntar archivo con 3MB (pdf, jpg, png , jpeg)
+                    </label>
+                    <div class="relative w-full">
+                        <?php
+                        echo $this->Form->input('plancuidado', [
+                            'label' => false,
+                            'type' => 'file',
+                            'class' => 'block w-full text-sm text-gray-700 border border-gray-300 rounded-lg cursor-pointer bg-white focus:outline-none focus:ring-2 focus:ring-blue-400 p-3 file:mr-4 file:py-6 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-green-50 file:text-green-700 hover:file:bg-green-100',
+                            'onchange' => 'validarTamanioSoporte()',
+                            'id' => 'ProcesoregistroAnexo',
+                            'error' => false
+                        ]);
+                        if (!empty($this->Form->error('plancuidado'))) {
+                            echo '<div class="text-red-600 text-md mt-1 font-semibold">' . $this->Form->error('plancuidado') . '</div>';
+                        }
+
+                        echo $this->Form->input('dirplancuidado', array('type' => 'hidden'));
+                        ?>
+                    </div>
+                    <span class="text-xs text-gray-500 mt-1">
+                        NOTA:
+                        * Cargar en archivo con extension "pdf", "jpg", "png", "jpeg" <br>
+                        * Familiograma Diligenciado <br>
+                        * Nomenclatura recomendada IDFAMILIA_APELLIDOS <br>
+                        El nombre del archivo no debe tener tildes o diéresis.
+                    </span>
+                </div>
+                <div class="relative w-full mt-4">
+                    <?php if (!empty($this->request->data['Observacion']['plancuidado'])): ?>
+                        <div class="block w-full text-sm text-gray-700 border border-gray-300 rounded-lg cursor-pointer bg-white focus:outline-none focus:ring-2 focus:ring-blue-400 p-3 file:mr-4 file:py-6 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
+                            Archivo actual:
+                            <a href="<?php echo $this->webroot . 'files/Observacion/plancuidado/' . $this->request->data['Observacion']['dirplancuidado'] . '/' . $this->request->data['Observacion']['plancuidado']; ?>" target="_blank" class="text-blue-600 underline ml-2">
+                                <?php echo $this->request->data['Observacion']['plancuidado']; ?>
+                            </a>
+                        </div>
+                    <?php endif; ?>
+                </div>
+            </div>
+
+
+
+
+
+            <div class="pt-2 flex gap-4">
+                <!-- Botón -->
+                <div class="w-full p-2">
+                    <button name="btn" value="Guardar Plan" type="submit" class="w-full bg-teal-600 text-white px-6 py-2 rounded-md hover:bg-green-700 transition font-medium flex items-center justify-center gap-2">
+                        <span>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-save-icon lucide-save">
+                                <path d="M15.2 3a2 2 0 0 1 1.4.6l3.8 3.8a2 2 0 0 1 .6 1.4V19a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z" />
+                                <path d="M17 21v-7a1 1 0 0 0-1-1H8a1 1 0 0 0-1 1v7" />
+                                <path d="M7 3v4a1 1 0 0 0 1 1h7" />
+                            </svg>
+                        </span>
+                        Guardar Plan
+                    </button>
+                </div>
+                <div class="w-full p-2">
+                    <button onclick="preventBackNavigation()" name="btn" value="volver" type="button" class="w-full bg-teal-600 text-white px-6 py-2 rounded-md hover:bg-green-700 transition font-medium flex items-center justify-center gap-2">
+                        <span>
+                            <i class="fa-solid fa-person-walking-arrow-loop-left "></i>
+                        </span>
+                        Volver a Familia
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+</div>
+
 
 
 <script type="text/javascript">
@@ -664,7 +987,11 @@ $nombreUsuario = isset($_SESSION['Auth']['User']['id_responsable']) ? $_SESSION[
         });
     });
 
-
+    function preventBackNavigation() {
+        if (confirm('¿Está seguro que desea salir de la página? Se pueden perder los cambios no guardados.')) {
+            window.location.href = '<?php echo $this->Html->url(['controller' => 'Familias', 'action' => 'view', $idAux]); ?>';
+        }
+    }
 
 
 
@@ -673,6 +1000,8 @@ $nombreUsuario = isset($_SESSION['Auth']['User']['id_responsable']) ? $_SESSION[
         const riesgosSalud = document.getElementById('riesgosalud');
         const puntuacionFamilia = document.getElementById('puntuacionfamilia');
         const valoracionFamilia = document.getElementById('valoracionfamilia');
+        const opcionesResponsableFamilia = <?= json_encode($opciones) ?>;
+        console.log(row.responsableFamilia);
 
         function calculateSum() {
             let sum = 0;
@@ -767,35 +1096,8 @@ $nombreUsuario = isset($_SESSION['Auth']['User']['id_responsable']) ? $_SESSION[
         var tbody = document.getElementById('actividaddesarrollar_tbody');
         var index = parseInt(tbody.getAttribute('data-index'), 10);
         var row = document.createElement('tr');
-        row.innerHTML = '' +
-            '<td class="p-2">' +
-            '<textarea name="data[Observacion][actividaddesarrollar][' + index + '][situacion]" class="form-control border border-gray-300 rounded-lg w-full p-2 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 text-sm text-gray-700" style="resize:vertical;"></textarea>' +
-            '</td>' +
-            '<td class="p-2">' +
-            '<textarea name="data[Observacion][actividaddesarrollar][' + index + '][logro]" class="form-control border border-gray-300 rounded-lg w-full p-2 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 text-sm text-gray-700" style="resize:vertical;"></textarea>' +
-            '</td>' +
-            '<td class="p-2">' +
-            '<textarea name="data[Observacion][actividaddesarrollar][' + index + '][responsable]" class="form-control border border-gray-300 rounded-lg w-full p-2 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 text-sm text-gray-700" style="resize:vertical;"></textarea>' +
-            '</td>' +
-            '<td class="p-2">' +
-            '<textarea name="data[Observacion][actividaddesarrollar][' + index + '][fecha]" class="form-control border border-gray-300 rounded-lg w-full p-2 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 text-sm text-gray-700" style="resize:vertical;"></textarea>' +
-            '</td>' +
-            '<td class="p-2">' +
-            '<textarea name="data[Observacion][actividaddesarrollar][' + index + '][fechaSeguimiento]" class="form-control border border-gray-300 rounded-lg w-full p-2 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 text-sm text-gray-700" style="resize:vertical;"></textarea>' +
-            '</td>' +
-            '<td class="p-2">' +
-            '<textarea name="data[Observacion][actividaddesarrollar][' + index + '][observacion]" class="form-control border border-gray-300 rounded-lg w-full p-2 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 text-sm text-gray-700" style="resize:vertical;"></textarea>' +
-            '</td>' +
-            '<td class="p-2">' +
-            '<select name="data[Observacion][actividaddesarrollar][' + index + '][estado]" class="form-control border border-gray-300 rounded-lg w-full p-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm text-gray-700 bg-white hover:bg-gray-50">' +
-            '<option value="" class="text-gray-500">En Proceso</option>' +
-            '<option value="Logro alcanzado" class="text-green-600">Logro alcanzado</option>' +
-            '<option value="Logro no alcanzado" class="text-red-600">Logro no alcanzado</option>' +
-            '</select>' +
-            '<div class="mt-2">' +
-            '<button type="button" class="btn btn-danger btn-sm bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600" onclick="removeRow(this)">Eliminar</button>' +
-            '</div>' +
-            '</td>';
+        row.innerHTML = ''
+
         tbody.appendChild(row);
         tbody.setAttribute('data-index', index + 1);
     }
@@ -821,4 +1123,389 @@ $nombreUsuario = isset($_SESSION['Auth']['User']['id_responsable']) ? $_SESSION[
             alert('Debe quedar al menos una fila.');
         }
     }
+
+    let rows = [];
+    let expandedRows = new Set();
+
+    function guardarRowsEnObservacion() {
+        const obsField = document.querySelector('[name="data[Observacion][actividaddesarrollar]"]');
+        if (obsField) {
+            obsField.value = JSON.stringify(rows);
+        }
+    }
+
+    function inicializarRowsDesdeObservacion() {
+        const obsField = document.querySelector('[name="data[Observacion][actividaddesarrollar]"]');
+        let deserializados = [];
+        if (obsField && obsField.value) {
+            try {
+                const datos = JSON.parse(obsField.value);
+                if (Array.isArray(datos) && datos.length > 0 && datos[0].id) {
+                    deserializados = datos;
+                }
+            } catch (e) {
+                // No es JSON válido, ignorar
+            }
+        }
+        // Siempre inicia con una fila vacía, luego los deserializados
+        rows = [{
+            id: Date.now().toString(),
+            situacionesPriorizadas: "",
+            logrosAlcanzados: "",
+            responsableFamilia: "",
+            fechaCompromiso: "",
+            fechaSeguimiento: "",
+            seguimientoCompromiso: "",
+            estado: "pendiente",
+        }, ...deserializados];
+        // Solo expandir la fila vacía al inicio
+        expandedRows = new Set([rows[0].id]);
+    }
+
+    inicializarRowsDesdeObservacion();
+
+    // Utility functions
+    function getEstadoColor(estado) {
+        switch (estado) {
+            case "alcanzado":
+                return "badge-alcanzado"
+            case "pendiente":
+                return "badge-pendiente"
+            case "en-proceso":
+                return "badge-en-proceso"
+            default:
+                return ""
+        }
+    }
+
+    function getEstadoText(estado) {
+        switch (estado) {
+            case "alcanzado":
+                return "Logro alcanzado"
+            case "pendiente":
+                return "Pendiente"
+            case "en-proceso":
+                return "En proceso"
+            default:
+                return estado
+        }
+    }
+
+    // Row operations
+    function addRow() {
+        const newRow = {
+            id: Date.now().toString(),
+            situacionesPriorizadas: "",
+            logrosAlcanzados: "",
+            responsableFamilia: "",
+            fechaCompromiso: "",
+            fechaSeguimiento: "",
+            seguimientoCompromiso: "",
+            estado: "pendiente",
+        }
+        rows.push(newRow)
+        expandedRows = new Set([newRow.id])
+        render()
+    }
+
+    function removeRow(id) {
+        if (rows.length > 1) {
+            rows = rows.filter((row) => row.id !== id)
+            expandedRows.delete(id)
+            render()
+        }
+    }
+
+    function removeLastRow() {
+        if (rows.length > 1) {
+            const lastId = rows[rows.length - 1].id
+            expandedRows.delete(lastId)
+            rows = rows.slice(0, -1)
+            render()
+        }
+    }
+
+    function toggleRow(id) {
+        if (expandedRows.has(id)) {
+            expandedRows.delete(id)
+        } else {
+            expandedRows.add(id)
+        }
+        render()
+    }
+
+    function updateRow(id, field, value) {
+        const row = rows.find((r) => r.id === id)
+        if (row) {
+            row[field] = value
+        }
+        guardarRowsEnObservacion();
+    }
+
+    const opcionesResponsableFamilia = <?= json_encode($opciones) ?>;
+
+    function renderOpciones(selectedId = '') {
+        let html = `<option value="">Seleccione una persona</option>`;
+
+        for (const id in opcionesResponsableFamilia) {
+            const selected = id == selectedId ? 'selected' : '';
+            html += `<option value="${id}" ${selected}>
+                    ${opcionesResponsableFamilia[id]}
+                 </option>`;
+        }
+
+        return html;
+    }
+
+
+    function renderDesktopView() {
+        const tableBody = document.getElementById("tableBody")
+        tableBody.innerHTML = ""
+
+
+        rows.forEach((row, index) => {
+            const isExpanded = expandedRows.has(row.id)
+            const tr = document.createElement("tr")
+            tr.className = "hover:bg-gray-50 transition-colors"
+
+            const cargados_personas = <?= json_encode($opciones) ?>;
+            let convetir = JSON.stringify(cargados_personas);
+            convetir = JSON.parse(convetir);
+            console.log(convetir[0]);
+
+            if (isExpanded) {
+                tr.innerHTML = `
+            <div class="w-full border border-gray-300 rounded-lg my-4">
+                <div class="px-3 py-3 text-center bg-teal-100 rounded-t-lg flex items-center justify-center ">
+                    <button type="button" class="btn-icon" onclick="toggleRow('${row.id}')">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"/>
+                        </svg>
+                    </button>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 pb-4">
+
+                    <div class="col-span-2 text-md font-semibold my-2 px-4">
+                        <div class="flex items-center mb-2">
+                            <label for="direccion" class="font-semibold">Situaciones Priorizadas</label>
+                        </div>
+                        <textarea 
+                        rows="3" 
+                        placeholder="Describe las situaciones priorizadas..." 
+                        onchange="updateRow('${row.id}', 'situacionesPriorizadas', this.value)" 
+                        class="ckeditor border rounded-lg w-full p-2 focus:ring focus:ring-blue-200 text-gray-700" 
+                        style="height:100px; font-size: 15px; width:100%">${row.situacionesPriorizadas}</textarea>
+
+                    </div>
+
+                    <div class="col-span-2 text-md font-semibold my-2 px-4">
+                        <div class="flex items-center mb-2">
+                            <label for="direccion" class="font-semibold">Logros Alcanzados</label>
+                        </div>
+                        <textarea 
+                        rows="3" 
+                        placeholder="Describe los logros alcanzados..." 
+                        onchange="updateRow('${row.id}', 'logrosAlcanzados', this.value)" 
+                        class="ckeditor border rounded-lg w-full p-2 focus:ring focus:ring-blue-200 text-gray-700" 
+                        style="height:100px; font-size: 15px; width:100%">${row.logrosAlcanzados}</textarea>
+
+                    </div>
+
+                    <div class="col-span-2 text-md font-semibold my-2 px-4">
+                        <div class="flex items-center mb-4">
+                            <label class="font-semibold">Responsable de la familia</label>
+                        </div>
+
+                    <select
+                        onchange="updateRow('${row.id}', 'responsableFamilia', this.value)"
+                        class="border border-gray-300 rounded-lg w-full p-2 focus:outline-none focus:ring-1 focus:ring-blue-500 text-sm text-gray-700">
+                        ${renderOpciones(row.responsableFamilia)}
+                    </select>
+                    </div>
+                
+                    <div class="col-span-2 sm:col-span-1 text-md font-semibold my-2 px-4">
+                        <div class="flex items-center mb-4">
+                            <label for="actividad" class="font-semibold">Fecha de compromiso</label>
+                        </div>
+                        <input type="date" 
+                            value="${row.fechaCompromiso}" 
+                            onchange="updateRow('${row.id}', 'fechaCompromiso', this.value)" 
+                            class="border border-gray-300 rounded-lg w-full p-2 focus:outline-none focus:ring-1 focus:ring-blue-500 text-sm text-gray-700"/>
+                    </div>
+
+                    <div class="col-span-2 sm:col-span-1 text-md font-semibold my-2 px-4">
+                        <div class="flex items-center mb-4">
+                            <label for="actividad" class="font-semibold">Seguimiento al compromiso</label>
+                        </div>
+                        <input type="date" 
+                            value="${row.fechaSeguimiento}" 
+                            onchange="updateRow('${row.id}', 'fechaSeguimiento', this.value)" 
+                            class="border border-gray-300 rounded-lg w-full p-2 focus:outline-none focus:ring-1 focus:ring-blue-500 text-sm text-gray-700"/>
+                    </div>
+
+                    <div class="col-span-2 text-md font-semibold my-2 px-4">
+                        <div class="flex items-center mb-2">
+                            <label class="font-semibold">Estado</label>
+                        </div>
+
+                    <select
+                        onchange="updateRow('${row.id}', 'estado', this.value)"
+                        class="border border-gray-300 rounded-lg w-full p-2 focus:outline-none focus:ring-1 focus:ring-blue-500 text-sm text-gray-700">
+                        <option value="pendiente" ${row.estado === "pendiente" ? "selected" : ""}>Pendiente</option>
+                        <option value="en-proceso" ${row.estado === "en-proceso" ? "selected" : ""}>En proceso</option>
+                        <option value="alcanzado" ${row.estado === "alcanzado" ? "selected" : ""}>Logro alcanzado</option>
+                    </select>
+                    </div>
+            
+                </div>
+            </div>
+            `
+            } else {
+                tr.innerHTML = `
+                <div class="w-full border border-gray-300 rounded-lg flex items-center justify-between px-4 py-3 my-4">
+                  <button type="button" class="btn-icon" onclick="toggleRow('${row.id}')">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                        </svg>
+                    </button>
+                     <div class="flex items-center gap-3">
+                        <span class="badge badge-outline">#${index + 1}</span>
+                        <span class="badge ${getEstadoColor(row.estado)}">${getEstadoText(row.estado)}</span>
+                        <span class="text-sm text-gray-600 truncate flex-1">${row.situacionesPriorizadas || "Sin información"}</span>
+                        ${row.responsableFamilia ? `<span class="text-sm font-medium">${opcionesResponsableFamilia[row.responsableFamilia]}</span>` : ""}
+                    </div>
+                     <button class="btn-icon destructive" onclick="removeRow('${row.id}')" ${rows.length === 1 ? "disabled" : ""}>
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                        </svg>
+                    </button>
+                </div>
+            `
+            }
+
+            tableBody.appendChild(tr)
+        })
+    }
+
+    function render() {
+        renderDesktopView()
+
+        // Update button states
+        document.getElementById("removeLastBtn").disabled = rows.length === 1
+    }
+
+    // Event listeners
+    document.getElementById("addRowBtn").addEventListener("click", addRow)
+    document.getElementById("removeLastBtn").addEventListener("click", removeLastRow)
+
+    // Initial render
+    render()
+
+    // --- Disentimiento Table Logic ---
+    let disentRows = [];
+    let disentIdCounter = 0;
+
+    function renderDesktopViewDisentimiento() {
+        const tableBody = document.getElementById("tableBodyDisentimiento");
+        if (!tableBody) return;
+        tableBody.innerHTML = "";
+        disentRows.forEach((row, index) => {
+            const tr = document.createElement("tr");
+            tr.className = "hover:bg-gray-50 transition-colors p";
+            tr.innerHTML = `
+                            <td class="p-2">
+                                <input type="text" class="border border-gray-300 rounded-lg w-full p-2 text-sm" placeholder="Nombre" value="${row.nombre || ''}" onchange="updateDisentRow(${row.id}, 'nombre', this.value)">
+                            </td>
+                            <td class="p-2">
+                                <input type="text" class="border border-gray-300 rounded-lg w-full p-2 text-sm" placeholder="Documento" value="${row.documento || ''}" onchange="updateDisentRow(${row.id}, 'documento', this.value)">
+                            </td>
+                            <td class="p-2">
+                                <input type="text" class="border border-gray-300 rounded-lg w-full p-2 text-sm" placeholder="Rol" value="${row.rol || ''}" onchange="updateDisentRow(${row.id}, 'rol', this.value)">
+                            </td>
+                            <td class="p-2">
+                                <input type="text" class="border border-gray-300 rounded-lg w-full p-2 text-sm" placeholder="Motivo" value="${row.motivo || ''}" onchange="updateDisentRow(${row.id}, 'motivo', this.value)">
+                            </td>
+                            <td class="p-2 text-center">
+                                <button type="button" class="btn-icon destructive" onclick="removeDisentRow(${row.id})" ${disentRows.length === 1 ? "disabled" : ""} title="Eliminar fila">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                                    </svg>
+                                </button>
+                            </td>
+                        `;
+            tableBody.appendChild(tr);
+        });
+    }
+
+    function addDisentRow() {
+        disentRows.push({
+            id: disentIdCounter++,
+            nombre: '',
+            documento: '',
+            rol: '',
+            motivo: ''
+        });
+        renderDesktopViewDisentimiento();
+        guardarDisentimientoEnHidden();
+    }
+
+    function removeDisentRow(id) {
+        if (disentRows.length === 1) return;
+        disentRows = disentRows.filter(row => row.id !== id);
+        renderDesktopViewDisentimiento();
+        guardarDisentimientoEnHidden();
+    }
+
+    function updateDisentRow(id, field, value) {
+        const idx = disentRows.findIndex(row => row.id === id);
+        if (idx !== -1) {
+            disentRows[idx][field] = value;
+            guardarDisentimientoEnHidden();
+        }
+    }
+
+    function guardarDisentimientoEnHidden() {
+        const hidden = document.getElementById('disentimiento_hidden');
+        if (hidden) {
+            // Guardar solo si hay datos relevantes
+            const toSave = disentRows.filter(row => row.nombre || row.documento || row.rol || row.motivo);
+            hidden.value = JSON.stringify(toSave);
+        }
+    }
+
+    function inicializarDisentimientoDesdeHidden() {
+        const hidden = document.getElementById('disentimiento_hidden');
+        let deserializados = [];
+        if (hidden && hidden.value) {
+            try {
+                deserializados = JSON.parse(hidden.value);
+            } catch (e) {
+                deserializados = [];
+            }
+        }
+        // Si hay datos, solo mostrar los deserializados; si no, una fila vacía
+        if (deserializados.length > 0) {
+            disentRows = deserializados.map(row => ({ ...row, id: disentIdCounter++ }));
+        } else {
+            disentRows = [{ id: disentIdCounter++, nombre: '', documento: '', rol: '', motivo: '' }];
+        }
+        renderDesktopViewDisentimiento();
+    }
+
+    // Inicializar tabla disentimiento al cargar
+    document.addEventListener("DOMContentLoaded", () => {
+        inicializarDisentimientoDesdeHidden();
+        // Botones de acción
+        const addBtn = document.getElementById('addRowBtnDisentimiento');
+        if (addBtn) addBtn.onclick = addDisentRow;
+        const removeBtn = document.getElementById('removeLastBtnDisentimiento');
+        if (removeBtn) removeBtn.onclick = () => {
+            if (disentRows.length > 1) {
+                disentRows.pop();
+                renderDesktopViewDisentimiento();
+                guardarDisentimientoEnHidden();
+            }
+        };
+    });
 </script>
