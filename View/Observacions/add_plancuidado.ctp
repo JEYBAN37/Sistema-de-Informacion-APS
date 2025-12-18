@@ -669,160 +669,92 @@ $idAux = $this->request->data['Observacion']['familia_id'];
     </div>
 
 
-<div class="bg-white shadow-2xl rounded-xl p-6 md:p-12 mt-16">
+    <div class="bg-white shadow-2xl rounded-xl p-6 md:p-12 mt-16">
 
-    <!-- Header -->
-    <div class="flex items-center mb-4">
-        <i class="fa-solid fa-suitcase-medical text-teal-600 text-3xl bg-teal-100 p-3 rounded-lg"></i>
-        <div class="ml-4">
-            <h1 class="text-xl font-semibold">Observaciones Finales</h1>
-            <p class="text-gray-500">Completa la información según la necesidad.</p>
-        </div>
-
-    </div>
-
-    <div class="grid grid-cols-1 md:grid-cols-2">
-
-        <div class="col-span-2 text-md font-semibold my-6">
-            <div class="flex items-center mb-4">
-                <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">1</span>
-                <label for="actividad" class="font-semibold">Observación del desarrollo de plan de cuidado primario</label>
-            </div>
-            <?php echo $this->Form->input('observacionesplancuidado', array(
-                'label' => false,
-                'type' => 'textarea', // Cambiado a 'textarea'
-                'class' => 'form-control',
-                'style' => 'height:100px;  font-size: 15px ; width:100%', // Ajustado el estilo para un área de texto más grande
-                'data-maxlength' => 5000,
-                'class' => 'ckeditor border rounded-lg w-full p-2 focus:ring focus:ring-blue-200',
-                'error' => false // No mostrar error aquí    
-
-            ));
-
-            if (!empty($this->Form->error('observacionesplancuidado'))) {
-                echo '<div class="text-red-600 text-md mt-1 font-semibold">' . $this->Form->error('observacionesplancuidado') . '</div>';
-            }
-
-            ?>
-        </div>
-
-        <div class="col-span-2 text-md font-semibold my-6">
-            <div class="flex items-center mb-4">
-                <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">2</span>
-                <label for="actividad" class="font-semibold">Nombres de representante familia que concerta plan de cuidado primario</label>
-            </div>
-            <?php echo $this->Form->input('firmaplancuidado', array(
-                'label' => false,
-                'type' => 'text',
-                'class' => 'border border-gray-300 rounded-lg w-full p-2 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 text-sm text-gray-700',
-                'style' => 'height:40px; font-size:16px;',
-                'error' => false // No mostrar error aquí
-
-            ));
-
-            if (!empty($this->Form->error('firmaplancuidado'))) {
-                echo '<div class="text-red-600 text-md mt-1 font-semibold">' . $this->Form->error('firmaplancuidado') . '</div>';
-            }
-
-            ?>
-        </div>
-
-
-        <?php echo $this->Form->hidden('date'); ?>
-
-
-        <div class="col-span-2 text-md font-semibold my-6">
-            <div class="flex items-center mb-4">
-                <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">3</span>
-                <label for="responsables" class="font-semibold">Responsable EBS</label>
-            </div>
-            <?php echo $this->Form->input(
-                'responsables',
-                [
-                    'type' => 'select',
-                    'label' => false,
-                    'multiple' => 'multiple', // Permitir selección múltiple
-                    'id' => 'responsables',
-                    'class' => 'w-full',
-                    'empty' => false,
-                    'options' => $responsables,
-                    'error' => false // No mostrar error aquí
-                ]
-            );
-            if (!empty($this->Form->error('responsables'))) {
-                echo '<div class="text-red-600 text-md mt-1 font-semibold">' . $this->Form->error('responsables') . '</div>';
-            }
-
-            ?>
-        </div>
-    </div>
-</div>
-
-
-<div class="max-w-6xl mx-auto p-18 mt-8">
-    <div class="bg-white shadow-2xl rounded-xl p-12">
         <!-- Header -->
         <div class="flex items-center mb-4">
-            <i class="fa-solid fa-file-waveform text-teal-600 text-3xl bg-teal-100 p-4 rounded-lg"></i>
+            <i class="fa-solid fa-suitcase-medical text-teal-600 text-3xl bg-teal-100 p-3 rounded-lg"></i>
             <div class="ml-4">
-                <h1 class="text-xl font-semibold">Cargue de Plan de Cuidado</h1>
-                <p class="text-gray-500">Anexe el archivo comprimido correspondiente.</p>
+                <h1 class="text-xl font-semibold">Observaciones Finales</h1>
+                <p class="text-gray-500">Completa la información según la necesidad.</p>
             </div>
 
         </div>
+
         <div class="grid grid-cols-1 md:grid-cols-2">
 
             <div class="col-span-2 text-md font-semibold my-6">
                 <div class="flex items-center mb-4">
                     <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">1</span>
-                    <label for="proactividad_id" class="font-semibold">Plan de Cuidado Firmado</label>
-                    <p class="text-red-600">*</p>
-
+                    <label for="actividad" class="font-semibold">Observación del desarrollo de plan de cuidado primario</label>
                 </div>
+                <?php echo $this->Form->input('observacionesplancuidado', array(
+                    'label' => false,
+                    'type' => 'textarea', // Cambiado a 'textarea'
+                    'class' => 'form-control',
+                    'style' => 'height:100px;  font-size: 15px ; width:100%', // Ajustado el estilo para un área de texto más grande
+                    'data-maxlength' => 5000,
+                    'class' => 'ckeditor border rounded-lg w-full p-2 focus:ring focus:ring-blue-200',
+                    'error' => false // No mostrar error aquí    
 
-                <div class="flex flex-col gap-2">
-                    <label for="familiograma" class="block text-gray-700 font-semibold text-sm mb-2">
-                        Adjuntar archivo con 3MB (pdf, jpg, png , jpeg)
-                    </label>
-                    <div class="relative w-full">
-                        <?php
-                        echo $this->Form->input('plancuidado', [
-                            'label' => false,
-                            'type' => 'file',
-                            'class' => 'block w-full text-sm text-gray-700 border border-gray-300 rounded-lg cursor-pointer bg-white focus:outline-none focus:ring-2 focus:ring-blue-400 p-3 file:mr-4 file:py-6 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-green-50 file:text-green-700 hover:file:bg-green-100',
-                            'onchange' => 'validarTamanioSoporte()',
-                            'id' => 'ProcesoregistroAnexo',
-                            'error' => false
-                        ]);
-                        if (!empty($this->Form->error('plancuidado'))) {
-                            echo '<div class="text-red-600 text-md mt-1 font-semibold">' . $this->Form->error('plancuidado') . '</div>';
-                        }
+                ));
 
-                        echo $this->Form->input('dirplancuidado', array('type' => 'hidden'));
-                        ?>
-                    </div>
-                    <span class="text-xs text-gray-500 mt-1">
-                        NOTA:
-                        * Cargar en archivo con extension "pdf", "jpg", "png", "jpeg" <br>
-                        * Familiograma Diligenciado <br>
-                        * Nomenclatura recomendada IDFAMILIA_APELLIDOS <br>
-                        El nombre del archivo no debe tener tildes o diéresis.
-                    </span>
+                if (!empty($this->Form->error('observacionesplancuidado'))) {
+                    echo '<div class="text-red-600 text-md mt-1 font-semibold">' . $this->Form->error('observacionesplancuidado') . '</div>';
+                }
+
+                ?>
+            </div>
+
+            <div class="col-span-2 text-md font-semibold my-6">
+                <div class="flex items-center mb-4">
+                    <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">2</span>
+                    <label for="actividad" class="font-semibold">Nombres de representante familia que concerta plan de cuidado primario</label>
                 </div>
-                <div class="relative w-full mt-4">
-                    <?php if (!empty($this->request->data['Observacion']['plancuidado'])): ?>
-                        <div class="block w-full text-sm text-gray-700 border border-gray-300 rounded-lg cursor-pointer bg-white focus:outline-none focus:ring-2 focus:ring-blue-400 p-3 file:mr-4 file:py-6 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
-                            Archivo actual:
-                            <a href="<?php echo $this->webroot . 'files/Observacion/plancuidado/' . $this->request->data['Observacion']['dirplancuidado'] . '/' . $this->request->data['Observacion']['plancuidado']; ?>" target="_blank" class="text-blue-600 underline ml-2">
-                                <?php echo $this->request->data['Observacion']['plancuidado']; ?>
-                            </a>
-                        </div>
-                    <?php endif; ?>
-                </div>
+                <?php echo $this->Form->input('firmaplancuidado', array(
+                    'label' => false,
+                    'type' => 'text',
+                    'class' => 'border border-gray-300 rounded-lg w-full p-2 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 text-sm text-gray-700',
+                    'style' => 'height:40px; font-size:16px;',
+                    'error' => false // No mostrar error aquí
+
+                ));
+
+                if (!empty($this->Form->error('firmaplancuidado'))) {
+                    echo '<div class="text-red-600 text-md mt-1 font-semibold">' . $this->Form->error('firmaplancuidado') . '</div>';
+                }
+
+                ?>
             </div>
 
 
+            <?php echo $this->Form->hidden('date'); ?>
 
+
+            <div class="col-span-2 text-md font-semibold my-6">
+                <div class="flex items-center mb-4">
+                    <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">3</span>
+                    <label for="responsables" class="font-semibold">Responsable EBS</label>
+                </div>
+                <?php echo $this->Form->input(
+                    'responsables',
+                    [
+                        'type' => 'select',
+                        'label' => false,
+                        'multiple' => 'multiple', // Permitir selección múltiple
+                        'id' => 'responsables',
+                        'class' => 'w-full',
+                        'empty' => false,
+                        'options' => $responsables,
+                        'error' => false // No mostrar error aquí
+                    ]
+                );
+                if (!empty($this->Form->error('responsables'))) {
+                    echo '<div class="text-red-600 text-md mt-1 font-semibold">' . $this->Form->error('responsables') . '</div>';
+                }
+
+                ?>
+            </div>
 
 
             <div class="pt-2 flex gap-4">
@@ -839,6 +771,7 @@ $idAux = $this->request->data['Observacion']['familia_id'];
                         Guardar Plan
                     </button>
                 </div>
+
                 <div class="w-full p-2">
                     <button onclick="preventBackNavigation()" name="btn" value="volver" type="button" class="w-full bg-teal-600 text-white px-6 py-2 rounded-md hover:bg-green-700 transition font-medium flex items-center justify-center gap-2">
                         <span>
@@ -850,9 +783,6 @@ $idAux = $this->request->data['Observacion']['familia_id'];
             </div>
         </div>
     </div>
-</div>
-
-
 </div>
 
 
@@ -1486,9 +1416,18 @@ $idAux = $this->request->data['Observacion']['familia_id'];
         }
         // Si hay datos, solo mostrar los deserializados; si no, una fila vacía
         if (deserializados.length > 0) {
-            disentRows = deserializados.map(row => ({ ...row, id: disentIdCounter++ }));
+            disentRows = deserializados.map(row => ({
+                ...row,
+                id: disentIdCounter++
+            }));
         } else {
-            disentRows = [{ id: disentIdCounter++, nombre: '', documento: '', rol: '', motivo: '' }];
+            disentRows = [{
+                id: disentIdCounter++,
+                nombre: '',
+                documento: '',
+                rol: '',
+                motivo: ''
+            }];
         }
         renderDesktopViewDisentimiento();
     }

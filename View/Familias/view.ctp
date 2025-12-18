@@ -5,14 +5,14 @@ $hasObservation = false;
 if (!empty($familia['Observacion']) && is_array($familia['Observacion'])) {
     $hasObservation = true;
     foreach ($familia['Observacion'] as $obs) {
-        if (!empty($obs['dirplancuidado'])) {
+        if (!empty($obs['firmaplancuidado'])) {
             $hasPlan = true;
             break;
         }
     }
 }
 
-$planUrl = $this->Html->url(['controller' => 'Familias', 'action' => 'plancuidado', $familia['Familia']['id']]);
+$planUrl = $this->Html->url(['controller' => 'Observacions', 'action' => 'addanexo', $familia['Familia']['id']]);
 ?>
 <link
     rel="stylesheet"
@@ -76,7 +76,7 @@ $planUrl = $this->Html->url(['controller' => 'Familias', 'action' => 'plancuidad
 
 
         <button title="Generar Plan de Cuidado" type="button"
-            id="btn-plancuidado"
+            id="btn-hasObservation"
             data-has-plan="<?php echo $hasPlan ? '1' : '0'; ?>"
             data-url="<?php echo h($planUrl); ?>"
             class="flex items-center w-38 space-x-2 bg-teal-600 text-white px-4 py-2 rounded hover:bg-teal-700"
@@ -407,7 +407,7 @@ $planUrl = $this->Html->url(['controller' => 'Familias', 'action' => 'plancuidad
                                         <td colspan="6" class="border border-gray-300 p-2 text-sm text-gray-700"><?php
                                                                                                                     if (!empty($observacion['dirplancuidado'])) {
                                                                                                                         echo $this->Html->link(
-                                                                                                                            h($observacion['resultadoPlanCuidado']),
+                                                                                                                            ($observacion['plancuidado']),
                                                                                                                             '../files/observacion/plancuidado/' . $observacion['dirplancuidado'] . '/' . $observacion['plancuidado'],
                                                                                                                             ['target' => '_blank', 'class' => 'underline text-blue-700 hover:text-blue-900']
                                                                                                                         );

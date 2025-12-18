@@ -445,7 +445,7 @@ class Observacion extends AppModel
 			),
 			'isValidMimeType' => array(
 
-				'rule' => array('isValidExtension', array('pdf', 'jpg', 'png', 'jpeg')),
+				'rule' => array('isValidExtension', array('pdf')),
 				'message' => 'El archivo debe ser de tipo pdf'
 			),
 			'isBelowMaxSize' => array(
