@@ -99,7 +99,7 @@ class ObservacionsController extends AppController
 
 		if ($this->request->is(array('post', 'put'))) {			// Procesar otros campos específicos del formulario si es necesario
 			if ($this->Observacion->save($this->request->data)) {
-				$this->Session->setFlash('Registro se guardó con éxito, continuar con información de la familia / hogar', 'flash_custom', array('class' => 'success', 'title' => 'El registro se ha completado correctamente'));					//return $this->redirect(array('action' => 'index'));
+				$this->Session->setFlash('Registro se guardó con éxito, continuar con la firma del Plan de Cuidado', 'flash_custom', array('class' => 'success', 'title' => 'El registro se ha completado correctamente'));					//return $this->redirect(array('action' => 'index'));
 				return $this->redirect(array('controller' => 'familias', 'action' => 'view', $this->request->data["Observacion"]["familia_id"]));
 			} else {
 				$this->Session->setFlash('No se ha guardado, por favor revisar campos', 'flash_custom', array('class' => 'error', 'title' => 'Error al guardar el registro'));
@@ -149,33 +149,61 @@ class ObservacionsController extends AppController
 
 			$opciones[$id] = $nombre;
 		}
+
+		if (empty($this->request->data('Observacion')['familia_id']) || empty($opciones)) {
+			$this->Session->setFlash('No hay personas registradas en esta familia. Por favor, registre al menos una persona antes de continuar con el plan de cuidado.', 'flash_custom', array('class' => 'error', 'title' => 'Error'));
+			return $this->redirect(array('controller' => 'Juventudadultos', 'action' => 'add', '?' => array('familia_id' => $this->request->data['Observacion']['familia_id'])));
+		}
 		$responsables = $this->Observacion->Responsable->find('list');
 		$this->set(compact('responsables', 'opciones'));
 	}
 
-	public function addanexo()
-	{
-		if ($this->request->is('post')) {
-			$this->Observacion->create();
-			if ($this->Observacion->save($this->request->data)) {
-				$this->Session->setFlash('La observación se ha guardado correctamente', 'default', array('class' => 'alert alert-success'));
-				$familiaId = isset($this->data["Observacion"]["familia_id"]) ? $this->data["Observacion"]["familia_id"] : null;
 
+	public function addanexo($id = null)
+	{
+			if (!$this->Observacion->exists($id)) {
+			$this->Session->setFlash(
+				'La familia no existe',
+				'flash_custom',
+				array('class' => 'error', 'title' => 'Error al cargar el registro')
+			);
+			return $this->redirect(array('controller' => 'Familias', 'action' => 'index'));
+		}
+
+		if ($this->request->is(array('post', 'put'))) {
+
+			// 👇 Si NO se sube archivo, eliminar campo para evitar errores
+			if (empty($this->request->data['Observacion']['plancuidado']['name'])) {
+				unset($this->request->data['Observacion']['plancuidado']);
+			}
+
+			// 👇 DEJAR A UploadBehavior HACER SU TRABAJO (NO mover archivo manualmente)
+			if ($this->Observacion->save($this->request->data)) {
+				$this->Session->setFlash(
+					'Registro actualizado con éxito',
+					'flash_custom',
+					array('class' => 'success', 'title' => 'Éxito')
+				);
 				return $this->redirect(array(
 					'controller' => 'familias',
-					'action' => 'view',
-					$this->data["Observacion"]["familia_id"],
-					'?' => array(
-						'familia_id' => $familiaId
-					)
+					'action' => 'view/' . $this->data["Observacion"]["familia_id"]
 				));
 			} else {
-				$this->Session->setFlash('No se ha guardado, por favor revisar campos', 'default', array('class' => 'alert alert-danger'));
+				$this->Session->setFlash(
+					'El registro no fue actualizado o falta un campo',
+					'flash_custom',
+					array('class' => 'error', 'title' => 'Error')
+				);
 			}
 		}
-		$familias = $this->Observacion->Familia->find('list');
-		$responsables = $this->Observacion->Responsable->find('list');
-		$this->set(compact('familias', 'responsables'));
+
+		$options = array(
+			'conditions' => array('Observacion.familia_id' => $id)
+		);
+
+		$this->request->data = $this->Observacion->tranformData(
+			$this->Observacion->find('first', $options)
+		);
 	}
 
 

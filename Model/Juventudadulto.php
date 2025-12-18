@@ -281,7 +281,7 @@ class Juventudadulto extends AppModel
 		'antecedenteginecologico' => array(
 			'multiple' => array(
 				'rule' => array('multiple', array('min' => 0)),
-				'message' => 'El campo de canalización es obligatorio',
+				'allowEmpty' => true,
 			),
 		),
 		'educacion' => array(
