@@ -10,7 +10,7 @@ App::uses('Configure', 'Core');
  */
 class FamiliasController extends AppController
 {
-	var $uses = array("Familia", "Ubicacion");
+	var $uses = array("Familia", "Ubicacion", "Sociambiental", "Responsable");
 	/**
 	 * Components
 	 *
@@ -94,7 +94,7 @@ class FamiliasController extends AppController
 					'fields' => array('nombres')
 				),
 				'Observacion' => array(
-					'fields' => array('id', 'observacion', 'valoracionfamilia', 'canalizacionuno', 'resultadoFamiliograma', 'resultadoEcomapa', 'dirplancuidado', 'dirfamiliograma', 'fecha', 'familiograma','firmaplancuidado','plancuidado')
+					'fields' => array('id', 'observacion', 'valoracionfamilia', 'canalizacionuno', 'resultadoFamiliograma', 'resultadoEcomapa', 'dirplancuidado', 'dirfamiliograma', 'fecha', 'familiograma', 'firmaplancuidado', 'plancuidado')
 				)
 			)
 		));
@@ -139,9 +139,45 @@ class FamiliasController extends AppController
 
 		$ficha = $this->Familia->find('first', array(
 			'conditions' => array('Familia.' . $this->Familia->primaryKey => $id),
-			'recursive' => -1
+			'fields' => array('
+			Familia.*'),
+			'contain' => array(
+				'Juventudadulto' => array( // <-- Esto trae los registros relacionados por familia_id
+					'fields' => array('id', 'primernombre', 'segundonombre', 'primerapellido', 'segundoapellido', 'fechanac', 'sexo', 'aseguradora', 'canalizacionuno', 'condicioncronica')
+				),
+				'Sociambiental' => array(
+					'fields' => array('id', 'fecha', 'apellidosfamilia', 'direccion', 'numerohogares', 'longitud', 'latitud', 'barriovereda')
+				),
+				'Ubicacion' => array(
+					'fields' => array('microterritorio', 'cod_microterritorio')
+				),
+				'Responsable' => array(
+					'fields' => array('nombres','profesion','id')
+				),
+				'Observacion' => array(
+					'fields' => array(
+						'responsable_id',
+						'familia_id',
+						'resultadoEcomapa',
+						'resultadoFamiliograma',
+						'date',
+						'id',
+						'menoresriegosalud',
+						'riesgovulnerabilidad',
+						'puntuacionfamilia',
+						'valoracionfamilia',
+						'fortalezas',
+						'objetivocortoplazo',
+						'objetivolargoplazo',
+						'entornoafectado',
+						'indicadorria',
+						'observacionesplancuidado',
+						'firmaplancuidado',
+						'responsables',
+					)
+				)
 			)
-		);
+		));
 
 		debug($ficha);
 		$this->set('familia', $ficha);
@@ -374,7 +410,7 @@ class FamiliasController extends AppController
 				'Sociambiental.id',
 				'Sociambiental.fecha',
 				'Ubicacion.microterritorio',
-    			'CONCAT(Familia.numeropersonas, "/", COUNT(Juventudadulto.id)) AS integrantes'
+				'CONCAT(Familia.numeropersonas, "/", COUNT(Juventudadulto.id)) AS integrantes'
 			),
 			'joins' => array(
 				array(
@@ -490,5 +526,4 @@ class FamiliasController extends AppController
 		$estadisticas = $this->Familia->getEstadisticasResponsable($responsable);
 		$this->set('estadisticas', $estadisticas);
 	}
-
 }

@@ -350,6 +350,15 @@ $planUrl = $this->Html->url(['controller' => 'Observacions', 'action' => 'addane
                                                 </button>
                                                 <div class="hidden absolute left-0 mt-2 w-32 bg-white border border-gray-200 rounded shadow-lg z-50 menu-options">
                                                     <a href="<?php echo $this->Html->url(['controller' => 'Observacions', 'action' => 'add_plancuidado/' . $observacion['id']]); ?>" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 text-sm">Agregar Plan de Cuidado</a>
+                                                    <?php
+                                                    if (!empty($observacion['firmaplancuidado'])) :
+                                                    ?>
+                                                        <a href="<?php echo $this->Html->url(['controller' => 'Familias', 'action' => 'plancuidado/' . $observacion['familia_id']]); ?>" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 text-sm">Ver Plan de Cuidado</a>
+
+                                                    <?php
+                                                    endif;
+                                                    ?>
+
                                                     <a href="<?php echo $this->Html->url(['controller' => 'Observacions', 'action' => 'view', $observacion['id']]); ?>" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 text-sm">Ver</a>
                                                     <a href="<?php echo $this->Html->url(['controller' => 'Observacions', 'action' => 'edit', $observacion['id']]); ?>"
                                                         class="block px-4 py-2 text-gray-700 hover:bg-gray-100 text-sm">Editar</a>
