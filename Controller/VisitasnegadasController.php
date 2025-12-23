@@ -99,7 +99,9 @@ class VisitasnegadasController extends AppController
 			),
 		);
 		$Visitasnegada = $this->Visitasnegada->find(
-			'first', $options);
+			'first',
+			$options
+		);
 
 		$this->set('visitasnegada', $Visitasnegada);
 	}
@@ -182,7 +184,7 @@ class VisitasnegadasController extends AppController
 		return $this->redirect(array('action' => 'index'));
 	}
 
-		public function VisitasNegadasResponsableIndex()
+	public function VisitasNegadasResponsableIndex()
 	{
 		// Configurar para respuesta JSON
 		$this->autoRender = false;
@@ -234,25 +236,21 @@ class VisitasnegadasController extends AppController
 		}
 
 		$conditions = array();
-		// Obtener responsable usando Auth o Session (fallback a $_SESSION si hace falta)
-		$r = $this->Auth->user();
-		$responsable = $r['responsable_id'];
 
 		// debug($responsable); // activar si necesita depurar
 		if (!empty($search)) {
-			if (!empty($responsable)) {
-				// responsable es obligatoria (AND), el resto es OR
-				$conditions['AND'] = array(
-					'Responsable.id' => intval($responsable),
-					'OR' => array(
-						'Visitasnegada.fecha LIKE' => "%$search%",
-						'Visitasnegada.id LIKE' => "%$search%",
-						'Visitasnegada.telefono LIKE' => "%$search%",
-						'Visitasnegada.estadocasa LIKE' => "%$search%",
-						'Ubicacion.microterritorio LIKE' => "%$search%",
-					)
-				);
-			}
+
+			// responsable es obligatoria (AND), el resto es OR
+			$conditions['AND'] = array(
+				'Responsable.id' => intval($responsable),
+				'OR' => array(
+					'Visitasnegada.fecha LIKE' => "%$search%",
+					'Visitasnegada.id LIKE' => "%$search%",
+					'Visitasnegada.telefono LIKE' => "%$search%",
+					'Visitasnegada.estadocasa LIKE' => "%$search%",
+					'Ubicacion.microterritorio LIKE' => "%$search%",
+				)
+			);
 		} else if (!empty($microterritorio) || !empty($fecha)) {
 			if (!empty($microterritorio)) {
 				$conditions['Ubicacion.microterritorio'] = intval($microterritorio);
@@ -260,10 +258,8 @@ class VisitasnegadasController extends AppController
 			if (!empty($fecha)) {
 				$conditions['Visitasnegada.fecha'] = $fecha;
 			}
-		} else {
-			$conditions['Responsable.id'] = intval($responsable);
-		}
-
+		} 
+		
 		$total = $this->Visitasnegada->find('count');
 		$filtered = $this->Visitasnegada->find('count', array('conditions' => $conditions));
 
@@ -321,5 +317,4 @@ class VisitasnegadasController extends AppController
 		echo json_encode($result);
 		exit();
 	}
-
 }

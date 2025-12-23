@@ -1277,7 +1277,7 @@ $animalesOptions = [
                             <path d="M7 3v4a1 1 0 0 0 1 1h7" />
                         </svg>
                     </span>
-                    Guardar cambios
+                    Actualizar
                 </button>
             </div>
 

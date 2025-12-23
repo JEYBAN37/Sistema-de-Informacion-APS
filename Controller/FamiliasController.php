@@ -22,7 +22,7 @@ class FamiliasController extends AppController
 	{
 		parent::beforeFilter();
 		// Permitir acceso a métodos JSON sin autenticación
-		$this->Auth->allow('familiasResponsablesIndex', 'testConnection', 'simpleJson');
+		$this->Auth->allow('familiasResponsablesIndex', 'familiaIndex', 'simpleJson');
 	}
 
 	/**
@@ -48,11 +48,7 @@ class FamiliasController extends AppController
 		$this->set('estadisticas', $estadisticas);
 	}
 
-	public function index_familias()
-	{
-		$estadisticas = $this->Familia->getEstadisticasResponsable(1);
-		$this->set('estadisticas', $estadisticas);
-	}
+	public function index_familias() {}
 
 	/**
 	 * view method
@@ -146,13 +142,42 @@ class FamiliasController extends AppController
 					'fields' => array('id', 'primernombre', 'segundonombre', 'primerapellido', 'segundoapellido', 'fechanac', 'sexo', 'aseguradora', 'canalizacionuno', 'condicioncronica')
 				),
 				'Sociambiental' => array(
-					'fields' => array('id', 'fecha', 'apellidosfamilia', 'direccion', 'numerohogares', 'longitud', 'latitud', 'barriovereda')
+					'fields' => array(
+						'id',
+						'fecha',
+						'apellidosfamilia',
+						'direccion',
+						'numerohogares',
+						'longitud',
+						'latitud',
+						'barriovereda',
+						'vivienda',
+						'actividad',
+						'estadoparedes',
+						'estadotecho',
+						'hacinamiento',
+						'riesgoexterno',
+						'riesgo',
+						'acceso',
+						'aguaservicio',
+						'aguatratamiento',
+						'aguasiministro',
+						'aguaresiduales',
+						'diposicionexcretas',
+						'reciclaje',
+						'numeroPerros',
+						'numeroGatos',
+						'mascotas',
+						'desparasitamascotas',
+						'cuidadomascotas',
+						'vacunamascotas',
+					)
 				),
 				'Ubicacion' => array(
 					'fields' => array('microterritorio', 'cod_microterritorio')
 				),
 				'Responsable' => array(
-					'fields' => array('nombres','profesion','id')
+					'fields' => array('nombres', 'profesion', 'id')
 				),
 				'Observacion' => array(
 					'fields' => array(
@@ -174,12 +199,53 @@ class FamiliasController extends AppController
 						'observacionesplancuidado',
 						'firmaplancuidado',
 						'responsables',
+						'actividaddesarrollar',
+						'disentimiento'
 					)
 				)
 			)
 		));
 
-		debug($ficha);
+
+		$ficha = $this->Familia->tranformData($ficha);
+
+		// Obtener todos los responsables con nombre y profesión
+		$responsablesData = $this->Responsable->find('all', array(
+			'fields' => array('Responsable.id', 'Responsable.nombres', 'Responsable.profesion'),
+			'recursive' => -1
+		));
+
+		// Crear array indexado por ID con nombre y profesión
+		$responsables = array();
+		foreach ($responsablesData as $resp) {
+			$id = $resp['Responsable']['id'];
+			$nombre = $resp['Responsable']['nombres'];
+			$profesion = $resp['Responsable']['profesion'];
+			$responsables[$id] = array(
+				'nombre' => $nombre,
+				'profesion' => $profesion
+			);
+		}
+
+		// Procesar el campo 'responsables' en Observacion para convertir IDs a nombres con profesión
+		if (!empty($ficha['Observacion'][0]['responsables'])) {
+			$idsResponsables = explode(',', $ficha['Observacion'][0]['responsables']);
+			$responsablesCompletos = array();
+
+			foreach ($idsResponsables as $idResp) {
+				$idResp = trim($idResp);
+				if (isset($responsables[$idResp])) {
+					$responsablesCompletos[] = array(
+						'nombre' => $responsables[$idResp]['nombre'],
+						'profesion' => $responsables[$idResp]['profesion']
+					);
+				}
+			}
+
+			// Reemplazar con array de responsables completos
+			$ficha['Observacion'][0]['responsables'] = $responsablesCompletos;
+		}
+
 		$this->set('familia', $ficha);
 	}
 
@@ -192,7 +258,6 @@ class FamiliasController extends AppController
 	{
 		if ($this->request->is('post')) {
 			$this->request->data['Familia']['sociambiental_id'] = $sociambientals_id;
-			debug($this->request->data);
 			if ($this->Familia->save($this->request->data)) {
 				if ($this->request->data['btn'] == 'Guardar y continuar') {
 					$this->Session->setFlash('Registro de familia se guradado con exito, continuar con informacion de los integrantes', 'flash_custom', array('class' => 'success', 'title' => 'El registro se ha completado correctamente'));
@@ -275,7 +340,8 @@ class FamiliasController extends AppController
 
 			if (!empty($familia)) {
 				// Si se encuentra la familia, asignarla a la solicitud
-				$this->request->data = $familia;
+
+				$this->request->data = $this->Familia->tranformData($familia);
 			} else {
 				// Si no se encuentra, mostrar un mensaje de error
 				$this->Session->setFlash('No se encontró la familia con el ID proporcionado.', 'flash_custom', array('class' => 'error', 'title' => 'Error'));
@@ -399,7 +465,51 @@ class FamiliasController extends AppController
 		}
 
 		$total = $this->Familia->find('count');
-		$filtered = $this->Familia->find('count', array('conditions' => $conditions));
+
+		$joins = array(
+			array(
+				'table' => 'sociambientals',
+				'alias' => 'Sociambiental',
+				'type' => 'LEFT',
+				'conditions' => array('Familia.sociambiental_id = Sociambiental.id')
+			),
+			array(
+				'table' => 'ubicaciones',
+				'alias' => 'Ubicacion',
+				'type' => 'LEFT',
+				'conditions' => array('Sociambiental.ubicacion_id = Ubicacion.id')
+			),
+			array(
+				'table' => 'responsables',
+				'alias' => 'Responsable',
+				'type' => 'LEFT',
+				'conditions' => array('Sociambiental.responsable_id = Responsable.id')
+			),
+			array(
+				'table' => 'juventudadultos',
+				'alias' => 'Juventudadulto',
+				'type' => 'LEFT',
+				'conditions' => array('Juventudadulto.familia_id = Familia.id')
+			)
+		);
+
+		$filtered = $this->Familia->find('count', array(
+			'conditions' => $conditions,
+			'joins' => $joins,
+			'group' => array('Familia.id'),
+			'recursive' => -1,
+		));
+
+		$group = array(
+			'Familia.id',
+			'Familia.celular',
+			'Familia.apellidos',
+			'Familia.numeropersonas',
+			'Sociambiental.id',
+			'Sociambiental.fecha',
+			'Ubicacion.microterritorio',
+			'Responsable.nombres'
+		);
 
 		$data = $this->Familia->find('all', array(
 			'conditions' => $conditions,
@@ -410,35 +520,11 @@ class FamiliasController extends AppController
 				'Sociambiental.id',
 				'Sociambiental.fecha',
 				'Ubicacion.microterritorio',
+				'Responsable.nombres',
 				'CONCAT(Familia.numeropersonas, "/", COUNT(Juventudadulto.id)) AS integrantes'
 			),
-			'joins' => array(
-				array(
-					'table' => 'sociambientals',
-					'alias' => 'Sociambiental',
-					'type' => 'LEFT',
-					'conditions' => array('Familia.sociambiental_id = Sociambiental.id')
-				),
-				array(
-					'table' => 'ubicaciones',
-					'alias' => 'Ubicacion',
-					'type' => 'LEFT',
-					'conditions' => array('Sociambiental.ubicacion_id = Ubicacion.id')
-				),
-				array(
-					'table' => 'responsables',
-					'alias' => 'Responsable',
-					'type' => 'LEFT',
-					'conditions' => array('Sociambiental.responsable_id = Responsable.id')
-				),
-				array(
-					'table' => 'juventudadultos',
-					'alias' => 'Juventudadulto',
-					'type' => 'LEFT',
-					'conditions' => array('Juventudadulto.familia_id = Familia.id')
-				)
-			),
-			'group' => array('Familia.id'),
+			'joins' => $joins,
+			'group' => $group,
 			'limit' => $length,
 			'offset' => $start,
 			'order' => $orderBy,
@@ -467,12 +553,15 @@ class FamiliasController extends AppController
 				'apellidos' => isset($row['Familia']['apellidos']) ? $row['Familia']['apellidos'] : '',
 				'microterritorio' => isset($row['Ubicacion']['microterritorio']) ? $row['Ubicacion']['microterritorio'] : '',
 				'integrantes' => isset($row[0]['integrantes']) ? $row[0]['integrantes'] : '',
+				'responsable'  => isset($row['Responsable']['nombres']) ? $row['Responsable']['nombres'] : '',
 			);
 		}
 		echo json_encode($result);
 		exit();
 	}
 
+	
+	
 	public function testConnection()
 	{
 		$this->autoRender = false;

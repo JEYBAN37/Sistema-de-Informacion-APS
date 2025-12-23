@@ -159,9 +159,9 @@ $optionLgtbi = ['' => 'Elegir', 'Si' => 'Si', 'No' => 'No'];
 
 $optionEnferemedadAntecedentes = [
     '2.No' => 'No refiere',
-    '1.Alteraciones mentales : Esquizofrenia, TAB, depresión.' => 'Alteraciones mentales : Esquizofrenia, TAB, depresión.',
-    '1.Cánceres (Mama, cuello uterino, estómago, prostata, colon, recto, pulmonar, leucemia.' => 'Cánceres (Mama, cuello uterino, estómago, prostata, colon, recto, pulmonar, leucemia.',
-    '1.Enfermedad cardio- cerebro- vascular: (hipertensión, infarto agudo al miocardio)' => 'Enfermedad cardio- cerebro- vascular: (hipertensión, infarto agudo al miocardio)',
+    '1.Alteraciones mentales : Esquizofrenia TAB depresión' => 'Alteraciones mentales : Esquizofrenia, TAB, depresión.',
+    '1.Cánceres (Mama cuello uterino estómago prostata colon recto pulmonar leucemia.' => 'Cánceres (Mama, cuello uterino, estómago, prostata, colon, recto, pulmonar, leucemia.',
+    '1.Enfermedad cardio- cerebro- vascular: (hipertensión infarto agudo al miocardio)' => 'Enfermedad cardio- cerebro- vascular: (hipertensión, infarto agudo al miocardio)',
     '1.Enfermedad renal ' => 'Enfermedad renal y/o cronica',
     '1.Enfermedad respiratoria: Asma/EPOC' => 'Enfermedad respiratoria: Asma/EPOC',
     '1.Diabetes' => 'Diabetes',
@@ -1222,7 +1222,7 @@ $alimentosHogar = [
                     <!-- Botón NO -->
                     <div>
                         <input type="radio"
-                            name="data[Familia][cuidadorpermanente]"
+                            name="data[Familia][cuidadorpermante]"
                             id="cuidadorpermanente-no"
                             value="0"
                             class="hidden peer"
@@ -1239,7 +1239,7 @@ $alimentosHogar = [
                     <!-- Botón SÍ -->
                     <div>
                         <input type="radio"
-                            name="data[Familia][cuidadorpermanente]"
+                            name="data[Familia][cuidadorpermante]"
                             id="cuidadorpermanente-si"
                             value="1"
                             data-target="cuidadorpermanente"
