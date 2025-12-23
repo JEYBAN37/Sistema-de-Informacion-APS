@@ -97,7 +97,8 @@ class ObservacionsController extends AppController
 			throw new NotFoundException(__('Invalid observacion'));
 		}
 
-		if ($this->request->is(array('post', 'put'))) {			// Procesar otros campos específicos del formulario si es necesario
+		if ($this->request->is(array('post', 'put'))) {
+			// El Model's beforeSave se encarga de convertir los arrays a strings
 			if ($this->Observacion->save($this->request->data)) {
 				$this->Session->setFlash('Registro se guardó con éxito, continuar con la firma del Plan de Cuidado', 'flash_custom', array('class' => 'success', 'title' => 'El registro se ha completado correctamente'));					//return $this->redirect(array('action' => 'index'));
 				return $this->redirect(array('controller' => 'familias', 'action' => 'view', $this->request->data["Observacion"]["familia_id"]));
@@ -123,13 +124,14 @@ class ObservacionsController extends AppController
 				'Observacion.objetivolargoplazo',
 				'Observacion.entornoafectado',
 				'Observacion.indicadorria',
+				'Observacion.actividaddesarrollar',
+				'Observacion.disentimiento',
 				'Observacion.observacionesplancuidado',
 				'Observacion.firmaplancuidado',
 				'Observacion.responsables',
 			)
 		);
 		$this->request->data = $this->Observacion->tranformData($this->Observacion->find('first', $options));
-
 		$personas = $this->Juventudadulto->find('all', array(
 			'conditions' => array('Juventudadulto.familia_id' => $this->request->data['Observacion']['familia_id']),
 			'fields' => array(

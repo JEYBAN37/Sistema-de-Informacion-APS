@@ -251,14 +251,14 @@ class SociambientalsController extends AppController
 
 		if ($this->request->is(array('post', 'put'))) {
 			if ($this->Sociambiental->save($this->request->data)) {
-				if ($this->request->data['btn'] == 'Guardar y continuar') {
+				if ($this->request->data['btn'] == 'Guardar cambios') {
 					//$session->setFlash("registro guardado");
 					$this->Session->setFlash('Registro se actualizo con exito, continuar con informacion de la familia / hogar', 'flash_custom', array('class' => 'success', 'title' => 'El registro se ha completado correctamente'));					//return $this->redirect(array('action' => 'index'));
-					return $this->redirect(array('controller' => 'Familias', 'action' => 'view/' . $id));
+					return $this->redirect(array('controller' => 'Sociambientals', 'action' => 'view/' . $id));
 				} else {
 					$this->Session->setFlash('Registro se guradado con exito, continuar con informacion de la familia / hogar', 'flash_custom', array('class' => 'info', 'title' => 'Copia el ID de la vivienda: ' . $this->Sociambiental->id));
 					//return $this->redirect(array('controller' => 'plsesiones', 'action' => 'nuebus'));                error
-					return $this->redirect(array('controller' => 'Familias', 'action' => 'index'));
+					return $this->redirect(array('controller' => 'Familias', 'action' => 'index_familias'));
 				}
 			} else {
 				$this->Session->setFlash('El registro no fue actualizado o esta pendiente un campo del formulario', 'flash_custom', array('class' => 'error', 'title' => 'Error al guardar el registro'));
@@ -368,10 +368,9 @@ class SociambientalsController extends AppController
 
 		// debug($responsable); // activar si necesita depurar
 		if (!empty($search)) {
-			if (!empty($responsable)) {
+			
 				// responsable es obligatoria (AND), el resto es OR
 				$conditions['AND'] = array(
-					'Responsable.id' => intval($responsable),
 					'OR' => array(
 						'Sociambiental.fecha LIKE' => "%$search%",
 						'Sociambiental.id LIKE' => "%$search%",
@@ -379,7 +378,7 @@ class SociambientalsController extends AppController
 						'Ubicacion.microterritorio LIKE' => "%$search%",
 					)
 				);
-			}
+			
 		} else if (!empty($microterritorio) || !empty($fecha)) {
 			if (!empty($microterritorio)) {
 				$conditions['Ubicacion.microterritorio'] = intval($microterritorio);
@@ -387,8 +386,6 @@ class SociambientalsController extends AppController
 			if (!empty($fecha)) {
 				$conditions['Sociambiental.fecha'] = $fecha;
 			}
-		} else {
-			$conditions['Responsable.id'] = intval($responsable);
 		}
 
 		$total = $this->Sociambiental->find('count');

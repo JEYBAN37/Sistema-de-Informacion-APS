@@ -356,7 +356,7 @@ $EstateHome = array(
             <div class="col-span-2 text-md font-semibold my-6">
                 <div class="flex items-center mb-4">
                     <span class="mr-2 px-2 rounded-lg bg-gray-200 text-md font-semibold">1</span>
-                    <label for="producto_id" class="font-semibold">Observacion general</label>
+                    <label for="s" class="font-semibold">Observacion general</label>
                     <p class="text-red-600">*</p>
                 </div>
                 <?php
@@ -401,22 +401,6 @@ $EstateHome = array(
                         </svg>
                     </span>
                     Guardar y Salir
-                </button>
-            </div>
-            <!-- Botón -->
-            <div class="w-full p-2">
-                <button type="button" class="w-full bg-teal-600 text-white px-6 py-2 rounded-md hover:bg-green-700 transition font-medium flex items-center justify-center gap-2" onclick="cargarEnStorage()">
-                    <span>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-save-icon lucide-save">
-                            <path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z" />
-                            <path d="M14 2v4a2 2 0 0 0 2 2h4" />
-                            <path d="M10 12a1 1 0 0 0-1 1v1a1 1 0 0 1-1 1 1 1 0 0 1 1 1v1a1 1 0 0 0 1 1" />
-                            <path d="M14 18a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1 1 1 0 0 1-1-1v-1a1 1 0 0 0-1-1" />
-
-                        </svg>
-
-                    </span>
-                    JSON
                 </button>
             </div>
 
@@ -721,8 +705,8 @@ $EstateHome = array(
             characterData: true
         });
     })();
-    
-    	function savePersona(data) {
+
+    function savePersona(data) {
         let personas = JSON.parse(localStorage.getItem("novedades")) || [];
         personas.push(data);
         localStorage.setItem("novedades", JSON.stringify(personas));
@@ -747,7 +731,7 @@ $EstateHome = array(
         });
 
         // un mensaje para ponerle un id temporal y esribr un numero de vivienda
-    
+
         if (input === null) return; // usuario canceló
 
         const idVivienda = input.trim();
@@ -769,4 +753,4 @@ $EstateHome = array(
             window.location.href = 'https://agsolutic.com/aps/aps_2025_v1/offline.html';
         }
     };
-    </script>
+</script>

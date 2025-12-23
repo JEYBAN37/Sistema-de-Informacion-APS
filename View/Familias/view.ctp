@@ -75,7 +75,7 @@ $planUrl = $this->Html->url(['controller' => 'Observacions', 'action' => 'addane
         ?>
 
 
-        <button title="Generar Plan de Cuidado" type="button"
+        <button title="Cargar Plan de Cuidado" type="button"
             id="btn-hasObservation"
             data-has-plan="<?php echo $hasPlan ? '1' : '0'; ?>"
             data-url="<?php echo h($planUrl); ?>"

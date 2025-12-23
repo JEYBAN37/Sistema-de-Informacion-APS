@@ -10,7 +10,7 @@
             <h1 class="text-4xl md:text-5xl font-bold text-slate-800 mb-4 leading-tight">
                 Novedades<br>
                 <span class="text-transparent bg-clip-text bg-gradient-to-r from-teal-600 to-cyan-600">
-                    a tu Nombre
+                    Cargadas Recientemente
                 </span>
             </h1>
             <p class="text-slate-600 text-lg max-w-2xl mx-auto leading-relaxed">

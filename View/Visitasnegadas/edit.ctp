@@ -411,27 +411,12 @@ $EstateHome = array(
                     Actualizar
                 </button>
             </div>
-            <!-- Botón -->
-            <div class="w-full p-2">
-                <button type="button" class="w-full bg-teal-600 text-white px-6 py-2 rounded-md hover:bg-green-700 transition font-medium flex items-center justify-center gap-2" onclick="preventBackNavigation()">
-                    <span>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-save-icon lucide-save">
-                            <path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z" />
-                            <path d="M14 2v4a2 2 0 0 0 2 2h4" />
-                            <path d="M10 12a1 1 0 0 0-1 1v1a1 1 0 0 1-1 1 1 1 0 0 1 1 1v1a1 1 0 0 0 1 1" />
-                            <path d="M14 18a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1 1 1 0 0 1-1-1v-1a1 1 0 0 0-1-1" />
-
-                        </svg>
-
-                    </span>
-                    JSON
-                </button>
-            </div>
 
             <?php echo $this->Form->end(); ?>
         </div>
     </div>
 </div>
+
 
 <script type="text/javascript">
     // Mostrar el modal al cargar la página
@@ -457,10 +442,6 @@ $EstateHome = array(
     });
 
     document.addEventListener("DOMContentLoaded", function() {
-
-        if (typeof CKEDITOR !== "undefined" && document.getElementById("VisitasnegadaObservacion")) {
-            CKEDITOR.replace("VisitasnegadaObservacion");
-        }
         // Busca todos los radios con data-target
         document.querySelectorAll('input[type="radio"][data-target]').forEach(function(radio) {
             radio.addEventListener('change', function() {
@@ -580,6 +561,58 @@ $EstateHome = array(
 
     });
 
+    CKEDITOR.on('instanceReady', function(ev) {
+        var editor = ev.editor;
+        var textarea = editor.element.$;
+        var maxChars = textarea.getAttribute("data-maxlength"); // Lee el límite de cada campo
+        maxChars = maxChars ? parseInt(maxChars) : 300; // Default 300 si no se define
+
+        // Crear un contador debajo del campo
+        var counter = document.createElement("div");
+        counter.className = "text-gray-600 mt-1 text-sm";
+        counter.id = "charCount_" + textarea.id;
+        textarea.parentNode.appendChild(counter);
+
+        function updateCount() {
+            var text = editor.getData().replace(/<[^>]*>/g, '');
+            var length = text.length;
+            var remaining = maxChars - length;
+
+            counter.innerHTML = "Caracteres usados: " + length + " / " + maxChars;
+
+            if (remaining < 0) {
+                counter.style.color = "red";
+                editor.setData(text.substring(0, maxChars));
+            } else {
+                counter.style.color = "gray";
+            }
+        }
+
+        // Bloquear si excede
+        editor.on('key', function(evt) {
+            var text = editor.getData().replace(/<[^>]*>/g, '');
+            if (text.length >= maxChars && evt.data.keyCode != 8 && evt.data.keyCode != 46) {
+                evt.cancel();
+                alert("Máximo permitido: " + maxChars + " caracteres.");
+            }
+        });
+
+        // Bloquear pegar excedido
+        editor.on('paste', function(evt) {
+            var text = evt.data.dataValue.replace(/<[^>]*>/g, '');
+            if (text.length > maxChars) {
+                evt.cancel();
+                alert("No puedes pegar más de " + maxChars + " caracteres.");
+            }
+        });
+
+        editor.on('key', updateCount);
+        editor.on('paste', updateCount);
+        editor.on('change', updateCount);
+
+        updateCount(); // inicializar contador
+    });
+
     history.pushState(null, null, location.href);
 
     window.addEventListener('popstate', function(event) {
@@ -591,4 +624,142 @@ $EstateHome = array(
             history.pushState(null, null, location.href);
         }
     });
+
+    (function() {
+        const resultado = document.getElementById('resultado');
+
+        function escapeHtml(str) {
+            return String(str)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#039;');
+        }
+
+        function render(text) {
+            const safe = escapeHtml(text || '').trim() || 'Resultado aquí';
+            // desconectar observer antes de reescribir para evitar bucles
+            if (observer) observer.disconnect();
+
+            resultado.innerHTML = `
+                                        <pre id="resultadoText" class="whitespace-pre-wrap break-words text-sm">${safe}</pre>
+                                        <button type="button" id="copyBtn" class="absolute top-2 right-2 bg-teal-600 text-white px-2 py-1 rounded text-xs">Copiar</button>
+                                    `;
+
+            attachCopy();
+            if (observer) observer.observe(resultado, {
+                childList: true,
+                subtree: true,
+                characterData: true
+            });
+        }
+
+        function attachCopy() {
+            const btn = document.getElementById('copyBtn');
+            const pre = document.getElementById('resultadoText');
+            if (!btn || !pre) return;
+
+            btn.onclick = copyText;
+            // click en el cuadro también copia
+            resultado.onclick = function(e) {
+                if (e.target && e.target.id === 'copyBtn') return; // ya lo maneja el botón
+                copyText();
+            };
+
+            function copyText() {
+                const text = pre.textContent.trim();
+                if (!text) {
+                    alert('No hay información para copiar');
+                    return;
+                }
+                if (navigator.clipboard && navigator.clipboard.writeText) {
+                    navigator.clipboard.writeText(text).then(() => {
+                        const original = btn.textContent;
+                        btn.textContent = 'Copiado';
+                        setTimeout(() => btn.textContent = original, 1400);
+                    }).catch(() => alert('No se pudo copiar al portapapeles'));
+                } else {
+                    // fallback
+                    const ta = document.createElement('textarea');
+                    ta.value = text;
+                    document.body.appendChild(ta);
+                    ta.select();
+                    try {
+                        document.execCommand('copy');
+                        const original = btn.textContent;
+                        btn.textContent = 'Copiado';
+                        setTimeout(() => btn.textContent = original, 1400);
+                    } catch (e) {
+                        alert('No se pudo copiar al portapapeles');
+                    }
+                    document.body.removeChild(ta);
+                }
+            }
+        }
+
+        // Observador para detectar cuando tu fetch (buscarCedula) escribe en #resultado
+        const observer = new MutationObserver(function(mutations) {
+            // leer el texto actual y re-renderizar con nuestro control (pre + boton)
+            const text = resultado.textContent || '';
+            render(text);
+        });
+
+        // inicializar contenido vacío controlado
+        render('');
+        // arrancar observador (para que cuando buscarCedula haga innerHTML, lo capture)
+        observer.observe(resultado, {
+            childList: true,
+            subtree: true,
+            characterData: true
+        });
+    })();
+
+    function savePersona(data) {
+        let personas = JSON.parse(localStorage.getItem("novedades")) || [];
+        personas.push(data);
+        localStorage.setItem("novedades", JSON.stringify(personas));
+    }
+
+    cargarEnStorage = function() {
+        const form = document.querySelector('form');
+        const formData = new FormData(form);
+        const dataObject = {};
+
+        formData.forEach((value, key) => {
+            // Manejar múltiples selecciones (arrays)
+            if (dataObject[key]) {
+                if (Array.isArray(dataObject[key])) {
+                    dataObject[key].push(value);
+                } else {
+                    dataObject[key] = [dataObject[key], value];
+                }
+            } else {
+                dataObject[key] = value;
+            }
+        });
+
+        // un mensaje para ponerle un id temporal y esribr un numero de vivienda
+
+        if (input === null) return; // usuario canceló
+
+        const idVivienda = input.trim();
+        if (idVivienda === '') {
+            alert('Debe ingresar un ID de Familia para continuar.');
+            return;
+        }
+
+        // Validación básica: permitir solo números, pero dar opción si no es numérico
+        if (!/^\d+$/.test(idVivienda)) {
+            if (!confirm('El ID ingresado no parece numérico. ¿Desea continuar de todos modos?')) {
+                return;
+            }
+        }
+
+        if (confirm('¿Está seguro de crear las personas con ID de la persona ' + idVivienda + '?')) {
+            savePersona(dataObject);
+            alert('✅ Datos guardados en el almacenamiento local como JSON.');
+            window.location.href = 'https://agsolutic.com/aps/aps_2025_v1/offline.html';
+        }
+    };
 </script>

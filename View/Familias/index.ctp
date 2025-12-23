@@ -433,7 +433,9 @@
                             <li><strong>ID:</strong> ${data.id}</li>
                             <li><strong>Apellidos:</strong> ${data.apellidos}</li>
                             <li><strong>Integrantes:</strong> ${data.integrantes}</li>
-                            <li><strong>Celular:</strong> ${data.celular}</li>
+                            <li><a class="text-teal-600" href="tel:${data.celular}"><strong >Celular:</strong> ${data.celular}</a></li>
+                            <li><strong>Microterritorio:</strong> ${data.microterritorio}</li>
+                            <li><strong>ID Vivienda:</strong> ${data.sociambiental_id}</li>
                             <li><strong>Fecha:</strong> ${(() => {
                                 const f = data.fecha;
                                 if (!f) return '';

@@ -44,11 +44,11 @@ class Observacion extends AppModel
 			$this->data[$this->alias]['responsables'] = implode(',', $this->data[$this->alias]['responsables']);
 		}
 
-		if (isset($this->data[$this->alias]['entornoafectado'])) {
-			$this->data[$this->alias]['entornoafectado'] = str_replace(',', '.', $this->data[$this->alias]['entornoafectado']);
+		if (isset($this->data[$this->alias]['entornoafectado']) && is_array($this->data[$this->alias]['entornoafectado'])) {
+			$this->data[$this->alias]['entornoafectado'] = implode(',', $this->data[$this->alias]['entornoafectado']);
 		}
 
-		if (isset($this->data[$this->alias]['indicadorria']) && is_array($this->data[$this->aias]['indicadorria'])) {
+		if (isset($this->data[$this->alias]['indicadorria']) && is_array($this->data[$this->alias]['indicadorria'])) {
 			$this->data[$this->alias]['indicadorria'] = implode(',', $this->data[$this->alias]['indicadorria']);
 		}
 
@@ -239,6 +239,27 @@ class Observacion extends AppModel
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
 		),
+		'indicadorria' => array(
+			'notEmpty' => array(
+				'rule' => array('multiple', array('min' => 0)),
+				'message' => 'Por favor seleccione al menos una opción',
+				'allowEmpty' => true,
+				//'required' => false,
+				//'last' => false, // Stop validation after this rule
+				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+			),
+
+		),
+		'entornoafectado' => array(
+			'notEmpty' => array(
+				'rule' => array('multiple', array('min' => 0)),
+				'message' => 'Por favor seleccione al menos una opción',
+				'allowEmpty' => true,
+				//'required' => false,
+				//'last' => false, // Stop validation after this rule
+				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+			),
+		),
 		/*'problematicafamilia1' => array(
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),
@@ -269,7 +290,7 @@ class Observacion extends AppModel
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
 		),/*
-		/*'indicadorria' => array(
+		'indicadorria' => array(
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),
 				//'message' => 'Your custom message here',
@@ -278,7 +299,7 @@ class Observacion extends AppModel
 				//'last' => false, // Stop validation after this rule
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
-		),*/
+		),
 		/*'recursoscomunitarios' => array(
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),

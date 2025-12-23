@@ -168,7 +168,9 @@ $idAux = $this->request->data['Observacion']['familia_id'];
             <?php echo $this->Form->hidden('id'); ?>
             <?php echo $this->Form->hidden('familia_id'); ?>
             <?php echo $this->Form->hidden('responsable_id'); ?>
+            <?php echo $this->Form->hidden('disentimiento'); ?>
             <?php echo $this->Form->hidden('actividaddesarrollar'); ?>
+                
 
             <!-- Resultados de ficha familiar-->
             <div class="col-span-2 md:col-span-1 text-md font-semibold my-6 mr-4">
@@ -416,30 +418,6 @@ $idAux = $this->request->data['Observacion']['familia_id'];
 
         <div class="grid grid-cols-1 md:grid-cols-2">
 
-
-            <div class="col-span-2 text-md font-semibold my-6">
-                <div class="flex items-center mb-4">
-                    <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">1</span>
-                    <label for="direccion" class="font-semibold">Objetivo </label>
-                </div>
-
-                <?php
-                echo $this->Form->input('data', [
-                    'label' => false,
-                    'type' => 'select', // Cambiado a 'textarea'
-                    'id' => 'objetivocortoplazo',
-                    'options' => $opciones,
-                    'class' => 'border border-gray-300 rounded-lg w-full p-2 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 text-sm text-gray-700',
-                    'error' => false // No mostrar error aquí            
-                ]);
-
-                if (!empty($this->Form->error('objetivocortoplazo'))) {
-                    echo '<div class="text-red-600 text-md mt-1 font-semibold">' . $this->Form->error('objetivocortoplazo') . '</div>';
-                }
-                ?>
-
-            </div>
-
             <div class="col-span-2 text-md font-semibold my-6">
                 <div class="flex items-center mb-4">
                     <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">1</span>
@@ -557,10 +535,7 @@ $idAux = $this->request->data['Observacion']['familia_id'];
                 if (!empty($this->Form->error('indicadorria'))) {
                     echo '<div class="text-red-600 text-md mt-1 font-semibold">' . $this->Form->error('indicadorria') . '</div>';
                 }
-
-                // Configurar el almacenamiento de los datos seleccionados en la base de datos como un arreglo
-                $this->Form->unlockField('indicadorria'); // Desbloquear el campo para que CakePHP lo procese como un arreglo
-                ?>
+                                ?>
             </div>
 
         </div>
@@ -626,9 +601,11 @@ $idAux = $this->request->data['Observacion']['familia_id'];
 
                     <!-- Desktop: Table Layout -->
                     <!-- Campo oculto para almacenar los datos de disentimiento serializados -->
-                    <?php echo $this->Form->hidden('disentimiento', [
-                        'id' => 'disentimiento_hidden',
-                    ]); ?>
+                    <textarea 
+                        name="data[Observacion][disentimiento]" 
+                        id="disentimiento_hidden" 
+                        style="display:none;"
+                    ><?php echo isset($this->request->data['Observacion']['disentimiento']) ? h($this->request->data['Observacion']['disentimiento']) : ''; ?></textarea>
 
                     <!-- Desktop: Table Layout para disentimiento -->
                     <div id="desktopViewdisentimiento" class="block overflow-x-auto">
@@ -1066,19 +1043,25 @@ $idAux = $this->request->data['Observacion']['familia_id'];
 
     function inicializarRowsDesdeObservacion() {
         const obsField = document.querySelector('[name="data[Observacion][actividaddesarrollar]"]');
+        console.log('Campo actividaddesarrollar encontrado:', obsField);
+        console.log('Valor del campo:', obsField ? obsField.value : 'No existe el campo');
+        
         let deserializados = [];
-        if (obsField && obsField.value) {
+        if (obsField && obsField.value && obsField.value.trim() !== '') {
             try {
                 const datos = JSON.parse(obsField.value);
-                if (Array.isArray(datos) && datos.length > 0 && datos[0].id) {
+                console.log('Datos parseados:', datos);
+                if (Array.isArray(datos) && datos.length > 0) {
                     deserializados = datos;
+                    console.log('Datos cargados correctamente:', deserializados);
                 }
             } catch (e) {
-                // No es JSON válido, ignorar
+                console.error('Error al parsear actividaddesarrollar:', e);
             }
         }
-        // Siempre inicia con una fila vacía, luego los deserializados
-        rows = [{
+        
+        // SIEMPRE crear una fila vacía al inicio para que el usuario llene
+        const filaVacia = {
             id: Date.now().toString(),
             situacionesPriorizadas: "",
             logrosAlcanzados: "",
@@ -1087,12 +1070,21 @@ $idAux = $this->request->data['Observacion']['familia_id'];
             fechaSeguimiento: "",
             seguimientoCompromiso: "",
             estado: "pendiente",
-        }, ...deserializados];
-        // Solo expandir la fila vacía al inicio
-        expandedRows = new Set([rows[0].id]);
+        };
+        
+        // Si hay datos guardados, agregarlos DESPUÉS de la fila vacía (colapsados)
+        if (deserializados.length > 0) {
+            rows = [filaVacia, ...deserializados];
+            // Solo expandir la fila vacía (la primera)
+            expandedRows = new Set([filaVacia.id]);
+            console.log('Fila vacía creada + datos existentes colapsados. Total filas:', rows.length);
+        } else {
+            // Si no hay datos, solo la fila vacía
+            rows = [filaVacia];
+            expandedRows = new Set([filaVacia.id]);
+            console.log('Solo fila vacía creada.');
+        }
     }
-
-    inicializarRowsDesdeObservacion();
 
     // Utility functions
     function getEstadoColor(estado) {
@@ -1135,6 +1127,7 @@ $idAux = $this->request->data['Observacion']['familia_id'];
         }
         rows.push(newRow)
         expandedRows = new Set([newRow.id])
+        guardarRowsEnObservacion()
         render()
     }
 
@@ -1142,6 +1135,7 @@ $idAux = $this->request->data['Observacion']['familia_id'];
         if (rows.length > 1) {
             rows = rows.filter((row) => row.id !== id)
             expandedRows.delete(id)
+            guardarRowsEnObservacion()
             render()
         }
     }
@@ -1151,6 +1145,7 @@ $idAux = $this->request->data['Observacion']['familia_id'];
             const lastId = rows[rows.length - 1].id
             expandedRows.delete(lastId)
             rows = rows.slice(0, -1)
+            guardarRowsEnObservacion()
             render()
         }
     }
@@ -1325,6 +1320,9 @@ $idAux = $this->request->data['Observacion']['familia_id'];
         document.getElementById("removeLastBtn").disabled = rows.length === 1
     }
 
+    // Inicializar datos al cargar
+    inicializarRowsDesdeObservacion();
+
     // Event listeners
     document.getElementById("addRowBtn").addEventListener("click", addRow)
     document.getElementById("removeLastBtn").addEventListener("click", removeLastRow)
@@ -1334,15 +1332,24 @@ $idAux = $this->request->data['Observacion']['familia_id'];
 
     // --- Disentimiento Table Logic ---
     let disentRows = [];
-    let disentIdCounter = 0;
+    let disentIdCounter = 1;
 
     function renderDesktopViewDisentimiento() {
         const tableBody = document.getElementById("tableBodyDisentimiento");
-        if (!tableBody) return;
+        console.log('Renderizando tabla disentimiento. tableBody encontrado:', tableBody);
+        console.log('Número de filas a renderizar:', disentRows.length);
+        
+        if (!tableBody) {
+            console.error('No se encontró el elemento tableBodyDisentimiento');
+            return;
+        }
+        
         tableBody.innerHTML = "";
+        
         disentRows.forEach((row, index) => {
+            console.log('Renderizando fila disentimiento:', index, row);
             const tr = document.createElement("tr");
-            tr.className = "hover:bg-gray-50 transition-colors p";
+            tr.className = "hover:bg-gray-50 transition-colors";
             tr.innerHTML = `
                             <td class="p-2">
                                 <input type="text" class="border border-gray-300 rounded-lg w-full p-2 text-sm" placeholder="Nombre" value="${row.nombre || ''}" onchange="updateDisentRow(${row.id}, 'nombre', this.value)">
@@ -1366,6 +1373,8 @@ $idAux = $this->request->data['Observacion']['familia_id'];
                         `;
             tableBody.appendChild(tr);
         });
+        
+        console.log('Tabla disentimiento renderizada. Filas en DOM:', tableBody.children.length);
     }
 
     function addDisentRow() {
@@ -1398,53 +1407,89 @@ $idAux = $this->request->data['Observacion']['familia_id'];
     function guardarDisentimientoEnHidden() {
         const hidden = document.getElementById('disentimiento_hidden');
         if (hidden) {
-            // Guardar solo si hay datos relevantes
-            const toSave = disentRows.filter(row => row.nombre || row.documento || row.rol || row.motivo);
+            // Guardar todas las filas excepto las completamente vacías (excepto la primera fila)
+            const toSave = disentRows
+                .filter((row, idx) => {
+                    // La primera fila siempre se mantiene para el formulario, pero no se guarda si está vacía
+                    if (idx === 0 && !row.nombre && !row.documento && !row.rol && !row.motivo) {
+                        return false;
+                    }
+                    // El resto de filas se guardan si tienen algún dato
+                    return row.nombre || row.documento || row.rol || row.motivo;
+                })
+                .map(row => ({
+                    nombre: row.nombre || '',
+                    documento: row.documento || '',
+                    rol: row.rol || '',
+                    motivo: row.motivo || ''
+                }));
+            
             hidden.value = JSON.stringify(toSave);
+            console.log('Disentimiento guardado:', toSave);
         }
     }
 
     function inicializarDisentimientoDesdeHidden() {
         const hidden = document.getElementById('disentimiento_hidden');
+        console.log('Campo disentimiento encontrado:', hidden);
+        console.log('Valor del campo:', hidden ? hidden.value : 'No existe el campo');
+        
         let deserializados = [];
-        if (hidden && hidden.value) {
+        if (hidden && hidden.value && hidden.value.trim() !== '') {
             try {
-                deserializados = JSON.parse(hidden.value);
+                const datos = JSON.parse(hidden.value);
+                console.log('Datos disentimiento parseados:', datos);
+                if (Array.isArray(datos) && datos.length > 0) {
+                    deserializados = datos.map(row => ({
+                        ...row,
+                        id: disentIdCounter++
+                    }));
+                    console.log('Datos disentimiento cargados correctamente:', deserializados);
+                }
             } catch (e) {
-                deserializados = [];
+                console.error('Error al parsear disentimiento:', e);
             }
         }
-        // Si hay datos, solo mostrar los deserializados; si no, una fila vacía
+        
+        // SIEMPRE crear una fila vacía al inicio para que el usuario llene
+        const filaVacia = {
+            id: disentIdCounter++,
+            nombre: '',
+            documento: '',
+            rol: '',
+            motivo: ''
+        };
+        
+        // Si hay datos guardados, agregarlos DESPUÉS de la fila vacía
         if (deserializados.length > 0) {
-            disentRows = deserializados.map(row => ({
-                ...row,
-                id: disentIdCounter++
-            }));
+            disentRows = [filaVacia, ...deserializados];
+            console.log('Fila vacía disentimiento creada + datos existentes. Total filas:', disentRows.length);
         } else {
-            disentRows = [{
-                id: disentIdCounter++,
-                nombre: '',
-                documento: '',
-                rol: '',
-                motivo: ''
-            }];
+            // Si no hay datos, solo la fila vacía
+            disentRows = [filaVacia];
+            console.log('Solo fila vacía disentimiento creada.');
         }
+        
         renderDesktopViewDisentimiento();
     }
 
-    // Inicializar tabla disentimiento al cargar
-    document.addEventListener("DOMContentLoaded", () => {
-        inicializarDisentimientoDesdeHidden();
-        // Botones de acción
-        const addBtn = document.getElementById('addRowBtnDisentimiento');
-        if (addBtn) addBtn.onclick = addDisentRow;
-        const removeBtn = document.getElementById('removeLastBtnDisentimiento');
-        if (removeBtn) removeBtn.onclick = () => {
+    // Inicializar tabla disentimiento al cargar la página
+    inicializarDisentimientoDesdeHidden();
+
+    // Configurar event listeners para botones de disentimiento
+    const addBtnDisent = document.getElementById('addRowBtnDisentimiento');
+    if (addBtnDisent) {
+        addBtnDisent.addEventListener('click', addDisentRow);
+    }
+    
+    const removeBtnDisent = document.getElementById('removeLastBtnDisentimiento');
+    if (removeBtnDisent) {
+        removeBtnDisent.addEventListener('click', () => {
             if (disentRows.length > 1) {
                 disentRows.pop();
                 renderDesktopViewDisentimiento();
                 guardarDisentimientoEnHidden();
             }
-        };
-    });
+        });
+    }
 </script>
