@@ -30,42 +30,10 @@ class VisitasnegadasController extends AppController
 	 */
 	public function index()
 	{
-		$this->loadModel('Responsable'); // Cargar el modelo Responsable
-		$this->loadModel('Ubicacion'); // Cargar el modelo Ubicacion
+		$ubicaciones = $this->getUbicacionesSelect();
+		$responsables = $this->getResponsablesSelect();
 
-		// Obtener listado de responsables (para mostrar en un select)
-		$responsablesList = $this->Responsable->find('list', array(
-			'fields' => array('id', 'nombres'), // Ajusta los campos según tu modelo Responsable
-			'order' => 'nombres'
-		));
-
-		// Obtener listado de ubicaciones (si aplica)
-		$ubicacionesList = $this->Ubicacion->find('list', array(
-			'fields' => array('id', 'microterritorio'), // Ajusta los campos según tu modelo de Ubicación
-			'order' => 'microterritorio'
-		));
-
-		$conditions = array();
-
-		if ($this->request->is(['post', 'put'])) {
-			$encuestadorId = $this->request->data['Visitasnegada']['encuestador_id'];
-
-			if (!empty($encuestadorId)) {
-				$conditions['visitasnegada.responsable_id'] = $encuestadorId;
-			}
-
-			$ubicacionId = $this->request->data['Visitasnegada']['ubicacion_id'];
-			if (!empty($ubicacionId)) {
-				$conditions['visitasnegada.ubicacion_id'] = $ubicacionId;
-			}
-
-			// Obtener los datos filtrados del modelo Sociambiental
-			$visitasNegadas = $this->Visitasnegada->getFamiliaNegadasFilter($conditions);
-		} else {
-			$visitasNegadas = array(); // Inicializar como array vacío
-		}
-		// Pasar las variables a la vista
-		$this->set(compact('visitasNegadas', 'ubicacionesList', 'responsablesList'));
+		$this->set(compact('ubicaciones', 'responsables'));
 	}
 
 	/**
@@ -201,6 +169,7 @@ class VisitasnegadasController extends AppController
 		$length = isset($_GET['length']) ? intval($_GET['length']) : 3;
 		$search = isset($_GET['search']['value']) ? $_GET['search']['value'] : '';
 		$microterritorio = isset($_GET['microterritorio']) ? $_GET['microterritorio'] : '';
+		$responsable = isset($_GET['responsable']) ? $_GET['responsable'] : '';
 		$fecha = isset($_GET['fecha']) ? $_GET['fecha'] : '';
 		$order = isset($_GET['order']) ? $_GET['order'] : array();
 		$columns = isset($_GET['columns']) ? $_GET['columns'] : array();
@@ -239,6 +208,14 @@ class VisitasnegadasController extends AppController
 
 		$conditions = array();
 
+		if (!empty($microterritorio)) {
+			$conditions['Ubicacion.id'] = intval($microterritorio);
+		}
+
+		if (!empty($responsable)) {
+			$conditions['Responsable.id'] = intval($responsable);
+		}
+
 		if (!empty($search)) {
 			$conditions['AND'] = [
 				[
@@ -248,7 +225,6 @@ class VisitasnegadasController extends AppController
 						'Visitasnegada.id LIKE' => "%$search%",
 						'Visitasnegada.telefono LIKE' => "%$search%",
 						'Visitasnegada.estadocasa LIKE' => "%$search%",
-						'Ubicacion.microterritorio LIKE' => "%$search%",
 					]
 				]
 			];

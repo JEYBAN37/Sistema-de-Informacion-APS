@@ -78,6 +78,12 @@ class UsersController extends AppController
     {
         if ($this->request->is('post')) {
 
+            if (empty($this->request->data['g-recaptcha-response'])) {
+                $this->Session->setFlash('Debe completar el CAPTCHA', 'flash_custom', array('class' => 'error', 'title' => 'Error al iniciar sesión'));
+                return;
+            }
+
+
             if ((isset($this->data)) && (!empty($this->data))) {
                 $r = $this->User->find("first", array(
                     "conditions" => array(
@@ -90,7 +96,7 @@ class UsersController extends AppController
                     $this->Session->write("usr", $r["User"]["username"]);
                     $this->Session->write("nvl", $r["User"]["nivel"]);
 
-                    
+
 
                     $responsableId = $this->Responsable->find('first', [
                         'conditions' => ['Responsable.numero' => $r['User']['username']],
@@ -115,10 +121,10 @@ class UsersController extends AppController
                         //$this->redirect("home");
                         return $this->redirect(
                             array('controller' => 'Familias', 'action' => 'index')
-                            );
+                        );
                     }
                 } else {
-                    $this->Session->setFlash('Por favor verifique sus credenciales', 'default', array('class' => self::ALERT_ERROR_CLASS));
+                    $this->Session->setFlash('Por favor verifique sus credenciales', 'flash_custom', array('class' => 'error', 'title' => 'Error al iniciar sesión'));
                     //$this->Session->setFlash("SIN ACCESO AL SISTEMA");                
                 }
             } else {

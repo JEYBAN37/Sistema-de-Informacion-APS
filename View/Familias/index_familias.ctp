@@ -615,7 +615,7 @@
         // Función para manejar el despliegue de los menús
         function setupDropdowns() {
 
-                        const choices = new Choices("#filtroMicroterritorio", {
+            const choices = new Choices("#filtroMicroterritorio", {
                 searchEnabled: true,
                 searchChoices: true,
                 removeItemButton: false,
