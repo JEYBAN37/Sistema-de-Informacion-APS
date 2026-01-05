@@ -692,9 +692,6 @@ class FamiliasController extends AppController
 
 
 
-
-
-
 		$joins = array(
 			array(
 				'table' => 'sociambientals',
@@ -713,16 +710,18 @@ class FamiliasController extends AppController
 				'alias' => 'Responsable',
 				'type' => 'LEFT',
 				'conditions' => array('Sociambiental.responsable_id = Responsable.id')
-			)
+			),
 		);
 
 		// Solo si se necesita el conteo
-		$joins[] = array(
-			'table' => 'juventudadultos',
-			'alias' => 'Juventudadulto',
+		$joins[] = [
+			'table' => '(SELECT familia_id, COUNT(*) total 
+                 FROM juventudadultos 
+                 GROUP BY familia_id)',
+			'alias' => 'JA',
 			'type' => 'LEFT',
-			'conditions' => array('Juventudadulto.familia_id = Familia.id')
-		);
+			'conditions' => ['JA.familia_id = Familia.id']
+		];
 
 		$total = $this->Familia->find('count', array(
 			'recursive' => -1
@@ -764,9 +763,10 @@ class FamiliasController extends AppController
 				'Ubicacion.microterritorio',
 				'Responsable.nombres',
 				'CONCAT(
-		Familia.numeropersonas, "/", 
-		COUNT(Juventudadulto.id)
-		) AS integrantes'
+    Familia.numeropersonas, "/", 
+    IFNULL(JA.total, 0)
+) AS integrantes'
+
 
 			),
 			'joins' => $joins,
