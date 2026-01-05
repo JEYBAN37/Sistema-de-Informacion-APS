@@ -22,7 +22,7 @@ class FamiliasController extends AppController
 	{
 		parent::beforeFilter();
 		// Permitir acceso a métodos JSON sin autenticación
-		$this->Auth->allow('familiasResponsablesIndex', 'familiaIndex');
+		$this->Auth->allow('familiasResponsablesIndex', 'familiasCargadas');
 	}
 
 	/**
@@ -92,7 +92,6 @@ class FamiliasController extends AppController
 	}
 
 
-
 	/**
 	 * view method
 	 *
@@ -108,7 +107,7 @@ class FamiliasController extends AppController
 
 		$ficha = $this->Familia->find('first', array(
 			'conditions' => array('Familia.' . $this->Familia->primaryKey => $id),
-			'fields' => array('Familia.id, Familia.apellidos, Familia.cursovidafamilia, Familia.nombres, Familia.celular, Familia.numeropersonas, Familia.poblacionvulnerable'),
+			'fields' => array('Familia.id, Familia.cursovidafamilia, Familia.nombres, Familia.celular, Familia.numeropersonas, Familia.poblacionvulnerable'),
 			'contain' => array(
 				'Juventudadulto' => array( // <-- Esto trae los registros relacionados por familia_id
 					'fields' => array('id', 'primernombre', 'segundonombre', 'primerapellido', 'segundoapellido', 'fechanac', 'sexo', 'aseguradora', 'canalizacionuno', 'condicioncronica')
@@ -321,24 +320,6 @@ class FamiliasController extends AppController
 		}
 	}
 
-
-	public function addnew()
-	{
-
-		if ($this->request->is('post')) {
-			$this->Familia->create();
-			if ($this->Familia->save($this->request->data)) {
-				$this->Session->setFlash(__('The familia has been saved.'));
-				return $this->redirect(array('action' => 'index'));
-			} else {
-				$this->Session->setFlash(__('Error al guardar.'));
-			}
-		}
-		$sociambientals = $this->Familia->Sociambiental->find('list', array('order' => array('sociambiental.id' => 'desc')));
-
-		$this->set(compact('sociambientals'));
-	}
-
 	/**
 	 * edit method
 	 *
@@ -407,9 +388,9 @@ class FamiliasController extends AppController
 		}
 		$this->request->allowMethod('post', 'delete');
 		if ($this->Familia->delete()) {
-			$this->Session->setFlash(__('The familia has been deleted.'));
+			$this->Session->setFlash('La familia ha sido eliminada correctamente.', 'flash_custom', array('class' => 'success', 'title' => 'La operación se ha completado correctamente'));
 		} else {
-			$this->Session->setFlash(__('The familia could not be deleted. Please, try again.'));
+			$this->Session->setFlash('La familia no pudo ser eliminada. Por favor, inténtalo de nuevo.', 'flash_custom', array('class' => 'error', 'title' => 'Error al eliminar el registro'));
 		}
 		return $this->redirect(array('action' => 'index'));
 	}
@@ -555,7 +536,7 @@ class FamiliasController extends AppController
 		$group = array(
 			'Familia.id',
 			'Familia.celular',
-			'Familia.apellidos',
+			'Sociambiental.apellidosfamilia',
 			'Familia.numeropersonas',
 			'Sociambiental.id',
 			'Sociambiental.fecha',
@@ -568,7 +549,7 @@ class FamiliasController extends AppController
 			'fields' => array(
 				'Familia.id',
 				'Familia.celular',
-				'Familia.apellidos',
+				'Sociambiental.apellidosfamilia',
 				'Sociambiental.id',
 				'Sociambiental.fecha',
 				'Ubicacion.microterritorio',
@@ -600,7 +581,209 @@ class FamiliasController extends AppController
 				'fecha' => isset($row['Sociambiental']['fecha']) ? $row['Sociambiental']['fecha'] : '',
 				'sociambiental_id' => isset($row['Sociambiental']['id']) ? $row['Sociambiental']['id'] : '',
 				'celular' => isset($row['Familia']['celular']) ? $row['Familia']['celular'] : '',
-				'apellidos' => isset($row['Familia']['apellidos']) ? $row['Familia']['apellidos'] : '',
+				'apellidos' => isset($row['Sociambiental']['apellidosfamilia']) ? $row['Sociambiental']['apellidosfamilia'] : '',
+				'microterritorio' => isset($row['Ubicacion']['microterritorio']) ? $row['Ubicacion']['microterritorio'] : '',
+				'integrantes' => isset($row[0]['integrantes']) ? $row[0]['integrantes'] : '',
+				'responsable'  => isset($row['Responsable']['nombres']) ? $row['Responsable']['nombres'] : '',
+			);
+		}
+
+		unset($data);
+		echo json_encode($result);
+		exit();
+	}
+
+	public function familiasCargadas()
+	{
+		$this->loadModel('Familia');
+
+		// Configurar para respuesta JSON
+		$this->autoRender = false;
+		$this->layout = false;
+		$this->response->type('json');
+
+
+		// Establecer headers para JSON
+
+		$columns = array('Familia.id');
+
+		$start = isset($_GET['start']) ? intval($_GET['start']) : 0;
+		$length = isset($_GET['length']) ? intval($_GET['length']) : 3;
+		$search = isset($_GET['search']['value']) ? $_GET['search']['value'] : '';
+		$microterritorio = isset($_GET['microterritorio']) ? $_GET['microterritorio'] : '';
+		$fecha = isset($_GET['fecha']) ? $_GET['fecha'] : '';
+		$order = isset($_GET['order']) ? $_GET['order'] : array();
+		$columns = isset($_GET['columns']) ? $_GET['columns'] : array();
+		$search = trim($search);
+
+		$orderBy = array();
+		if (!empty($order)) {
+			foreach ($order as $o) {
+				$colIndex = intval($o['column']); // índice de la columna
+				$colName = $columns[$colIndex]['data']; // nombre definido en JS (columns: [])
+				$dir = strtoupper($o['dir']) === 'DESC' ? 'DESC' : 'ASC';
+
+				// Mapear a las columnas reales de la BD
+				switch ($colName) {
+					case 'id':
+						$orderBy['Familia.id'] = $dir;
+						break;
+					case 'fecha':
+						$orderBy['Sociambiental.fecha'] = $dir;
+						break;
+					case 'nombres':
+						$orderBy['Familia.nombres'] = $dir;
+						break;
+					case 'apellidos':
+						$orderBy['Familia.apellidos'] = $dir;
+						break;
+					case 'celular':
+						$orderBy['Familia.celular'] = $dir;
+						break;
+					case 'sociambiental_id':
+						$orderBy['Sociambiental.id'] = $dir;
+						break;
+					case 'microterritorio':
+						$orderBy['Ubicacion.microterritorio'] = $dir;
+						break;
+					default:
+						// Por defecto ordenar por fecha más reciente
+						$orderBy['Sociambiental.fecha'] = 'DESC';
+				}
+			}
+		} else {
+			// Si no hay orden especificado, ordenar por fecha más reciente
+			$orderBy = array('Sociambiental.fecha' => 'DESC');
+		}
+
+		$conditions = array();
+
+		// debug($responsable); // activar si necesita depurar
+		if (!empty($search)) {
+			$conditions['OR'] = array(
+				'Familia.id LIKE' => "%$search%",
+				'Sociambiental.fecha LIKE' => "%$search%",
+				'Sociambiental.id LIKE' => "%$search%",
+				'Familia.celular LIKE' => "%$search%",
+				'Ubicacion.microterritorio LIKE' => "%$search%",
+			);
+		} else if (!empty($microterritorio) || !empty($fecha)) {
+			if (!empty($microterritorio)) {
+				$conditions['Ubicacion.microterritorio'] = intval($microterritorio);
+			}
+			if (!empty($fecha)) {
+				$conditions['Sociambiental.fecha'] = $fecha;
+			}
+		} else {
+			// por defecto traer solo recientes (ej: 30 días)
+			$conditions['Sociambiental.fecha >='] = date('Y-m-d', strtotime('-30 days'));
+		}
+
+
+
+
+
+
+		$joins = array(
+			array(
+				'table' => 'sociambientals',
+				'alias' => 'Sociambiental',
+				'type' => 'LEFT',
+				'conditions' => array('Familia.sociambiental_id = Sociambiental.id')
+			),
+			array(
+				'table' => 'ubicaciones',
+				'alias' => 'Ubicacion',
+				'type' => 'LEFT',
+				'conditions' => array('Sociambiental.ubicacion_id = Ubicacion.id')
+			),
+			array(
+				'table' => 'responsables',
+				'alias' => 'Responsable',
+				'type' => 'LEFT',
+				'conditions' => array('Sociambiental.responsable_id = Responsable.id')
+			)
+		);
+
+		// Solo si se necesita el conteo
+		$joins[] = array(
+			'table' => 'juventudadultos',
+			'alias' => 'Juventudadulto',
+			'type' => 'LEFT',
+			'conditions' => array('Juventudadulto.familia_id = Familia.id')
+		);
+
+		$total = $this->Familia->find('count', array(
+			'recursive' => -1
+		));
+
+		$filtered = $this->Familia->find('count', array(
+			'conditions' => $conditions,
+			'joins' => array(
+				$joins[0],
+				$joins[1],
+				$joins[2],
+			),
+			'distinct' => 'Familia.id',
+			'recursive' => -1,
+		));
+
+
+
+		$group = array(
+			'Familia.id',
+			'Familia.celular',
+			'Sociambiental.apellidosfamilia',
+			'Familia.numeropersonas',
+			'Sociambiental.id',
+			'Sociambiental.fecha',
+			'Ubicacion.microterritorio',
+			'Responsable.nombres'
+		);
+
+
+		$data = $this->Familia->find('all', array(
+			'conditions' => $conditions,
+			'fields' => array(
+				'Familia.id',
+				'Familia.celular',
+				'Sociambiental.apellidosfamilia',
+				'Sociambiental.id',
+				'Sociambiental.fecha',
+				'Ubicacion.microterritorio',
+				'Responsable.nombres',
+				'CONCAT(
+		Familia.numeropersonas, "/", 
+		COUNT(Juventudadulto.id)
+		) AS integrantes'
+
+			),
+			'joins' => $joins,
+			'group' => $group,
+			'limit' => $length,
+			'offset' => $start,
+			'order' => $orderBy,
+			'recursive' => -1,
+		));
+
+		$draw = isset($_GET['draw']) ? intval($_GET['draw']) : 0;
+
+		$result = array(
+			"draw" => $draw,
+			"recordsTotal" => $total,
+			"recordsFiltered" => $filtered,
+			"data" => array()
+		);
+
+
+		$result['data'] = array();
+		foreach ($data as $row) {
+			$result['data'][] = array(
+				'id' => isset($row['Familia']['id']) ? $row['Familia']['id'] : '',
+				'fecha' => isset($row['Sociambiental']['fecha']) ? $row['Sociambiental']['fecha'] : '',
+				'sociambiental_id' => isset($row['Sociambiental']['id']) ? $row['Sociambiental']['id'] : '',
+				'celular' => isset($row['Familia']['celular']) ? $row['Familia']['celular'] : '',
+				'apellidos' => isset($row['Sociambiental']['apellidosfamilia']) ? $row['Sociambiental']['apellidosfamilia'] : '',
 				'microterritorio' => isset($row['Ubicacion']['microterritorio']) ? $row['Ubicacion']['microterritorio'] : '',
 				'integrantes' => isset($row[0]['integrantes']) ? $row[0]['integrantes'] : '',
 				'responsable'  => isset($row['Responsable']['nombres']) ? $row['Responsable']['nombres'] : '',

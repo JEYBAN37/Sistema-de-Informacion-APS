@@ -26,6 +26,22 @@
             </h3>
 
         </div>
+
+        <div class="mb-4 w-full md:w-1/3">
+            <label class="block text-sm font-medium text-gray-700 mb-1">
+                Microterritorio
+            </label>
+            <select id="filtroMicroterritorio"
+                class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm">
+                <option value="">Todos</option>
+                <option value="1">Microterritorio 1</option>
+                <option value="2">Microterritorio 2</option>
+                <option value="3">Microterritorio 3</option>
+            </select>
+        </div>
+
+
+
         <!-- Search and Filter Section -->
         <div class="w-[350px] md:w-full md:mt-6 mb-4">
             <table id="miTabla" style="width:100%;" class="stripe hover text-sm text-left text-gray-600 border border-gray-200 rounded-lg overflow-hidden">
@@ -79,7 +95,6 @@
     </style>
 
     <script>
-
         $(function() {
             $('#datetime_range').daterangepicker({
                 singleDatePicker: true,
@@ -220,13 +235,15 @@
                 processing: true,
                 serverSide: true,
                 ajax: {
-                    url: "<?php echo $this->Html->url(array('controller' => 'Sociambientals', 'action' => 'SociambientalResponsablesIndex')); ?>",
+                    url: "<?php echo $this->Html->url(['controller' => 'Sociambientals', 'action' => 'SociambientalResponsablesIndex']); ?>",
                     type: "GET",
-                    error: function(xhr, error, code) {
-                        console.error("Error al cargar los datos:", error, code);
-                        alert("Error al cargar los datos. Por favor, inténtalo de nuevo más tarde.");
+                    data: function(d) {
+                        d.microterritorio = $('#filtroMicroterritorio').val();
+                        // aquí puedes enviar más filtros si quieres
+                        // d.fecha = $('#fecha').val();
                     }
                 },
+
                 order: [
                     [0, 'asc']
                 ],
@@ -270,11 +287,11 @@
                             const viewUrl = URL_view.replace('__ID__', data);
                             const editUrl = URL_edit.replace('__ID__', data);
                             return `
-          <div class="relative inline-block text-left">
-            <a href="${viewUrl}" class="block px-4 py-2 text-sm hover:bg-gray-100">Ver</a>
-            <a href="${editUrl}" class="block px-4 py-2 text-sm hover:bg-gray-100">Actualizar</a>
-            <hr class="my-1 border-gray-200">
-          </div>`;
+                <div class="relative inline-block text-left">
+                    <a href="${viewUrl}" class="block px-4 py-2 text-sm hover:bg-gray-100">Ver</a>
+                    <a href="${editUrl}" class="block px-4 py-2 text-sm hover:bg-gray-100">Actualizar</a>
+                    <hr class="my-1 border-gray-200">
+                </div>`;
                         }
                     }
                 ],
@@ -379,12 +396,33 @@
                 table.search(this.value).draw();
             });
 
+            $('#filtroMicroterritorio').on('change', function() {
+                table.draw();
+            });
+
             table.on('draw');
         });
 
 
+
         // Función para manejar el despliegue de los menús
         function setupDropdowns() {
+
+            const choices = new Choices("#filtroMicroterritorio", {
+                searchEnabled: true,
+                searchChoices: true,
+                removeItemButton: false,
+                itemSelectText: '',
+                shouldSort: false,
+                searchPlaceholderValue: "Escriba para filtrar...",
+                fuseOptions: {
+                    includeScore: true,
+                    threshold: 0.3,
+                    keys: ['label', 'value']
+                },
+                renderChoiceLimit: -1, // Sin límite de renderizado
+                searchResultLimit: 20, // Puedes aumentar este valor si tienes muchos resultados
+            });
 
             localStorage.removeItem('consentAccepted');
 

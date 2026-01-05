@@ -394,7 +394,7 @@
                 processing: true,
                 serverSide: true,
                 ajax: {
-                    url: "<?php echo $this->Html->url(array('controller' => 'familias', 'action' => 'familiasResponsablesIndex')); ?>",
+                    url: "<?php echo $this->Html->url(array('controller' => 'familias', 'action' => 'familiasCargadas')); ?>",
                     type: "GET",
                     error: function(xhr, error, code) {
                         console.error("Error al cargar los datos:", error, code);

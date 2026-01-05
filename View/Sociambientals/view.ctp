@@ -40,6 +40,15 @@
                 <path d="m16 19 2 2 4-4" />
             </svg>
         </button>
+
+        <?php 
+
+        if ($responsable == $sociambiental['Sociambiental']['responsable_id'] ) : ?>
+            <button title="Eliminar Ficha" type="button" onclick="if (confirm('¿Está seguro/a de eliminar este registro? Esta acción no se puede deshacer.')) { window.location.href='<?php echo $this->Html->url(['controller' => 'Sociambientals', 'action' => 'delete/', $sociambiental['Sociambiental']['id']]); ?>'; }"
+                class="flex items-center w-38 space-x-2 bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700">
+                <i class="fas fa-trash-alt text-xl"></i>
+            </button>
+        <?php endif; ?>
     </div>
     <!-- Document Container -->
     <div class="max-w-6xl mx-auto bg-white overflow-hidden mt-4 sm:mt-4 p-4 shadow-2xl rounded-xl" id="print-area">

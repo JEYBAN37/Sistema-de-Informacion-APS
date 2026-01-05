@@ -31,8 +31,7 @@ class SociambientalsController extends AppController
 	 *
 	 * @return void
 	 */
-	public function index()
-	{}
+	public function index() {}
 
 
 
@@ -58,6 +57,7 @@ class SociambientalsController extends AppController
 				'Sociambiental.direccion',
 				'Sociambiental.apellidosfamilia',
 				'Sociambiental.numerohogares',
+				'Sociambiental.responsable_id',
 				'Sociambiental.numerohabitantes',
 				'Responsable.nombres',
 				'Ubicacion.microterritorio',
@@ -92,7 +92,9 @@ class SociambientalsController extends AppController
 			'recursive' => -1
 		]);
 
-		$this->set(compact('sociambiental', 'familias'));
+		$r = $this->Auth->user();
+		$responsable = $r['responsable_id'];
+		$this->set(compact('sociambiental', 'familias', 'responsable'));
 	}
 
 
@@ -285,9 +287,10 @@ class SociambientalsController extends AppController
 		}
 
 		$conditions = array();
-		// Obtener responsable usando Auth o Session (fallback a $_SESSION si hace falta)
-		$r = $this->Auth->user();
-		$responsable = $r['responsable_id'];
+
+		if (!empty($microterritorio)) {
+			$conditions['Ubicacion.id'] = intval($microterritorio);
+		}
 
 		// debug($responsable); // activar si necesita depurar
 		if (!empty($search)) {
@@ -297,12 +300,8 @@ class SociambientalsController extends AppController
 				'Sociambiental.fecha LIKE' => "%$search%",
 				'Sociambiental.id LIKE' => "%$search%",
 				'Sociambiental.apellidosfamilia LIKE' => "%$search%",
-				'Ubicacion.microterritorio LIKE' => "%$search%",
 			);
 		} else if (!empty($microterritorio) || !empty($fecha)) {
-			if (!empty($microterritorio)) {
-				$conditions['Ubicacion.microterritorio'] = intval($microterritorio);
-			}
 			if (!empty($fecha)) {
 				$conditions['Sociambiental.fecha'] = $fecha;
 			}
@@ -441,7 +440,5 @@ class SociambientalsController extends AppController
 		exit();
 	}
 
-	public function index_general()
-	{
-	}
+	public function index_general() {}
 }
