@@ -205,4 +205,38 @@ class AppController extends Controller
         $data = json_decode($response, true);
         return $data['access_token'];
     }
+
+     protected function getUbicacionesSelect()
+    {
+        $cacheKey = 'ubicaciones_select';
+        $ubicaciones = Cache::read($cacheKey, 'selects');
+
+        if ($ubicaciones === false) {
+            $this->loadModel('Ubicacion');
+            $ubicaciones = $this->Ubicacion->find('list', [
+                'fields' => ['Ubicacion.id', 'Ubicacion.microterritorio'],
+                'recursive' => -1
+            ]);
+            Cache::write($cacheKey, $ubicaciones, 'selects');
+        }
+
+        return $ubicaciones;
+    }
+
+    protected function getResponsablesSelect()
+    {
+        $cacheKey = 'responsables_select';
+        $responsables = Cache::read($cacheKey, 'selects');
+
+        if ($responsables === false) {
+            $this->loadModel('Responsable');
+            $responsables = $this->Responsable->find('list', [
+                'fields' => ['Responsable.id', 'Responsable.nombres'],
+                'recursive' => -1
+            ]);
+            Cache::write($cacheKey, $responsables, 'selects');
+        }
+
+        return $responsables;
+    }
 }

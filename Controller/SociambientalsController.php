@@ -31,7 +31,13 @@ class SociambientalsController extends AppController
 	 *
 	 * @return void
 	 */
-	public function index() {}
+	public function index()
+	{
+		$ubicaciones = $this->getUbicacionesSelect();
+		$responsables = $this->getResponsablesSelect();
+
+		$this->set(compact('ubicaciones', 'responsables'));
+	}
 
 
 
@@ -251,6 +257,7 @@ class SociambientalsController extends AppController
 		$length = isset($_GET['length']) ? intval($_GET['length']) : 3;
 		$search = isset($_GET['search']['value']) ? $_GET['search']['value'] : '';
 		$microterritorio = isset($_GET['microterritorio']) ? $_GET['microterritorio'] : '';
+		$responsable = isset($_GET['responsable']) ? $_GET['responsable'] : '';
 		$fecha = isset($_GET['fecha']) ? $_GET['fecha'] : '';
 		$order = isset($_GET['order']) ? $_GET['order'] : array();
 		$columns = isset($_GET['columns']) ? $_GET['columns'] : array();
@@ -290,6 +297,10 @@ class SociambientalsController extends AppController
 
 		if (!empty($microterritorio)) {
 			$conditions['Ubicacion.id'] = intval($microterritorio);
+		}
+
+		if (!empty($responsable)) {
+			$conditions['Responsable.id'] = intval($responsable);
 		}
 
 		// debug($responsable); // activar si necesita depurar

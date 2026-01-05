@@ -64,7 +64,7 @@
 
  */
 
-	Configure::write('debug', 2);
+Configure::write('debug', 2);
 
 
 
@@ -98,15 +98,15 @@
 
  */
 
-	Configure::write('Error', array(
+Configure::write('Error', array(
 
-		'handler' => 'ErrorHandler::handleError',
+	'handler' => 'ErrorHandler::handleError',
 
-		'level' => E_ALL & ~E_DEPRECATED,
+	'level' => E_ALL & ~E_DEPRECATED,
 
-		'trace' => true
+	'trace' => true
 
-	));
+));
 
 
 
@@ -150,15 +150,15 @@
 
  */
 
-	Configure::write('Exception', array(
+Configure::write('Exception', array(
 
-		'handler' => 'ErrorHandler::handleException',
+	'handler' => 'ErrorHandler::handleException',
 
-		'renderer' => 'ExceptionRenderer',
+	'renderer' => 'ExceptionRenderer',
 
-		'log' => true
+	'log' => true
 
-	));
+));
 
 
 
@@ -168,7 +168,7 @@
 
  */
 
-	Configure::write('App.encoding', 'UTF-8');
+Configure::write('App.encoding', 'UTF-8');
 
 
 
@@ -432,13 +432,13 @@
 
  */
 
-	Configure::write('Session', array(
+Configure::write('Session', array(
 
 
-		'defaults' => 'php',
-		'timeout'=> 31556926
+	'defaults' => 'php',
+	'timeout' => 31556926
 
-	));
+));
 
 
 
@@ -448,7 +448,7 @@
 
  */
 
-	Configure::write('Security.salt', 'DYhG93b0qyJfIxfs2guVoUubWwvniR2G0FgaC9mi');
+Configure::write('Security.salt', 'DYhG93b0qyJfIxfs2guVoUubWwvniR2G0FgaC9mi');
 
 
 
@@ -458,7 +458,7 @@
 
  */
 
-	Configure::write('Security.cipherSeed', '76859309657453542496749683645');
+Configure::write('Security.cipherSeed', '76859309657453542496749683645');
 
 
 
@@ -524,9 +524,9 @@
 
  */
 
-	Configure::write('Acl.classname', 'DbAcl');
+Configure::write('Acl.classname', 'DbAcl');
 
-	Configure::write('Acl.database', 'default');
+Configure::write('Acl.database', 'default');
 
 
 
@@ -717,7 +717,6 @@ $duration = '+999 days';
 if (Configure::read('debug') > 0) {
 
 	$duration = '+10 seconds';
-
 }
 
 
@@ -774,3 +773,8 @@ Cache::config('_cake_model_', array(
 
 ));
 
+Cache::config('selects', array(
+	'engine'   => 'File',
+	'duration' => '+1 day',
+	'path'     => CACHE . 'selects/',
+));
