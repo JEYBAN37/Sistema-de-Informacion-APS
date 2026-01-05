@@ -485,6 +485,7 @@ class Sociambiental extends AppModel
 			'className' => 'Familia',
 			'foreignKey' => 'sociambiental_id',
 			'conditions' => '',
+			'dependent' => true,
 			'fields' => '',
 			'order' => '',
 			'limit' => '',

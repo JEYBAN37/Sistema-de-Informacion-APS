@@ -26,8 +26,43 @@
             </h3>
 
         </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2">
+
+            <div class="col-span-2 md:col-span-1 text-md font-semibold my-4 sm:mr-4">
+                <div class="flex items-center mb-4">
+                    <label for="familiograma" class="font-semibold">Microterritorio</label>
+                </div>
+                <select id="filtroMicroterritorio"
+                   class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm">
+                    <option value="">Todos</option>
+                    <?php foreach ($ubicaciones as $id => $microterritorio): ?>
+                        <option value="<?php echo h($id); ?>">
+                            <?php echo h($microterritorio); ?>
+                        </option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
+            <div class="col-span-2 md:col-span-1 text-md font-semibold my-4 sm:mr-4">
+                <div class="flex items-center mb-4">
+                    <label for="familiograma" class="font-semibold">Responsable</label>
+                </div>
+                <select id="filtroResponsable"
+                    class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm">
+                    <option value="">Todos</option>
+                    <?php foreach ($responsables as $id => $nombres): ?>
+                        <option value="<?php echo h($id); ?>">
+                            <?php echo h($nombres); ?>
+                        </option>
+                    <?php endforeach; ?>
+                </select>
+
+            </div>
+        </div>
+
+
         <!-- Search and Filter Section -->
-        <div class="w-[350px] md:w-full md:mt-6 mb-4">
+        <div class="w-[350px] md:w-full mb-4">
             <table id="miTabla" style="width:100%;" class="stripe hover text-sm text-left text-gray-600 border border-gray-200 rounded-lg overflow-hidden">
                 <thead class="bg-gray-200 font-medium border-b border-gray-300">
                     <tr class=" text-gray-900 font-light">
@@ -79,7 +114,6 @@
     </style>
 
     <script>
-
         $(function() {
             $('#datetime_range').daterangepicker({
                 singleDatePicker: true,
@@ -220,13 +254,16 @@
                 processing: true,
                 serverSide: true,
                 ajax: {
-                    url: "<?php echo $this->Html->url(array('controller' => 'Sociambientals', 'action' => 'SociambientalResponsablesIndex')); ?>",
+                    url: "<?php echo $this->Html->url(['controller' => 'Sociambientals', 'action' => 'SociambientalResponsablesIndex']); ?>",
                     type: "GET",
-                    error: function(xhr, error, code) {
-                        console.error("Error al cargar los datos:", error, code);
-                        alert("Error al cargar los datos. Por favor, inténtalo de nuevo más tarde.");
+                    data: function(d) {
+                        d.microterritorio = $('#filtroMicroterritorio').val();
+                        d.responsable = $('#filtroResponsable').val();
+                        // aquí puedes enviar más filtros si quieres
+                        // d.fecha = $('#fecha').val();
                     }
                 },
+
                 order: [
                     [0, 'asc']
                 ],
@@ -270,11 +307,11 @@
                             const viewUrl = URL_view.replace('__ID__', data);
                             const editUrl = URL_edit.replace('__ID__', data);
                             return `
-          <div class="relative inline-block text-left">
-            <a href="${viewUrl}" class="block px-4 py-2 text-sm hover:bg-gray-100">Ver</a>
-            <a href="${editUrl}" class="block px-4 py-2 text-sm hover:bg-gray-100">Actualizar</a>
-            <hr class="my-1 border-gray-200">
-          </div>`;
+                <div class="relative inline-block text-left">
+                    <a href="${viewUrl}" class="block px-4 py-2 text-sm hover:bg-gray-100">Ver</a>
+                    <a href="${editUrl}" class="block px-4 py-2 text-sm hover:bg-gray-100">Actualizar</a>
+                    <hr class="my-1 border-gray-200">
+                </div>`;
                         }
                     }
                 ],
@@ -379,12 +416,53 @@
                 table.search(this.value).draw();
             });
 
+            $('#filtroMicroterritorio').on('change', function() {
+                table.draw();
+            });
+
+            $('#filtroResponsable').on('change', function() {
+                table.draw();
+            });
+
             table.on('draw');
         });
 
 
+
         // Función para manejar el despliegue de los menús
         function setupDropdowns() {
+
+            const choices = new Choices("#filtroMicroterritorio", {
+                searchEnabled: true,
+                searchChoices: true,
+                removeItemButton: false,
+                itemSelectText: '',
+                shouldSort: false,
+                searchPlaceholderValue: "Escriba para filtrar...",
+                fuseOptions: {
+                    includeScore: true,
+                    threshold: 0.3,
+                    keys: ['label', 'value']
+                },
+                renderChoiceLimit: -1, // Sin límite de renderizado
+                searchResultLimit: 20, // Puedes aumentar este valor si tienes muchos resultados
+            });
+
+            const choices_responsable = new Choices("#filtroResponsable", {
+                searchEnabled: true,
+                searchChoices: true,
+                removeItemButton: false,
+                itemSelectText: '',
+                shouldSort: false,
+                searchPlaceholderValue: "Escriba para filtrar...",
+                fuseOptions: {
+                    includeScore: true,
+                    threshold: 0.3,
+                    keys: ['label', 'value']
+                },
+                renderChoiceLimit: -1, // Sin límite de renderizado
+                searchResultLimit: 20, // Puedes aumentar este valor si tienes muchos resultados
+            });
 
             localStorage.removeItem('consentAccepted');
 

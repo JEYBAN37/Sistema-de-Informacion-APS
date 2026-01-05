@@ -32,7 +32,12 @@ class SociambientalsController extends AppController
 	 * @return void
 	 */
 	public function index()
-	{}
+	{
+		$ubicaciones = $this->getUbicacionesSelect();
+		$responsables = $this->getResponsablesSelect();
+
+		$this->set(compact('ubicaciones', 'responsables'));
+	}
 
 
 
@@ -58,6 +63,7 @@ class SociambientalsController extends AppController
 				'Sociambiental.direccion',
 				'Sociambiental.apellidosfamilia',
 				'Sociambiental.numerohogares',
+				'Sociambiental.responsable_id',
 				'Sociambiental.numerohabitantes',
 				'Responsable.nombres',
 				'Ubicacion.microterritorio',
@@ -92,7 +98,9 @@ class SociambientalsController extends AppController
 			'recursive' => -1
 		]);
 
-		$this->set(compact('sociambiental', 'familias'));
+		$r = $this->Auth->user();
+		$responsable = $r['responsable_id'];
+		$this->set(compact('sociambiental', 'familias', 'responsable'));
 	}
 
 
@@ -249,6 +257,7 @@ class SociambientalsController extends AppController
 		$length = isset($_GET['length']) ? intval($_GET['length']) : 3;
 		$search = isset($_GET['search']['value']) ? $_GET['search']['value'] : '';
 		$microterritorio = isset($_GET['microterritorio']) ? $_GET['microterritorio'] : '';
+		$responsable = isset($_GET['responsable']) ? $_GET['responsable'] : '';
 		$fecha = isset($_GET['fecha']) ? $_GET['fecha'] : '';
 		$order = isset($_GET['order']) ? $_GET['order'] : array();
 		$columns = isset($_GET['columns']) ? $_GET['columns'] : array();
@@ -285,9 +294,14 @@ class SociambientalsController extends AppController
 		}
 
 		$conditions = array();
-		// Obtener responsable usando Auth o Session (fallback a $_SESSION si hace falta)
-		$r = $this->Auth->user();
-		$responsable = $r['responsable_id'];
+
+		if (!empty($microterritorio)) {
+			$conditions['Ubicacion.id'] = intval($microterritorio);
+		}
+
+		if (!empty($responsable)) {
+			$conditions['Responsable.id'] = intval($responsable);
+		}
 
 		// debug($responsable); // activar si necesita depurar
 		if (!empty($search)) {
@@ -297,12 +311,8 @@ class SociambientalsController extends AppController
 				'Sociambiental.fecha LIKE' => "%$search%",
 				'Sociambiental.id LIKE' => "%$search%",
 				'Sociambiental.apellidosfamilia LIKE' => "%$search%",
-				'Ubicacion.microterritorio LIKE' => "%$search%",
 			);
 		} else if (!empty($microterritorio) || !empty($fecha)) {
-			if (!empty($microterritorio)) {
-				$conditions['Ubicacion.microterritorio'] = intval($microterritorio);
-			}
 			if (!empty($fecha)) {
 				$conditions['Sociambiental.fecha'] = $fecha;
 			}
@@ -441,7 +451,5 @@ class SociambientalsController extends AppController
 		exit();
 	}
 
-	public function index_general()
-	{
-	}
+	public function index_general() {}
 }

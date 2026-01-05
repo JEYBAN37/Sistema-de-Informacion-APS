@@ -192,7 +192,8 @@ class VisitasnegadasController extends AppController
 
 
 		// Establecer headers para JSON
-		header('Content-Type: application/json');
+		$this->response->type('json');
+
 
 		$columns = array('Visitasnegada.id');
 
@@ -203,7 +204,8 @@ class VisitasnegadasController extends AppController
 		$fecha = isset($_GET['fecha']) ? $_GET['fecha'] : '';
 		$order = isset($_GET['order']) ? $_GET['order'] : array();
 		$columns = isset($_GET['columns']) ? $_GET['columns'] : array();
-
+		$search = trim($search);
+		$search = substr($search, 0, 100);
 		$orderBy = array();
 		if (!empty($order)) {
 			foreach ($order as $o) {
@@ -237,20 +239,19 @@ class VisitasnegadasController extends AppController
 
 		$conditions = array();
 
-		// debug($responsable); // activar si necesita depurar
 		if (!empty($search)) {
-
-			// responsable es obligatoria (AND), el resto es OR
-			$conditions['AND'] = array(
-				'Responsable.id' => intval($responsable),
-				'OR' => array(
-					'Visitasnegada.fecha LIKE' => "%$search%",
-					'Visitasnegada.id LIKE' => "%$search%",
-					'Visitasnegada.telefono LIKE' => "%$search%",
-					'Visitasnegada.estadocasa LIKE' => "%$search%",
-					'Ubicacion.microterritorio LIKE' => "%$search%",
-				)
-			);
+			$conditions['AND'] = [
+				[
+					'OR' => [
+						'Responsable.nombres LIKE' => "%$search%",
+						'Visitasnegada.fecha LIKE' => "%$search%",
+						'Visitasnegada.id LIKE' => "%$search%",
+						'Visitasnegada.telefono LIKE' => "%$search%",
+						'Visitasnegada.estadocasa LIKE' => "%$search%",
+						'Ubicacion.microterritorio LIKE' => "%$search%",
+					]
+				]
+			];
 		} else if (!empty($microterritorio) || !empty($fecha)) {
 			if (!empty($microterritorio)) {
 				$conditions['Ubicacion.microterritorio'] = intval($microterritorio);
@@ -258,10 +259,33 @@ class VisitasnegadasController extends AppController
 			if (!empty($fecha)) {
 				$conditions['Visitasnegada.fecha'] = $fecha;
 			}
-		} 
-		
-		$total = $this->Visitasnegada->find('count');
-		$filtered = $this->Visitasnegada->find('count', array('conditions' => $conditions));
+		}
+
+		$countOptions = [
+			'conditions' => $conditions,
+			'joins' => [
+				[
+					'table' => 'ubicaciones',
+					'alias' => 'Ubicacion',
+					'type' => 'LEFT',
+					'conditions' => ['Visitasnegada.ubicacion_id = Ubicacion.id']
+				],
+				[
+					'table' => 'responsables',
+					'alias' => 'Responsable',
+					'type' => 'LEFT',
+					'conditions' => ['Visitasnegada.responsable_id = Responsable.id']
+				]
+			],
+			'recursive' => -1
+		];
+
+		$total = $this->Visitasnegada->find('count', [
+			'joins' => $countOptions['joins'],
+			'recursive' => -1
+		]);
+		$filtered = $this->Visitasnegada->find('count', $countOptions);
+
 
 		$data = $this->Visitasnegada->find('all', array(
 			'conditions' => $conditions,
