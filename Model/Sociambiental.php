@@ -43,8 +43,6 @@ class Sociambiental extends AppModel
 			),
 		);
 
-
-
 		// Realizar la consulta y retornar los resultados
 		return $this->find('all', $options);
 	}

@@ -213,11 +213,6 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
                                     data-href="<?php echo $this->Html->url(['controller' => 'sociambientals', 'action' => 'add']); ?>">
                                     Nueva Vivienda
                                 </button>
-                                <button
-                                    class="subitem block w-full text-left text-[13px] text-gray-500 hover:text-teal-600 hover:bg-gray-100 rounded p-1 cursor-pointer"
-                                    data-href="<?php echo $this->Html->url(['controller' => 'familias', 'action' => 'add']); ?>">
-                                    Nuevo Familia
-                                </button>
                             </div>
                         </div>
 
