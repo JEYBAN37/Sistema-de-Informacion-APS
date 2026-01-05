@@ -79,41 +79,6 @@
     </style>
 
     <script>
-        function toSociambiental() {
-            if (confirm('¿Está seguro de realizar esta acción?')) {
-                window.location.href = '<?php echo $this->Html->url(['controller' => 'Sociambientals', 'action' => 'add']); ?>';
-            }
-        }
-
-        function toFamilia() {
-            // Solicita al usuario el ID de vivienda
-            const input = prompt('Ingrese el ID de vivienda para crear la familia (ej: 123):');
-            if (input === null) return; // usuario canceló
-
-            const idVivienda = input.trim();
-            if (idVivienda === '') {
-                alert('Debe ingresar un ID de vivienda para continuar.');
-                return;
-            }
-
-            // Validación básica: permitir solo números, pero dar opción si no es numérico
-            if (!/^\d+$/.test(idVivienda)) {
-                if (!confirm('El ID ingresado no parece numérico. ¿Desea continuar de todos modos?')) {
-                    return;
-                }
-            }
-
-            if (confirm('¿Está seguro de crear la familia con ID de vivienda ' + idVivienda + '?')) {
-                // Redirige a la acción add pasando el ID como segmento de URL
-                window.location.href = '<?php echo $this->Html->url(['controller' => 'Familias', 'action' => 'add']); ?>/' + idVivienda;
-            }
-        }
-
-        function toNovedad() {
-            if (confirm('¿Está seguro de realizar esta acción?')) {
-                window.location.href = '<?php echo $this->Html->url(['controller' => 'visitasnegadas', 'action' => 'add']); ?>';
-            }
-        }
 
         $(function() {
             $('#datetime_range').daterangepicker({
@@ -243,9 +208,7 @@
                         </ul>
                         <div class="flex gap-2 mt-4">
                             <a href="${URL_view.replace('__ID__', data.sociambiental_id)}" class="bg-gray-200 hover:bg-blue-600 text-teal-700 px-3 py-1 rounded text-sm">Ver</a>
-                            <a href="${URL_edit.replace('__ID__', data.sociambiental_id)}" class="bg-gray-200 hover:bg-amber-600 text-teal-700 px-3 py-1 rounded text-sm">Editar</a>
-                            <a href="${URL_delete.replace('__ID__', data.sociambiental_id)}" class="bg-gray-200 hover:bg-red-600 text-teal-700 px-3 py-1 rounded text-sm"
-                               onclick="return confirm('¿Seguro que quieres borrar #${data.sociambiental_id}?');">Borrar</a>
+                            <a href="${URL_edit.replace('__ID__', data.sociambiental_id)}" class="bg-gray-200 hover:bg-amber-600 text-teal-700 px-3 py-1 rounded text-sm">Actualizar</a>
                         </div>
                     </div>
                 `;
@@ -306,14 +269,11 @@
                         render: function(data) {
                             const viewUrl = URL_view.replace('__ID__', data);
                             const editUrl = URL_edit.replace('__ID__', data);
-                            const deleteUrl = URL_delete.replace('__ID__', data);
                             return `
           <div class="relative inline-block text-left">
             <a href="${viewUrl}" class="block px-4 py-2 text-sm hover:bg-gray-100">Ver</a>
-            <a href="${editUrl}" class="block px-4 py-2 text-sm hover:bg-gray-100">Editar</a>
+            <a href="${editUrl}" class="block px-4 py-2 text-sm hover:bg-gray-100">Actualizar</a>
             <hr class="my-1 border-gray-200">
-            <a href="${deleteUrl}" class="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100"
-               onclick="return confirm('¿Seguro que quieres borrar #${data}?');">Borrar</a>
           </div>`;
                         }
                     }

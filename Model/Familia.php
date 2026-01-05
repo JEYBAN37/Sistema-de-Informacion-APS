@@ -36,28 +36,28 @@ class Familia extends AppModel
 		return $query;
 	}
 
-		public function uniqueDocumento($check)
+	public function uniqueDocumento($check)
 	{
-		   $numerodoc = array_values($check)[0];
-		   // Si es edición, no validar unicidad
-		   $currentId = null;
-		   if (!empty($this->data[$this->alias]['id'])) {
-			   $currentId = $this->data[$this->alias]['id'];
-		   } elseif (!empty($this->id)) {
-			   $currentId = $this->id;
-		   } elseif (!empty($check['id'])) {
-			   $currentId = $check['id'];
-		   }
-		   if (!empty($currentId)) {
-			   return true; // No validar unicidad en edit
-		   }
-		   $conditions = array(
-			   'Familia.numerodocumento' => $numerodoc
-		   );
+		$numerodoc = array_values($check)[0];
+		// Si es edición, no validar unicidad
+		$currentId = null;
+		if (!empty($this->data[$this->alias]['id'])) {
+			$currentId = $this->data[$this->alias]['id'];
+		} elseif (!empty($this->id)) {
+			$currentId = $this->id;
+		} elseif (!empty($check['id'])) {
+			$currentId = $check['id'];
+		}
+		if (!empty($currentId)) {
+			return true; // No validar unicidad en edit
+		}
+		$conditions = array(
+			'Familia.numerodocumento' => $numerodoc
+		);
 
-		   // Buscar el id en todas las ubicaciones posibles
-		   $count = $this->find('count', array('conditions' => $conditions, 'recursive' => -1));
-		   return $count == 0;
+		// Buscar el id en todas las ubicaciones posibles
+		$count = $this->find('count', array('conditions' => $conditions, 'recursive' => -1));
+		return $count == 0;
 	}
 
 
@@ -795,45 +795,22 @@ class Familia extends AppModel
 
 	public function tranformData($data)
 	{
-		// Ejemplo: viene "2. Hombres,4. Niños y niñas"
-		if (!empty($data['Familia']['combustible'])) {
-			$poblacionStr = $data['Familia']['combustible'];
-			// Extraer cada palabra/frase hasta la coma
-			$tipos = array_map('trim', explode(',', $poblacionStr));
-			$data['Familia']['combustible'] = $tipos;
-		}
-		if (!empty($data['Familia']['poblacionvulnerable'])) {
-			$poblacionStr = $data['Familia']['poblacionvulnerable'];
-			// Extraer cada palabra/frase hasta la coma
-			$tipos = array_map('trim', explode(',', $poblacionStr));
-			$data['Familia']['poblacionvulnerable'] = $tipos;
-		}
-		if (!empty($data['Familia']['antecedenteenfermedad'])) {
-			$poblacionStr = $data['Familia']['antecedenteenfermedad'];
-			// Extraer cada palabra/frase hasta la coma
-			$tipos = array_map('trim', explode(',', $poblacionStr));
-			$data['Familia']['antecedenteenfermedad'] = $tipos;
-		}
+		$campos = array(
+			'combustible',
+			'poblacionvulnerable',
+			'antecedenteenfermedad',
+			'riesgopsicosocial',
+			'alimentos',
+			'enfermedadtransmible'
+		);
 
-		if (!empty($data['Familia']['riesgopsicosocial'])) {
-			$poblacionStr = $data['Familia']['riesgopsicosocial'];
-			// Extraer cada palabra/frase hasta la coma
-			$tipos = array_map('trim', explode(',', $poblacionStr));
-			$data['Familia']['riesgopsicosocial'] = $tipos;
-		}
-
-		if (!empty($data['Familia']['alimentos'])) {
-			$poblacionStr = $data['Familia']['alimentos'];
-			// Extraer cada palabra/frase hasta la coma
-			$tipos = array_map('trim', explode(',', $poblacionStr));
-			$data['Familia']['alimentos'] = $tipos;
-		}
-
-		if (!empty($data['Familia']['enfermedadtransmible'])) {
-			$poblacionStr = $data['Familia']['enfermedadtransmible'];
-			// Extraer cada palabra/frase hasta la coma
-			$tipos = array_map('trim', explode(',', $poblacionStr));
-			$data['Familia']['enfermedadtransmible'] = $tipos;
+		foreach ($campos as $campo) {
+			if (!empty($data['Familia'][$campo])) {
+				$data['Familia'][$campo] = array_map(
+					'trim',
+					explode(',', $data['Familia'][$campo])
+				);
+			}
 		}
 
 		return $data;

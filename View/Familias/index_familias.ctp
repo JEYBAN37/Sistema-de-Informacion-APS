@@ -382,7 +382,7 @@
                         </ul>
                         <div class="flex gap-2 mt-4">
                             <a href="${URL_view.replace('__ID__', data.id)}" class="bg-gray-200 hover:bg-blue-600 text-teal-700 px-3 py-1 rounded text-sm">Ver</a>
-                            <a href="${URL_edit.replace('__ID__', data.id)}" class="bg-gray-200 hover:bg-amber-600 text-teal-700 px-3 py-1 rounded text-sm">Editar</a>
+                            <a href="${URL_edit.replace('__ID__', data.id)}" class="bg-gray-200 hover:bg-amber-600 text-teal-700 px-3 py-1 rounded text-sm">Actualizar</a>
                         </div>
                     </div>
                 `;
@@ -458,7 +458,7 @@
                             return `
           <div class="relative inline-block text-left">
             <a href="${viewUrl}" class="block px-4 py-2 text-sm hover:bg-gray-100">Ver</a>
-            <a href="${editUrl}" class="block px-4 py-2 text-sm hover:bg-gray-100">Editar</a>
+            <a href="${editUrl}" class="block px-4 py-2 text-sm hover:bg-gray-100">Actualizar</a>
             <hr class="my-1 border-gray-200">
           </div>`;
                         }

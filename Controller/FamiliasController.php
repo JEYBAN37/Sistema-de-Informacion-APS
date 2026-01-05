@@ -22,7 +22,7 @@ class FamiliasController extends AppController
 	{
 		parent::beforeFilter();
 		// Permitir acceso a métodos JSON sin autenticación
-		$this->Auth->allow('familiasResponsablesIndex', 'familiaIndex', 'simpleJson');
+		$this->Auth->allow('familiasResponsablesIndex', 'familiaIndex');
 	}
 
 	/**
@@ -32,10 +32,9 @@ class FamiliasController extends AppController
 	 */
 	public function index()
 	{
-		// Obtener el ID del responsable del usuario logueado
-		$responsable = isset($_SESSION['Auth']['User']['responsable_id']) ? $_SESSION['Auth']['User']['responsable_id'] : '';
-		// Si no hay usuario logueado, usar un valor por defecto o redirigir
-		if (!$responsable) {
+		$responsable = $this->Auth->user('responsable_id');
+
+		if (empty($responsable)) {
 			$this->Session->setFlash(
 				'Debes iniciar sesión para ver las estadísticas',
 				'custom_flash',
@@ -44,11 +43,55 @@ class FamiliasController extends AppController
 			return $this->redirect(array('controller' => 'users', 'action' => 'login'));
 		}
 
-		$estadisticas = $this->Familia->getEstadisticasResponsable($responsable);
+		$cacheKey = 'estadisticas_responsable_' . $responsable;
+
+		$estadisticas = Cache::read($cacheKey, 'default');
+
+		if ($estadisticas === false) {
+			$estadisticas = $this->Familia->getEstadisticasResponsable($responsable);
+			Cache::write($cacheKey, $estadisticas, 'default');
+		}
+
 		$this->set('estadisticas', $estadisticas);
 	}
 
+
 	public function index_familias() {}
+
+	private function mergeIntegrantes($ficha)
+	{
+		$integrantes = [];
+
+		foreach (['Juventudadulto', 'Primerainfancia', 'Infantil', 'Adolescencia'] as $tipo) {
+			if (!empty($ficha[$tipo])) {
+				foreach ($ficha[$tipo] as $item) {
+					$integrantes[] = $item;
+				}
+			}
+		}
+
+		return $integrantes;
+	}
+
+	private function calcularEdades(array $integrantes)
+	{
+		$hoy = time();
+
+		foreach ($integrantes as &$integrante) {
+			if (!empty($integrante['fechanac'])) {
+				$integrante['edad'] = floor(
+					($hoy - strtotime($integrante['fechanac'])) / 31556926
+				);
+			} else {
+				$integrante['edad'] = null;
+			}
+		}
+		unset($integrante);
+
+		return $integrantes;
+	}
+
+
 
 	/**
 	 * view method
@@ -95,34 +138,26 @@ class FamiliasController extends AppController
 			)
 		));
 
-		$ficha['Integrantes'] = array_merge(
-			isset($ficha['Juventudadulto']) ? $ficha['Juventudadulto'] : [],
-			isset($ficha['Primerainfancia']) ? $ficha['Primerainfancia'] : [],
-			isset($ficha['Infantil']) ? $ficha['Infantil'] : [],
-			isset($ficha['Adolescencia']) ? $ficha['Adolescencia'] : []
-		);
+
+		if (empty($ficha['Observacion'])) {
+			unset($ficha['Observacion']);
+		}
+
+
+		$ficha['Integrantes'] = $this->mergeIntegrantes($ficha);
+		$ficha['Integrantes'] = $this->calcularEdades($ficha['Integrantes']);
 
 		if (empty($ficha['Integrantes'])) {
 			$this->Session->setFlash('No hay integrantes registrados para esta familia.', 'flash_custom', array('class' => 'warning', 'title' => 'Información'));
 		}
 
-		if ($ficha['Observacion'] == null) {
-			$ficha['Observacion'] = [];
-		}
+		unset(
+			$ficha['Juventudadulto'],
+			$ficha['Primerainfancia'],
+			$ficha['Infantil'],
+			$ficha['Adolescencia']
+		);
 
-		foreach ($ficha['Integrantes'] as &$integrante) {
-			if (!empty($integrante['fechanac'])) {
-				$fechaNac = new DateTime($integrante['fechanac']);
-				$hoy = new DateTime();
-				$integrante['edad'] = $fechaNac->diff($hoy)->y;
-			} else {
-				$integrante['edad'] = null;
-			}
-		}
-		unset($integrante); // Buenas prácticas
-
-		// Opcional: elimina los arrays originales para evitar duplicidad
-		unset($ficha['Juventudadulto'], $ficha['Primerainfancia'], $ficha['Infantil'], $ficha['Adolescencia']);
 		$this->set('familia', $ficha);
 	}
 
@@ -209,22 +244,28 @@ class FamiliasController extends AppController
 
 		$ficha = $this->Familia->tranformData($ficha);
 
-		// Obtener todos los responsables con nombre y profesión
-		$responsablesData = $this->Responsable->find('all', array(
-			'fields' => array('Responsable.id', 'Responsable.nombres', 'Responsable.profesion'),
-			'recursive' => -1
-		));
+		$idsResponsables = [];
 
-		// Crear array indexado por ID con nombre y profesión
-		$responsables = array();
-		foreach ($responsablesData as $resp) {
-			$id = $resp['Responsable']['id'];
-			$nombre = $resp['Responsable']['nombres'];
-			$profesion = $resp['Responsable']['profesion'];
-			$responsables[$id] = array(
-				'nombre' => $nombre,
-				'profesion' => $profesion
-			);
+		if (!empty($ficha['Observacion'][0]['responsables'])) {
+			$idsResponsables = array_map('trim', explode(',', $ficha['Observacion'][0]['responsables']));
+		}
+
+		$responsables = [];
+
+		if (!empty($idsResponsables)) {
+			$responsablesData = $this->Responsable->find('all', array(
+				'conditions' => array('Responsable.id' => $idsResponsables),
+				'fields' => array('Responsable.id', 'Responsable.nombres', 'Responsable.profesion'),
+				'recursive' => -1
+			));
+
+			foreach ($responsablesData as $resp) {
+				$id = $resp['Responsable']['id'];
+				$responsables[$id] = array(
+					'nombre' => $resp['Responsable']['nombres'],
+					'profesion' => $resp['Responsable']['profesion']
+				);
+			}
 		}
 
 		// Procesar el campo 'responsables' en Observacion para convertir IDs a nombres con profesión
@@ -247,6 +288,7 @@ class FamiliasController extends AppController
 		}
 
 		$this->set('familia', $ficha);
+		unset($responsablesData, $idsResponsables);
 	}
 
 	/**
@@ -466,6 +508,7 @@ class FamiliasController extends AppController
 
 		$total = $this->Familia->find('count');
 
+
 		$joins = array(
 			array(
 				'table' => 'sociambientals',
@@ -484,21 +527,30 @@ class FamiliasController extends AppController
 				'alias' => 'Responsable',
 				'type' => 'LEFT',
 				'conditions' => array('Sociambiental.responsable_id = Responsable.id')
-			),
-			array(
-				'table' => 'juventudadultos',
-				'alias' => 'Juventudadulto',
-				'type' => 'LEFT',
-				'conditions' => array('Juventudadulto.familia_id = Familia.id')
 			)
 		);
 
+		// Solo si se necesita el conteo
+		$joins[] = array(
+			'table' => 'juventudadultos',
+			'alias' => 'Juventudadulto',
+			'type' => 'LEFT',
+			'conditions' => array('Juventudadulto.familia_id = Familia.id')
+		);
+
+
 		$filtered = $this->Familia->find('count', array(
 			'conditions' => $conditions,
-			'joins' => $joins,
-			'group' => array('Familia.id'),
+			'joins' => array(
+				$joins[0],
+				$joins[1],
+				$joins[2],
+			),
+			'distinct' => 'Familia.id',
 			'recursive' => -1,
 		));
+
+
 
 		$group = array(
 			'Familia.id',
@@ -541,9 +593,7 @@ class FamiliasController extends AppController
 		);
 
 
-
-
-
+		$result['data'] = array();
 		foreach ($data as $row) {
 			$result['data'][] = array(
 				'id' => isset($row['Familia']['id']) ? $row['Familia']['id'] : '',
@@ -556,63 +606,12 @@ class FamiliasController extends AppController
 				'responsable'  => isset($row['Responsable']['nombres']) ? $row['Responsable']['nombres'] : '',
 			);
 		}
+
+		unset($data);
 		echo json_encode($result);
 		exit();
 	}
 
-	
-	
-	public function testConnection()
-	{
-		$this->autoRender = false;
-		$this->layout = false;
-		header('Content-Type: application/json');
 
-		echo json_encode(array(
-			'status' => 'success',
-			'message' => 'El método funciona correctamente',
-			'timestamp' => date('Y-m-d H:i:s'),
-			'method' => 'testConnection'
-		));
-		exit();
-	}
-
-	public function simpleJson()
-	{
-		$this->autoRender = false;
-		$this->layout = false;
-		header('Content-Type: application/json');
-
-		// Test básico de datos
-		$familias = $this->Familia->find('all', array(
-			'limit' => 5,
-			'recursive' => -1
-		));
-
-		echo json_encode(array(
-			'status' => 'success',
-			'count' => count($familias),
-			'data' => $familias,
-			'message' => 'Datos recuperados correctamente'
-		));
-		exit();
-	}
-
-	public function index_general()
-	{
-		// Obtener el ID del responsable del usuario logueado
-		$responsable = isset($_SESSION['Auth']['User']['responsable_id']) ? $_SESSION['Auth']['User']['responsable_id'] : '';
-		// Si no hay usuario logueado, usar un valor por defecto o redirigir
-		if (!$responsable) {
-			$this->Session->setFlash(
-				'Debes iniciar sesión para ver las estadísticas',
-				'custom_flash',
-				array('class' => 'warning', 'title' => 'Acceso requerido')
-			);
-			return $this->redirect(array('controller' => 'users', 'action' => 'login'));
-		}
-
-		$estadisticas = $this->Familia->getEstadisticasResponsable($responsable);
-		$this->set('estadisticas', $estadisticas);
-	}
+	public function index_general() {}
 }

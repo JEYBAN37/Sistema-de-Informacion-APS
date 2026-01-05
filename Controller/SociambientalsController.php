@@ -32,85 +32,8 @@ class SociambientalsController extends AppController
 	 * @return void
 	 */
 	public function index()
-	{
-		$this->loadModel('Responsable'); // Cargar el modelo Responsable
-		$this->loadModel('Ubicacion'); // Cargar el modelo Ubicacion
+	{}
 
-		// Obtener listado de responsables (para mostrar en un select)
-		$responsablesList = $this->Responsable->find('list', array(
-			'fields' => array('id', 'nombres'), // Ajusta los campos según tu modelo Responsable
-			'order' => 'nombres'
-		));
-
-		// Obtener listado de ubicaciones (si aplica)
-		$ubicacionesList = $this->Ubicacion->find('list', array(
-			'fields' => array('id', 'microterritorio'), // Ajusta los campos según tu modelo de Ubicación
-			'order' => 'microterritorio'
-		));
-
-		$conditions = array();
-
-		if ($this->request->is(['post', 'put'])) {
-			$encuestadorId = $this->request->data['Sociambiental']['encuestador_id'];
-
-			if (!empty($encuestadorId)) {
-				$conditions['Sociambiental.responsable_id'] = $encuestadorId;
-			}
-
-			$ubicacionId = $this->request->data['Sociambiental']['ubicacion_id'];
-			if (!empty($ubicacionId)) {
-				$conditions['Sociambiental.ubicacion_id'] = $ubicacionId;
-			}
-
-			// Obtener los datos filtrados del modelo Sociambiental
-			$sociambientals = $this->Sociambiental->getFamiliaSocioambientalFilter($conditions);
-		} else {
-			$sociambientals = array(); // Inicializar como array vacío
-		}
-		// Pasar las variables a la vista
-		$this->set(compact('sociambientals', 'ubicacionesList', 'responsablesList'));
-	}
-
-
-	public function viewFilter()
-	{
-		$this->loadModel('Responsable'); // Cargar el modelo Responsable
-		$this->loadModel('Ubicacion'); // Cargar el modelo Ubicacion
-
-		// Obtener listado de responsables (para mostrar en un select)
-		$responsablesList = $this->Responsable->find('list', array(
-			'fields' => array('id', 'nombres'), // Ajusta los campos según tu modelo Responsable
-			'order' => 'nombres'
-		));
-
-		// Obtener listado de ubicaciones (si aplica)
-		$ubicacionesList = $this->Ubicacion->find('list', array(
-			'fields' => array('id', 'microterritorio'), // Ajusta los campos según tu modelo de Ubicación
-			'order' => 'microterritorio'
-		));
-
-		$conditions = array();
-
-		if ($this->request->is(['post', 'put'])) {
-			$encuestadorId = $this->request->data['Sociambiental']['encuestador_id'];
-
-			if (!empty($encuestadorId)) {
-				$conditions['Sociambiental.responsable_id'] = $encuestadorId;
-			}
-
-			$ubicacionId = $this->request->data['Sociambiental']['ubicacion_id'];
-			if (!empty($ubicacionId)) {
-				$conditions['Sociambiental.ubicacion_id'] = $ubicacionId;
-			}
-
-			// Obtener los datos filtrados del modelo Sociambiental
-			$sociambientals = $this->Sociambiental->getFamiliaSocioambientalFilter($conditions);
-		} else {
-			$sociambientals = array(); // Inicializar como array vacío
-		}
-		// Pasar las variables a la vista
-		$this->set(compact('sociambientals', 'ubicacionesList', 'responsablesList'));
-	}
 
 
 	/**
@@ -368,17 +291,14 @@ class SociambientalsController extends AppController
 
 		// debug($responsable); // activar si necesita depurar
 		if (!empty($search)) {
-			
-				// responsable es obligatoria (AND), el resto es OR
-				$conditions['AND'] = array(
-					'OR' => array(
-						'Sociambiental.fecha LIKE' => "%$search%",
-						'Sociambiental.id LIKE' => "%$search%",
-						'Sociambiental.apellidosfamilia LIKE' => "%$search%",
-						'Ubicacion.microterritorio LIKE' => "%$search%",
-					)
-				);
-			
+
+			// responsable es obligatoria (AND), el resto es OR
+			$conditions['OR'] = array(
+				'Sociambiental.fecha LIKE' => "%$search%",
+				'Sociambiental.id LIKE' => "%$search%",
+				'Sociambiental.apellidosfamilia LIKE' => "%$search%",
+				'Ubicacion.microterritorio LIKE' => "%$search%",
+			);
 		} else if (!empty($microterritorio) || !empty($fecha)) {
 			if (!empty($microterritorio)) {
 				$conditions['Ubicacion.microterritorio'] = intval($microterritorio);
@@ -389,7 +309,26 @@ class SociambientalsController extends AppController
 		}
 
 		$total = $this->Sociambiental->find('count');
-		$filtered = $this->Sociambiental->find('count', array('conditions' => $conditions));
+		$filtered = $this->Sociambiental->find('count', array(
+			'conditions' => $conditions,
+			'joins' => array(
+				array(
+					'table' => 'ubicaciones',
+					'alias' => 'Ubicacion',
+					'type' => 'LEFT',
+					'conditions' => array('Sociambiental.ubicacion_id = Ubicacion.id')
+				),
+				array(
+					'table' => 'responsables',
+					'alias' => 'Responsable',
+					'type' => 'LEFT',
+					'conditions' => array('Sociambiental.responsable_id = Responsable.id')
+				)
+			),
+			'distinct' => 'Sociambiental.id',
+			'recursive' => -1
+		));
+
 
 		$data = $this->Sociambiental->find('all', array(
 			'conditions' => $conditions,
@@ -433,7 +372,7 @@ class SociambientalsController extends AppController
 
 		foreach ($data as $row) {
 			$result['data'][] = array(
-				'id' => isset($row['Familia']['id']) ? $row['Familia']['id'] : '',
+				'id' => $row['Sociambiental']['id'],
 				'fecha' => isset($row['Sociambiental']['fecha']) ? $row['Sociambiental']['fecha'] : '',
 				'sociambiental_id' => isset($row['Sociambiental']['id']) ? $row['Sociambiental']['id'] : '',
 				'apellidos' => isset($row['Sociambiental']['apellidosfamilia']) ? $row['Sociambiental']['apellidosfamilia'] : '',
@@ -441,8 +380,9 @@ class SociambientalsController extends AppController
 				'nombre_responsable' => isset($row['Responsable']['nombres']) ? $row['Responsable']['nombres'] : ''
 			);
 		}
-		echo json_encode($result);
-		exit();
+		$this->response->type('json');
+		$this->response->body(json_encode($result));
+		return $this->response;
 	}
 
 	public function buscarCedula($cedula)
@@ -503,41 +443,5 @@ class SociambientalsController extends AppController
 
 	public function index_general()
 	{
-		$this->loadModel('Responsable'); // Cargar el modelo Responsable
-		$this->loadModel('Ubicacion'); // Cargar el modelo Ubicacion
-
-		// Obtener listado de responsables (para mostrar en un select)
-		$responsablesList = $this->Responsable->find('list', array(
-			'fields' => array('id', 'nombres'), // Ajusta los campos según tu modelo Responsable
-			'order' => 'nombres'
-		));
-
-		// Obtener listado de ubicaciones (si aplica)
-		$ubicacionesList = $this->Ubicacion->find('list', array(
-			'fields' => array('id', 'microterritorio'), // Ajusta los campos según tu modelo de Ubicación
-			'order' => 'microterritorio'
-		));
-
-		$conditions = array();
-
-		if ($this->request->is(['post', 'put'])) {
-			$encuestadorId = $this->request->data['Sociambiental']['encuestador_id'];
-
-			if (!empty($encuestadorId)) {
-				$conditions['Sociambiental.responsable_id'] = $encuestadorId;
-			}
-
-			$ubicacionId = $this->request->data['Sociambiental']['ubicacion_id'];
-			if (!empty($ubicacionId)) {
-				$conditions['Sociambiental.ubicacion_id'] = $ubicacionId;
-			}
-
-			// Obtener los datos filtrados del modelo Sociambiental
-			$sociambientals = $this->Sociambiental->getFamiliaSocioambientalFilter($conditions);
-		} else {
-			$sociambientals = array(); // Inicializar como array vacío
-		}
-		// Pasar las variables a la vista
-		$this->set(compact('sociambientals', 'ubicacionesList', 'responsablesList'));
 	}
 }
