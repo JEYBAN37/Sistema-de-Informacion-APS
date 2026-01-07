@@ -778,3 +778,6 @@ Cache::config('selects', array(
 	'duration' => '+1 day',
 	'path'     => CACHE . 'selects/',
 ));
+
+// segundos
+Configure::write('Session.inactivityLimit', 15 * 60);
