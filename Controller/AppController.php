@@ -99,7 +99,7 @@ class AppController extends Controller
     public function isAuthorized($user)
     {
         // Default deny
-        return false;
+        return true;
     }
 
     /**

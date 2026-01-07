@@ -114,23 +114,15 @@ class UsersController extends AppController
 
 
                     $this->Auth->login($auxUser);
-                    //$this->redirect("bienvenida");
                     if ($this->Session->read('Auth.User')) {
                         $this->Session->setFlash('Acceso exitoso, bienvenido', 'flash_custom',     array('class' => 'success', 'title' => 'El registro se ha completado correctamente'));
-                        // return $this->redirect('controller' => 'orders', 'action' => 'thanks');
-                        //$this->redirect("home");
-                        return $this->redirect(
-                            array('controller' => 'Familias', 'action' => 'index')
-                        );
+
+                        return $this->redirect( array('controller' => 'Familias', 'action' => 'index'));
                     }
                 } else {
                     $this->Session->setFlash('Por favor verifique sus credenciales', 'flash_custom', array('class' => 'error', 'title' => 'Error al iniciar sesión'));
-                    //$this->Session->setFlash("SIN ACCESO AL SISTEMA");                
                 }
-            } else {
-                //$this->Session->setFlash("SIN ACCESO AL SISTEMA");
-                // echo "<script> alert('SIN ACCESO AL SISTEMA'); </script>";
-            }
+            } 
 
             $this->layout = 'login';
         }
