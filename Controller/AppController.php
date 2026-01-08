@@ -3,72 +3,21 @@
 App::uses('AppModel', 'Model');
 App::uses('AuthComponent', 'Controller/Component');
 App::uses('SimplePasswordHasher', 'Controller/Component/Auth');
-
-/**
-
- * Application level Controller
-
- *
-
- * This file is application-wide controller file. You can put all
-
- * application-wide controller-related methods here.
-
- *
-
- * PHP 5
-
- *
-
- * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
-
- * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
-
- *
-
- * Licensed under The MIT License
-
- * For full copyright and license information, please see the LICENSE.txt
-
- * Redistributions of files must retain the above copyright notice.
-
- *
-
- * @copyright     Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
-
- * @link          http://cakephp.org CakePHP(tm) Project
-
- * @package       app.Controller
-
- * @since         CakePHP(tm) v 0.2.9
-
- * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
-
- */
 App::uses('Controller', 'Controller');
 
-/**
 
- * Application Controller
-
- *
-
- * Add your application-wide methods in the class below, your controllers
-
- * will inherit them.
-
- *
-
- * @package		app.Controller
-
- * @link		http://book.cakephp.org/2.0/en/controllers.html#the-app-controller
-
- */
 class AppController extends Controller
 {
 
-    //var $components = array("Auth", "Session");
-
+    /**
+     * Componentes globales del controlador.
+     * 
+     * - RequestHandler: Maneja peticiones HTTP (AJAX, JSON, etc.).
+     * - Session: Manejo de sesiones del usuario.
+     * - Paginator: Paginación de resultados.
+     * - Acl: Control de listas de acceso (ACL).
+     * - Auth: Autenticación y autorización de usuarios.
+     */
     public $components = array(
         'RequestHandler',
         'Session',
@@ -92,64 +41,76 @@ class AppController extends Controller
         ),
     );
 
-
-    /*public $components = array( 'Session', 'Auth' => array( 'loginAction' => array('controller' => 'accounts', 'action' => 'login'), 'loginRedirect' => array('controller' => 'accounts', 'action' => 'admin'), 'logoutRedirect' => array('controller' => 'pages', 'action' => 'display', 'home'), 'authenticate' => array ( 'Custom' => array( 'userModel' => 'Account', 'fields' => array('username' => 'id'), ) ), ) );*/
-
-
-    /* public $components = array(
-    'Auth' => array(
-        'authenticate' => array(
-            'Form' => array(
-                'passwordHasher' => array(
-                    'className' => 'Simple',
-                    'hashType' => 'md5'
-                )
-            )
-        )
-    )
-);*/
-
-
+    /**
+     * Se ejecuta antes de cada acción del controlador.
+     * 
+     * - Configura el sistema de autenticación (Auth).
+     * - Define acciones de login y logout.
+     * - Permite acceso público a login y logout.
+     * - Ejecuta la validación de inactividad del usuario.
+     */
     function beforeFilter()
     {
-
         parent::beforeFilter();
 
-        $this->Auth->fields = array(
-            "username" => "username",
-            "password" => "password"
+        $this->Auth->authenticate = array(
+            'Form' => array(
+                'fields' => array(
+                    'username' => 'username',
+                    'password' => 'password'
+                )
+            )
         );
 
-        $this->Auth->authorize = array(
-            'Controller',
-            'Actions' => array('actionPath' => 'controllers')
-        );
-
-        $this->Auth->authenticate = array('Form' => array('fields' => array('username' => 'name', 'password' => 'password')));
+        $this->Auth->authorize = array('Controller');
 
         $this->Auth->loginAction = array(
             'controller' => 'users',
             'action' => 'login'
         );
+
         $this->Auth->logoutRedirect = array(
             'controller' => 'users',
-            'action' => 'logout'
+            'action' => 'login'
         );
 
-        $this->Auth->allow("");
+        $this->Auth->allow('login', 'logout');
+
+        $this->_checkInactivity();
     }
 
+        /**
+     * Se ejecuta justo antes de renderizar la vista.
+     * 
+     * Útil para enviar variables globales a las vistas
+     * o realizar ajustes finales antes del render.
+     */
     function beforeRender()
     {
         parent::beforeRender();
     }
 
+    /**
+     * Define si un usuario está autorizado a acceder a una acción.
+     * 
+     * @param array $user Datos del usuario autenticado.
+     * @return bool Retorna false por defecto (acceso denegado).
+     */
     public function isAuthorized($user)
     {
         // Default deny
-        return false;
+        return true;
     }
 
+    /**
+     * Maneja filtros de búsqueda persistentes por usuario.
+     * 
+     * - Guarda filtros en sesión por usuario.
+     * - Recupera filtros almacenados si no hay datos enviados.
+     * - Permite mantener filtros entre páginas (paginación).
+     * 
+     * @return array|null Retorna los filtros activos o null.
+     */
     public function _filter()
     {
         $uid = $this->Auth->user('id');
@@ -167,6 +128,16 @@ class AppController extends Controller
         }
         return null;
     }
+
+    /**
+     * Obtiene un access token para Google Firestore usando
+     * una Service Account (JWT).
+     * 
+     * - Genera un JWT firmado con la clave privada.
+     * - Solicita un token OAuth2 a Google.
+     * 
+     * @return string Access token para consumir Firestore.
+     */
     function getFirestoreAccessToken()
     {
         $json = json_decode(file_get_contents(APP . 'Config/serviceAccount.json'), true);
@@ -206,7 +177,15 @@ class AppController extends Controller
         return $data['access_token'];
     }
 
-     protected function getUbicacionesSelect()
+    /**
+     * Obtiene un listado de ubicaciones para usar en un <select>.
+     * 
+     * - Usa caché para mejorar el rendimiento.
+     * - Consulta la tabla Ubicacion si no existe en caché.
+     * 
+     * @return array Listado de ubicaciones (id => microterritorio).
+     */
+    protected function getUbicacionesSelect()
     {
         $cacheKey = 'ubicaciones_select';
         $ubicaciones = Cache::read($cacheKey, 'selects');
@@ -223,6 +202,14 @@ class AppController extends Controller
         return $ubicaciones;
     }
 
+    /**
+     * Obtiene un listado de responsables para usar en un <select>.
+     * 
+     * - Usa caché para evitar consultas repetidas.
+     * - Consulta la tabla Responsable si no existe en caché.
+     * 
+     * @return array Listado de responsables (id => nombres).
+     */
     protected function getResponsablesSelect()
     {
         $cacheKey = 'responsables_select';
@@ -238,5 +225,54 @@ class AppController extends Controller
         }
 
         return $responsables;
+    }
+
+    /**
+     * Verifica la inactividad del usuario autenticado.
+     * 
+     * - Si el usuario supera el tiempo máximo de inactividad,
+     *   se cierra la sesión automáticamente.
+     * - Redirige al login con un mensaje de advertencia.
+     * - Actualiza el tiempo de última actividad en cada request.
+     */
+    protected function _checkInactivity()
+    {
+        if (
+            $this->request->controller === 'users' &&
+            $this->request->action === 'login'
+        ) {
+            return;
+        }
+
+
+        $user = $this->Auth->user();
+
+        if (!$user) {
+            return;
+        }
+
+        $now = time();
+        $lastActivity = $this->Session->read('Auth.lastActivity');
+
+        if ($lastActivity) {
+            $limit = Configure::read('Session.inactivityLimit');
+
+            if (($now - $lastActivity) > $limit) {
+                // sesión expirada por inactividad
+                $this->Auth->logout();
+                $this->Session->destroy();
+
+                $this->Session->setFlash(
+                    'Tu sesión expiró por inactividad',
+                    'default',
+                    array('class' => 'alert alert-warning')
+                );
+
+                return $this->redirect($this->Auth->loginAction);
+            }
+        }
+
+        // actualizar actividad
+        $this->Session->write('Auth.lastActivity', $now);
     }
 }

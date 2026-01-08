@@ -9,71 +9,16 @@ class UsersController extends AppController
     var $helpers = array("Html", "Form");
     var $paginate = array("order" => "username", "limit" => 5);
     var $nivs = array("A" => "Administrador", "U" => "Investigador", "D" => "Digitador");
-    const ALERT_SUCCESS_CLASS = 'bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative'; // Puedes cambiar esto por clases Tailwind, por ejemplo: '';
-    const ALERT_ERROR_CLASS = 'bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative';
 
-    public function home()
-    {
-        $this->User->recursive = 0;
-        $this->set('users', $this->Paginator->paginate());
-    }
-
-
-
-    public function add()
-    {
-        if ($this->request->is('post')) {
-            $this->User->create();
-            //$this->request->data["User"]["password"]=md5($this->request->data["User"]["password"]);
-            if ($this->User->save($this->request->data)) {
-                $this->Session->setFlash(__('The user has been saved.'));
-                return $this->redirect(array('action' => 'admin'));
-            } else {
-                $this->Session->setFlash(__('The user could not be saved. Please, try again.'));
-            }
-        }
-        $groups = $this->User->Group->find('list');
-        $this->set(compact('groups'));
-    }
-
-
-
-    function edit($id = null)
-    {
-
-        if (isset($this->data) && !empty($this->data)) {
-
-            //$this->request->data["User"]["password"]=md5($this->request->data["User"]["password"]);
-            try {
-                $this->User->save($this->data);
-            } catch (\Exception $e) {
-            }
-            $this->redirect("admin");
-            //return $this->redirect(array('action' => 'admin'));
-
-        } else {
-
-            $this->set("nivs", $this->nivs);
-
-            $this->set("datos", $this->User->find("first", array("conditions" => array("User.id" => $id))));
-
-            $this->Session->setFlash("ACTUALIZACION DE USUARIOS");
-        }
-    }
-
-
-
-
-    function delete($id = null)
-    {
-        try {
-            $this->User->delete($id);
-        } catch (\Exception $e) {
-        }
-        $this->redirect("admin");
-    }
-
-
+    /**
+     * Maneja el proceso de autenticación de usuarios.
+     * 
+     * - Valida que la petición sea POST.
+     * - Verifica que el CAPTCHA esté completo.
+     * - Valida usuario y contraseña contra la base de datos.
+     * - Crea la sesión del usuario autenticado.
+     * - Redirige al módulo principal tras login exitoso.
+     */
     function login()
     {
         if ($this->request->is('post')) {
@@ -114,44 +59,27 @@ class UsersController extends AppController
 
 
                     $this->Auth->login($auxUser);
-                    //$this->redirect("bienvenida");
                     if ($this->Session->read('Auth.User')) {
                         $this->Session->setFlash('Acceso exitoso, bienvenido', 'flash_custom',     array('class' => 'success', 'title' => 'El registro se ha completado correctamente'));
-                        // return $this->redirect('controller' => 'orders', 'action' => 'thanks');
-                        //$this->redirect("home");
-                        return $this->redirect(
-                            array('controller' => 'Familias', 'action' => 'index')
-                        );
+
+                        return $this->redirect( array('controller' => 'Familias', 'action' => 'index'));
                     }
                 } else {
                     $this->Session->setFlash('Por favor verifique sus credenciales', 'flash_custom', array('class' => 'error', 'title' => 'Error al iniciar sesión'));
-                    //$this->Session->setFlash("SIN ACCESO AL SISTEMA");                
                 }
-            } else {
-                //$this->Session->setFlash("SIN ACCESO AL SISTEMA");
-                // echo "<script> alert('SIN ACCESO AL SISTEMA'); </script>";
-            }
+            } 
 
             $this->layout = 'login';
         }
     }
 
-
-    function logout()
-    {
-        $this->Session->setFlash('Good-Bye');
-        $this->redirect($this->Auth->logout());
-    }
-
-
-
-    function bienvenida()
-    {
-        $this->Session->setFlash("Bienvenid@s");
-    }
-
-
-
+    /**
+     * Cierra la sesión del usuario autenticado.
+     * 
+     * - Destruye la sesión.
+     * - Cierra sesión en AuthComponent.
+     * - Redirige al formulario de login.
+     */
     function salir()
     {
         $this->Session->destroy();
@@ -159,23 +87,26 @@ class UsersController extends AppController
         $this->redirect("login");
     }
 
-
-
-    function admin()
-    {
-        $r = $this->paginate("User");
-        $this->set("usrs", $r);
-        $this->set("nivs", $this->nivs);
-        $this->Session->setFlash("ADMINISTRACION DE USUARIOS");
-    }
-
-
+    /**
+     * Método ejecutado antes de cada acción del controlador.
+     * 
+     * - Permite acceso a todas las acciones (Auth->allow).
+     * - Hereda configuración del AppController.
+     */
     public function beforefilter()
     {
         parent::beforeFilter();
         $this->Auth->allow();
     }
 
+    /**
+     * Inicializa las reglas de ACL del sistema.
+     * 
+     * - Define permisos por grupo de usuarios.
+     * - Grupo 1: acceso total.
+     * - Grupo 2 y 3: permisos personalizados (comentados).
+     * - Se ejecuta solo una vez para configurar ACL.
+     */
     public function initDB()
     {
         $group = $this->User->Group;
