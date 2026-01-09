@@ -112,8 +112,20 @@ class SociambientalsController extends AppController
 	 */
 	public function add()
 	{
+		$r = $this->Auth->user();
+		$responsable = $r['responsable_id'];
 		if ($this->request->is(array('post'))) {
 			if ($this->Sociambiental->save($this->request->data)) {
+
+				$this->loadHistorial(array(
+					'Intervecion' => array(
+						'sociambiental_id' => $this->Sociambiental->id,
+						'fecha' => date('Y-m-d'),
+						'historial' => json_encode($this->request->data['Sociambiental']),
+						'responsable_id' => $responsable,
+					)
+				));
+
 				if ($this->request->data['btn'] == 'Guardar y continuar')
 					//$session->setFlash("registro guardado");
 					$this->Session->setFlash('Registro se creó con éxito, continuar con información de la familia / hogar', 'flash_custom', array('class' => 'success', 'title' => 'El registro se ha completado correctamente'));					//return $this->redirect(array('action' => 'index'));
@@ -176,12 +188,25 @@ class SociambientalsController extends AppController
 
 	public function edit($id = null)
 	{
+		$r = $this->Auth->user();
+		$responsable = $r['responsable_id'];
+
 		if (!$this->Sociambiental->exists($id)) {
 			throw new NotFoundException(__('Invalid Sociambiental'));
 		}
 
 		if ($this->request->is(array('post', 'put'))) {
 			if ($this->Sociambiental->save($this->request->data)) {
+
+				$this->loadHistorial(array(
+					'Intervecion' => array(
+						'sociambiental_id' => $this->Sociambiental->id,
+						'fecha' => date('Y-m-d'),
+						'historial' => json_encode($this->request->data['Sociambiental']),
+						'responsable_id' => $responsable,
+					)
+				));
+
 				if ($this->request->data['btn'] == 'Guardar cambios') {
 					//$session->setFlash("registro guardado");
 					$this->Session->setFlash('Registro se actualizo con exito, continuar con informacion de la familia / hogar', 'flash_custom', array('class' => 'success', 'title' => 'El registro se ha completado correctamente'));					//return $this->redirect(array('action' => 'index'));

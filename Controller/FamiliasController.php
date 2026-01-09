@@ -306,6 +306,16 @@ class FamiliasController extends AppController
 		if ($this->request->is('post')) {
 			$this->request->data['Familia']['sociambiental_id'] = $sociambientals_id;
 			if ($this->Familia->save($this->request->data)) {
+
+				$this->loadHistorial(array(
+					'Intervecion' => array(
+						'familia_id' => $this->Familia->id,
+						'fecha' => date('Y-m-d'),
+						'historial' => json_encode($this->request->data['Familia']),
+						'responsable_id' => $this->userCurrent(),
+					)
+				));
+
 				if ($this->request->data['btn'] == 'Guardar y continuar') {
 					$this->Session->setFlash('Registro de familia se guradado con exito, continuar con informacion de los integrantes', 'flash_custom', array('class' => 'success', 'title' => 'El registro se ha completado correctamente'));
 					return $this->redirect(array('controller' => 'Juventudadultos', 'action' => 'add?familia=', $this->Familia->id));
@@ -335,6 +345,7 @@ class FamiliasController extends AppController
 	 */
 	public function edit($id = null)
 	{
+
 		if (!$this->Familia->exists($id)) {
 			$this->Session->setFlash('La familia no existe', 'flash_custom', array('class' => 'error', 'title' => 'Error al cargar el registro'));
 			return $this->redirect(array('controller' => 'Familias', 'action' => 'index'));
@@ -343,6 +354,16 @@ class FamiliasController extends AppController
 
 		if ($this->request->is(array('post', 'put'))) {
 			if ($this->Familia->save($this->request->data)) {
+
+				$this->loadHistorial(array(
+					'Intervecion' => array(
+						'familia_id' => $this->Familia->id,
+						'fecha' => date('Y-m-d'),
+						'historial' => json_encode($this->request->data['Familia']),
+						'responsable_id' => $this->userCurrent(),
+					)
+				));
+
 				if ($this->request->data['btn'] == 'Guardar') {
 					//$session->setFlash("registro guardado");
 					$this->Session->setFlash('Registro se actualizo con exito, continuar con informacion de la familia / hogar', 'flash_custom', array('class' => 'success', 'title' => 'El registro se ha completado correctamente'));					//return $this->redirect(array('action' => 'index'));
