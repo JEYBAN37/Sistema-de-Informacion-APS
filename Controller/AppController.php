@@ -10,7 +10,7 @@ class AppController extends Controller
 {
 
     /**
-     * Componentes globales del controlador.
+     * Componentes globales del controlador. @property Intervecion $Intervecion
      * 
      * - RequestHandler: Maneja peticiones HTTP (AJAX, JSON, etc.).
      * - Session: Manejo de sesiones del usuario.
@@ -275,4 +275,17 @@ class AppController extends Controller
         // actualizar actividad
         $this->Session->write('Auth.lastActivity', $now);
     }
+
+    protected function loadHistorial($data) {
+        $this->loadModel('Intervecion');
+        $this->Intervecion->create();
+        $this->Intervecion->save($data);
+    }
+
+    protected function userCurrent() {
+        $r = $this->Auth->user();
+		$responsable = $r['responsable_id'];
+        return $responsable;
+    }
+
 }

@@ -65,6 +65,17 @@ class ObservacionsController extends AppController
 		if ($this->request->is(array('post'))) {
 			if ($this->Observacion->save($this->request->data)) {
 
+				$this->loadHistorial(array(
+					'Intervecion' => array(
+						'observacion_id' => $this->Observacion->id,
+						'fecha' => date('Y-m-d'),
+						'historial' => json_encode($this->request->data['Observacion']),
+						'responsable_id' => $this->userCurrent(),
+
+					)
+				));
+
+
 				if ($this->request->data['btn'] == 'Guardar y continuar') {
 					//$session->setFlash("registro guardado");
 					$this->Session->setFlash('Registro se creó con éxito, continuar con la creacion del plan de cuidado', 'flash_custom', array('class' => 'success', 'title' => 'El registro se ha completado correctamente'));
@@ -100,6 +111,16 @@ class ObservacionsController extends AppController
 		if ($this->request->is(array('post', 'put'))) {
 			// El Model's beforeSave se encarga de convertir los arrays a strings
 			if ($this->Observacion->save($this->request->data)) {
+
+				$this->loadHistorial(array(
+					'Intervecion' => array(
+						'observacion_id' => $this->Observacion->id,
+						'fecha' => date('Y-m-d'),
+						'historial' => json_encode($this->request->data['Observacion']),
+						'responsable_id' => $this->userCurrent(),
+					)
+				));
+				
 				$this->Session->setFlash('Registro se guardó con éxito, continuar con la firma del Plan de Cuidado', 'flash_custom', array('class' => 'success', 'title' => 'El registro se ha completado correctamente'));					//return $this->redirect(array('action' => 'index'));
 				return $this->redirect(array('controller' => 'familias', 'action' => 'view', $this->request->data["Observacion"]["familia_id"]));
 			} else {
@@ -163,7 +184,7 @@ class ObservacionsController extends AppController
 
 	public function addanexo($id = null)
 	{
-			if (!$this->Observacion->exists($id)) {
+		if (!$this->Observacion->exists($id)) {
 			$this->Session->setFlash(
 				'La familia no existe',
 				'flash_custom',
@@ -181,6 +202,17 @@ class ObservacionsController extends AppController
 
 			// 👇 DEJAR A UploadBehavior HACER SU TRABAJO (NO mover archivo manualmente)
 			if ($this->Observacion->save($this->request->data)) {
+
+				$this->loadHistorial(array(
+					'Intervecion' => array(
+						'observacion_id' => $this->Observacion->id,
+						'fecha' => date('Y-m-d'),
+						'historial' => json_encode($this->request->data['Observacion']),
+						'responsable_id' => $this->userCurrent(),
+					)
+				));
+
+
 				$this->Session->setFlash(
 					'Registro actualizado con éxito',
 					'flash_custom',
@@ -236,6 +268,16 @@ class ObservacionsController extends AppController
 
 			// 👇 DEJAR A UploadBehavior HACER SU TRABAJO (NO mover archivo manualmente)
 			if ($this->Observacion->save($this->request->data)) {
+
+				$this->loadHistorial(array(
+					'Intervecion' => array(
+						'observacion_id' => $this->Observacion->id,
+						'fecha' => date('Y-m-d'),
+						'historial' => json_encode($this->request->data['Observacion']),
+						'responsable_id' => $this->userCurrent(),
+					)
+				));
+
 				$this->Session->setFlash(
 					'Registro actualizado con éxito',
 					'flash_custom',

@@ -55,10 +55,22 @@ class JuventudadultosController extends AppController
 	 */
 	public function add()
 	{
+
 		if ($this->request->is('post')) {
 			$this->Juventudadulto->create();
 			$id_familia = $this->request->data['Juventudadulto']['familia_id'];
 			if ($this->Juventudadulto->save($this->request->data)) {
+
+				$this->loadHistorial(array(
+					'Intervecion' => array(
+						'juventudadultos_id' => $this->Juventudadulto->id,
+						'fecha' => date('Y-m-d'),
+						'historial' => json_encode($this->request->data['Juventudadulto']),
+						'responsable_id' => $this->userCurrent(),
+					)
+				));
+
+
 				if (isset($this->request->data['btn']) && $this->request->data['btn'] == 'Guardar y agregar integrante') {
 					$this->Session->setFlash('Registro de familia se guradado con exito, continuar con informacion del siguiente integrante', 'flash_custom', array('class' => 'success', 'title' => 'El registro se ha completado correctamente'));
 					// Asegurar que no quede data previa en el siguiente formulario
@@ -66,7 +78,7 @@ class JuventudadultosController extends AppController
 					return $this->redirect(array(
 						'controller' => 'Juventudadultos',
 						'action' => 'add',
-						'?' => array('familia' => $id_familia)
+						'?' => array('juventudadultos' => $id_familia)
 					));
 				}
 
@@ -90,8 +102,6 @@ class JuventudadultosController extends AppController
 	}
 
 
-
-
 	/**
 	 * edit method
 	 *
@@ -108,6 +118,17 @@ class JuventudadultosController extends AppController
 
 		if ($this->request->is(array('post', 'put'))) {
 			if ($this->Juventudadulto->save($this->request->data)) {
+
+				$this->loadHistorial(array(
+					'Intervecion' => array(
+						'juventudadultos_id' => $this->Juventudadulto->id,
+						'fecha' => date('Y-m-d'),
+						'historial' => json_encode($this->request->data['Juventudadulto']),
+						'responsable_id' => $this->userCurrent(),
+
+					)
+				));
+
 				if (isset($this->request->data['btn']) == 'Guardar') {
 					$this->Session->setFlash('Registro de Persona se actualizo con exito', 'flash_custom', array('class' => 'success', 'title' => 'El registro se ha actualizado correctamente'));
 					return $this->redirect(array('controller' => 'familias', 'action' => 'view/', $this->data["Juventudadulto"]["familia_id"]));
