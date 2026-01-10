@@ -55,6 +55,7 @@ class JuventudadultosController extends AppController
 	 */
 	public function add()
 	{
+		$this->loadModel('Persona');
 
 		if ($this->request->is('post')) {
 			$this->Juventudadulto->create();
@@ -70,8 +71,29 @@ class JuventudadultosController extends AppController
 					)
 				));
 
-
-				if (isset($this->request->data['btn']) && $this->request->data['btn'] == 'Guardar y agregar integrante') {
+				$this->Persona->create();
+				if($this->Persona->save(array(
+					'Persona' => array(
+						'juventudadulto_id' => $this->Juventudadulto->id,
+						'familia_id' => $id_familia,
+						'primernombre' => $this->request->data['Juventudadulto']['primernombre'],
+						'segundonombre' => $this->request->data['Juventudadulto']['segundonombre'],
+						'primerapellido' => $this->request->data['Juventudadulto']['primerapellido'],
+						'segundoapellido' => $this->request->data['Juventudadulto']['segundoapellido'],
+						'tipodocumento' => $this->request->data['Juventudadulto']['tipodocumento'],
+						'numerodoc' => $this->request->data['Juventudadulto']['numerodoc'],
+						'fechanac' => $this->request->data['Juventudadulto']['fechanac'],
+						'regimen' => $this->request->data['Juventudadulto']['regimen'],
+						'discapacidad' => $this->request->data['Juventudadulto']['discapacidad'],
+						'condicioncronica' => $this->request->data['Juventudadulto']['condicioncronica'],
+						'canalizacionuno' => $this->request->data['Juventudadulto']['canalizacionuno'],
+						'sociambiental_id'  => $this->request->data['Juventudadulto']['sociambiental_id'],
+						'sexo' => $this->request->data['Juventudadulto']['sexo'],
+						'familia_id' => $id_familia,
+						'responsable_id' => $this->userCurrent(),
+					)
+				))){
+					if (isset($this->request->data['btn']) && $this->request->data['btn'] == 'Guardar y agregar integrante') {
 					$this->Session->setFlash('Registro de familia se guradado con exito, continuar con informacion del siguiente integrante', 'flash_custom', array('class' => 'success', 'title' => 'El registro se ha completado correctamente'));
 					// Asegurar que no quede data previa en el siguiente formulario
 					$this->request->data = array();
@@ -90,6 +112,10 @@ class JuventudadultosController extends AppController
 						'action' => 'view/' . $id_familia,
 						'?' => array('familia' => $id_familia)
 					));
+				}
+				} else {
+					// Manejo de error si el registro de Persona no se guarda
+					$this->Session->setFlash('El registro de Persona no fue guardado correctamente pórque ya existe.', 'flash_custom', array('class' => 'error', 'title' => 'Error al guardar el registro'));
 				}
 
 			} else {
@@ -148,60 +174,6 @@ class JuventudadultosController extends AppController
 
 		$canalizaciones = $this->Juventudadulto->Canalizacion->find('list');
 		$this->set(compact('canalizaciones'));
-	}
-
-	public function edit1($id = null)
-	{
-		if (!$this->Juventudadulto->exists($id)) {
-			throw new NotFoundException(__('Invalid juventudadulto'));
-		}
-		if ($this->request->is(array('post', 'put'))) {
-			if ($this->Juventudadulto->save($this->request->data)) {
-				$this->Session->setFlash('Se ha guardado correctamente', 'default', array('class' => 'alert alert-success'));
-				return $this->redirect(array('action' => 'index'));
-			} else {
-				$this->Session->setFlash('No se ha guardado, por favor revisar campos', 'default', array('class' => 'alert alert-danger'));
-			}
-		} else {
-			$options = array('conditions' => array('Juventudadulto.' . $this->Juventudadulto->primaryKey => $id));
-			$this->request->data = $this->Juventudadulto->find('first', $options);
-		}
-
-		$familias = $this->Juventudadulto->Familia->find('list');
-		$canalizaciones = $this->Juventudadulto->Canalizacion->find('list');
-		$this->set(compact('familias', 'canalizaciones'));
-	}
-
-	public function seguimiento($id = null)
-	{
-		if (!$this->Juventudadulto->exists($id)) {
-			throw new NotFoundException(__('Invalid juventudadulto'));
-		}
-
-		if ($this->request->is(array('post', 'put'))) {
-			// Obtener el valor de canalizacion_id del formulario
-			$canalizacionId = $this->request->data['Juventudadulto']['canalizacion_id'];
-
-			if ($this->Juventudadulto->save($this->request->data)) {
-				$this->Session->setFlash('Se ha guardado correctamente', 'default', array('class' => 'alert alert-success'));
-
-				// Redirigir a la vista de la Canalizacion
-				return $this->redirect(array(
-					'controller' => 'canalizacions',
-					'action' => 'view',
-					$canalizacionId
-				));
-			} else {
-				$this->Session->setFlash('No se ha guardado, por favor revisar campos', 'default', array('class' => 'alert alert-danger'));
-			}
-		} else {
-			$options = array('conditions' => array('Juventudadulto.' . $this->Juventudadulto->primaryKey => $id));
-			$this->request->data = $this->Juventudadulto->find('first', $options);
-		}
-
-		$familias = $this->Juventudadulto->Familia->find('list');
-		$canalizaciones = $this->Juventudadulto->Canalizacion->find('list');
-		$this->set(compact('familias', 'canalizaciones'));
 	}
 
 	/**

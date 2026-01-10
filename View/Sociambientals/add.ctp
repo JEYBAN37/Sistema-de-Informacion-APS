@@ -252,17 +252,24 @@ $animalesOptions = [
                     <label for="resultadoEcomapa" class="font-semibold">Verifica Caracterizacion</label>
                     <p class="text-red-600">*</p>
                 </div>
-                <div class="col-span-2 text-md font-semibold mt-6">
+                <div class="col-span-2 text-md font-semibold mt-6 ">
                     <div class="flex flex-col w-full">
                         <input
                             type="text"
                             id="cedula"
-                            onkeyup="buscarCedula()"
                             class="border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400 w-full"
                             placeholder="Ingresa número de documento" />
                         <span class="text-sm text-red-600 ">
                             <?= $this->Form->error('fecha') ?>
                         </span>
+                    </div>
+                    <div class="w-full py-4">
+                        <button
+                            type="button"
+                            onclick="consultarPersona()"
+                            class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition">
+                            Consultar
+                        </button>
                     </div>
 
                 </div>
@@ -284,29 +291,61 @@ $animalesOptions = [
                     </div>
                 </div>
 
-                <script>
-                    // Sobrescribe/actualiza la función buscarCedula para mostrar JSON ordenado (pretty)
-                    function buscarCedula() {
-                        var ced = document.getElementById('cedula').value;
-                        if (ced.length < 5) return;
+                <input type="hidden" id="persona_id" name="persona_id">
 
-                        fetch('./buscarCedula/' + ced)
-                            .then(response => response.json())
+                <p id="errorCedula" class="text-sm text-red-600 mt-2 hidden">
+                    No se encontró la persona
+                </p>
+
+
+                <script>
+                    function consultarPersona() {
+                        const cedula = document.getElementById('cedula').value.trim();
+
+
+                        limpiarResultado();
+
+                        fetch('../personas/buscarPersona?q=' + cedula)
+                            .then(res => res.json())
                             .then(data => {
-                                try {
-                                    // formatear JSON con indentación de 2 espacios
-                                    const pretty = JSON.stringify(data, null, 2);
-                                    document.getElementById('resultado').textContent = pretty;
-                                } catch (e) {
-                                    // en caso de error, mostrar fallback
-                                    document.getElementById('resultado').textContent = typeof data === 'string' ? data : JSON.stringify(data);
+                                if (!data || data.length === 0) {
+                                    mostrarError();
+                                    return;
                                 }
+
+                                // Mostrar resultado bonito
+                                document.getElementById('resultado').textContent =
+                                    JSON.stringify(data, null, 2);
+
+                                // Tomar el primer registro
+                                document.getElementById('persona_id').value = data[0].id;
+
+                                ocultarError();
                             })
-                            .catch(err => {
-                                document.getElementById('resultado').textContent = 'Error: ' + err.message;
+                            .catch(() => {
+                                mostrarError();
                             });
                     }
+
+                    function mostrarError() {
+                        document.getElementById('resultado').textContent = '';
+                        document.getElementById('persona_id').value = '';
+                        document.getElementById('errorCedula').classList.remove('hidden');
+                    }
+
+                    function ocultarError() {
+                        document.getElementById('errorCedula').classList.add('hidden');
+                    }
+
+                    function limpiarResultado() {
+                        document.getElementById('resultado').textContent = '';
+                        document.getElementById('persona_id').value = '';
+                        ocultarError();
+                    }
                 </script>
+
+
+
             </div>
         </div>
     </div>
@@ -1689,7 +1728,7 @@ $animalesOptions = [
                 dataObject[key] = value;
             }
         });
-        
+
         // un mensaje para ponerle un id temporal y esribr un numero de vivienda
         const input = prompt('Ingrese el ID de vivienda para crear la familia (ej: 123):');
         if (input === null) return; // usuario canceló
