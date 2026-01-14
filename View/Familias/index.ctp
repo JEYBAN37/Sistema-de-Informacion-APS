@@ -575,7 +575,7 @@
           <div class="relative inline-block text-left">
             <a href="${viewUrl}" class="block px-4 py-2 text-sm hover:bg-gray-100">Ver</a>
             <a href="${editUrl}" class="block px-4 py-2 text-sm hover:bg-gray-100">Actualizar</a>
-            <button onclick="deleteFamilia(${data.id})" class="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100">
+            <button onclick="deleteFamilia(${data})" class="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100">
                 Borrar Familia
             </button>
           </div>`;
