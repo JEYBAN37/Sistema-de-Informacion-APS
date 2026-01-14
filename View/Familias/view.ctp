@@ -51,10 +51,10 @@ $planUrl = $this->Html->url(['controller' => 'Observacions', 'action' => 'addane
             </svg>
         </button>
 
-        <button title="Ver detalles de familia" type="button" onclick="window.location.href='<?php echo $this->Html->url(['action' => 'plancuidado', $familia['Familia']['id']]); ?>'"
+        <!--<button title="Ver detalles de familia" type="button" onclick="window.location.href='<?php echo $this->Html->url(['action' => 'view', $familia['Familia']['id']]); ?>'"
             class="flex items-center w-38 space-x-2 bg-teal-600 text-white px-4 py-2 rounded hover:bg-teal-700">
             <i class="fa-solid fa-info text-2xl px-2"></i>
-        </button>
+        </button>-->
 
         <button title="Agregar Integrante" type="button" onclick="window.location.href='<?php echo $this->Html->url(['controller' => 'Juventudadultos', 'action' => 'add?juventudadultos=' . $familia['Familia']['id']]); ?>'"
             class="flex items-center w-38 space-x-2 bg-teal-600 text-white px-4 py-2 rounded hover:bg-teal-700">
