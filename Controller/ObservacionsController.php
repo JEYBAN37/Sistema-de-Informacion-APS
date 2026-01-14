@@ -109,6 +109,9 @@ class ObservacionsController extends AppController
 		}
 
 		if ($this->request->is(array('post', 'put'))) {
+			// Guardar copia de los datos originales antes de intentar guardar
+			$datosOriginales = $this->request->data;
+			
 			// El Model's beforeSave se encarga de convertir los arrays a strings
 			if ($this->Observacion->save($this->request->data)) {
 
@@ -124,35 +127,40 @@ class ObservacionsController extends AppController
 				$this->Session->setFlash('Registro se guardó con éxito, continuar con la firma del Plan de Cuidado', 'flash_custom', array('class' => 'success', 'title' => 'El registro se ha completado correctamente'));					//return $this->redirect(array('action' => 'index'));
 				return $this->redirect(array('controller' => 'familias', 'action' => 'view', $this->request->data["Observacion"]["familia_id"]));
 			} else {
+				// Si hay error, restaurar los datos originales (sin modificaciones de beforeSave)
+				// para que se muestren en la vista tal como los envió el usuario
+				$this->request->data = $datosOriginales;
 				$this->Session->setFlash('No se ha guardado, por favor revisar campos', 'flash_custom', array('class' => 'error', 'title' => 'Error al guardar el registro'));
 			}
+		} else {
+			// Si no hay datos POST (carga inicial), cargar del servidor
+			$options = array(
+				'conditions' => array('Observacion.' . $this->Observacion->primaryKey => $id),
+				'fields' => array(
+					'Observacion.responsable_id',
+					'Observacion.familia_id',
+					'Observacion.resultadoEcomapa',
+					'Observacion.resultadoFamiliograma',
+					'Observacion.date',
+					'Observacion.id',
+					'Observacion.menoresriegosalud',
+					'Observacion.riesgovulnerabilidad',
+					'Observacion.puntuacionfamilia',
+					'Observacion.valoracionfamilia',
+					'Observacion.fortalezas',
+					'Observacion.objetivocortoplazo',
+					'Observacion.objetivolargoplazo',
+					'Observacion.entornoafectado',
+					'Observacion.indicadorria',
+					'Observacion.actividaddesarrollar',
+					'Observacion.disentimiento',
+					'Observacion.observacionesplancuidado',
+					'Observacion.firmaplancuidado',
+					'Observacion.responsables',
+				)
+			);
+			$this->request->data = $this->Observacion->tranformData($this->Observacion->find('first', $options));
 		}
-		$options = array(
-			'conditions' => array('Observacion.' . $this->Observacion->primaryKey => $id),
-			'fields' => array(
-				'Observacion.responsable_id',
-				'Observacion.familia_id',
-				'Observacion.resultadoEcomapa',
-				'Observacion.resultadoFamiliograma',
-				'Observacion.date',
-				'Observacion.id',
-				'Observacion.menoresriegosalud',
-				'Observacion.riesgovulnerabilidad',
-				'Observacion.puntuacionfamilia',
-				'Observacion.valoracionfamilia',
-				'Observacion.fortalezas',
-				'Observacion.objetivocortoplazo',
-				'Observacion.objetivolargoplazo',
-				'Observacion.entornoafectado',
-				'Observacion.indicadorria',
-				'Observacion.actividaddesarrollar',
-				'Observacion.disentimiento',
-				'Observacion.observacionesplancuidado',
-				'Observacion.firmaplancuidado',
-				'Observacion.responsables',
-			)
-		);
-		$this->request->data = $this->Observacion->tranformData($this->Observacion->find('first', $options));
 		$personas = $this->Juventudadulto->find('all', array(
 			'conditions' => array('Juventudadulto.familia_id' => $this->request->data['Observacion']['familia_id']),
 			'fields' => array(
@@ -331,9 +339,9 @@ class ObservacionsController extends AppController
 		if ($this->Observacion->delete()) {
 
 
-			$this->Session->setFlash('El registro se borro exitosamente', 'default', array('class' => 'alert alert-success'));
+			$this->Session->setFlash('La Observación ha sido eliminada correctamente.', 'flash_custom', array('class' => 'success', 'title' => 'La operación se ha completado correctamente'));
 		} else {
-			$this->Session->setFlash('El registro no se pudo borrar', 'default', array('class' => 'alert alert-danger'));
+			$this->Session->setFlash('El registro no se pudo borrar', 'flash_custom', array('class' => 'error', 'title' => 'Error al borrar el registro'));
 		}
 
 

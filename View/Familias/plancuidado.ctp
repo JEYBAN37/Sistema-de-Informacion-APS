@@ -291,7 +291,7 @@
                 <tbody>
                     <tr>
                         <td colspan="9" class="border border-gray-300 font-semibold text-center p-2">
-                            OBJECTIVOS DEL PLAN DE CUIDADO
+                            OBJETIVOS DEL PLAN DE CUIDADO
                         </td>
                     </tr>
                     <tr class="bg-gray-100">

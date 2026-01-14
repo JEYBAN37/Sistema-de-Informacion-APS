@@ -20,36 +20,24 @@ class Observacion extends AppModel
 
 	public function beforeSave($options = array())
 	{
-		if (isset($this->data[$this->alias]['resultadoFamiliograma']) && is_array($this->data[$this->alias]['resultadoFamiliograma'])) {
-			$this->data[$this->alias]['resultadoFamiliograma'] = implode(',', $this->data[$this->alias]['resultadoFamiliograma']);
-		}
-
-		if (isset($this->data[$this->alias]['menoresriegosalud']) && is_array($this->data[$this->alias]['menoresriegosalud'])) {
-			$this->data[$this->alias]['menoresriegosalud'] = implode(',', $this->data[$this->alias]['menoresriegosalud']);
-		}
-
-		if (isset($this->data[$this->alias]['riesgovulnerabilidad']) && is_array($this->data[$this->alias]['riesgovulnerabilidad'])) {
-			$this->data[$this->alias]['riesgovulnerabilidad'] = implode(',', $this->data[$this->alias]['riesgovulnerabilidad']);
-		}
-
-		if (isset($this->data[$this->alias]['fortalezas']) && is_array($this->data[$this->alias]['fortalezas'])) {
-			$this->data[$this->alias]['fortalezas'] = implode(',', $this->data[$this->alias]['fortalezas']);
-		}
-
-		if (isset($this->data[$this->alias]['canalizacionuno']) && is_array($this->data[$this->alias]['canalizacionuno'])) {
-			$this->data[$this->alias]['canalizacionuno'] = implode(',', $this->data[$this->alias]['canalizacionuno']);
-		}
-
-		if (isset($this->data[$this->alias]['responsables']) && is_array($this->data[$this->alias]['responsables'])) {
-			$this->data[$this->alias]['responsables'] = implode(',', $this->data[$this->alias]['responsables']);
-		}
-
-		if (isset($this->data[$this->alias]['entornoafectado']) && is_array($this->data[$this->alias]['entornoafectado'])) {
-			$this->data[$this->alias]['entornoafectado'] = implode(',', $this->data[$this->alias]['entornoafectado']);
-		}
-
-		if (isset($this->data[$this->alias]['indicadorria']) && is_array($this->data[$this->alias]['indicadorria'])) {
-			$this->data[$this->alias]['indicadorria'] = implode(',', $this->data[$this->alias]['indicadorria']);
+		// Convertir arrays a strings separados por comas
+		$campos = ['resultadoFamiliograma', 'menoresriegosalud', 'riesgovulnerabilidad', 'fortalezas', 'canalizacionuno', 'responsables', 'entornoafectado', 'indicadorria'];
+		
+		foreach ($campos as $campo) {
+			if (isset($this->data[$this->alias][$campo])) {
+				$valor = $this->data[$this->alias][$campo];
+				
+				// Si es array, convertir a string
+				if (is_array($valor)) {
+					// Filtrar valores vacíos antes de unir
+					$valoresValidos = array_filter($valor, function($v) {
+						return !empty($v);
+					});
+					$this->data[$this->alias][$campo] = !empty($valoresValidos) ? implode(',', $valoresValidos) : '';
+				}
+				// Si es string vacío, dejarlo así
+				// Si es string con datos, dejarlo como está
+			}
 		}
 
 		return true;
@@ -59,14 +47,29 @@ class Observacion extends AppModel
 	{
 		// Solo procesar si el valor es string, si es array lo deja igual
 		$campos = ['resultadoFamiliograma', 'menoresriegosalud', 'riesgovulnerabilidad', 'fortalezas', 'canalizacionuno', 'responsables','entornoafectado','indicadorria'];
+		
+		if (!isset($data['Observacion'])) {
+			return $data;
+		}
+		
 		foreach ($campos as $campo) {
-			if (!empty($data['Observacion'][$campo])) {
+			if (isset($data['Observacion'][$campo])) {
 				$valor = $data['Observacion'][$campo];
-				if (is_string($valor)) {
-					$tipos = array_map('trim', explode(',', $valor));
-					$data['Observacion'][$campo] = $tipos;
-				} else if (is_array($valor)) {
-					$data['Observacion'][$campo] = $valor;
+				
+				// Si es string, convertir a array
+				if (is_string($valor) && !empty($valor)) {
+					$data['Observacion'][$campo] = array_filter(array_map('trim', explode(',', $valor)));
+				} 
+				// Si es array vacío o null, dejarlo vacío pero como array
+				elseif (empty($valor)) {
+					$data['Observacion'][$campo] = array();
+				}
+				// Si ya es array, dejarlo como está (puede tener valores vacíos)
+				else if (is_array($valor)) {
+					// Filtrar valores vacíos pero mantener estructura
+					$data['Observacion'][$campo] = array_filter($valor, function($v) {
+						return !empty($v) || $v === '0';
+					});
 				}
 			}
 		}

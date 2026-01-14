@@ -193,9 +193,9 @@ class JuventudadultosController extends AppController
 		$familiaId = $this->Juventudadulto->field('familia_id');
 		$this->request->allowMethod('post', 'delete');
 		if ($this->Juventudadulto->delete()) {
-			$this->Session->setFlash('El registro se borro exitosamente', 'default', array('class' => 'alert alert-success'));
+			$this->Session->setFlash('La persona ha sido eliminada correctamente.', 'flash_custom', array('class' => 'success', 'title' => 'La operación se ha completado correctamente'));
 		} else {
-			$this->Session->setFlash('El registro se borro exitosamente', 'default', array('class' => 'alert alert-danger'));
+			$this->Session->setFlash('El registro no se pudo borrar', 'flash_custom', array('class' => 'error', 'title' => 'Error al borrar el registro'));
 		}
 		// Redirigir al controller "familias" y a la acci�n "view" con el familia_id
 		return $this->redirect(array('controller' => 'familias', 'action' => 'view', $familiaId));
