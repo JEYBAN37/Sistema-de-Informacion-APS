@@ -240,7 +240,8 @@ class FamiliasController extends AppController
 						'firmaplancuidado',
 						'responsables',
 						'actividaddesarrollar',
-						'disentimiento'
+						'disentimiento',
+						'objetivocortoplazoresultados'
 					)
 				)
 			)
@@ -318,7 +319,9 @@ class FamiliasController extends AppController
 
 				if ($this->request->data['btn'] == 'Guardar y continuar') {
 					$this->Session->setFlash('Registro de familia se guradado con exito, continuar con informacion de los integrantes', 'flash_custom', array('class' => 'success', 'title' => 'El registro se ha completado correctamente'));
-					return $this->redirect(array('controller' => 'Juventudadultos', 'action' => 'add?familia=', $this->Familia->id));
+					return $this->redirect(array('controller' => 'Juventudadultos', 'action' => 'add', '?' => array(
+						'familia' => $this->Familia->id
+					)));
 				}
 
 				if ($this->request->data['btn'] == 'ver familia') {

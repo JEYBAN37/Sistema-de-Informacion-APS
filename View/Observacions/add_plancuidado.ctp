@@ -170,7 +170,7 @@ $idAux = $this->request->data['Observacion']['familia_id'];
             <?php echo $this->Form->hidden('responsable_id'); ?>
             <?php echo $this->Form->hidden('disentimiento'); ?>
             <?php echo $this->Form->hidden('actividaddesarrollar'); ?>
-                
+
 
             <!-- Resultados de ficha familiar-->
             <div class="col-span-2 md:col-span-1 text-md font-semibold my-6 mr-4">
@@ -425,26 +425,62 @@ $idAux = $this->request->data['Observacion']['familia_id'];
                 </div>
 
                 <?php
-                echo $this->Form->input('objetivocortoplazo', [
-                    'label' => false,
-                    'type' => 'textarea', // Cambiado a 'textarea'
-                    'id' => 'objetivocortoplazo',
-                    'class' => 'border border-gray-300 rounded-lg w-full p-2 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 text-sm text-gray-700',
-                    'data-maxlength' => 5000,
-                    'class' => 'ckeditor border rounded-lg w-full p-2 focus:ring focus:ring-blue-200',
-                    'error' => false // No mostrar error aquí            
-                ]);
+                // Transformar $parametros para mostrar solo keys como display
+                $parametrosDisplay = [];
+                foreach ($parametros as $key => $value) {
+                    $parametrosDisplay[$key] = $key; // Mostrar la key
+                }
+
+                echo $this->Form->input(
+                    'objetivocortoplazo',
+                    [
+                        'type' => 'select',
+                        'label' => false,
+                        'multiple' => 'multiple',
+                        'id' => 'indicadores',
+                        'class' => 'w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 text-sm text-gray-700',
+                        'empty' => false,
+                        'options' => $parametrosDisplay,
+                        'error' => false
+                    ]
+                );
+
+                // Input oculto para guardar los valores (completamente invisible)
+
 
                 if (!empty($this->Form->error('objetivocortoplazo'))) {
                     echo '<div class="text-red-600 text-md mt-1 font-semibold">' . $this->Form->error('objetivocortoplazo') . '</div>';
-                }
-                ?>
+                } ?>
 
             </div>
 
             <div class="col-span-2 text-md font-semibold my-6">
                 <div class="flex items-center mb-4">
                     <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">2</span>
+                    <label for="direccion" class="font-semibold">Resultados esperados en la intervención</label>
+                </div>
+
+                <?php
+                echo $this->Form->input('objetivocortoplazoresultados', [
+                    'label' => false,
+                    'type' => 'textarea',
+                    'id' => 'indicadores_valores',
+                    'class' => 'border border-gray-300 rounded-lg w-full p-2 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 text-sm text-gray-700',
+                    'readonly' => 'readonly',
+                    'error' => false
+                ]);
+
+                if (!empty($this->Form->error('objetivocortoplazoresultados'))) {
+                    echo '<div class="text-red-600 text-md mt-1 font-semibold">' . $this->Form->error('objetivocortoplazoresultados') . '</div>';
+                }
+                ?>
+
+            </div>
+
+
+            <div class="col-span-2 text-md font-semibold my-6">
+                <div class="flex items-center mb-4">
+                    <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">3</span>
                     <label for="direccion" class="font-semibold">Objetivo plan de cuidado largo plazo</label>
                 </div>
 
@@ -470,7 +506,7 @@ $idAux = $this->request->data['Observacion']['familia_id'];
 
             <div class="col-span-2 text-md font-semibold my-6">
                 <div class="flex items-center mb-4">
-                    <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">3</span>
+                    <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">4</span>
                     <label for="entornoafectado" class="font-semibold">Entorno de intervención</label>
                 </div>
 
@@ -502,7 +538,7 @@ $idAux = $this->request->data['Observacion']['familia_id'];
 
             <div class="col-span-2 text-md font-semibold my-6">
                 <div class="flex items-center mb-4">
-                    <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">4</span>
+                    <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">5</span>
                     <label for="ria" class="font-semibold">Actividades a desarrollar</label>
                     <p class="text-red-600">*</p>
                 </div>
@@ -535,7 +571,7 @@ $idAux = $this->request->data['Observacion']['familia_id'];
                 if (!empty($this->Form->error('indicadorria'))) {
                     echo '<div class="text-red-600 text-md mt-1 font-semibold">' . $this->Form->error('indicadorria') . '</div>';
                 }
-                                ?>
+                ?>
             </div>
 
         </div>
@@ -601,11 +637,10 @@ $idAux = $this->request->data['Observacion']['familia_id'];
 
                     <!-- Desktop: Table Layout -->
                     <!-- Campo oculto para almacenar los datos de disentimiento serializados -->
-                    <textarea 
-                        name="data[Observacion][disentimiento]" 
-                        id="disentimiento_hidden" 
-                        style="display:none;"
-                    ><?php echo isset($this->request->data['Observacion']['disentimiento']) ? h($this->request->data['Observacion']['disentimiento']) : ''; ?></textarea>
+                    <textarea
+                        name="data[Observacion][disentimiento]"
+                        id="disentimiento_hidden"
+                        style="display:none;"><?php echo isset($this->request->data['Observacion']['disentimiento']) ? h($this->request->data['Observacion']['disentimiento']) : ''; ?></textarea>
 
                     <!-- Desktop: Table Layout para disentimiento -->
                     <div id="desktopViewdisentimiento" class="block overflow-x-auto">
@@ -852,6 +887,38 @@ $idAux = $this->request->data['Observacion']['familia_id'];
             placeholderValue: "Seleccione los responsables EBS",
         });
 
+        // Mapa de parametros para sincronizar key -> value
+        const parametrosMap = <?= json_encode($parametros) ?>;
+
+        const choices_indicadores = new Choices("#indicadores", {
+            searchEnabled: true,
+            searchChoices: true,
+            removeItemButton: true, // Permite eliminar seleccionados
+            itemSelectText: '',
+            shouldSort: false,
+            searchPlaceholderValue: "Escriba para filtrar...",
+            maxItemCount: -1, // Sin límite
+            searchResultLimit: -1, // Sin límite en resultados
+            removeItems: true, // Permite quitar seleccionados
+            duplicateItemsAllowed: false,
+            placeholder: true,
+            minMatchCharLength: 1,
+            placeholderValue: "Seleccione indicadores",
+        });
+
+        // Sincronizar selección de indicadores con valores
+        const indicadoresSelect = document.getElementById('indicadores');
+        const valoresInput = document.getElementById('indicadores_valores');
+
+        if (indicadoresSelect && valoresInput) {
+            indicadoresSelect.addEventListener('change', function() {
+                const selectedOptions = Array.from(indicadoresSelect.selectedOptions);
+                const valores = selectedOptions.map(option => parametrosMap[option.value]);
+                valoresInput.value = JSON.stringify(valores);
+                console.log('Valores sincronizados:', valores);
+            });
+        }
+
 
 
 
@@ -1045,7 +1112,7 @@ $idAux = $this->request->data['Observacion']['familia_id'];
         const obsField = document.querySelector('[name="data[Observacion][actividaddesarrollar]"]');
         console.log('Campo actividaddesarrollar encontrado:', obsField);
         console.log('Valor del campo:', obsField ? obsField.value : 'No existe el campo');
-        
+
         let deserializados = [];
         if (obsField && obsField.value && obsField.value.trim() !== '') {
             try {
@@ -1059,7 +1126,7 @@ $idAux = $this->request->data['Observacion']['familia_id'];
                 console.error('Error al parsear actividaddesarrollar:', e);
             }
         }
-        
+
         // SIEMPRE crear una fila vacía al inicio para que el usuario llene
         const filaVacia = {
             id: Date.now().toString(),
@@ -1071,7 +1138,7 @@ $idAux = $this->request->data['Observacion']['familia_id'];
             seguimientoCompromiso: "",
             estado: "pendiente",
         };
-        
+
         // Si hay datos guardados, agregarlos DESPUÉS de la fila vacía (colapsados)
         if (deserializados.length > 0) {
             rows = [filaVacia, ...deserializados];
@@ -1338,14 +1405,14 @@ $idAux = $this->request->data['Observacion']['familia_id'];
         const tableBody = document.getElementById("tableBodyDisentimiento");
         console.log('Renderizando tabla disentimiento. tableBody encontrado:', tableBody);
         console.log('Número de filas a renderizar:', disentRows.length);
-        
+
         if (!tableBody) {
             console.error('No se encontró el elemento tableBodyDisentimiento');
             return;
         }
-        
+
         tableBody.innerHTML = "";
-        
+
         disentRows.forEach((row, index) => {
             console.log('Renderizando fila disentimiento:', index, row);
             const tr = document.createElement("tr");
@@ -1373,7 +1440,7 @@ $idAux = $this->request->data['Observacion']['familia_id'];
                         `;
             tableBody.appendChild(tr);
         });
-        
+
         console.log('Tabla disentimiento renderizada. Filas en DOM:', tableBody.children.length);
     }
 
@@ -1423,7 +1490,7 @@ $idAux = $this->request->data['Observacion']['familia_id'];
                     rol: row.rol || '',
                     motivo: row.motivo || ''
                 }));
-            
+
             hidden.value = JSON.stringify(toSave);
             console.log('Disentimiento guardado:', toSave);
         }
@@ -1433,7 +1500,7 @@ $idAux = $this->request->data['Observacion']['familia_id'];
         const hidden = document.getElementById('disentimiento_hidden');
         console.log('Campo disentimiento encontrado:', hidden);
         console.log('Valor del campo:', hidden ? hidden.value : 'No existe el campo');
-        
+
         let deserializados = [];
         if (hidden && hidden.value && hidden.value.trim() !== '') {
             try {
@@ -1450,7 +1517,7 @@ $idAux = $this->request->data['Observacion']['familia_id'];
                 console.error('Error al parsear disentimiento:', e);
             }
         }
-        
+
         // SIEMPRE crear una fila vacía al inicio para que el usuario llene
         const filaVacia = {
             id: disentIdCounter++,
@@ -1459,7 +1526,7 @@ $idAux = $this->request->data['Observacion']['familia_id'];
             rol: '',
             motivo: ''
         };
-        
+
         // Si hay datos guardados, agregarlos DESPUÉS de la fila vacía
         if (deserializados.length > 0) {
             disentRows = [filaVacia, ...deserializados];
@@ -1469,7 +1536,7 @@ $idAux = $this->request->data['Observacion']['familia_id'];
             disentRows = [filaVacia];
             console.log('Solo fila vacía disentimiento creada.');
         }
-        
+
         renderDesktopViewDisentimiento();
     }
 
@@ -1481,7 +1548,7 @@ $idAux = $this->request->data['Observacion']['familia_id'];
     if (addBtnDisent) {
         addBtnDisent.addEventListener('click', addDisentRow);
     }
-    
+
     const removeBtnDisent = document.getElementById('removeLastBtnDisentimiento');
     if (removeBtnDisent) {
         removeBtnDisent.addEventListener('click', () => {

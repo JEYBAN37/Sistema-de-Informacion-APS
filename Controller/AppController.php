@@ -227,6 +227,22 @@ class AppController extends Controller
         return $responsables;
     }
 
+        protected function getParametros()
+    {
+        $cacheKey = 'parametros_select';
+        $parametros = Cache::read($cacheKey, 'selects');
+
+        if ($parametros === false) {
+            $this->loadModel('Parametro');
+            $parametros = $this->Parametro->find('list', [
+                'fields' => ['Parametro.indicador','Parametro.resultado'],
+                'recursive' => -1
+            ]);
+            Cache::write($cacheKey, $parametros, 'selects');
+        }
+        return $parametros;
+    }
+
     /**
      * Verifica la inactividad del usuario autenticado.
      * 

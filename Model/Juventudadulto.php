@@ -377,7 +377,6 @@ class Juventudadulto extends AppModel
 
 	public function traerIntervenciones($juventudadultoId)
 	{
-		debug($juventudadultoId);
 		return 'asdasd';
 	}
 

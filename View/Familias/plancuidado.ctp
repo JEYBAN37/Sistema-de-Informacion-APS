@@ -279,7 +279,26 @@
                         </tr>
                         <tr class="bg-gray-100">
                             <td colspan="1" class="border border-gray-300 font-semibold p-2 text-center"><?php echo __('Canalizacion'); ?></td>
-                            <td colspan="3" class="border border-gray-300 p-2"><?php echo h($integrante['canalizacionuno']); ?> </td>
+                            <td colspan="3" class="border border-gray-300 p-2">
+                                <?php
+                                $canalizacionRaw = $integrante['canalizacionuno'];
+
+                                if ($canalizacionRaw) {
+                                    $partes = array_filter(array_map('trim', explode(',', $canalizacionRaw)));
+                                    if (!empty($partes)) {
+                                        echo '<ul class="list-disc list-inside space-y-1">';
+                                        foreach ($partes as $parte) {
+                                            echo '<li>' . h($parte) . '</li>';
+                                        }
+                                        echo '</ul>';
+                                    } else {
+                                        echo h($canalizacionRaw);
+                                    }
+                                } else {
+                                    echo h($canalizacionRaw);
+                                }
+                                ?>
+                            </td>
                             <td colspan="1" class="border border-gray-300 font-semibold p-2 text-center"><?php echo __('Condicion cronica'); ?></td>
                             <td colspan="4" class="border border-gray-300 p-2"><?php echo h($integrante['condicioncronica']); ?> </td>
                         </tr>
@@ -294,18 +313,69 @@
                             OBJETIVOS DEL PLAN DE CUIDADO
                         </td>
                     </tr>
+
                     <tr class="bg-gray-100">
-                        <td colspan="2" class="border border-gray-300 font-semibold p-2 text-center">Objetivo a largo plazo</td>
-                        <td colspan="7" class="border border-gray-300 p-2">
-                            <?php echo $this->Html->div('objetivolargoplazo-tema', $familia['Observacion'][0]['objetivolargoplazo'], ['escape' => false]); ?>
-                        </td>
-                    </tr>
-                    <tr>
                         <td colspan="2" class="border border-gray-300 font-semibold p-2 text-center">Objetivo a corto plazo</td>
                         <td colspan="7" class="border border-gray-300 p-2">
-                            <?php echo $this->Html->div('objetivocortoplazo-tema', $familia['Observacion'][0]['objetivocortoplazo'], ['escape' => false]); ?>
+                            <?php
+
+                            $canalizacionRaw = $familia['Observacion'][0]['objetivocortoplazo'];
+
+                            if ($canalizacionRaw) {
+                                $partes = array_filter(array_map('trim', explode(',', $canalizacionRaw)));
+                                if (!empty($partes)) {
+                                    echo '<ul class="list-disc list-inside space-y-1">';
+                                    foreach ($partes as $parte) {
+                                        echo '<li>' . h($parte) . '</li>';
+                                    }
+                                    echo '</ul>';
+                                } else {
+                                    echo h($canalizacionRaw);
+                                }
+                            } else {
+                                echo h($canalizacionRaw);
+                            }
+
+                            ?>
                         </td>
                     </tr>
+
+                    <tr>
+                        <td colspan="2" class="border border-gray-300 font-semibold p-2 text-center">Resultados esperados</td>
+                        <td colspan="7" class="border border-gray-300 p-2">
+                            <?php
+                            $resultadosRaw = $familia['Observacion'][0]['objetivocortoplazoresultados'];
+                            $resultados = [];
+
+                            if (!empty($resultadosRaw)) {
+                                $decoded = json_decode($resultadosRaw, true);
+
+                                if (json_last_error() === JSON_ERROR_NONE && is_array($decoded)) {
+                                    $resultados = $decoded;
+                                } else {
+                                    $resultados = explode(',', $resultadosRaw);
+                                }
+
+                                $resultados = array_values(array_filter($resultados, function ($value) {
+                                    return $value !== null && trim($value) !== '';
+                                }));
+
+                                // Deduplicar conservando el orden
+                                $resultados = array_values(array_unique($resultados));
+                            }
+
+                            if (!empty($resultados)) : ?>
+                                <ul class="list-disc list-inside space-y-1">
+                                    <?php foreach ($resultados as $resultado) : ?>
+                                        <li><?php echo h($resultado); ?></li>
+                                    <?php endforeach; ?>
+                                </ul>
+                            <?php else : ?>
+                                <span class="text-gray-500">No hay resultados registrados</span>
+                            <?php endif; ?>
+                        </td>
+                    </tr>
+
                     <tr class="bg-gray-100">
                         <td colspan="2" class="border border-gray-300 font-semibold p-2 text-center"><?php echo __('Entorno de Intervencion'); ?></td>
                         <td colspan="7" class="border border-gray-300 p-2"><?php echo h($familia['Observacion'][0]['entornoafectado']); ?> </td>

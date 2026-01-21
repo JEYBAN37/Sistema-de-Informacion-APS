@@ -3,7 +3,7 @@
 	'class' => 'space-y-6',
 	'novalidate' => true
 ]);
-$idAux = $_GET['juventudadultos'];
+$idAux = $_GET['familia'];
 echo $this->Form->input('familia_id', array('value' => '' . $idAux, 'type' => 'hidden'));
 
 $TipoDeDocumentoOptions = array(
