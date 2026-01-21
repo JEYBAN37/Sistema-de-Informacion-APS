@@ -123,7 +123,7 @@ echo $this->Form->input('familia_id', array('value' => ''
 
                 <?php
                 $riesgosalud = [
-                    '0' => 'Ninguno',
+                    '0.1' => 'Ninguno',
                     '5.1' => 'Menor con Riesgo desnutrición',
                     '5.2' => 'Menor sin esquema de vacunación completo',
                     '3.3' => 'Menor con Signos de peligro EDA o IRA',
@@ -165,7 +165,7 @@ echo $this->Form->input('familia_id', array('value' => ''
 
                 <?php
                 $riesgovulnerabilidad = [
-                    '0' => 'Ninguna',
+                    '0.1' => 'Ninguna',
                     '2.0' => 'Persona con discapacidad sin cuidador',
                     '2.1' => 'Menor sin estudiar',
                     '1.3' => 'Población Especial en riesgo',
