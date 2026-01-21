@@ -104,6 +104,7 @@ class ObservacionsController extends AppController
 	public function add_plancuidado($id = null)
 	{
 		$this->loadModel('Juventudadulto');
+
 		if (!$this->Observacion->exists($id)) {
 			throw new NotFoundException(__('Invalid observacion'));
 		}
@@ -111,7 +112,7 @@ class ObservacionsController extends AppController
 		if ($this->request->is(array('post', 'put'))) {
 			// Guardar copia de los datos originales antes de intentar guardar
 			$datosOriginales = $this->request->data;
-			
+
 			// El Model's beforeSave se encarga de convertir los arrays a strings
 			if ($this->Observacion->save($this->request->data)) {
 
@@ -123,7 +124,7 @@ class ObservacionsController extends AppController
 						'responsable_id' => $this->userCurrent(),
 					)
 				));
-				
+
 				$this->Session->setFlash('Registro se guardó con éxito, continuar con la firma del Plan de Cuidado', 'flash_custom', array('class' => 'success', 'title' => 'El registro se ha completado correctamente'));					//return $this->redirect(array('action' => 'index'));
 				return $this->redirect(array('controller' => 'familias', 'action' => 'view', $this->request->data["Observacion"]["familia_id"]));
 			} else {
@@ -157,6 +158,7 @@ class ObservacionsController extends AppController
 					'Observacion.observacionesplancuidado',
 					'Observacion.firmaplancuidado',
 					'Observacion.responsables',
+					'Observacion.objetivocortoplazoresultados',
 				)
 			);
 			$this->request->data = $this->Observacion->tranformData($this->Observacion->find('first', $options));
@@ -186,7 +188,10 @@ class ObservacionsController extends AppController
 			return $this->redirect(array('controller' => 'Juventudadultos', 'action' => 'add', '?' => array('familia_id' => $this->request->data['Observacion']['familia_id'])));
 		}
 		$responsables = $this->Observacion->Responsable->find('list');
-		$this->set(compact('responsables', 'opciones'));
+		$parametros = $this->getParametros();
+
+		debug($parametros);
+		$this->set(compact('responsables', 'opciones', 'parametros'));
 	}
 
 

@@ -93,10 +93,6 @@ class Juventudadulto extends AppModel
 			),
 		),
 		'segundoapellido' => array(
-			'notEmpty' => array(
-				'rule' => 'notEmpty',
-				'message' => 'Este campo no puede estar vacío',
-			),
 			'validarLetras' => array(
 				'rule' => array('custom', '/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/'),
 				'message' => 'Este campo solo permite letras',
@@ -381,7 +377,6 @@ class Juventudadulto extends AppModel
 
 	public function traerIntervenciones($juventudadultoId)
 	{
-		debug($juventudadultoId);
 		return 'asdasd';
 	}
 

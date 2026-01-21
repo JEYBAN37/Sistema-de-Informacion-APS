@@ -100,7 +100,7 @@ class JuventudadultosController extends AppController
 					return $this->redirect(array(
 						'controller' => 'Juventudadultos',
 						'action' => 'add',
-						'?' => array('juventudadultos' => $id_familia)
+						'?' => array('familia' => $id_familia)
 					));
 				}
 
