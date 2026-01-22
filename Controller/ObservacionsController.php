@@ -250,7 +250,8 @@ class ObservacionsController extends AppController
 		}
 
 		$options = array(
-			'conditions' => array('Observacion.familia_id' => $id)
+			'conditions' => array('Observacion.familia_id' => $id),
+			'recursive' => -1
 		);
 
 		$this->request->data = $this->Observacion->tranformData(
@@ -315,12 +316,13 @@ class ObservacionsController extends AppController
 		}
 
 		$options = array(
-			'conditions' => array('Observacion.' . $this->Observacion->primaryKey => $id)
+			'conditions' => array('Observacion.' . $this->Observacion->primaryKey => $id),
+			'recursive' => -1
 		);
 
-		$this->request->data = $this->Observacion->tranformData(
-			$this->Observacion->find('first', $options)
-		);
+		$observacion = $this->Observacion->find('first', $options);
+		
+		$this->request->data = $this->Observacion->tranformData($observacion);
 
 		$this->set(compact('familias', 'responsables'));
 	}

@@ -24,6 +24,16 @@ echo $this->Form->hidden('familia_id');
 echo $this->Form->hidden('id');
 $idAux  =  $this->request->data['Observacion']['familia_id'];
 ?>
+
+<?php
+
+echo $this->Form->input('fecha', [
+    'label' => false,
+    'type' => 'hidden',
+    'value' => date('Y-m-d'),
+]);
+
+?>
 <div class="max-w-6xl mx-auto p-18 mb-4">
     <div class="bg-white shadow-2xl rounded-xl  p-6  md:p-12">
 
@@ -36,6 +46,8 @@ $idAux  =  $this->request->data['Observacion']['familia_id'];
             </div>
 
         </div>
+
+        
 
         <div class="grid grid-cols-1 md:grid-cols-2">
 
@@ -245,7 +257,7 @@ $idAux  =  $this->request->data['Observacion']['familia_id'];
 
                 $fortalezas = [
                     'Vivienda adecuada y segura' => 'Vivienda adecuada y segura',
-                    'Acceso a servicios básicos (agua,alcantarillado, luz, gas)' => 'Acceso a servicios básicos (agua, luz, gas)',
+                    'Acceso a servicios básicos (agua alcantarillado luz gas)' => 'Acceso a servicios básicos (agua alcantarillado luz gas)',
                     'Buena salud física y mental de los miembros' => 'Buena salud física y mental de los miembros',
                     'Relaciones familiares afectuosas y respetuosas' => 'Relaciones familiares afectuosas y respetuosas',
                     'Apoyo emocional entre los miembros' => 'Apoyo emocional entre los miembros',
