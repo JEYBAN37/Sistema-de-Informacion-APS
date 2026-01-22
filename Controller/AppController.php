@@ -231,67 +231,70 @@ class AppController extends Controller
     {
         $cacheKey = 'parametros_select';
         $parametrosRaw = Cache::read($cacheKey, 'selects');
-
+        $parametrosFiltrados = [];
         if ($parametrosRaw === false) {
             $this->loadModel('Parametro');
             $parametrosRaw = $this->Parametro->find('all', [
                 'recursive' => -1
             ]);
-        }
 
-        // Inicializar cursos de vida aplicables
-        $cursosVidaAplicables = [];
-        $fechaActual = new DateTime();
+            // Inicializar cursos de vida aplicables
+            $cursosVidaAplicables = [];
+            $fechaActual = new DateTime();
 
-        // Calcular edades y determinar cursos de vida
-        if ($personas && is_array($personas)) {
-            foreach ($personas as $persona) {
-                if (!empty($persona['Juventudadulto']['fechanac'])) {
-                    $fechaNacimiento = new DateTime($persona['Juventudadulto']['fechanac']);
-                    $diferencia = $fechaActual->diff($fechaNacimiento);
-                    $edadEnAnios = $diferencia->y;
+            // Calcular edades y determinar cursos de vida
+            if ($personas && is_array($personas)) {
+                foreach ($personas as $persona) {
+                    if (!empty($persona['Juventudadulto']['fechanac'])) {
+                        $fechaNacimiento = new DateTime($persona['Juventudadulto']['fechanac']);
+                        $diferencia = $fechaActual->diff($fechaNacimiento);
+                        $edadEnAnios = $diferencia->y;
 
-                    // Obtener cursos de vida para esta edad
-                    $cursosParaEsta = $this->_obtenerCursosVidaParaEdad($edadEnAnios, $persona['Juventudadulto']['gestacion']);
-                    foreach ($cursosParaEsta as $curso) {
-                        if (!in_array($curso, $cursosVidaAplicables)) {
-                            $cursosVidaAplicables[] = $curso;
+                        // Obtener cursos de vida para esta edad
+                        $cursosParaEsta = $this->_obtenerCursosVidaParaEdad($edadEnAnios, $persona['Juventudadulto']['gestacion']);
+                        foreach ($cursosParaEsta as $curso) {
+                            if (!in_array($curso, $cursosVidaAplicables)) {
+                                $cursosVidaAplicables[] = $curso;
+                            }
                         }
                     }
                 }
             }
-        }
 
-        // Si hay cuidador (zarit), agregar "SOLO AL CUIDADOR"
-        if ($zarit === true || $zarit === 'Si' || $zarit === 1 || $zarit === '1') {
-            if (!in_array('SOLO AL CUIDADOR', $cursosVidaAplicables)) {
-                $cursosVidaAplicables[] = 'SOLO AL CUIDADOR';
+            // Si hay cuidador (zarit), agregar "SOLO AL CUIDADOR"
+            if ($zarit === true || $zarit === 'Si' || $zarit === 1 || $zarit === '1') {
+                if (!in_array('SOLO AL CUIDADOR', $cursosVidaAplicables)) {
+                    $cursosVidaAplicables[] = 'SOLO AL CUIDADOR';
+                }
             }
-        }
 
 
-        // Si no hay personas ni zarit, retornar array vacío
-        if (empty($cursosVidaAplicables)) {
-            return [];
-        }
+            // Si no hay personas ni zarit, retornar array vacío
+            if (empty($cursosVidaAplicables)) {
+                return [];
+            }
 
-        // Filtrar parámetros cruzando cursos de vida con estructura anidada
-        $parametrosFiltrados = [];
+            // Filtrar parámetros cruzando cursos de vida con estructura anidada
 
-        // Recorrer cada curso de vida aplicable
-        foreach ($cursosVidaAplicables as $cursoAplicable) {
-            // Buscar el curso en la estructura anidada (con y sin espacios)
-            foreach ($parametrosRaw as $cursoKey => $indicadores) {
-                if (trim($cursoKey) === $cursoAplicable && is_array($indicadores)) {
-                    // Agregar todos los indicadores de este curso
-                    foreach ($indicadores as $indicador => $resultado) {
-                        if (!isset($parametrosFiltrados[$indicador])) {
-                            $parametrosFiltrados[$indicador] = $resultado;
+
+            // Recorrer cada curso de vida aplicable
+            foreach ($cursosVidaAplicables as $cursoAplicable) {
+                // Buscar el curso en la estructura anidada (con y sin espacios)
+                foreach ($parametrosRaw as $cursoKey => $indicadores) {
+                    if (trim($cursoKey) === $cursoAplicable && is_array($indicadores)) {
+                        // Agregar todos los indicadores de este curso
+                        foreach ($indicadores as $indicador => $resultado) {
+                            if (!isset($parametrosFiltrados[$indicador])) {
+                                $parametrosFiltrados[$indicador] = $resultado;
+                            }
                         }
                     }
                 }
             }
+            Cache::write($cacheKey, $parametrosFiltrados, 'selects');
         }
+
+
 
         return $parametrosFiltrados;
     }
