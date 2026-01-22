@@ -79,7 +79,7 @@ class AppController extends Controller
         $this->_checkInactivity();
     }
 
-        /**
+    /**
      * Se ejecuta justo antes de renderizar la vista.
      * 
      * Útil para enviar variables globales a las vistas
@@ -227,21 +227,146 @@ class AppController extends Controller
         return $responsables;
     }
 
-        protected function getParametros()
+    protected function getParametros($personas = null, $zarit = false)
     {
         $cacheKey = 'parametros_select';
-        $parametros = Cache::read($cacheKey, 'selects');
+        $parametrosRaw = Cache::read($cacheKey, 'selects');
 
-        if ($parametros === false) {
+        if ($parametrosRaw === false) {
             $this->loadModel('Parametro');
-            $parametros = $this->Parametro->find('list', [
-                'fields' => ['Parametro.indicador','Parametro.resultado'],
+            $parametrosRaw = $this->Parametro->find('all', [
                 'recursive' => -1
             ]);
-            Cache::write($cacheKey, $parametros, 'selects');
         }
-        return $parametros;
+
+        // Inicializar cursos de vida aplicables
+        $cursosVidaAplicables = [];
+        $fechaActual = new DateTime();
+
+        // Calcular edades y determinar cursos de vida
+        if ($personas && is_array($personas)) {
+            foreach ($personas as $persona) {
+                if (!empty($persona['Juventudadulto']['fechanac'])) {
+                    $fechaNacimiento = new DateTime($persona['Juventudadulto']['fechanac']);
+                    $diferencia = $fechaActual->diff($fechaNacimiento);
+                    $edadEnAnios = $diferencia->y;
+
+                    // Obtener cursos de vida para esta edad
+                    $cursosParaEsta = $this->_obtenerCursosVidaParaEdad($edadEnAnios, $persona['Juventudadulto']['gestacion']);
+                    foreach ($cursosParaEsta as $curso) {
+                        if (!in_array($curso, $cursosVidaAplicables)) {
+                            $cursosVidaAplicables[] = $curso;
+                        }
+                    }
+                }
+            }
+        }
+
+        // Si hay cuidador (zarit), agregar "SOLO AL CUIDADOR"
+        if ($zarit === true || $zarit === 'Si' || $zarit === 1 || $zarit === '1') {
+            if (!in_array('SOLO AL CUIDADOR', $cursosVidaAplicables)) {
+                $cursosVidaAplicables[] = 'SOLO AL CUIDADOR';
+            }
+        }
+
+
+        // Si no hay personas ni zarit, retornar array vacío
+        if (empty($cursosVidaAplicables)) {
+            return [];
+        }
+
+        // Filtrar parámetros cruzando cursos de vida con estructura anidada
+        $parametrosFiltrados = [];
+
+        // Recorrer cada curso de vida aplicable
+        foreach ($cursosVidaAplicables as $cursoAplicable) {
+            // Buscar el curso en la estructura anidada (con y sin espacios)
+            foreach ($parametrosRaw as $cursoKey => $indicadores) {
+                if (trim($cursoKey) === $cursoAplicable && is_array($indicadores)) {
+                    // Agregar todos los indicadores de este curso
+                    foreach ($indicadores as $indicador => $resultado) {
+                        if (!isset($parametrosFiltrados[$indicador])) {
+                            $parametrosFiltrados[$indicador] = $resultado;
+                        }
+                    }
+                }
+            }
+        }
+
+        return $parametrosFiltrados;
     }
+
+    /**
+     * Obtiene los cursos de vida que aplican para una edad específica.
+     * 
+     * @param int $edad Edad en años
+     * @return array Array de cursos de vida aplicables
+     */
+    protected function _obtenerCursosVidaParaEdad($edad, $gestacion = null)
+    {
+        $cursos = [];
+
+        if ($edad >= 0 && $edad <= 5) {
+            $cursos[] = 'PRIMERA INFANCIA';
+            $cursos[] = 'PRIMERA INFANCIA E INFANCIA';
+            $cursos[] = 'PRIMERA INFANCIA E INFANCIA ADOLESCENCIA';
+            $cursos[] = 'TODOS CURSOS DE VIDA';
+            $cursos[] = '1 VEZ EN CURSO DE VIDA';
+            $cursos[] = 'INFANCIA ADOLESCENCIA JUVENTUD ADULTEZ Y VEJ';
+        } elseif ($edad >= 6 && $edad <= 11) {
+            $cursos[] = 'INFANCIA';
+            $cursos[] = 'PRIMERA INFANCIA E INFANCIA';
+            $cursos[] = 'PRIMERA INFANCIA E INFANCIA ADOLESCENCIA';
+            $cursos[] = 'INFANCIA ADOLESCENCIA';
+            $cursos[] = 'TODOS CURSOS DE VIDA';
+            $cursos[] = '1 VEZ EN CURSO DE VIDA';
+            $cursos[] = 'INFANCIA ADOLESCENCIA JUVENTUD ADULTEZ Y VEJ';
+        } elseif ($edad >= 12 && $edad <= 17) {
+            $cursos[] = 'ADOLESCENCIA';
+            $cursos[] = 'ADOLESCENCIA JUVENTUD ADULTEZ Y VEJEZ';
+            $cursos[] = 'ADOLESCENCIA JUVENTUD ADULTEZ';
+            $cursos[] = 'PRIMERA INFANCIA E INFANCIA ADOLESCENCIA';
+            $cursos[] = 'INFANCIA ADOLESCENCIA';
+            $cursos[] = 'INFANCIA ADOLESCENCIA JUVENTUD ADULTEZ Y VEJ';
+            $cursos[] = 'TODOS CURSOS DE VIDA';
+            $cursos[] = '1 VEZ EN CURSO DE VIDA';
+        } elseif ($edad >= 18 && $edad <= 26) {
+            $cursos[] = 'JUVENTUD';
+            $cursos[] = 'JUVENTUD ADULTEZ';
+            $cursos[] = 'JUVENTUD ADULTEZ Y VEJEZ';
+            $cursos[] = 'ADOLESCENCIA JUVENTUD ADULTEZ Y VEJEZ';
+            $cursos[] = 'ADOLESCENCIA JUVENTUD ADULTEZ';
+            $cursos[] = 'INFANCIA ADOLESCENCIA JUVENTUD ADULTEZ Y VEJ';
+            $cursos[] = 'TODOS CURSOS DE VIDA';
+            $cursos[] = '1 VEZ EN CURSO DE VIDA';
+        } elseif ($edad >= 27 && $edad <= 59) {
+            $cursos[] = 'ADULTEZ';
+            $cursos[] = 'ADULTEZ Y VEJEZ';
+            $cursos[] = 'JUVENTUD ADULTEZ Y VEJEZ';
+            $cursos[] = 'ADOLESCENCIA JUVENTUD ADULTEZ Y VEJEZ';
+            $cursos[] = 'ADOLESCENCIA JUVENTUD ADULTEZ';
+            $cursos[] = 'INFANCIA ADOLESCENCIA JUVENTUD ADULTEZ Y VEJ';
+            $cursos[] = 'TODOS CURSOS DE VIDA';
+            $cursos[] = '1 VEZ EN CURSO DE VIDA';
+        } elseif ($edad >= 60) {
+            $cursos[] = 'VEJEZ';
+            $cursos[] = 'ADULTEZ Y VEJEZ';
+            $cursos[] = 'JUVENTUD ADULTEZ Y VEJEZ';
+            $cursos[] = 'ADOLESCENCIA JUVENTUD ADULTEZ Y VEJEZ';
+            $cursos[] = 'INFANCIA ADOLESCENCIA JUVENTUD ADULTEZ Y VEJ';
+            $cursos[] = 'TODOS CURSOS DE VIDA';
+            $cursos[] = '1 VEZ EN CURSO DE VIDA';
+        }
+        if ($gestacion === 'Si' || $gestacion === 1 || $gestacion === '1') {
+            $cursos[] = 'GESTANTE';
+            $cursos[] = 'TODOS CURSOS DE VIDA';
+            $cursos[] = '1 VEZ EN CURSO DE VIDA';
+        }
+
+
+        return $cursos;
+    }
+
 
     /**
      * Verifica la inactividad del usuario autenticado.
@@ -292,16 +417,17 @@ class AppController extends Controller
         $this->Session->write('Auth.lastActivity', $now);
     }
 
-    protected function loadHistorial($data) {
+    protected function loadHistorial($data)
+    {
         $this->loadModel('Intervecion');
         $this->Intervecion->create();
         $this->Intervecion->save($data);
     }
 
-    protected function userCurrent() {
+    protected function userCurrent()
+    {
         $r = $this->Auth->user();
-		$responsable = $r['responsable_id'];
+        $responsable = $r['responsable_id'];
         return $responsable;
     }
-
 }
