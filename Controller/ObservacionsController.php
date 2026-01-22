@@ -189,8 +189,6 @@ class ObservacionsController extends AppController
 		}
 		$responsables = $this->Observacion->Responsable->find('list');
 		$parametros = $this->getParametros();
-
-		debug($parametros);
 		$this->set(compact('responsables', 'opciones', 'parametros'));
 	}
 
