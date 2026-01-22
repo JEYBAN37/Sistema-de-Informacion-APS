@@ -230,14 +230,25 @@ class AppController extends Controller
     protected function getParametros($personas = null, $zarit = false)
     {
         $cacheKey = 'parametros_select';
-        $parametrosRaw = Cache::read($cacheKey, 'selects');
-        $parametrosFiltrados = [];
-        if ($parametrosRaw === false) {
+        $parametrosFiltrados = Cache::read($cacheKey, 'selects');
+        
+        if ($parametrosFiltrados === false) {
+            
             $this->loadModel('Parametro');
-            $parametrosRaw = $this->Parametro->find('all', [
+            if (!isset($this->Parametro) || !is_object($this->Parametro)) {
+                $this->Parametro = ClassRegistry::init('Parametro');
+            }
+            if (!$this->Parametro) {
+                CakeLog::write('error', 'No se pudo cargar el modelo Parametro en AppController::getParametros');
+                return [];
+            }
+            
+            $parametrosRaw = $this->Parametro->find('list', [
+                'fields' => [ 'Parametro.curso', 'Parametro.indicador', 'Parametro.resultado'],
                 'recursive' => -1
             ]);
 
+            
             // Inicializar cursos de vida aplicables
             $cursosVidaAplicables = [];
             $fechaActual = new DateTime();
@@ -275,7 +286,7 @@ class AppController extends Controller
             }
 
             // Filtrar parámetros cruzando cursos de vida con estructura anidada
-
+            $parametrosFiltrados = [];
 
             // Recorrer cada curso de vida aplicable
             foreach ($cursosVidaAplicables as $cursoAplicable) {
@@ -293,8 +304,6 @@ class AppController extends Controller
             }
             Cache::write($cacheKey, $parametrosFiltrados, 'selects');
         }
-
-
 
         return $parametrosFiltrados;
     }
