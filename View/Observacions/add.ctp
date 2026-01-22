@@ -19,6 +19,7 @@ echo $this->Form->create('Observacion',  [
     'class' => 'space-y-6',
 ]);
 
+
 // se utiliza para llamar el id responsable donde sea necesario
 $nombreUsuario = isset($_SESSION['Auth']['User']['responsable_id']) ? $_SESSION['Auth']['User']['responsable_id'] : '';
 
@@ -27,6 +28,16 @@ echo $this->Form->input('responsable_id', array('value' => $nombreUsuario, 'type
 $idAux = $_GET['observacions'];
 echo $this->Form->input('familia_id', array('value' => ''
     . $idAux, 'type' => 'hidden'));
+?>
+
+<?php
+
+echo $this->Form->input('fecha', [
+    'label' => false,
+    'type' => 'hidden',
+    'value' => date('Y-m-d'),
+]);
+
 ?>
 <div class="max-w-6xl mx-auto p-18 mb-4">
     <div class="bg-white shadow-2xl rounded-xl  p-6  md:p-12">
@@ -249,7 +260,7 @@ echo $this->Form->input('familia_id', array('value' => ''
 
                 $fortalezas = [
                     'Vivienda adecuada y segura' => 'Vivienda adecuada y segura',
-                    'Acceso a servicios básicos (agua,alcantarillado, luz, gas)' => 'Acceso a servicios básicos (agua, luz, gas)',
+                    'Acceso a servicios básicos (agua alcantarillado luz gas)' => 'Acceso a servicios básicos (agua alcantarillado luz gas)',
                     'Buena salud física y mental de los miembros' => 'Buena salud física y mental de los miembros',
                     'Relaciones familiares afectuosas y respetuosas' => 'Relaciones familiares afectuosas y respetuosas',
                     'Apoyo emocional entre los miembros' => 'Apoyo emocional entre los miembros',

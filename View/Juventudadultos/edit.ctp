@@ -712,7 +712,6 @@ $optionCronica = array(
 );
 
 $optionGinecologico = [
-    'No aplica ' => 'Elegir',
     'No' => 'No',
     'No embarazos' => 'No ha tenido embarazos',
     'Antecedente de abortos' => 'Antecedente de 2 o más abortos',
@@ -741,7 +740,6 @@ $optionVidaSexual = [
 ];
 
 $optionAnticonceptivos = [
-    'No aplica ' => 'Elegir',
     'No' => 'No',
     'Sin pareja' => 'No tiene pareja en el momento',
     'Si control' => 'Si, con supervisión',
@@ -3056,55 +3054,6 @@ echo $this->Form->input('fechaRegistro', [
     </div>
 </div>
 
-<div class="max-w-6xl mx-auto p-18">
-    <div class="bg-white shadow-2xl rounded-xl  p-6  md:p-12">
-
-        <div class="flex items-center mb-4">
-            <i class="fa-solid fa-clock-rotate-left text-teal-600 text-3xl bg-teal-100 px-5 py-3 rounded-lg"></i>
-            <div class="ml-4">
-                <h1 class="text-xl font-semibold">Seguimiento</h1>
-                <p class="text-gray-500">Registra la gestion realizada a la persona relacionada a su salud</p>
-            </div>
-
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-2">
-
-            <!-- Objetivos específicos -->
-            <div class="col-span-2 text-md font-semibold my-6">
-                <div class="flex items-center mb-4">
-                    <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">1</span>
-                    <label for="producto_id" class="font-semibold">Descripción del plan de cuidado individual</label>
-                    <p class="text-red-600">*</p>
-                </div>
-                <?php
-
-                echo $this->Form->input('observacion', [
-                    'label' => '',
-                    'type' => 'textarea',
-                    'id' => 'IntervencionObservacion',
-                    'name' => 'data[Intervencion][observacionGestion]',
-                    'data-maxlength' => 800,
-                    'class' => 'ckeditor border rounded-lg w-full p-2 focus:ring focus:ring-blue-200',
-                    'error' => false // No mostrar error aquí
-                ]);
-
-                if (!empty($this->Form->error('observacion'))) {
-                    echo '<div class="text-red-600 text-md mt-1 font-semibold">' . $this->Form->error('observacion') . '</div>';
-                }
-                ?>
-
-            </div>
-
-            <div>
-                <?php
-
-                $intervenciones
-                ?>
-            </div>
-        </div>
-    </div>
-</div>
 
 <div class="max-w-6xl mx-auto p-18 mt-12">
     <div class="bg-white shadow-2xl rounded-xl  p-6  md:p-12">

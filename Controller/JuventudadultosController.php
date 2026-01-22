@@ -142,6 +142,8 @@ class JuventudadultosController extends AppController
 			return $this->redirect(array('controller' => 'Familias', 'action' => 'index'));
 		}
 
+		debug($this->request->data);
+
 		if ($this->request->is(array('post', 'put'))) {
 			if ($this->Juventudadulto->save($this->request->data)) {
 
