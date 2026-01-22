@@ -244,7 +244,7 @@ class AppController extends Controller
             }
             
             $parametrosRaw = $this->Parametro->find('list', [
-                'fields' => [ 'Parametro.curso', 'Parametro.indicador', 'Parametro.resultado'],
+                'fields' => ['Parametro.indicador', 'Parametro.resultado','Parametro.curso'],
                 'recursive' => -1
             ]);
 
@@ -286,7 +286,7 @@ class AppController extends Controller
             }
 
             // Filtrar parámetros cruzando cursos de vida con estructura anidada
-            $parametrosFiltrados = [];
+
 
             // Recorrer cada curso de vida aplicable
             foreach ($cursosVidaAplicables as $cursoAplicable) {
@@ -304,6 +304,8 @@ class AppController extends Controller
             }
             Cache::write($cacheKey, $parametrosFiltrados, 'selects');
         }
+
+
 
         return $parametrosFiltrados;
     }
