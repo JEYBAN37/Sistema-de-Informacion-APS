@@ -159,9 +159,12 @@ class ObservacionsController extends AppController
 					'Observacion.firmaplancuidado',
 					'Observacion.responsables',
 					'Observacion.objetivocortoplazoresultados',
+					'Familia.cuidadorpermante'
 				)
 			);
+			
 			$this->request->data = $this->Observacion->tranformData($this->Observacion->find('first', $options));
+
 		}
 		$personas = $this->Juventudadulto->find('all', array(
 			'conditions' => array('Juventudadulto.familia_id' => $this->request->data['Observacion']['familia_id']),
@@ -171,6 +174,9 @@ class ObservacionsController extends AppController
 				 Juventudadulto.segundonombre, " ",
 				  Juventudadulto.primerapellido, " ",
 				   Juventudadulto.segundoapellido) AS nombre_completo',
+				'Juventudadulto.fechanac',
+				'Juventudadulto.gestacion'
+
 			)
 		));
 
@@ -188,7 +194,8 @@ class ObservacionsController extends AppController
 			return $this->redirect(array('controller' => 'Juventudadultos', 'action' => 'add', '?' => array('familia_id' => $this->request->data['Observacion']['familia_id'])));
 		}
 		$responsables = $this->Observacion->Responsable->find('list');
-		$parametros = $this->getParametros();
+		$cuidador = $this->request->data['Familia']['cuidadorpermante']; 
+		$parametros = $this->getParametros($personas, $cuidador);
 		$this->set(compact('responsables', 'opciones', 'parametros'));
 	}
 
