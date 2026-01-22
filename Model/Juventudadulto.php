@@ -248,7 +248,6 @@ class Juventudadulto extends AppModel
 		),
 		'consumospa' => array(
 			'multiple' => array(
-				'rule' => array('multiple', array('min' => 0)),
 				'allowEmpty' => true,
 			),
 		),
@@ -276,7 +275,6 @@ class Juventudadulto extends AppModel
 		),
 		'antecedenteginecologico' => array(
 			'multiple' => array(
-				'rule' => array('multiple', array('min' => 0)),
 				'allowEmpty' => true,
 			),
 		),

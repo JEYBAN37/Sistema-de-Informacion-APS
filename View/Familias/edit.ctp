@@ -277,18 +277,18 @@ echo $this->Form->hidden('sociambiental_id');
             <div class="col-span-2 md:col-span-1 text-md font-semibold mt-4 mb-6 md:mr-4">
                 <div class="flex items-center mb-4">
                     <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">1</span>
-                    <label for="nombre" class="font-semibold">Nombre del Encuestado</label>
+                    <label for="nombre" class="font-semibold">Tipo de documento</label>
                     <p class="text-red-600">*</p>
                 </div>
                 <?php
-                echo $this->Form->input('nombres', [
+                echo $this->Form->input('tipodocumento', [
                     'label' => false,
                     'class' => 'border border-gray-300 rounded-lg w-full p-2 focus:outline-none  focus:ring-1 focus:ring-blue-500 focus:border-blue-500 borde azul  mt-2 font-semibold text-gray-700  text-sm focus:text-gray-900',
                     'error' => false
                 ]);
 
-                if (!empty($this->Form->error('nombres'))) {
-                    echo '<div class="text-red-600 text-md mt-1 font-semibold">' . $this->Form->error('nombres') . '</div>';
+                if (!empty($this->Form->error('tipodocumento'))) {
+                    echo '<div class="text-red-600 text-md mt-1 font-semibold">' . $this->Form->error('tipodocumento') . '</div>';
                 }
                 ?>
             </div>
