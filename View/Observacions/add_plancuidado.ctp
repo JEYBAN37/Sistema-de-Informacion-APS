@@ -425,62 +425,33 @@ $idAux = $this->request->data['Observacion']['familia_id'];
                 </div>
 
                 <?php
-                // Transformar $parametros para mostrar solo keys como display
                 $parametrosDisplay = [];
                 foreach ($parametros as $key => $value) {
-                    $parametrosDisplay[$key] = $key; // Mostrar la key
+                    $parametrosDisplay[$key] = $value; // $key = indicador, $value = resultado esperado
                 }
 
-                echo $this->Form->input(
-                    'objetivocortoplazo',
-                    [
-                        'type' => 'select',
-                        'label' => false,
-                        'multiple' => 'multiple',
-                        'id' => 'indicadores',
-                        'class' => 'w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 text-sm text-gray-700',
-                        'empty' => false,
-                        'options' => $parametrosDisplay,
-                        'error' => false
-                    ]
-                );
-
-                // Input oculto para guardar los valores (completamente invisible)
-
+                echo $this->Form->input('objetivocortoplazo', [
+                    'label' => false,
+                    'type' => 'textarea', // Cambiado a 'textarea'
+                    'id' => 'objetivolargoplazo',
+                    'class' => 'border border-gray-300 rounded-lg w-full p-2 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 text-sm text-gray-700',
+                    'data-maxlength' => 5000,
+                    'class' => 'ckeditor border rounded-lg w-full p-2 focus:ring focus:ring-blue-200',
+                    'error' => false // No mostrar error aquí                 
+                ]);
 
                 if (!empty($this->Form->error('objetivocortoplazo'))) {
                     echo '<div class="text-red-600 text-md mt-1 font-semibold">' . $this->Form->error('objetivocortoplazo') . '</div>';
-                } ?>
-
-            </div>
-
-            <div class="col-span-2 text-md font-semibold my-6">
-                <div class="flex items-center mb-4">
-                    <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">2</span>
-                    <label for="direccion" class="font-semibold">Resultados esperados en la intervención</label>
-                </div>
-
-                <?php
-                echo $this->Form->input('objetivocortoplazoresultados', [
-                    'label' => false,
-                    'type' => 'textarea',
-                    'id' => 'indicadores_valores',
-                    'class' => 'border border-gray-300 rounded-lg w-full p-2 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 text-sm text-gray-700',
-                    'readonly' => 'readonly',
-                    'error' => false
-                ]);
-
-                if (!empty($this->Form->error('objetivocortoplazoresultados'))) {
-                    echo '<div class="text-red-600 text-md mt-1 font-semibold">' . $this->Form->error('objetivocortoplazoresultados') . '</div>';
                 }
                 ?>
 
             </div>
 
 
+
             <div class="col-span-2 text-md font-semibold my-6">
                 <div class="flex items-center mb-4">
-                    <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">3</span>
+                    <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">2</span>
                     <label for="direccion" class="font-semibold">Objetivo plan de cuidado largo plazo</label>
                 </div>
 
@@ -506,7 +477,7 @@ $idAux = $this->request->data['Observacion']['familia_id'];
 
             <div class="col-span-2 text-md font-semibold my-6">
                 <div class="flex items-center mb-4">
-                    <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">4</span>
+                    <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">3</span>
                     <label for="entornoafectado" class="font-semibold">Entorno de intervención</label>
                 </div>
 
@@ -538,7 +509,7 @@ $idAux = $this->request->data['Observacion']['familia_id'];
 
             <div class="col-span-2 text-md font-semibold my-6">
                 <div class="flex items-center mb-4">
-                    <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">5</span>
+                    <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">4</span>
                     <label for="ria" class="font-semibold">Actividades a desarrollar</label>
                     <p class="text-red-600">*</p>
                 </div>
@@ -800,6 +771,14 @@ $idAux = $this->request->data['Observacion']['familia_id'];
 
 
 <script type="text/javascript">
+    // Definir parametrosMap GLOBALMENTE antes de cualquier evento
+    const parametrosMapData = <?= json_encode($parametrosDisplay) ?>;
+    window.parametrosMap = parametrosMapData;
+    window.parametrosKeys = Object.keys(parametrosMapData);
+    console.log('parametrosMap inicializado globalmente:', window.parametrosMap);
+    console.log('parametrosKeys inicializado globalmente:', window.parametrosKeys);
+    console.log('¿parametrosMap está vacío?', Object.keys(window.parametrosMap).length === 0);
+
     document.addEventListener("DOMContentLoaded", () => {
 
         const choices_riesgosalud = new Choices("#riesgosalud", {
@@ -887,8 +866,9 @@ $idAux = $this->request->data['Observacion']['familia_id'];
             placeholderValue: "Seleccione los responsables EBS",
         });
 
-        // Mapa de parametros para sincronizar key -> value
-        const parametrosMap = <?= json_encode($parametros) ?>;
+        // parametrosMap ya está definido globalmente arriba
+
+
 
         const choices_indicadores = new Choices("#indicadores", {
             searchEnabled: true,
@@ -913,7 +893,7 @@ $idAux = $this->request->data['Observacion']['familia_id'];
         if (indicadoresSelect && valoresInput) {
             indicadoresSelect.addEventListener('change', function() {
                 const selectedOptions = Array.from(indicadoresSelect.selectedOptions);
-                const valores = selectedOptions.map(option => parametrosMap[option.value]);
+                const valores = selectedOptions.map(option => window.parametrosMap[option.value]);
                 valoresInput.value = JSON.stringify(valores);
                 console.log('Valores sincronizados:', valores);
             });
@@ -1100,6 +1080,7 @@ $idAux = $this->request->data['Observacion']['familia_id'];
 
     let rows = [];
     let expandedRows = new Set();
+    let rowChoicesInstances = {}; // Almacenar instancias de Choices.js por fila
 
     function guardarRowsEnObservacion() {
         const obsField = document.querySelector('[name="data[Observacion][actividaddesarrollar]"]');
@@ -1136,6 +1117,8 @@ $idAux = $this->request->data['Observacion']['familia_id'];
             fechaCompromiso: "",
             fechaSeguimiento: "",
             seguimientoCompromiso: "",
+            objetivoCortoPlazo: [], // Array de keys
+            resultadosEsperados: [], // Array de values
             estado: "pendiente",
         };
 
@@ -1190,6 +1173,8 @@ $idAux = $this->request->data['Observacion']['familia_id'];
             fechaCompromiso: "",
             fechaSeguimiento: "",
             seguimientoCompromiso: "",
+            objetivoCortoPlazo: [], // Array de keys
+            resultadosEsperados: [], // Array de values
             estado: "pendiente",
         }
         rows.push(newRow)
@@ -1247,6 +1232,89 @@ $idAux = $this->request->data['Observacion']['familia_id'];
         }
 
         return html;
+    }
+
+    // Opciones para indicadores (usa values de window.parametrosMap)
+    function renderIndicadoresOptions(selected = []) {
+        const keys = Array.isArray(window.parametrosKeys) ? window.parametrosKeys : [];
+        const map = window.parametrosMap || {};
+        console.log('renderIndicadoresOptions - keys disponibles:', keys);
+        console.log('renderIndicadoresOptions - seleccionados:', selected);
+        let html = "";
+        keys.forEach((k) => {
+            const displayValue = map[k] || k; // Mostrar el value (descripción)
+            const sel = (Array.isArray(selected) && selected.includes(k)) ? 'selected' : '';
+            html += `<option value="${k}" ${sel}>${displayValue}</option>`;
+        });
+        console.log('HTML generado:', html.substring(0, 200));
+        return html;
+    }
+
+    // Maneja cambio en indicadores por fila: guarda keys en objetivoCortoPlazo y values en resultadosEsperados
+    function handleIndicadoresChange(rowId, selectEl) {
+        // Obtener las KEYS seleccionadas (valores del option value)
+        const keys = Array.from(selectEl.selectedOptions).map(o => o.value);
+        const map = window.parametrosMap || {};
+        console.log('handleIndicadoresChange - map actual:', map);
+        console.log('handleIndicadoresChange - keys seleccionadas:', keys);
+
+        // Mapear las keys a sus valores
+        const valores = keys.map(k => {
+            const val = map[k];
+            console.log(`Mapeando key "${k}" -> value "${val}"`);
+            return val;
+        });
+
+        console.log('handleIndicadoresChange - values mapeados:', valores);
+        console.log('handleIndicadoresChange - valores contiene undefined?:', valores.includes(undefined));
+
+        // Guardar keys en objetivoCortoPlazo y values en resultadosEsperados
+        updateRow(rowId, 'objetivoCortoPlazo', keys);
+        updateRow(rowId, 'resultadosEsperados', valores);
+        render();
+    }
+
+    // Inicializar Choices.js en los selects de indicadores por fila
+    function initializeRowChoices() {
+        // Destruir instancias previas
+        Object.values(rowChoicesInstances).forEach(instance => {
+            if (instance && instance.destroy) {
+                instance.destroy();
+            }
+        });
+        rowChoicesInstances = {};
+
+        // Crear nuevas instancias para cada fila expandida
+        rows.forEach(row => {
+            const selectId = `indicadores_row_${row.id}`;
+            const selectEl = document.getElementById(selectId);
+
+            if (selectEl && expandedRows.has(row.id)) {
+                console.log('Inicializando Choices para:', selectId);
+                try {
+                    rowChoicesInstances[row.id] = new Choices(selectEl, {
+                        searchEnabled: true,
+                        searchChoices: true,
+                        removeItemButton: true,
+                        itemSelectText: '',
+                        shouldSort: false,
+                        searchPlaceholderValue: "Escriba para filtrar...",
+                        maxItemCount: -1,
+                        removeItems: true,
+                        duplicateItemsAllowed: false,
+                        placeholder: true,
+                        placeholderValue: "Seleccione objetivos corto plazo",
+                    });
+
+                    // Agregar evento para sincronizar cambios
+                    selectEl.addEventListener('change', function() {
+                        handleIndicadoresChange(row.id, this);
+                    });
+                } catch (e) {
+                    console.error('Error al inicializar Choices:', e);
+                }
+            }
+        });
     }
 
 
@@ -1336,11 +1404,22 @@ $idAux = $this->request->data['Observacion']['familia_id'];
                             class="border border-gray-300 rounded-lg w-full p-2 focus:outline-none focus:ring-1 focus:ring-blue-500 text-sm text-gray-700"/>
                     </div>
 
+                    <div class="col-span-2 sm:col-span-2 text-md font-semibold my-2 px-4">
+                        <div class="flex items-center mb-4">
+                            <label for="actividad" class="font-semibold">Indicadores</label>
+                        </div>
+                        <select multiple
+                            id="indicadores_row_${row.id}"
+                            onchange="handleIndicadoresChange('${row.id}', this)"
+                            class="border border-gray-300 rounded-lg w-full p-2 focus:outline-none focus:ring-1 focus:ring-blue-500 text-sm text-gray-700">
+                            ${renderIndicadoresOptions(row.objetivoCortoPlazo || [])}
+                        </select>
+                    </div>
+
                     <div class="col-span-2 text-md font-semibold my-2 px-4">
                         <div class="flex items-center mb-2">
                             <label class="font-semibold">Estado</label>
                         </div>
-
                     <select
                         onchange="updateRow('${row.id}', 'estado', this.value)"
                         class="border border-gray-300 rounded-lg w-full p-2 focus:outline-none focus:ring-1 focus:ring-blue-500 text-sm text-gray-700">
@@ -1385,6 +1464,10 @@ $idAux = $this->request->data['Observacion']['familia_id'];
 
         // Update button states
         document.getElementById("removeLastBtn").disabled = rows.length === 1
+        // Inicializar Choices.js en los selects dinámicos después de un pequeño delay
+        setTimeout(() => {
+            initializeRowChoices();
+        }, 100);
     }
 
     // Inicializar datos al cargar
