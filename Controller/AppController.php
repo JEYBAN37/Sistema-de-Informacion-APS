@@ -219,8 +219,10 @@ class AppController extends Controller
             $this->loadModel('Responsable');
             $responsables = $this->Responsable->find('list', [
                 'fields' => ['Responsable.id', 'Responsable.nombres'],
+                'conditions' => ['Responsable.contrato' => 'ACTIVO'],
                 'recursive' => -1
             ]);
+            debug($responsables);
             Cache::write($cacheKey, $responsables, 'selects');
         }
 

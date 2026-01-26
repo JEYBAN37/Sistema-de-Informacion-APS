@@ -44,10 +44,12 @@
         <?php 
 
         if ($responsable == $sociambiental['Sociambiental']['responsable_id'] ) : ?>
-            <button title="Eliminar Ficha" type="button" onclick="if (confirm('¿Está seguro/a de eliminar este registro? Esta acción no se puede deshacer.')) { window.location.href='<?php echo $this->Html->url(['controller' => 'Sociambientals', 'action' => 'delete/', $sociambiental['Sociambiental']['id']]); ?>'; }"
-                class="flex items-center w-38 space-x-2 bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700">
-                <i class="fas fa-trash-alt text-xl"></i>
-            </button>
+            <form method="post" action="<?php echo $this->Html->url(['controller' => 'Sociambientals', 'action' => 'delete', $sociambiental['Sociambiental']['id']]); ?>" onsubmit="return confirm('¿Está seguro/a de eliminar este registro? Esta acción no se puede deshacer.');" style="display:inline;">
+                <?php echo $this->Form->hidden('_method', ['value' => 'POST']); ?>
+                <button title="Eliminar Ficha" type="submit" class="flex items-center w-38 space-x-2 bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700">
+                    <i class="fas fa-trash-alt text-xl"></i>
+                </button>
+            </form>
         <?php endif; ?>
     </div>
     <!-- Document Container -->

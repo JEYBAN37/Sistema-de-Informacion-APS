@@ -51,7 +51,7 @@ $planUrl = $this->Html->url(['controller' => 'Observacions', 'action' => 'addane
             </svg>
         </button>
 
-        <!--<button title="Ver detalles de familia" type="button" onclick="window.location.href='<?php echo $this->Html->url(['action' => 'view', $familia['Familia']['id']]); ?>'"
+        <!--<button title="Ver detalles de familia" type="button" onclick="window.location.href='<?php /*echo $this->Html->url(['action' => 'view', $familia['Familia']['id']]); */?>/*'"
             class="flex items-center w-38 space-x-2 bg-teal-600 text-white px-4 py-2 rounded hover:bg-teal-700">
             <i class="fa-solid fa-info text-2xl px-2"></i>
         </button>-->
@@ -373,7 +373,7 @@ $planUrl = $this->Html->url(['controller' => 'Observacions', 'action' => 'addane
                                     <tr class="mt-4 bg-gray-100 ">
                                         <td colspan="1" class="border border-gray-300 font-semibold p-2 text-center text-sm text-gray-700"> ID </td>
                                         <td colspan="7" class="border border-gray-300 p-2 font-semibold text-teal-600 text-sm hover:underline">
-                                            <?php echo $this->Html->link(strtoupper($observacion['id']), array('controller' => 'Observacions', 'action' => 'view', $observacion['id'])); ?>
+                                            <?php echo $this->Html->link(strtoupper($observacion['id']), array('controller' => 'Observacions', 'action' => 'edit', $observacion['id'])); ?>
                                         </td>
                                     </tr>
 

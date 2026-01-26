@@ -93,10 +93,7 @@ class Juventudadulto extends AppModel
 			),
 		),
 		'segundoapellido' => array(
-			'validarLetras' => array(
-				'rule' => array('custom', '/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/'),
-				'message' => 'Este campo solo permite letras',
-			),
+			
 		),
 
 		'primernombre' => array(
@@ -110,10 +107,7 @@ class Juventudadulto extends AppModel
 			),
 		),
 		'segundonombre' => array(
-			'validarLetras' => array(
-				'rule' => array('custom', '/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/'),
-				'message' => 'Este campo solo permite letras',
-			),
+			
 		),
 		'fechanac' => array(
 			'date' => array(

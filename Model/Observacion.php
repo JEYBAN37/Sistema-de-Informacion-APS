@@ -21,7 +21,7 @@ class Observacion extends AppModel
 	public function beforeSave($options = array())
 	{
 		// Convertir arrays a strings separados por comas
-		$campos = ['resultadoFamiliograma', 'menoresriegosalud', 'riesgovulnerabilidad', 'fortalezas', 'canalizacionuno', 'responsables', 'entornoafectado', 'indicadorria', 'objetivocortoplazo'];
+		$campos = ['resultadoFamiliograma', 'menoresriegosalud', 'riesgovulnerabilidad', 'fortalezas', 'canalizacionuno', 'responsables', 'entornoafectado', 'indicadorria'];
 		
 		foreach ($campos as $campo) {
 			if (isset($this->data[$this->alias][$campo])) {
@@ -46,7 +46,7 @@ class Observacion extends AppModel
 	public function tranformData($data)
 	{
 		// Solo procesar si el valor es string, si es array lo deja igual
-		$campos = ['resultadoFamiliograma', 'menoresriegosalud', 'riesgovulnerabilidad', 'fortalezas', 'canalizacionuno', 'responsables','entornoafectado','indicadorria','objetivocortoplazo'];
+		$campos = ['resultadoFamiliograma', 'menoresriegosalud', 'riesgovulnerabilidad', 'fortalezas', 'canalizacionuno', 'responsables','entornoafectado','indicadorria'];
 		
 		if (!isset($data['Observacion'])) {
 			return $data;
