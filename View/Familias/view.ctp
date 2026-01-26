@@ -359,7 +359,6 @@ $planUrl = $this->Html->url(['controller' => 'Observacions', 'action' => 'addane
                                                     endif;
                                                     ?>
 
-                                                    <a href="<?php echo $this->Html->url(['controller' => 'Observacions', 'action' => 'view', $observacion['id']]); ?>" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 text-sm">Ver</a>
                                                     <a href="<?php echo $this->Html->url(['controller' => 'Observacions', 'action' => 'edit', $observacion['id']]); ?>"
                                                         class="block px-4 py-2 text-gray-700 hover:bg-gray-100 text-sm">Editar</a>
                                                     <form method="post" action="<?php echo $this->Html->url(['controller' => 'Observacions', 'action' => 'delete', $observacion['id'], $observacion['id']]); ?>" onsubmit="return confirm('<?php echo __('¿Está seguro/a de eliminar el registro con ID# %s?', $observacion['id']); ?>');">

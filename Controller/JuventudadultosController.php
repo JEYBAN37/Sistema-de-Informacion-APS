@@ -44,8 +44,17 @@ class JuventudadultosController extends AppController
 		if (!$this->Juventudadulto->exists($id)) {
 			throw new NotFoundException(__('Invalid juventudadulto'));
 		}
-		$options = array('conditions' => array('Juventudadulto.' . $this->Juventudadulto->primaryKey => $id));
-		$this->set('juventudadulto', $this->Juventudadulto->find('first', $options));
+		$options = array(
+			'conditions' => array('Juventudadulto.' . $this->Juventudadulto->primaryKey => $id),
+			'fields' => array(
+				'Juventudadulto.*',
+				'Canalizacion.nombre',
+				
+			),
+		
+		);
+		$juventudadulto = $this->Juventudadulto->find('first', $options);
+		$this->set('juventudadulto', $juventudadulto);
 	}
 
 	/**
@@ -142,7 +151,6 @@ class JuventudadultosController extends AppController
 			return $this->redirect(array('controller' => 'Familias', 'action' => 'index'));
 		}
 
-		debug($this->request->data);
 
 		if ($this->request->is(array('post', 'put'))) {
 			if ($this->Juventudadulto->save($this->request->data)) {
