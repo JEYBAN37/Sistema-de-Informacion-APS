@@ -259,9 +259,9 @@ class SociambientalsController extends AppController
 		}
 		$this->request->allowMethod('post', 'delete');
 		if ($this->Sociambiental->delete()) {
-			$this->Session->setFlash(__('The sociambiental has been deleted.'));
+			$this->Session->setFlash('La vivienda ha sido eliminada correctamente.', 'flash_custom', array('class' => 'success', 'title' => 'La operación se ha completado correctamente'));
 		} else {
-			$this->Session->setFlash(__('The sociambiental could not be deleted. Please, try again.'));
+			$this->Session->setFlash('La vivienda no pudo ser eliminada. Por favor, inténtelo de nuevo.', 'flash_custom', array('class' => 'error', 'title' => 'Error al eliminar el registro'));
 		}
 		return $this->redirect(array('action' => 'index'));
 	}

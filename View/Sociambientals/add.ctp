@@ -424,13 +424,16 @@ $animalesOptions = [
 
                     <div class="w-full md:w-1/2" id="coords">
 
-                        <input type="text"
-                            id='latitud' ,
-                            name='data[Sociambiental][latitud]' ,
-                            label=false,
-                            class='border border-gray-300 rounded-lg w-full p-2 focus:outline-none  focus:ring-1 focus:ring-blue-500 focus:border-blue-500 borde azul  mt-2 font-semibold text-gray-700  text-sm focus:text-gray-900' ,
-                            error=false>
                         <?php
+
+                        echo $this->Form->input('latitud', [
+                            'type' => 'text',
+                            'id' => 'latitud',
+                            'name' => 'data[Sociambiental][latitud]',
+                            'label' => false,
+                            'class' => 'border border-gray-300 rounded-lg w-full p-2 focus:outline-none  focus:ring-1 focus:ring-blue-500 focus:border-blue-500 borde azul  mt-2 font-semibold text-gray-700  text-sm focus:text-gray-900',
+                            'error' => false
+                        ]);
 
                         if (!empty($this->Form->error('latitud'))) {
                             echo '<div class="text-red-600 text-md mt-1 font-semibold">' . $this->Form->error('latitud') . '</div>';

@@ -433,7 +433,6 @@ $idAux = $this->request->data['Observacion']['familia_id'];
                 echo $this->Form->input('objetivocortoplazo', [
                     'label' => false,
                     'type' => 'textarea', // Cambiado a 'textarea'
-                    'id' => 'objetivolargoplazo',
                     'class' => 'border border-gray-300 rounded-lg w-full p-2 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 text-sm text-gray-700',
                     'data-maxlength' => 5000,
                     'class' => 'ckeditor border rounded-lg w-full p-2 focus:ring focus:ring-blue-200',
@@ -1234,42 +1233,41 @@ $idAux = $this->request->data['Observacion']['familia_id'];
         return html;
     }
 
-    // Opciones para indicadores (usa values de window.parametrosMap)
+    // Opciones para indicadores: muestra KEYS, guarda KEYS
     function renderIndicadoresOptions(selected = []) {
-        const keys = Array.isArray(window.parametrosKeys) ? window.parametrosKeys : [];
         const map = window.parametrosMap || {};
-        console.log('renderIndicadoresOptions - keys disponibles:', keys);
-        console.log('renderIndicadoresOptions - seleccionados:', selected);
+        console.log('renderIndicadoresOptions - map completo:', map);
+        console.log('renderIndicadoresOptions - seleccionados (keys):', selected);
         let html = "";
-        keys.forEach((k) => {
-            const displayValue = map[k] || k; // Mostrar el value (descripción)
-            const sel = (Array.isArray(selected) && selected.includes(k)) ? 'selected' : '';
-            html += `<option value="${k}" ${sel}>${displayValue}</option>`;
+        
+        // Iterar sobre el map para obtener key-value pairs
+        Object.entries(map).forEach(([key, value]) => {
+            // Comparar con las KEYS seleccionadas
+            const sel = (Array.isArray(selected) && selected.includes(key)) ? 'selected' : '';
+            // Mostrar KEY en texto, guardar KEY en value
+            html += `<option value="${key}" ${sel}>${key}</option>`;
         });
+        
         console.log('HTML generado:', html.substring(0, 200));
         return html;
     }
 
-    // Maneja cambio en indicadores por fila: guarda keys en objetivoCortoPlazo y values en resultadosEsperados
+// Maneja cambio en indicadores por fila: extrae KEYS y mapea a VALUES
     function handleIndicadoresChange(rowId, selectEl) {
-        // Obtener las KEYS seleccionadas (valores del option value)
-        const keys = Array.from(selectEl.selectedOptions).map(o => o.value);
         const map = window.parametrosMap || {};
-        console.log('handleIndicadoresChange - map actual:', map);
+        
+        // Obtener las KEYS seleccionadas (están en option.value)
+        const keys = Array.from(selectEl.selectedOptions).map(o => o.value);
+        
+        // Mapear las KEYS a sus VALUES correspondientes
+        const valores = keys.map(k => map[k]);
+        
+        console.log('handleIndicadoresChange - map:', map);
         console.log('handleIndicadoresChange - keys seleccionadas:', keys);
-
-        // Mapear las keys a sus valores
-        const valores = keys.map(k => {
-            const val = map[k];
-            console.log(`Mapeando key "${k}" -> value "${val}"`);
-            return val;
-        });
-
         console.log('handleIndicadoresChange - values mapeados:', valores);
-        console.log('handleIndicadoresChange - valores contiene undefined?:', valores.includes(undefined));
 
         // Guardar keys en objetivoCortoPlazo y values en resultadosEsperados
-        updateRow(rowId, 'objetivoCortoPlazo', keys);
+         updateRow(rowId, 'objetivoCortoPlazo', keys);
         updateRow(rowId, 'resultadosEsperados', valores);
         render();
     }

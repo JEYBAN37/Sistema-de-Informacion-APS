@@ -466,7 +466,8 @@
                                     <?php
                                     if (!empty($actividad['resultadosEsperados']) && is_array($actividad['resultadosEsperados'])) {
                                         echo '<ul class="list-disc list-inside space-y-1">';
-                                        foreach ($actividad['resultadosEsperados'] as $resultado) {
+                                        $resultadosUnicos = array_unique($actividad['resultadosEsperados']);
+                                        foreach ($resultadosUnicos as $resultado) {
                                             echo '<li>' . h($resultado) . '</li>';
                                         }
                                         echo '</ul>';

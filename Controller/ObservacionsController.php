@@ -193,7 +193,7 @@ class ObservacionsController extends AppController
 			$this->Session->setFlash('No hay personas registradas en esta familia. Por favor, registre al menos una persona antes de continuar con el plan de cuidado.', 'flash_custom', array('class' => 'error', 'title' => 'Error'));
 			return $this->redirect(array('controller' => 'Juventudadultos', 'action' => 'add', '?' => array('familia_id' => $this->request->data['Observacion']['familia_id'])));
 		}
-		$responsables = $this->Observacion->Responsable->find('list');
+		$responsables = $this->getResponsablesSelect();
 		$cuidador = $this->request->data['Familia']['cuidadorpermante']; 
 		$parametros = $this->getParametros($personas, $cuidador);
 		$this->set(compact('responsables', 'opciones', 'parametros'));

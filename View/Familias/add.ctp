@@ -271,27 +271,9 @@ $alimentosHogar = [
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2">
-            <div class="col-span-2 md:col-span-1 text-md font-semibold mt-4 mb-6 md:mr-4">
+            <div class="col-span-2 md:col-span-1 text-md font-semibold mt-4 mb-6  md:mr-4">
                 <div class="flex items-center mb-4">
                     <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">1</span>
-                    <label for="nombre" class="font-semibold">Tipo de documento</label>
-                    <p class="text-red-600">*</p>
-                </div>
-                <?php
-                echo $this->Form->input('tipodocumento', [
-                    'label' => false,
-                    'class' => 'border border-gray-300 rounded-lg w-full p-2 focus:outline-none  focus:ring-1 focus:ring-blue-500 focus:border-blue-500 borde azul  mt-2 font-semibold text-gray-700  text-sm focus:text-gray-900',
-                    'error' => false
-                ]);
-
-                if (!empty($this->Form->error('tipodocumento'))) {
-                    echo '<div class="text-red-600 text-md mt-1 font-semibold">' . $this->Form->error('tipodocumento') . '</div>';
-                }
-                ?>
-            </div>
-            <div class="col-span-2 md:col-span-1 text-md font-semibold mt-4 mb-6">
-                <div class="flex items-center mb-4">
-                    <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">2</span>
                     <label for="nombre" class="font-semibold">N° de Documento</label>
                     <p class="text-red-600">*</p>
                 </div>
@@ -307,9 +289,9 @@ $alimentosHogar = [
                 }
                 ?>
             </div>
-            <div class="col-span-2 md:col-span-1 text-md font-semibold mt-4 mb-6 md:mr-4">
+            <div class="col-span-2 md:col-span-1 text-md font-semibold mt-4 mb-6">
                 <div class="flex items-center mb-4">
-                    <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">3</span>
+                    <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">2</span>
                     <label for="nombre" class="font-semibold">Quién atiende la visita es</label>
                     <p class="text-red-600">*</p>
                 </div>
@@ -331,7 +313,7 @@ $alimentosHogar = [
             </div>
             <div class="col-span-2 md:col-span-1 text-md font-semibold mt-4 mb-6">
                 <div class="flex items-center mb-4">
-                    <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">4</span>
+                    <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">3</span>
                     <label for="celular" class="font-semibold">Número celular de contacto</label>
                     <p class="text-red-600">*</p>
                 </div>

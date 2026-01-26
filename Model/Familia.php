@@ -263,7 +263,6 @@ class Familia extends AppModel
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
 		),
-		'tipodocumento' => array(),
 		'numerodocumento' => array(
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),
@@ -700,6 +699,19 @@ class Familia extends AppModel
 			'finderQuery' => '',
 			'counterQuery' => ''
 		),
+		'Persona' => array(
+			'className' => 'Persona',
+			'foreignKey' => 'familia_id',
+			'dependent' => true,
+			'conditions' => '',
+			'fields' => '',
+			'order' => '',
+			'limit' => '',
+			'offset' => '',
+			'exclusive' => '',
+			'finderQuery' => '',
+			'counterQuery' => ''
+		),
 		'Gestante' => array(
 			'className' => 'Gestante',
 			'foreignKey' => 'familia_id',
@@ -729,7 +741,7 @@ class Familia extends AppModel
 		'Juventudadulto' => array(
 			'className' => 'Juventudadulto',
 			'foreignKey' => 'familia_id',
-			'dependent' => false,
+			'dependent' => true,
 			'conditions' => '',
 			'fields' => '',
 			'order' => '',
@@ -742,7 +754,7 @@ class Familia extends AppModel
 		'Observacion' => array(
 			'className' => 'Observacion',
 			'foreignKey' => 'familia_id',
-			'dependent' => false,
+			'dependent' => true,
 			'conditions' => '',
 			'fields' => '',
 			'order' => '',
