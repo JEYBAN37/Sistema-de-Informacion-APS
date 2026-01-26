@@ -780,4 +780,4 @@ Cache::config('selects', array(
 ));
 
 // segundos
-Configure::write('Session.inactivityLimit', 15 * 60);
+Configure::write('Session.inactivityLimit', 30 * 60);
