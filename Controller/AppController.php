@@ -229,13 +229,32 @@ class AppController extends Controller
         return $responsables;
     }
 
+    protected function getResponsablesSelectCompletos()
+    {
+        $cacheKey = 'responsables_select';
+        $responsables = Cache::read($cacheKey, 'selects');
+
+        if ($responsables === false) {
+            $this->loadModel('Responsable');
+            $responsables = $this->Responsable->find('list', [
+                'fields' => ['Responsable.id', 'Responsable.nombres'],
+                'recursive' => -1
+            ]);
+            Cache::write($cacheKey, $responsables, 'selects');
+        }
+
+        return $responsables;
+    }
+
+
+
     protected function getParametros($personas = null, $zarit = false)
     {
         $cacheKey = 'parametros_select';
         $parametrosFiltrados = Cache::read($cacheKey, 'selects');
-        
+
         if ($parametrosFiltrados === false) {
-            
+
             $this->loadModel('Parametro');
             if (!isset($this->Parametro) || !is_object($this->Parametro)) {
                 $this->Parametro = ClassRegistry::init('Parametro');
@@ -244,13 +263,13 @@ class AppController extends Controller
                 CakeLog::write('error', 'No se pudo cargar el modelo Parametro en AppController::getParametros');
                 return [];
             }
-            
+
             $parametrosRaw = $this->Parametro->find('list', [
-                'fields' => ['Parametro.indicador', 'Parametro.resultado','Parametro.curso'],
+                'fields' => ['Parametro.indicador', 'Parametro.resultado', 'Parametro.curso'],
                 'recursive' => -1
             ]);
 
-            
+
             // Inicializar cursos de vida aplicables
             $cursosVidaAplicables = [];
             $fechaActual = new DateTime();

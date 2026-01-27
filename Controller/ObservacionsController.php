@@ -18,7 +18,12 @@ class ObservacionsController extends AppController
 	public $components = array('Paginator');
 
 
-
+	public function beforeFilter()
+	{
+		parent::beforeFilter();
+		// Permitir acceso a métodos JSON sin autenticación
+		$this->Auth->allow('plancuidadoIndex');
+	}
 	/**
 	 * index method
 	 *
@@ -50,6 +55,214 @@ class ObservacionsController extends AppController
 		$options = array('conditions' => array('Observacion.' . $this->Observacion->primaryKey => $id));
 		$this->set('observacion', $this->Observacion->find('first', $options));
 	}
+
+	public function plancuidado()
+	{
+		$ubicaciones = $this->getUbicacionesSelect();
+		$responsables = $this->getResponsablesSelectCompletos();
+		$estados = [
+			"Con G" => "Con Gestion del riesgo salud",
+			"Con Gestion del riesgo salud" => "Con Gestion del riesgo salud",
+			"Prior"	=> "Prioridad media",
+			"Prioridad alta" => "Prioridad alta",
+			"Prioridad baja" => "Prioridad baja",
+			"Prioridad media" => "Prioridad media",
+			"Riesgo Bajo" => "Riesgo Bajo",
+			"Riesgo Medio" => "Riesgo Medio",
+			"Riesgo Alto" => "Riesgo Alto",
+		];
+
+		$this->set(compact('ubicaciones', 'responsables', 'estados'));
+	}
+
+	public function plancuidadoIndex()
+	{
+		$this->loadModel('Observacion');
+		$this->loadModel('Familia');
+		$this->loadModel('Responsable');
+
+		// Configurar para respuesta JSON
+		$this->autoRender = false;
+		$this->layout = false;
+		$this->response->type('json');
+
+		$columns = array('Familia.id');
+		$fecha = isset($_GET['fecha']) ? trim($_GET['fecha']) : '';
+		$start = isset($_GET['start']) ? intval($_GET['start']) : 0;
+		$length = isset($_GET['length']) ? intval($_GET['length']) : 10;
+		$search = isset($_GET['search']['value']) ? $_GET['search']['value'] : '';
+		$microterritorio = isset($_GET['microterritorio']) ? $_GET['microterritorio'] : '';
+		$responsable = isset($_GET['responsable']) ? $_GET['responsable'] : '';
+		$estado = isset($_GET['estado']) ? $_GET['estado'] : '';
+		$order = isset($_GET['order']) ? $_GET['order'] : array();
+		$columns = isset($_GET['columns']) ? $_GET['columns'] : array();
+		$search = trim($search);
+
+		$orderBy = array();
+		if (!empty($order)) {
+			foreach ($order as $o) {
+				$colIndex = intval($o['column']);
+				$colName = $columns[$colIndex]['data'];
+				$dir = strtoupper($o['dir']) === 'DESC' ? 'DESC' : 'ASC';
+
+				switch ($colName) {
+					case 'id':
+						$orderBy['Observacion.id'] = $dir;
+						break;
+					case 'fecha':
+						$orderBy['Observacion.date'] = $dir;
+						break;
+					case 'estado':
+						$orderBy['Observacion.valoracionfamilia'] = $dir;
+						break;
+					case 'microterritorio':
+						$orderBy['Ubicacion.microterritorio'] = $dir;
+						break;
+					default:
+						$orderBy['Observacion.date'] = 'DESC';
+				}
+			}
+		} else {
+			$orderBy = array('Observacion.date' => 'DESC');
+		}
+
+		$conditions = array();
+
+		if (!empty($microterritorio)) {
+			$conditions['Ubicacion.id'] = intval($microterritorio);
+		}
+
+		if (!empty($responsable)) {
+			$conditions['Responsable.id'] = intval($responsable);
+		}
+
+		if (!empty($estado)) {
+			$conditions['Observacion.valoracionfamilia'] = $estado;
+		}
+
+		if (!empty($search)) {
+			$conditions['OR'] = array(
+				'Familia.id LIKE' => "%$search%",
+				'Observacion.date LIKE' => "%$search%",
+				'Observacion.id LIKE' => "%$search%",
+				'Familia.celular LIKE' => "%$search%",
+			);
+		} elseif (!empty($microterritorio) || !empty($fecha)) {
+			if (!empty($fecha)) {
+				$conditions['Observacion.date'] = $fecha;
+			}
+		} else {
+			$conditions['Observacion.date >='] = date('Y-m-d', strtotime('-30 days'));
+		}
+
+		$joins = array(
+			array(
+				'table' => 'familias',
+				'alias' => 'Familia',
+				'type' => 'INNER',
+				'conditions' => array('Observacion.familia_id = Familia.id')
+			),
+			array(
+				'table' => 'sociambientals',
+				'alias' => 'Sociambiental',
+				'type' => 'LEFT',
+				'conditions' => array('Familia.sociambiental_id = Sociambiental.id')
+			),
+			array(
+				'table' => 'ubicaciones',
+				'alias' => 'Ubicacion',
+				'type' => 'LEFT',
+				'conditions' => array('Sociambiental.ubicacion_id = Ubicacion.id')
+			),
+			array(
+				'table' => 'responsables',
+				'alias' => 'Responsable',
+				'type' => 'LEFT',
+				'conditions' => array('FIND_IN_SET(Responsable.id, Observacion.responsables) > 0')
+			),
+		);
+
+		$total = $this->Observacion->find('count', array(
+			'recursive' => -1
+		));
+
+		$filtered = $this->Observacion->find('count', array(
+			'conditions' => $conditions,
+			'joins' => $joins,
+			'distinct' => 'Observacion.id',
+			'recursive' => -1,
+		));
+
+		$group = array(
+			'Familia.id',
+			'Observacion.id',
+			'Observacion.valoracionfamilia',
+			'Observacion.date',
+			'Observacion.dirplancuidado',
+			'Observacion.dirfamiliograma',
+			'Ubicacion.microterritorio',
+			'Responsable.nombres',
+			'Sociambiental.apellidosfamilia',
+		);
+
+		$data = $this->Observacion->find('all', array(
+			'conditions' => $conditions,
+			'fields' => array(
+				'Familia.id',
+				'Observacion.id',
+				'Observacion.valoracionfamilia',
+				'Observacion.date',
+				'Observacion.dirplancuidado',
+				'Observacion.dirfamiliograma',	
+				'Observacion.familiograma',
+				'Ubicacion.microterritorio',
+				'Observacion.responsables',
+				'Responsable.nombres',
+				'Sociambiental.apellidosfamilia',
+			),
+			'joins' => $joins,
+			'group' => $group,
+			'limit' => $length,
+			'offset' => $start,
+			'order' => $orderBy,
+			'recursive' => -1,
+		));
+
+		$draw = isset($_GET['draw']) ? intval($_GET['draw']) : 0;
+
+		$result = array(
+			'draw' => $draw,
+			'recordsTotal' => $total,
+			'recordsFiltered' => $filtered,
+			'data' => array()
+		);
+
+
+		$result['data'] = array();
+		foreach ($data as $row) {
+			$result['data'][] = array(
+				'id' => $row['Familia']['id'],
+				'id_familia' => $row['Familia']['id'],
+				'id_observacion' => $row['Observacion']['id'],
+				'fecha' => $row['Observacion']['date'],
+				'estado' => $row['Observacion']['valoracionfamilia'],
+				'microterritorio' => $row['Ubicacion']['microterritorio'],
+				'responsable' => $row['Responsable']['nombres'],
+				'plancuidado' => $row['Observacion']['dirplancuidado'],
+				'dirfamiliograma' => $row['Observacion']['dirfamiliograma'],
+				'familiograma' => $row['Observacion']['familiograma'],
+			);
+		}
+
+		unset($data);
+		echo json_encode($result);
+		exit();
+	}
+
+	// Alias para probar vía URL directa: /observacions/plancuidadoIndex
+
+
+
 
 	/**
 	 * add method
@@ -162,9 +375,8 @@ class ObservacionsController extends AppController
 					'Familia.cuidadorpermante'
 				)
 			);
-			
-			$this->request->data = $this->Observacion->tranformData($this->Observacion->find('first', $options));
 
+			$this->request->data = $this->Observacion->tranformData($this->Observacion->find('first', $options));
 		}
 		$personas = $this->Juventudadulto->find('all', array(
 			'conditions' => array('Juventudadulto.familia_id' => $this->request->data['Observacion']['familia_id']),
@@ -194,7 +406,7 @@ class ObservacionsController extends AppController
 			return $this->redirect(array('controller' => 'Juventudadultos', 'action' => 'add', '?' => array('familia_id' => $this->request->data['Observacion']['familia_id'])));
 		}
 		$responsables = $this->getResponsablesSelect();
-		$cuidador = $this->request->data['Familia']['cuidadorpermante']; 
+		$cuidador = $this->request->data['Familia']['cuidadorpermante'];
 		$parametros = $this->getParametros($personas, $cuidador);
 		$this->set(compact('responsables', 'opciones', 'parametros'));
 	}
@@ -321,7 +533,7 @@ class ObservacionsController extends AppController
 		);
 
 		$observacion = $this->Observacion->find('first', $options);
-		
+
 		$this->request->data = $this->Observacion->tranformData($observacion);
 
 		$this->set(compact('familias', 'responsables'));
