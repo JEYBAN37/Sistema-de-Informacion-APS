@@ -31,7 +31,7 @@ class VisitasnegadasController extends AppController
 	public function index()
 	{
 		$ubicaciones = $this->getUbicacionesSelect();
-		$responsables = $this->getResponsablesSelect();
+		$responsables = $this->getResponsablesSelectCompletos();
 
 		$this->set(compact('ubicaciones', 'responsables'));
 	}
