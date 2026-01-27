@@ -349,7 +349,7 @@ $planUrl = $this->Html->url(['controller' => 'Observacions', 'action' => 'addane
                                                     </svg>
                                                 </button>
                                                 <div class="hidden absolute left-0 mt-2 w-32 bg-white border border-gray-200 rounded shadow-lg z-50 menu-options">
-                                                    <a href="<?php echo $this->Html->url(['controller' => 'Observacions', 'action' => 'add_plancuidado/' . $observacion['id']]); ?>" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 text-sm">Agregar Plan de Cuidado</a>
+                                                    <a href="<?php echo $this->Html->url(['controller' => 'Observacions', 'action' => 'add_plancuidado/' . $observacion['id']]); ?>" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 text-sm">Plan de Cuidado</a>
                                                     <?php
                                                     if (!empty($observacion['firmaplancuidado'])) :
                                                     ?>
@@ -360,7 +360,7 @@ $planUrl = $this->Html->url(['controller' => 'Observacions', 'action' => 'addane
                                                     ?>
 
                                                     <a href="<?php echo $this->Html->url(['controller' => 'Observacions', 'action' => 'edit', $observacion['id']]); ?>"
-                                                        class="block px-4 py-2 text-gray-700 hover:bg-gray-100 text-sm">Editar</a>
+                                                        class="block px-4 py-2 text-gray-700 hover:bg-gray-100 text-sm">Editar Observacion</a>
                                                     <form method="post" action="<?php echo $this->Html->url(['controller' => 'Observacions', 'action' => 'delete', $observacion['id'], $observacion['id']]); ?>" onsubmit="return confirm('<?php echo __('¿Está seguro/a de eliminar el registro con ID# %s?', $observacion['id']); ?>');">
                                                         <?php echo $this->Form->hidden('_method', ['value' => 'POST']); ?>
                                                         <button type="submit" class="w-full text-left px-4 py-2 text-red-600 hover:bg-gray-100 text-sm">Borrar</button>
