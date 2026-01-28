@@ -222,7 +222,6 @@ class AppController extends Controller
                 'conditions' => ['Responsable.contrato' => 'ACTIVO'],
                 'recursive' => -1
             ]);
-            debug($responsables);
             Cache::write($cacheKey, $responsables, 'selects');
         }
 
