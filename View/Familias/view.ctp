@@ -12,7 +12,7 @@ if (!empty($familia['Observacion']) && is_array($familia['Observacion'])) {
     }
 }
 
-$planUrl = $this->Html->url(['controller' => 'Observacions', 'action' => 'addanexo', $familia['Familia']['id']]);
+$planUrl = $this->Html->url(['controller' => 'Observacions', 'action' => 'addanexo', $familia['Observacion'][0]['id']]);
 ?>
 <link
     rel="stylesheet"
