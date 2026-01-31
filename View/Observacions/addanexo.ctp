@@ -23,7 +23,7 @@ echo $this->Form->create('Observacion',  [
 // se utiliza para llamar el id responsable donde sea necesario
 $idAux = isset($this->request->data['Observacion']['familia_id']) ? $this->request->data['Observacion']['familia_id'] : '';
 echo $this->Form->hidden('id');
-echo $this->Form->hidden('familia_id');
+echo $this->Form->hidden('familia_id', ['value' => $idAux, 'id' => 'familia_id']);
 echo $this->Form->hidden('responsable_id');
 
 // Mostrar errores generales del modelo
@@ -131,7 +131,14 @@ if (isset($validationErrors['Observacion']) && !empty($validationErrors['Observa
 <script>
 	function preventBackNavigation() {
 		if (confirm('¿Está seguro que desea salir de la página? Se pueden perder los cambios no guardados.')) {
-			window.location.href = '<?php echo $this->Html->url(['controller' => 'Familias', 'action' => 'view', $idAux]); ?>';
+			const familiaElem = document.getElementById('familia_id');
+			const familiaId = familiaElem ? familiaElem.value : '<?php echo $idAux; ?>';
+			if (!familiaId) {
+				alert('ID de familia no disponible.');
+				return;
+			}
+			const baseUrl = '<?php echo $this->Html->url(['controller' => 'Familias', 'action' => 'view']); ?>';
+			window.location.href = baseUrl + '/' + encodeURIComponent(familiaId);
 		}
 	}
 
