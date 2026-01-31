@@ -462,7 +462,7 @@ class ObservacionsController extends AppController
 		}
 
 		$options = array(
-			'conditions' => array('Observacion.familia_id' => $id),
+			'conditions' => array('Observacion.id' => $id),
 			'recursive' => -1
 		);
 
