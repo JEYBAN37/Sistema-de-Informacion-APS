@@ -7,16 +7,20 @@ echo $this->Form->hidden('id');
 echo $this->Form->hidden('familia_id');
 
 $TipoDeDocumentoOptions = array(
-    'CC' => 'Cedula de ciudadania',
-    'TI' => 'Tarjeta de identidad',
-    'PPT' => 'Permiso Protección Temporal',
+	'CC' => 'Cedula de ciudadania',
+	'TI' => 'Tarjeta de identidad',
+	'PPT' => 'Permiso Protección Temporal',
+	'RC' => 'Registro civil',
+	'MS' => 'Menor sin identificación',
+	'AS' => 'Adulto sin identificación',
+	'CE' => 'Cédula de extranjería',
 
 );
 
 $generoOption = [
     'Masculino' => 'Masculino',
     'Femenino' => 'Femenino',
-    'No binanrio' => 'No binario',
+    'No binario' => 'No binario',
     'Prefiere no informar' => 'Prefiere no informar',
 
 ];
