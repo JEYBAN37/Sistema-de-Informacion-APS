@@ -404,6 +404,111 @@ $idAux = $this->request->data['Observacion']['familia_id'];
         </div>
     </div>
 
+
+
+    <div class="bg-white shadow-2xl rounded-xl p-6 md:p-12 mt-16">
+
+        <!-- Header -->
+        <div class="flex items-center mb-4">
+            <i class="fa-solid fa-person-dots-from-line text-teal-600 text-3xl bg-teal-100 p-3 rounded-lg"></i>
+            <div class="ml-4">
+                <h1 class="text-xl font-semibold">Necedidades / Problemas / Determinantes</h1>
+                <p class="text-gray-500">Complementa la información segun los logros concertados con la familia</p>
+            </div>
+
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2">
+
+
+            <div class="col-span-2 text-md font-semibold my-6">
+                <div class="flex items-center mb-4">
+                    <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">1</span>
+                    <label for="direccion" class="font-semibold">Definicion de Necesidades / Problemas / Determinantes </label>
+                </div>
+
+                <div class="p-2">
+
+                    <!-- Desktop: Table Layout -->
+                    <div id="desktopView" class="block overflow-x-auto">
+                        <table class="w-full border-collapse">
+                            <tbody id="tableBody" class="divide-y divide-gray-200">
+                                <!-- Table rows will be rendered here by JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="flex flex-col sm:flex-row gap-3 pt-4 border-t border-gray-200">
+                        <button type="button" id="addRowBtn" class="flex items-center justify-center gap-2 px-6 py-3 bg-teal-600 text-white rounded-lg hover:bg-green-700 transition-colors font-medium">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                            </svg>
+                            Agregar fila
+                        </button>
+                        <button type="button" id="removeLastBtn" class="flex items-center justify-center gap-2 px-6 py-3 bg-white text-gray-700 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors font-medium cursor-pointer">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                            </svg>
+                            Quitar última fila
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-span-2 text-md font-semibold my-6">
+                <div class="flex items-center mb-4">
+                    <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">2</span>
+                    <label for="direccion" class="font-semibold">Registre opersonas que no desean participar en el Plan</label>
+                </div>
+
+                <div class="p-2">
+
+                    <!-- Desktop: Table Layout -->
+                    <!-- Campo oculto para almacenar los datos de disentimiento serializados -->
+                    <textarea
+                        name="data[Observacion][disentimiento]"
+                        id="disentimiento_hidden"
+                        style="display:none;"><?php echo isset($this->request->data['Observacion']['disentimiento']) ? h($this->request->data['Observacion']['disentimiento']) : ''; ?></textarea>
+
+                    <!-- Desktop: Table Layout para disentimiento -->
+                    <div id="desktopViewdisentimiento" class="block overflow-x-auto">
+                        <table class="w-full border-collapse">
+                            <thead>
+                                <tr>
+                                    <th class="p-2 font-medium">Nombre</th>
+                                    <th class="p-2 font-medium">Documento</th>
+                                    <th class="p-2 font-medium">Rol</th>
+                                    <th class="p-2 font-medium">Motivo</th>
+                                    <th class="p-2 font-medium">Acción</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tableBodyDisentimiento" class="divide-y divide-gray-200">
+                                <!-- Table rows will be rendered here by JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Action Buttons para disentimiento -->
+                    <div class="flex flex-col sm:flex-row gap-3 pt-4 border-t border-gray-200 mt-4">
+                        <button type="button" id="addRowBtnDisentimiento" class="flex items-center justify-center gap-2 px-6 py-3 bg-teal-600 text-white rounded-lg hover:bg-green-700 transition-colors font-medium">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                            </svg>
+                            Agregar fila
+                        </button>
+                        <button type="button" id="removeLastBtnDisentimiento" class="flex items-center justify-center gap-2 px-6 py-3 bg-white text-gray-700 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors font-medium cursor-pointer">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                            </svg>
+                            Quitar última fila
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="bg-white shadow-2xl rounded-xl p-6 md:p-12 mt-16">
 
         <!-- Header -->
@@ -546,110 +651,6 @@ $idAux = $this->request->data['Observacion']['familia_id'];
 
         </div>
     </div>
-
-    <div class="bg-white shadow-2xl rounded-xl p-6 md:p-12 mt-16">
-
-        <!-- Header -->
-        <div class="flex items-center mb-4">
-            <i class="fa-solid fa-person-dots-from-line text-teal-600 text-3xl bg-teal-100 p-3 rounded-lg"></i>
-            <div class="ml-4">
-                <h1 class="text-xl font-semibold">Definiciones Individuales</h1>
-                <p class="text-gray-500">Complementa la información segun los logros concertados con la familia</p>
-            </div>
-
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-2">
-
-
-            <div class="col-span-2 text-md font-semibold my-6">
-                <div class="flex items-center mb-4">
-                    <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">1</span>
-                    <label for="direccion" class="font-semibold">Definicion de Logros concertados con la familia </label>
-                </div>
-
-                <div class="p-2">
-
-                    <!-- Desktop: Table Layout -->
-                    <div id="desktopView" class="block overflow-x-auto">
-                        <table class="w-full border-collapse">
-                            <tbody id="tableBody" class="divide-y divide-gray-200">
-                                <!-- Table rows will be rendered here by JavaScript -->
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <!-- Action Buttons -->
-                    <div class="flex flex-col sm:flex-row gap-3 pt-4 border-t border-gray-200">
-                        <button type="button" id="addRowBtn" class="flex items-center justify-center gap-2 px-6 py-3 bg-teal-600 text-white rounded-lg hover:bg-green-700 transition-colors font-medium">
-                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
-                            </svg>
-                            Agregar fila
-                        </button>
-                        <button type="button" id="removeLastBtn" class="flex items-center justify-center gap-2 px-6 py-3 bg-white text-gray-700 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors font-medium cursor-pointer">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                            </svg>
-                            Quitar última fila
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-span-2 text-md font-semibold my-6">
-                <div class="flex items-center mb-4">
-                    <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">2</span>
-                    <label for="direccion" class="font-semibold">Registre opersonas que no desean participar en el Plan</label>
-                </div>
-
-                <div class="p-2">
-
-                    <!-- Desktop: Table Layout -->
-                    <!-- Campo oculto para almacenar los datos de disentimiento serializados -->
-                    <textarea
-                        name="data[Observacion][disentimiento]"
-                        id="disentimiento_hidden"
-                        style="display:none;"><?php echo isset($this->request->data['Observacion']['disentimiento']) ? h($this->request->data['Observacion']['disentimiento']) : ''; ?></textarea>
-
-                    <!-- Desktop: Table Layout para disentimiento -->
-                    <div id="desktopViewdisentimiento" class="block overflow-x-auto">
-                        <table class="w-full border-collapse">
-                            <thead>
-                                <tr>
-                                    <th class="p-2 font-medium">Nombre</th>
-                                    <th class="p-2 font-medium">Documento</th>
-                                    <th class="p-2 font-medium">Rol</th>
-                                    <th class="p-2 font-medium">Motivo</th>
-                                    <th class="p-2 font-medium">Acción</th>
-                                </tr>
-                            </thead>
-                            <tbody id="tableBodyDisentimiento" class="divide-y divide-gray-200">
-                                <!-- Table rows will be rendered here by JavaScript -->
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <!-- Action Buttons para disentimiento -->
-                    <div class="flex flex-col sm:flex-row gap-3 pt-4 border-t border-gray-200 mt-4">
-                        <button type="button" id="addRowBtnDisentimiento" class="flex items-center justify-center gap-2 px-6 py-3 bg-teal-600 text-white rounded-lg hover:bg-green-700 transition-colors font-medium">
-                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
-                            </svg>
-                            Agregar fila
-                        </button>
-                        <button type="button" id="removeLastBtnDisentimiento" class="flex items-center justify-center gap-2 px-6 py-3 bg-white text-gray-700 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors font-medium cursor-pointer">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                            </svg>
-                            Quitar última fila
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
 
     <div class="bg-white shadow-2xl rounded-xl p-6 md:p-12 mt-16">
 
@@ -1239,7 +1240,7 @@ $idAux = $this->request->data['Observacion']['familia_id'];
         console.log('renderIndicadoresOptions - map completo:', map);
         console.log('renderIndicadoresOptions - seleccionados (keys):', selected);
         let html = "";
-        
+
         // Iterar sobre el map para obtener key-value pairs
         Object.entries(map).forEach(([key, value]) => {
             // Comparar con las KEYS seleccionadas
@@ -1247,27 +1248,27 @@ $idAux = $this->request->data['Observacion']['familia_id'];
             // Mostrar KEY en texto, guardar KEY en value
             html += `<option value="${key}" ${sel}>${key}</option>`;
         });
-        
+
         console.log('HTML generado:', html.substring(0, 200));
         return html;
     }
 
-// Maneja cambio en indicadores por fila: extrae KEYS y mapea a VALUES
+    // Maneja cambio en indicadores por fila: extrae KEYS y mapea a VALUES
     function handleIndicadoresChange(rowId, selectEl) {
         const map = window.parametrosMap || {};
-        
+
         // Obtener las KEYS seleccionadas (están en option.value)
         const keys = Array.from(selectEl.selectedOptions).map(o => o.value);
-        
+
         // Mapear las KEYS a sus VALUES correspondientes
         const valores = keys.map(k => map[k]);
-        
+
         console.log('handleIndicadoresChange - map:', map);
         console.log('handleIndicadoresChange - keys seleccionadas:', keys);
         console.log('handleIndicadoresChange - values mapeados:', valores);
 
         // Guardar keys en objetivoCortoPlazo y values en resultadosEsperados
-         updateRow(rowId, 'objetivoCortoPlazo', keys);
+        updateRow(rowId, 'objetivoCortoPlazo', keys);
         updateRow(rowId, 'resultadosEsperados', valores);
         render();
     }
