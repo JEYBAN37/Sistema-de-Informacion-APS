@@ -7,13 +7,13 @@ echo $this->Form->hidden('id');
 echo $this->Form->hidden('familia_id');
 
 $TipoDeDocumentoOptions = array(
-	'CC' => 'Cedula de ciudadania',
-	'TI' => 'Tarjeta de identidad',
-	'PPT' => 'Permiso Protección Temporal',
-	'RC' => 'Registro civil',
-	'MS' => 'Menor sin identificación',
-	'AS' => 'Adulto sin identificación',
-	'CE' => 'Cédula de extranjería',
+    'CC' => 'Cedula de ciudadania',
+    'TI' => 'Tarjeta de identidad',
+    'PPT' => 'Permiso Protección Temporal',
+    'RC' => 'Registro civil',
+    'MS' => 'Menor sin identificación',
+    'AS' => 'Adulto sin identificación',
+    'CE' => 'Cédula de extranjería',
 
 );
 
@@ -26,10 +26,10 @@ $generoOption = [
 ];
 
 $optionAnsiedad = [
-	'0' => 'para nada',
-	'1' => 'Algunos días',
-	'2' => 'Mas de la mitad de los días',
-	'3' => 'Casi todos los días',
+    '0' => 'para nada',
+    '1' => 'Algunos días',
+    '2' => 'Mas de la mitad de los días',
+    '3' => 'Casi todos los días',
 ];
 
 $aseguradoraOption = [
@@ -2816,74 +2816,74 @@ echo $this->Form->input('fechaRegistro', [
             </div>
 
             <!-- riegodepresion -->
-			<div class="flex flex-col md:flex-row justify-center md:justify-between col-span-1 md:col-span-2 text-md font-semibold my-6 mr-4" id="campo-psicosocial" style="display: none;">
-				<div class="flex items-center mb-4">
-					<span class="mr-2 px-2 rounded-lg bg-blue-200 text-md font-semibold">?</span>
-					<label for="riesgodepresion" class="font-semibold">¿Durante los últimos 30 dias ha sentido a menudo desanimado, deprimido o sin esperanza?</label>
-				</div>
+            <div class="flex flex-col md:flex-row justify-center md:justify-between col-span-1 md:col-span-2 text-md font-semibold my-6 mr-4" id="campo-psicosocial" style="display: none;">
+                <div class="flex items-center mb-4">
+                    <span class="mr-2 px-2 rounded-lg bg-blue-200 text-md font-semibold">?</span>
+                    <label for="riesgodepresion" class="font-semibold">¿Durante los últimos 30 dias ha sentido a menudo desanimado, deprimido o sin esperanza?</label>
+                </div>
 
                 <?php $selectedRiesgoDepresion = $this->Form->value('riesgodepresion'); ?>
-				<div class="flex space-x-4 items-center justify-center md:justify-start mt-4 pr-0 md:pr-[10%]  md:mt-0 ">
-					<!-- Botón NO -->
-					<div>
-						<input type="radio"
-							name="data[Juventudadulto][riesgodepresion]"
-							id="riesgodepresion-no"
-							value="No"
-							class="hidden peer"
+                <div class="flex space-x-4 items-center justify-center md:justify-start mt-4 pr-0 md:pr-[10%]  md:mt-0 ">
+                    <!-- Botón NO -->
+                    <div>
+                        <input type="radio"
+                            name="data[Juventudadulto][riesgodepresion]"
+                            id="riesgodepresion-no"
+                            value="No"
+                            class="hidden peer"
                             <?php echo $selectedRiesgoDepresion === 'No' ? 'checked' : ''; ?>
-							data-target="riesgodepresion"
-							data-show="false"
-							checked /> <!-- 👈 Por defecto NO -->
-						<label for="riesgodepresion-no"
-							class="px-12 py-2 rounded-lg border cursor-pointer hover:text-white hover:bg-teal-600
+                            data-target="riesgodepresion"
+                            data-show="false"
+                            checked /> <!-- 👈 Por defecto NO -->
+                        <label for="riesgodepresion-no"
+                            class="px-12 py-2 rounded-lg border cursor-pointer hover:text-white hover:bg-teal-600
                        peer-checked:bg-teal-600 peer-checked:text-white">
-							NO
-						</label>
-					</div>
+                            NO
+                        </label>
+                    </div>
 
-					<!-- Botón SÍ -->
-					<div>
-						<input type="radio"
-							name="data[Juventudadulto][riesgodepresion]"
-							id="riesgodepresion-si"
-							value="Si"
-							data-target="riesgodepresion"
-							data-show="true"
+                    <!-- Botón SÍ -->
+                    <div>
+                        <input type="radio"
+                            name="data[Juventudadulto][riesgodepresion]"
+                            id="riesgodepresion-si"
+                            value="Si"
+                            data-target="riesgodepresion"
+                            data-show="true"
                             <?php echo $selectedRiesgoDepresion === 'Si' ? 'checked' : ''; ?>
-							class="hidden peer cursor-pointer" />
-						<label for="riesgodepresion-si"
-							class="px-12 py-2 rounded-lg border hover:bg-teal-600 cursor-pointer hover:text-white
+                            class="hidden peer cursor-pointer" />
+                        <label for="riesgodepresion-si"
+                            class="px-12 py-2 rounded-lg border hover:bg-teal-600 cursor-pointer hover:text-white
                        peer-checked:bg-teal-600 peer-checked:text-white">
-							SI
-						</label>
-					</div>
-				</div>
-			</div>
+                            SI
+                        </label>
+                    </div>
+                </div>
+            </div>
 
-			<!-- riegodansiedad-->
-			<div class="col-span-2 md:col-span-1 text-md font-semibold my-6 mr-4" id="campo-ansiedad" style="display: none;">
-				<div class="flex items-center mb-4">
-					<span class="mr-2 px-2 rounded-lg bg-blue-200 text-md font-semibold">?</span>
-					<label for="riegodansiedad" class="font-semibold">¿Que tan seguido se ha molestado por los siguientes problemas? (Sentirse nervioso(a), ansionso(a), o inquieto)</label>
-					<p class="text-red-600">*</p>
-				</div>
-				<?php
-				echo $this->Form->input('riegodansiedad', [
-					'type' => 'select',
-					'id' => 'riegodansiedad',
-					'class' => 'border border-gray-300 rounded-lg w-full p-2 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 text-sm text-gray-500 focus:text-gray-800',
-					'error' => false,
-					'options' => $optionAnsiedad,
-					'label' => '',
-					'empty' => 'Selecciona una opción',
+            <!-- riegodansiedad-->
+            <div class="col-span-2 md:col-span-1 text-md font-semibold my-6 mr-4" id="campo-ansiedad" style="display: none;">
+                <div class="flex items-center mb-4">
+                    <span class="mr-2 px-2 rounded-lg bg-blue-200 text-md font-semibold">?</span>
+                    <label for="riegodansiedad" class="font-semibold">¿Que tan seguido se ha molestado por los siguientes problemas? (Sentirse nervioso(a), ansionso(a), o inquieto)</label>
+                    <p class="text-red-600">*</p>
+                </div>
+                <?php
+                echo $this->Form->input('riegodansiedad', [
+                    'type' => 'select',
+                    'id' => 'riegodansiedad',
+                    'class' => 'border border-gray-300 rounded-lg w-full p-2 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 text-sm text-gray-500 focus:text-gray-800',
+                    'error' => false,
+                    'options' => $optionAnsiedad,
+                    'label' => '',
+                    'empty' => 'Selecciona una opción',
 
-				]);
-				if (!empty($this->Form->error('riegodansiedad'))) {
-					echo '<div class="text-red-600 text-md mt-1 font-semibold">' . $this->Form->error('riegodansiedad') . '</div>';
-				}
-				?>
-			</div>
+                ]);
+                if (!empty($this->Form->error('riegodansiedad'))) {
+                    echo '<div class="text-red-600 text-md mt-1 font-semibold">' . $this->Form->error('riegodansiedad') . '</div>';
+                }
+                ?>
+            </div>
 
 
         </div>
@@ -2905,6 +2905,53 @@ echo $this->Form->input('fechaRegistro', [
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2">
+
+            <!-- Defuncia -->
+            <div class="flex flex-col md:flex-row justify-center md:justify-between col-span-1 md:col-span-2 text-md font-semibold my-6 mr-4">
+                <div class="flex items-center mb-4">
+                    <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">?</span>
+                    <label for="sexo" class="font-semibold">Defuncion</label>
+                </div>
+
+                <?php $selected = $this->Form->value('sexo'); ?>
+                <div class="flex space-x-4 items-center justify-center md:justify-start mt-4 pr-0 md:pr-[10%]  md:mt-0 ">
+                    <!-- Botón NO -->
+                    <div>
+                        <input type="radio"
+                            name="data[Juventudadulto][defuncion]"
+                            id="defuncion-no"
+                            value="Si"
+                            <?php if ($selected === 'No') echo 'checked'; ?>
+                            data-target="defuncion"
+                            class="hidden peer"
+                            data-target="defuncion"
+                            data-show="false"
+                            checked /> <!-- 👈 Por defecto NO -->
+                        <label for="defuncion-no"
+                            class="px-12 py-2 rounded-lg border cursor-pointer hover:text-white hover:bg-teal-600
+                       peer-checked:bg-teal-600 peer-checked:text-white">
+                            Si
+                        </label>
+                    </div>
+
+                    <!-- Botón SÍ -->
+                    <div>
+                        <input type="radio"
+                            name="data[Juventudadulto][defuncion]"
+                            id="defuncion-si"
+                            value="No"
+                            data-target="defuncion"
+                            <?php if ($selected === 'Si') echo 'checked'; ?>
+                            data-show="true"
+                            class="hidden peer cursor-pointer" />
+                        <label for="defuncion-si"
+                            class="px-12 py-2 rounded-lg border hover:bg-teal-600 cursor-pointer hover:text-white
+                       peer-checked:bg-teal-600 peer-checked:text-white">
+                            No
+                        </label>
+                    </div>
+                </div>
+            </div>
 
             <!-- canalización  -->
             <div class="col-span-2 md:col-span-1 text-md font-semibold my-6 mr-4">
@@ -3170,7 +3217,7 @@ echo $this->Form->input('fechaRegistro', [
         var fechaInput = document.getElementById('fecha');
         if (fechaInput && fechaInput.value) {
             nacimiento = new Date(fechaInput.value);
-                }
+        }
         // Ejecutar evaluarCampos al cargar el formulario
         evaluarCampos();
 
