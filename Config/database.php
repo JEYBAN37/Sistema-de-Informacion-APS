@@ -71,7 +71,7 @@ class DATABASE_CONFIG {
 		'login' => 'agsolutic_fichafamilarbdresolucionnueva',
 		'password' => 'FichaFamiliar2023*',
 		//'database' => 'bienestarmarzo15pic2018',
-		'database' => 'agsolutic_alpha_2025',
+		'database' => 'agsolutic_test_2026',
 		              
 		'prefix' => '',
 		'encoding' => 'utf8',
