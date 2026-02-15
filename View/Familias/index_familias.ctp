@@ -370,7 +370,7 @@
                     <div class="bg-white rounded-xl shadow-lg p-4 mt-2 w-full max-w-md mx-auto">
                         <h4 class="text-lg font-semibold text-teal-700 mb-2">Detalles de la Familia</h4>
                         <ul class="space-y-2 text-gray-700">
-                            <li><strong>ID:</strong> ${data.id}</li>
+                            <li><strong>ID:</strong> <a href="${URL_view.replace('__ID__', data.id)}" class="text-teal-600 hover:underline">${data.id}</a></li>
                             <li><strong>Apellidos:</strong> ${data.apellidos}</li>
                             <li><strong>Integrantes:</strong> ${data.integrantes}</li>
                             <li><a class="text-teal-600" href="tel:${data.celular}"><strong >Celular:</strong> ${data.celular}</a></li>
@@ -453,6 +453,9 @@
                     },
                     {
                         data: "id",
+                        render: function(data) {
+                            return `<a href="${URL_view.replace('__ID__', data)}" class="text-teal-600 hover:underline">${data}</a>`;
+                        },
                         name: "id"
                     },
                     {
