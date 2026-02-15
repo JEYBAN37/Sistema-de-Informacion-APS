@@ -2920,7 +2920,7 @@ echo $this->Form->input('fechaRegistro', [
                         <input type="radio"
                             name="data[Juventudadulto][defuncion]"
                             id="defuncion-no"
-                            value="Si"
+                            value="No"
                             <?php if ($selected === 'No') echo 'checked'; ?>
                             data-target="defuncion"
                             class="hidden peer"
@@ -2930,7 +2930,7 @@ echo $this->Form->input('fechaRegistro', [
                         <label for="defuncion-no"
                             class="px-12 py-2 rounded-lg border cursor-pointer hover:text-white hover:bg-teal-600
                        peer-checked:bg-teal-600 peer-checked:text-white">
-                            Si
+                            No
                         </label>
                     </div>
 
@@ -2947,7 +2947,7 @@ echo $this->Form->input('fechaRegistro', [
                         <label for="defuncion-si"
                             class="px-12 py-2 rounded-lg border hover:bg-teal-600 cursor-pointer hover:text-white
                        peer-checked:bg-teal-600 peer-checked:text-white">
-                            No
+                            Si
                         </label>
                     </div>
                 </div>
