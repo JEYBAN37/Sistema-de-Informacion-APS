@@ -148,7 +148,64 @@ $nombreUsuario = isset($_SESSION['Auth']['User']['id_responsable']) ? $_SESSION[
 $idAux = $this->request->data['Observacion']['familia_id'];
 ?>
 
+<?php echo $this->Form->hidden('id'); ?>
+<?php echo $this->Form->hidden('familia_id'); ?>
+<?php echo $this->Form->hidden('responsable_id'); ?>
+<?php echo $this->Form->hidden('disentimiento'); ?>
+<?php echo $this->Form->hidden('actividaddesarrollar'); ?>
+
+<?php
+$riesgosalud = [
+    '0.1' => 'Ninguno',
+    '5.1' => 'Menor con Riesgo desnutrición',
+    '5.2' => 'Menor sin esquema de vacunación completo',
+    '3.3' => 'Menor con Signos de peligro EDA o IRA',
+    '2.1' => 'Menor sin valoraciones de PYM',
+    '1' => 'Persona joven/adulto sin valoraciones de PYM',
+    '5.4' => 'Gestante sin control',
+    '4.5' => 'Embarazo de alto riesgo',
+    '1.01' => 'Persona con enfermedad crónica con control',
+    '5.6' => 'Persona con enfermedad crónica sin control',
+    '4.1' => 'Persona Sintomatico respiratorio o de piel',
+    '3' => 'Persona con enferemedad sin manejo',
+    '3.4' => 'Persona con afectación de salud mental',
+
+];
+
+
+$riesgovulnerabilidad = [
+    '0.1' => 'Ninguna',
+    '2.0' => 'Persona con discapacidad sin cuidador',
+    '2.1' => 'Menor sin estudiar',
+    '1.3' => 'Población Especial en riesgo',
+    '2.4' => 'Persona sin afiliación a salud',
+    '1.2' => 'Persona con consumo SPA',
+    '2.01' => 'Sospecha de violencia intrafamiliar',
+    '1.02' => 'Vivienda precaria',
+    '1.03' => 'Cuidador con sobrecarga',
+    '1.04' => 'Disfunción famliliar',
+    '1.05' => 'Relaciones familiares tensas o estresantes'
+];
+
+
+$fortalezas = [
+    'Vivienda adecuada y segura' => 'Vivienda adecuada y segura',
+    'Acceso a servicios básicos (agua,alcantarillado, luz, gas)' => 'Acceso a servicios básicos (agua, luz, gas)',
+    'Buena salud física y mental de los miembros' => 'Buena salud física y mental de los miembros',
+    'Relaciones familiares afectuosas y respetuosas' => 'Relaciones familiares afectuosas y respetuosas',
+    'Apoyo emocional entre los miembros' => 'Apoyo emocional entre los miembros',
+    'Participación activa en la comunidad' => 'Participación activa en la comunidad',
+    'Estabilidad económica' => 'Estabilidad económica',
+    'Acceso a educación y formación' => 'Acceso a educación y formación',
+    'Habilidades de resolución de conflictos' => 'Habilidades de resolución de conflictos',
+    'Red de apoyo social sólida' => 'Red de apoyo social sólida',
+    'Prácticas saludables de alimentación y ejercicio' => 'Prácticas saludables de alimentación y ejercicio',
+    'Entorno familiar seguro y libre de violencia' => 'Entorno familiar seguro y libre de violencia',
+];
+?>
+
 <div class="max-w-6xl mx-auto p-18">
+
     <div class="bg-white shadow-2xl rounded-xl  p-6  md:p-12">
 
         <!-- Header -->
@@ -157,254 +214,142 @@ $idAux = $this->request->data['Observacion']['familia_id'];
 
             <div class="ml-4">
                 <h1 class="text-xl font-semibold">Análisis del riesgo familiar</h1>
-                <p class="text-gray-500">Complementa la información segun la necesidad.</p>
+                <p class="text-gray-500">Este es el resumen de la ficha familiar completado en la observacion si hay campos vacios debes actualizar <a href="<?php
+                                                                                                                                                                echo $this->Html->url(['action' => 'edit', $this->request->data['Observacion']['id']]);
+                                                                                                                                                                ?>" class="text-teal-600 hover:underline font-semibold">click aqui</a> </p>
             </div>
 
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2">
+        <!-- Contenido a imprimir -->
+        <div class="overflow-x-auto">
+            <table class="w-full border border-gray-300 text-sm text-gray-800">
+                <tbody>
+                    <!-- Encabezado con logo y datos -->
+                    <tr>
+                        <td colspan="9" class="border border-gray-300 font-semibold text-center p-2">
+                            RESUMEN DE FICHA FAMILIAR
+                        </td>
+                    </tr>
+                    <tr class="bg-gray-100">
+                        <td colspan="1" class="border border-gray-300 font-semibold p-2 text-center">Resultado Ecomapa</td>
+                        <td colspan="3" class="border border-gray-300 p-2"><?php echo h($this->request->data['Observacion']['resultadoEcomapa']); ?></td>
+                        <td colspan="1" class="border border-gray-300 font-semibold p-2 text-center">Resultado Familiograma</td>
+                        <td colspan="4" class="border border-gray-300 p-2">
+                            <?php
+                            $canalizacionRaw = $this->request->data['Observacion']['resultadoFamiliograma'];
 
+                            if ($canalizacionRaw) {
+                                if (!empty($canalizacionRaw)) {
+                                    echo '<ul class="list-disc list-inside space-y-1">';
+                                    foreach ($canalizacionRaw as $parte) {
+                                        $label = isset($riesgosalud[$parte]) ? $riesgosalud[$parte] : $parte;
+                                        echo '<li>' . h($label) . '</li>';
+                                    }
+                                    echo '</ul>';
+                                } else {
+                                    $label = isset($riesgosalud[$canalizacionRaw]) ? $riesgosalud[$canalizacionRaw] : $canalizacionRaw;
+                                    echo h($label);
+                                }
+                            } else {
+                                echo h('Campo vacío');
+                            }
+                            ?>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="1" class="border border-gray-300 font-semibold p-2 text-center">Se identificó riesgos en salud</td>
+                        <td colspan="3" class="border border-gray-300 p-2">
+                            <?php
+                            $canalizacionRaw = $this->request->data['Observacion']['menoresriegosalud'];
 
-            <?php echo $this->Form->hidden('id'); ?>
-            <?php echo $this->Form->hidden('familia_id'); ?>
-            <?php echo $this->Form->hidden('responsable_id'); ?>
-            <?php echo $this->Form->hidden('disentimiento'); ?>
-            <?php echo $this->Form->hidden('actividaddesarrollar'); ?>
+                            if ($canalizacionRaw) {
+                                if (!empty($canalizacionRaw)) {
+                                    echo '<ul class="list-disc list-inside space-y-1">';
+                                    foreach ($canalizacionRaw as $parte) {
+                                        $label = isset($riesgosalud[$parte]) ? $riesgosalud[$parte] : $parte;
+                                        echo '<li>' . h($label) . '</li>';
+                                    }
+                                    echo '</ul>';
+                                } else {
+                                    echo h('Campo vacío');
+                                }
+                            } else {
+                                echo h('Campo vacío');
+                            }
+                            ?>
 
+                        </td>
+                        <td colspan="1" class="border border-gray-300 font-semibold p-2 text-center">Se identificó algún riesgo de vulnerabilidad</td>
+                        <td colspan="4" class="border border-gray-300 p-2">
+                            <?php
+                            $canalizacionRaw = $this->request->data['Observacion']['riesgovulnerabilidad'];
 
-            <!-- Resultados de ficha familiar-->
-            <div class="col-span-2 md:col-span-1 text-md font-semibold my-6 mr-4">
-                <div class="flex items-center mb-4">
-                    <span class="mr-2 px-2 rounded-lg bg-gray-200 text-md font-semibold">1</span>
-                    <label for="resultadoEcomapa" class="font-semibold">Resultado Ecomapa</label>
-                </div>
+                            if ($canalizacionRaw) {
+                                if (!empty($canalizacionRaw)) {
+                                    echo '<ul class="list-disc list-inside space-y-1">';
+                                    foreach ($canalizacionRaw as $parte) {
+                                        $label = isset($riesgovulnerabilidad[$parte]) ? $riesgovulnerabilidad[$parte] : $parte;
+                                        echo '<li>' . h($label) . '</li>';
+                                    }
+                                    echo '</ul>';
+                                } else {
+                                    echo h('Campo vacío');
+                                }
+                            } else {
+                                echo h('Campo vacío');
+                            }
+                            ?>
+                        </td>
+                    </tr>
+                    <tr class="bg-gray-100">
+                        <td colspan="1" class="border border-gray-300 font-semibold p-2 text-center">Valoración de riesgo familia</td>
+                        <td colspan="3" class="border border-gray-300 p-2">
+                            <?php
+                            $puntuacionFamilia = isset($this->request->data['Observacion']['puntuacionfamilia'])
+                                ? $this->request->data['Observacion']['puntuacionfamilia']
+                                : '';
+                            echo h($puntuacionFamilia !== '' ? $puntuacionFamilia : 'Campo vacío');
+                            ?>
+                        </td>
+                        <td colspan="1" class="border border-gray-300 font-semibold p-2 text-center">Clasificación de la familia</td>
+                        <td colspan="4" class="border border-gray-300 p-2">
+                            <?php
+                            $puntuacionFamilia = isset($this->request->data['Observacion']['valoracionfamilia'])
+                                ? $this->request->data['Observacion']['valoracionfamilia']
+                                : '';
+                            echo h($puntuacionFamilia !== '' ? $puntuacionFamilia : 'Campo vacío');
+                            ?>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="1" class="border border-gray-300 font-semibold p-2 text-center">Fortalezas de la familia</td>
+                        <td colspan="8" class="border border-gray-300 p-2">
+                            <?php
+                            $canalizacionRaw = $this->request->data['Observacion']['fortalezas'];
 
-                <?php
-                echo $this->Form->input('resultadoEcomapa', [
-                    'label' => false,
-                    'type' => 'text',
-                    'id' => 'resultadoEcomapa',
-                    'class' => 'border border-gray-300 rounded-lg w-full p-2 focus:outline-none text-sm text-gray-700',
-                    'readonly' => 'readonly'
-                ]);
-                ?>
-
-            </div>
-
-            <!-- Resultado famliograma -->
-            <div class="col-span-2 md:col-span-1 text-md font-semibold my-6 mr-4">
-                <div class="flex items-center mb-4">
-                    <span class="mr-2 px-2 rounded-lg bg-gray-200 text-md font-semibold">2</span>
-                    <label for="familiograma" class="font-semibold">Resultado Familiograma</label>
-                </div>
-
-                <?php
-                echo $this->Form->input('resultadoFamiliograma', [
-                    'label' => false,
-                    'type' => 'text',
-                    'id' => 'resultadoFamiliograma',
-                    'class' => 'border border-gray-300 rounded-lg w-full p-2 focus:outline-none text-sm text-gray-700',
-                    'readonly' => 'readonly',
-                ]);
-                ?>
-            </div>
-
-            <div class="col-span-2 md:col-span-1 text-md font-semibold my-6 mr-4">
-                <div class="flex items-center mb-4">
-                    <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">3</span>
-                    <label for="actividad" class="font-semibold">Fecha de registro de plan cuidado</label>
-                </div>
-                <?php echo $this->Form->input('date', array(
-                    'label' => false,
-                    'type' => 'text',
-                    'id' => 'fechaRegistro',
-                    'style' => 'height:40px; font-size:16px; width:100%; border:1px solid #d1d5db; border-radius:0.375rem; padding:0.5rem; color:#374151; background-color:#ffffff;',
-                    'class' => 'focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500',
-                    'empty' => false, // Establecer el campo como vacío
-                ));
-
-                if (!empty($this->Form->error('date'))) {
-                    echo '<div class="text-red-600 text-md mt-1 font-semibold">' . $this->Form->error('date') . '</div>';
-                }
-
-                ?>
-            </div>
-
-            <div class="col-span-2 md:col-span-1 text-md font-semibold my-6 mr-4">
-
-                <div class="flex items-center mb-4">
-                    <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">4</span>
-                    <label for="riesgosalud" class="font-semibold">Se identificó riesgos en salud</label>
-                    <p class="text-red-600">*</p>
-                </div>
-
-                <?php
-                $riesgosalud = [
-                    '0.1' => 'Ninguno',
-                    '5.1' => 'Menor con Riesgo desnutrición',
-                    '5.2' => 'Menor sin esquema de vacunación completo',
-                    '3.3' => 'Menor con Signos de peligro EDA o IRA',
-                    '2.1' => 'Menor sin valoraciones de PYM',
-                    '1' => 'Persona joven/adulto sin valoraciones de PYM',
-                    '5.4' => 'Gestante sin control',
-                    '4.5' => 'Embarazo de alto riesgo',
-                    '1.01' => 'Persona con enfermedad crónica con control',
-                    '5.6' => 'Persona con enfermedad crónica sin control',
-                    '4.1' => 'Persona Sintomatico respiratorio o de piel',
-                    '3' => 'Persona con enferemedad sin manejo',
-                    '3.4' => 'Persona con afectación de salud mental',
-
-                ];
-
-
-                echo $this->Form->input('menoresriegosalud', [
-                    'type' => 'select',
-                    'label' => false,
-                    'multiple' => 'multiple',
-                    'id' => 'riesgosalud',
-                    'class' => 'w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 text-sm text-gray-700',
-                    'empty' => false,
-                    'options' => $riesgosalud,
-                    'error' => false // No mostrar error aquí
-                ]);
-                if (!empty($this->Form->error('menoresriegosalud'))) {
-                    echo '<div class="text-red-600 text-md mt-1 font-semibold">' . $this->Form->error('menoresriegosalud') . '</div>';
-                }
-                ?>
-            </div>
-
-
-
-            <div class="col-span-2 md:col-span-1 text-md font-semibold my-6 mr-4">
-                <div class="flex items-center mb-4">
-                    <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">5</span>
-                    <label for="riesgovulnerabilidad" class="font-semibold">Se identificó algún riesgo de vulnerabilidad</label>
-                    <p class="text-red-600">*</p>
-                </div>
-
-                <?php
-                $riesgovulnerabilidad = [
-                    '0.1' => 'Ninguna',
-                    '2.0' => 'Persona con discapacidad sin cuidador',
-                    '2.1' => 'Menor sin estudiar',
-                    '1.3' => 'Población Especial en riesgo',
-                    '2.4' => 'Persona sin afiliación a salud',
-                    '1.2' => 'Persona con consumo SPA',
-                    '2.01' => 'Sospecha de violencia intrafamiliar',
-                    '1.02' => 'Vivienda precaria',
-                    '1.03' => 'Cuidador con sobrecarga',
-                    '1.04' => 'Disfunción famliliar',
-                    '1.05' => 'Relaciones familiares tensas o estresantes'
-                ];
-
-                echo $this->Form->input(
-                    'riesgovulnerabilidad',
-                    [
-                        'type' => 'select',
-                        'label' => false,
-                        'multiple' => 'multiple',
-                        'id' => 'riesgovulnerabilidad',
-                        'class' => 'w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 text-sm text-gray-700',
-                        'empty' => false,
-                        'options' => $riesgovulnerabilidad,
-                        'error' => false // No mostrar error aquí
-                    ]
-                );
-                if (!empty($this->Form->error('riesgovulnerabilidad'))) {
-                    echo '<div class="text-red-600 text-md mt-1 font-semibold">' . $this->Form->error('riesgovulnerabilidad') . '</div>';
-                }
-                ?>
-            </div>
-
-
-
-            <div class="col-span-2 md:col-span-1 text-md font-semibold my-6 mr-4">
-                <div class="flex items-center mb-4">
-                    <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">6</span>
-                    <label for="direccion" class="font-semibold">Valoración de riesgo familia</label>
-                </div>
-
-                <?php
-                echo $this->Form->input('puntuacionfamilia', [
-                    'label' => false,
-                    'type' => 'text',
-                    'id' => 'puntuacionfamilia',
-                    'class' => 'border border-gray-300 rounded-lg w-full p-2 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 text-sm text-gray-700',
-                    'readonly' => 'readonly', // Hacer el campo de solo lectura
-                ]);
-
-                if (!empty($this->Form->error('puntuacionfamilia'))) {
-                    echo '<div class="text-red-600 text-md mt-1 font-semibold">' . $this->Form->error('puntuacionfamilia') . '</div>';
-                }
-                ?>
-            </div>
-
-
-
-            <div class="col-span-2 md:col-span-1 text-md font-semibold my-6 mr-4">
-                <div class="flex items-center mb-4">
-                    <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">7</span>
-                    <label for="direccion" class="font-semibold">Clasificación de la familia</label>
-                </div>
-
-                <?php
-                echo $this->Form->input('valoracionfamilia', [
-                    'label' => false,
-                    'type' => 'text',
-                    'id' => 'valoracionfamilia',
-                    'class' => 'border border-gray-300 rounded-lg w-full p-2 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 text-sm text-gray-700',
-
-                ]);
-
-                if (!empty($this->Form->error('valoracionfamilia'))) {
-                    echo '<div class="text-red-600 text-md mt-1 font-semibold">' . $this->Form->error('valoracionfamilia') . '</div>';
-                }
-                ?>
-            </div>
-
-            <div class="col-span-2 md:col-span-1 text-md font-semibold my-6 mr-4">
-                <div class="flex items-center mb-4">
-                    <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">8</span>
-                    <label for="fortalezas" class="font-semibold">Fortalezas de la familia</label>
-                </div>
-
-                <?php
-
-                $fortalezas = [
-                    'Vivienda adecuada y segura' => 'Vivienda adecuada y segura',
-                    'Acceso a servicios básicos (agua,alcantarillado, luz, gas)' => 'Acceso a servicios básicos (agua, luz, gas)',
-                    'Buena salud física y mental de los miembros' => 'Buena salud física y mental de los miembros',
-                    'Relaciones familiares afectuosas y respetuosas' => 'Relaciones familiares afectuosas y respetuosas',
-                    'Apoyo emocional entre los miembros' => 'Apoyo emocional entre los miembros',
-                    'Participación activa en la comunidad' => 'Participación activa en la comunidad',
-                    'Estabilidad económica' => 'Estabilidad económica',
-                    'Acceso a educación y formación' => 'Acceso a educación y formación',
-                    'Habilidades de resolución de conflictos' => 'Habilidades de resolución de conflictos',
-                    'Red de apoyo social sólida' => 'Red de apoyo social sólida',
-                    'Prácticas saludables de alimentación y ejercicio' => 'Prácticas saludables de alimentación y ejercicio',
-                    'Entorno familiar seguro y libre de violencia' => 'Entorno familiar seguro y libre de violencia',
-                ];
-
-                echo $this->Form->input('fortalezas', [
-                    'label' => false,
-                    'type' => 'select',
-                    'multiple' => 'multiple',
-                    'options' => $fortalezas,
-                    'id' => 'fortalezas',
-                    'class' => 'w-full',
-                    'empty' => false,
-                    'error' => false // No mostrar error aquí
-                ]);
-                if (!empty($this->Form->error('fortalezas'))) {
-                    echo '<div class="text-red-600 text-md mt-1 font-semibold">' . $this->Form->error('fortalezas') . '</div>';
-                }
-                ?>
-            </div>
-
+                            if ($canalizacionRaw) {
+                                if (!empty($canalizacionRaw)) {
+                                    echo '<ul class="list-disc list-inside space-y-1">';
+                                    foreach ($canalizacionRaw as $parte) {
+                                        $label = isset($fortalezas[$parte]) ? $fortalezas[$parte] : $parte;
+                                        echo '<li>' . h($label) . '</li>';
+                                    }
+                                    echo '</ul>';
+                                } else {
+                                    echo h('Campo vacío');
+                                }
+                            } else {
+                                echo h('Campo vacío');
+                            }
+                            ?>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
+
     </div>
-
-
 
     <div class="bg-white shadow-2xl rounded-xl p-6 md:p-12 mt-16">
 
@@ -739,6 +684,27 @@ $idAux = $this->request->data['Observacion']['familia_id'];
                 ?>
             </div>
 
+            <div class="col-span-2 text-md font-semibold my-6">
+                <div class="flex items-center mb-4">
+                    <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">4</span>
+                    <label for="actividad" class="font-semibold">Fecha de registro de plan cuidado</label>
+                </div>
+                <?php echo $this->Form->input('date', array(
+                    'label' => false,
+                    'type' => 'text',
+                    'id' => 'fechaRegistro',
+                    'style' => 'height:40px; font-size:16px; width:100%; border:1px solid #d1d5db; border-radius:0.375rem; padding:0.5rem; color:#374151; background-color:#ffffff;',
+                    'class' => 'focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500',
+                    'empty' => false, // Establecer el campo como vacío
+                ));
+
+                if (!empty($this->Form->error('date'))) {
+                    echo '<div class="text-red-600 text-md mt-1 font-semibold">' . $this->Form->error('date') . '</div>';
+                }
+
+                ?>
+            </div>
+
 
             <div class="pt-2 flex gap-4">
                 <!-- Botón -->
@@ -781,19 +747,7 @@ $idAux = $this->request->data['Observacion']['familia_id'];
 
     document.addEventListener("DOMContentLoaded", () => {
 
-        const choices_riesgosalud = new Choices("#riesgosalud", {
-            searchEnabled: true,
-            searchChoices: true,
-            removeItemButton: true, // Permite eliminar seleccionados
-            itemSelectText: '',
-            shouldSort: false,
-            searchPlaceholderValue: "Escriba para filtrar...",
-            maxItemCount: -1, // Sin límite
-            removeItems: true, // Permite quitar seleccionados
-            duplicateItemsAllowed: false,
-            placeholder: true,
-            placeholderValue: "Seleccione riesgos en salud identificados",
-        });
+
 
 
         const choices_ria = new Choices("#ria", {
@@ -824,34 +778,7 @@ $idAux = $this->request->data['Observacion']['familia_id'];
             placeholderValue: "Seleccione los entornos a intervenir",
         });
 
-        const choices_riesgovulnerabilidad = new Choices("#riesgovulnerabilidad", {
-            searchEnabled: true,
-            searchChoices: true,
-            removeItemButton: true, // Permite eliminar seleccionados
-            itemSelectText: '',
-            shouldSort: false,
-            searchPlaceholderValue: "Escriba para filtrar...",
-            maxItemCount: -1, // Sin límite
-            removeItems: true, // Permite quitar seleccionados
-            duplicateItemsAllowed: false,
-            placeholder: true,
-            placeholderValue: "Seleccione riesgos o vulnerabilidad identificados",
-        });
 
-
-        const choices_fortalezas = new Choices("#fortalezas", {
-            searchEnabled: true,
-            searchChoices: true,
-            removeItemButton: true, // Permite eliminar seleccionados
-            itemSelectText: '',
-            shouldSort: false,
-            searchPlaceholderValue: "Escriba para filtrar...",
-            maxItemCount: -1, // Sin límite
-            removeItems: true, // Permite quitar seleccionados
-            duplicateItemsAllowed: false,
-            placeholder: true,
-            placeholderValue: "Seleccione las fortalezas de la familia",
-        });
         const choices_responsables = new Choices("#responsables", {
             searchEnabled: true,
             searchChoices: true,
