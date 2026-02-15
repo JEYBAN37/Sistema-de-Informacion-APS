@@ -174,13 +174,13 @@
 
     <script>
         function deleteFamilia(id) {
-            if (!confirm(`¿Seguro que deseas eliminar la familia #${id}?`)) {
+            if (!confirm(`¿Seguro que deseas eliminar la vivienda recuerda si borras la vivienda todas las familias se perderan para borrar una sola familia entra en la vivienda y borra la familia especifica #${id}?`)) {
                 return;
             }
 
             const form = document.createElement('form');
             form.method = 'POST';
-            form.action = "<?php echo $this->Html->url(['action' => 'delete']); ?>/" + id;
+            form.action = "<?php echo $this->Html->url(['controller' => 'Sociambientals', 'action' => 'delete']); ?>/" + id;
 
             // Token CSRF si lo usas
             <?php if ($this->Session->check('_Token')): ?>
@@ -396,6 +396,7 @@
         });
 
         const URL_view = "<?php echo $this->Html->url(['action' => 'view', '__ID__']); ?>";
+        const URL_view_sociambiental = "<?php echo $this->Html->url(['controller' => 'Sociambientals', 'action' => 'view', '__ID__']); ?>";
         <?php if (!isset($tipoUsuario)) {
             $tipoUsuario = null;
         } ?>
@@ -452,12 +453,12 @@
                     <div class="bg-white rounded-xl shadow-lg p-4 mt-2 w-full max-w-md mx-auto">
                         <h4 class="text-lg font-semibold text-teal-700 mb-2">Detalles de la Familia</h4>
                         <ul class="space-y-2 text-gray-700">
-                            <li><strong>ID:</strong> ${data.id}</li>
+                            <li><strong>ID:</strong> <a href="${URL_view.replace('__ID__', data.id)}">${data.id}</a></li>
                             <li><strong>Apellidos:</strong> ${data.apellidos}</li>
                             <li><strong>Integrantes:</strong> ${data.integrantes}</li>
                             <li><a class="text-teal-600" href="tel:${data.celular}"><strong >Celular:</strong> ${data.celular}</a></li>
                             <li><strong>Microterritorio:</strong> ${data.microterritorio}</li>
-                            <li><strong>ID Vivienda:</strong> ${data.sociambiental_id}</li>
+                            <li><strong>ID Vivienda:</strong><a href="${URL_view_sociambiental.replace('__ID__', data.sociambiental_id)}" class="text-teal-600 hover:underline">${data.sociambiental_id}</a></li>
                             <li><strong>Fecha:</strong> ${(() => {
                                 const f = data.fecha;
                                 if (!f) return '';
@@ -499,8 +500,8 @@
                         <div class="flex gap-2 mt-4">
                             <a href="${URL_view.replace('__ID__', data.id)}" class="bg-gray-200 hover:bg-blue-600 text-teal-700 px-3 py-1 rounded text-sm">Ver</a>
                             <a href="${URL_edit.replace('__ID__', data.id)}" class="bg-gray-200 hover:bg-amber-600 text-teal-700 px-3 py-1 rounded text-sm">Actualizar</a>
-                            <button onclick="deleteFamilia(${data.id})" class="text-red-600 hover:underline">
-                             Borrar Familia
+                            <button onclick="deleteFamilia(${data.sociambiental_id})" class="text-red-600 hover:underline">
+                             Borrar Ficha Completa
                             </button>
                         </div>
                     </div>
@@ -537,6 +538,9 @@
                     },
                     {
                         data: "id",
+                        render: function(data) {
+                            return `<a href="${URL_view.replace('__ID__', data)}" class="text-teal-600 hover:underline">${data}</a>`;
+                        },
                         name: "id"
                     },
                     {
@@ -561,13 +565,16 @@
                     },
                     {
                         data: "sociambiental_id",
+                            render: function(data) {
+                                return `<a href="${URL_view_sociambiental.replace('__ID__', data)}" class="text-teal-600 hover:underline">${data}</a>`;
+                            },
                         name: "sociambiental_id"
                     },
                     {
                         data: "id",
                         orderable: false,
                         searchable: false,
-                        render: function(data) {
+                        render: function(data, type, row) {
                             const viewUrl = URL_view.replace('__ID__', data);
                             const editUrl = URL_edit.replace('__ID__', data);
                             const deleteUrl = URL_delete.replace('__ID__', data);
@@ -575,8 +582,8 @@
           <div class="relative inline-block text-left">
             <a href="${viewUrl}" class="block px-4 py-2 text-sm hover:bg-gray-100">Ver</a>
             <a href="${editUrl}" class="block px-4 py-2 text-sm hover:bg-gray-100">Actualizar</a>
-            <button onclick="deleteFamilia(${data})" class="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100">
-                Borrar Familia
+            <button onclick="deleteFamilia(${row.sociambiental_id})" class="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100">
+                Borrar Ficha Completa
             </button>
           </div>`;
                         }

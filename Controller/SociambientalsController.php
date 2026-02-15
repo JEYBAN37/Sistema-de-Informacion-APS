@@ -263,7 +263,7 @@ class SociambientalsController extends AppController
 		} else {
 			$this->Session->setFlash('La vivienda no pudo ser eliminada. Por favor, inténtelo de nuevo.', 'flash_custom', array('class' => 'error', 'title' => 'Error al eliminar el registro'));
 		}
-		return $this->redirect(array('action' => 'index'));
+		return $this->redirect(array('controller' => 'Familias', 'action' => 'index'));
 	}
 
 	public function SociambientalResponsablesIndex()
