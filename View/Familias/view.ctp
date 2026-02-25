@@ -1,5 +1,7 @@
 <?php $this->layout = 'default_familia';
 
+
+
 $hasPlan = false;
 $hasObservation = false;
 if (!empty($familia['Observacion']) && is_array($familia['Observacion'])) {
@@ -400,7 +402,7 @@ $planUrl = $this->Html->url(['controller' => 'Observacions', 'action' => 'addane
                                         <td colspan="2" class="border border-gray-300 p-2 font-bold text-sm"><?php if (!empty($observacion['dirfamiliograma'])) {
                                                                                                                     echo $this->Html->link(
                                                                                                                         h($observacion['resultadoFamiliograma']),
-                                                                                                                        '../files/observacion/familiograma/' . $observacion['dirfamiliograma'] . '/' . $observacion['familiograma'],
+                                                                                                                        $linkFamiliograma,
                                                                                                                         ['target' => '_blank', 'class' => 'underline text-blue-700 hover:text-blue-900']
                                                                                                                     );
                                                                                                                 } else {
@@ -416,7 +418,7 @@ $planUrl = $this->Html->url(['controller' => 'Observacions', 'action' => 'addane
                                                                                                                     if (!empty($observacion['dirplancuidado'])) {
                                                                                                                         echo $this->Html->link(
                                                                                                                             ($observacion['plancuidado']),
-                                                                                                                            '../files/observacion/plancuidado/' . $observacion['dirplancuidado'] . '/' . $observacion['plancuidado'],
+                                                                                                                             $link,
                                                                                                                             ['target' => '_blank', 'class' => 'underline text-blue-700 hover:text-blue-900']
                                                                                                                         );
                                                                                                                     } else {
