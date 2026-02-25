@@ -138,11 +138,11 @@ class FamiliasController extends AppController
 					'fields' => array('nombres')
 				),
 				'Observacion' => array(
-					'fields' => array('id', 'observacion', 'valoracionfamilia', 'canalizacionuno', 'resultadoFamiliograma', 'resultadoEcomapa', 'dirplancuidado', 'dirfamiliograma', 'fecha', 'familiograma', 'firmaplancuidado', 'plancuidado')
+					'fields' => array('id', 'observacion', 'valoracionfamilia', 'canalizacionuno', 'resultadoFamiliograma', 'resultadoEcomapa', 'dirplancuidado', 'dirfamiliograma', 'fecha', 'familiograma', 'firmaplancuidado', 'plancuidado', 'date', 'base_anterior')
 				)
 			)
 		));
-
+		
 
 		if (empty($ficha['Observacion'])) {
 			unset($ficha['Observacion']);
@@ -162,8 +162,77 @@ class FamiliasController extends AppController
 			$ficha['Infantil'],
 			$ficha['Adolescencia']
 		);
-
+		
 		$this->set('familia', $ficha);
+		
+		$this->set('link', $this->sendViewPlanCuidado(
+			isset($ficha['Observacion'][0]['dirplancuidado']) ? $ficha['Observacion'][0]['dirplancuidado'] : null,
+			isset($ficha['Observacion'][0]['plancuidado']) ? $ficha['Observacion'][0]['plancuidado'] : null,
+			isset($ficha['Observacion'][0]['base_anterior']) ? $ficha['Observacion'][0]['base_anterior'] : null,
+			isset($ficha['Observacion'][0]['date']) ? $ficha['Observacion'][0]['date'] : null
+		));
+
+		$this->set('linkFamiliograma', $this->sendViewFamiliograma(
+			isset($ficha['Observacion'][0]['dirfamiliograma']) ? $ficha['Observacion'][0]['dirfamiliograma'] : null,
+			isset($ficha['Observacion'][0]['familiograma']) ? $ficha['Observacion'][0]['familiograma'] : null,
+			isset($ficha['Observacion'][0]['base_anterior']) ? $ficha['Observacion'][0]['base_anterior'] : null,
+			isset($ficha['Observacion'][0]['date']) ? $ficha['Observacion'][0]['date'] : null
+		));
+	}
+
+
+	private function sendViewPlanCuidado($dirPlancuidado, $plancuidado, $base_anterior, $date)
+	{
+		if ($date > '2026-01-01') {
+			return '../files/observacion/plancuidado/' . $dirPlancuidado . '/' . $plancuidado;
+		}
+
+		if ($base_anterior == 'CENTRAL') {
+			return 'https://agsolutic.com/aps/fichafamiliar/files/observacion/plancuidado/' . $dirPlancuidado . '/' . $plancuidado;
+		}
+
+		if ($base_anterior == 'NORTE') {
+			return 'https://agsolutic.com/fichafamiliar/files/observacion/plancuidado/' . $dirPlancuidado . '/' . $plancuidado;
+		}
+
+		if ($base_anterior == 'OCCIDENTE') {
+			return 'https://agsolutic.com/aps/nodooccidente/files/observacion/plancuidado/' . $dirPlancuidado . '/' . $plancuidado;
+		}
+
+		if ($base_anterior == 'ORIENTE') {
+			return 'https://agsolutic.com/aps/nodooriente/files/observacion/plancuidado/' . $dirPlancuidado . '/' . $plancuidado;
+		}
+
+		if ($base_anterior == 'SUR') {
+			return 'https://agsolutic.com/aps/nodosur/files/observacion/plancuidado/' . $dirPlancuidado . '/' . $plancuidado;
+		}
+	}
+
+	private function sendViewFamiliograma($dirFamiliograma, $familiograma, $base_anterior, $date)
+	{
+		if ($date > '2026-01-01') {
+			return '../files/observacion/familiograma/' . $dirFamiliograma . '/' . $familiograma;
+		}
+
+		if ($base_anterior == 'CENTRAL') {
+			return 'https://agsolutic.com/aps/fichafamiliar/files/observacion/familiograma/' . $dirFamiliograma . '/' . $familiograma;
+		}
+
+		if ($base_anterior == 'NORTE') {
+			return 'https://agsolutic.com/fichafamiliar/files/observacion/familiograma/' . $dirFamiliograma . '/' . $familiograma;
+		}
+
+		if ($base_anterior == 'OCCIDENTE') {
+			return 'https://agsolutic.com/aps/nodooccidente/files/observacion/familiograma/' . $dirFamiliograma . '/' . $familiograma;
+		}
+
+		if ($base_anterior == 'ORIENTE') {
+			return 'https://agsolutic.com/aps/nodooriente/files/observacion/familiograma/' . $dirFamiliograma . '/' . $familiograma;
+		}
+
+		if ($base_anterior == 'SUR') {
+			return 'https://agsolutic.com/aps/nodosur/files/observacion/familiograma/' . $dirFamiliograma . '/' . $familiograma;
+		}
 	}
 
 	public function plancuidado($id = null)
@@ -241,7 +310,7 @@ class FamiliasController extends AppController
 						'responsables',
 						'actividaddesarrollar',
 						'disentimiento',
-						'objetivocortoplazoresultados'
+						'objetivocortoplazoresultados',
 					)
 				)
 			)

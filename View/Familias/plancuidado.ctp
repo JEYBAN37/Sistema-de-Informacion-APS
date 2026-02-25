@@ -306,6 +306,112 @@
                 </tbody>
             </table>
 
+            <table class="w-full border border-gray-300 text-sm text-gray-800">
+                <tbody>
+                    <!-- Encabezado con logo y datos -->
+                    <tr>
+                        <td colspan="9" class="border border-gray-300 font-semibold text-center p-2">
+                            RESUMEN DE FICHA FAMILIAR
+                        </td>
+                    </tr>
+                    <tr class="bg-gray-100">
+                        <td colspan="1" class="border border-gray-300 font-semibold p-2 text-center">Resultado Ecomapa</td>
+                        <td colspan="3" class="border border-gray-300 p-2"><?php echo h($familia['Observacion'][0]['resultadoEcomapa']); ?></td>
+                        <td colspan="1" class="border border-gray-300 font-semibold p-2 text-center">Resultado Familiograma</td>
+                        <td colspan="4" class="border border-gray-300 p-2"><?php echo h($familia['Observacion'][0]['resultadoFamiliograma']); ?>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="1" class="border border-gray-300 font-semibold p-2 text-center">Se identificó riesgos en salud</td>
+                        <td colspan="3" class="border border-gray-300 p-2">
+                            <?php
+                            $canalizacionRaw = $familia['Observacion'][0]['menoresriegosalud'];
+
+                            if ($canalizacionRaw) {
+                                if (!empty($canalizacionRaw)) {
+                                    echo '<ul class="list-disc list-inside space-y-1">';
+                                    foreach ($canalizacionRaw as $parte) {
+                                        $label = isset($riesgosalud[$parte]) ? $riesgosalud[$parte] : $parte;
+                                        echo '<li>' . h($label) . '</li>';
+                                    }
+                                    echo '</ul>';
+                                } else {
+                                    echo h('Campo vacío');
+                                }
+                            } else {
+                                echo h('Campo vacío');
+                            }
+                            ?>
+
+                        </td>
+                        <td colspan="1" class="border border-gray-300 font-semibold p-2 text-center">Se identificó algún riesgo de vulnerabilidad</td>
+                        <td colspan="4" class="border border-gray-300 p-2">
+                            <?php
+                            $canalizacionRaw = $familia['Observacion'][0]['riesgovulnerabilidad'];
+
+                            if ($canalizacionRaw) {
+                                if (!empty($canalizacionRaw)) {
+                                    echo '<ul class="list-disc list-inside space-y-1">';
+                                    foreach ($canalizacionRaw as $parte) {
+                                        $label = isset($riesgovulnerabilidad[$parte]) ? $riesgovulnerabilidad[$parte] : $parte;
+                                        echo '<li>' . h($label) . '</li>';
+                                    }
+                                    echo '</ul>';
+                                } else {
+                                    echo h('Campo vacío');
+                                }
+                            } else {
+                                echo h('Campo vacío');
+                            }
+                            ?>
+                        </td>
+                    </tr>
+                    <tr class="bg-gray-100">
+                        <td colspan="1" class="border border-gray-300 font-semibold p-2 text-center">Valoración de riesgo familia</td>
+                        <td colspan="3" class="border border-gray-300 p-2">
+                            <?php
+                            $puntuacionFamilia = isset($familia['Observacion'][0]['puntuacionfamilia'])
+                                ? $familia['Observacion'][0]['puntuacionfamilia']
+                                : '';
+                            echo h($puntuacionFamilia !== '' ? $puntuacionFamilia : 'Campo vacío');
+                            ?>
+                        </td>
+                        <td colspan="1" class="border border-gray-300 font-semibold p-2 text-center">Clasificación de la familia</td>
+                        <td colspan="4" class="border border-gray-300 p-2">
+                            <?php
+                            $puntuacionFamilia = isset($familia['Observacion'][0]['valoracionfamilia'])
+                                ? $familia['Observacion'][0]['valoracionfamilia']
+                                : '';
+                            echo h($puntuacionFamilia !== '' ? $puntuacionFamilia : 'Campo vacío');
+                            ?>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="1" class="border border-gray-300 font-semibold p-2 text-center">Fortalezas de la familia</td>
+                        <td colspan="8" class="border border-gray-300 p-2">
+                            <?php
+                            $canalizacionRaw = $familia['Observacion'][0]['fortalezas'];
+
+                            if ($canalizacionRaw) {
+                                if (!empty($canalizacionRaw)) {
+                                    echo '<ul class="list-disc list-inside space-y-1">';
+                                    foreach ($canalizacionRaw as $parte) {
+                                        $label = isset($fortalezas[$parte]) ? $fortalezas[$parte] : $parte;
+                                        echo '<li>' . h($label) . '</li>';
+                                    }
+                                    echo '</ul>';
+                                } else {
+                                    echo h('Campo vacío');
+                                }
+                            } else {
+                                echo h('Campo vacío');
+                            }
+                            ?>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
             <table class="w-full border border-gray-300 text-sm text-gray-800 mt-12">
                 <tbody>
                     <tr>
@@ -318,16 +424,16 @@
                         <td colspan="2" class="border border-gray-300 font-semibold p-2 text-center">Objetivo a corto plazo</td>
                         <td colspan="7" class="border border-gray-300 p-2">
                             <?php
-                            echo $this->Html->div('observacionplancuidado-tema', $familia['Observacion'][0]['objetivocortoplazo'], ['escape' => false]); 
+                            echo $this->Html->div('observacionplancuidado-tema', $familia['Observacion'][0]['objetivocortoplazo'], ['escape' => false]);
                             ?>
-                            
+
                         </td>
                     </tr>
                     <tr class="bg-gray-100">
                         <td colspan="2" class="border border-gray-300 font-semibold p-2 text-center">Objetivo a largo plazo</td>
                         <td colspan="7" class="border border-gray-300 p-2">
                             <?php
-                            echo $this->Html->div('observacionplancuidado-tema', $familia['Observacion'][0]['objetivolargoplazo'], ['escape' => false]); 
+                            echo $this->Html->div('observacionplancuidado-tema', $familia['Observacion'][0]['objetivolargoplazo'], ['escape' => false]);
                             ?>
                         </td>
                     </tr>
