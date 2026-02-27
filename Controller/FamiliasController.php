@@ -142,7 +142,7 @@ class FamiliasController extends AppController
 				)
 			)
 		));
-		
+
 
 		if (empty($ficha['Observacion'])) {
 			unset($ficha['Observacion']);
@@ -162,9 +162,9 @@ class FamiliasController extends AppController
 			$ficha['Infantil'],
 			$ficha['Adolescencia']
 		);
-		
+
 		$this->set('familia', $ficha);
-		
+
 		$this->set('link', $this->sendViewPlanCuidado(
 			isset($ficha['Observacion'][0]['dirplancuidado']) ? $ficha['Observacion'][0]['dirplancuidado'] : null,
 			isset($ficha['Observacion'][0]['plancuidado']) ? $ficha['Observacion'][0]['plancuidado'] : null,
@@ -183,9 +183,6 @@ class FamiliasController extends AppController
 
 	private function sendViewPlanCuidado($dirPlancuidado, $plancuidado, $base_anterior, $date)
 	{
-		if ($date > '2026-01-01') {
-			return '../files/observacion/plancuidado/' . $dirPlancuidado . '/' . $plancuidado;
-		}
 
 		if ($base_anterior == 'CENTRAL') {
 			return 'https://agsolutic.com/aps/fichafamiliar/files/observacion/plancuidado/' . $dirPlancuidado . '/' . $plancuidado;
@@ -205,6 +202,10 @@ class FamiliasController extends AppController
 
 		if ($base_anterior == 'SUR') {
 			return 'https://agsolutic.com/aps/nodosur/files/observacion/plancuidado/' . $dirPlancuidado . '/' . $plancuidado;
+		}
+
+		if ($date > '2026-01-01') {
+			return '../files/observacion/plancuidado/' . $dirPlancuidado . '/' . $plancuidado;
 		}
 	}
 
