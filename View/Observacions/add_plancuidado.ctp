@@ -656,9 +656,6 @@ $fortalezas = [
             </div>
 
 
-            <?php echo $this->Form->hidden('date'); ?>
-
-
             <div class="col-span-2 text-md font-semibold my-6">
                 <div class="flex items-center mb-4">
                     <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">3</span>
