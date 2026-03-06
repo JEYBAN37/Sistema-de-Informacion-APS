@@ -176,7 +176,7 @@ class FamiliasController extends AppController
 			isset($ficha['Observacion'][0]['dirfamiliograma']) ? $ficha['Observacion'][0]['dirfamiliograma'] : null,
 			isset($ficha['Observacion'][0]['familiograma']) ? $ficha['Observacion'][0]['familiograma'] : null,
 			isset($ficha['Observacion'][0]['base_anterior']) ? $ficha['Observacion'][0]['base_anterior'] : null,
-			isset($ficha['Observacion'][0]['date']) ? $ficha['Observacion'][0]['date'] : null
+			isset($ficha['Observacion'][0]['fecha']) ? $ficha['Observacion'][0]['fecha'] : null
 		));
 	}
 
