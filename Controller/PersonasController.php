@@ -1,74 +1,146 @@
 <?php
 App::uses('AppController', 'Controller');
 /**
- * Juventudadultos Controller
+ * Personas Controller
  *
  * @property Persona $Persona
+ * @property PaginatorComponent $Paginator
  */
-class PersonasController extends AppController
-{
+class PersonasController extends AppController {
 
-    /**
-     * Components
-     *
-     * @var array
-     */
-    public $components = array('Paginator');
+/**
+ * Components
+ *
+ * @var array
+ */
+	public $components = array('Paginator');
 
-    public function beforeFilter()
-    {
-        parent::beforeFilter();
-        // Permitir acceso a métodos JSON sin autenticación
-        $this->Auth->allow('buscarPersona');
-    }
+/**
+ * index method
+ *
+ * @return void
+ */
+	public function index() {
+		$this->Persona->recursive = 0;
+		$this->set('personas', $this->Paginator->paginate());
+	}
 
-    public function buscarPersona()
-    {
-        $this->autoRender = false;
-        $this->response->type('json');
+/**
+ * view method
+ *
+ * @throws NotFoundException
+ * @param string $id
+ * @return void
+ */
+	public function view($id = null) {
+		if (!$this->Persona->exists($id)) {
+			throw new NotFoundException(__('Invalid persona'));
+		}
+		$options = array('conditions' => array('Persona.' . $this->Persona->primaryKey => $id));
+		$this->set('persona', $this->Persona->find('first', $options));
+	}
 
-        $term = trim($this->request->query('q'));
+/**
+ * add method
+ *
+ * @return void
+ */
+	
 
-        if (strlen($term) < 3) {
-            echo json_encode([]);
-            return;
+/**
+ * edit method
+ *
+ * @throws NotFoundException
+ * @param string $id
+ * @return void
+ */
+	public function edit($id = null) {
+		if (!$this->Persona->exists($id)) {
+			throw new NotFoundException(__('Invalid persona'));
+		}
+		if ($this->request->is(array('post', 'put'))) {
+			if ($this->Persona->save($this->request->data)) {
+				$this->Session->setFlash(__('The persona has been saved.'));
+				return $this->redirect(array('action' => 'index'));
+			} else {
+				$this->Session->setFlash(__('The persona could not be saved. Please, try again.'));
+			}
+		} else {
+			$options = array('conditions' => array('Persona.' . $this->Persona->primaryKey => $id));
+			$this->request->data = $this->Persona->find('first', $options);
+		}
+	}
+
+/**
+ * delete method
+ *
+ * @throws NotFoundException
+ * @param string $id
+ * @return void
+ */
+	public function delete($id = null) {
+		$this->Persona->id = $id;
+		if (!$this->Persona->exists()) {
+			throw new NotFoundException(__('Invalid persona'));
+		}
+		$this->request->allowMethod('post', 'delete');
+		if ($this->Persona->delete()) {
+			$this->Session->setFlash(__('The persona has been deleted.'));
+		} else {
+			$this->Session->setFlash(__('The persona could not be deleted. Please, try again.'));
+		}
+		return $this->redirect(array('action' => 'index'));
+	}
+
+
+	public function add() {
+    if ($this->request->is('post') || $this->request->is('put')) {
+        // 1. Intentar buscar si el número de documento ya existe
+        $numerodoc = $this->request->data['Persona']['numerodoc'];
+        $personaExistente = $this->Persona->find('first', array(
+            'conditions' => array('Persona.numerodoc' => $numerodoc),
+            'recursive' => -1
+        ));
+
+        if ($personaExistente) {
+            // El usuario existe: Asignamos el ID para que CakePHP haga un UPDATE en lugar de INSERT
+            $this->Persona->id = $personaExistente['Persona']['id'];
+            $this->Session->setFlash(__('Usuario encontrado. Actualizando información existente.'), 'default', array('class' => 'success'));
+        } else {
+            // El usuario no existe: Preparamos para un nuevo registro
+            $this->Persona->create();
+            $this->Session->setFlash(__('Usuario no está en la tabla personas, por favor ingresar la información manualmente.'), 'default', array('class' => 'info'));
         }
 
-        $this->loadModel('Persona');
-
-        $rows = $this->Persona->find('all', [
-            'conditions' => [
-                'OR' => [
-                    'Persona.numerodoc LIKE' => '%' . $term . '%',
-                ]
-            ],
-            'fields' => [
-                'Persona.numerodoc',
-                'Persona.primernombre',
-                'Persona.primerapellido',
-                'Persona.familia_id',
-                'Persona.sociambiental_id'
-            ],
-            'limit' => 1,
-            'recursive' => -1,
-            'order' => [
-                'Persona.numerodoc' => 'ASC'
-            ]
-        ]);
-
-        $result = [];
-
-        foreach ($rows as $row) {
-            $p = $row['Persona'];
-
-            $result[] = [
-                'cedula' => $p['numerodoc'],
-                'nombre' => $p['primernombre'] . ' ' . $p['primerapellido'],
-                'familia_id' => $p['familia_id'],
-                'sociambiental_id' => $p['sociambiental_id']
-            ];
+        // 2. Guardar los datos (ya sea nuevo o actualización)
+        if ($this->Persona->save($this->request->data)) {
+            $this->Session->setFlash(__('La información ha sido guardada correctamente.'));
+            return $this->redirect(array('action' => 'index'));
+        } else {
+            $this->Session->setFlash(__('No se pudo guardar la información. Por favor, intente de nuevo.'));
         }
-
-        echo json_encode($result);
     }
+	// ESTO ES LO QUE TRAE LA INFORMACIÓN DE LA TABLA CANALIZACIONES
+    // 'list' genera un arreglo tipo [id => nombre] automático para el select
+    $canalizaciones = $this->Persona->Canalizacion->find('list', array(
+        'fields' => array('Canalizacion.id', 'Canalizacion.enlace'),
+        'order' => 'Canalizacion.tipo ASC'
+    ));
+	$this->set(compact('canalizaciones'));
+}
+
+// Acción AJAX o búsqueda rápida para cargar datos en los inputs sin recargar toda la página
+public function buscarPorDoc($doc = null) {
+    $this->autoRender = false;
+    $persona = $this->Persona->find('first', array(
+        'conditions' => array('Persona.numerodoc' => $doc),
+        'recursive' => -1
+    ));
+    
+    if ($persona) {
+        return json_encode(array('success' => true, 'data' => $persona['Persona']));
+    } else {
+        return json_encode(array('success' => false));
+    }
+}
 }

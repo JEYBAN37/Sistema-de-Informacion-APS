@@ -1,26 +1,144 @@
 <?php
 App::uses('AppModel', 'Model');
 /**
- * Reporte Model
+ * Persona Model
  *
+ * @property Sociambiental $Sociambiental
  * @property Familia $Familia
- * @property Primerainfancia $Primerainfancia
- * @property Infantil $Infantil
+ * @property Responsable $Responsable
  * @property Adolescencia $Adolescencia
+ * @property Gestante $Gestante
+ * @property Infantil $Infantil
+ * @property Primerainfancia $Primerainfancia
  */
 class Persona extends AppModel {
-    public $useTable = 'personas';
-    
-    public function beforeSave($options = array())
-    {
-        // Convertir arrays a strings separados por comas
-        if (isset($this->data[$this->alias]['canalizacionuno']) && is_array($this->data[$this->alias]['canalizacionuno'])) {
-            $valoresValidos = array_filter($this->data[$this->alias]['canalizacionuno'], function($v) {
-                return !empty($v);
-            });
-            $this->data[$this->alias]['canalizacionuno'] = !empty($valoresValidos) ? implode(',', $valoresValidos) : '';
-        }
-        
-        return true;
-    }
+
+/**
+ * Validation rules
+ *
+ * @var array
+ */
+	public $validate = array(
+		'numerodoc' => array(
+			'notEmpty' => array(
+				'rule' => array('notEmpty'),
+				//'message' => 'Your custom message here',
+				//'allowEmpty' => false,
+				//'required' => false,
+				//'last' => false, // Stop validation after this rule
+				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+			),
+		),
+	);
+
+	//The Associations below have been created with all possible keys, those that are not needed can be removed
+
+/**
+ * belongsTo associations
+ *
+ * @var array
+ */
+	public $belongsTo = array(
+		'Sociambiental' => array(
+			'className' => 'Sociambiental',
+			'foreignKey' => 'sociambiental_id',
+			'conditions' => '',
+			'fields' => '',
+			'order' => ''
+		),
+		'Familia' => array(
+			'className' => 'Familia',
+			'foreignKey' => 'familia_id',
+			'conditions' => '',
+			'fields' => '',
+			'order' => ''
+		),
+		'Responsable' => array(
+			'className' => 'Responsable',
+			'foreignKey' => 'responsable_id',
+			'conditions' => '',
+			'fields' => '',
+			'order' => ''
+		),
+		'Canalizacion' => array(
+			'className' => 'Canalizacion',
+			'foreignKey' => 'canalizacion_id',
+			'conditions' => '',
+			'fields' => '',
+			'order' => ''
+		)
+	);
+
+/**
+ * hasMany associations
+ *
+ * @var array
+ */
+
+
+public function beforeSave($options = array())
+	{
+		
+		if (isset($this->data[$this->alias]['vector']) && is_array($this->data[$this->alias]['vector'])) {
+			$this->data[$this->alias]['vector'] = implode(',', $this->data[$this->alias]['vector']);
+		}	
+
+		return true;
+	}
+
+	public $hasMany = array(
+		'Adolescencia' => array(
+			'className' => 'Adolescencia',
+			'foreignKey' => 'persona_id',
+			'dependent' => false,
+			'conditions' => '',
+			'fields' => '',
+			'order' => '',
+			'limit' => '',
+			'offset' => '',
+			'exclusive' => '',
+			'finderQuery' => '',
+			'counterQuery' => ''
+		),
+		'Gestante' => array(
+			'className' => 'Gestante',
+			'foreignKey' => 'persona_id',
+			'dependent' => false,
+			'conditions' => '',
+			'fields' => '',
+			'order' => '',
+			'limit' => '',
+			'offset' => '',
+			'exclusive' => '',
+			'finderQuery' => '',
+			'counterQuery' => ''
+		),
+		'Infantil' => array(
+			'className' => 'Infantil',
+			'foreignKey' => 'persona_id',
+			'dependent' => false,
+			'conditions' => '',
+			'fields' => '',
+			'order' => '',
+			'limit' => '',
+			'offset' => '',
+			'exclusive' => '',
+			'finderQuery' => '',
+			'counterQuery' => ''
+		),
+		'Primerainfancia' => array(
+			'className' => 'Primerainfancia',
+			'foreignKey' => 'persona_id',
+			'dependent' => false,
+			'conditions' => '',
+			'fields' => '',
+			'order' => '',
+			'limit' => '',
+			'offset' => '',
+			'exclusive' => '',
+			'finderQuery' => '',
+			'counterQuery' => ''
+		)
+	);
+
 }
