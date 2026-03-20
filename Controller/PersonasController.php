@@ -94,15 +94,86 @@ class PersonasController extends AppController {
 
 
 	public function add() {
-    if ($this->request->is('post') || $this->request->is('put')) {
+		$personaExistente = $this->Persona->find('first', array(
+            'conditions' => array('Persona.numerodoc' => '1085273376'),
+			'join'=> array(
+			array(
+				'table' => 'familias',
+				'alias' => 'Familia',
+				'type' => 'INNER',
+				'conditions' => array('Persona.familia_id = Familia.id')
+			),
+			/*array(
+				'table' => 'sociambientals',
+				'alias' => 'Sociambiental',
+				'type' => 'LEFT',
+				'conditions' => array('Familia.sociambiental_id = Sociambiental.id')
+			),*/
+			array(
+				'table' => 'ubicaciones',
+				'alias' => 'Ubicacion',
+				'type' => 'LEFT',
+				'conditions' => array('Sociambiental.ubicacion_id = Ubicacion.id')
+			),
+			array(
+				'table' => 'juventudadultos',
+				'alias' => 'Juventudadulto',
+				'type' => 'LEFT',
+				'conditions' => array('Persona.numerodoc = Juventudadulto.numerodoc')
+			),
+			),
+			
+				
+			));
+
+
+			debug($personaExistente);
+    
+			if ($this->request->is('post') || $this->request->is('put')) {
         // 1. Intentar buscar si el número de documento ya existe
         $numerodoc = $this->request->data['Persona']['numerodoc'];
         $personaExistente = $this->Persona->find('first', array(
             'conditions' => array('Persona.numerodoc' => $numerodoc),
-            'recursive' => -1
+			'recursive' => -1,
+			'join'=> array(
+			/*array(
+				'table' => 'sociambientals',
+				'alias' => 'Sociambiental',
+				'type' => 'LEFT',
+				'conditions' => array('Persona.sociambiental_id = Sociambiental.id')
+			),*/
+			array(
+				'table' => 'ubicaciones',
+				'alias' => 'Ubicacion',
+				'type' => 'LEFT',
+				'conditions' => array('Sociambiental.ubicacion_id = Ubicacion.id')
+			),
+			array(
+				'table' => 'juventudadultos',
+				'alias' => 'Juventudadulto',
+				'type' => 'LEFT',
+				'conditions' => array('Persona.numerodoc = Juventudadulto.numerodoc')
+			),
+			),
+			'fields' => array(
+				'Sociambiental.barrioverda',
+				'Sociambiental.direccion',
+				'Ubicacion.comuna',
+				'Ubicacion.microterritorio',
+				'Juventudadulto.aseguradora',
+				'Juventudadulto.telefono',
+				'Juventudadulto.email',
+				'Juventudadulto.aseguradora',
+				'Juventudadulto.canalizacionuno',
+
+				
+			),
         ));
 
+		
+
         if ($personaExistente) {
+
             // El usuario existe: Asignamos el ID para que CakePHP haga un UPDATE en lugar de INSERT
             $this->Persona->id = $personaExistente['Persona']['id'];
             $this->Session->setFlash(__('Usuario encontrado. Actualizando información existente.'), 'default', array('class' => 'success'));
@@ -114,6 +185,9 @@ class PersonasController extends AppController {
 
         // 2. Guardar los datos (ya sea nuevo o actualización)
         if ($this->Persona->save($this->request->data)) {
+			// llamar al modele juventud aduttosl
+
+
             $this->Session->setFlash(__('La información ha sido guardada correctamente.'));
             return $this->redirect(array('action' => 'index'));
         } else {
@@ -122,11 +196,11 @@ class PersonasController extends AppController {
     }
 	// ESTO ES LO QUE TRAE LA INFORMACIÓN DE LA TABLA CANALIZACIONES
     // 'list' genera un arreglo tipo [id => nombre] automático para el select
-    $canalizaciones = $this->Persona->Canalizacion->find('list', array(
-        'fields' => array('Canalizacion.id', 'Canalizacion.enlace'),
-        'order' => 'Canalizacion.tipo ASC'
-    ));
-	$this->set(compact('canalizaciones'));
+    //$canalizaciones = $this->Persona->Canalizacion->find('list', array(
+       // 'fields' => array('Canalizacion.id', 'Canalizacion.enlace'),
+       // 'order' => 'Canalizacion.tipo ASC'
+  //  ));
+	//$this->set(compact('canalizaciones'));
 }
 
 // Acción AJAX o búsqueda rápida para cargar datos en los inputs sin recargar toda la página

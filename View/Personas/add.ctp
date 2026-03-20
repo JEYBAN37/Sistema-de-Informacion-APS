@@ -416,6 +416,8 @@ echo $this->Form->input('fechaRegistro', [
 					'options' => $aseguradoraOption,
 					'class' => 'border border-gray-300 rounded-lg w-full p-2 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 text-sm text-gray-500 focus:text-gray-800',
 					'label' => '',
+                    'value' => 'Juventudultos{
+                    }',
 					'empty' => 'Seleccione el aseguradora',
 					'error' => false, // No mostrar error aquí
                     'id' => 'aseguradora_field'

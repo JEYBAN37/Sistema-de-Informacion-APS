@@ -13,6 +13,11 @@ App::uses('AppModel', 'Model');
  */
 class Persona extends AppModel {
 
+public $actsAs = array(
+		'Containable',
+	);
+
+
 /**
  * Validation rules
  *
@@ -39,13 +44,22 @@ class Persona extends AppModel {
  * @var array
  */
 	public $belongsTo = array(
-		'Sociambiental' => array(
+		/*'Sociambiental' => array(
 			'className' => 'Sociambiental',
 			'foreignKey' => 'sociambiental_id',
 			'conditions' => '',
 			'fields' => '',
 			'order' => ''
-		),
+		),*/
+
+		/*'Juventudadulto' => array(
+			'className' => 'Juventudadulto',
+			'foreignKey' => 'numerodoc',
+			'conditions' => '',
+			'fields' => '',
+			'order' => ''
+		),*/
+
 		'Familia' => array(
 			'className' => 'Familia',
 			'foreignKey' => 'familia_id',
@@ -60,13 +74,7 @@ class Persona extends AppModel {
 			'fields' => '',
 			'order' => ''
 		),
-		'Canalizacion' => array(
-			'className' => 'Canalizacion',
-			'foreignKey' => 'canalizacion_id',
-			'conditions' => '',
-			'fields' => '',
-			'order' => ''
-		)
+		
 	);
 
 /**
