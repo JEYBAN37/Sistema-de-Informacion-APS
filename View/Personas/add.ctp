@@ -578,27 +578,33 @@ echo $this->Form->input('fechaRegistro', [
 
 <div class="max-w-6xl mx-auto px-4 space-y-6">
     <div class="bg-white shadow-lg rounded-xl p-6 border-l-4 border-teal-500">
-        <h3 class="text-lg font-bold text-teal-800 mb-4">Servicios de Salud</h3>
-        <?php echo $this->Form->input('urgencia', ['label' => 'Urgencia', 'class' => 'ckeditor']); ?>
+        <h2 class="text-lg font-bold text-teal-800 mb-4">Servicios de Salud</h2>
+        <label class="font-semibold">Registre la canalización a Urgencias</label>
+        <?php echo $this->Form->input('urgencia', ['label' => false, 'class' => 'ckeditor']); ?>
+        <label class="font-semibold">Registre la canalizacion a Detección Temprana</label>
+        <?php echo $this->Form->input('detecciontemprana', ['label' => false, 'class' => 'ckeditor']); ?>
         <div class="mt-4">
-            <label class="font-semibold">Atención RIAS</label>
+            <label class="font-semibold">Seleccione la canalización a Rutas Integrales de Atención - RIAS</label>
             <?php echo $this->Form->input('rias', ['type' => 'select', 'multiple' => true, 'options' => $optionCanalizacion, 'id' => 'rias_select', 'label' => false]); ?>
         </div>
     </div>
 
     <div class="bg-white shadow-lg rounded-xl p-6 border-l-4 border-blue-500">
-        <h3 class="text-lg font-bold text-blue-800 mb-4">Servicios Sociales</h3>
-        <?php echo $this->Form->input('serviciosocial', ['label' => 'Oferta Social', 'class' => 'ckeditor']); ?>
+        <h3 class="text-lg font-bold text-blue-800 mb-4">Registre la canalización a Servicios Sociales</h3>
+        <?php echo $this->Form->input('serviciosocial', ['label' => false, 'class' => 'ckeditor']); ?>
     </div>
 
     <div class="bg-white shadow-lg rounded-xl p-6 border-l-4 border-orange-500">
-        <h3 class="text-lg font-bold text-orange-800 mb-4">Oferta PIC</h3>
+        <h3 class="text-lg font-bold text-orange-800 mb-4">Canalización a Oferta PIC</h3>
         <?php echo $this->Form->input('ofertapic', ['type' => 'select',
          'multiple' => true,
           'options' => $optionPic, 
           'id' => 'pic_select',
            'label' => false]); 
            ?>
+
+        <label class="font-semibold">Observación de la oferta PIC</label>
+        <?php echo $this->Form->input('observacionpic', ['label' => false, 'class' => 'ckeditor']); ?>
     </div>
 
     <div class="py-10">
