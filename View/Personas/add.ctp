@@ -7,36 +7,6 @@
 <script src="https://cdn.jsdelivr.net/npm/daterangepicker"></script>
 <script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
 
-<div id="consentModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-40"
-    style="display: flex;">
-    <div class="bg-white rounded-xl shadow-2xl max-w-lg w-full p-8 relative">
-        <button type="button" class="absolute top-4 right-4 text-gray-400 hover:text-gray-700 text-2xl font-bold"
-            onclick="window.location.href='<?php echo $this->Html->url(['controller' => 'Familias', 'action' => 'index']); ?>'">×</button>
-        <h3 class="text-2xl font-semibold mb-4 text-center text-teal-600">Consentimiento informado</h3>
-        <div class="mb-6 text-gray-700 text-justify">
-            <p class="text-gray-700 text-justify">
-                Con el diligenciamiento del presente formulario
-                <strong>autorizo libre y expresamente</strong>
-                a la Secretaría de Salud de Pasto para que realice el tratamiento de los datos personales registrados y
-                recolectados, de igual manera manifiesto que
-                <strong>he sido informado</strong>
-                sobre la finalidad de la recolección de la misma, con el propósito de implementar el modelo predictivo,
-                preventivo y resolutivo basado en
-                <strong>Atención Primaria en Salud</strong>
-                , dando cumplimiento a la
-                <strong>privacidad y protección de datos</strong>
-                dispuesto en la Ley 1581 de 2012, el Decreto 1377 de 2013 y la circular externa 008 de 2020 de la
-                Superintendencia de registro y comercio.
-            </p>
-        </div>
-        <div class="flex flex-col md:flex-row gap-3 justify-center mt-6">
-
-            <button id="aceptoBtn"
-                class="bg-teal-600 hover:bg-teal-700 text-white px-4 py-2 rounded-lg font-semibold text-center">Sí
-                acepto</button>
-        </div>
-    </div>
-</div>
 
 <div class="max-w-5xl mx-auto text-center mb-8">
     <h1 class="text-4xl md:text-5xl font-bold text-slate-800 mb-4 leading-tight">
@@ -204,7 +174,7 @@ echo $this->Form->input('fechaRegistro', [
                 <?php
 				echo $this->Form->input('tipodocumento', [
 					'type' => 'select',
-					'id' => 'tipodoc_select',
+					'id' => 'rol',
 					'class' => 'border border-gray-300 rounded-lg w-full p-2 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 text-sm text-gray-500 focus:text-gray-800',
 					'error' => false,
 					'options' => $TipoDeDocumentoOptions,
@@ -666,6 +636,7 @@ $(document).ready(function() {
             success: function(res) {
                 if (res.success) {
                     // SI EXISTE: Cargamos ID para UPDATE y llenamos campos
+                    console.log(res.data); // Verifica la estructura de los datos en la consola
                     msg.html(
                         '<span class="text-green-600 font-bold">✓ Usuario encontrado. Se actualizará el registro existente.</span>'
                     );
