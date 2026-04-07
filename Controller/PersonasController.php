@@ -102,6 +102,7 @@ class PersonasController extends AppController
 	{
 
 		$this->loadModel('Familia');
+		$this->loadModel('Canalizacion');
 		$this->loadModel('Sociambiental');
 
 		if ($this->request->is('post') || $this->request->is('put')) {
@@ -128,13 +129,8 @@ class PersonasController extends AppController
 				$this->Session->setFlash(__('No se pudo guardar la información. Por favor, intente de nuevo.'));
 			}
 		}
-		// ESTO ES LO QUE TRAE LA INFORMACIÓN DE LA TABLA CANALIZACIONES
-		// 'list' genera un arreglo tipo [id => nombre] automático para el select
-		//$canalizaciones = $this->Persona->Canalizacion->find('list', array(
-		// 'fields' => array('Canalizacion.id', 'Canalizacion.enlace'),
-		// 'order' => 'Canalizacion.tipo ASC'
-		//  ));
-		//$this->set(compact('canalizaciones'));
+		$canalizaciones = $this->Canalizacion->find('list');
+		$this->set(compact('canalizaciones'));
 	}
 
 	// Acción AJAX o búsqueda rápida para cargar datos en los inputs sin recargar toda la página
@@ -148,7 +144,14 @@ class PersonasController extends AppController
 				'conditions' => array('Persona.numerodoc' => '1085273376'),
 				'fields' => array(
 					'Persona.id',
+					'Persona.tipodocumento',
 					'Persona.numerodoc',
+					'Persona.primerapellido',
+					'Persona.segundoapellido',
+					'Persona.primernombre',
+					'Persona.segundonombre',
+					'Persona.fechanac',
+					'Persona.sexo',					
 					'Persona.familia_id',
 					'Familia.id',
 					'Familia.sociambiental_id',
@@ -163,6 +166,7 @@ class PersonasController extends AppController
 					'Juventudadulto.canalizacion_id',
 					'Juventudadulto.fechanac',
 					'Juventudadulto.tipodocumento',
+					'Juventudadulto.grupopoblacional',
 				),
 				'recursive' => -1,
 				'distinct' => 'Persona.id',

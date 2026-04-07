@@ -56,9 +56,134 @@ $aseguradoraOption = [
 	'Asmet Salud' => 'Asmet Salud',
 	'Sanidad PONAL' => 'Sanidad PONAL',
 	'PROINSALUD' => 'PROINSALUD',
-	'Fondo UDENAR' => 'Fondo UDENAR',	
-	'Otra' => 'Otra',
-	
+	'Fondo UDENAR' => 'Fondo UDENAR',
+	'Medicina Prepagada' => 'Medicina Prepagada',
+	'Sin afiliación' => 'Sin afiliación',
+
+	'COMFAMILIAR CAMACOL' => 'COMFAMILIAR CAMACOL',
+	'COMFAMA' => 'COMFAMA',
+	'COMFAMILIAR CARTAGENA' => 'COMFAMILIAR CARTAGENA',
+	'COMFABOY' => 'COMFABOY',
+	'COMFACOR' => 'COMFACOR',
+	'CAFAM' => 'CAFAM',
+	'COMFAMILIAR DE LA GUAJIRA' => 'COMFAMILIAR DE LA GUAJIRA',
+	'COMFAMILIAR HUILA' => 'COMFAMILIAR HUILA',
+	'COMFAMILIAR NARIÑO' => 'COMFAMILIAR NARIÑO',
+	'COMFENALCO QUINDIO' => 'COMFENALCO QUINDIO',
+	'COMFAMILIAR RISARALDA' => 'COMFAMILIAR RISARALDA',
+	'CAJASAI' => 'CAJASAI',
+	'CAJASAN' => 'CAJASAN',
+	'COMFENALCO SANTANDER' => 'COMFENALCO SANTANDER',
+	'COMFASUCRE' => 'COMFASUCRE',
+	'CAFABA' => 'CAFABA',
+	'COMFENALCO TOLIMA' => 'COMFENALCO TOLIMA',
+	'EPSS COMFACARTAGO' => 'EPSS COMFACARTAGO',
+	'COMFANORTE' => 'COMFANORTE',
+	'COMFAORIENTE' => 'COMFAORIENTE',
+	'CCF050 COMFAORIENTE' => 'CCF050 COMFAORIENTE',
+	'COMFACUNDI' => 'COMFACUNDI',
+	'EPSS COMFENALCO CUNDINAMARCA' => 'EPSS COMFENALCO CUNDINAMARCA',
+	'CAJACOPI ATLANTICO' => 'CAJACOPI ATLANTICO',
+	'COLSUBSIDIO' => 'COLSUBSIDIO',
+	'COMFACHOCO' => 'COMFACHOCO',
+	'COMFACA' => 'COMFACA',
+	'C.C.F. COMFACHOCO' => 'C.C.F. COMFACHOCO',
+	'COMFAMILIAR GUAJIRA' => 'COMFAMILIAR GUAJIRA',
+	'CCF de Sucre COMFASUCRE' => 'CCF de Sucre COMFASUCRE',
+	'CCFC50 COMFAORIENTE Régimen por efecto de Movilidad' => 'CCFC50 COMFAORIENTE Régimen por efecto de Movilidad',
+	'EPM MEDELLIN' => 'EPM MEDELLIN',
+	'FONDO DE PASIVO SOCIAL FERROCARRILES' => 'FONDO DE PASIVO SOCIAL FERROCARRILES',
+	'ALIANSALUD' => 'ALIANSALUD',
+	'SALUD TOTAL' => 'SALUD TOTAL',
+	'CAFESALUD' => 'CAFESALUD',
+	'ISS' => 'ISS',
+	'UNIMEC' => 'UNIMEC',
+	'COMPENSAR' => 'COMPENSAR',
+	'COMFENALCO ANTIOQUIA' => 'COMFENALCO ANTIOQUIA',
+	'SURA - Compania Suramericana de Servicios de Salud SA' => 'SURA - Compania Suramericana de Servicios de Salud SA',
+	'COLSEGUROS E.P.S. EN LIQUIDACION' => 'COLSEGUROS E.P.S. EN LIQUIDACION',
+	'COMFENALCO VALLE' => 'COMFENALCO VALLE',
+	'SALUDCOOP' => 'SALUDCOOP',
+	'HUMANA VIVIR' => 'HUMANA VIVIR',
+	'SALUD COLPATRIA' => 'SALUD COLPATRIA',
+	'COOMEVA' => 'COOMEVA',
+	'FAMISANAR' => 'FAMISANAR',
+	'SERVICIO OCCIDENTAL DE SALUD SOS' => 'SERVICIO OCCIDENTAL DE SALUD SOS',
+	'CAPRECOM' => 'CAPRECOM',
+	'ARS CONVIDA' => 'ARS CONVIDA',
+	'CRUZ BLANCA' => 'CRUZ BLANCA',
+	'CAPRESOCA EPS' => 'CAPRESOCA EPS',
+	'SOLSALUD' => 'SOLSALUD',
+	'CALISALUD' => 'CALISALUD',
+	'EPS SALUD CONDOR' => 'EPS SALUD CONDOR',
+	'SELVASALUD SA' => 'SELVASALUD SA',
+	'SALUD VIDA' => 'SALUD VIDA',
+	'SALUD COLOMBIA' => 'SALUD COLOMBIA',
+	'RED SALUD' => 'RED SALUD',
+	'MULTIMEDICAS' => 'MULTIMEDICAS',
+	'GOLDEN GROUP' => 'GOLDEN GROUP',
+	'SAVIA SALUD' => 'SAVIA SALUD',
+	'COOSALUD' => 'COOSALUD',
+	'Medimas EPS S.A.S' => 'Medimas EPS S.A.S',
+	'Fundación Salud MIA EPS' => 'Fundación Salud MIA EPS',
+	'SALUD BOLIVAR EPS' => 'SALUD BOLIVAR EPS',
+	'MUTUAL SER' => 'MUTUAL SER',
+	'EPS La Guaitara' => 'EPS La Guaitara',
+	'CONVIDA' => 'CONVIDA',
+	'CAPRESOCA' => 'CAPRESOCA',
+	'SALUDVIDA S.A.' => 'SALUDVIDA S.A.',
+	'CAPITAL SALUD' => 'CAPITAL SALUD',
+	'DUSAKAWI' => 'DUSAKAWI',
+	'MANEXKA' => 'MANEXKA',
+	'ASOCIACION INDIGENA DEL CAUCA AIC' => 'ASOCIACION INDIGENA DEL CAUCA AIC',
+	'ANASWAYU' => 'ANASWAYU',
+	'PIJAOSALUD' => 'PIJAOSALUD',
+	'AIC' => 'AIC',
+	'ANAS WAYUU' => 'ANAS WAYUU',
+	'PIJAOS' => 'PIJAOS',
+
+	'ESS EMDISALUD' => 'ESS EMDISALUD',
+	'COMCAJA' => 'COMCAJA',
+	'ESS COOSALUD' => 'ESS COOSALUD',
+	'ESS ASMET SALUD' => 'ESS ASMET SALUD',
+	'ASOCIACION SOLIDARIA DE SALUD DE ASTREA' => 'ASOCIACION SOLIDARIA DE SALUD DE ASTREA',
+	'ESS AMBUQ' => 'ESS AMBUQ',
+	'ESS ECOOPSOS' => 'ESS ECOOPSOS',
+	'ESS COMPARTA' => 'ESS COMPARTA',
+	'EMDISALUD ESS' => 'EMDISALUD ESS',
+	'MUTUALSER' => 'MUTUALSER',
+	'AMBUQ' => 'AMBUQ',
+	'COOSALUD E.S.S.' => 'COOSALUD E.S.S.',
+	'COMPARTA' => 'COMPARTA',
+	'ASMETSALUD' => 'ASMETSALUD',
+	'ECOOPSOS' => 'ECOOPSOS',
+
+	'FONDO DE SOLIDARIDAD PENSIONAL' => 'FONDO DE SOLIDARIDAD PENSIONAL',
+	'ECOPETROL' => 'ECOPETROL',
+	'FUERZAS MILITARES' => 'FUERZAS MILITARES',
+	'FONDO DE PRESTACIONES SOCIALES DEL MAGISTERIO' => 'FONDO DE PRESTACIONES SOCIALES DEL MAGISTERIO',
+	'UNIDAD DE SALUD UNIVERSIDAD DEL ATLANTICO' => 'UNIDAD DE SALUD UNIVERSIDAD DEL ATLANTICO',
+	'CAJA DE PREVISION SOCIAL DE LA U DE SANTANDER CAPRUIS' => 'CAJA DE PREVISION SOCIAL DE LA U DE SANTANDER CAPRUIS',
+	'SERVICIO MEDICO DE LA UNIVERSIDAD DEL VALLE' => 'SERVICIO MEDICO DE LA UNIVERSIDAD DEL VALLE',
+	'UNIDAD DE SALUD UNIVERSIDAD NACIONAL' => 'UNIDAD DE SALUD UNIVERSIDAD NACIONAL',
+	'UNIDAD DE SALUD UNIVERSIDAD DEL CAUCA' => 'UNIDAD DE SALUD UNIVERSIDAD DEL CAUCA',
+	'UNIDAD DE SALUD UNIVERSIDAD DEL CARTAGENA' => 'UNIDAD DE SALUD UNIVERSIDAD DEL CARTAGENA',
+	'PROGRAMA DE SALUD UNIVERSIDAD DE ANTIOQUIA' => 'PROGRAMA DE SALUD UNIVERSIDAD DE ANTIOQUIA',
+	'UNIDAD DE SALUD UNIVERSIDAD DEL CORDOBA' => 'UNIDAD DE SALUD UNIVERSIDAD DEL CORDOBA',
+	'UNIDAD DE SALUD UPTC' => 'UNIDAD DE SALUD UPTC',
+
+	'REUE02' => 'REUE02',
+	'REUE03' => 'REUE03',
+	'REUE04' => 'REUE04',
+	'REUE05' => 'REUE05',
+	'REUE06' => 'REUE06',
+	'REUE07' => 'REUE07',
+	'REUE09' => 'REUE09',
+
+	'CAJASALUD EPSS UT' => 'CAJASALUD EPSS UT',
+	'COMFAMILIARES EN SALUD UT' => 'COMFAMILIARES EN SALUD UT',
+	'CONVENIO COMFENALCO UT' => 'CONVENIO COMFENALCO UT',
+	'CONVENIO CAMACOL COMFAMA UT' => 'CONVENIO CAMACOL COMFAMA UT',
 ];
 
 
@@ -69,7 +194,6 @@ $grupoPoblacional = [
 	'4.Persona con condición de discapacidad' => 'Persona con condición de discapacidad',
 	'5.Personas con orientación sexual diversa' => 'Personas con orientación sexual diversa',
 	'6.Víctimas de violencia' => 'Víctimas de violencia',
-	'8.Grupo Étnico'=>'Grupo Étnico',
 	'7.Ninguno' => 'Ninguno'
 ];
 
@@ -173,19 +297,21 @@ echo $this->Form->input('fechaRegistro', [
                 </div>
                 <?php
 				echo $this->Form->input('tipodocumento', [
-					'type' => 'select',
-					'id' => 'rol',
-					'class' => 'border border-gray-300 rounded-lg w-full p-2 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 text-sm text-gray-500 focus:text-gray-800',
-					'error' => false,
-					'options' => $TipoDeDocumentoOptions,
-					'label' => '',
-					'empty' => 'Selecciona tipo de documento',
+				 'type' => 'select',
+				'id' => 'tipodoc_select',
+                'options' => $TipoDeDocumentoOptions,                
+                'class' => 'border border-gray-300 rounded-lg w-full p-2 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 text-sm text-gray-500 focus:text-gray-800',
+                'label' => '',
+                'error' => false                
+				
 				]);
 
 				if (!empty($this->Form->error('tipodocumento'))) {
 					echo '<div class="text-red-600 text-md mt-1 font-semibold">' . $this->Form->error('tipodocumento') . '</div>';
 				}
 				?>
+
+
             </div>
 
 
@@ -306,7 +432,7 @@ echo $this->Form->input('fechaRegistro', [
                 </div>
                 <div class="col-span-2 text-md font-semibold mt-6">
                     <div class="flex flex-col w-full">
-                        <input type="text" name="data[Persona][fechanac]" id="fecha" id="fechaNac_field" ,
+                        <input type="text" name="data[Persona][fechanac]" id="fechaNac_field" ,
                             class="border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400 w-full" ""
                             placeholder="Selecciona rango de fecha" />
                         <span class="text-sm text-red-600 ">
@@ -342,33 +468,29 @@ echo $this->Form->input('fechaRegistro', [
 				?>
             </div>
 
+
             <!-- Grupo Poblacional -->
             <div class="col-span-2 md:col-span-1 text-md font-semibold mt-4 mb-6 md:mr-4">
                 <div class="flex items-center mb-4">
                     <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">14</span>
-                    <label for="grupopoblacional" class="font-semibold">Grupo Poblacional</label>
+                    <label for="nombre" class="font-semibold">Grupo Poblacional</label>
                     <p class="text-red-600">*</p>
                 </div>
                 <?php
 				echo $this->Form->input('grupopoblacional', [
-                    'type' => 'select',
-					'id' => 'grupopoblacional_select',					
+					'type' => 'select',
+					'id' => 'grupopoblacional_field',
+					'class' => 'border border-gray-300 rounded-lg w-full p-2 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 text-sm text-gray-500 focus:text-gray-800',
 					'error' => false,
 					'options' => $grupoPoblacional,
-					'label' => false,					
-					'multiple' => true,
-					'empty' => false,
-                    'class' => 'w-full',
-                    //'id' => 'grupopoblacional_field'
-					
+					'label' => '',
+					'empty' => 'Selecciona el grupo poblacional',
 				]);
 
 				if (!empty($this->Form->error('grupopoblacional'))) {
 					echo '<div class="text-red-600 text-md mt-1 font-semibold">' . $this->Form->error('grupopoblacional') . '</div>';
 				}
 				?>
-
-
             </div>
 
             <!-- Aseguradora -->
@@ -400,28 +522,29 @@ echo $this->Form->input('fechaRegistro', [
 				?>
             </div>
 
-            <!-- Ips de atención -->
-            <div class="col-span-2 md:col-span-1 text-md font-semibold my-6">
+
+            <div class="col-span-2 md:col-span-1 text-md font-semibold my-6 mb-6 md:mr-4">
                 <div class="flex items-center mb-4">
                     <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">5</span>
-                    <label class="font-semibold">IPS referida *</label>
+                    <label for="familiograma" class="font-semibold">IPS referida</label>
+                    <p class="text-red-600">*</p>
                 </div>
 
                 <?php
-    echo $this->Form->input('canalizacion_id', array(
-        'type' => 'select',
-        'options' => $canalizaciones, // Asegúrate que esta variable venga del controller
-        'id' => 'canalizacion_select', // ID ÚNICO Y CORRECTO
-        'class' => 'w-full border border-gray-300 rounded-lg p-2 text-sm',
-        'label' => false,
-        'empty' => 'Seleccione el IPS',
-        'error' => false
-    ));
+				echo $this->Form->input('canalizacion_id', [
+					'type' => 'select',					
+					'class' => 'w-full',
+					'label' => '',
+					//'empty' => 'Seleccione el IPS',
+					'error' => false, // No mostrar error aquí
+                    'id' => 'canalizacion_id',
+				]);
 
-    if (!empty($this->Form->error('canalizacion_id'))) {
-        echo '<div class="text-red-600 text-md mt-1 font-semibold">' . $this->Form->error('canalizacion_id') . '</div>';
-    }
-    ?>
+
+				if (!empty($this->Form->error('canalizacion_id'))) {
+					echo '<div class="text-red-600 text-md mt-1 font-semibold">' . $this->Form->error('canalizacion_id') . '</div>';
+				}
+				?>
             </div>
 
             <!-- Barrio / Vereda -->
@@ -642,24 +765,28 @@ $(document).ready(function() {
             success: function(res) {
                 if (res.success) {
                     // SI EXISTE: Cargamos ID para UPDATE y llenamos campos
-                    console.log(res.data); // Verifica la estructura de los datos en la consola
+                    console.log(res
+                        .data); // Verifica la estructura de los datos en la consola
                     msg.html(
                         '<span class="text-green-600 font-bold">✓ Usuario encontrado. Se actualizará el registro existente.</span>'
                     );
                     $('#persona_id_field').val(res.data.id);
-                    $('#numerodoc_field').val(res.data.numerodoc).attr('readonly', true);
-                    $('#tipodoc_select').val(res.data.tipodocumento);
-                    $('#apellido1_field').val(res.data.primerapellido);
-                    $('#apellido2_field').val(res.data.segundoapellido);
-                    $('#nombre1_field').val(res.data.primernombre);
-                    $('#nombre2_field').val(res.data.segundonombre);
-                    $('#fechaNac_field').val(res.data.fechanac);
-                    $('#sexo_field').val(res.data.sexo);
-                    $('#grupopoblacional_field').val(res.data.grupopoblacional);
-                    $('#aseguradora_field').val(res.data.aseguradora);
-                    $('#canalizacion_field').val(res.data.canalizacion);
-                    $('#barriovereda_field').val(res.data.barriovereda);
-                    $('#direccion_field').val(res.data.direccion);
+                    $('#numerodoc_field').val(res.data.Persona.numerodoc).attr('readonly',
+                        true);
+                    $('#tipodoc_select').val(res.data.Persona.tipodocumento);
+                    $('#apellido1_field').val(res.data.Persona.primerapellido);
+                    $('#apellido2_field').val(res.data.Persona.segundoapellido);
+                    $('#nombre1_field').val(res.data.Persona.primernombre);
+                    $('#nombre2_field').val(res.data.Persona.segundonombre);
+                    $('#fechaNac_field').val(res.data.Persona.fechanac);
+                    $('#sexo_field').val(res.data.Persona.sexo);
+                    $('#grupopoblacional_field').val(res.data.Juventudadulto
+                        .grupopoblacional);
+                    $('#aseguradora_field').val(res.data.Juventudadulto.aseguradora);
+                    $('#canalizacion_id').val(res.data.Juventudadulto
+                        .canalizacion_id);
+                    $('#barriovereda_field').val(res.data.Sociambiental.barriovereda);
+                    $('#direccion_field').val(res.data.Sociambiental.direccion);
                     $('#telefono_field').val(res.data.telefono);
                     $('#email_field').val(res.data.email);
                     $('#nombreAcudiente_field').val(res.data.nombreAcudiente);
@@ -674,7 +801,7 @@ $(document).ready(function() {
                     );
                     $('#persona_id_field').val('');
                     $('#numerodoc_field').val(doc).removeAttr('readonly');
-                    //$('#tipodoc_select').val('');
+                    $('#tipodoc_select').val('');
                     $('#apellido1_field').val('').focus();
                     $('#apellido2_field').val('');
                     $('#nombre1_field').val('');
@@ -709,20 +836,22 @@ $(document).ready(function() {
     };
     new Choices("#rias_select", choicesOptions);
     new Choices("#pic_select", choicesOptions);
-    new Choices("#tipodoc_select", {
-        searchEnabled: false,
-        itemSelectText: ''
+
+    const choices_canalizacion_id = new Choices("#canalizacion_id", {
+        searchEnabled: true,
+        searchChoices: true,
+        removeItemButton: true, // Permite eliminar seleccionados
+        itemSelectText: '',
+        shouldSort: false,
+        searchPlaceholderValue: "Escriba para filtrar...",
+        maxItemCount: 3, // Límite a 3 items
+        removeItems: true, // Permite quitar seleccionados
+        duplicateItemsAllowed: false,
+        placeholder: true,
+        placeholderValue: "Seleccione IPS...",
     });
-    new Choices("#grupopoblacional_select", choicesOptions);
-    // Inicializar el buscador en el select de IPS
-    const canalizacionChoices = new Choices("#canalizacion_select", {
-        searchEnabled: true, // Activa la búsqueda escribiendo
-        searchPlaceholderValue: "Escriba el nombre de la IPS...",
-        itemSelectText: '', // Quita el texto "Press to select"
-        noResultsText: 'No se encontraron coincidencias',
-        noChoicesText: 'No hay opciones disponibles',
-        shouldSort: false // Mantiene el orden que viene del servidor
-    });
+
+
 
 
     // 3. Modal de Consentimiento

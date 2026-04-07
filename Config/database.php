@@ -64,7 +64,7 @@
  */
 class DATABASE_CONFIG {
 
-	public $default = array(
+/*	public $default = array(
 		'datasource' => 'Database/Mysql',
 		'persistent' => false,
 		'host' => '195.250.27.25',
@@ -75,19 +75,19 @@ class DATABASE_CONFIG {
 		              
 		'prefix' => '',
 		'encoding' => 'utf8',
-	);
+	);*/
 
-	/*public $default = array(
+	public $default = array(
 	'datasource' => 'Database/Mysql',
     'persistent' => false,
     'host' => 'localhost:3306',
     'login' => 'root',
     'password' => '',
-    'database' => 'agsolutic_alpha_2025',
+    'database' => 'aps_2026',
     'prefix' => '',
     'unix_socket' => 'C:/xampp/mysql/mysql.sock',
     'encoding' => 'utf8',
-);*/
+);
 
 
 
