@@ -239,12 +239,14 @@ $optionCanalizacion =
 	];
 
     $optionPic = [
-     '0.No |0' => 'No se requiere canalización',
-	'1.Zonas Orientación Escolar' => 'Zonas Orientación Escolar',
-	'2.Centro de Escucha' => 'Centro de Escucha',
-	'3.Curso virtual' => 'Curso virtual',
-	'4.Caracterización por EBS' => 'Caracterización por EBS',
-	
+    '0.No |0' => '0.No se requiere canalización',
+	'1.Zonas Orientación Escolar' => '1.Zonas Orientación Escolar',
+	'2.Centro de Escucha' => '2.Centro de Escucha',
+	'3.Curso virtual DSDR' => '3.Curso virtual Salud Sexual y repoductiva',
+    '4.Curso virtual Salud Mental' => '4.Curso virtual Salud Mental',
+    '5.Curso virtual Vacunación' => '5.Curso virtual Vacunación',
+    '6.Veeduria PIC-APS' => '6.Veeduria PIC-APS',
+		
 ];
 
     
@@ -426,7 +428,7 @@ echo $this->Form->input('fechaRegistro', [
             <!-- Fecha de Nacimiento -->
             <div class="col-span-2 md:col-span-2 text-md font-semibold my-4 mb-6 md:mr-4">
                 <div class="flex items-center">
-                    <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">8</span>
+                    <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">7</span>
                     <label for="resultadoEcomapa" class="font-semibold">Fecha de nacimiento</label>
                     <p class="text-red-600">*</p>
                 </div>
@@ -446,7 +448,7 @@ echo $this->Form->input('fechaRegistro', [
 
             <div class="col-span-2 md:col-span-1 text-md font-semibold my-6 mb-6 md:mr-4">
                 <div class="flex items-center mb-4">
-                    <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">10</span>
+                    <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">8</span>
                     <label for="sexo" class="font-semibold">Sexo</label>
                     <p class="text-red-600">*</p>
                 </div>
@@ -472,7 +474,7 @@ echo $this->Form->input('fechaRegistro', [
             <!-- Grupo Poblacional -->
             <div class="col-span-2 md:col-span-1 text-md font-semibold mt-4 mb-6 md:mr-4">
                 <div class="flex items-center mb-4">
-                    <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">14</span>
+                    <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">9</span>
                     <label for="nombre" class="font-semibold">Grupo Poblacional</label>
                     <p class="text-red-600">*</p>
                 </div>
@@ -525,8 +527,8 @@ echo $this->Form->input('fechaRegistro', [
 
             <div class="col-span-2 md:col-span-1 text-md font-semibold my-6 mb-6 md:mr-4">
                 <div class="flex items-center mb-4">
-                    <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">5</span>
-                    <label for="familiograma" class="font-semibold">IPS referida</label>
+                    <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">11</span>
+                    <label for="familiograma" class="font-semibold">Institución referida</label>
                     <p class="text-red-600">*</p>
                 </div>
 
@@ -550,7 +552,7 @@ echo $this->Form->input('fechaRegistro', [
             <!-- Barrio / Vereda -->
             <div class="col-span-2 text-md font-semibold mt-4 mb-6 sm:mr-4">
                 <div class="flex items-center mb-4">
-                    <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">4</span>
+                    <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">12</span>
                     <label for="objactividad" class="font-semibold">Barrio / Vereda</label>
                 </div>
                 <?php
@@ -569,11 +571,10 @@ echo $this->Form->input('fechaRegistro', [
 
             <!-- direccion -->
             <div class="col-span-2 text-md font-semibold mt-4 mb-6">
-                <div class="flex items-center mb-4">
-                    <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">5</span>
-                    <label for="direccion" class="font-semibold">Nomenclatura de la Dirección</label>
-                    <p class="text-red-600">*</p>
-                </div>
+                <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">13</span>
+                <label for="direccion" class="font-semibold">Nomenclatura de la Dirección</label>
+                <p class="text-red-600">*</p>
+
                 <?php
                 echo $this->Form->input('direccion', [
                     'label' => false,
@@ -593,7 +594,7 @@ echo $this->Form->input('fechaRegistro', [
             <!-- Telefono -->
             <div class="col-span-2 md:col-span-1 text-md font-semibold mt-4 mb-6 md:mr-4">
                 <div class="flex items-center mb-4">
-                    <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">17</span>
+                    <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">14</span>
                     <label for="telefono" class="font-semibold">Número de contacto</label>
                 </div>
                 <?php
@@ -624,7 +625,7 @@ echo $this->Form->input('fechaRegistro', [
             <!-- Email -->
             <div class="col-span-2 md:col-span-1 text-md font-semibold mt-4 mb-6 md:mr-4">
                 <div class="flex items-center mb-4">
-                    <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">18</span>
+                    <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">15</span>
                     <label for="nombre" class="font-semibold">Email</label>
                 </div>
                 <?php
@@ -645,7 +646,7 @@ echo $this->Form->input('fechaRegistro', [
             <!-- Nombre acudiente -->
             <div class="col-span-2 md:col-span-1 text-md font-semibold mt-4 mb-6 md:mr-4">
                 <div class="flex items-center mb-4">
-                    <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">5</span>
+                    <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">16</span>
                     <label for="nombre" class="font-semibold">Nombre de acudiente</label>
                     <p class="text-red-600">*</p>
                 </div>
@@ -702,12 +703,45 @@ echo $this->Form->input('fechaRegistro', [
 <div class="max-w-6xl mx-auto px-4 space-y-6">
     <div class="bg-white shadow-lg rounded-xl p-6 border-l-4 border-teal-500">
         <h2 class="text-lg font-bold text-teal-800 mb-4">Servicios de Salud</h2>
-        <label class="font-semibold">Registre la canalización a Urgencias</label>
-        <?php echo $this->Form->input('urgencia', ['label' => false, 'class' => 'ckeditor']); ?>
-        <label class="font-semibold">Registre la canalizacion a Detección Temprana</label>
-        <?php echo $this->Form->input('detecciontemprana', ['label' => false, 'class' => 'ckeditor']); ?>
+
+        <div class="relative inline-block w-full">
+            <button type="button" id="ayudaButtonTIPO"
+                class="mt-4 bg-blue-100 text-blue-700 hover:bg-blue-200 rounded-full w-10 h-10 flex items-center justify-center"
+                aria-label="Ayuda" aria-expanded="false">
+                ?
+            </button>
+            <div id="helpContentTIPO"
+                class="absolute left-0 top-16 mb-2 w-80 bg-blue-50 border border-blue-200 rounded-lg z-50 hidden shadow-lg p-4"
+                role="dialog" aria-hidden="true">
+                <p>
+                    <!-- Aquí tu contenido de ayuda -->
+                    <strong>Urgencia:</strong> atención prioritaria
+                    en urgencias.<br>
+                    <strong>Deteccion temprana:</strong> atención
+                    por consulta médica general para identificar
+                    de forma oportuna y efectiva la enfermedad
+                    para su tratamiento. <br>
+                    <strong>Rutas integrales de atención en salud:</strong> atenciones
+                    coordinadas, complementarias y efectivas
+                    para determinar el estado de salud de las
+                    personas con el fin de definir las
+                    intervenciones de salud que se requieran,
+                    según el curso de vida. <br>
+
+                </p>
+            </div>
+        </div>
         <div class="mt-4">
-            <label class="font-semibold">Seleccione la canalización a Rutas Integrales de Atención - RIAS</label>
+            <label class="font-semibold">Registre la canalización a Urgencias</label>
+            <?php echo $this->Form->input('urgencia', ['label' => false, 'class' => 'ckeditor']); ?>
+        </div>
+        <div class="mt-4">
+            <label class="font-semibold">Registre la canalizacion a Detección Temprana</label>
+            <?php echo $this->Form->input('detecciontemprana', ['label' => false, 'class' => 'ckeditor']); ?>
+        </div>
+        <div class="mt-4">
+            <label class="font-semibold">Seleccione la canalización a Rutas Integrales de Atención -
+                RIAS</label>
             <?php echo $this->Form->input('rias', ['type' => 'select', 'multiple' => true, 'options' => $optionCanalizacion, 'id' => 'rias_select', 'label' => false]); ?>
         </div>
     </div>
@@ -726,9 +760,44 @@ echo $this->Form->input('fechaRegistro', [
            'label' => false]); 
            ?>
 
-        <label class="font-semibold">Observación de la oferta PIC</label>
-        <?php echo $this->Form->input('observacionpic', ['label' => false, 'class' => 'ckeditor']); ?>
+        <div class="mt-4">
+
+            <label class="font-semibold">Observación de la oferta PIC</label>
+            <?php echo $this->Form->input('observacionpic', ['label' => false, 'class' => 'ckeditor']); ?>
+        </div>
+        <!-- Canalizacion APS -->
+        <div
+            class="flex flex-col md:flex-row justify-center md:justify-between col-span-1 md:col-span-2 text-md font-semibold my-6 mr-4">
+            <div class="flex items-center mb-4">
+                <label for="canalizacionaps" class="font-semibold">Realizar caracterización APS</label>
+            </div>
+
+            <div class="flex space-x-4 items-center justify-center md:justify-start mt-4 pr-0 md:pr-[10%]  md:mt-0 ">
+                <!-- Botón NO -->
+                <div>
+                    <input type="radio" name="data[Persona][caracterizacionaps]" id="canalizacionaps-no" value="0"
+                        class="hidden peer" data-target="canalizacionaps" data-show="false" checked />
+                    <!-- 👈 Por defecto NO -->
+                    <label for="canalizacionaps-no" class="px-12 py-2 rounded-lg border cursor-pointer hover:text-white hover:bg-teal-600
+                       peer-checked:bg-teal-600 peer-checked:text-white">
+                        NO
+                    </label>
+                </div>
+
+                <!-- Botón SÍ -->
+                <div>
+                    <input type="radio" name="data[Persona][caracterizacionaps]" id="canalizacionaps-si" value="1"
+                        data-target="canalizacionaps" data-show="true" class="hidden peer cursor-pointer" />
+                    <label for="canalizacionaps-si" class="px-12 py-2 rounded-lg border hover:bg-teal-600 cursor-pointer hover:text-white
+                       peer-checked:bg-teal-600 peer-checked:text-white">
+                        SI
+                    </label>
+                </div>
+            </div>
+        </div>
     </div>
+
+
 
     <div class="py-10">
         <button type="submit"
@@ -771,7 +840,8 @@ $(document).ready(function() {
                         '<span class="text-green-600 font-bold">✓ Usuario encontrado. Se actualizará el registro existente.</span>'
                     );
                     $('#persona_id_field').val(res.data.id);
-                    $('#numerodoc_field').val(res.data.Persona.numerodoc).attr('readonly',
+                    $('#numerodoc_field').val(res.data.Persona.numerodoc).attr(
+                        'readonly',
                         true);
                     $('#tipodoc_select').val(res.data.Persona.tipodocumento);
                     $('#apellido1_field').val(res.data.Persona.primerapellido);
@@ -782,10 +852,12 @@ $(document).ready(function() {
                     $('#sexo_field').val(res.data.Persona.sexo);
                     $('#grupopoblacional_field').val(res.data.Juventudadulto
                         .grupopoblacional);
-                    $('#aseguradora_field').val(res.data.Juventudadulto.aseguradora);
+                    $('#aseguradora_field').val(res.data.Juventudadulto
+                        .aseguradora);
                     $('#canalizacion_id').val(res.data.Juventudadulto
                         .canalizacion_id);
-                    $('#barriovereda_field').val(res.data.Sociambiental.barriovereda);
+                    $('#barriovereda_field').val(res.data.Sociambiental
+                        .barriovereda);
                     $('#direccion_field').val(res.data.Sociambiental.direccion);
                     $('#telefono_field').val(res.data.telefono);
                     $('#email_field').val(res.data.email);
@@ -828,6 +900,28 @@ $(document).ready(function() {
         });
     });
 
+
+    // Busca todos los radios con data-target
+    document.querySelectorAll('input[type="radio"][data-target]').forEach(function(radio) {
+        radio.addEventListener('change', function() {
+            var targetId = radio.getAttribute('data-target');
+            var show = radio.getAttribute('data-show') === 'true';
+            var target = document.getElementById(targetId);
+            if (target) {
+                target.style.display = show ? 'block' : 'none';
+            }
+        });
+        // Mostrar/ocultar al cargar la página según el radio seleccionado
+        if (radio.checked) {
+            var targetId = radio.getAttribute('data-target');
+            var show = radio.getAttribute('data-show') === 'true';
+            var target = document.getElementById(targetId);
+            if (target) {
+                target.style.display = show ? 'block' : 'none';
+            }
+        }
+    });
+
     // 2. Inicialización de Choices.js para los select múltiples
     const choicesOptions = {
         removeItemButton: true,
@@ -851,6 +945,17 @@ $(document).ready(function() {
         placeholderValue: "Seleccione IPS...",
     });
 
+    document.querySelectorAll('[id^="ayudaButton"]').forEach(function(btn) {
+        btn.addEventListener('click', function(e) {
+            var id = this.id.replace('ayudaButton', 'helpContent');
+            var helpContent = document.getElementById(id);
+            var expanded = this.getAttribute('aria-expanded') === 'true';
+            this.setAttribute('aria-expanded', String(!expanded));
+            helpContent.classList.toggle('hidden');
+            helpContent.setAttribute('aria-hidden', String(expanded));
+            e.stopPropagation();
+        });
+    });
 
 
 
