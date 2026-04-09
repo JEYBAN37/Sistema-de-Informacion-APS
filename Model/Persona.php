@@ -33,7 +33,15 @@ public $actsAs = array(
 				//'last' => false, // Stop validation after this rule
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
+			
 		),
+		'fechanac' => array(
+			'date' => array(
+				'rule' => array('date'),
+				'message' => 'La fecha de nacimiento no puede estar vacía',
+			),
+		),
+
 	);
 
 	//The Associations below have been created with all possible keys, those that are not needed can be removed

@@ -481,7 +481,7 @@ echo $this->Form->input('fechaRegistro', [
                 <?php
 				echo $this->Form->input('grupopoblacional', [
 					'type' => 'select',
-					'id' => 'grupopoblacional_field',
+					'id' => 'grupopoblacional_field',                   
 					'class' => 'border border-gray-300 rounded-lg w-full p-2 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 text-sm text-gray-500 focus:text-gray-800',
 					'error' => false,
 					'options' => $grupoPoblacional,
@@ -833,36 +833,63 @@ $(document).ready(function() {
             },
             success: function(res) {
                 if (res.success) {
+                    const p = res.data.Persona;
+                    const j = res.data.Juventudadulto || {};
+                    const s = res.data.Sociambiental || {};
+                    const f = res.data.Familia || {};
                     // SI EXISTE: Cargamos ID para UPDATE y llenamos campos
                     console.log(res
                         .data); // Verifica la estructura de los datos en la consola
                     msg.html(
                         '<span class="text-green-600 font-bold">✓ Usuario encontrado. Se actualizará el registro existente.</span>'
                     );
-                    $('#persona_id_field').val(res.data.id);
-                    $('#numerodoc_field').val(res.data.Persona.numerodoc).attr(
+                    $('#grupopoblacional_field').val(j.grupopoblacional || p
+                        .grupopoblacional);
+                    $('#aseguradora_field').val(j.aseguradora || p.aseguradora);
+                    $('#telefono_field').val(j.telefono || p.telefono);
+                    $('#canalizacion_id').val(j.canalizacion_id || p.canalizacion_id);
+                    $('#fechaNac_field').val(j.fechanac || p.fechanac);
+                    $('#sexo_field').val(j.sexo || p.sexo);
+                    $('#email_field').val(j.email || p.email);
+
+                    $('#barriovereda_field').val(s.barriovereda || p.barriovereda);
+                    $('#direccion_field').val(s.direccion || p.direccion);
+                    $('#nombreAcudiente_field').val(f.nombres || p.nombreAcudiente);
+                    $('#telefonoAcudiente_field').val(f.celular || p.telefonoAcudiente);
+
+                    $('#persona_id_field').val(p.id);
+                    $('#numerodoc_field').val(p.numerodoc).attr(
                         'readonly',
                         true);
-                    $('#tipodoc_select').val(res.data.Persona.tipodocumento);
-                    $('#apellido1_field').val(res.data.Persona.primerapellido);
-                    $('#apellido2_field').val(res.data.Persona.segundoapellido);
-                    $('#nombre1_field').val(res.data.Persona.primernombre);
-                    $('#nombre2_field').val(res.data.Persona.segundonombre);
-                    $('#fechaNac_field').val(res.data.Persona.fechanac);
-                    $('#sexo_field').val(res.data.Persona.sexo);
-                    $('#grupopoblacional_field').val(res.data.Juventudadulto
-                        .grupopoblacional);
-                    $('#aseguradora_field').val(res.data.Juventudadulto
-                        .aseguradora);
-                    $('#canalizacion_id').val(res.data.Juventudadulto
-                        .canalizacion_id);
-                    $('#barriovereda_field').val(res.data.Sociambiental
-                        .barriovereda);
-                    $('#direccion_field').val(res.data.Sociambiental.direccion);
-                    $('#telefono_field').val(res.data.Juventudadulto.telefono);
-                    $('#email_field').val(res.data.Juventudadulto.email);
-                    $('#nombreAcudiente_field').val(res.data.Familia.nombres);
-                    $('#telefonoAcudiente_field').val(res.data.Familia.celular);
+                    $('#tipodoc_select').val(p.tipodocumento);
+                    $('#apellido1_field').val(p.primerapellido);
+                    $('#apellido2_field').val(p.segundoapellido);
+                    $('#nombre1_field').val(p.primernombre);
+                    $('#nombre2_field').val(p.segundonombre);
+                    if (p.urgencia) {
+                        // 1. Intentamos asignar directamente si la instancia ya existe
+                        if (window.CKEDITOR && CKEDITOR.instances['PersonaUrgencia']) {
+                            CKEDITOR.instances['PersonaUrgencia'].setData(p.urgencia);
+                        } else {
+                            // 2. Si aún no está lista, esperamos al evento 'instanceReady'
+                            CKEDITOR.on('instanceReady', function(evt) {
+                                if (evt.editor.name === 'PersonaUrgencia') {
+                                    evt.editor.setData(p.urgencia);
+                                }
+                            });
+
+                            // 3. Fallback por si acaso (el textarea original)
+                            $('#Urgencia_field').val(p.urgencia);
+                        }
+                    }
+                    $('#caracterizacionaps_field').val(p.caracterizacionaps);
+                    /*$('#detecciontemprana_field').val(p.detecciontemprana);
+                    $('#rias_field').val(p.rias);
+                    $('#serviciosocial_field').val(p.serviciosocial);
+                    $('#ofertapic_field').val(p.ofertapic);
+                    $('#observacionpic_field').val(p.observacionpic);
+                    */
+
 
 
                     // Aquí puedes llenar más campos si la respuesta los incluye
@@ -888,7 +915,9 @@ $(document).ready(function() {
                     $('#telefono_field').val('');
                     $('#email_field').val('');
                     $('#nombreAcudiente_field').val('');
-                    $('#telefonoAcudiente').val('');
+                    $('#telefonoAcudiente_field').val('');
+                    $('#urgencia_field').val('');
+                    $('#caracterizacionaps_field').val('');
 
                 }
             },
@@ -899,6 +928,42 @@ $(document).ready(function() {
             }
         });
     });
+
+    $(function() {
+        nacimiento = null; // Aquí guardamos la fecha elegida
+
+        $('#fechaNac_field').daterangepicker({
+            singleDatePicker: true,
+            showDropdowns: true,
+            autoApply: true,
+            locale: {
+                format: 'YYYY-MM-DD',
+                applyLabel: "Aplicar",
+                cancelLabel: "Cancelar",
+                daysOfWeek: ["Do", "Lu", "Ma", "Mi", "Ju", "Vi", "Sa"],
+                monthNames: [
+                    "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
+                    "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
+                ],
+                firstDay: 1
+            }
+        }, function(start) {
+            nacimiento = start.toDate();
+            evaluarCampos();
+        });
+
+
+
+
+
+        // Si hay valor en el campo fecha, inicializar nacimiento y ejecutar evaluarCampo
+
+        var fechaInput = document.getElementById('fecha');
+        if (fechaInput && fechaInput.value) {
+            nacimiento = new Date(fechaInput.value);
+        }
+    });
+
 
 
     // Busca todos los radios con data-target
