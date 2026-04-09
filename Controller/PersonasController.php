@@ -107,10 +107,15 @@ class PersonasController extends AppController
 
 		if ($this->request->is('post') || $this->request->is('put')) {
 
+		// 1. Lógica de verificación de existencia (esto debe estar dentro del POST)
+        $doc = $this->request->data['Persona']['numerodoc'];
+        $personaExistente = $this->Persona->findByNumerodoc($doc);
+
 			if ($personaExistente) {
 
 				// El usuario existe: Asignamos el ID para que CakePHP haga un UPDATE en lugar de INSERT
 				$this->Persona->id = $personaExistente['Persona']['id'];
+				//debug($this->Persona->id);
 				$this->Session->setFlash(__('Usuario encontrado. Actualizando información existente.'), 'default', array('class' => 'success'));
 			} else {
 				// El usuario no existe: Preparamos para un nuevo registro
@@ -141,7 +146,7 @@ class PersonasController extends AppController
 		$this->loadModel('Sociambiental');
 		$this->autoRender = false;
 		$persona = $this->Persona->find('first', array(
-				'conditions' => array('Persona.numerodoc' => '1085273376'),
+				'conditions' => array('Persona.numerodoc' => $doc),
 				'fields' => array(
 					'Persona.id',
 					'Persona.tipodocumento',
@@ -155,7 +160,11 @@ class PersonasController extends AppController
 					'Persona.familia_id',
 					'Familia.id',
 					'Familia.sociambiental_id',
+					'Familia.sociambiental_id',
+					'Familia.nombres',
+					'Familia.celular',
 					'Sociambiental.id',
+					'Sociambiental.barriovereda',
 					'Sociambiental.direccion',
 					'Ubicacion.comuna',
 					'Ubicacion.microterritorio',

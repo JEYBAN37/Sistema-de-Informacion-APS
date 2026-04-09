@@ -859,10 +859,10 @@ $(document).ready(function() {
                     $('#barriovereda_field').val(res.data.Sociambiental
                         .barriovereda);
                     $('#direccion_field').val(res.data.Sociambiental.direccion);
-                    $('#telefono_field').val(res.data.telefono);
-                    $('#email_field').val(res.data.email);
-                    $('#nombreAcudiente_field').val(res.data.nombreAcudiente);
-                    $('#telefonoAcudiente_field').val(res.data.telefonoAcudiente);
+                    $('#telefono_field').val(res.data.Juventudadulto.telefono);
+                    $('#email_field').val(res.data.Juventudadulto.email);
+                    $('#nombreAcudiente_field').val(res.data.Familia.nombres);
+                    $('#telefonoAcudiente_field').val(res.data.Familia.celular);
 
 
                     // Aquí puedes llenar más campos si la respuesta los incluye

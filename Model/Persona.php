@@ -87,9 +87,12 @@ public $actsAs = array(
 public function beforeSave($options = array())
 	{
 		
-		if (isset($this->data[$this->alias]['vector']) && is_array($this->data[$this->alias]['vector'])) {
-			$this->data[$this->alias]['vector'] = implode(',', $this->data[$this->alias]['vector']);
+		if (isset($this->data[$this->alias]['ofertapic']) && is_array($this->data[$this->alias]['ofertapic'])) {
+			$this->data[$this->alias]['ofertapic'] = implode(',', $this->data[$this->alias]['ofertapic']);
 		}	
+		if (isset($this->data[$this->alias]['rias']) && is_array($this->data[$this->alias]['rias'])) {
+			$this->data[$this->alias]['rias'] = implode(',', $this->data[$this->alias]['rias']);
+		}
 
 		return true;
 	}
@@ -148,5 +151,7 @@ public function beforeSave($options = array())
 			'counterQuery' => ''
 		)
 	);
+
+	
 
 }
