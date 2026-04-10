@@ -765,37 +765,25 @@ echo $this->Form->input('fechaRegistro', [
             <label class="font-semibold">Observación de la oferta PIC</label>
             <?php echo $this->Form->input('observacionpic', ['label' => false, 'class' => 'ckeditor']); ?>
         </div>
-        <!-- Canalizacion APS -->
-        <div
-            class="flex flex-col md:flex-row justify-center md:justify-between col-span-1 md:col-span-2 text-md font-semibold my-6 mr-4">
-            <div class="flex items-center mb-4">
-                <label for="canalizacionaps" class="font-semibold">Realizar caracterización APS</label>
-            </div>
 
-            <div class="flex space-x-4 items-center justify-center md:justify-start mt-4 pr-0 md:pr-[10%]  md:mt-0 ">
-                <!-- Botón NO -->
-                <div>
-                    <input type="radio" name="data[Persona][caracterizacionaps]" id="canalizacionaps-no" value="0"
-                        class="hidden peer" data-target="canalizacionaps" data-show="false" checked />
-                    <!-- 👈 Por defecto NO -->
-                    <label for="canalizacionaps-no" class="px-12 py-2 rounded-lg border cursor-pointer hover:text-white hover:bg-teal-600
-                       peer-checked:bg-teal-600 peer-checked:text-white">
-                        NO
-                    </label>
-                </div>
-
-                <!-- Botón SÍ -->
-                <div>
-                    <input type="radio" name="data[Persona][caracterizacionaps]" id="canalizacionaps-si" value="1"
-                        data-target="canalizacionaps" data-show="true" class="hidden peer cursor-pointer" />
-                    <label for="canalizacionaps-si" class="px-12 py-2 rounded-lg border hover:bg-teal-600 cursor-pointer hover:text-white
-                       peer-checked:bg-teal-600 peer-checked:text-white">
-                        SI
-                    </label>
-                </div>
-            </div>
+        <div class="mb-4">
+            <label class="text-sm font-semibold text-gray-600">Estado de Registro en APS:</label>
+            <?php 
+        echo $this->Form->input('caracterizacionaps', [
+            'type' => 'text',
+            'id' => 'caracterizacionaps_info',
+            'readonly' => 'readonly',
+            'label' => false,
+            'class' => 'bg-gray-50 border border-gray-200 rounded p-2 w-full text-gray-500 font-mono',
+            'placeholder' => 'Pendiente...'
+        ]); 
+    ?>
         </div>
+
+
+
     </div>
+
 
 
 
@@ -882,7 +870,69 @@ $(document).ready(function() {
                             $('#Urgencia_field').val(p.urgencia);
                         }
                     }
-                    $('#caracterizacionaps_field').val(p.caracterizacionaps);
+
+                    if (p.detecciontemprana) {
+                        // 1. Intentamos asignar directamente si la instancia ya existe
+                        if (window.CKEDITOR && CKEDITOR.instances[
+                                'PersonaDetecciontemprana']) {
+                            CKEDITOR.instances['PersonaDetecciontemprana'].setData(p
+                                .detecciontemprana);
+                        } else {
+                            // 2. Si aún no está lista, esperamos al evento 'instanceReady'
+                            CKEDITOR.on('instanceReady', function(evt) {
+                                if (evt.editor.name ===
+                                    'PersonaDetecciontemprana') {
+                                    evt.editor.setData(p.detecciontemprana);
+                                }
+                            });
+
+                            // 3. Fallback por si acaso (el textarea original)
+                            $('#urgencia_field').val(p.urgencia);
+                        }
+                    }
+                    if (p.serviciosocial) {
+                        // 1. Intentamos asignar directamente si la instancia ya existe
+                        if (window.CKEDITOR && CKEDITOR.instances[
+                                'PersonaServiciosocial']) {
+                            CKEDITOR.instances['PersonaServiciosocial'].setData(p
+                                .serviciosocial);
+                        } else {
+                            // 2. Si aún no está lista, esperamos al evento 'instanceReady'
+                            CKEDITOR.on('instanceReady', function(evt) {
+                                if (evt.editor.name ===
+                                    'PersonaServiciosocial') {
+                                    evt.editor.setData(p.serviciosocial);
+                                }
+                            });
+
+                            // 3. Fallback por si acaso (el textarea original)
+                            $('#serviciosocial_field').val(p.urgencia);
+                        }
+                    }
+                    if (p.observacionpic) {
+                        // 1. Intentamos asignar directamente si la instancia ya existe
+                        if (window.CKEDITOR && CKEDITOR.instances[
+                                'PersonaObservacionpic']) {
+                            CKEDITOR.instances['PersonaObservacionpic'].setData(p
+                                .observacionpic);
+                        } else {
+                            // 2. Si aún no está lista, esperamos al evento 'instanceReady'
+                            CKEDITOR.on('instanceReady', function(evt) {
+                                if (evt.editor.name ===
+                                    'PersonaObservacionpic') {
+                                    evt.editor.setData(p.observacionpic);
+                                }
+                            });
+
+                            // 3. Fallback por si acaso (el textarea original)
+                            $('#observacionpic_field').val(p.observacionpic);
+                        }
+                    }
+                    $('#caracterizacionaps_info').val(p.caracterizacionaps ? p
+                        .caracterizacionaps :
+                        'Persona Caracterizada por EBS id_familia:' + p
+                        .familia_id);
+                    $('#caracterizacionaps_info').attr('readonly', true);
                     /*$('#detecciontemprana_field').val(p.detecciontemprana);
                     $('#rias_field').val(p.rias);
                     $('#serviciosocial_field').val(p.serviciosocial);
@@ -917,7 +967,7 @@ $(document).ready(function() {
                     $('#nombreAcudiente_field').val('');
                     $('#telefonoAcudiente_field').val('');
                     $('#urgencia_field').val('');
-                    $('#caracterizacionaps_field').val('');
+                    $('#caracterizacionaps_info').val('Pendiente por Caracterizar');
 
                 }
             },
@@ -976,15 +1026,7 @@ $(document).ready(function() {
                 target.style.display = show ? 'block' : 'none';
             }
         });
-        // Mostrar/ocultar al cargar la página según el radio seleccionado
-        if (radio.checked) {
-            var targetId = radio.getAttribute('data-target');
-            var show = radio.getAttribute('data-show') === 'true';
-            var target = document.getElementById(targetId);
-            if (target) {
-                target.style.display = show ? 'block' : 'none';
-            }
-        }
+
     });
 
     // 2. Inicialización de Choices.js para los select múltiples

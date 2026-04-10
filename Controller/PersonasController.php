@@ -110,10 +110,15 @@ class PersonasController extends AppController
 		// 1. Lógica de verificación de existencia (esto debe estar dentro del POST)
         $doc = $this->request->data['Persona']['numerodoc'];
         $personaExistente = $this->Persona->findByNumerodoc($doc);
+
+	if (!$personaExistente) {
+            // REGLA: Si el documento NO existe, se marca como 1
+            $this->request->data['Persona']['caracterizacionaps'] = 'Caracterizar';
+            $this->Persona->create();
+        } 
+
 		debug($this->request->data);
 			if ($personaExistente) {
-				
-
 				// El usuario existe: Asignamos el ID para que CakePHP haga un UPDATE en lugar de INSERT
 				$this->Persona->id = $personaExistente['Persona']['id'];
 				debug($this->Persona->id);
@@ -172,11 +177,13 @@ class PersonasController extends AppController
 					'Persona.telefonoAcudiente',
 					'Persona.urgencia',
 					'Persona.caracterizacionaps',
-					/*'Persona.detecciontemprana',
-					'Persona.rias',
+					'Persona.detecciontemprana',
 					'Persona.serviciosocial',
-					'Persona.ofertapic',
 					'Persona.observacionpic',
+					/*'Persona.rias',				
+
+					'Persona.ofertapic',
+					
 					*/
 
 					'Persona.familia_id',
