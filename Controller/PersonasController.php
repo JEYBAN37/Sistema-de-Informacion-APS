@@ -110,14 +110,29 @@ class PersonasController extends AppController
 		// 1. Lógica de verificación de existencia (esto debe estar dentro del POST)
         $doc = $this->request->data['Persona']['numerodoc'];
         $personaExistente = $this->Persona->findByNumerodoc($doc);
+		
+       
+			//  Obtener la fecha de nacimiento del formulario
+        $fechaNacimiento = $this->request->data['Persona']['fechanac'];
+
+        if (!empty($fechaNacimiento)) {
+            // 2. Calcular la edad
+            $fechaNac = new DateTime($fechaNacimiento);
+            $hoy = new DateTime(); // Fecha actual (2026-04-10)
+            $edadIntervalo = $hoy->diff($fechaNac);
+            $edad = $edadIntervalo->y; // Extraer solo los años
+
+            // 3. Asignar al array de datos para que se guarde en la columna 'edad'
+            $this->request->data['Persona']['edad'] = $edad;
+        }
 
 	if (!$personaExistente) {
             // REGLA: Si el documento NO existe, se marca como 1
             $this->request->data['Persona']['caracterizacionaps'] = 'Caracterizar';
-            $this->Persona->create();
+            
         } 
 
-		debug($this->request->data);
+		//debug($this->request->data);
 			if ($personaExistente) {
 				// El usuario existe: Asignamos el ID para que CakePHP haga un UPDATE en lugar de INSERT
 				$this->Persona->id = $personaExistente['Persona']['id'];
@@ -131,6 +146,7 @@ class PersonasController extends AppController
 
 			// 2. Guardar los datos (ya sea nuevo o actualización)
 			if ($this->Persona->save($this->request->data)) {
+				$this->Session->setFlash(__('Registro guardado con éxito. Edad calculada: ' . $edad . ' años.'));
 				// llamar al modele juventud aduttosl
 
 
@@ -142,7 +158,23 @@ class PersonasController extends AppController
 		}
 		$canalizaciones = $this->Canalizacion->find('list');
 		$this->set(compact('canalizaciones'));
+		$this->request->data = $this->transformPersonaData($this->request->data);
 	}
+		private function transformPersonaData($data) {
+			// Transformar RIAS: de "Opción 1, Opción 2" a ["Opción 1", "Opción 2"]
+			if (!empty($data['Persona']['rias'])) {
+				$data['Persona']['rias'] = array_map('trim', explode(',', $data['Persona']['rias']));
+			}
+
+			// Transformar Oferta PIC
+			if (!empty($data['Persona']['ofertapic'])) {
+				$data['Persona']['ofertapic'] = array_map('trim', explode(',', $data['Persona']['ofertapic']));
+			}
+
+
+
+				return $data;
+    }
 
 	// Acción AJAX o búsqueda rápida para cargar datos en los inputs sin recargar toda la página
 	public function buscarPorDoc($doc = null)
@@ -169,6 +201,7 @@ class PersonasController extends AppController
 					'Persona.telefono',
 					'Persona.canalizacion_id',
 					'Persona.fechanac',
+					'Persona.edad',
 					'Persona.sexo',
 					'Persona.email',
 					'Persona.barriovereda',
@@ -180,12 +213,8 @@ class PersonasController extends AppController
 					'Persona.detecciontemprana',
 					'Persona.serviciosocial',
 					'Persona.observacionpic',
-					/*'Persona.rias',				
-
+					'Persona.rias',
 					'Persona.ofertapic',
-					
-					*/
-
 					'Persona.familia_id',
 					'Familia.id',
 					'Familia.sociambiental_id',
@@ -241,5 +270,8 @@ class PersonasController extends AppController
 		} else {
 			return json_encode(array('success' => false));
 		}
+
+	
 	}
+	
 }

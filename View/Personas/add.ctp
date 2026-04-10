@@ -426,23 +426,44 @@ echo $this->Form->input('fechaRegistro', [
             </div>
 
             <!-- Fecha de Nacimiento -->
-            <div class="col-span-2 md:col-span-2 text-md font-semibold my-4 mb-6 md:mr-4">
-                <div class="flex items-center">
+            <div class="col-span-2 md:col-span-1 text-md font-semibold mt-4 mb-6">
+                <div class="flex items-center mb-4">
                     <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">7</span>
                     <label for="resultadoEcomapa" class="font-semibold">Fecha de nacimiento</label>
                     <p class="text-red-600">*</p>
                 </div>
                 <div class="col-span-2 text-md font-semibold mt-6">
-                    <div class="flex flex-col w-full">
+                    <div class="flex items-center mb-4">
                         <input type="text" name="data[Persona][fechanac]" id="fechaNac_field" ,
                             class="border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400 w-full" ""
-                            placeholder="Selecciona rango de fecha" />
+                            placeholder="AAAA-MM-DD" autocomplete="off" />
+
                         <span class="text-sm text-red-600 ">
                             <?= $this->Form->error('fechanac') ?>
                         </span>
                     </div>
 
                 </div>
+            </div>
+            <!-- Edad -->
+            <div class="col-span-2 md:col-span-1 text-md font-semibold mt-4 mb-6">
+                <div class="flex items-center mb-4">
+                    <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">7.1</span>
+                    <label for="edad" class="font-semibold">Edad en años</label>
+                </div>
+                <?php
+				echo $this->Form->input('edad', [
+					'label' => false,
+					'uppercase' => true,
+					'class' => 'border border-gray-300 rounded-lg w-full p-2 focus:outline-none  focus:ring-1 focus:ring-blue-500 focus:border-blue-500 borde azul  mt-2 font-semibold text-gray-700  text-sm focus:text-gray-900',
+					'error' => false,
+                    'id' => 'edad_field',
+				]);
+
+				if (!empty($this->Form->error('segundonombre'))) {
+					echo '<div class="text-red-600 text-md mt-1 font-semibold">' . $this->Form->error('segundonombre') . '</div>';
+				}
+				?>
             </div>
             <!-- Sexo -->
 
@@ -831,12 +852,38 @@ $(document).ready(function() {
                     msg.html(
                         '<span class="text-green-600 font-bold">✓ Usuario encontrado. Se actualizará el registro existente.</span>'
                     );
+                    // --- PROCESAR RIAS ---
+                    if (typeof choices_rias !== 'undefined') {
+                        // 1. Siempre limpiar selecciones previas
+                        choices_rias.removeActiveItems();
+
+                        if (p.rias && p.rias.trim() !== "") {
+                            // 2. Convertir string "Opción 1, Opción 2" a Array ["Opción 1", "Opción 2"]
+                            var arrayRias = p.rias.split(', ');
+                            // 3. Forzar al plugin a mostrar las burbujas
+                            choices_rias.setChoiceByValue(arrayRias);
+                        }
+                    }
+
+                    // --- PROCESAR OFERTA PIC ---
+                    if (typeof choices_pic !== 'undefined') {
+                        choices_pic.removeActiveItems();
+
+                        if (p.ofertapic && p.ofertapic.trim() !== "") {
+                            var arrayPic = p.ofertapic.split(', ');
+                            choices_pic.setChoiceByValue(arrayPic);
+                        }
+                    }
+
+                    // 2. Limpiar los valores de los selects originales
+                    //$('#rias_select').val([]);
+                    // $('#pic_select').val([]);
                     $('#grupopoblacional_field').val(j.grupopoblacional || p
                         .grupopoblacional);
                     $('#aseguradora_field').val(j.aseguradora || p.aseguradora);
                     $('#telefono_field').val(j.telefono || p.telefono);
                     $('#canalizacion_id').val(j.canalizacion_id || p.canalizacion_id);
-                    $('#fechaNac_field').val(j.fechanac || p.fechanac);
+                    //$('#fechaNac_field').val(j.fechanac || p.fechanac);
                     $('#sexo_field').val(j.sexo || p.sexo);
                     $('#email_field').val(j.email || p.email);
 
@@ -854,6 +901,18 @@ $(document).ready(function() {
                     $('#apellido2_field').val(p.segundoapellido);
                     $('#nombre1_field').val(p.primernombre);
                     $('#nombre2_field').val(p.segundonombre);
+                    $('#edad_field').val(p.edad);
+                    if (p.fechanac) {
+                        // 1. Asigna el valor al input
+                        $('#fechaNac_field').val(p.fechanac);
+
+                        // 2. Actualiza la instancia del calendario
+                        var drp = $('#fechaNac_field').data('daterangepicker');
+                        if (drp) {
+                            drp.setStartDate(p.fechanac);
+                            drp.setEndDate(p.fechanac);
+                        }
+                    }
                     if (p.urgencia) {
                         // 1. Intentamos asignar directamente si la instancia ya existe
                         if (window.CKEDITOR && CKEDITOR.instances['PersonaUrgencia']) {
@@ -933,12 +992,15 @@ $(document).ready(function() {
                         'Persona Caracterizada por EBS id_familia:' + p
                         .familia_id);
                     $('#caracterizacionaps_info').attr('readonly', true);
-                    /*$('#detecciontemprana_field').val(p.detecciontemprana);
-                    $('#rias_field').val(p.rias);
-                    $('#serviciosocial_field').val(p.serviciosocial);
-                    $('#ofertapic_field').val(p.ofertapic);
-                    $('#observacionpic_field').val(p.observacionpic);
-                    */
+                    // --- Lógica para RIAS ---
+                    if (p.rias) {
+                        choices_rias.setChoiceByValue(p.rias); // p.rias ya es un Array
+                    }
+
+                    if (p.ofertapic) {
+                        choices_rias.setChoiceByValue(p.ofertapic); // p.rias ya es un Array
+                    }
+
 
 
 
@@ -966,8 +1028,16 @@ $(document).ready(function() {
                     $('#email_field').val('');
                     $('#nombreAcudiente_field').val('');
                     $('#telefonoAcudiente_field').val('');
-                    $('#urgencia_field').val('');
-                    $('#caracterizacionaps_info').val('Pendiente por Caracterizar');
+                    // Limpieza de CKEditors
+                    if (window.CKEDITOR) {
+                        ['PersonaUrgencia', 'PersonaDetecciontemprana',
+                            'PersonaServiciosocial', 'PersonaObservacionpic'
+                        ].forEach(id => {
+                            if (CKEDITOR.instances[id]) CKEDITOR.instances[id]
+                                .setData('');
+                        });
+                    }
+                    $('#caracterizacionaps_info').val('Pendiente por Caracterizar');;
 
                 }
             },
@@ -985,6 +1055,7 @@ $(document).ready(function() {
         $('#fechaNac_field').daterangepicker({
             singleDatePicker: true,
             showDropdowns: true,
+            autoUpdateInput: true,
             autoApply: true,
             locale: {
                 format: 'YYYY-MM-DD',
@@ -1002,6 +1073,23 @@ $(document).ready(function() {
             evaluarCampos();
         });
 
+        function evaluarCampos() {
+            var fechaNac = $('#fechaNac_field').val();
+            if (fechaNac) {
+                var hoy = new Date();
+                var cumple = new Date(fechaNac);
+                var edad = hoy.getFullYear() - cumple.getFullYear();
+                var m = hoy.getMonth() - cumple.getMonth();
+
+                if (m < 0 || (m === 0 && hoy.getDate() < cumple.getDate())) {
+                    edad--;
+                }
+
+                // Mostrar edad inmediatamente en el input
+                $('#edad_field').val(edad);
+            }
+        }
+
 
 
 
@@ -1016,18 +1104,18 @@ $(document).ready(function() {
 
 
 
-    // Busca todos los radios con data-target
-    document.querySelectorAll('input[type="radio"][data-target]').forEach(function(radio) {
-        radio.addEventListener('change', function() {
-            var targetId = radio.getAttribute('data-target');
-            var show = radio.getAttribute('data-show') === 'true';
-            var target = document.getElementById(targetId);
-            if (target) {
-                target.style.display = show ? 'block' : 'none';
-            }
-        });
 
-    });
+
+    const options = {
+        searchEnabled: true,
+        searchChoices: true,
+        removeItemButton: false,
+        itemSelectText: '',
+        shouldSort: false,
+        renderChoiceLimit: -1, // Sin límite de renderizado
+        searchResultLimit: 20, // Puedes aumentar este valor si tienes muchos resultados
+        searchPlaceholderValue: "Escriba para filtrar...",
+    };
 
     // 2. Inicialización de Choices.js para los select múltiples
     const choicesOptions = {
@@ -1045,7 +1133,7 @@ $(document).ready(function() {
         itemSelectText: '',
         shouldSort: false,
         searchPlaceholderValue: "Escriba para filtrar...",
-        maxItemCount: 3, // Límite a 3 items
+        maxItemCount: -1, // Sin límite
         removeItems: true, // Permite quitar seleccionados
         duplicateItemsAllowed: false,
         placeholder: true,
@@ -1064,6 +1152,20 @@ $(document).ready(function() {
         });
     });
 
+    // Aplicar estilos con Tailwind
+    const inner = document.querySelector('.choices__inner');
+    if (inner) {
+        inner.classList.add(
+            'bg-white', 'border', 'border-gray-300', 'rounded-lg',
+            'px-3', 'py-2', 'focus:ring', 'focus:ring-blue-200', 'text-gray-700'
+        );
+    }
+
+    const dropdown = document.querySelector('.choices__list--dropdown');
+    if (dropdown) {
+        dropdown.classList.add('bg-white', 'shadow-lg', 'rounded-lg', 'border', 'border-gray-200');
+    }
+
 
 
     // 3. Modal de Consentimiento
@@ -1072,7 +1174,72 @@ $(document).ready(function() {
         localStorage.setItem('consentAccepted', 'true');
     });
 
+    CKEDITOR.on('instanceReady', function(ev) {
+        var editor = ev.editor;
+        var textarea = editor.element.$;
+        var maxChars = textarea.getAttribute("data-maxlength"); // Lee el límite de cada campo
+        maxChars = maxChars ? parseInt(maxChars) : 300; // Default 300 si no se define
 
+        // Crear un contador debajo del campo
+        var counter = document.createElement("div");
+        counter.className = "text-gray-600 mt-1 text-sm";
+        counter.id = "charCount_" + textarea.id;
+        textarea.parentNode.appendChild(counter);
+
+        function updateCount() {
+            var text = editor.getData().replace(/<[^>]*>/g, '');
+            var length = text.length;
+            var remaining = maxChars - length;
+
+            counter.innerHTML = "Caracteres usados: " + length + " / " + maxChars;
+
+            if (remaining < 0) {
+                counter.style.color = "red";
+                editor.setData(text.substring(0, maxChars));
+            } else {
+                counter.style.color = "gray";
+            }
+        }
+
+        // Bloquear si excede
+        editor.on('key', function(evt) {
+            var text = editor.getData().replace(/<[^>]*>/g, '');
+            if (text.length >= maxChars && evt.data.keyCode != 8 && evt.data.keyCode != 46) {
+                evt.cancel();
+                alert("Máximo permitido: " + maxChars + " caracteres.");
+            }
+        });
+
+        // Bloquear pegar excedido
+        editor.on('paste', function(evt) {
+            var text = evt.data.dataValue.replace(/<[^>]*>/g, '');
+            if (text.length > maxChars) {
+                evt.cancel();
+                alert("No puedes pegar más de " + maxChars + " caracteres.");
+            }
+        });
+
+        editor.on('key', updateCount);
+        editor.on('paste', updateCount);
+        editor.on('change', updateCount);
+
+        updateCount(); // inicializar contador
+    });
+
+    // Detectar si el usuario intenta retroceder con la flecha del navegador
+    window.addEventListener('popstate', function(event) {
+        if (confirm(
+                '¿Está seguro que desea salir de la página? Se pueden perder los cambios no guardados.'
+            )) {
+            window.location.href = 'index'; // Redirigir a la página deseada
+        } else {
+            history.pushState(null, null, location.href); // Mantener en la página actual
+        }
+    });
+
+
+    // Prevenir retroceso con la flecha del navegador (mejor experiencia)
+    history.pushState(null, null, location.href);
 
 
 
