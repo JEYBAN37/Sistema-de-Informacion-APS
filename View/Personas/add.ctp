@@ -801,6 +801,22 @@ echo $this->Form->input('fechaRegistro', [
     ?>
         </div>
 
+        <div class="mb-4">
+            <label class="text-sm font-semibold text-gray-600">id persona:</label>
+            <?php 
+             echo $this->Form->input('juventudadulto_id', [
+            'type' => 'text',
+            'id' => 'juventudadulto_id_field',
+            'readonly' => 'readonly',
+            'label' => false,
+            'class' => 'bg-gray-50 border border-gray-200 rounded p-2 w-full text-gray-500 font-mono',
+            'placeholder' => 'Pendiente...'
+             ]); 
+            ?>
+        </div>
+
+
+
 
 
     </div>
@@ -878,6 +894,7 @@ $(document).ready(function() {
                     // 2. Limpiar los valores de los selects originales
                     //$('#rias_select').val([]);
                     // $('#pic_select').val([]);
+                    $('#juventudadulto_id_field').val(j.id);
                     $('#grupopoblacional_field').val(j.grupopoblacional || p
                         .grupopoblacional);
                     $('#aseguradora_field').val(j.aseguradora || p.aseguradora);
@@ -891,6 +908,7 @@ $(document).ready(function() {
                     $('#direccion_field').val(s.direccion || p.direccion);
                     $('#nombreAcudiente_field').val(f.nombres || p.nombreAcudiente);
                     $('#telefonoAcudiente_field').val(f.celular || p.telefonoAcudiente);
+                    $('#familia_id_fiel').val(f.id);
 
                     $('#persona_id_field').val(p.id);
                     $('#numerodoc_field').val(p.numerodoc).attr(
@@ -1010,8 +1028,10 @@ $(document).ready(function() {
                     msg.html(
                         '<span class="text-blue-600 font-bold">ℹ Usuario no está en la tabla personas, por favor ingresar la información manualmente.</span>'
                     );
+
                     $('#persona_id_field').val('');
                     $('#numerodoc_field').val(doc).removeAttr('readonly');
+                    $('#juventudadulto_id_fiel').val('');
                     $('#tipodoc_select').val('');
                     $('#apellido1_field').val('').focus();
                     $('#apellido2_field').val('');
@@ -1026,6 +1046,7 @@ $(document).ready(function() {
                     $('#direccion_field').val('');
                     $('#telefono_field').val('');
                     $('#email_field').val('');
+                    $('#familia_id_fiel').val('');
                     $('#nombreAcudiente_field').val('');
                     $('#telefonoAcudiente_field').val('');
                     // Limpieza de CKEditors

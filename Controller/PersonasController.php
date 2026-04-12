@@ -104,6 +104,7 @@ class PersonasController extends AppController
 		$this->loadModel('Familia');
 		$this->loadModel('Canalizacion');
 		$this->loadModel('Sociambiental');
+		$this->loadModel('Juventudadulto');
 
 		if ($this->request->is('post') || $this->request->is('put')) {
 
@@ -114,6 +115,22 @@ class PersonasController extends AppController
        
 			//  Obtener la fecha de nacimiento del formulario
         $fechaNacimiento = $this->request->data['Persona']['fechanac'];
+		//debug($this->request->data);
+		//exit;
+
+		if (!empty($this->request->data['Persona'])) {
+            $dataSA = $this->request->data['Persona'];
+
+            // Si la persona existe y tiene una familia con ficha socioambiental, asignamos el ID para UPDATE
+            if ($personaExistente && !empty($personaExistente['Familia']['sociambiental_id'])) {
+                $this->Sociambiental->id = $personaExistente['Familia']['sociambiental_id'];
+				//$this->Juventudadultos->id = $personaExistente['Juventudadulto']['id'];
+				// Guardamos Sociambiental
+            	$this->Sociambiental->save($dataSA);
+            } 
+        }
+
+
 
         if (!empty($fechaNacimiento)) {
             // 2. Calcular la edad
@@ -217,16 +234,17 @@ class PersonasController extends AppController
 					'Persona.ofertapic',
 					'Persona.familia_id',
 					'Familia.id',
-					'Familia.sociambiental_id',
-					'Familia.sociambiental_id',
+					'Familia.sociambiental_id',				
 					'Familia.nombres',
 					'Familia.celular',
 					'Sociambiental.id',
 					'Sociambiental.barriovereda',
 					'Sociambiental.direccion',
+
 					'Ubicacion.comuna',
 					'Ubicacion.microterritorio',
 					'Juventudadulto.numerodoc',
+					'Juventudadulto.id',
 					'Juventudadulto.aseguradora',
 					'Juventudadulto.telefono',
 					'Juventudadulto.email',
