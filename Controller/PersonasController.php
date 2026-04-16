@@ -104,7 +104,7 @@ class PersonasController extends AppController
 		$this->loadModel('Familia');
 		$this->loadModel('Canalizacion');
 		$this->loadModel('Sociambiental');
-		$this->loadModel('Juventudadulto');
+		//$this->loadModel('Juventudadulto');
 
 		if ($this->request->is('post') || $this->request->is('put')) {
 
@@ -244,7 +244,7 @@ class PersonasController extends AppController
 					'Ubicacion.comuna',
 					'Ubicacion.microterritorio',
 					'Juventudadulto.numerodoc',
-					'Juventudadulto.id',
+					//'Juventudadulto.id',
 					'Juventudadulto.aseguradora',
 					'Juventudadulto.telefono',
 					'Juventudadulto.email',
