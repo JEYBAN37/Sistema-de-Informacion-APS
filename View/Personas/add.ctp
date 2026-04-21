@@ -1,4 +1,4 @@
-<?php $this->layout = 'default_familia' ?>
+<?php $this->layout = 'default_canalizacion' ?>
 <?php echo $this->Html->script('ckeditor/ckeditor'); ?>
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css" />
@@ -24,8 +24,7 @@
 <?php echo $this->Form->create('Persona', [
     'class' => 'space-y-6', 'id' => 'formPersona']); 
     // se utiliza para llamar el id responsable donde sea necesario
-$nombreUsuario = isset($_SESSION['Auth']['User']['responsable_id']) ? $_SESSION['Auth']['User']['responsable_id'] : '';
-echo $this->Form->input('responsable_id', array('value' => $nombreUsuario, 'type' => 'hidden'));
+
 echo $this->Form->hidden('aceptaformulario', array(
     'value' => 'Si acepta'
 ));
@@ -249,6 +248,11 @@ $optionCanalizacion =
 		
 ];
 
+ $estadoOption = [    
+	'2.Tramite' => '2.Tramite',
+    '1.Resuelta' => '1.Canalización Resuelta',		
+];
+
     
     ?>
 <?php
@@ -376,9 +380,7 @@ echo $this->Form->input('fechaRegistro', [
 
 				]);
 
-				if (!empty($this->Form->error('segundoapellido'))) {
-					echo '<div class="text-red-600 text-md mt-1 font-semibold">' . $this->Form->error('segundoapellido') . '</div>';
-				}
+				
 				?>
             </div>
 
@@ -419,9 +421,7 @@ echo $this->Form->input('fechaRegistro', [
                     'id' => 'nombre2_field',
 				]);
 
-				if (!empty($this->Form->error('segundonombre'))) {
-					echo '<div class="text-red-600 text-md mt-1 font-semibold">' . $this->Form->error('segundonombre') . '</div>';
-				}
+				
 				?>
             </div>
 
@@ -438,9 +438,11 @@ echo $this->Form->input('fechaRegistro', [
                             class="border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400 w-full" ""
                             placeholder="AAAA-MM-DD" autocomplete="off" />
 
-                        <span class="text-sm text-red-600 ">
-                            <?= $this->Form->error('fechanac') ?>
-                        </span>
+                        <?php if (!empty($this->Form->error('fechanac'))) {
+                            echo '<div class="text-red-600 text-md mt-1 font-semibold">' .
+                                $this->Form->error('fechanac') . '</div>';
+                            }
+                            ?>
                     </div>
 
                 </div>
@@ -460,9 +462,7 @@ echo $this->Form->input('fechaRegistro', [
                     'id' => 'edad_field',
 				]);
 
-				if (!empty($this->Form->error('segundonombre'))) {
-					echo '<div class="text-red-600 text-md mt-1 font-semibold">' . $this->Form->error('segundonombre') . '</div>';
-				}
+				
 				?>
             </div>
             <!-- Sexo -->
@@ -485,8 +485,8 @@ echo $this->Form->input('fechaRegistro', [
 				]);
 
 
-				if (!empty($this->Form->error('aseguradora'))) {
-					echo '<div class="text-red-600 text-md mt-1 font-semibold">' . $this->Form->error('aseguradora') . '</div>';
+				if (!empty($this->Form->error('sexo'))) {
+					echo '<div class="text-red-600 text-md mt-1 font-semibold">' . $this->Form->error('sexo') . '</div>';
 				}
 				?>
             </div>
@@ -658,9 +658,7 @@ echo $this->Form->input('fechaRegistro', [
                     'id' => 'email_field'
 				]);
 
-				if (!empty($this->Form->error('email'))) {
-					echo '<div class="text-red-600 text-md mt-1 font-semibold">' . $this->Form->error('email') . '</div>';
-				}
+				
 				?>
             </div>
 
@@ -680,9 +678,7 @@ echo $this->Form->input('fechaRegistro', [
                     'id' => 'nombreAcudiente_field'
 				]);
 
-				if (!empty($this->Form->error('nombreAcudiente'))) {
-					echo '<div class="text-red-600 text-md mt-1 font-semibold">' . $this->Form->error('nombreAcudiente') . '</div>';
-				}
+				
 				?>
             </div>
 
@@ -708,9 +704,7 @@ echo $this->Form->input('fechaRegistro', [
 					'oninput' => "this.value = this.value.replace(/\\D/g,'').slice(0,10); document.getElementById('telefonoError').style.display = (/^[0-9]{1,10}$/.test(this.value) || this.value.length===0) ? 'none' : 'block';"
 				]);
 
-				if (!empty($this->Form->error('telefonoAcudiente'))) {
-					echo '<div class="text-red-600 text-md mt-1 font-semibold">' . $this->Form->error('telefonoAcudiente') . '</div>';
-				}
+				
 				?>
                 <div id="telefonoError" class="text-red-600 text-md mt-1 font-semibold" style="display:none;">
                     Ingrese solo números (máximo 10 dígitos).
@@ -773,33 +767,79 @@ echo $this->Form->input('fechaRegistro', [
     </div>
 
     <div class="bg-white shadow-lg rounded-xl p-6 border-l-4 border-orange-500">
-        <h3 class="text-lg font-bold text-orange-800 mb-4">Canalización a Oferta PIC</h3>
-        <?php echo $this->Form->input('ofertapic', ['type' => 'select',
-         'multiple' => true,
-          'options' => $optionPic, 
-          'id' => 'pic_select',
-           'label' => false]); 
+        <div class="col-span-2 md:col-span-1 text-md font-semibold my-6 mb-6 md:mr-4">
+            <div class="flex items-center mb-4">
+                <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">10</span>
+                <label for="estado" class="font-semibold">Registre la canalización a oferta PIC</label>
+                <p class="text-red-600">*</p>
+            </div>
+
+            <?php echo $this->Form->input('ofertapic', [
+                'type' => 'select',
+                'multiple' => true,
+                'options' => $optionPic, 
+                 'id' => 'pic_select',
+                'label' => false,
+                'empty'=> false]); 
+
+           if (!empty($this->Form->error('ofertapic'))) {
+					echo '<div class="text-red-600 text-md mt-1 font-semibold">' . $this->Form->error('ofertapic') . '</div>';
+				}
            ?>
+        </div>
 
-        <div class="mt-4">
+        <div class="col-span-2 md:col-span-1 text-md font-semibold my-6 mb-6 md:mr-4">
+            <div class="flex items-center mb-4">
 
-            <label class="font-semibold">Observación de la oferta PIC</label>
+                <label for="estado" class="font-semibold">Observación de la oferta PIC</label>
+                <p class="text-red-600">*</p>
+            </div>
+
+
             <?php echo $this->Form->input('observacionpic', ['label' => false, 'class' => 'ckeditor']); ?>
+        </div>
+
+        <!-- estado -->
+        <div class="col-span-2 md:col-span-1 text-md font-semibold my-6 mb-6 md:mr-4">
+            <div class="flex items-center mb-4">
+
+                <label for="estado" class="font-semibold">estado</label>
+                <p class="text-red-600">*</p>
+            </div>
+
+            <?php
+				echo $this->Form->input('estado', [
+					'type' => 'select',					
+					'options' => $estadoOption,
+					'class' => 'border border-gray-300 rounded-lg w-full p-2 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 text-sm text-gray-500 focus:text-gray-800',
+					'label' => '',                   
+					'empty' => 'Seleccione el estado de la canalización',
+					'error' => false, // No mostrar error aquí
+                   
+				]);
+
+
+				if (!empty($this->Form->error('aseguradora'))) {
+					echo '<div class="text-red-600 text-md mt-1 font-semibold">' . $this->Form->error('aseguradora') . '</div>';
+				}
+				?>
         </div>
 
         <div class="mb-4">
             <label class="text-sm font-semibold text-gray-600">Estado de Registro en APS:</label>
             <?php 
-        echo $this->Form->input('caracterizacionaps', [
+            echo $this->Form->input('caracterizacionaps', [
             'type' => 'text',
             'id' => 'caracterizacionaps_info',
             'readonly' => 'readonly',
             'label' => false,
             'class' => 'bg-gray-50 border border-gray-200 rounded p-2 w-full text-gray-500 font-mono',
             'placeholder' => 'Pendiente...'
-        ]); 
-    ?>
+             ]); 
+              ?>
         </div>
+
+
 
         <div class="mb-4">
             <label class="text-sm font-semibold text-gray-600">id persona:</label>
@@ -811,6 +851,29 @@ echo $this->Form->input('fechaRegistro', [
             'label' => false,
             'class' => 'bg-gray-50 border border-gray-200 rounded p-2 w-full text-gray-500 font-mono',
             'placeholder' => 'Pendiente...'
+             ]); 
+            ?>
+        </div>
+        <div class="mb-4">
+            <label class="text-sm font-semibold text-gray-600">id persona:</label>
+            <?php 
+             echo $this->Form->input('familia_id', [
+            'type' => 'text',
+            'id' => 'familia_id_field',
+            'label' => false,
+            'class' => 'bg-gray-50 border border-gray-200 rounded p-2 w-full text-gray-500 font-mono',
+             ]); 
+            ?>
+        </div>
+        <div class="mb-4">
+            <label class="text-sm font-semibold text-gray-600">id persona:</label>
+            <?php 
+             echo $this->Form->input('sociambiental_id', [
+            'type' => 'text',
+            'id' => 'sociambiental_id_field',
+            'label' => false,
+            'class' => 'bg-gray-50 border border-gray-200 rounded p-2 w-full text-gray-500 font-mono',
+
              ]); 
             ?>
         </div>
@@ -869,37 +932,40 @@ $(document).ready(function() {
                         '<span class="text-green-600 font-bold">✓ Usuario encontrado. Se actualizará el registro existente.</span>'
                     );
                     // --- PROCESAR RIAS ---
-                    if (typeof choices_rias !== 'undefined') {
-                        // 1. Siempre limpiar selecciones previas
-                        choices_rias.removeActiveItems();
+                    const picValues = p.ofertapic ?
+                        (Array.isArray(p.ofertapic) ? p.ofertapic : p.ofertapic.split(',')
+                            .map(v => v.trim())) : [];
 
-                        if (p.rias && p.rias.trim() !== "") {
-                            // 2. Convertir string "Opción 1, Opción 2" a Array ["Opción 1", "Opción 2"]
-                            var arrayRias = p.rias.split(', ');
-                            // 3. Forzar al plugin a mostrar las burbujas
-                            choices_rias.setChoiceByValue(arrayRias);
-                        }
+                    if (picValues.length) {
+                        choicesPic.setChoiceByValue(picValues);
                     }
 
-                    // --- PROCESAR OFERTA PIC ---
-                    if (typeof choices_pic !== 'undefined') {
-                        choices_pic.removeActiveItems();
+                    const riaValues = p.rias ?
+                        (Array.isArray(p.rias) ? p.rias : p.rias.split(',')
+                            .map(v => v.trim())) : [];
 
-                        if (p.ofertapic && p.ofertapic.trim() !== "") {
-                            var arrayPic = p.ofertapic.split(', ');
-                            choices_pic.setChoiceByValue(arrayPic);
-                        }
+                    if (riaValues.length) {
+                        choicesRias.setChoiceByValue(riaValues);
+                    }
+
+                    if (j.canalizacion_id || p
+                        .canalizacion_id) {
+                        choices_canalizacion_id.setChoiceByValue(String(j.canalizacion_id ||
+                            p
+                            .canalizacion_id));
                     }
 
                     // 2. Limpiar los valores de los selects originales
                     //$('#rias_select').val([]);
-                    // $('#pic_select').val([]);
+                    //$('#pic_select').val(p.ofertapic);
                     $('#juventudadulto_id_field').val(j.id);
+                    $('#familia_id_fiel').val(f.id);
+
                     $('#grupopoblacional_field').val(j.grupopoblacional || p
                         .grupopoblacional);
                     $('#aseguradora_field').val(j.aseguradora || p.aseguradora);
                     $('#telefono_field').val(j.telefono || p.telefono);
-                    $('#canalizacion_id').val(j.canalizacion_id || p.canalizacion_id);
+                    //$('#canalizacion_id').val(j.canalizacion_id || p.canalizacion_id);
                     //$('#fechaNac_field').val(j.fechanac || p.fechanac);
                     $('#sexo_field').val(j.sexo || p.sexo);
                     $('#email_field').val(j.email || p.email);
@@ -908,8 +974,7 @@ $(document).ready(function() {
                     $('#direccion_field').val(s.direccion || p.direccion);
                     $('#nombreAcudiente_field').val(f.nombres || p.nombreAcudiente);
                     $('#telefonoAcudiente_field').val(f.celular || p.telefonoAcudiente);
-                    $('#familia_id_fiel').val(f.id);
-
+                    $('#sociambiental_id_fiel').val(f.sociambiental_id);
                     $('#persona_id_field').val(p.id);
                     $('#numerodoc_field').val(p.numerodoc).attr(
                         'readonly',
@@ -1047,6 +1112,7 @@ $(document).ready(function() {
                     $('#telefono_field').val('');
                     $('#email_field').val('');
                     $('#familia_id_fiel').val('');
+                    $('#sociambiental_id_fiel').val('');
                     $('#nombreAcudiente_field').val('');
                     $('#telefonoAcudiente_field').val('');
                     // Limpieza de CKEditors
@@ -1144,8 +1210,9 @@ $(document).ready(function() {
         searchPlaceholderValue: "Escriba para filtrar...",
         itemSelectText: ''
     };
-    new Choices("#rias_select", choicesOptions);
-    new Choices("#pic_select", choicesOptions);
+    const choicesRias = new Choices("#rias_select", choicesOptions);
+    const choicesPic = new Choices("#pic_select", choicesOptions);
+
 
     const choices_canalizacion_id = new Choices("#canalizacion_id", {
         searchEnabled: true,

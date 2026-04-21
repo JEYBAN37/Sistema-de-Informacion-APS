@@ -8,6 +8,13 @@ App::uses('AppController', 'Controller');
  */
 class PersonasController extends AppController
 {
+ public function beforeFilter()
+	{
+		parent::beforeFilter();
+		// Permitir acceso a métodos JSON sin autenticación
+		$this->Auth->allow('add','buscarPorDoc');
+	}
+
 
 	/**
 	 * Components
@@ -104,30 +111,40 @@ class PersonasController extends AppController
 		$this->loadModel('Familia');
 		$this->loadModel('Canalizacion');
 		$this->loadModel('Sociambiental');
-		//$this->loadModel('Juventudadulto');
+		$this->loadModel('Juventudadulto');
 
 		if ($this->request->is('post') || $this->request->is('put')) {
 
 		// 1. Lógica de verificación de existencia (esto debe estar dentro del POST)
         $doc = $this->request->data['Persona']['numerodoc'];
-        $personaExistente = $this->Persona->findByNumerodoc($doc);
+        $personaExistente = $this->Persona->find('first', array(
+						'conditions' => array('Persona.numerodoc' => $doc),
+						'fields' => array('Persona.id')
+					));
 		
        
-			//  Obtener la fecha de nacimiento del formulario
+		//  Obtener la fecha de nacimiento del formulario
         $fechaNacimiento = $this->request->data['Persona']['fechanac'];
 		//debug($this->request->data);
-		//exit;
+		#exit;
 
 		if (!empty($this->request->data['Persona'])) {
             $dataSA = $this->request->data['Persona'];
-
-            // Si la persona existe y tiene una familia con ficha socioambiental, asignamos el ID para UPDATE
-            if ($personaExistente && !empty($personaExistente['Familia']['sociambiental_id'])) {
-                $this->Sociambiental->id = $personaExistente['Familia']['sociambiental_id'];
-				//$this->Juventudadultos->id = $personaExistente['Juventudadulto']['id'];
-				// Guardamos Sociambiental
-            	$this->Sociambiental->save($dataSA);
-            } 
+				if ($personaExistente) {
+					$this->Sociambiental->id = $dataSA['Familia']['sociambiental_id'];
+					
+					debug($dataSA);
+					exit;
+					$idJuventuAdulto = $this->Juventudadulto->find('first', array(
+						'conditions' => array('Juventudadulto.numerodoc' => $doc),
+						'fields' => array('Juventudadulto.id')
+					));
+					$this->Juventudadulto->id = $idJuventuAdulto['Juventudadulto']['id'];
+					
+					// Guardamos Sociambiental
+					$this->Juventudadulto->save($dataSA);
+					$this->Sociambiental->save($dataSA);
+				}
         }
 
 
@@ -153,7 +170,7 @@ class PersonasController extends AppController
 			if ($personaExistente) {
 				// El usuario existe: Asignamos el ID para que CakePHP haga un UPDATE en lugar de INSERT
 				$this->Persona->id = $personaExistente['Persona']['id'];
-				debug($this->Persona->id);
+
 				$this->Session->setFlash(__('Usuario encontrado. Actualizando información existente.'), 'default', array('class' => 'success'));
 			} else {
 				// El usuario no existe: Preparamos para un nuevo registro
@@ -166,16 +183,17 @@ class PersonasController extends AppController
 				$this->Session->setFlash(__('Registro guardado con éxito. Edad calculada: ' . $edad . ' años.'));
 				// llamar al modele juventud aduttosl
 
-
-				$this->Session->setFlash(__('La información ha sido guardada correctamente.'));
-				return $this->redirect(array('action' => 'index'));
+                $this->Session->setFlash('La Canalización se guradado con exito', 'flash_custom', array('class' => 'success', 'title' => 'El registro se ha completado correctamente'));
+				return $this->redirect(array('action' => 'add'));
 			} else {
-				$this->Session->setFlash(__('No se pudo guardar la información. Por favor, intente de nuevo.'));
+				    debug($this->Persona->validationErrors);
+				$this->Session->setFlash('El registro no fue guardado o esta pendiente un campo del formulario', 'flash_custom', array('class' => 'error', 'title' => 'Error al guardar el registro'));
 			}
 		}
+		
 		$canalizaciones = $this->Canalizacion->find('list');
 		$this->set(compact('canalizaciones'));
-		$this->request->data = $this->transformPersonaData($this->request->data);
+		
 	}
 		private function transformPersonaData($data) {
 			// Transformar RIAS: de "Opción 1, Opción 2" a ["Opción 1", "Opción 2"]
@@ -188,9 +206,7 @@ class PersonasController extends AppController
 				$data['Persona']['ofertapic'] = array_map('trim', explode(',', $data['Persona']['ofertapic']));
 			}
 
-
-
-				return $data;
+			return $data;
     }
 
 	// Acción AJAX o búsqueda rápida para cargar datos en los inputs sin recargar toda la página
@@ -204,7 +220,6 @@ class PersonasController extends AppController
 				'conditions' => array('Persona.numerodoc' => $doc),
 				'fields' => array(
 					'Persona.id',			
-					
 					'Persona.tipodocumento',
 					'Persona.numerodoc',
 					'Persona.primerapellido',
@@ -240,11 +255,10 @@ class PersonasController extends AppController
 					'Sociambiental.id',
 					'Sociambiental.barriovereda',
 					'Sociambiental.direccion',
-
 					'Ubicacion.comuna',
 					'Ubicacion.microterritorio',
 					'Juventudadulto.numerodoc',
-					//'Juventudadulto.id',
+					'Juventudadulto.id',
 					'Juventudadulto.aseguradora',
 					'Juventudadulto.telefono',
 					'Juventudadulto.email',
@@ -284,6 +298,7 @@ class PersonasController extends AppController
 			));
 
 		if ($persona) {
+			$persona = $this->transformPersonaData($persona);
 			return json_encode(array('success' => true, 'data' => $persona));
 		} else {
 			return json_encode(array('success' => false));
