@@ -151,9 +151,6 @@ class Juventudadulto extends AppModel
 			),
 		),
 		'canalizacion_id' => array(
-			'numeric' => array(
-				'rule' => array('numeric'),
-			),
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),
 				'message' => 'La IPS de canalizacion no debe estar vacío',

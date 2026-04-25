@@ -53,12 +53,12 @@ public $actsAs = array(
 			),
 		),
 
-		'estado' => array(
+		/*'estado' => array(
 			'notEmpty' => array(
 				'rule' => 'notEmpty',
 				'message' => 'Este campo no puede estar vacío',
 			),
-		),
+		),*/
 		'primernombre' => array(
 			'notEmpty' => array(
 				'rule' => 'notEmpty',
@@ -69,19 +69,24 @@ public $actsAs = array(
 				'message' => 'Este campo solo permite letras',
 			),
 		),
-		'ofertapic' => array(
+		/*'ofertapic' => array(
 			'multiple' => array(
-				'rule' => array('multiple', array('min' => 1)),
+				'rule' => array('multiple', array('min' => 0)),
 				'message' => 'El campo de sospecha maltrato es obligatorio',
 			),
 		),
 		'rias' => array(
 			'multiple' => array(
-				'rule' => array('multiple', array('min' => 1)),
+				'rule' => array('multiple', array('min' => 0)),
+				'message' => 'El campo de sospecha maltrato es obligatorio',
+			),
+		),*/
+		'canalizacionuno' => array(
+			'multiple' => array(
+				'rule' => array('multiple', array('min' => 0)),
 				'message' => 'El campo de sospecha maltrato es obligatorio',
 			),
 		),
-		
 		'sexo' => array(
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),
@@ -110,7 +115,7 @@ public $actsAs = array(
 				'message' => 'La IPS de canalizacion no debe estar vacío',
 			),
 		),
-		'direccion' => array(
+		/*'direccion' => array(
 			'alphaNumeric' => array(
 				'rule'     =>  array('notEmpty'),
 				'message'  =>  'La dirección no puede estar vacía',
@@ -119,8 +124,8 @@ public $actsAs = array(
 				//'last' => false, // Stop validation after this rule
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
-		),
-		'barriovereda' => array(
+		),*/
+		/*'barriovereda' => array(
 			'alphaNumeric' => array(
 				'rule'     =>  array('notEmpty'),
 				'message'  =>  'No se registra el barrio o corregimiento',
@@ -129,7 +134,7 @@ public $actsAs = array(
 				//'last' => false, // Stop validation after this rule
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
-		),
+		),*/
 		
 
 	);
@@ -190,6 +195,9 @@ public function beforeSave($options = array())
 		}	
 		if (isset($this->data[$this->alias]['rias']) && is_array($this->data[$this->alias]['rias'])) {
 			$this->data[$this->alias]['rias'] = implode(',', $this->data[$this->alias]['rias']);
+		}
+			if (isset($this->data[$this->alias]['canalizacionuno']) && is_array($this->data[$this->alias]['canalizacionuno'])) {
+			$this->data[$this->alias]['canalizacionuno'] = implode(',', $this->data[$this->alias]['canalizacionuno']);
 		}
 
 		return true;
