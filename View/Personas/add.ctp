@@ -286,12 +286,16 @@ echo $this->Form->input('fechaRegistro', [
 
 <div class="max-w-6xl mx-auto px-4">
     <div class="bg-white shadow-xl rounded-xl p-6 md:p-10 border border-gray-100">
-        <div class="flex items-center mb-6">
-            <i class="fa-solid fa-person text-teal-600 text-2xl bg-teal-50 p-3 rounded-lg"></i>
-            <h2 class="text-lg font-bold text-slate-700">Información de Identificación</h2>
-            <p class="text-sm text-slate-500">Complementa la información básica de la persona.</p>
-        </div>
 
+
+        <div class="flex items-center mb-4">
+            <i class="fa-solid fa-person text-teal-600 text-3xl bg-teal-100 p-3 rounded-lg"></i>
+            <div class="ml-4">
+                <h1 class="text-xl font-semibold">Información de Identificación</h1>
+                <p class="text-gray-500">Complementa la información básica de la persona.</p>
+            </div>
+
+        </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2">
             <!-- Tipo de Documento -->
@@ -426,7 +430,7 @@ echo $this->Form->input('fechaRegistro', [
             </div>
 
             <!-- Fecha de Nacimiento -->
-            <div class="col-span-2 md:col-span-1 text-md font-semibold mt-4 mb-6">
+            <div class="col-span-2 md:col-span-1 text-md font-semibold mt-4 mb-6 md:mr-4">
                 <div class="flex items-center mb-4">
                     <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">7</span>
                     <label for="resultadoEcomapa" class="font-semibold">Fecha de nacimiento</label>
@@ -447,6 +451,7 @@ echo $this->Form->input('fechaRegistro', [
 
                 </div>
             </div>
+
             <!-- Edad -->
             <div class="col-span-2 md:col-span-1 text-md font-semibold mt-4 mb-6">
                 <div class="flex items-center mb-4">
@@ -803,7 +808,7 @@ echo $this->Form->input('fechaRegistro', [
         <div class="col-span-2 md:col-span-1 text-md font-semibold my-6 mb-6 md:mr-4">
             <div class="flex items-center mb-4">
 
-                <label for="estado" class="font-semibold">estado</label>
+                <label for="estado" class="font-semibold">Estado canalizacion</label>
                 <p class="text-red-600">*</p>
             </div>
 
@@ -841,10 +846,8 @@ echo $this->Form->input('fechaRegistro', [
 
 
 
-        <div class="mb-4">
-            <label class="text-sm font-semibold text-gray-600">id persona:</label>
-            <?php 
-             echo $this->Form->input('juventudadulto_id', [
+        <?php 
+             echo $this->Form->hidden('juventudadulto_id', [
             'type' => 'text',
             'id' => 'juventudadulto_id_field',
             'readonly' => 'readonly',
@@ -853,22 +856,19 @@ echo $this->Form->input('fechaRegistro', [
             'placeholder' => 'Pendiente...'
              ]); 
             ?>
-        </div>
-        <div class="mb-4">
-            <label class="text-sm font-semibold text-gray-600">id persona:</label>
-            <?php 
-             echo $this->Form->input('familia_id', [
+
+
+        <?php 
+             echo $this->Form->hidden('familia_id', [
             'type' => 'text',
             'id' => 'familia_id_field',
             'label' => false,
             'class' => 'bg-gray-50 border border-gray-200 rounded p-2 w-full text-gray-500 font-mono',
              ]); 
             ?>
-        </div>
-        <div class="mb-4">
-            <label class="text-sm font-semibold text-gray-600">id persona:</label>
-            <?php 
-             echo $this->Form->input('sociambiental_id', [
+
+        <?php 
+             echo $this->Form->hidden('sociambiental_id', [
             'type' => 'text',
             'id' => 'sociambiental_id_field',
             'label' => false,
@@ -876,7 +876,6 @@ echo $this->Form->input('fechaRegistro', [
 
              ]); 
             ?>
-        </div>
 
 
 
@@ -899,6 +898,21 @@ echo $this->Form->input('fechaRegistro', [
 
 <script>
 $(document).ready(function() {
+
+    function calcularEdad(fechaNac) {
+
+        var hoy = new Date();
+        var cumple = new Date(fechaNac);
+        console.log(cumple);
+        var edad = hoy.getFullYear() - cumple.getFullYear();
+        var m = hoy.getMonth() - cumple.getMonth();
+
+        if (m < 0 || (m === 0 && hoy.getDate() < cumple.getDate())) {
+            edad--;
+        }
+
+        return edad;
+    }
     // 1. Lógica de Búsqueda AJAX
     $('#btn_ejecutar_busqueda').click(function() {
         const doc = $('#doc_search').val().trim();
@@ -926,14 +940,14 @@ $(document).ready(function() {
                     const s = res.data.Sociambiental || {};
                     const f = res.data.Familia || {};
                     // SI EXISTE: Cargamos ID para UPDATE y llenamos campos
-                    console.log(res
-                        .data); // Verifica la estructura de los datos en la consola
+                    console.log(f); // Verifica la estructura de los datos en la consola
                     msg.html(
                         '<span class="text-green-600 font-bold">✓ Usuario encontrado. Se actualizará el registro existente.</span>'
                     );
                     // --- PROCESAR RIAS ---
                     const picValues = p.ofertapic ?
-                        (Array.isArray(p.ofertapic) ? p.ofertapic : p.ofertapic.split(',')
+                        (Array.isArray(p.ofertapic) ? p.ofertapic : p.ofertapic.split(
+                                ',')
                             .map(v => v.trim())) : [];
 
                     if (picValues.length) {
@@ -950,7 +964,8 @@ $(document).ready(function() {
 
                     if (j.canalizacion_id || p
                         .canalizacion_id) {
-                        choices_canalizacion_id.setChoiceByValue(String(j.canalizacion_id ||
+                        choices_canalizacion_id.setChoiceByValue(String(j
+                            .canalizacion_id ||
                             p
                             .canalizacion_id));
                     }
@@ -959,7 +974,7 @@ $(document).ready(function() {
                     //$('#rias_select').val([]);
                     //$('#pic_select').val(p.ofertapic);
                     $('#juventudadulto_id_field').val(j.id);
-                    $('#familia_id_fiel').val(f.id);
+                    $('#familia_id_field').val(f.id);
 
                     $('#grupopoblacional_field').val(j.grupopoblacional || p
                         .grupopoblacional);
@@ -974,7 +989,7 @@ $(document).ready(function() {
                     $('#direccion_field').val(s.direccion || p.direccion);
                     $('#nombreAcudiente_field').val(f.nombres || p.nombreAcudiente);
                     $('#telefonoAcudiente_field').val(f.celular || p.telefonoAcudiente);
-                    $('#sociambiental_id_fiel').val(f.sociambiental_id);
+                    $('#sociambiental_id_field').val(f.sociambiental_id);
                     $('#persona_id_field').val(p.id);
                     $('#numerodoc_field').val(p.numerodoc).attr(
                         'readonly',
@@ -988,13 +1003,19 @@ $(document).ready(function() {
                     if (p.fechanac) {
                         // 1. Asigna el valor al input
                         $('#fechaNac_field').val(p.fechanac);
+                        var partes = p.fechanac.split("-");
 
+                        var edad = calcularEdad(new Date(partes[0], partes[1] - 1,
+                            partes[
+                                2]));
+                        $('#edad_field').val(edad);
                         // 2. Actualiza la instancia del calendario
                         var drp = $('#fechaNac_field').data('daterangepicker');
                         if (drp) {
                             drp.setStartDate(p.fechanac);
-                            drp.setEndDate(p.fechanac);
+
                         }
+
                     }
                     if (p.urgencia) {
                         // 1. Intentamos asignar directamente si la instancia ya existe
@@ -1081,7 +1102,8 @@ $(document).ready(function() {
                     }
 
                     if (p.ofertapic) {
-                        choices_rias.setChoiceByValue(p.ofertapic); // p.rias ya es un Array
+                        choices_rias.setChoiceByValue(p
+                            .ofertapic); // p.rias ya es un Array
                     }
 
 
@@ -1136,13 +1158,14 @@ $(document).ready(function() {
         });
     });
 
+
+
     $(function() {
         nacimiento = null; // Aquí guardamos la fecha elegida
 
         $('#fechaNac_field').daterangepicker({
             singleDatePicker: true,
             showDropdowns: true,
-            autoUpdateInput: true,
             autoApply: true,
             locale: {
                 format: 'YYYY-MM-DD',
@@ -1160,26 +1183,19 @@ $(document).ready(function() {
             evaluarCampos();
         });
 
+        $('#fechaNac_field').val('');
+
         function evaluarCampos() {
             var fechaNac = $('#fechaNac_field').val();
             if (fechaNac) {
-                var hoy = new Date();
-                var cumple = new Date(fechaNac);
-                var edad = hoy.getFullYear() - cumple.getFullYear();
-                var m = hoy.getMonth() - cumple.getMonth();
 
-                if (m < 0 || (m === 0 && hoy.getDate() < cumple.getDate())) {
-                    edad--;
-                }
+                var edad = calcularEdad(fechaNac);
+
 
                 // Mostrar edad inmediatamente en el input
                 $('#edad_field').val(edad);
             }
         }
-
-
-
-
 
         // Si hay valor en el campo fecha, inicializar nacimiento y ejecutar evaluarCampo
 
@@ -1292,7 +1308,8 @@ $(document).ready(function() {
         // Bloquear si excede
         editor.on('key', function(evt) {
             var text = editor.getData().replace(/<[^>]*>/g, '');
-            if (text.length >= maxChars && evt.data.keyCode != 8 && evt.data.keyCode != 46) {
+            if (text.length >= maxChars && evt.data.keyCode != 8 && evt.data.keyCode !=
+                46) {
                 evt.cancel();
                 alert("Máximo permitido: " + maxChars + " caracteres.");
             }

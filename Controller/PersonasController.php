@@ -131,17 +131,21 @@ class PersonasController extends AppController
 		if (!empty($this->request->data['Persona'])) {
             $dataSA = $this->request->data['Persona'];
 				if ($personaExistente) {
-					$this->Sociambiental->id = $dataSA['Familia']['sociambiental_id'];
 					
-					debug($dataSA);
-					exit;
+					//debug($dataSA);
+					//exit;
+					
 					$idJuventuAdulto = $this->Juventudadulto->find('first', array(
 						'conditions' => array('Juventudadulto.numerodoc' => $doc),
 						'fields' => array('Juventudadulto.id')
 					));
+									
+	
 					$this->Juventudadulto->id = $idJuventuAdulto['Juventudadulto']['id'];
-					
+					$this->Sociambiental->id = $dataSA['sociambiental_id'];
 					// Guardamos Sociambiental
+					//debug($this->Sociambiental->id);
+					//exit;
 					$this->Juventudadulto->save($dataSA);
 					$this->Sociambiental->save($dataSA);
 				}
@@ -252,7 +256,6 @@ class PersonasController extends AppController
 					'Familia.sociambiental_id',				
 					'Familia.nombres',
 					'Familia.celular',
-					'Sociambiental.id',
 					'Sociambiental.barriovereda',
 					'Sociambiental.direccion',
 					'Ubicacion.comuna',
