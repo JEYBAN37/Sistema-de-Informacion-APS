@@ -324,6 +324,7 @@ class ObservacionsController extends AppController
 
 		if ($this->request->is(array('post', 'put'))) {
 			// Guardar copia de los datos originales antes de intentar guardar
+			$this->request->data['Observacion']['id'] = $id;
 			$datosOriginales = $this->request->data;
 
 			// El Model's beforeSave se encarga de convertir los arrays a strings
@@ -496,6 +497,8 @@ class ObservacionsController extends AppController
 			if (empty($this->request->data['Observacion']['familiograma']['name'])) {
 				unset($this->request->data['Observacion']['familiograma']);
 			}
+
+			$this->request->data['Observacion']['id'] = $id;
 
 			// 👇 DEJAR A UploadBehavior HACER SU TRABAJO (NO mover archivo manualmente)
 			if ($this->Observacion->save($this->request->data)) {
