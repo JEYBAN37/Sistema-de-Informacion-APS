@@ -486,6 +486,10 @@ echo $this->Form->input('fecha', [
 </div>
 
 <script type="text/javascript">
+    $('form').submit(function() {
+        $(this).find('button[type=submit]').prop('disabled', true).text('Guardando...');
+    });
+
     async function validarTamanioSoporte() {
         const auxFile = document.getElementById('ProcesoregistroAnexo');
         if (!auxFile || !auxFile.files || !auxFile.files[0]) return;

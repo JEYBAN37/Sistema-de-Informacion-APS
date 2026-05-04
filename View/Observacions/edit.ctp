@@ -47,7 +47,7 @@ echo $this->Form->input('fecha', [
 
         </div>
 
-        
+
 
         <div class="grid grid-cols-1 md:grid-cols-2">
 
@@ -484,6 +484,10 @@ echo $this->Form->input('fecha', [
 </div>
 
 <script type="text/javascript">
+    $('form').submit(function() {
+        $(this).find('button[type=submit]').prop('disabled', true).text('Guardando...');
+    });
+
     async function validarTamanioSoporte() {
         const auxFile = document.getElementById('ProcesoregistroAnexo');
         if (!auxFile || !auxFile.files || !auxFile.files[0]) return;

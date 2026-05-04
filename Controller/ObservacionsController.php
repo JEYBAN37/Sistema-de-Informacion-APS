@@ -276,6 +276,17 @@ class ObservacionsController extends AppController
 	public function add()
 	{
 		if ($this->request->is(array('post'))) {
+
+			$existe = $this->Observacion->hasAny(array(
+				'Observacion.familia_id' => $this->request->data['Observacion']['familia_id'],
+				'Observacion.date' => date('Y-m-d')
+			));
+
+			if ($existe) {
+				$this->Session->setFlash('Ya existe una observación registrada hoy para esta familia.', 'flash_custom', array('class' => 'error'));
+				return $this->redirect(array('action' => 'index'));
+			}
+
 			if ($this->Observacion->save($this->request->data)) {
 
 				$this->loadHistorial(array(
