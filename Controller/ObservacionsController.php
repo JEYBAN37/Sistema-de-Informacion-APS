@@ -213,7 +213,7 @@ class ObservacionsController extends AppController
 				'Observacion.valoracionfamilia',
 				'Observacion.date',
 				'Observacion.dirplancuidado',
-				'Observacion.dirfamiliograma',	
+				'Observacion.dirfamiliograma',
 				'Observacion.familiograma',
 				'Ubicacion.microterritorio',
 				'Observacion.responsables',
@@ -481,6 +481,13 @@ class ObservacionsController extends AppController
 		$this->request->data = $this->Observacion->tranformData(
 			$this->Observacion->find('first', $options)
 		);
+
+		$this->set('link', $this->sendViewPlanCuidado(
+			isset($this->request->data['Observacion']['dirplancuidado']) ? $this->request->data['Observacion']['dirplancuidado'] : null,
+			isset($this->request->data['Observacion']['plancuidado']) ? $this->request->data['Observacion']['plancuidado'] : null,
+			isset($this->request->data['Observacion']['base_anterior']) ? $this->request->data['Observacion']['base_anterior'] : null,
+			isset($this->request->data['Observacion']['date']) ? $this->request->data['Observacion']['date'] : null
+		));
 	}
 
 
@@ -549,6 +556,13 @@ class ObservacionsController extends AppController
 		$observacion = $this->Observacion->find('first', $options);
 
 		$this->request->data = $this->Observacion->tranformData($observacion);
+
+		$this->set('linkFamiliograma', $this->sendViewFamiliograma(
+			isset($observacion['Observacion']['dirfamiliograma']) ? $observacion['Observacion']['dirfamiliograma'] : null,
+			isset($observacion['Observacion']['familiograma']) ? $observacion['Observacion']['familiograma'] : null,
+			isset($observacion['Observacion']['base_anterior']) ? $observacion['Observacion']['base_anterior'] : null,
+			isset($observacion['Observacion']['fecha']) ? $observacion['Observacion']['fecha'] : null
+		));
 
 		$this->set(compact('familias', 'responsables'));
 	}
