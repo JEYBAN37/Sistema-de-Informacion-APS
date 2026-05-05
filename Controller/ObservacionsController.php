@@ -561,7 +561,8 @@ class ObservacionsController extends AppController
 			isset($observacion['Observacion']['dirfamiliograma']) ? $observacion['Observacion']['dirfamiliograma'] : null,
 			isset($observacion['Observacion']['familiograma']) ? $observacion['Observacion']['familiograma'] : null,
 			isset($observacion['Observacion']['base_anterior']) ? $observacion['Observacion']['base_anterior'] : null,
-			isset($observacion['Observacion']['fecha']) ? $observacion['Observacion']['fecha'] : null
+			isset($observacion['Observacion']['fecha']) ? $observacion['Observacion']['fecha'] : null,
+			isset($observacion['Observacion']['id']) ? $observacion['Observacion']['id'] : null
 		));
 
 		$this->set(compact('familias', 'responsables'));
