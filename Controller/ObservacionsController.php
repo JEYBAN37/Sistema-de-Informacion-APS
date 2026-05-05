@@ -219,6 +219,7 @@ class ObservacionsController extends AppController
 				'Observacion.responsables',
 				'Responsable.nombres',
 				'Sociambiental.apellidosfamilia',
+				'Observacion.base_anterior',
 			),
 			'joins' => $joins,
 			'group' => $group,
@@ -249,7 +250,13 @@ class ObservacionsController extends AppController
 				'microterritorio' => $row['Ubicacion']['microterritorio'],
 				'responsable' => $row['Responsable']['nombres'],
 				'plancuidado' => $row['Observacion']['dirplancuidado'],
-				'dirfamiliograma' => $row['Observacion']['dirfamiliograma'],
+				'dirfamiliograma' => $this->sendViewFamiliograma(
+					isset($row['Observacion']['dirfamiliograma']) ? $row['Observacion']['dirfamiliograma'] : null,
+					 isset($row['Observacion']['familiograma']) ? $row['Observacion']['familiograma'] : null,
+					 isset($row['Observacion']['base_anterior']) ? $row['Observacion']['base_anterior'] : null,
+					 isset($row['Observacion']['date']) ? $row['Observacion']['date'] : null,
+					 isset($row['Observacion']['id']) ? $row['Observacion']['id'] : null
+				),
 				'familiograma' => $row['Observacion']['familiograma'],
 			);
 		}
