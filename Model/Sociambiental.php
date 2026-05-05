@@ -450,7 +450,14 @@ class Sociambiental extends AppModel
 			'conditions' => '',
 			'fields' => '',
 			'order' => ''
-		)
+		),
+		/*'Persona' => array(
+			'className' => 'Persona',
+			'foreignKey' => 'persona_id',
+			'conditions' => '',
+			'fields' => '',
+			'order' => ''
+		)*/
 	);
 
 	public function beforeSave($options = array())

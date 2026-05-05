@@ -213,7 +213,7 @@ class ObservacionsController extends AppController
 				'Observacion.valoracionfamilia',
 				'Observacion.date',
 				'Observacion.dirplancuidado',
-				'Observacion.dirfamiliograma',	
+				'Observacion.dirfamiliograma',
 				'Observacion.familiograma',
 				'Ubicacion.microterritorio',
 				'Observacion.responsables',
@@ -276,6 +276,17 @@ class ObservacionsController extends AppController
 	public function add()
 	{
 		if ($this->request->is(array('post'))) {
+
+			$existe = $this->Observacion->hasAny(array(
+				'Observacion.familia_id' => $this->request->data['Observacion']['familia_id'],
+				'Observacion.date' => date('Y-m-d')
+			));
+
+			if ($existe) {
+				$this->Session->setFlash('Ya existe una observación registrada hoy para esta familia.', 'flash_custom', array('class' => 'error'));
+				return $this->redirect(array('action' => 'index'));
+			}
+
 			if ($this->Observacion->save($this->request->data)) {
 
 				$this->loadHistorial(array(
@@ -324,6 +335,7 @@ class ObservacionsController extends AppController
 
 		if ($this->request->is(array('post', 'put'))) {
 			// Guardar copia de los datos originales antes de intentar guardar
+			$this->request->data['Observacion']['id'] = $id;
 			$datosOriginales = $this->request->data;
 
 			// El Model's beforeSave se encarga de convertir los arrays a strings
@@ -469,6 +481,13 @@ class ObservacionsController extends AppController
 		$this->request->data = $this->Observacion->tranformData(
 			$this->Observacion->find('first', $options)
 		);
+
+		$this->set('link', $this->sendViewPlanCuidado(
+			isset($this->request->data['Observacion']['dirplancuidado']) ? $this->request->data['Observacion']['dirplancuidado'] : null,
+			isset($this->request->data['Observacion']['plancuidado']) ? $this->request->data['Observacion']['plancuidado'] : null,
+			isset($this->request->data['Observacion']['base_anterior']) ? $this->request->data['Observacion']['base_anterior'] : null,
+			isset($this->request->data['Observacion']['date']) ? $this->request->data['Observacion']['date'] : null
+		));
 	}
 
 
@@ -496,6 +515,8 @@ class ObservacionsController extends AppController
 			if (empty($this->request->data['Observacion']['familiograma']['name'])) {
 				unset($this->request->data['Observacion']['familiograma']);
 			}
+
+			$this->request->data['Observacion']['id'] = $id;
 
 			// 👇 DEJAR A UploadBehavior HACER SU TRABAJO (NO mover archivo manualmente)
 			if ($this->Observacion->save($this->request->data)) {
@@ -535,6 +556,13 @@ class ObservacionsController extends AppController
 		$observacion = $this->Observacion->find('first', $options);
 
 		$this->request->data = $this->Observacion->tranformData($observacion);
+
+		$this->set('linkFamiliograma', $this->sendViewFamiliograma(
+			isset($observacion['Observacion']['dirfamiliograma']) ? $observacion['Observacion']['dirfamiliograma'] : null,
+			isset($observacion['Observacion']['familiograma']) ? $observacion['Observacion']['familiograma'] : null,
+			isset($observacion['Observacion']['base_anterior']) ? $observacion['Observacion']['base_anterior'] : null,
+			isset($observacion['Observacion']['fecha']) ? $observacion['Observacion']['fecha'] : null
+		));
 
 		$this->set(compact('familias', 'responsables'));
 	}

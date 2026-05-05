@@ -401,7 +401,7 @@ $planUrl = $this->Html->url(['controller' => 'Observacions', 'action' => 'addane
                                         <td colspan="1" class=" border border-gray-300 font-semibold p-2 text-center text-sm text-gray-700">Familiograma</td>
                                         <td colspan="2" class="border border-gray-300 p-2 font-bold text-sm"><?php if (!empty($observacion['dirfamiliograma'])) {
                                                                                                                     echo $this->Html->link(
-                                                                                                                        h($observacion['resultadoFamiliograma']),
+                                                                                                                        'Ver Familiograma',
                                                                                                                         $linkFamiliograma,
                                                                                                                         ['target' => '_blank', 'class' => 'underline text-blue-700 hover:text-blue-900']
                                                                                                                     );
