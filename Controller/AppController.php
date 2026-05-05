@@ -493,25 +493,25 @@ class AppController extends Controller
         }
     }
 
-    protected function sendViewFamiliograma($dirFamiliograma, $familiograma, $base_anterior, $date)
+    protected function sendViewFamiliograma($dirFamiliograma, $familiograma, $base_anterior, $date, $id)
     {
-        if ($base_anterior == 'CENTRAL' && $date <= '2026-01-01') {
+        if ($base_anterior == 'CENTRAL' && $date <= '2026-01-01' || $base_anterior == 'CENTRAL' && $id != $dirFamiliograma) {
             return 'https://agsolutic.com/aps/fichafamiliar/files/observacion/familiograma/' . $dirFamiliograma . '/' . $familiograma;
         }
 
-        if ($base_anterior == 'NORTE' && $date <= '2026-01-01') {
+        if ($base_anterior == 'NORTE' && $date <= '2026-01-01' || $base_anterior == 'NORTE' && $id != $dirFamiliograma) {
             return 'https://agsolutic.com/fichafamiliar/files/observacion/familiograma/' . $dirFamiliograma . '/' . $familiograma;
         }
 
-        if ($base_anterior == 'OCCIDENTE' && $date <= '2026-01-01') {
+        if ($base_anterior == 'OCCIDENTE' && $date <= '2026-01-01' || $base_anterior == 'OCCIDENTE' && $id != $dirFamiliograma) {
             return 'https://agsolutic.com/aps/nodooccidente/files/observacion/familiograma/' . $dirFamiliograma . '/' . $familiograma;
         }
 
-        if ($base_anterior == 'ORIENTE' && $date <= '2026-01-01') {
+        if ($base_anterior == 'ORIENTE' && $date <= '2026-01-01' || $base_anterior == 'ORIENTE' && $id != $dirFamiliograma) {
             return 'https://agsolutic.com/aps/nodooriente/files/observacion/familiograma/' . $dirFamiliograma . '/' . $familiograma;
         }
 
-        if ($base_anterior == 'SUR' && $date <= '2026-01-01') {
+        if ($base_anterior == 'SUR' && $date <= '2026-01-01' || $base_anterior == 'SUR' && $id != $dirFamiliograma) {
             return 'https://agsolutic.com/aps/nodosur/files/observacion/familiograma/' . $dirFamiliograma . '/' . $familiograma;
         }
 
