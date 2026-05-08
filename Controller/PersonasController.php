@@ -12,7 +12,7 @@ class PersonasController extends AppController
 	{
 		parent::beforeFilter();
 		// Permitir acceso a métodos JSON sin autenticación
-		$this->Auth->allow('add','buscarPorDoc');
+		$this->Auth->allow('add','buscarPorDoc','buscarPersona');
 	}
 
 
@@ -132,14 +132,15 @@ class PersonasController extends AppController
             $dataSA = $this->request->data['Persona'];
 				if ($personaExistente) {
 					
-					//debug($dataSA);
-					//exit;
+					
 					
 					$idJuventuAdulto = $this->Juventudadulto->find('first', array(
 						'conditions' => array('Juventudadulto.numerodoc' => $doc),
 						'fields' => array('Juventudadulto.id')
 					));
-									
+					
+					//debug($idJuventuAdulto);
+					//exit;
 	
 					$this->Juventudadulto->id = $idJuventuAdulto['Juventudadulto']['id'];
 					$this->Sociambiental->id = $dataSA['sociambiental_id'];

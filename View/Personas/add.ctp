@@ -940,7 +940,8 @@ $(document).ready(function() {
                     const s = res.data.Sociambiental || {};
                     const f = res.data.Familia || {};
                     // SI EXISTE: Cargamos ID para UPDATE y llenamos campos
-                    console.log(f); // Verifica la estructura de los datos en la consola
+                    console.log(res
+                    .data); // Verifica la estructura de los datos en la consola
                     msg.html(
                         '<span class="text-green-600 font-bold">✓ Usuario encontrado. Se actualizará el registro existente.</span>'
                     );
@@ -1133,8 +1134,8 @@ $(document).ready(function() {
                     $('#direccion_field').val('');
                     $('#telefono_field').val('');
                     $('#email_field').val('');
-                    $('#familia_id_fiel').val('');
-                    $('#sociambiental_id_fiel').val('');
+                    $('#familia_id_field').val('');
+                    $('#sociambiental_id_field').val('');
                     $('#nombreAcudiente_field').val('');
                     $('#telefonoAcudiente_field').val('');
                     // Limpieza de CKEditors
