@@ -132,8 +132,7 @@ class PersonasController extends AppController
             $dataSA = $this->request->data['Persona'];
 				if ($personaExistente) {
 					
-					
-					
+								
 					$idJuventuAdulto = $this->Juventudadulto->find('first', array(
 						'conditions' => array('Juventudadulto.numerodoc' => $doc),
 						'fields' => array('Juventudadulto.id')
@@ -165,9 +164,13 @@ class PersonasController extends AppController
             $this->request->data['Persona']['edad'] = $edad;
         }
 
-	if (!$personaExistente) {
+		if (!$personaExistente) {
             // REGLA: Si el documento NO existe, se marca como 1
             $this->request->data['Persona']['caracterizacionaps'] = 'Caracterizar';
+			
+			
+
+			
             
         } 
 
@@ -191,7 +194,7 @@ class PersonasController extends AppController
                 $this->Session->setFlash('La Canalización se guradado con exito', 'flash_custom', array('class' => 'success', 'title' => 'El registro se ha completado correctamente'));
 				return $this->redirect(array('action' => 'add'));
 			} else {
-				    debug($this->Persona->validationErrors);
+				    //debug($this->Persona->validationErrors);
 				$this->Session->setFlash('El registro no fue guardado o esta pendiente un campo del formulario', 'flash_custom', array('class' => 'error', 'title' => 'Error al guardar el registro'));
 			}
 		}
@@ -211,6 +214,12 @@ class PersonasController extends AppController
 				$data['Persona']['ofertapic'] = array_map('trim', explode(',', $data['Persona']['ofertapic']));
 			}
 
+				// Transformar Canalizacionuno
+			if (!empty($data['Persona']['canalizacionuno'])) {
+				$data['Persona']['canalizacionuno'] = array_map('trim', explode(',', $data['Persona']['canalizacionuno']));
+			}
+
+			
 			return $data;
     }
 
@@ -252,6 +261,11 @@ class PersonasController extends AppController
 					'Persona.observacionpic',
 					'Persona.rias',
 					'Persona.ofertapic',
+					'Persona.canalizacionuno',
+					'Persona.responsablecanalizacion',
+					'Persona.nombreResponsable',
+					'Persona.contactoCelular',
+					'Persona.estado',
 					'Persona.familia_id',
 					'Familia.id',
 					'Familia.sociambiental_id',				
@@ -266,7 +280,7 @@ class PersonasController extends AppController
 					'Juventudadulto.aseguradora',
 					'Juventudadulto.telefono',
 					'Juventudadulto.email',
-					'Juventudadulto.canalizacion_id',
+					'Juventudadulto.canalizacion_id',				
 					'Juventudadulto.fechanac',
 					'Juventudadulto.tipodocumento',
 					'Juventudadulto.grupopoblacional',

@@ -238,7 +238,7 @@ $optionCanalizacion =
 	];
 
     $optionPic = [
-    '0.No |0' => '0.No se requiere canalización',
+    '0.No |0' => '0.No aplica',
 	'1.Zonas Orientación Escolar' => '1.Zonas Orientación Escolar',
 	'2.Centro de Escucha' => '2.Centro de Escucha',
 	'3.Curso virtual DSDR' => '3.Curso virtual Salud Sexual y repoductiva',
@@ -248,19 +248,20 @@ $optionCanalizacion =
 		
 ];
 
- $estadoOption = [    
-	'2.Tramite' => '2.Tramite',
-    '1.Resuelta' => '1.Canalización Resuelta',		
+ $estadoOption = [ 
+    '' => 'Elegir',   
+	'Tramite' => 'Tramite',    	
+    'Resuelta por IPS' => 'Resuelta por IPS',	
+    'Resuelta por EPS' => 'Resuelta por EPS',	
+    'Resuelta por equipo EBS' => 'Resuelta por equipo EBS',	
+    'Resuelta por equipo PIC' => 'Resuelta por equipo PIC',
+    'No Efectiva' => 'No efectiva',
+
 ];
 
     
     ?>
-<?php
-echo $this->Form->input('fechaRegistro', [
-	'type' => 'hidden',
-	'value' => date('Y-m-d')
-]);
-?>
+
 
 <div class="max-w-6xl mx-auto px-4">
     <div class="bg-slate-50 border-2 border-teal-100 rounded-xl p-6 shadow-sm">
@@ -283,6 +284,13 @@ echo $this->Form->input('fechaRegistro', [
         <div id="status_msg" class="mt-3 text-sm font-medium"></div>
     </div>
 </div>
+
+<?php
+echo $this->Form->input('fechaRegistro', [
+	'type' => 'hidden',
+	'value' => date('Y-m-d')
+]);
+?>
 
 <div class="max-w-6xl mx-auto px-4">
     <div class="bg-white shadow-xl rounded-xl p-6 md:p-10 border border-gray-100">
@@ -721,6 +729,7 @@ echo $this->Form->input('fechaRegistro', [
 
 
 <div class="max-w-6xl mx-auto px-4 space-y-6">
+
     <div class="bg-white shadow-lg rounded-xl p-6 border-l-4 border-teal-500">
         <h2 class="text-lg font-bold text-teal-800 mb-4">Servicios de Salud</h2>
 
@@ -751,18 +760,76 @@ echo $this->Form->input('fechaRegistro', [
                 </p>
             </div>
         </div>
+
+        <!-- canalización  -->
+        <div class="col-span-2 md:col-span-1 text-md font-semibold my-6 mr-4">
+            <div class="flex items-center mb-4">
+
+                <label for="canalizacionuno" class="font-semibold">Canalización realizada por EBS</label>
+
+
+            </div>
+            <?php
+                echo $this->Form->input('canalizacionuno', [
+                    'type' => 'select',
+                    'disabled'=> true,
+                 'multiple' => true,
+                  'options' => $optionCanalizacion,
+                   'id' => 'canalizacionuno_select', 
+                   'label' => false,
+                   'class' => 'bg-gray-100 cursor-not-allowed',
+                  
+
+                ]);
+                if (!empty($this->Form->error('canalizacionuno'))) {
+                    echo '<div class="text-red-600 text-md mt-1 font-semibold">' . $this->Form->error('canalizacionuno') . '</div>';
+                }
+                ?>
+        </div>
+
+
         <div class="mt-4">
-            <label class="font-semibold">Registre la canalización a Urgencias</label>
+            <div class="flex items-center mb-4">
+
+                <label for="canalizacionuno" class="font-semibold">Registre la canalización a Urgencias</label>
+
+
+            </div>
+
             <?php echo $this->Form->input('urgencia', ['label' => false, 'class' => 'ckeditor']); ?>
         </div>
         <div class="mt-4">
-            <label class="font-semibold">Registre la canalizacion a Detección Temprana</label>
+            <div class="flex items-center mb-4">
+
+                <label for="canalizacionuno" class="font-semibold">Registre la canalizacion a Detección Temprana</label>
+
+
+            </div>
+
             <?php echo $this->Form->input('detecciontemprana', ['label' => false, 'class' => 'ckeditor']); ?>
         </div>
+
         <div class="mt-4">
-            <label class="font-semibold">Seleccione la canalización a Rutas Integrales de Atención -
-                RIAS</label>
-            <?php echo $this->Form->input('rias', ['type' => 'select', 'multiple' => true, 'options' => $optionCanalizacion, 'id' => 'rias_select', 'label' => false]); ?>
+            <div class="flex items-center mb-4">
+
+                <label for="canalizacionuno" class="font-semibold">Seleccione la canalización a Rutas Integrales de
+                    Atención -
+                    RIAS</label>
+
+
+            </div>
+
+
+            <?php echo $this->Form->input('rias', [
+                'type' => 'select',
+                 'multiple' => true,
+                  'options' => $optionCanalizacion,
+                   'id' => 'rias_select', 
+                   'label' => false,
+                   
+                   
+                   ]); 
+                   ?>
         </div>
     </div>
 
@@ -774,7 +841,7 @@ echo $this->Form->input('fechaRegistro', [
     <div class="bg-white shadow-lg rounded-xl p-6 border-l-4 border-orange-500">
         <div class="col-span-2 md:col-span-1 text-md font-semibold my-6 mb-6 md:mr-4">
             <div class="flex items-center mb-4">
-                <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">10</span>
+
                 <label for="estado" class="font-semibold">Registre la canalización a oferta PIC</label>
                 <p class="text-red-600">*</p>
             </div>
@@ -814,24 +881,30 @@ echo $this->Form->input('fechaRegistro', [
 
             <?php
 				echo $this->Form->input('estado', [
-					'type' => 'select',					
-					'options' => $estadoOption,
+					'type' => 'select',		
+                    'id' => 'estado_field',			
 					'class' => 'border border-gray-300 rounded-lg w-full p-2 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 text-sm text-gray-500 focus:text-gray-800',
-					'label' => '',                   
-					'empty' => 'Seleccione el estado de la canalización',
 					'error' => false, // No mostrar error aquí
+                    'options' => $estadoOption,
+                    'label' => '',   
+                    'empty' => 'Seleccione el estado de la canalización',
                    
 				]);
 
 
-				if (!empty($this->Form->error('aseguradora'))) {
-					echo '<div class="text-red-600 text-md mt-1 font-semibold">' . $this->Form->error('aseguradora') . '</div>';
+				if (!empty($this->Form->error('estado'))) {
+					echo '<div class="text-red-600 text-md mt-1 font-semibold">' . $this->Form->error('estado') . '</div>';
 				}
 				?>
         </div>
 
         <div class="mb-4">
-            <label class="text-sm font-semibold text-gray-600">Estado de Registro en APS:</label>
+
+            <div class="flex items-center mb-4">
+
+                <label for="estado" class="font-semibold">Estado de Registro en APS:</label>
+                <p class="text-red-600">*</p>
+            </div>
             <?php 
             echo $this->Form->input('caracterizacionaps', [
             'type' => 'text',
@@ -843,6 +916,77 @@ echo $this->Form->input('fechaRegistro', [
              ]); 
               ?>
         </div>
+
+        <div class="mb-4">
+
+            <div class="flex items-center mb-4">
+
+                <label for="responsablecanalizacion" class="font-semibold">Número de documento responsable:</label>
+                <p class="text-red-600">*</p>
+            </div>
+            <?php
+				echo $this->Form->input('responsablecanalizacion', [
+					'label' => false,
+					'uppercase' => true,
+					'class' => 'border border-gray-300 rounded-lg w-full p-2 focus:outline-none  focus:ring-1 focus:ring-blue-500 focus:border-blue-500 borde azul  mt-2 font-semibold text-gray-700  text-sm focus:text-gray-900',
+					'error' => false,
+                    'id' => 'responsablecanalizacion_field',
+				]);
+
+				if (!empty($this->Form->error('responsablecanalizacion'))) {
+					echo '<div class="text-red-600 text-md mt-1 font-semibold">' . $this->Form->error('responsablecanalizacion') . '</div>';
+				}
+				?>
+
+
+        </div>
+        <div class="mb-4">
+
+            <div class="flex items-center mb-4">
+
+                <label for="nombreResponsable" class="font-semibold">Nombre responsable:</label>
+                <p class="text-red-600">*</p>
+            </div>
+            <?php
+				echo $this->Form->input('nombreResponsable', [
+					'label' => false,
+					'uppercase' => true,
+					'class' => 'border border-gray-300 rounded-lg w-full p-2 focus:outline-none  focus:ring-1 focus:ring-blue-500 focus:border-blue-500 borde azul  mt-2 font-semibold text-gray-700  text-sm focus:text-gray-900',
+					'error' => false,
+                    'id' => 'nombreResponsable_field',
+				]);
+
+				if (!empty($this->Form->error('nombreResponsable'))) {
+					echo '<div class="text-red-600 text-md mt-1 font-semibold">' . $this->Form->error('nombreResponsable') . '</div>';
+				}
+				?>
+
+
+        </div>
+        <div class="mb-4">
+
+            <div class="flex items-center mb-4">
+
+                <label for="contactoCelular" class="font-semibold">Numero contacto reponsable:</label>
+                <p class="text-red-600">*</p>
+            </div>
+            <?php
+				echo $this->Form->input('contactoCelular', [
+					'label' => false,
+					'uppercase' => true,
+					'class' => 'border border-gray-300 rounded-lg w-full p-2 focus:outline-none  focus:ring-1 focus:ring-blue-500 focus:border-blue-500 borde azul  mt-2 font-semibold text-gray-700  text-sm focus:text-gray-900',
+					'error' => false,
+                    'id' => 'contactoCelular_field',
+				]);
+
+				if (!empty($this->Form->error('contactoCelular'))) {
+					echo '<div class="text-red-600 text-md mt-1 font-semibold">' . $this->Form->error('contactoCelular') . '</div>';
+				}
+				?>
+
+
+        </div>
+
 
 
 
@@ -941,7 +1085,7 @@ $(document).ready(function() {
                     const f = res.data.Familia || {};
                     // SI EXISTE: Cargamos ID para UPDATE y llenamos campos
                     console.log(res
-                    .data); // Verifica la estructura de los datos en la consola
+                        .data); // Verifica la estructura de los datos en la consola
                     msg.html(
                         '<span class="text-green-600 font-bold">✓ Usuario encontrado. Se actualizará el registro existente.</span>'
                     );
@@ -961,6 +1105,15 @@ $(document).ready(function() {
 
                     if (riaValues.length) {
                         choicesRias.setChoiceByValue(riaValues);
+                    }
+                    const canalizacionvalues = p.canalizacionuno ?
+                        (Array.isArray(p.canalizacionuno) ? p.canalizacionuno : p
+                            .canalizacionuno
+                            .split(',')
+                            .map(v => v.trim())) : [];
+
+                    if (canalizacionvalues.length) {
+                        choicesCanalizacionuno.setChoiceByValue(canalizacionvalues);
                     }
 
                     if (j.canalizacion_id || p
@@ -986,21 +1139,44 @@ $(document).ready(function() {
                     $('#sexo_field').val(j.sexo || p.sexo);
                     $('#email_field').val(j.email || p.email);
 
-                    $('#barriovereda_field').val(s.barriovereda || p.barriovereda);
-                    $('#direccion_field').val(s.direccion || p.direccion);
-                    $('#nombreAcudiente_field').val(f.nombres || p.nombreAcudiente);
-                    $('#telefonoAcudiente_field').val(f.celular || p.telefonoAcudiente);
-                    $('#sociambiental_id_field').val(f.sociambiental_id);
-                    $('#persona_id_field').val(p.id);
-                    $('#numerodoc_field').val(p.numerodoc).attr(
+
+                    $('#barriovereda_field').val(s.barriovereda || p
+                        .barriovereda);
+                    $('#direccion_field').val(s.direccion || p
+                        .direccion);
+                    $('#nombreAcudiente_field').val(f.nombres || p
+                        .nombreAcudiente);
+                    $('#telefonoAcudiente_field').val(f
+                        .celular || p.telefonoAcudiente);
+                    $(
+                        '#sociambiental_id_field').val(f.sociambiental_id);
+                    $(
+                        '#persona_id_field').val(p.id);
+                    $('#numerodoc_field').val(p
+                        .numerodoc).attr(
                         'readonly',
                         true);
                     $('#tipodoc_select').val(p.tipodocumento);
-                    $('#apellido1_field').val(p.primerapellido);
-                    $('#apellido2_field').val(p.segundoapellido);
-                    $('#nombre1_field').val(p.primernombre);
-                    $('#nombre2_field').val(p.segundonombre);
-                    $('#edad_field').val(p.edad);
+                    $(
+                        '#apellido1_field').val(p.primerapellido);
+                    $(
+                        '#apellido2_field').val(p.segundoapellido);
+                    $(
+                        '#nombre1_field').val(p.primernombre);
+                    $(
+                        '#nombre2_field').val(p.segundonombre);
+                    $(
+                        '#edad_field').val(p.edad);
+                    $(
+                        '#responsablecanalizacion_field').val(p.responsablecanalizacion);
+                    $(
+                        '#nombreResponsable_field').val(p.nombreResponsable);
+                    $(
+                        '#contactoCelular_field').val(p.contactoCelular);
+                    $(
+                        '#estado_field').val(p.estado);
+
+
                     if (p.fechanac) {
                         // 1. Asigna el valor al input
                         $('#fechaNac_field').val(p.fechanac);
@@ -1018,10 +1194,15 @@ $(document).ready(function() {
                         }
 
                     }
+                    $(
+                        '#canalizacionuno_field').val(p.canalizacionuno);
+
                     if (p.urgencia) {
                         // 1. Intentamos asignar directamente si la instancia ya existe
-                        if (window.CKEDITOR && CKEDITOR.instances['PersonaUrgencia']) {
-                            CKEDITOR.instances['PersonaUrgencia'].setData(p.urgencia);
+                        if (window.CKEDITOR && CKEDITOR.instances[
+                                'PersonaUrgencia']) {
+                            CKEDITOR.instances['PersonaUrgencia'].setData(p
+                                .urgencia);
                         } else {
                             // 2. Si aún no está lista, esperamos al evento 'instanceReady'
                             CKEDITOR.on('instanceReady', function(evt) {
@@ -1096,16 +1277,23 @@ $(document).ready(function() {
                         .caracterizacionaps :
                         'Persona Caracterizada por EBS id_familia:' + p
                         .familia_id);
-                    $('#caracterizacionaps_info').attr('readonly', true);
+                    $('#caracterizacionaps_info').attr('readonly',
+                        true);
                     // --- Lógica para RIAS ---
                     if (p.rias) {
-                        choices_rias.setChoiceByValue(p.rias); // p.rias ya es un Array
+                        choices_rias.setChoiceByValue(p
+                            .rias); // p.rias ya es un Array
                     }
 
                     if (p.ofertapic) {
                         choices_rias.setChoiceByValue(p
                             .ofertapic); // p.rias ya es un Array
                     }
+                    if (p.canalizacionuno) {
+                        choices_rias.setChoiceByValue(p
+                            .canalizacionuno); // p.rias ya es un Array
+                    }
+
 
 
 
@@ -1138,6 +1326,14 @@ $(document).ready(function() {
                     $('#sociambiental_id_field').val('');
                     $('#nombreAcudiente_field').val('');
                     $('#telefonoAcudiente_field').val('');
+                    $('#canalizacionuno_field').val('');
+                    $('#nombreResponsable_field').val('');
+                    $('#responsablecanalizacion_field').val('');
+                    $('#contactoCelular_field').val('');
+                    $('#estado_field').val('');
+
+
+
                     // Limpieza de CKEditors
                     if (window.CKEDITOR) {
                         ['PersonaUrgencia', 'PersonaDetecciontemprana',
@@ -1229,6 +1425,8 @@ $(document).ready(function() {
     };
     const choicesRias = new Choices("#rias_select", choicesOptions);
     const choicesPic = new Choices("#pic_select", choicesOptions);
+    const choicesCanalizacionuno = new Choices("#canalizacionuno_select", choicesOptions);
+
 
 
     const choices_canalizacion_id = new Choices("#canalizacion_id", {
@@ -1244,6 +1442,8 @@ $(document).ready(function() {
         placeholder: true,
         placeholderValue: "Seleccione IPS...",
     });
+
+
 
     document.querySelectorAll('[id^="ayudaButton"]').forEach(function(btn) {
         btn.addEventListener('click', function(e) {
