@@ -251,7 +251,7 @@ class PersonasController extends AppController
 					'Persona.sexo',
 					'Persona.email',
 					'Persona.barriovereda',
-					'persona.direccion',
+					'Persona.direccion',
 					'Persona.nombreAcudiente',
 					'Persona.telefonoAcudiente',
 					'Persona.urgencia',
