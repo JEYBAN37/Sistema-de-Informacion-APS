@@ -765,6 +765,8 @@ echo $this->Form->input('fechaRegistro', [
         <div class="col-span-2 md:col-span-1 text-md font-semibold my-6 mr-4">
             <div class="flex items-center mb-4">
 
+
+
                 <label for="canalizacionuno" class="font-semibold">Canalización realizada por EBS</label>
 
 
@@ -839,8 +841,10 @@ echo $this->Form->input('fechaRegistro', [
     </div>
 
     <div class="bg-white shadow-lg rounded-xl p-6 border-l-4 border-orange-500">
+        <h3 class="text-lg font-bold text-orange-800 mb-4">Acciones plan de intervenciones colectivas</h3>
         <div class="col-span-2 md:col-span-1 text-md font-semibold my-6 mb-6 md:mr-4">
             <div class="flex items-center mb-4">
+
 
                 <label for="estado" class="font-semibold">Registre la canalización a oferta PIC</label>
                 <p class="text-red-600">*</p>
@@ -870,6 +874,16 @@ echo $this->Form->input('fechaRegistro', [
 
             <?php echo $this->Form->input('observacionpic', ['label' => false, 'class' => 'ckeditor']); ?>
         </div>
+
+    </div>
+
+    <div class="bg-white shadow-lg rounded-xl p-6 border-l-4 border-blue-500">
+        <h3 class="text-lg font-bold text-blue-800 mb-4">Registre la canalización a Servicios Sociales</h3>
+        <?php echo $this->Form->input('serviciosocial', ['label' => false, 'class' => 'ckeditor']); ?>
+    </div>
+
+    <div class="bg-white shadow-lg rounded-xl p-6 border-l-4 border-orange-500">
+        <h3 class="text-lg font-bold text-orange-800 mb-4">Gestión de canalización</h3>
 
         <!-- estado -->
         <div class="col-span-2 md:col-span-1 text-md font-semibold my-6 mb-6 md:mr-4">
@@ -1483,7 +1497,7 @@ $(document).ready(function() {
         var editor = ev.editor;
         var textarea = editor.element.$;
         var maxChars = textarea.getAttribute("data-maxlength"); // Lee el límite de cada campo
-        maxChars = maxChars ? parseInt(maxChars) : 300; // Default 300 si no se define
+        maxChars = maxChars ? parseInt(maxChars) : 1000; // Default 300 si no se define
 
         // Crear un contador debajo del campo
         var counter = document.createElement("div");
