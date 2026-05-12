@@ -80,13 +80,13 @@ public $actsAs = array(
 				'rule' => array('multiple', array('min' => 0)),
 				'message' => 'El campo de sospecha maltrato es obligatorio',
 			),
-		),*/
+		),
 		'canalizacionuno' => array(
 			'multiple' => array(
 				'rule' => array('multiple', array('min' => 0)),
 				'message' => 'El campo de sospecha maltrato es obligatorio',
 			),
-		),
+		),*/
 		'sexo' => array(
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),
@@ -115,6 +115,24 @@ public $actsAs = array(
 				'message' => 'La IPS de canalizacion no debe estar vacío',
 			),
 		),
+			'responsablecanalizacion' => array(
+			'notEmpty' => array(
+				'rule' => array('notEmpty'),
+				'message' => 'Es necesario agregar el numero de documento del responsable',
+			),
+		),
+			'nombreResponsable' => array(
+			'notEmpty' => array(
+				'rule' => array('notEmpty'),
+				'message' => 'Es necesario agregar el nombre del responsable de la canalización',
+			),
+		),
+			'contactoCelular' => array(
+			'notEmpty' => array(
+				'rule' => array('notEmpty'),
+				'message' => 'Es necesario agregar el numero de documento del responsable de la canalización',
+			),
+		)
 		/*'direccion' => array(
 			'alphaNumeric' => array(
 				'rule'     =>  array('notEmpty'),
@@ -178,6 +196,7 @@ public $actsAs = array(
 			'order' => ''
 		),
 		
+		
 	);
 
 /**
@@ -199,6 +218,7 @@ public function beforeSave($options = array())
 			if (isset($this->data[$this->alias]['canalizacionuno']) && is_array($this->data[$this->alias]['canalizacionuno'])) {
 			$this->data[$this->alias]['canalizacionuno'] = implode(',', $this->data[$this->alias]['canalizacionuno']);
 		}
+		
 
 		return true;
 }

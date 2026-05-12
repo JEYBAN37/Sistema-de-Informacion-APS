@@ -94,16 +94,16 @@ if (isset($validationErrors['Observacion']) && !empty($validationErrors['Observa
 						<div class="block w-full text-sm text-gray-700 border border-gray-300 rounded-lg cursor-pointer bg-white focus:outline-none focus:ring-2 focus:ring-blue-400 p-3 file:mr-4 file:py-6 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
 							Archivo actual:
 							<?php
-                            if (!empty($this->request->data['Observacion']['dirplancuidado'])) {
-                                echo $this->Html->link(
-                                    ($this->request->data['Observacion']['plancuidado']),
-                                    $link,
-                                    ['target' => '_blank', 'class' => 'underline text-blue-700 hover:text-blue-900']
-                                );
-                            } else {
-                                echo '<span class="text-gray-400 italic">Sin plan de cuidado</span>';
-                            }
-                            ?>
+							if (!empty($this->request->data['Observacion']['dirplancuidado'])) {
+								echo $this->Html->link(
+									($this->request->data['Observacion']['plancuidado']),
+									$link,
+									['target' => '_blank', 'class' => 'underline text-blue-700 hover:text-blue-900']
+								);
+							} else {
+								echo '<span class="text-gray-400 italic">Sin plan de cuidado</span>';
+							}
+							?>
 						</div>
 					<?php endif; ?>
 				</div>
@@ -137,6 +137,10 @@ if (isset($validationErrors['Observacion']) && !empty($validationErrors['Observa
 </div>
 
 <script>
+	$('form').submit(function() {
+		$(this).find('button[type=submit]').prop('disabled', true).text('Guardando...');
+	});
+
 	function preventBackNavigation() {
 		if (confirm('¿Está seguro que desea salir de la página? Se pueden perder los cambios no guardados.')) {
 			const familiaElem = document.getElementById('familia_id');
