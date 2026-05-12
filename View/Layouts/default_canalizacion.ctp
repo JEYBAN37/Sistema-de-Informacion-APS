@@ -146,7 +146,7 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
 
 
         <!-- Contenido principal -->
-        <main id="mainContent" class="flex-1 p-6 md:ml-[280px] transition-all duration-300">
+        <main id="mainContent" class="flex-1 p-6 transition-all duration-300">
             <?php echo $this->Session->flash(); ?>
             <div class="relative z-10">
                 <?php echo $this->fetch('content'); ?>
