@@ -910,10 +910,7 @@ echo $this->Form->input('fechaRegistro', [
 
     </div>
 
-    <div class="bg-white shadow-lg rounded-xl p-6 border-l-4 border-blue-500">
-        <h3 class="text-lg font-bold text-blue-800 mb-4">Registre la canalización a Servicios Sociales</h3>
-        <?php echo $this->Form->input('serviciosocial', ['label' => false, 'class' => 'ckeditor']); ?>
-    </div>
+
 
     <div class="bg-white shadow-lg rounded-xl p-6 border-l-4 border-orange-500">
         <h3 class="text-lg font-bold text-orange-800 mb-4">Gestión de canalización</h3>
