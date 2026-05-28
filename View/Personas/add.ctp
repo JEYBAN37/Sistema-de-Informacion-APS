@@ -797,6 +797,8 @@ echo $this->Form->input('fechaRegistro', [
         <div class="col-span-2 md:col-span-1 text-md font-semibold my-6 mr-4">
             <div class="flex items-center mb-4">
 
+
+
                 <label for="canalizacionuno" class="font-semibold">Canalización realizada por EBS</label>
 
 
@@ -871,8 +873,10 @@ echo $this->Form->input('fechaRegistro', [
     </div>
 
     <div class="bg-white shadow-lg rounded-xl p-6 border-l-4 border-orange-500">
+        <h3 class="text-lg font-bold text-orange-800 mb-4">Acciones plan de intervenciones colectivas</h3>
         <div class="col-span-2 md:col-span-1 text-md font-semibold my-6 mb-6 md:mr-4">
             <div class="flex items-center mb-4">
+
 
                 <label for="estado" class="font-semibold">Registre la canalización a oferta PIC</label>
                 <p class="text-red-600">*</p>
@@ -903,6 +907,13 @@ echo $this->Form->input('fechaRegistro', [
 
             <?php echo $this->Form->input('observacionpic', ['label' => false, 'class' => 'ckeditor']); ?>
         </div>
+
+    </div>
+
+
+
+    <div class="bg-white shadow-lg rounded-xl p-6 border-l-4 border-orange-500">
+        <h3 class="text-lg font-bold text-orange-800 mb-4">Gestión de canalización</h3>
 
         <!-- estado -->
         <div class="col-span-2 md:col-span-1 text-md font-semibold my-6 mb-6 md:mr-4">
@@ -1074,521 +1085,521 @@ echo $this->Form->input('fechaRegistro', [
 <?php echo $this->Form->end(); ?>
 
 <script>
-    $(document).ready(function() {
+$(document).ready(function() {
 
 
-        // 3. Modal de Consentimiento
-        $('#aceptoBtn').click(function() {
-            $('#consentModal').fadeOut();
-            localStorage.setItem('consentAccepted', 'true');
-        });
+    // 3. Modal de Consentimiento
+    $('#aceptoBtn').click(function() {
+        $('#consentModal').fadeOut();
+        localStorage.setItem('consentAccepted', 'true');
+    });
 
 
-        function calcularEdad(fechaNac) {
+    function calcularEdad(fechaNac) {
 
-            var hoy = new Date();
-            var cumple = new Date(fechaNac);
-            console.log(cumple);
-            var edad = hoy.getFullYear() - cumple.getFullYear();
-            var m = hoy.getMonth() - cumple.getMonth();
+        var hoy = new Date();
+        var cumple = new Date(fechaNac);
+        console.log(cumple);
+        var edad = hoy.getFullYear() - cumple.getFullYear();
+        var m = hoy.getMonth() - cumple.getMonth();
 
-            if (m < 0 || (m === 0 && hoy.getDate() < cumple.getDate())) {
-                edad--;
-            }
-
-            return edad;
+        if (m < 0 || (m === 0 && hoy.getDate() < cumple.getDate())) {
+            edad--;
         }
-        // 1. Lógica de Búsqueda AJAX
-        $('#btn_ejecutar_busqueda').click(function() {
-            const doc = $('#doc_search').val().trim();
-            const msg = $('#status_msg');
 
-            if (doc === "") {
-                alert("Por favor ingrese un documento.");
-                return;
-            }
+        return edad;
+    }
+    // 1. Lógica de Búsqueda AJAX
+    $('#btn_ejecutar_busqueda').click(function() {
+        const doc = $('#doc_search').val().trim();
+        const msg = $('#status_msg');
 
-            $.ajax({
-                url: '<?php echo $this->Html->url(['controller' => 'personas', 'action' => 'buscarPorDoc']); ?>/' +
-                    doc,
-                type: 'GET',
-                dataType: 'json',
-                beforeSend: function() {
+        if (doc === "") {
+            alert("Por favor ingrese un documento.");
+            return;
+        }
+
+        $.ajax({
+            url: '<?php echo $this->Html->url(['controller' => 'personas', 'action' => 'buscarPorDoc']); ?>/' +
+                doc,
+            type: 'GET',
+            dataType: 'json',
+            beforeSend: function() {
+                msg.html(
+                    '<span class="text-gray-500 animate-pulse">Buscando en la base de datos...</span>'
+                );
+            },
+            success: function(res) {
+                if (res.success) {
+                    const p = res.data.Persona;
+                    const j = res.data.Juventudadulto || {};
+                    const s = res.data.Sociambiental || {};
+                    const f = res.data.Familia || {};
+                    // SI EXISTE: Cargamos ID para UPDATE y llenamos campos
+                    console.log(res
+                        .data); // Verifica la estructura de los datos en la consola
                     msg.html(
-                        '<span class="text-gray-500 animate-pulse">Buscando en la base de datos...</span>'
+                        '<span class="text-green-600 font-bold">✓ Usuario encontrado. Se actualizará el registro existente.</span>'
                     );
-                },
-                success: function(res) {
-                    if (res.success) {
-                        const p = res.data.Persona;
-                        const j = res.data.Juventudadulto || {};
-                        const s = res.data.Sociambiental || {};
-                        const f = res.data.Familia || {};
-                        // SI EXISTE: Cargamos ID para UPDATE y llenamos campos
-                        console.log(res
-                            .data); // Verifica la estructura de los datos en la consola
-                        msg.html(
-                            '<span class="text-green-600 font-bold">✓ Usuario encontrado. Se actualizará el registro existente.</span>'
-                        );
-                        // --- PROCESAR RIAS ---
-                        const picValues = p.ofertapic ?
-                            (Array.isArray(p.ofertapic) ? p.ofertapic : p.ofertapic.split(
-                                    ',')
-                                .map(v => v.trim())) : [];
+                    // --- PROCESAR RIAS ---
+                    const picValues = p.ofertapic ?
+                        (Array.isArray(p.ofertapic) ? p.ofertapic : p.ofertapic.split(
+                                ',')
+                            .map(v => v.trim())) : [];
 
-                        if (picValues.length) {
-                            choicesPic.setChoiceByValue(picValues);
-                        }
+                    if (picValues.length) {
+                        choicesPic.setChoiceByValue(picValues);
+                    }
 
-                        const riaValues = p.rias ?
-                            (Array.isArray(p.rias) ? p.rias : p.rias.split(',')
-                                .map(v => v.trim())) : [];
+                    const riaValues = p.rias ?
+                        (Array.isArray(p.rias) ? p.rias : p.rias.split(',')
+                            .map(v => v.trim())) : [];
 
-                        if (riaValues.length) {
-                            choicesRias.setChoiceByValue(riaValues);
-                        }
-                        const canalizacionvalues = p.canalizacionuno ?
-                            (Array.isArray(p.canalizacionuno) ? p.canalizacionuno : p
-                                .canalizacionuno
-                                .split(',')
-                                .map(v => v.trim())) : [];
+                    if (riaValues.length) {
+                        choicesRias.setChoiceByValue(riaValues);
+                    }
+                    const canalizacionvalues = p.canalizacionuno ?
+                        (Array.isArray(p.canalizacionuno) ? p.canalizacionuno : p
+                            .canalizacionuno
+                            .split(',')
+                            .map(v => v.trim())) : [];
 
-                        if (canalizacionvalues.length) {
-                            choicesCanalizacionuno.setChoiceByValue(canalizacionvalues);
-                        }
+                    if (canalizacionvalues.length) {
+                        choicesCanalizacionuno.setChoiceByValue(canalizacionvalues);
+                    }
 
-                        if (j.canalizacion_id || p
-                            .canalizacion_id) {
-                            choices_canalizacion_id.setChoiceByValue(String(j
-                                .canalizacion_id ||
-                                p
-                                .canalizacion_id));
-                        }
+                    if (j.canalizacion_id || p
+                        .canalizacion_id) {
+                        choices_canalizacion_id.setChoiceByValue(String(j
+                            .canalizacion_id ||
+                            p
+                            .canalizacion_id));
+                    }
 
-                        // 2. Limpiar los valores de los selects originales
-                        //$('#rias_select').val([]);
-                        //$('#pic_select').val(p.ofertapic);
-                        $('#juventudadulto_id_field').val(j.id);
-                        $('#familia_id_field').val(f.id);
+                    // 2. Limpiar los valores de los selects originales
+                    //$('#rias_select').val([]);
+                    //$('#pic_select').val(p.ofertapic);
+                    $('#juventudadulto_id_field').val(j.id);
+                    $('#familia_id_field').val(f.id);
 
-                        $('#grupopoblacional_field').val(j.grupopoblacional || p
-                            .grupopoblacional);
-                        $('#aseguradora_field').val(j.aseguradora || p.aseguradora);
-                        $('#telefono_field').val(j.telefono || p.telefono);
-                        //$('#canalizacion_id').val(j.canalizacion_id || p.canalizacion_id);
-                        //$('#fechaNac_field').val(j.fechanac || p.fechanac);
-                        $('#sexo_field').val(j.sexo || p.sexo);
-                        $('#email_field').val(j.email || p.email);
+                    $('#grupopoblacional_field').val(j.grupopoblacional || p
+                        .grupopoblacional);
+                    $('#aseguradora_field').val(j.aseguradora || p.aseguradora);
+                    $('#telefono_field').val(j.telefono || p.telefono);
+                    //$('#canalizacion_id').val(j.canalizacion_id || p.canalizacion_id);
+                    //$('#fechaNac_field').val(j.fechanac || p.fechanac);
+                    $('#sexo_field').val(j.sexo || p.sexo);
+                    $('#email_field').val(j.email || p.email);
 
 
-                        $('#barriovereda_field').val(s.barriovereda || p
-                            .barriovereda);
-                        $('#direccion_field').val(s.direccion || p
-                            .direccion);
-                        $('#nombreAcudiente_field').val(f.nombres || p
-                            .nombreAcudiente);
-                        $('#telefonoAcudiente_field').val(f
-                            .celular || p.telefonoAcudiente);
-                        $(
-                            '#sociambiental_id_field').val(f.sociambiental_id);
-                        $(
-                            '#persona_id_field').val(p.id);
-                        $('#numerodoc_field').val(p
-                            .numerodoc).attr(
-                            'readonly',
-                            true);
-                        $('#tipodoc_select').val(p.tipodocumento);
-                        $(
-                            '#apellido1_field').val(p.primerapellido);
-                        $(
-                            '#apellido2_field').val(p.segundoapellido);
-                        $(
-                            '#nombre1_field').val(p.primernombre);
-                        $(
-                            '#nombre2_field').val(p.segundonombre);
-                        $(
-                            '#edad_field').val(p.edad);
-                        $(
-                            '#responsablecanalizacion_field').val(p.responsablecanalizacion);
-                        $(
-                            '#nombreResponsable_field').val(p.nombreResponsable);
-                        $(
-                            '#contactoCelular_field').val(p.contactoCelular);
-                        $(
-                            '#estado_field').val(p.estado);
+                    $('#barriovereda_field').val(s.barriovereda || p
+                        .barriovereda);
+                    $('#direccion_field').val(s.direccion || p
+                        .direccion);
+                    $('#nombreAcudiente_field').val(f.nombres || p
+                        .nombreAcudiente);
+                    $('#telefonoAcudiente_field').val(f
+                        .celular || p.telefonoAcudiente);
+                    $(
+                        '#sociambiental_id_field').val(f.sociambiental_id);
+                    $(
+                        '#persona_id_field').val(p.id);
+                    $('#numerodoc_field').val(p
+                        .numerodoc).attr(
+                        'readonly',
+                        true);
+                    $('#tipodoc_select').val(p.tipodocumento);
+                    $(
+                        '#apellido1_field').val(p.primerapellido);
+                    $(
+                        '#apellido2_field').val(p.segundoapellido);
+                    $(
+                        '#nombre1_field').val(p.primernombre);
+                    $(
+                        '#nombre2_field').val(p.segundonombre);
+                    $(
+                        '#edad_field').val(p.edad);
+                    $(
+                        '#responsablecanalizacion_field').val(p.responsablecanalizacion);
+                    $(
+                        '#nombreResponsable_field').val(p.nombreResponsable);
+                    $(
+                        '#contactoCelular_field').val(p.contactoCelular);
+                    $(
+                        '#estado_field').val(p.estado);
 
 
-                        if (p.fechanac) {
-                            // 1. Asigna el valor al input
-                            $('#fechaNac_field').val(p.fechanac);
-                            var partes = p.fechanac.split("-");
+                    if (p.fechanac) {
+                        // 1. Asigna el valor al input
+                        $('#fechaNac_field').val(p.fechanac);
+                        var partes = p.fechanac.split("-");
 
-                            var edad = calcularEdad(new Date(partes[0], partes[1] - 1,
-                                partes[
-                                    2]));
-                            $('#edad_field').val(edad);
-                            // 2. Actualiza la instancia del calendario
-                            var drp = $('#fechaNac_field').data('daterangepicker');
-                            if (drp) {
-                                drp.setStartDate(p.fechanac);
-
-                            }
+                        var edad = calcularEdad(new Date(partes[0], partes[1] - 1,
+                            partes[
+                                2]));
+                        $('#edad_field').val(edad);
+                        // 2. Actualiza la instancia del calendario
+                        var drp = $('#fechaNac_field').data('daterangepicker');
+                        if (drp) {
+                            drp.setStartDate(p.fechanac);
 
                         }
-                        $(
-                            '#canalizacionuno_field').val(p.canalizacionuno);
-
-                        if (p.urgencia) {
-                            // 1. Intentamos asignar directamente si la instancia ya existe
-                            if (window.CKEDITOR && CKEDITOR.instances[
-                                    'PersonaUrgencia']) {
-                                CKEDITOR.instances['PersonaUrgencia'].setData(p
-                                    .urgencia);
-                            } else {
-                                // 2. Si aún no está lista, esperamos al evento 'instanceReady'
-                                CKEDITOR.on('instanceReady', function(evt) {
-                                    if (evt.editor.name === 'PersonaUrgencia') {
-                                        evt.editor.setData(p.urgencia);
-                                    }
-                                });
-
-                                // 3. Fallback por si acaso (el textarea original)
-                                $('#Urgencia_field').val(p.urgencia);
-                            }
-                        }
-
-                        if (p.detecciontemprana) {
-                            // 1. Intentamos asignar directamente si la instancia ya existe
-                            if (window.CKEDITOR && CKEDITOR.instances[
-                                    'PersonaDetecciontemprana']) {
-                                CKEDITOR.instances['PersonaDetecciontemprana'].setData(p
-                                    .detecciontemprana);
-                            } else {
-                                // 2. Si aún no está lista, esperamos al evento 'instanceReady'
-                                CKEDITOR.on('instanceReady', function(evt) {
-                                    if (evt.editor.name ===
-                                        'PersonaDetecciontemprana') {
-                                        evt.editor.setData(p.detecciontemprana);
-                                    }
-                                });
-
-                                // 3. Fallback por si acaso (el textarea original)
-                                $('#urgencia_field').val(p.urgencia);
-                            }
-                        }
-                        if (p.serviciosocial) {
-                            // 1. Intentamos asignar directamente si la instancia ya existe
-                            if (window.CKEDITOR && CKEDITOR.instances[
-                                    'PersonaServiciosocial']) {
-                                CKEDITOR.instances['PersonaServiciosocial'].setData(p
-                                    .serviciosocial);
-                            } else {
-                                // 2. Si aún no está lista, esperamos al evento 'instanceReady'
-                                CKEDITOR.on('instanceReady', function(evt) {
-                                    if (evt.editor.name ===
-                                        'PersonaServiciosocial') {
-                                        evt.editor.setData(p.serviciosocial);
-                                    }
-                                });
-
-                                // 3. Fallback por si acaso (el textarea original)
-                                $('#serviciosocial_field').val(p.urgencia);
-                            }
-                        }
-                        if (p.observacionpic) {
-                            // 1. Intentamos asignar directamente si la instancia ya existe
-                            if (window.CKEDITOR && CKEDITOR.instances[
-                                    'PersonaObservacionpic']) {
-                                CKEDITOR.instances['PersonaObservacionpic'].setData(p
-                                    .observacionpic);
-                            } else {
-                                // 2. Si aún no está lista, esperamos al evento 'instanceReady'
-                                CKEDITOR.on('instanceReady', function(evt) {
-                                    if (evt.editor.name ===
-                                        'PersonaObservacionpic') {
-                                        evt.editor.setData(p.observacionpic);
-                                    }
-                                });
-
-                                // 3. Fallback por si acaso (el textarea original)
-                                $('#observacionpic_field').val(p.observacionpic);
-                            }
-                        }
-                        $('#caracterizacionaps_info').val(p.caracterizacionaps ? p
-                            .caracterizacionaps :
-                            'Persona Caracterizada por EBS id_familia:' + p
-                            .familia_id);
-                        $('#caracterizacionaps_info').attr('readonly',
-                            true);
-                        // --- Lógica para RIAS ---
-                        if (p.rias) {
-                            choices_rias.setChoiceByValue(p
-                                .rias); // p.rias ya es un Array
-                        }
-
-                        if (p.ofertapic) {
-                            choices_rias.setChoiceByValue(p
-                                .ofertapic); // p.rias ya es un Array
-                        }
-                        if (p.canalizacionuno) {
-                            choices_rias.setChoiceByValue(p
-                                .canalizacionuno); // p.rias ya es un Array
-                        }
-
-
-
-
-
-                        // Aquí puedes llenar más campos si la respuesta los incluye
-                    } else {
-                        // NO EXISTE: Limpiamos ID para INSERT y habilitamos edición
-                        msg.html(
-                            '<span class="text-blue-600 font-bold">ℹ Usuario no está en la tabla personas, por favor ingresar la información manualmente.</span>'
-                        );
-
-                        $('#persona_id_field').val('');
-                        $('#numerodoc_field').val(doc).removeAttr('readonly');
-                        $('#juventudadulto_id_fiel').val('');
-                        $('#tipodoc_select').val('');
-                        $('#apellido1_field').val('').focus();
-                        $('#apellido2_field').val('');
-                        $('#nombre1_field').val('');
-                        $('#nombre2_field').val('');
-                        $('#fechaNac_field').val('');
-                        $('#sexo_field').val('');
-                        $('#grupopoblacional_field').val('');
-                        $('#aseguradora_field').val('');
-                        $('#canalizacion_field').val('');
-                        $('#barriovereda_field').val('');
-                        $('#direccion_field').val('');
-                        $('#telefono_field').val('');
-                        $('#email_field').val('');
-                        $('#familia_id_field').val('');
-                        $('#sociambiental_id_field').val('');
-                        $('#nombreAcudiente_field').val('');
-                        $('#telefonoAcudiente_field').val('');
-                        $('#canalizacionuno_field').val('');
-                        $('#nombreResponsable_field').val('');
-                        $('#responsablecanalizacion_field').val('');
-                        $('#contactoCelular_field').val('');
-                        $('#estado_field').val('');
-
-
-
-                        // Limpieza de CKEditors
-                        if (window.CKEDITOR) {
-                            ['PersonaUrgencia', 'PersonaDetecciontemprana',
-                                'PersonaServiciosocial', 'PersonaObservacionpic'
-                            ].forEach(id => {
-                                if (CKEDITOR.instances[id]) CKEDITOR.instances[id]
-                                    .setData('');
-                            });
-                        }
-                        $('#caracterizacionaps_info').val('Pendiente por Caracterizar');;
 
                     }
-                },
-                error: function() {
-                    msg.html(
-                        '<span class="text-red-600">Error al conectar con el servidor.</span>'
-                    );
-                }
-            });
-        });
+                    $(
+                        '#canalizacionuno_field').val(p.canalizacionuno);
+
+                    if (p.urgencia) {
+                        // 1. Intentamos asignar directamente si la instancia ya existe
+                        if (window.CKEDITOR && CKEDITOR.instances[
+                                'PersonaUrgencia']) {
+                            CKEDITOR.instances['PersonaUrgencia'].setData(p
+                                .urgencia);
+                        } else {
+                            // 2. Si aún no está lista, esperamos al evento 'instanceReady'
+                            CKEDITOR.on('instanceReady', function(evt) {
+                                if (evt.editor.name === 'PersonaUrgencia') {
+                                    evt.editor.setData(p.urgencia);
+                                }
+                            });
+
+                            // 3. Fallback por si acaso (el textarea original)
+                            $('#Urgencia_field').val(p.urgencia);
+                        }
+                    }
+
+                    if (p.detecciontemprana) {
+                        // 1. Intentamos asignar directamente si la instancia ya existe
+                        if (window.CKEDITOR && CKEDITOR.instances[
+                                'PersonaDetecciontemprana']) {
+                            CKEDITOR.instances['PersonaDetecciontemprana'].setData(p
+                                .detecciontemprana);
+                        } else {
+                            // 2. Si aún no está lista, esperamos al evento 'instanceReady'
+                            CKEDITOR.on('instanceReady', function(evt) {
+                                if (evt.editor.name ===
+                                    'PersonaDetecciontemprana') {
+                                    evt.editor.setData(p.detecciontemprana);
+                                }
+                            });
+
+                            // 3. Fallback por si acaso (el textarea original)
+                            $('#urgencia_field').val(p.urgencia);
+                        }
+                    }
+                    if (p.serviciosocial) {
+                        // 1. Intentamos asignar directamente si la instancia ya existe
+                        if (window.CKEDITOR && CKEDITOR.instances[
+                                'PersonaServiciosocial']) {
+                            CKEDITOR.instances['PersonaServiciosocial'].setData(p
+                                .serviciosocial);
+                        } else {
+                            // 2. Si aún no está lista, esperamos al evento 'instanceReady'
+                            CKEDITOR.on('instanceReady', function(evt) {
+                                if (evt.editor.name ===
+                                    'PersonaServiciosocial') {
+                                    evt.editor.setData(p.serviciosocial);
+                                }
+                            });
+
+                            // 3. Fallback por si acaso (el textarea original)
+                            $('#serviciosocial_field').val(p.urgencia);
+                        }
+                    }
+                    if (p.observacionpic) {
+                        // 1. Intentamos asignar directamente si la instancia ya existe
+                        if (window.CKEDITOR && CKEDITOR.instances[
+                                'PersonaObservacionpic']) {
+                            CKEDITOR.instances['PersonaObservacionpic'].setData(p
+                                .observacionpic);
+                        } else {
+                            // 2. Si aún no está lista, esperamos al evento 'instanceReady'
+                            CKEDITOR.on('instanceReady', function(evt) {
+                                if (evt.editor.name ===
+                                    'PersonaObservacionpic') {
+                                    evt.editor.setData(p.observacionpic);
+                                }
+                            });
+
+                            // 3. Fallback por si acaso (el textarea original)
+                            $('#observacionpic_field').val(p.observacionpic);
+                        }
+                    }
+                    $('#caracterizacionaps_info').val(p.caracterizacionaps ? p
+                        .caracterizacionaps :
+                        'Persona Caracterizada por EBS id_familia:' + p
+                        .familia_id);
+                    $('#caracterizacionaps_info').attr('readonly',
+                        true);
+                    // --- Lógica para RIAS ---
+                    if (p.rias) {
+                        choices_rias.setChoiceByValue(p
+                            .rias); // p.rias ya es un Array
+                    }
+
+                    if (p.ofertapic) {
+                        choices_rias.setChoiceByValue(p
+                            .ofertapic); // p.rias ya es un Array
+                    }
+                    if (p.canalizacionuno) {
+                        choices_rias.setChoiceByValue(p
+                            .canalizacionuno); // p.rias ya es un Array
+                    }
 
 
 
-        $(function() {
-            nacimiento = null; // Aquí guardamos la fecha elegida
-
-            $('#fechaNac_field').daterangepicker({
-                singleDatePicker: true,
-                showDropdowns: true,
-                autoApply: true,
-                locale: {
-                    format: 'YYYY-MM-DD',
-                    applyLabel: "Aplicar",
-                    cancelLabel: "Cancelar",
-                    daysOfWeek: ["Do", "Lu", "Ma", "Mi", "Ju", "Vi", "Sa"],
-                    monthNames: [
-                        "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
-                        "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
-                    ],
-                    firstDay: 1
-                }
-            }, function(start) {
-                nacimiento = start.toDate();
-                evaluarCampos();
-            });
-
-            $('#fechaNac_field').val('');
-
-            function evaluarCampos() {
-                var fechaNac = $('#fechaNac_field').val();
-                if (fechaNac) {
-
-                    var edad = calcularEdad(fechaNac);
 
 
-                    // Mostrar edad inmediatamente en el input
-                    $('#edad_field').val(edad);
-                }
-            }
-
-            // Si hay valor en el campo fecha, inicializar nacimiento y ejecutar evaluarCampo
-
-            var fechaInput = document.getElementById('fecha');
-            if (fechaInput && fechaInput.value) {
-                nacimiento = new Date(fechaInput.value);
-            }
-        });
-
-
-
-
-
-        const options = {
-            searchEnabled: true,
-            searchChoices: true,
-            removeItemButton: false,
-            itemSelectText: '',
-            shouldSort: false,
-            renderChoiceLimit: -1, // Sin límite de renderizado
-            searchResultLimit: 20, // Puedes aumentar este valor si tienes muchos resultados
-            searchPlaceholderValue: "Escriba para filtrar...",
-        };
-
-        // 2. Inicialización de Choices.js para los select múltiples
-        const choicesOptions = {
-            removeItemButton: true,
-            searchPlaceholderValue: "Escriba para filtrar...",
-            itemSelectText: ''
-        };
-        const choicesRias = new Choices("#rias_select", choicesOptions);
-        const choicesPic = new Choices("#pic_select", choicesOptions);
-        const choicesCanalizacionuno = new Choices("#canalizacionuno_select", choicesOptions);
-
-
-
-        const choices_canalizacion_id = new Choices("#canalizacion_id", {
-            searchEnabled: true,
-            searchChoices: true,
-            removeItemButton: true, // Permite eliminar seleccionados
-            itemSelectText: '',
-            shouldSort: false,
-            searchPlaceholderValue: "Escriba para filtrar...",
-            maxItemCount: -1, // Sin límite
-            removeItems: true, // Permite quitar seleccionados
-            duplicateItemsAllowed: false,
-            placeholder: true,
-            placeholderValue: "Seleccione IPS...",
-        });
-
-
-
-        document.querySelectorAll('[id^="ayudaButton"]').forEach(function(btn) {
-            btn.addEventListener('click', function(e) {
-                var id = this.id.replace('ayudaButton', 'helpContent');
-                var helpContent = document.getElementById(id);
-                var expanded = this.getAttribute('aria-expanded') === 'true';
-                this.setAttribute('aria-expanded', String(!expanded));
-                helpContent.classList.toggle('hidden');
-                helpContent.setAttribute('aria-hidden', String(expanded));
-                e.stopPropagation();
-            });
-        });
-
-        // Aplicar estilos con Tailwind
-        const inner = document.querySelector('.choices__inner');
-        if (inner) {
-            inner.classList.add(
-                'bg-white', 'border', 'border-gray-300', 'rounded-lg',
-                'px-3', 'py-2', 'focus:ring', 'focus:ring-blue-200', 'text-gray-700'
-            );
-        }
-
-        const dropdown = document.querySelector('.choices__list--dropdown');
-        if (dropdown) {
-            dropdown.classList.add('bg-white', 'shadow-lg', 'rounded-lg', 'border', 'border-gray-200');
-        }
-
-
-
-        // 3. Modal de Consentimiento
-        $('#aceptoBtn').click(function() {
-            $('#consentModal').fadeOut();
-            localStorage.setItem('consentAccepted', 'true');
-        });
-
-        CKEDITOR.on('instanceReady', function(ev) {
-            var editor = ev.editor;
-            var textarea = editor.element.$;
-            var maxChars = textarea.getAttribute("data-maxlength"); // Lee el límite de cada campo
-            maxChars = maxChars ? parseInt(maxChars) : 300; // Default 300 si no se define
-
-            // Crear un contador debajo del campo
-            var counter = document.createElement("div");
-            counter.className = "text-gray-600 mt-1 text-sm";
-            counter.id = "charCount_" + textarea.id;
-            textarea.parentNode.appendChild(counter);
-
-            function updateCount() {
-                var text = editor.getData().replace(/<[^>]*>/g, '');
-                var length = text.length;
-                var remaining = maxChars - length;
-
-                counter.innerHTML = "Caracteres usados: " + length + " / " + maxChars;
-
-                if (remaining < 0) {
-                    counter.style.color = "red";
-                    editor.setData(text.substring(0, maxChars));
+                    // Aquí puedes llenar más campos si la respuesta los incluye
                 } else {
-                    counter.style.color = "gray";
+                    // NO EXISTE: Limpiamos ID para INSERT y habilitamos edición
+                    msg.html(
+                        '<span class="text-blue-600 font-bold">ℹ Usuario no está en la tabla personas, por favor ingresar la información manualmente.</span>'
+                    );
+
+                    $('#persona_id_field').val('');
+                    $('#numerodoc_field').val(doc).removeAttr('readonly');
+                    $('#juventudadulto_id_fiel').val('');
+                    $('#tipodoc_select').val('');
+                    $('#apellido1_field').val('').focus();
+                    $('#apellido2_field').val('');
+                    $('#nombre1_field').val('');
+                    $('#nombre2_field').val('');
+                    $('#fechaNac_field').val('');
+                    $('#sexo_field').val('');
+                    $('#grupopoblacional_field').val('');
+                    $('#aseguradora_field').val('');
+                    $('#canalizacion_field').val('');
+                    $('#barriovereda_field').val('');
+                    $('#direccion_field').val('');
+                    $('#telefono_field').val('');
+                    $('#email_field').val('');
+                    $('#familia_id_field').val('');
+                    $('#sociambiental_id_field').val('');
+                    $('#nombreAcudiente_field').val('');
+                    $('#telefonoAcudiente_field').val('');
+                    $('#canalizacionuno_field').val('');
+                    $('#nombreResponsable_field').val('');
+                    $('#responsablecanalizacion_field').val('');
+                    $('#contactoCelular_field').val('');
+                    $('#estado_field').val('');
+
+
+
+                    // Limpieza de CKEditors
+                    if (window.CKEDITOR) {
+                        ['PersonaUrgencia', 'PersonaDetecciontemprana',
+                            'PersonaServiciosocial', 'PersonaObservacionpic'
+                        ].forEach(id => {
+                            if (CKEDITOR.instances[id]) CKEDITOR.instances[id]
+                                .setData('');
+                        });
+                    }
+                    $('#caracterizacionaps_info').val('Pendiente por Caracterizar');;
+
                 }
+            },
+            error: function() {
+                msg.html(
+                    '<span class="text-red-600">Error al conectar con el servidor.</span>'
+                );
             }
-
-            // Bloquear si excede
-            editor.on('key', function(evt) {
-                var text = editor.getData().replace(/<[^>]*>/g, '');
-                if (text.length >= maxChars && evt.data.keyCode != 8 && evt.data.keyCode !=
-                    46) {
-                    evt.cancel();
-                    alert("Máximo permitido: " + maxChars + " caracteres.");
-                }
-            });
-
-            // Bloquear pegar excedido
-            editor.on('paste', function(evt) {
-                var text = evt.data.dataValue.replace(/<[^>]*>/g, '');
-                if (text.length > maxChars) {
-                    evt.cancel();
-                    alert("No puedes pegar más de " + maxChars + " caracteres.");
-                }
-            });
-
-            editor.on('key', updateCount);
-            editor.on('paste', updateCount);
-            editor.on('change', updateCount);
-
-            updateCount(); // inicializar contador
         });
-
-        // Detectar si el usuario intenta retroceder con la flecha del navegador
-        window.addEventListener('popstate', function(event) {
-            if (confirm(
-                    '¿Está seguro que desea salir de la página? Se pueden perder los cambios no guardados.'
-                )) {
-                window.location.href = 'index'; // Redirigir a la página deseada
-            } else {
-                history.pushState(null, null, location.href); // Mantener en la página actual
-            }
-        });
-
-
-        // Prevenir retroceso con la flecha del navegador (mejor experiencia)
-        history.pushState(null, null, location.href);
-
-
-
     });
+
+
+
+    $(function() {
+        nacimiento = null; // Aquí guardamos la fecha elegida
+
+        $('#fechaNac_field').daterangepicker({
+            singleDatePicker: true,
+            showDropdowns: true,
+            autoApply: true,
+            locale: {
+                format: 'YYYY-MM-DD',
+                applyLabel: "Aplicar",
+                cancelLabel: "Cancelar",
+                daysOfWeek: ["Do", "Lu", "Ma", "Mi", "Ju", "Vi", "Sa"],
+                monthNames: [
+                    "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
+                    "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
+                ],
+                firstDay: 1
+            }
+        }, function(start) {
+            nacimiento = start.toDate();
+            evaluarCampos();
+        });
+
+        $('#fechaNac_field').val('');
+
+        function evaluarCampos() {
+            var fechaNac = $('#fechaNac_field').val();
+            if (fechaNac) {
+
+                var edad = calcularEdad(fechaNac);
+
+
+                // Mostrar edad inmediatamente en el input
+                $('#edad_field').val(edad);
+            }
+        }
+
+        // Si hay valor en el campo fecha, inicializar nacimiento y ejecutar evaluarCampo
+
+        var fechaInput = document.getElementById('fecha');
+        if (fechaInput && fechaInput.value) {
+            nacimiento = new Date(fechaInput.value);
+        }
+    });
+
+
+
+
+
+    const options = {
+        searchEnabled: true,
+        searchChoices: true,
+        removeItemButton: false,
+        itemSelectText: '',
+        shouldSort: false,
+        renderChoiceLimit: -1, // Sin límite de renderizado
+        searchResultLimit: 20, // Puedes aumentar este valor si tienes muchos resultados
+        searchPlaceholderValue: "Escriba para filtrar...",
+    };
+
+    // 2. Inicialización de Choices.js para los select múltiples
+    const choicesOptions = {
+        removeItemButton: true,
+        searchPlaceholderValue: "Escriba para filtrar...",
+        itemSelectText: ''
+    };
+    const choicesRias = new Choices("#rias_select", choicesOptions);
+    const choicesPic = new Choices("#pic_select", choicesOptions);
+    const choicesCanalizacionuno = new Choices("#canalizacionuno_select", choicesOptions);
+
+
+
+    const choices_canalizacion_id = new Choices("#canalizacion_id", {
+        searchEnabled: true,
+        searchChoices: true,
+        removeItemButton: true, // Permite eliminar seleccionados
+        itemSelectText: '',
+        shouldSort: false,
+        searchPlaceholderValue: "Escriba para filtrar...",
+        maxItemCount: -1, // Sin límite
+        removeItems: true, // Permite quitar seleccionados
+        duplicateItemsAllowed: false,
+        placeholder: true,
+        placeholderValue: "Seleccione IPS...",
+    });
+
+
+
+    document.querySelectorAll('[id^="ayudaButton"]').forEach(function(btn) {
+        btn.addEventListener('click', function(e) {
+            var id = this.id.replace('ayudaButton', 'helpContent');
+            var helpContent = document.getElementById(id);
+            var expanded = this.getAttribute('aria-expanded') === 'true';
+            this.setAttribute('aria-expanded', String(!expanded));
+            helpContent.classList.toggle('hidden');
+            helpContent.setAttribute('aria-hidden', String(expanded));
+            e.stopPropagation();
+        });
+    });
+
+    // Aplicar estilos con Tailwind
+    const inner = document.querySelector('.choices__inner');
+    if (inner) {
+        inner.classList.add(
+            'bg-white', 'border', 'border-gray-300', 'rounded-lg',
+            'px-3', 'py-2', 'focus:ring', 'focus:ring-blue-200', 'text-gray-700'
+        );
+    }
+
+    const dropdown = document.querySelector('.choices__list--dropdown');
+    if (dropdown) {
+        dropdown.classList.add('bg-white', 'shadow-lg', 'rounded-lg', 'border', 'border-gray-200');
+    }
+
+
+
+    // 3. Modal de Consentimiento
+    $('#aceptoBtn').click(function() {
+        $('#consentModal').fadeOut();
+        localStorage.setItem('consentAccepted', 'true');
+    });
+
+    CKEDITOR.on('instanceReady', function(ev) {
+        var editor = ev.editor;
+        var textarea = editor.element.$;
+        var maxChars = textarea.getAttribute("data-maxlength"); // Lee el límite de cada campo
+        maxChars = maxChars ? parseInt(maxChars) : 1000; // Default 300 si no se define
+
+        // Crear un contador debajo del campo
+        var counter = document.createElement("div");
+        counter.className = "text-gray-600 mt-1 text-sm";
+        counter.id = "charCount_" + textarea.id;
+        textarea.parentNode.appendChild(counter);
+
+        function updateCount() {
+            var text = editor.getData().replace(/<[^>]*>/g, '');
+            var length = text.length;
+            var remaining = maxChars - length;
+
+            counter.innerHTML = "Caracteres usados: " + length + " / " + maxChars;
+
+            if (remaining < 0) {
+                counter.style.color = "red";
+                editor.setData(text.substring(0, maxChars));
+            } else {
+                counter.style.color = "gray";
+            }
+        }
+
+        // Bloquear si excede
+        editor.on('key', function(evt) {
+            var text = editor.getData().replace(/<[^>]*>/g, '');
+            if (text.length >= maxChars && evt.data.keyCode != 8 && evt.data.keyCode !=
+                46) {
+                evt.cancel();
+                alert("Máximo permitido: " + maxChars + " caracteres.");
+            }
+        });
+
+        // Bloquear pegar excedido
+        editor.on('paste', function(evt) {
+            var text = evt.data.dataValue.replace(/<[^>]*>/g, '');
+            if (text.length > maxChars) {
+                evt.cancel();
+                alert("No puedes pegar más de " + maxChars + " caracteres.");
+            }
+        });
+
+        editor.on('key', updateCount);
+        editor.on('paste', updateCount);
+        editor.on('change', updateCount);
+
+        updateCount(); // inicializar contador
+    });
+
+    // Detectar si el usuario intenta retroceder con la flecha del navegador
+    window.addEventListener('popstate', function(event) {
+        if (confirm(
+                '¿Está seguro que desea salir de la página? Se pueden perder los cambios no guardados.'
+            )) {
+            window.location.href = 'index'; // Redirigir a la página deseada
+        } else {
+            history.pushState(null, null, location.href); // Mantener en la página actual
+        }
+    });
+
+
+    // Prevenir retroceso con la flecha del navegador (mejor experiencia)
+    history.pushState(null, null, location.href);
+
+
+
+});
 </script>
