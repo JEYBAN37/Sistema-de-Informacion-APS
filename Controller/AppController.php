@@ -265,7 +265,8 @@ class AppController extends Controller
 
             $parametrosRaw = $this->Parametro->find('list', [
                 'fields' => ['Parametro.indicador', 'Parametro.resultado', 'Parametro.curso'],
-                'recursive' => -1
+                'recursive' => -1,
+                'conditions' => array('Parametro.tipo' => 'I'),
             ]);
 
 
@@ -473,7 +474,7 @@ class AppController extends Controller
         }
 
         if ($base_anterior == 'NORTE' && $date <= '2026-01-01') {
-            return 'https://agsolutic.com/fichafamiliar/files/observacion/plancuidado/' . $dirPlancuidado . '/' . $plancuidado;
+            return 'https://agsolutic.com/aps/fichafamiliar/files/observacion/plancuidado/' . $dirPlancuidado . '/' . $plancuidado;
         }
 
         if ($base_anterior == 'OCCIDENTE' && $date <= '2026-01-01') {
@@ -500,7 +501,7 @@ class AppController extends Controller
         }
 
         if ($base_anterior == 'NORTE' && $date <= '2026-01-01' || $base_anterior == 'NORTE' && $id != $dirFamiliograma) {
-            return 'https://agsolutic.com/fichafamiliar/files/observacion/familiograma/' . $dirFamiliograma . '/' . $familiograma;
+            return 'https://agsolutic.com/aps/fichafamiliar/files/observacion/familiograma/' . $dirFamiliograma . '/' . $familiograma;
         }
 
         if ($base_anterior == 'OCCIDENTE' && $date <= '2026-01-01' || $base_anterior == 'OCCIDENTE' && $id != $dirFamiliograma) {
@@ -516,7 +517,7 @@ class AppController extends Controller
         }
 
         if ($date > '2026-01-01') {
-            return '../files/observacion/familiograma/' . $dirFamiliograma . '/' . $familiograma;
+            return 'https://agsolutic.com/aps/aps_2025_v1/observacion/familiograma/' . $dirFamiliograma . '/' . $familiograma;
         }
     }
 }
