@@ -473,7 +473,7 @@ class AppController extends Controller
         }
 
         if ($base_anterior == 'NORTE' && $date <= '2026-01-01') {
-            return 'https://agsolutic.com/fichafamiliar/files/observacion/plancuidado/' . $dirPlancuidado . '/' . $plancuidado;
+            return 'https://agsolutic.com/aps/fichafamiliar/files/observacion/plancuidado/' . $dirPlancuidado . '/' . $plancuidado;
         }
 
         if ($base_anterior == 'OCCIDENTE' && $date <= '2026-01-01') {
@@ -491,6 +491,10 @@ class AppController extends Controller
         if ($date > '2026-01-01') {
             return '../files/observacion/plancuidado/' . $dirPlancuidado . '/' . $plancuidado;
         }
+
+        if ($base_anterior == null) {
+            return '../files/observacion/plancuidado/' . $dirPlancuidado . '/' . $plancuidado;
+        }
     }
 
     protected function sendViewFamiliograma($dirFamiliograma, $familiograma, $base_anterior, $date, $id)
@@ -500,7 +504,7 @@ class AppController extends Controller
         }
 
         if ($base_anterior == 'NORTE' && $date <= '2026-01-01' || $base_anterior == 'NORTE' && $id != $dirFamiliograma) {
-            return 'https://agsolutic.com/fichafamiliar/files/observacion/familiograma/' . $dirFamiliograma . '/' . $familiograma;
+            return 'https://agsolutic.com/aps/fichafamiliar/files/observacion/familiograma/' . $dirFamiliograma . '/' . $familiograma;
         }
 
         if ($base_anterior == 'OCCIDENTE' && $date <= '2026-01-01' || $base_anterior == 'OCCIDENTE' && $id != $dirFamiliograma) {
@@ -516,6 +520,10 @@ class AppController extends Controller
         }
 
         if ($date > '2026-01-01') {
+            return '../files/observacion/familiograma/' . $dirFamiliograma . '/' . $familiograma;
+        }
+
+        if ($base_anterior == null) {
             return '../files/observacion/familiograma/' . $dirFamiliograma . '/' . $familiograma;
         }
     }
