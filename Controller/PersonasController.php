@@ -30,8 +30,107 @@ class PersonasController extends AppController
 	 */
 	public function index()
 	{
+		$this->loadModel('Canalizacion');
 		$this->Persona->recursive = 0;
+
+		$conditions = array(
+			'Persona.aceptaformulario' => 'Si acepta'
+		);
+
+		// Filtro por número de documento
+		if (!empty($this->request->query('numerodoc'))) {
+			$conditions['Persona.numerodoc LIKE'] = '%' . $this->request->query('numerodoc') . '%';
+		}
+
+		// Filtro por aseguradora
+		if (!empty($this->request->query('aseguradora'))) {
+			$conditions['Persona.aseguradora'] = $this->request->query('aseguradora');
+		}
+
+		// Filtro por canalización
+		if (!empty($this->request->query('canalizacion_id'))) {
+			$conditions['Persona.canalizacion_id'] = $this->request->query('canalizacion_id');
+		}
+
+		// Filtro por Servicio Salud
+		if (!empty($this->request->query('serviciosalud'))) {
+			if ($this->request->query('serviciosalud') == 'SI') {
+				$conditions['OR'] = array(
+					'Persona.urgencia IS NOT NULL',
+					'Persona.detecciontemprana IS NOT NULL',
+					'Persona.rias IS NOT NULL'
+				);
+			} elseif ($this->request->query('serviciosalud') == 'NA') {
+				$conditions['Persona.urgencia IS NULL'] = true;
+				$conditions['Persona.detecciontemprana IS NULL'] = true;
+				$conditions['Persona.rias IS NULL'] = true;
+			}
+		}
+
+		// Filtro por Otros Servicios (Oferta Pic)
+		if (!empty($this->request->query('otros_servicios'))) {
+			if ($this->request->query('otros_servicios') == 'oferta_pic') {
+				$conditions[] = "Persona.ofertapic IS NOT NULL AND Persona.ofertapic != '' AND Persona.ofertapic != '0.No |0'";
+			}
+		}
+
+		// Filtro por Servicio Social
+		if (!empty($this->request->query('servicio_social'))) {
+			if ($this->request->query('servicio_social') == 'servicio_social') {
+				$conditions[] = "Persona.serviciosocial IS NOT NULL AND Persona.serviciosocial != ''";
+			}
+		}
+
+		// Filtro por Caracterización APS
+		if (!empty($this->request->query('caracterizacion_aps'))) {
+			if ($this->request->query('caracterizacion_aps') == 'caracterizar') {
+				$conditions['Persona.caracterizacionaps'] = 'Caracterizar';
+			}
+		}
+
+		$this->Paginator->settings = array(
+			'conditions' => $conditions,
+			'limit' => 25
+		);
+
 		$this->set('personas', $this->Paginator->paginate());
+
+		// Cargar opciones para los dropdowns
+		$aseguradoras = array(
+			'Sanitas' => 'Sanitas',
+			'Emssanar' => 'Emssanar',
+			'Nueva EPS' => 'Nueva EPS',
+			'Mallamas' => 'Mallamas',
+			'Famisanar' => 'Famisanar',
+			'Asmet Salud' => 'Asmet Salud',
+			'Sanidad PONAL' => 'Sanidad PONAL',
+			'PROINSALUD' => 'PROINSALUD',
+			'Fondo UDENAR' => 'Fondo UDENAR',
+			'Sin afiliación' => 'Sin afiliación'
+		);
+
+		$serviciosSalud = array(
+			'SI' => 'SI',
+			'NA' => 'N/A'
+		);
+
+		$otrosServicios = array(
+			'oferta_pic' => 'Oferta Pic'
+		);
+
+		$servicioSocialOptions = array(
+			'servicio_social' => 'Servicio Social'
+		);
+
+		$caracterizacionAps = array(
+			'caracterizar' => 'Caracterizar'
+		);
+
+		$canalizaciones = $this->Canalizacion->find('list', array(
+			'fields' => array('Canalizacion.id', 'Canalizacion.nombre')
+		));
+
+		$this->set(compact('aseguradoras', 'canalizaciones', 'serviciosSalud', 'otrosServicios', 'servicioSocialOptions', 'caracterizacionAps'));
 	}
 
 	/**
