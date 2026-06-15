@@ -119,6 +119,8 @@ echo $this->Form->create("User");
             <div class="absolute bottom-6 left-6 right-6 flex justify-between">
                 <img class="w-[121px] h-[68px] object-contain" alt="WhatsApp logo"
                     src="<?php echo $this->webroot; ?>/img/aps_v2025/secretaria_salud.png" />
+                <img class="w-[98px] h-[68px] object-contain" alt="Agsolutic logo"
+                    src="<?php echo $this->webroot; ?>/img/aps_v2025/agsolutic.png" />
                 <img class="w-[98px] h-[68px] object-contain" alt="Ciudad Bienestar logo"
                     src="<?php echo $this->webroot; ?>/img/aps_v2025/cb.png" />
             </div>
