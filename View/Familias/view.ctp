@@ -405,11 +405,14 @@ $planUrl = $this->Html->url(['controller' => 'Observacions', 'action' => 'addane
 
                                     <tr>
                                         <td colspan="1" class=" border border-gray-300 font-semibold p-2 text-center text-sm text-gray-700">Observacion</td>
-                                        <td colspan="2" class="border border-gray-300 p-2 font-semibold text-sm"><?php echo $observacion['observacion']; ?></td>
-                                        <td colspan="1" class=" border border-gray-300 font-semibold p-2 text-center text-sm text-gray-700">Valoracion de la Familia</td>
-                                        <td colspan="3" class="border border-gray-300 p-2 text-sm text-gray-700"><?php echo $observacion['valoracionfamilia']; ?></td>
+                                        <td colspan="8" class="border border-gray-300 p-2 font-semibold text-sm"><?php echo $observacion['observacion']; ?></td>
+                                        
                                     </tr>
                                     <tr class="mt-4 bg-gray-100 ">
+                                        <td colspan="1" class=" border border-gray-300 font-semibold p-2 text-center text-sm text-gray-700">Valoracion de la Familia</td>
+                                        <td colspan="8" class="border border-gray-300 p-2 text-sm text-gray-700"><?php echo $observacion['valoracionfamilia']; ?></td>
+                                    </tr>
+                                    <tr >
                                         <td colspan="1" class=" border border-gray-300 font-semibold p-2 text-center text-sm text-gray-700">Canalizaciones</td>
                                         <td colspan="2" class="border border-gray-300 p-2 font-bold text-sm">
                                             <?php echo $observacion['canalizacionuno']; ?>
@@ -421,7 +424,7 @@ $planUrl = $this->Html->url(['controller' => 'Observacions', 'action' => 'addane
 
                                     </tr>
 
-                                    <tr>
+                                    <tr class="mt-4 bg-gray-100 ">
                                         <td colspan="1" class=" border border-gray-300 font-semibold p-2 text-center text-sm text-gray-700">Familiograma</td>
                                         <td colspan="2" class="border border-gray-300 p-2 font-bold text-sm"><?php if (!empty($observacion['dirfamiliograma'])) {
                                                                                                                     echo $this->Html->link(
