@@ -359,8 +359,12 @@ class ObservacionsController extends AppController
 					)
 				));
 
-				$this->Session->setFlash('Registro se guardó con éxito, continuar con la firma del Plan de Cuidado', 'flash_custom', array('class' => 'success', 'title' => 'El registro se ha completado correctamente'));					//return $this->redirect(array('action' => 'index'));
-				return $this->redirect(array('controller' => 'familias', 'action' => 'view', $this->request->data["Observacion"]["familia_id"]));
+				$this->Session->setFlash('Registro se guardó con éxito, continuar con la firma del Plan de Cuidado', 'flash_custom', array('class' => 'success', 'title' => 'El registro se ha completado correctamente'));		
+				if ($this->request->data['btn'] == 'familia') {
+					return $this->redirect(array('controller' => 'familias', 'action' => 'view', $this->request->data["Observacion"]["familia_id"]));
+				} else {
+					return $this->redirect(array('controller' => 'familias', 'action' => 'plancuidado', $this->request->data["Observacion"]["familia_id"]));
+				}
 			} else {
 				// Si hay error, restaurar los datos originales (sin modificaciones de beforeSave)
 				// para que se muestren en la vista tal como los envió el usuario

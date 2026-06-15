@@ -1,4 +1,4 @@
-<?php $this->layout = 'default_persona' ?>
+<?php $this->layout = 'default_familia' ?>
 
 <body class="bg-gradient-to-br from-slate-50 to-slate-100 min-h-screen">
 
