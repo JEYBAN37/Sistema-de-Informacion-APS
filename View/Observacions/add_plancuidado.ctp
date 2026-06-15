@@ -136,7 +136,6 @@
 
 
 <?php
-
 echo $this->Form->create('Observacion',  [
     'type' => 'file',
     'novalidate' => 'novalidate',
@@ -154,55 +153,6 @@ $idAux = $this->request->data['Observacion']['familia_id'];
 <?php echo $this->Form->hidden('disentimiento'); ?>
 <?php echo $this->Form->hidden('actividaddesarrollar'); ?>
 
-<?php
-$riesgosalud = [
-    '0.1' => 'Ninguno',
-    '5.1' => 'Menor con Riesgo desnutrición',
-    '5.2' => 'Menor sin esquema de vacunación completo',
-    '3.3' => 'Menor con Signos de peligro EDA o IRA',
-    '2.1' => 'Menor sin valoraciones de PYM',
-    '1' => 'Persona joven/adulto sin valoraciones de PYM',
-    '5.4' => 'Gestante sin control',
-    '4.5' => 'Embarazo de alto riesgo',
-    '1.01' => 'Persona con enfermedad crónica con control',
-    '5.6' => 'Persona con enfermedad crónica sin control',
-    '4.1' => 'Persona Sintomatico respiratorio o de piel',
-    '3' => 'Persona con enferemedad sin manejo',
-    '3.4' => 'Persona con afectación de salud mental',
-
-];
-
-
-$riesgovulnerabilidad = [
-    '0.1' => 'Ninguna',
-    '2.0' => 'Persona con discapacidad sin cuidador',
-    '2.1' => 'Menor sin estudiar',
-    '1.3' => 'Población Especial en riesgo',
-    '2.4' => 'Persona sin afiliación a salud',
-    '1.2' => 'Persona con consumo SPA',
-    '2.01' => 'Sospecha de violencia intrafamiliar',
-    '1.02' => 'Vivienda precaria',
-    '1.03' => 'Cuidador con sobrecarga',
-    '1.04' => 'Disfunción famliliar',
-    '1.05' => 'Relaciones familiares tensas o estresantes'
-];
-
-
-$fortalezas = [
-    'Vivienda adecuada y segura' => 'Vivienda adecuada y segura',
-    'Acceso a servicios básicos (agua,alcantarillado, luz, gas)' => 'Acceso a servicios básicos (agua, luz, gas)',
-    'Buena salud física y mental de los miembros' => 'Buena salud física y mental de los miembros',
-    'Relaciones familiares afectuosas y respetuosas' => 'Relaciones familiares afectuosas y respetuosas',
-    'Apoyo emocional entre los miembros' => 'Apoyo emocional entre los miembros',
-    'Participación activa en la comunidad' => 'Participación activa en la comunidad',
-    'Estabilidad económica' => 'Estabilidad económica',
-    'Acceso a educación y formación' => 'Acceso a educación y formación',
-    'Habilidades de resolución de conflictos' => 'Habilidades de resolución de conflictos',
-    'Red de apoyo social sólida' => 'Red de apoyo social sólida',
-    'Prácticas saludables de alimentación y ejercicio' => 'Prácticas saludables de alimentación y ejercicio',
-    'Entorno familiar seguro y libre de violencia' => 'Entorno familiar seguro y libre de violencia',
-];
-?>
 
 <div class="max-w-6xl mx-auto p-18">
 
@@ -532,13 +482,6 @@ $fortalezas = [
 
                 <?php
 
-                $entornoAfectado = [
-                    'Hogar'   => 'Hogar',
-                    'Comunitario'   => 'Comunitario',
-                    'Educativo' => 'Educativo'
-                ];
-
-                // Usando FormHelper para generar checkboxes (CakePHP 2.x)
                 echo $this->Form->input('entornoafectado', [
                     'label' => false,
                     'type' => 'select',
@@ -563,17 +506,6 @@ $fortalezas = [
                     <p class="text-red-600">*</p>
                 </div>
                 <?php
-                $actividadesDesarrollar = [
-                    'manejo y seguimiento a riesgos en salud' => 'Manejo y seguimiento a riesgos en salud',
-                    'Atenciones,intervenciones individuales RIAS' => 'Atenciones/intervenciones individuales RIAS',
-                    'Derivación servicios salud especializados' => 'Derivación servicios salud especializados',
-                    'Apoyo Psicosocial' => 'Apoyo Psicosocial',
-                    'AcompañamientoAJUSTAR familiar' => 'Acompañamiento familiar',
-                    'Gestión recursos comunitarios' => 'Gestión recursos comunitarios',
-                    'Educación para la Salud' => 'Educación en Salud',
-                    'Información en Salud' => 'Información en Salud',
-                    'Intervenciones Colectivas' => 'Intervenciones Colectivas',
-                ];
 
                 echo $this->Form->input(
                     'indicadorria',
@@ -738,107 +670,30 @@ $fortalezas = [
     const parametrosMapData = <?= json_encode($parametrosDisplay) ?>;
     window.parametrosMap = parametrosMapData;
     window.parametrosKeys = Object.keys(parametrosMapData);
-    console.log('parametrosMap inicializado globalmente:', window.parametrosMap);
-    console.log('parametrosKeys inicializado globalmente:', window.parametrosKeys);
-    console.log('¿parametrosMap está vacío?', Object.keys(window.parametrosMap).length === 0);
+
+    const choiceCreator = (nombre, label) => {
+        return new Choices(nombre, {
+            searchEnabled: true,
+            searchChoices: true,
+            removeItemButton: true, // Permite eliminar seleccionados
+            itemSelectText: '',
+            shouldSort: false,
+            searchPlaceholderValue: "Escriba para filtrar...",
+            maxItemCount: -1, // Sin límite
+            removeItems: true, // Permite quitar seleccionados
+            duplicateItemsAllowed: false,
+            placeholder: true,
+            placeholderValue: label,
+        });
+    };
 
     document.addEventListener("DOMContentLoaded", () => {
 
-
-
-
-        const choices_ria = new Choices("#ria", {
-            searchEnabled: true,
-            searchChoices: true,
-            removeItemButton: true, // Permite eliminar seleccionados
-            itemSelectText: '',
-            shouldSort: false,
-            searchPlaceholderValue: "Escriba para filtrar...",
-            maxItemCount: -1, // Sin límite
-            removeItems: true, // Permite quitar seleccionados
-            duplicateItemsAllowed: false,
-            placeholder: true,
-            placeholderValue: "Seleccione las actividades a desarrollar",
-        });
-
-        const choices_entornoafectado = new Choices("#entornoafectado", {
-            searchEnabled: true,
-            searchChoices: true,
-            removeItemButton: true, // Permite eliminar seleccionados
-            itemSelectText: '',
-            shouldSort: false,
-            searchPlaceholderValue: "Escriba para filtrar...",
-            maxItemCount: -1, // Sin límite
-            removeItems: true, // Permite quitar seleccionados
-            duplicateItemsAllowed: false,
-            placeholder: true,
-            placeholderValue: "Seleccione los entornos a intervenir",
-        });
-
-
-        const choices_responsables = new Choices("#responsables", {
-            searchEnabled: true,
-            searchChoices: true,
-            removeItemButton: true, // Permite eliminar seleccionados
-            itemSelectText: '',
-            shouldSort: false,
-            searchPlaceholderValue: "Escriba para filtrar...",
-            maxItemCount: -1, // Sin límite
-            removeItems: true, // Permite quitar seleccionados
-            duplicateItemsAllowed: false,
-            placeholder: true,
-            placeholderValue: "Seleccione los responsables EBS",
-        });
-
-        // parametrosMap ya está definido globalmente arriba
-
-
-
-        const choices_indicadores = new Choices("#indicadores", {
-            searchEnabled: true,
-            searchChoices: true,
-            removeItemButton: true, // Permite eliminar seleccionados
-            itemSelectText: '',
-            shouldSort: false,
-            searchPlaceholderValue: "Escriba para filtrar...",
-            maxItemCount: -1, // Sin límite
-            searchResultLimit: -1, // Sin límite en resultados
-            removeItems: true, // Permite quitar seleccionados
-            duplicateItemsAllowed: false,
-            placeholder: true,
-            minMatchCharLength: 1,
-            placeholderValue: "Seleccione indicadores",
-        });
-
-        // Sincronizar selección de indicadores con valores
-        const indicadoresSelect = document.getElementById('indicadores');
-        const valoresInput = document.getElementById('indicadores_valores');
-
-        if (indicadoresSelect && valoresInput) {
-            indicadoresSelect.addEventListener('change', function() {
-                const selectedOptions = Array.from(indicadoresSelect.selectedOptions);
-                const valores = selectedOptions.map(option => window.parametrosMap[option.value]);
-                valoresInput.value = JSON.stringify(valores);
-                console.log('Valores sincronizados:', valores);
-            });
-        }
-
-
-
-
-        // Aplicar estilos con Tailwind
-        const inner = document.querySelector('.choices__inner');
-        if (inner) {
-            inner.classList.add(
-                'bg-white', 'border', 'border-gray-300', 'rounded-lg',
-                'px-3', 'py-2', 'focus:ring', 'focus:ring-blue-200', 'text-gray-700'
-            );
-        }
-
-        const dropdown = document.querySelector('.choices__list--dropdown');
-        if (dropdown) {
-            dropdown.classList.add('bg-white', 'shadow-lg', 'rounded-lg', 'border', 'border-gray-200');
-        }
+        // Inicializar Choices para los selectores
+        const choices_ria = choiceCreator("#ria", "Seleccione las actividades a desarrollar");
+        const choices_entornoafectado = choiceCreator("#entornoafectado", "Seleccione los entornos a intervenir");
+        const choices_responsables = choiceCreator("#responsables", "Seleccione los responsables EBS");
+        const choices_disentimiento = choiceCreator("#indicadores", "Seleccione indicadores");
     });
 
 
@@ -938,11 +793,21 @@ $fortalezas = [
         }
     });
 
+    const NUEVA_FILA = {
+        id: Date.now().toString(),
+        situacionesPriorizadas: "",
+        logrosAlcanzados: "",
+        responsableFamilia: "",
+        fechaCompromiso: "",
+        fechaSeguimiento: "",
+        seguimientoCompromiso: "",
+        objetivoCortoPlazo: [], // Array de keys
+        resultadosEsperados: [], // Array de values
+        estado: "pendiente",
+    };
 
     document.addEventListener("DOMContentLoaded", () => {
         const puntuacionFamilia = document.getElementById('puntuacionfamilia');
-
-
 
         function updateValoracionFamilia() {
             if (puntuacionFamilia && valoracionFamilia) {
@@ -1013,50 +878,29 @@ $fortalezas = [
         }
     }
 
+
+
     function inicializarRowsDesdeObservacion() {
         const obsField = document.querySelector('[name="data[Observacion][actividaddesarrollar]"]');
-        console.log('Campo actividaddesarrollar encontrado:', obsField);
-        console.log('Valor del campo:', obsField ? obsField.value : 'No existe el campo');
-
         let deserializados = [];
         if (obsField && obsField.value && obsField.value.trim() !== '') {
             try {
                 const datos = JSON.parse(obsField.value);
-                console.log('Datos parseados:', datos);
                 if (Array.isArray(datos) && datos.length > 0) {
                     deserializados = datos;
-                    console.log('Datos cargados correctamente:', deserializados);
+
                 }
             } catch (e) {
                 console.error('Error al parsear actividaddesarrollar:', e);
             }
         }
 
-        // SIEMPRE crear una fila vacía al inicio para que el usuario llene
-        const filaVacia = {
-            id: Date.now().toString(),
-            situacionesPriorizadas: "",
-            logrosAlcanzados: "",
-            responsableFamilia: "",
-            fechaCompromiso: "",
-            fechaSeguimiento: "",
-            seguimientoCompromiso: "",
-            objetivoCortoPlazo: [], // Array de keys
-            resultadosEsperados: [], // Array de values
-            estado: "pendiente",
-        };
 
-        // Si hay datos guardados, agregarlos DESPUÉS de la fila vacía (colapsados)
         if (deserializados.length > 0) {
-            rows = [filaVacia, ...deserializados];
-            // Solo expandir la fila vacía (la primera)
-            expandedRows = new Set([filaVacia.id]);
-            console.log('Fila vacía creada + datos existentes colapsados. Total filas:', rows.length);
+            rows = [...deserializados];
         } else {
-            // Si no hay datos, solo la fila vacía
-            rows = [filaVacia];
-            expandedRows = new Set([filaVacia.id]);
-            console.log('Solo fila vacía creada.');
+            rows = [NUEVA_FILA];
+            expandedRows = new Set([NUEVA_FILA.id]);
         }
     }
 
@@ -1089,20 +933,8 @@ $fortalezas = [
 
     // Row operations
     function addRow() {
-        const newRow = {
-            id: Date.now().toString(),
-            situacionesPriorizadas: "",
-            logrosAlcanzados: "",
-            responsableFamilia: "",
-            fechaCompromiso: "",
-            fechaSeguimiento: "",
-            seguimientoCompromiso: "",
-            objetivoCortoPlazo: [], // Array de keys
-            resultadosEsperados: [], // Array de values
-            estado: "pendiente",
-        }
-        rows.push(newRow)
-        expandedRows = new Set([newRow.id])
+        rows.push(NUEVA_FILA)
+        expandedRows = new Set([NUEVA_FILA.id])
         guardarRowsEnObservacion()
         render()
     }
@@ -1144,6 +976,20 @@ $fortalezas = [
     }
 
     const opcionesResponsableFamilia = <?= json_encode($opciones) ?>;
+    const opcionesResponsables = <?= json_encode($responsables) ?>;
+
+    function renderOpcionesResponsables(selectedId = '') {
+        let html = `<option value="">Seleccione una persona</option>`;
+
+        for (const id in opcionesResponsables) {
+            const selected = id == selectedId ? 'selected' : '';
+            html += `<option value="${id}" ${selected}>
+                    ${opcionesResponsables[id]}
+                 </option>`;
+        }
+
+        return html;
+    }
 
     function renderOpciones(selectedId = '') {
         let html = `<option value="">Seleccione una persona</option>`;
@@ -1294,19 +1140,31 @@ $fortalezas = [
                         style="height:100px; font-size: 15px; width:100%">${row.logrosAlcanzados}</textarea>
 
                     </div>
+                    <div class="col-span-2 sm:col-span-1 text-md font-semibold my-2 px-4">
 
-                    <div class="col-span-2 text-md font-semibold my-2 px-4">
-                        <div class="flex items-center mb-4">
-                            <label class="font-semibold">Responsable de la familia</label>
+                            <div class="flex items-center mb-4">
+                                <label class="font-semibold">Persona a Intervenir</label>
+                            </div>
+
+                        <select
+                            onchange="updateRow('${row.id}', 'responsableFamilia', this.value)"
+                            class="border border-gray-300 rounded-lg w-full p-2 focus:outline-none focus:ring-1 focus:ring-blue-500 text-sm text-gray-700">
+                            ${renderOpciones(row.responsableFamilia)}
+                        </select>
                         </div>
+                    <div class="col-span-2 sm:col-span-1 text-md font-semibold my-2 px-4">
 
-                    <select
-                        onchange="updateRow('${row.id}', 'responsableFamilia', this.value)"
-                        class="border border-gray-300 rounded-lg w-full p-2 focus:outline-none focus:ring-1 focus:ring-blue-500 text-sm text-gray-700">
-                        ${renderOpciones(row.responsableFamilia)}
-                    </select>
+                            <div class="flex items-center mb-4">
+                                <label class="font-semibold">Responsable de la Intervención</label>
+                            </div>
+
+                        <select
+                            onchange="updateRow('${row.id}', 'responsableFamilia', this.value)"
+                            class="border border-gray-300 rounded-lg w-full p-2 focus:outline-none focus:ring-1 focus:ring-blue-500 text-sm text-gray-700">
+                            ${renderOpcionesResponsables(row.responsableFamilia)}
+                        </select>
                     </div>
-                
+       
                     <div class="col-span-2 sm:col-span-1 text-md font-semibold my-2 px-4">
                         <div class="flex items-center mb-4">
                             <label for="actividad" class="font-semibold">Fecha de compromiso</label>
@@ -1366,8 +1224,12 @@ $fortalezas = [
                      <div class="flex items-center gap-3">
                         <span class="badge badge-outline">#${index + 1}</span>
                         <span class="badge ${getEstadoColor(row.estado)}">${getEstadoText(row.estado)}</span>
-                        <span class="text-sm text-gray-600 truncate flex-1">${row.situacionesPriorizadas || "Sin información"}</span>
-                        ${row.responsableFamilia ? `<span class="text-sm font-medium">${opcionesResponsableFamilia[row.responsableFamilia]}</span>` : ""}
+                    <span class="text-sm text-gray-600 truncate flex-1">
+                    ${row.situacionesPriorizadas 
+                        ? (row.situacionesPriorizadas.length > 30 ? row.situacionesPriorizadas.slice(0, 30) + "..." : row.situacionesPriorizadas) 
+                        : "Sin información"}
+                    </span>                        
+                    ${row.responsableFamilia ? `<span class="text-sm font-medium">${opcionesResponsableFamilia[row.responsableFamilia]}</span>` : ""}
                     </div>
                      <button class="btn-icon destructive" onclick="removeRow('${row.id}')" ${rows.length === 1 ? "disabled" : ""}>
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">

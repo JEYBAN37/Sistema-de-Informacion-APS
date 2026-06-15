@@ -117,6 +117,7 @@ class PersonasController extends AppController
 
 		// 1. Lógica de verificación de existencia (esto debe estar dentro del POST)
         $doc = $this->request->data['Persona']['numerodoc'];
+		trim($doc); // Eliminar espacios en blanco al inicio y al final
         $personaExistente = $this->Persona->find('first', array(
 						'conditions' => array('Persona.numerodoc' => $doc),
 						'fields' => array('Persona.id')

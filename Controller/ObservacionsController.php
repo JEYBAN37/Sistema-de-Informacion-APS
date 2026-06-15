@@ -252,10 +252,10 @@ class ObservacionsController extends AppController
 				'plancuidado' => $row['Observacion']['dirplancuidado'],
 				'dirfamiliograma' => $this->sendViewFamiliograma(
 					isset($row['Observacion']['dirfamiliograma']) ? $row['Observacion']['dirfamiliograma'] : null,
-					 isset($row['Observacion']['familiograma']) ? $row['Observacion']['familiograma'] : null,
-					 isset($row['Observacion']['base_anterior']) ? $row['Observacion']['base_anterior'] : null,
-					 isset($row['Observacion']['date']) ? $row['Observacion']['date'] : null,
-					 isset($row['Observacion']['id']) ? $row['Observacion']['id'] : null
+					isset($row['Observacion']['familiograma']) ? $row['Observacion']['familiograma'] : null,
+					isset($row['Observacion']['base_anterior']) ? $row['Observacion']['base_anterior'] : null,
+					isset($row['Observacion']['date']) ? $row['Observacion']['date'] : null,
+					isset($row['Observacion']['id']) ? $row['Observacion']['id'] : null
 				),
 				'familiograma' => $row['Observacion']['familiograma'],
 			);
@@ -282,6 +282,7 @@ class ObservacionsController extends AppController
 
 	public function add()
 	{
+		$this->set($this->_getCatalogosObservacion());
 		if ($this->request->is(array('post'))) {
 
 			$existe = $this->Observacion->hasAny(array(
@@ -334,6 +335,7 @@ class ObservacionsController extends AppController
 
 	public function add_plancuidado($id = null)
 	{
+		$this->set($this->_getCatalogosObservacion());
 		$this->loadModel('Juventudadulto');
 
 		if (!$this->Observacion->exists($id)) {
@@ -406,7 +408,8 @@ class ObservacionsController extends AppController
 				  Juventudadulto.primerapellido, " ",
 				   Juventudadulto.segundoapellido) AS nombre_completo',
 				'Juventudadulto.fechanac',
-				'Juventudadulto.gestacion'
+				'Juventudadulto.gestacion',
+				'Juventudadulto.canalizacionuno',
 
 			)
 		));
@@ -607,5 +610,69 @@ class ObservacionsController extends AppController
 
 		// Redirigir al controller "familias" y a la acción "view" con el familia_id
 		return $this->redirect(array('controller' => 'familias', 'action' => 'view', $familiaId));
+	}
+
+	private function _getCatalogosObservacion()
+	{
+		return [
+			'riesgosalud' => [
+				'0.1' => 'Ninguno',
+				'5.1' => 'Menor con Riesgo desnutrición',
+				'5.2' => 'Menor sin esquema de vacunación completo',
+				'3.3' => 'Menor con Signos de peligro EDA o IRA',
+				'2.1' => 'Menor sin valoraciones de PYM',
+				'1' => 'Persona joven/adulto sin valoraciones de PYM',
+				'5.4' => 'Gestante sin control',
+				'4.5' => 'Embarazo de alto riesgo',
+				'1.01' => 'Persona con enfermedad crónica con control',
+				'5.6' => 'Persona con enfermedad crónica sin control',
+				'4.1' => 'Persona Sintomatico respiratorio o de piel',
+				'3' => 'Persona con enferemedad sin manejo',
+				'3.4' => 'Persona con afectación de salud mental',
+			],
+			'riesgovulnerabilidad' => [
+				'0.1' => 'Ninguna',
+				'2.0' => 'Persona con discapacidad sin cuidador',
+				'2.1' => 'Menor sin estudiar',
+				'1.3' => 'Población Especial en riesgo',
+				'2.4' => 'Persona sin afiliación a salud',
+				'1.2' => 'Persona con consumo SPA',
+				'2.01' => 'Sospecha de violencia intrafamiliar',
+				'1.02' => 'Vivienda precaria',
+				'1.03' => 'Cuidador con sobrecarga',
+				'1.04' => 'Disfunción famliliar',
+				'1.05' => 'Relaciones familiares tensas o estresantes'
+			],
+			'fortalezas' => [
+				'Vivienda adecuada y segura' => 'Vivienda adecuada y segura',
+				'Acceso a servicios básicos (agua,alcantarillado, luz, gas)' => 'Acceso a servicios básicos (agua, luz, gas)',
+				'Buena salud física y mental de los miembros' => 'Buena salud física y mental de los miembros',
+				'Relaciones familiares afectuosas y respetuosas' => 'Relaciones familiares afectuosas y respetuosas',
+				'Apoyo emocional entre los miembros' => 'Apoyo emocional entre los miembros',
+				'Participación activa en la comunidad' => 'Participación activa en la comunidad',
+				'Estabilidad económica' => 'Estabilidad económica',
+				'Acceso a educación y formación' => 'Acceso a educación y formación',
+				'Habilidades de resolución de conflictos' => 'Habilidades de resolución de conflictos',
+				'Red de apoyo social sólida' => 'Red de apoyo social sólida',
+				'Prácticas saludables de alimentación y ejercicio' => 'Prácticas saludables de alimentación y ejercicio',
+				'Entorno familiar seguro y libre de violencia' => 'Entorno familiar seguro y libre de violencia',
+			],
+			'entornoAfectado' => [
+				'Hogar'   => 'Hogar',
+				'Comunitario'   => 'Comunitario',
+				'Educativo' => 'Educativo'
+			],
+			'actividadesDesarrollar' => [
+				'manejo y seguimiento a riesgos en salud' => 'Manejo y seguimiento a riesgos en salud',
+				'Atenciones,intervenciones individuales RIAS' => 'Atenciones/intervenciones individuales RIAS',
+				'Derivación servicios salud especializados' => 'Derivación servicios salud especializados',
+				'Apoyo Psicosocial' => 'Apoyo Psicosocial',
+				'AcompañamientoAJUSTAR familiar' => 'Acompañamiento familiar',
+				'Gestión recursos comunitarios' => 'Gestión recursos comunitarios',
+				'Educación para la Salud' => 'Educación en Salud',
+				'Información en Salud' => 'Información en Salud',
+				'Intervenciones Colectivas' => 'Intervenciones Colectivas',
+			]
+		];
 	}
 }

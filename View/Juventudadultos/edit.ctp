@@ -903,6 +903,15 @@ $optionTiposViolencia = [
     'Sospecha Abondono_Negligencia |0.3' => 'Falta de atención a necesidades básicas(alimentación, salud, educación)',
 ];
 
+$opcionCanalizacionComplementaria = [
+   'Consulta de morbilidad' => 'Consulta de morbilidad',
+   'Consulta de crónicos' => 'Consulta de crónicos',
+   'Consulta Pediatrica' => 'Consulta Pediátrica',
+   'Consulta Ginecologica' => 'Consulta Ginecológica',
+   'Consulta por Medicina Interna' => 'Consulta por Medicina Interna',
+   'Consulta Psiquiatrica' => 'Consulta Psiquiátrica',
+];
+
 $optionCanalizacion =
     [
         '0.No |0' => 'No se requiere canalización',
@@ -3005,6 +3014,32 @@ echo $this->Form->input('fechaRegistro', [
                 ?>
             </div>
 
+            <!-- canalización  -->
+            <div class="col-span-2 md:col-span-1 text-md font-semibold my-6 mr-4">
+                <div class="flex items-center mb-4">
+                    <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">1</span>
+                    <label for="canalizacionuno" class="font-semibold">Canalización</label>
+                    <p class="text-red-600">*</p>
+
+                </div>
+                <?php
+                echo $this->Form->input('canalizacion_complementaria', [
+                    'type' => 'select',
+                    'label' => false,
+                    'multiple' => true,
+                    'empty' => false,
+                    'options' => $opcionCanalizacionComplementaria,
+                    'class' => 'w-full',
+                    'id' => 'canalizacion_complementaria',
+                    'error' => false,
+
+                ]);
+                if (!empty($this->Form->error('canalizacion_complementaria'))) {
+                    echo '<div class="text-red-600 text-md mt-1 font-semibold">' . $this->Form->error('canalizacion_complementaria') . '</div>';
+                }
+                ?>
+            </div>
+
             <!-- Objetivos específicos -->
             <div class="col-span-2 text-md font-semibold my-6">
                 <div class="flex items-center mb-4">
@@ -3504,6 +3539,20 @@ echo $this->Form->input('fechaRegistro', [
         });
 
         const choices_canalizacionuno = new Choices("#canalizacionuno", {
+            searchEnabled: true,
+            searchChoices: true,
+            removeItemButton: true, // Permite eliminar seleccionados
+            itemSelectText: '',
+            shouldSort: false,
+            searchPlaceholderValue: "Escriba para filtrar...",
+            maxItemCount: 3, // Límite a 3 items
+            removeItems: true, // Permite quitar seleccionados
+            duplicateItemsAllowed: false,
+            placeholder: true,
+            placeholderValue: "Seleccione canalización...",
+        });
+
+        const choices_canalizacion = new Choices("#canalizacion_complementaria", {
             searchEnabled: true,
             searchChoices: true,
             removeItemButton: true, // Permite eliminar seleccionados

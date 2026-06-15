@@ -269,6 +269,11 @@ class Juventudadulto extends AppModel
 				'allowEmpty' => true,
 			),
 		),
+		'canalizacion_complementaria' => array(
+			'multiple' => array(
+				'allowEmpty' => true,
+			),
+		),	
 		'educacion' => array(
 			'multiple' => array(
 				'rule' => array('multiple', array('min' => 1)),
@@ -400,6 +405,10 @@ class Juventudadulto extends AppModel
 			$this->data[$this->alias]['antecedenteginecologico'] = implode(',', $this->data[$this->alias]['antecedenteginecologico']);
 		}
 
+		if (isset($this->data[$this->alias]['canalizacion_complementaria']) && is_array($this->data[$this->alias]['canalizacion_complementaria'])) {
+			$this->data[$this->alias]['canalizacion_complementaria'] = implode(',', $this->data[$this->alias]['canalizacion_complementaria']);
+		}
+
 		return true;
 	}
 
@@ -458,6 +467,13 @@ class Juventudadulto extends AppModel
 			// Extraer cada palabra/frase hasta la coma
 			$tipos = array_map('trim', explode(',', $poblacionStr));
 			$data['Juventudadulto']['motivoinasistencia'] = $tipos;
+		}
+
+		if (!empty($data['Juventudadulto']['canalizacion_complementaria'])) {
+			$poblacionStr = $data['Juventudadulto']['canalizacion_complementaria'];
+			// Extraer cada palabra/frase hasta la coma
+			$tipos = array_map('trim', explode(',', $poblacionStr));
+			$data['Juventudadulto']['canalizacion_complementaria'] = $tipos;
 		}
 
 		return $data;
