@@ -420,7 +420,8 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
                 sidebar.classList.add('hidden');
                 mainContent.classList.remove('md:ml-[280px]');
                 sidebarContainer.classList.remove('w-[300px]');
-                sidebarContainer.classList.add('w-[10px]');
+                sidebarContainer.classList.remove('md:w-[300px]');
+                sidebarContainer.classList.add('w-[30px]');
                 desktopArrow.style.transform = 'rotate(180deg)';
             }
         }

@@ -631,7 +631,7 @@ $idAux = $this->request->data['Observacion']['familia_id'];
             </div>
 
 
-            <div class="pt-2 flex gap-4 justify-end col-span-2">
+            <div class="pt-2 gap-4 col-span-2 md:flex md:flex-row">
                 <!-- Botón -->
                 <div class="w-full p-2">
                     <button name="btn" value="Guardar" type="submit" class="w-full bg-teal-600 text-white px-6 py-2 rounded-md hover:bg-green-700 transition font-medium flex items-center justify-center gap-2">
