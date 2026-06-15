@@ -136,7 +136,6 @@
 
 
 <?php
-
 echo $this->Form->create('Observacion',  [
     'type' => 'file',
     'novalidate' => 'novalidate',
@@ -154,55 +153,6 @@ $idAux = $this->request->data['Observacion']['familia_id'];
 <?php echo $this->Form->hidden('disentimiento'); ?>
 <?php echo $this->Form->hidden('actividaddesarrollar'); ?>
 
-<?php
-$riesgosalud = [
-    '0.1' => 'Ninguno',
-    '5.1' => 'Menor con Riesgo desnutrición',
-    '5.2' => 'Menor sin esquema de vacunación completo',
-    '3.3' => 'Menor con Signos de peligro EDA o IRA',
-    '2.1' => 'Menor sin valoraciones de PYM',
-    '1' => 'Persona joven/adulto sin valoraciones de PYM',
-    '5.4' => 'Gestante sin control',
-    '4.5' => 'Embarazo de alto riesgo',
-    '1.01' => 'Persona con enfermedad crónica con control',
-    '5.6' => 'Persona con enfermedad crónica sin control',
-    '4.1' => 'Persona Sintomatico respiratorio o de piel',
-    '3' => 'Persona con enferemedad sin manejo',
-    '3.4' => 'Persona con afectación de salud mental',
-
-];
-
-
-$riesgovulnerabilidad = [
-    '0.1' => 'Ninguna',
-    '2.0' => 'Persona con discapacidad sin cuidador',
-    '2.1' => 'Menor sin estudiar',
-    '1.3' => 'Población Especial en riesgo',
-    '2.4' => 'Persona sin afiliación a salud',
-    '1.2' => 'Persona con consumo SPA',
-    '2.01' => 'Sospecha de violencia intrafamiliar',
-    '1.02' => 'Vivienda precaria',
-    '1.03' => 'Cuidador con sobrecarga',
-    '1.04' => 'Disfunción famliliar',
-    '1.05' => 'Relaciones familiares tensas o estresantes'
-];
-
-
-$fortalezas = [
-    'Vivienda adecuada y segura' => 'Vivienda adecuada y segura',
-    'Acceso a servicios básicos (agua,alcantarillado, luz, gas)' => 'Acceso a servicios básicos (agua, luz, gas)',
-    'Buena salud física y mental de los miembros' => 'Buena salud física y mental de los miembros',
-    'Relaciones familiares afectuosas y respetuosas' => 'Relaciones familiares afectuosas y respetuosas',
-    'Apoyo emocional entre los miembros' => 'Apoyo emocional entre los miembros',
-    'Participación activa en la comunidad' => 'Participación activa en la comunidad',
-    'Estabilidad económica' => 'Estabilidad económica',
-    'Acceso a educación y formación' => 'Acceso a educación y formación',
-    'Habilidades de resolución de conflictos' => 'Habilidades de resolución de conflictos',
-    'Red de apoyo social sólida' => 'Red de apoyo social sólida',
-    'Prácticas saludables de alimentación y ejercicio' => 'Prácticas saludables de alimentación y ejercicio',
-    'Entorno familiar seguro y libre de violencia' => 'Entorno familiar seguro y libre de violencia',
-];
-?>
 
 <div class="max-w-6xl mx-auto p-18">
 
@@ -496,8 +446,6 @@ $fortalezas = [
 
             </div>
 
-
-
             <div class="col-span-2 text-md font-semibold my-6">
                 <div class="flex items-center mb-4">
                     <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">2</span>
@@ -510,7 +458,7 @@ $fortalezas = [
                     'type' => 'textarea', // Cambiado a 'textarea'
                     'id' => 'objetivolargoplazo',
                     'class' => 'border border-gray-300 rounded-lg w-full p-2 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 text-sm text-gray-700',
-                    'data-maxlength' => 5000,
+                    'data-maxlength' => 1000,
                     'class' => 'ckeditor border rounded-lg w-full p-2 focus:ring focus:ring-blue-200',
                     'error' => false // No mostrar error aquí                 
                 ]);
@@ -522,8 +470,6 @@ $fortalezas = [
 
             </div>
 
-
-
             <div class="col-span-2 text-md font-semibold my-6">
                 <div class="flex items-center mb-4">
                     <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">3</span>
@@ -532,13 +478,6 @@ $fortalezas = [
 
                 <?php
 
-                $entornoAfectado = [
-                    'Hogar'   => 'Hogar',
-                    'Comunitario'   => 'Comunitario',
-                    'Educativo' => 'Educativo'
-                ];
-
-                // Usando FormHelper para generar checkboxes (CakePHP 2.x)
                 echo $this->Form->input('entornoafectado', [
                     'label' => false,
                     'type' => 'select',
@@ -563,17 +502,6 @@ $fortalezas = [
                     <p class="text-red-600">*</p>
                 </div>
                 <?php
-                $actividadesDesarrollar = [
-                    'manejo y seguimiento a riesgos en salud' => 'Manejo y seguimiento a riesgos en salud',
-                    'Atenciones,intervenciones individuales RIAS' => 'Atenciones/intervenciones individuales RIAS',
-                    'Derivación servicios salud especializados' => 'Derivación servicios salud especializados',
-                    'Apoyo Psicosocial' => 'Apoyo Psicosocial',
-                    'AcompañamientoAJUSTAR familiar' => 'Acompañamiento familiar',
-                    'Gestión recursos comunitarios' => 'Gestión recursos comunitarios',
-                    'Educación para la Salud' => 'Educación en Salud',
-                    'Información en Salud' => 'Información en Salud',
-                    'Intervenciones Colectivas' => 'Intervenciones Colectivas',
-                ];
 
                 echo $this->Form->input(
                     'indicadorria',
@@ -703,10 +631,10 @@ $fortalezas = [
             </div>
 
 
-            <div class="pt-2 flex gap-4">
+            <div class="pt-2 flex gap-4 justify-end col-span-2">
                 <!-- Botón -->
                 <div class="w-full p-2">
-                    <button name="btn" value="Guardar Plan" type="submit" class="w-full bg-teal-600 text-white px-6 py-2 rounded-md hover:bg-green-700 transition font-medium flex items-center justify-center gap-2">
+                    <button name="btn" value="Guardar" type="submit" class="w-full bg-teal-600 text-white px-6 py-2 rounded-md hover:bg-green-700 transition font-medium flex items-center justify-center gap-2">
                         <span>
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-save-icon lucide-save">
                                 <path d="M15.2 3a2 2 0 0 1 1.4.6l3.8 3.8a2 2 0 0 1 .6 1.4V19a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z" />
@@ -715,6 +643,19 @@ $fortalezas = [
                             </svg>
                         </span>
                         Guardar Plan
+                    </button>
+                </div>
+
+                <div class="w-full p-2">
+                    <button name="btn" value="familia" type="submit" class="w-full bg-teal-600 text-white px-6 py-2 rounded-md hover:bg-green-700 transition font-medium flex items-center justify-center gap-2">
+                        <span>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-save-icon lucide-save">
+                                <path d="M15.2 3a2 2 0 0 1 1.4.6l3.8 3.8a2 2 0 0 1 .6 1.4V19a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z" />
+                                <path d="M17 21v-7a1 1 0 0 0-1-1H8a1 1 0 0 0-1 1v7" />
+                                <path d="M7 3v4a1 1 0 0 0 1 1h7" />
+                            </svg>
+                        </span>
+                        Guardar e ir a Familia
                     </button>
                 </div>
 
@@ -731,119 +672,598 @@ $fortalezas = [
     </div>
 </div>
 
-
-
 <script type="text/javascript">
-    // Definir parametrosMap GLOBALMENTE antes de cualquier evento
-    const parametrosMapData = <?= json_encode($parametrosDisplay) ?>;
-    window.parametrosMap = parametrosMapData;
-    window.parametrosKeys = Object.keys(parametrosMapData);
-    console.log('parametrosMap inicializado globalmente:', window.parametrosMap);
-    console.log('parametrosKeys inicializado globalmente:', window.parametrosKeys);
-    console.log('¿parametrosMap está vacío?', Object.keys(window.parametrosMap).length === 0);
+    /**
+     * ─────────────────────────────────────────────────────────────
+     *  CONFIGURACIÓN GLOBAL — inyectada desde PHP una sola vez
+     * ─────────────────────────────────────────────────────────────
+     *  En tu view de CakePHP reemplaza este bloque por:
+     *
+    const APP_CONFIG = {
+     *      parametrosMap          : <?= json_encode($parametrosDisplay) ?>,
+     *      opcionesResponsableFamilia : <?= json_encode($opciones) ?>,
+     *      opcionesResponsables   : <?= json_encode($responsables) ?>,
+     *      urlSalida              : '<?php echo $this->Html->url(["controller" => "Familias", "action" => "view", $idAux]); ?>',
+     *  };
+     */
+    const APP_CONFIG = {
+        parametrosMap: <?= json_encode($parametrosDisplay) ?>,
+        opcionesResponsableFamilia: <?= json_encode($opciones) ?>,
+        opcionesResponsables: <?= json_encode($responsables) ?>,
+        urlSalida: '<?= $this->Html->url(["controller" => "Familias", "action" => "view", $idAux]) ?>',
+    };
 
-    document.addEventListener("DOMContentLoaded", () => {
+    // ─────────────────────────────────────────────────────────────
+    //  UTILIDADES COMPARTIDAS
+    // ─────────────────────────────────────────────────────────────
 
+    /**
+     * Crea un selector Choices.js con configuración estándar.
+     * Se usa para todos los <select> estilizados del formulario.
+     */
+    function crearChoices(selector, placeholder) {
+        // ← Verificar que el elemento existe antes de inicializar
+        const el = typeof selector === 'string' ?
+            document.querySelector(selector) :
+            selector;
 
+        if (!el) return null; // ← no lanza error, continúa normalmente
 
-
-        const choices_ria = new Choices("#ria", {
+        return new Choices(el, {
             searchEnabled: true,
             searchChoices: true,
-            removeItemButton: true, // Permite eliminar seleccionados
+            removeItemButton: true,
             itemSelectText: '',
             shouldSort: false,
             searchPlaceholderValue: "Escriba para filtrar...",
-            maxItemCount: -1, // Sin límite
-            removeItems: true, // Permite quitar seleccionados
+            maxItemCount: -1,
+            removeItems: true,
             duplicateItemsAllowed: false,
             placeholder: true,
-            placeholderValue: "Seleccione las actividades a desarrollar",
+            placeholderValue: placeholder,
+        });
+    }
+
+    /**
+     * Serializa un array de filas y lo guarda en un campo del DOM.
+     * @param {string} selector  - Selector CSS o ID del campo hidden
+     * @param {Array}  filas     - Array de objetos a guardar como JSON
+     */
+    function guardarEnCampo(selector, filas) {
+        const campo = document.querySelector(`[name="${selector}"]`) ||
+            document.getElementById(selector);
+        if (campo) campo.value = JSON.stringify(filas);
+    }
+
+    /**
+     * Fábrica genérica de tabla dinámica.
+     * Encapsula la lógica de agregar / eliminar / actualizar filas
+     * para evitar duplicar el mismo código entre tablas.
+     *
+     * @param {Object} config
+     *   - filaVacia  {Object}   Objeto con los campos iniciales de una fila nueva
+     *   - onRender   {Function} Se llama con (filas[]) después de cada cambio
+     *   - onGuardar  {Function} Se llama con (filas[]) para persistir el estado
+     */
+    function crearTabla({
+        filaVacia,
+        onRender,
+        onGuardar
+    }) {
+        let filas = [];
+        let contador = 1;
+
+        function _nuevoId() {
+            return String(contador++);
+        } // ← siempre string
+        function _render() {
+            onRender(filas);
+        }
+
+        function _guardar() {
+            onGuardar(filas);
+        }
+
+        return {
+            getFilas() {
+                return filas;
+            },
+
+            inicializar(datos = []) {
+                if (datos.length > 0) {
+                    filas = datos.map(d => ({
+                        ...filaVacia,
+                        ...d,
+                        id: _nuevoId()
+                    }));
+                } else {
+                    filas = [{
+                        ...filaVacia,
+                        id: _nuevoId()
+                    }];
+                }
+                _render();
+            },
+
+            agregar() {
+                filas.push({
+                    ...filaVacia,
+                    id: _nuevoId()
+                });
+                _render();
+                _guardar();
+            },
+
+            eliminar(id) {
+                if (filas.length <= 1) return;
+                filas = filas.filter(f => f.id !== String(id)); // ← String()
+                _render();
+                _guardar();
+            },
+
+            eliminarUltima() {
+                if (filas.length <= 1) return;
+                filas = filas.slice(0, -1);
+                _render();
+                _guardar();
+            },
+
+            actualizar(id, campo, valor) {
+                const fila = filas.find(f => f.id === String(id)); // ← String()
+                if (fila) fila[campo] = valor;
+                _guardar();
+            },
+        };
+    }
+
+    // ─────────────────────────────────────────────────────────────
+    //  HELPERS DE RENDER — generan HTML de <option>
+    // ─────────────────────────────────────────────────────────────
+
+    function renderOpciones(mapa, selectedId = '', placeholder = 'Seleccione una persona') {
+        let html = `<option value="">${placeholder}</option>`;
+        for (const [id, nombre] of Object.entries(mapa)) {
+            html += `<option value="${id}" ${id == selectedId ? 'selected' : ''}>${nombre}</option>`;
+        }
+        return html;
+    }
+
+    function renderIndicadoresOptions(selected = []) {
+        return Object.entries(APP_CONFIG.parametrosMap)
+            .map(([key]) =>
+                `<option value="${key}" ${selected.includes(key) ? 'selected' : ''}>${key}</option>`
+            ).join('');
+    }
+
+    // ─────────────────────────────────────────────────────────────
+    //  TABLA ACTIVIDADES
+    // ─────────────────────────────────────────────────────────────
+
+    const FILA_ACTIVIDAD_VACIA = {
+        situacionesPriorizadas: "",
+        logrosAlcanzados: "",
+        responsableFamilia: "",
+        responsableEBS: "",
+        fechaCompromiso: "",
+        fechaSeguimiento: "",
+        seguimientoCompromiso: "",
+        objetivoCortoPlazo: [],
+        resultadosEsperados: [],
+        estado: "pendiente",
+    };
+
+    // Estado de filas expandidas
+    let expandedRows = new Set();
+    let rowChoicesInstances = {};
+
+    function getEstadoColor(estado) {
+        const mapa = {
+            alcanzado: "badge-alcanzado",
+            pendiente: "badge-pendiente",
+            "en-proceso": "badge-en-proceso"
+        };
+        return mapa[estado] || "";
+    }
+
+    function getEstadoText(estado) {
+        const mapa = {
+            alcanzado: "Logro alcanzado",
+            pendiente: "Pendiente",
+            "en-proceso": "En proceso"
+        };
+        return mapa[estado] || estado;
+    }
+
+    function handleIndicadoresChange(rowId, selectEl) {
+        const map = APP_CONFIG.parametrosMap;
+        const keys = Array.from(selectEl.selectedOptions).map(o => o.value);
+        tablaActividades.actualizar(rowId, 'objetivoCortoPlazo', keys);
+        tablaActividades.actualizar(rowId, 'resultadosEsperados', keys.map(k => map[k]));
+    }
+
+    function initializeRowChoices() {
+        // Destruir instancias previas
+        Object.values(rowChoicesInstances).forEach(i => i?.destroy?.());
+        rowChoicesInstances = {};
+
+        tablaActividades.getFilas().forEach(row => {
+            if (!expandedRows.has(row.id)) return;
+
+            const selIndicadores = document.getElementById(`indicadores_row_${row.id}`);
+            const selResponsable = document.getElementById(`responsable_row_${row.id}`);
+
+            if (selIndicadores) {
+                rowChoicesInstances[`ind_${row.id}`] = crearChoices(selIndicadores, "Seleccione los indicadores");
+                selIndicadores.addEventListener('change', function() {
+                    handleIndicadoresChange(row.id, this);
+                });
+            }
+
+            if (selResponsable) {
+                rowChoicesInstances[`resp_${row.id}`] = crearChoices(selResponsable, "Seleccione el responsable");
+                selResponsable.addEventListener('change', function() {
+                    tablaActividades.actualizar(row.id, 'responsableEBS', this.value);
+                });
+            }
+        });
+    }
+
+    function renderActividades(filas) {
+        const tableBody = document.getElementById("tableBody");
+        if (!tableBody) return;
+        tableBody.innerHTML = "";
+
+        // ← Destruir todos los CKEditor antes de limpiar el DOM
+        filas.forEach(row => destruirCKEditorFila(row.id));
+
+        filas.forEach((row, index) => {
+            const isExpanded = expandedRows.has(row.id);
+            const tr = document.createElement("tr");
+            tr.className = "hover:bg-gray-50 transition-colors";
+            tr.innerHTML = isExpanded ?
+                renderFilaExpandida(row) :
+                renderFilaColapsada(row, index, filas.length);
+            tableBody.appendChild(tr);
         });
 
-        const choices_entornoafectado = new Choices("#entornoafectado", {
-            searchEnabled: true,
-            searchChoices: true,
-            removeItemButton: true, // Permite eliminar seleccionados
-            itemSelectText: '',
-            shouldSort: false,
-            searchPlaceholderValue: "Escriba para filtrar...",
-            maxItemCount: -1, // Sin límite
-            removeItems: true, // Permite quitar seleccionados
-            duplicateItemsAllowed: false,
-            placeholder: true,
-            placeholderValue: "Seleccione los entornos a intervenir",
-        });
+        document.getElementById("removeLastBtn").disabled = filas.length === 1;
 
-
-        const choices_responsables = new Choices("#responsables", {
-            searchEnabled: true,
-            searchChoices: true,
-            removeItemButton: true, // Permite eliminar seleccionados
-            itemSelectText: '',
-            shouldSort: false,
-            searchPlaceholderValue: "Escriba para filtrar...",
-            maxItemCount: -1, // Sin límite
-            removeItems: true, // Permite quitar seleccionados
-            duplicateItemsAllowed: false,
-            placeholder: true,
-            placeholderValue: "Seleccione los responsables EBS",
-        });
-
-        // parametrosMap ya está definido globalmente arriba
-
-
-
-        const choices_indicadores = new Choices("#indicadores", {
-            searchEnabled: true,
-            searchChoices: true,
-            removeItemButton: true, // Permite eliminar seleccionados
-            itemSelectText: '',
-            shouldSort: false,
-            searchPlaceholderValue: "Escriba para filtrar...",
-            maxItemCount: -1, // Sin límite
-            searchResultLimit: -1, // Sin límite en resultados
-            removeItems: true, // Permite quitar seleccionados
-            duplicateItemsAllowed: false,
-            placeholder: true,
-            minMatchCharLength: 1,
-            placeholderValue: "Seleccione indicadores",
-        });
-
-        // Sincronizar selección de indicadores con valores
-        const indicadoresSelect = document.getElementById('indicadores');
-        const valoresInput = document.getElementById('indicadores_valores');
-
-        if (indicadoresSelect && valoresInput) {
-            indicadoresSelect.addEventListener('change', function() {
-                const selectedOptions = Array.from(indicadoresSelect.selectedOptions);
-                const valores = selectedOptions.map(option => window.parametrosMap[option.value]);
-                valoresInput.value = JSON.stringify(valores);
-                console.log('Valores sincronizados:', valores);
+        // ← Inicializar CKEditor y Choices después de que el DOM esté listo
+        setTimeout(() => {
+            filas.forEach(row => {
+                if (expandedRows.has(row.id)) {
+                    inicializarCKEditorFila(row.id);
+                }
             });
+            initializeRowChoices();
+        }, 150); // ← un poco más de delay para que CKEditor cargue bien
+    }
+
+    function renderFilaExpandida(row) {
+        return `
+    <div class="w-full border border-gray-300 rounded-lg my-4">
+        <div class="px-3 py-3 text-center bg-teal-100 rounded-t-lg flex items-center justify-center">
+            <button type="button" class="btn-icon" onclick="toggleRow('${row.id}')">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"/>
+                </svg>
+            </button>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 pb-4">
+
+            <div class="col-span-2 text-md font-semibold my-2 px-4">
+                <label class="font-semibold">Situacion a Priorizar</label>
+                <!-- ← ID único para CKEditor -->
+                <textarea id="situaciones_${row.id}" rows="3"
+                    placeholder="Describe las situaciones priorizadas..."
+                    class="border rounded-lg w-full p-2 text-gray-700"
+                    style="height:100px; font-size:15px; width:100%">${row.situacionesPriorizadas || ''}</textarea>
+            </div>
+
+            <div class="col-span-2 text-md font-semibold my-2 px-4">
+                <label class="font-semibold">Logros por Alcanzar</label>
+                <!-- ← ID único para CKEditor -->
+                <textarea id="logros_${row.id}" rows="3"
+                    placeholder="Describe los logros por alcanzar..."
+                    class="border rounded-lg w-full p-2 text-gray-700"
+                    style="height:100px; font-size:15px; width:100%">${row.logrosAlcanzados || ''}</textarea>
+            </div>
+
+            <div class="col-span-2 sm:col-span-1 text-md font-semibold my-2 px-4">
+                <label class="font-semibold mb-4 block">Persona a Intervenir</label>
+                <select onchange="tablaActividades.actualizar('${row.id}', 'responsableFamilia', this.value)"
+                    class="border border-gray-300 rounded-lg w-full p-2 text-sm text-gray-700">
+                    ${renderOpciones(APP_CONFIG.opcionesResponsableFamilia, row.responsableFamilia)}
+                </select>
+            </div>
+
+            <div class="col-span-2 sm:col-span-1 text-md font-semibold my-2 px-4">
+                <label class="font-semibold mb-4 block">Responsable de la Intervención</label>
+                <select id="responsable_row_${row.id}"
+                    class="border border-gray-300 rounded-lg w-full p-2 text-sm text-gray-700">
+                    ${renderOpciones(APP_CONFIG.opcionesResponsables, row.responsableEBS)}
+                </select>
+            </div>
+
+            <div class="col-span-2 sm:col-span-1 text-md font-semibold my-2 px-4">
+                <label class="font-semibold mb-4 block">Fecha de compromiso</label>
+                <input type="date" value="${row.fechaCompromiso}"
+                    onchange="tablaActividades.actualizar('${row.id}', 'fechaCompromiso', this.value)"
+                    class="border border-gray-300 rounded-lg w-full p-2 text-sm text-gray-700"/>
+            </div>
+
+            <div class="col-span-2 sm:col-span-1 text-md font-semibold my-2 px-4">
+                <label class="font-semibold mb-4 block">Seguimiento al compromiso</label>
+                <input type="date" value="${row.fechaSeguimiento}"
+                    onchange="tablaActividades.actualizar('${row.id}', 'fechaSeguimiento', this.value)"
+                    class="border border-gray-300 rounded-lg w-full p-2 text-sm text-gray-700"/>
+            </div>
+
+            <div class="col-span-2 text-md font-semibold my-2 px-4">
+                <label class="font-semibold mb-4 block">Indicadores</label>
+                <select multiple id="indicadores_row_${row.id}"
+                    class="border border-gray-300 rounded-lg w-full p-2 text-sm text-gray-700">
+                    ${renderIndicadoresOptions(row.objetivoCortoPlazo || [])}
+                </select>
+            </div>
+
+            <div class="col-span-2 text-md font-semibold my-2 px-4">
+                <label class="font-semibold block mb-2">Estado</label>
+                <select onchange="tablaActividades.actualizar('${row.id}', 'estado', this.value)"
+                    class="border border-gray-300 rounded-lg w-full p-2 text-sm text-gray-700">
+                    <option value="pendiente"  ${row.estado === "pendiente"  ? "selected" : ""}>Pendiente</option>
+                    <option value="en-proceso" ${row.estado === "en-proceso" ? "selected" : ""}>En proceso</option>
+                    <option value="alcanzado"  ${row.estado === "alcanzado"  ? "selected" : ""}>Logro alcanzado</option>
+                </select>
+            </div>
+        </div>
+    </div>`;
+    }
+
+    function renderFilaColapsada(row, index, total) {
+        const nombre = APP_CONFIG.opcionesResponsableFamilia[row.responsableFamilia] || '';
+        const preview = row.situacionesPriorizadas ?
+            (row.situacionesPriorizadas.length > 30 ?
+                row.situacionesPriorizadas.slice(0, 30) + "..." :
+                row.situacionesPriorizadas) :
+            "Sin información";
+
+        return `
+    <div class="w-full border border-gray-300 rounded-lg flex items-center justify-between px-4 py-3 my-4">
+        <button type="button" class="btn-icon" onclick="toggleRow('${row.id}')">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+            </svg>
+        </button>
+        <div class="flex items-center gap-3">
+            <span class="badge badge-outline">#${index + 1}</span>
+            <span class="badge ${getEstadoColor(row.estado)}">${getEstadoText(row.estado)}</span>
+            <span class="text-sm text-gray-600 truncate flex-1">${preview}</span>
+            ${nombre ? `<span class="text-sm font-medium">${nombre}</span>` : ""}
+        </div>
+        <button class="btn-icon destructive" onclick="tablaActividades.eliminar('${row.id}')" ${total === 1 ? "disabled" : ""}>
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+            </svg>
+        </button>
+    </div>`;
+    }
+
+    function toggleRow(id) {
+        if (expandedRows.has(id)) {
+            destruirCKEditorFila(id); // ← destruir antes de colapsar
+            expandedRows.delete(id);
+        } else {
+            expandedRows.add(id);
         }
+        renderActividades(tablaActividades.getFilas());
+    }
 
+    // ─────────────────────────────────────────────────────────────
+    //  TABLA DISENTIMIENTO
+    // ─────────────────────────────────────────────────────────────
 
+    const FILA_DISENTIMIENTO_VACIA = {
+        nombre: '',
+        documento: '',
+        rol: '',
+        motivo: ''
+    };
 
+    function renderDisentimiento(filas) {
+        const tableBody = document.getElementById("tableBodyDisentimiento");
+        if (!tableBody) return;
+        tableBody.innerHTML = "";
 
-        // Aplicar estilos con Tailwind
-        const inner = document.querySelector('.choices__inner');
-        if (inner) {
-            inner.classList.add(
-                'bg-white', 'border', 'border-gray-300', 'rounded-lg',
-                'px-3', 'py-2', 'focus:ring', 'focus:ring-blue-200', 'text-gray-700'
-            );
-        }
+        filas.forEach(row => {
+            const tr = document.createElement("tr");
+            tr.className = "hover:bg-gray-50 transition-colors";
+            tr.innerHTML = `
+            <td class="p-2">
+                <input type="text" class="border border-gray-300 rounded-lg w-full p-2 text-sm"
+                    placeholder="Nombre" value="${row.nombre || ''}"
+                    onchange="tablaDisentimiento.actualizar(${row.id}, 'nombre', this.value)">
+            </td>
+            <td class="p-2">
+                <input type="text" class="border border-gray-300 rounded-lg w-full p-2 text-sm"
+                    placeholder="Documento" value="${row.documento || ''}"
+                    onchange="tablaDisentimiento.actualizar(${row.id}, 'documento', this.value)">
+            </td>
+            <td class="p-2">
+                <input type="text" class="border border-gray-300 rounded-lg w-full p-2 text-sm"
+                    placeholder="Rol" value="${row.rol || ''}"
+                    onchange="tablaDisentimiento.actualizar(${row.id}, 'rol', this.value)">
+            </td>
+            <td class="p-2">
+                <input type="text" class="border border-gray-300 rounded-lg w-full p-2 text-sm"
+                    placeholder="Motivo" value="${row.motivo || ''}"
+                    onchange="tablaDisentimiento.actualizar(${row.id}, 'motivo', this.value)">
+            </td>
+            <td class="p-2 text-center">
+                <button type="button" class="btn-icon destructive"
+                    onclick="tablaDisentimiento.eliminar(${row.id})"
+                    ${filas.length === 1 ? "disabled" : ""}>
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                    </svg>
+                </button>
+            </td>`;
+            tableBody.appendChild(tr);
+        });
+    }
 
-        const dropdown = document.querySelector('.choices__list--dropdown');
-        if (dropdown) {
-            dropdown.classList.add('bg-white', 'shadow-lg', 'rounded-lg', 'border', 'border-gray-200');
-        }
+    function guardarDisentimiento(filas) {
+        const toSave = filas.filter(r => r.nombre || r.documento || r.rol || r.motivo);
+        guardarEnCampo('disentimiento_hidden', toSave);
+    }
+
+    // ─────────────────────────────────────────────────────────────
+    //  INSTANCIAR TABLAS con la fábrica genérica
+    // ─────────────────────────────────────────────────────────────
+
+    const tablaActividades = crearTabla({
+        filaVacia: FILA_ACTIVIDAD_VACIA, // ← sin id aquí
+        onRender: renderActividades,
+        onGuardar: (filas) => guardarEnCampo('data[Observacion][actividaddesarrollar]', filas),
     });
 
+    const tablaDisentimiento = crearTabla({
+        filaVacia: FILA_DISENTIMIENTO_VACIA,
+        onRender: renderDisentimiento,
+        onGuardar: guardarDisentimiento,
+    });
 
+    // ─────────────────────────────────────────────────────────────
+    //  CKEDITOR — contador de caracteres (sin cambios, ya estaba bien)
+    // ─────────────────────────────────────────────────────────────
+
+    CKEDITOR.on('instanceReady', function(ev) {
+        const editor = ev.editor;
+        const textarea = editor.element.$;
+        const maxChars = parseInt(textarea.getAttribute("data-maxlength") || "300");
+
+        const counter = document.createElement("div");
+        counter.className = "text-gray-600 mt-1 text-sm";
+        counter.id = "charCount_" + textarea.id;
+        textarea.parentNode.appendChild(counter);
+
+        let isUpdating = false; // ← bandera anti-loop
+
+        function updateCount() {
+            if (isUpdating) return; // ← corta el loop
+            const text = editor.getData().replace(/<[^>]*>/g, '');
+            const remaining = maxChars - text.length;
+            counter.innerHTML = `Caracteres usados: ${text.length} / ${maxChars}`;
+            counter.style.color = remaining < 0 ? "red" : "gray";
+
+            if (remaining < 0) {
+                isUpdating = true; // ← activa bandera
+                editor.setData(text.substring(0, maxChars)); // ← no dispara loop
+                isUpdating = false; // ← desactiva bandera
+            }
+        }
+
+        editor.on('key', function(evt) {
+            const text = editor.getData().replace(/<[^>]*>/g, '');
+            if (text.length >= maxChars && evt.data.keyCode !== 8 && evt.data.keyCode !== 46) {
+                evt.cancel();
+                alert(`Máximo permitido: ${maxChars} caracteres.`);
+            }
+        });
+
+        editor.on('paste', function(evt) {
+            const text = evt.data.dataValue.replace(/<[^>]*>/g, '');
+            if (text.length > maxChars) {
+                evt.cancel();
+                alert(`No puedes pegar más de ${maxChars} caracteres.`);
+            }
+        });
+
+        editor.on('change', updateCount); // ← solo change, no key+paste+change
+        updateCount();
+    });
+
+    let ckEditorInstances = {};
+
+    function inicializarCKEditorFila(rowId) {
+        const campos = [{
+                id: `situaciones_${rowId}`,
+                campo: 'situacionesPriorizadas'
+            },
+            {
+                id: `logros_${rowId}`,
+                campo: 'logrosAlcanzados'
+            },
+        ];
+
+        campos.forEach(({
+            id,
+            campo
+        }) => {
+            // Destruir instancia previa si existe
+            if (CKEDITOR.instances[id]) {
+                CKEDITOR.instances[id].destroy(true);
+            }
+
+            if (!document.getElementById(id)) return;
+
+            const editor = CKEDITOR.replace(id, {
+                toolbar: [{
+                        name: 'basicstyles',
+                        items: ['Bold', 'Italic', 'Underline']
+                    },
+                    {
+                        name: 'lists',
+                        items: ['BulletedList', 'NumberedList']
+                    },
+                    {
+                        name: 'undo',
+                        items: ['Undo', 'Redo']
+                    },
+                ],
+                height: 100,
+                removePlugins: 'cloudservices,easyimage', // ← evita el error cloudservices
+            });
+
+            let isUpdating = false;
+            editor.on('change', function() {
+                if (isUpdating) return;
+                const text = editor.getData().replace(/<[^>]*>/g, '');
+                tablaActividades.actualizar(rowId, campo, editor.getData());
+            });
+
+            ckEditorInstances[id] = editor;
+        });
+    }
+
+    function destruirCKEditorFila(rowId) {
+        [`situaciones_${rowId}`, `logros_${rowId}`].forEach(id => {
+            if (CKEDITOR.instances[id]) {
+                CKEDITOR.instances[id].destroy(true);
+                delete ckEditorInstances[id];
+            }
+        });
+    }
+
+
+
+
+
+
+
+    // ─────────────────────────────────────────────────────────────
+    //  INICIALIZACIÓN AL CARGAR LA PÁGINA
+    // ─────────────────────────────────────────────────────────────
 
     $(function() {
+        // Choices.js — selectores del formulario principal
+        crearChoices("#ria", "Seleccione las actividades a desarrollar");
+        crearChoices("#entornoafectado", "Seleccione los entornos a intervenir");
+        crearChoices("#responsables", "Seleccione los responsables EBS");
+
+        // Datepicker
         $('#fechaRegistro').daterangepicker({
             singleDatePicker: true,
             showDropdowns: true,
@@ -853,716 +1273,58 @@ $fortalezas = [
                 applyLabel: "Aplicar",
                 cancelLabel: "Cancelar",
                 daysOfWeek: ["Do", "Lu", "Ma", "Mi", "Ju", "Vi", "Sa"],
-                monthNames: [
-                    "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
+                monthNames: ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
                     "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
                 ],
-
-            }
-        }, function(start) {
-            let fecha = start.format('YYYY-MM-DD');
-            $("#fechaRegistro").val(fecha);
+            },
         });
+
+        // ── Tabla Actividades ──────────────────────────────────────
+        const campoActividades = document.querySelector('[name="data[Observacion][actividaddesarrollar]"]');
+        let datosActividades = [];
+        if (campoActividades?.value?.trim()) {
+            try {
+                datosActividades = JSON.parse(campoActividades.value);
+            } catch (e) {}
+        }
+        tablaActividades.inicializar(datosActividades);
+
+        // ← Expandir primera fila si no hay datos guardados
+        const primeraFila = tablaActividades.getFilas()[0];
+        if (primeraFila) expandedRows.add(primeraFila.id);
+        renderActividades(tablaActividades.getFilas());
+
+        // ── Tabla Disentimiento ────────────────────────────────────
+        const campoDisent = document.getElementById('disentimiento_hidden');
+        let datosDisent = [];
+        if (campoDisent?.value?.trim()) {
+            try {
+                datosDisent = JSON.parse(campoDisent.value);
+            } catch (e) {}
+        }
+        // ← Pasar datos directamente, siempre arranca con fila vacía si no hay datos
+        tablaDisentimiento.inicializar(datosDisent);
+
+        // ── Botones Actividades ────────────────────────────────────
+        document.getElementById("addRowBtn")
+            ?.addEventListener("click", () => tablaActividades.agregar());
+        document.getElementById("removeLastBtn")
+            ?.addEventListener("click", () => tablaActividades.eliminarUltima());
+
+        // ── Botones Disentimiento ──────────────────────────────────
+        document.getElementById("addRowBtnDisentimiento")
+            ?.addEventListener("click", () => tablaDisentimiento.agregar());
+        document.getElementById("removeLastBtnDisentimiento")
+            ?.addEventListener("click", () => tablaDisentimiento.eliminarUltima());
     });
+
+    // ─────────────────────────────────────────────────────────────
+    //  NAVEGACIÓN — confirmación al salir
+    // ─────────────────────────────────────────────────────────────
 
     function preventBackNavigation() {
         if (confirm('¿Está seguro que desea salir de la página? Se pueden perder los cambios no guardados.')) {
-            window.location.href = '<?php echo $this->Html->url(['controller' => 'Familias', 'action' => 'view', $idAux]); ?>';
+            window.location.href = APP_CONFIG.urlSalida;
         }
-    }
-
-
-
-    document.addEventListener("DOMContentLoaded", () => {
-        const riesgosVulnerabilidad = document.getElementById('riesgovulnerabilidad');
-        const riesgosSalud = document.getElementById('riesgosalud');
-        const puntuacionFamilia = document.getElementById('puntuacionfamilia');
-        const valoracionFamilia = document.getElementById('valoracionfamilia');
-        const opcionesResponsableFamilia = <?= json_encode($opciones) ?>;
-        console.log(row.responsableFamilia);
-
-        function calculateSum() {
-            let sum = 0;
-
-            // Sumar valores seleccionados en riesgos de vulnerabilidad
-            if (riesgosVulnerabilidad) {
-                const selectedOptions = Array.from(riesgosVulnerabilidad.selectedOptions);
-                sum += selectedOptions.reduce((acc, option) => acc + parseInt(option.value || 0, 10), 0);
-            }
-
-            // Sumar valores seleccionados en riesgos de salud
-            if (riesgosSalud) {
-                const selectedOptions = Array.from(riesgosSalud.selectedOptions);
-                sum += selectedOptions.reduce((acc, option) => acc + parseInt(option.value || 0, 10), 0);
-            }
-
-            // Actualizar el campo de puntuación
-            if (puntuacionFamilia) {
-                puntuacionFamilia.value = sum;
-            }
-
-            if (valoracionFamilia) {
-                // Actualizar la valoración basada en la puntuación
-                if (sum < 3) {
-                    valoracionFamilia.value = 'Riesgo Bajo';
-                } else if (sum >= 3 && sum < 5) {
-                    valoracionFamilia.value = 'Riesgo Medio';
-                } else if (sum >= 5) {
-                    valoracionFamilia.value = 'Riesgo Alto';
-                } else {
-                    valoracionFamilia.value = '';
-                }
-            }
-        }
-
-        // Escuchar cambios en ambos selectores
-        if (riesgosVulnerabilidad) {
-            riesgosVulnerabilidad.addEventListener('change', calculateSum);
-        }
-        if (riesgosSalud) {
-            riesgosSalud.addEventListener('change', calculateSum);
-        }
-    });
-    // Configuración Fecha
-    document.addEventListener("DOMContentLoaded", () => {
-        const fechaInput = document.getElementById('fechaRegistro');
-        if (fechaInput) {
-            fechaInput.addEventListener('focus', () => {
-                fechaInput.type = 'date';
-            });
-            fechaInput.addEventListener('blur', () => {
-                if (!fechaInput.value) {
-                    fechaInput.type = 'text';
-                }
-            });
-        }
-    });
-
-
-    document.addEventListener("DOMContentLoaded", () => {
-        const puntuacionFamilia = document.getElementById('puntuacionfamilia');
-
-
-
-        function updateValoracionFamilia() {
-            if (puntuacionFamilia && valoracionFamilia) {
-                const puntuacion = parseFloat(puntuacionFamilia.value) || 0;
-
-                if (puntuacion < 3) {
-                    valoracionFamilia.value = 'Riesgo Bajo';
-                } else if (puntuacion >= 3 && puntuacion < 5) {
-                    valoracionFamilia.value = 'Riesgo Medio';
-                } else if (puntuacion >= 5) {
-                    valoracionFamilia.value = 'Riesgo Alto';
-                } else {
-                    valoracionFamilia.value = '';
-                }
-            }
-        }
-
-        // Escuchar cambios en el campo de puntuación
-        if (puntuacionFamilia) {
-            puntuacionFamilia.addEventListener('input', updateValoracionFamilia); // Use 'input' for real-time updates
-        }
-
-        // Llamar la función al cargar la página para inicializar el valor
-        updateValoracionFamilia();
-    });
-
-
-    function addRow() {
-        var tbody = document.getElementById('actividaddesarrollar_tbody');
-        var index = parseInt(tbody.getAttribute('data-index'), 10);
-        var row = document.createElement('tr');
-        row.innerHTML = ''
-
-        tbody.appendChild(row);
-        tbody.setAttribute('data-index', index + 1);
-    }
-
-    function removeRow(button) {
-        var tr = button.closest('tr');
-        if (!tr) return;
-        var tbody = document.getElementById('actividaddesarrollar_tbody');
-        // Evitar eliminar la última fila si se desea mantener al menos una fila
-        if (tbody.rows.length <= 1) {
-            // si se quiere permitir eliminar todas, comentar la siguiente línea
-            alert('Debe quedar al menos una fila.');
-            return;
-        }
-        tr.parentNode.removeChild(tr);
-    }
-
-    function removeLastRow() {
-        var tbody = document.getElementById('actividaddesarrollar_tbody');
-        if (tbody.rows.length > 1) {
-            tbody.deleteRow(tbody.rows.length - 1);
-        } else {
-            alert('Debe quedar al menos una fila.');
-        }
-    }
-
-    let rows = [];
-    let expandedRows = new Set();
-    let rowChoicesInstances = {}; // Almacenar instancias de Choices.js por fila
-
-    function guardarRowsEnObservacion() {
-        const obsField = document.querySelector('[name="data[Observacion][actividaddesarrollar]"]');
-        if (obsField) {
-            obsField.value = JSON.stringify(rows);
-        }
-    }
-
-    function inicializarRowsDesdeObservacion() {
-        const obsField = document.querySelector('[name="data[Observacion][actividaddesarrollar]"]');
-        console.log('Campo actividaddesarrollar encontrado:', obsField);
-        console.log('Valor del campo:', obsField ? obsField.value : 'No existe el campo');
-
-        let deserializados = [];
-        if (obsField && obsField.value && obsField.value.trim() !== '') {
-            try {
-                const datos = JSON.parse(obsField.value);
-                console.log('Datos parseados:', datos);
-                if (Array.isArray(datos) && datos.length > 0) {
-                    deserializados = datos;
-                    console.log('Datos cargados correctamente:', deserializados);
-                }
-            } catch (e) {
-                console.error('Error al parsear actividaddesarrollar:', e);
-            }
-        }
-
-        // SIEMPRE crear una fila vacía al inicio para que el usuario llene
-        const filaVacia = {
-            id: Date.now().toString(),
-            situacionesPriorizadas: "",
-            logrosAlcanzados: "",
-            responsableFamilia: "",
-            fechaCompromiso: "",
-            fechaSeguimiento: "",
-            seguimientoCompromiso: "",
-            objetivoCortoPlazo: [], // Array de keys
-            resultadosEsperados: [], // Array de values
-            estado: "pendiente",
-        };
-
-        // Si hay datos guardados, agregarlos DESPUÉS de la fila vacía (colapsados)
-        if (deserializados.length > 0) {
-            rows = [filaVacia, ...deserializados];
-            // Solo expandir la fila vacía (la primera)
-            expandedRows = new Set([filaVacia.id]);
-            console.log('Fila vacía creada + datos existentes colapsados. Total filas:', rows.length);
-        } else {
-            // Si no hay datos, solo la fila vacía
-            rows = [filaVacia];
-            expandedRows = new Set([filaVacia.id]);
-            console.log('Solo fila vacía creada.');
-        }
-    }
-
-    // Utility functions
-    function getEstadoColor(estado) {
-        switch (estado) {
-            case "alcanzado":
-                return "badge-alcanzado"
-            case "pendiente":
-                return "badge-pendiente"
-            case "en-proceso":
-                return "badge-en-proceso"
-            default:
-                return ""
-        }
-    }
-
-    function getEstadoText(estado) {
-        switch (estado) {
-            case "alcanzado":
-                return "Logro alcanzado"
-            case "pendiente":
-                return "Pendiente"
-            case "en-proceso":
-                return "En proceso"
-            default:
-                return estado
-        }
-    }
-
-    // Row operations
-    function addRow() {
-        const newRow = {
-            id: Date.now().toString(),
-            situacionesPriorizadas: "",
-            logrosAlcanzados: "",
-            responsableFamilia: "",
-            fechaCompromiso: "",
-            fechaSeguimiento: "",
-            seguimientoCompromiso: "",
-            objetivoCortoPlazo: [], // Array de keys
-            resultadosEsperados: [], // Array de values
-            estado: "pendiente",
-        }
-        rows.push(newRow)
-        expandedRows = new Set([newRow.id])
-        guardarRowsEnObservacion()
-        render()
-    }
-
-    function removeRow(id) {
-        if (rows.length > 1) {
-            rows = rows.filter((row) => row.id !== id)
-            expandedRows.delete(id)
-            guardarRowsEnObservacion()
-            render()
-        }
-    }
-
-    function removeLastRow() {
-        if (rows.length > 1) {
-            const lastId = rows[rows.length - 1].id
-            expandedRows.delete(lastId)
-            rows = rows.slice(0, -1)
-            guardarRowsEnObservacion()
-            render()
-        }
-    }
-
-    function toggleRow(id) {
-        if (expandedRows.has(id)) {
-            expandedRows.delete(id)
-        } else {
-            expandedRows.add(id)
-        }
-        render()
-    }
-
-    function updateRow(id, field, value) {
-        const row = rows.find((r) => r.id === id)
-        if (row) {
-            row[field] = value
-        }
-        guardarRowsEnObservacion();
-    }
-
-    const opcionesResponsableFamilia = <?= json_encode($opciones) ?>;
-
-    function renderOpciones(selectedId = '') {
-        let html = `<option value="">Seleccione una persona</option>`;
-
-        for (const id in opcionesResponsableFamilia) {
-            const selected = id == selectedId ? 'selected' : '';
-            html += `<option value="${id}" ${selected}>
-                    ${opcionesResponsableFamilia[id]}
-                 </option>`;
-        }
-
-        return html;
-    }
-
-    // Opciones para indicadores: muestra KEYS, guarda KEYS
-    function renderIndicadoresOptions(selected = []) {
-        const map = window.parametrosMap || {};
-        console.log('renderIndicadoresOptions - map completo:', map);
-        console.log('renderIndicadoresOptions - seleccionados (keys):', selected);
-        let html = "";
-
-        // Iterar sobre el map para obtener key-value pairs
-        Object.entries(map).forEach(([key, value]) => {
-            // Comparar con las KEYS seleccionadas
-            const sel = (Array.isArray(selected) && selected.includes(key)) ? 'selected' : '';
-            // Mostrar KEY en texto, guardar KEY en value
-            html += `<option value="${key}" ${sel}>${key}</option>`;
-        });
-
-        console.log('HTML generado:', html.substring(0, 200));
-        return html;
-    }
-
-    // Maneja cambio en indicadores por fila: extrae KEYS y mapea a VALUES
-    function handleIndicadoresChange(rowId, selectEl) {
-        const map = window.parametrosMap || {};
-
-        // Obtener las KEYS seleccionadas (están en option.value)
-        const keys = Array.from(selectEl.selectedOptions).map(o => o.value);
-
-        // Mapear las KEYS a sus VALUES correspondientes
-        const valores = keys.map(k => map[k]);
-
-        console.log('handleIndicadoresChange - map:', map);
-        console.log('handleIndicadoresChange - keys seleccionadas:', keys);
-        console.log('handleIndicadoresChange - values mapeados:', valores);
-
-        // Guardar keys en objetivoCortoPlazo y values en resultadosEsperados
-        updateRow(rowId, 'objetivoCortoPlazo', keys);
-        updateRow(rowId, 'resultadosEsperados', valores);
-        render();
-    }
-
-    // Inicializar Choices.js en los selects de indicadores por fila
-    function initializeRowChoices() {
-        // Destruir instancias previas
-        Object.values(rowChoicesInstances).forEach(instance => {
-            if (instance && instance.destroy) {
-                instance.destroy();
-            }
-        });
-        rowChoicesInstances = {};
-
-        // Crear nuevas instancias para cada fila expandida
-        rows.forEach(row => {
-            const selectId = `indicadores_row_${row.id}`;
-            const selectEl = document.getElementById(selectId);
-
-            if (selectEl && expandedRows.has(row.id)) {
-                console.log('Inicializando Choices para:', selectId);
-                try {
-                    rowChoicesInstances[row.id] = new Choices(selectEl, {
-                        searchEnabled: true,
-                        searchChoices: true,
-                        removeItemButton: true,
-                        itemSelectText: '',
-                        shouldSort: false,
-                        searchPlaceholderValue: "Escriba para filtrar...",
-                        maxItemCount: -1,
-                        removeItems: true,
-                        duplicateItemsAllowed: false,
-                        placeholder: true,
-                        placeholderValue: "Seleccione objetivos corto plazo",
-                    });
-
-                    // Agregar evento para sincronizar cambios
-                    selectEl.addEventListener('change', function() {
-                        handleIndicadoresChange(row.id, this);
-                    });
-                } catch (e) {
-                    console.error('Error al inicializar Choices:', e);
-                }
-            }
-        });
-    }
-
-
-    function renderDesktopView() {
-        const tableBody = document.getElementById("tableBody")
-        tableBody.innerHTML = ""
-
-
-        rows.forEach((row, index) => {
-            const isExpanded = expandedRows.has(row.id)
-            const tr = document.createElement("tr")
-            tr.className = "hover:bg-gray-50 transition-colors"
-
-            const cargados_personas = <?= json_encode($opciones) ?>;
-            let convetir = JSON.stringify(cargados_personas);
-            convetir = JSON.parse(convetir);
-            console.log(convetir[0]);
-
-            if (isExpanded) {
-                tr.innerHTML = `
-            <div class="w-full border border-gray-300 rounded-lg my-4">
-                <div class="px-3 py-3 text-center bg-teal-100 rounded-t-lg flex items-center justify-center ">
-                    <button type="button" class="btn-icon" onclick="toggleRow('${row.id}')">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"/>
-                        </svg>
-                    </button>
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 pb-4">
-
-                    <div class="col-span-2 text-md font-semibold my-2 px-4">
-                        <div class="flex items-center mb-2">
-                            <label for="direccion" class="font-semibold">Situaciones Priorizadas</label>
-                        </div>
-                        <textarea 
-                        rows="3" 
-                        placeholder="Describe las situaciones priorizadas..." 
-                        onchange="updateRow('${row.id}', 'situacionesPriorizadas', this.value)" 
-                        class="ckeditor border rounded-lg w-full p-2 focus:ring focus:ring-blue-200 text-gray-700" 
-                        style="height:100px; font-size: 15px; width:100%">${row.situacionesPriorizadas}</textarea>
-
-                    </div>
-
-                    <div class="col-span-2 text-md font-semibold my-2 px-4">
-                        <div class="flex items-center mb-2">
-                            <label for="direccion" class="font-semibold">Logros Alcanzados</label>
-                        </div>
-                        <textarea 
-                        rows="3" 
-                        placeholder="Describe los logros alcanzados..." 
-                        onchange="updateRow('${row.id}', 'logrosAlcanzados', this.value)" 
-                        class="ckeditor border rounded-lg w-full p-2 focus:ring focus:ring-blue-200 text-gray-700" 
-                        style="height:100px; font-size: 15px; width:100%">${row.logrosAlcanzados}</textarea>
-
-                    </div>
-
-                    <div class="col-span-2 text-md font-semibold my-2 px-4">
-                        <div class="flex items-center mb-4">
-                            <label class="font-semibold">Responsable de la familia</label>
-                        </div>
-
-                    <select
-                        onchange="updateRow('${row.id}', 'responsableFamilia', this.value)"
-                        class="border border-gray-300 rounded-lg w-full p-2 focus:outline-none focus:ring-1 focus:ring-blue-500 text-sm text-gray-700">
-                        ${renderOpciones(row.responsableFamilia)}
-                    </select>
-                    </div>
-                
-                    <div class="col-span-2 sm:col-span-1 text-md font-semibold my-2 px-4">
-                        <div class="flex items-center mb-4">
-                            <label for="actividad" class="font-semibold">Fecha de compromiso</label>
-                        </div>
-                        <input type="date" 
-                            value="${row.fechaCompromiso}" 
-                            onchange="updateRow('${row.id}', 'fechaCompromiso', this.value)" 
-                            class="border border-gray-300 rounded-lg w-full p-2 focus:outline-none focus:ring-1 focus:ring-blue-500 text-sm text-gray-700"/>
-                    </div>
-
-                    <div class="col-span-2 sm:col-span-1 text-md font-semibold my-2 px-4">
-                        <div class="flex items-center mb-4">
-                            <label for="actividad" class="font-semibold">Seguimiento al compromiso</label>
-                        </div>
-                        <input type="date" 
-                            value="${row.fechaSeguimiento}" 
-                            onchange="updateRow('${row.id}', 'fechaSeguimiento', this.value)" 
-                            class="border border-gray-300 rounded-lg w-full p-2 focus:outline-none focus:ring-1 focus:ring-blue-500 text-sm text-gray-700"/>
-                    </div>
-
-                    <div class="col-span-2 sm:col-span-2 text-md font-semibold my-2 px-4">
-                        <div class="flex items-center mb-4">
-                            <label for="actividad" class="font-semibold">Indicadores</label>
-                        </div>
-                        <select multiple
-                            id="indicadores_row_${row.id}"
-                            onchange="handleIndicadoresChange('${row.id}', this)"
-                            class="border border-gray-300 rounded-lg w-full p-2 focus:outline-none focus:ring-1 focus:ring-blue-500 text-sm text-gray-700">
-                            ${renderIndicadoresOptions(row.objetivoCortoPlazo || [])}
-                        </select>
-                    </div>
-
-                    <div class="col-span-2 text-md font-semibold my-2 px-4">
-                        <div class="flex items-center mb-2">
-                            <label class="font-semibold">Estado</label>
-                        </div>
-                    <select
-                        onchange="updateRow('${row.id}', 'estado', this.value)"
-                        class="border border-gray-300 rounded-lg w-full p-2 focus:outline-none focus:ring-1 focus:ring-blue-500 text-sm text-gray-700">
-                        <option value="pendiente" ${row.estado === "pendiente" ? "selected" : ""}>Pendiente</option>
-                        <option value="en-proceso" ${row.estado === "en-proceso" ? "selected" : ""}>En proceso</option>
-                        <option value="alcanzado" ${row.estado === "alcanzado" ? "selected" : ""}>Logro alcanzado</option>
-                    </select>
-                    </div>
-            
-                </div>
-            </div>
-            `
-            } else {
-                tr.innerHTML = `
-                <div class="w-full border border-gray-300 rounded-lg flex items-center justify-between px-4 py-3 my-4">
-                  <button type="button" class="btn-icon" onclick="toggleRow('${row.id}')">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
-                        </svg>
-                    </button>
-                     <div class="flex items-center gap-3">
-                        <span class="badge badge-outline">#${index + 1}</span>
-                        <span class="badge ${getEstadoColor(row.estado)}">${getEstadoText(row.estado)}</span>
-                        <span class="text-sm text-gray-600 truncate flex-1">${row.situacionesPriorizadas || "Sin información"}</span>
-                        ${row.responsableFamilia ? `<span class="text-sm font-medium">${opcionesResponsableFamilia[row.responsableFamilia]}</span>` : ""}
-                    </div>
-                     <button class="btn-icon destructive" onclick="removeRow('${row.id}')" ${rows.length === 1 ? "disabled" : ""}>
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
-                        </svg>
-                    </button>
-                </div>
-            `
-            }
-
-            tableBody.appendChild(tr)
-        })
-    }
-
-    function render() {
-        renderDesktopView()
-
-        // Update button states
-        document.getElementById("removeLastBtn").disabled = rows.length === 1
-        // Inicializar Choices.js en los selects dinámicos después de un pequeño delay
-        setTimeout(() => {
-            initializeRowChoices();
-        }, 100);
-    }
-
-    // Inicializar datos al cargar
-    inicializarRowsDesdeObservacion();
-
-    // Event listeners
-    document.getElementById("addRowBtn").addEventListener("click", addRow)
-    document.getElementById("removeLastBtn").addEventListener("click", removeLastRow)
-
-    // Initial render
-    render()
-
-    // --- Disentimiento Table Logic ---
-    let disentRows = [];
-    let disentIdCounter = 1;
-
-    function renderDesktopViewDisentimiento() {
-        const tableBody = document.getElementById("tableBodyDisentimiento");
-        console.log('Renderizando tabla disentimiento. tableBody encontrado:', tableBody);
-        console.log('Número de filas a renderizar:', disentRows.length);
-
-        if (!tableBody) {
-            console.error('No se encontró el elemento tableBodyDisentimiento');
-            return;
-        }
-
-        tableBody.innerHTML = "";
-
-        disentRows.forEach((row, index) => {
-            console.log('Renderizando fila disentimiento:', index, row);
-            const tr = document.createElement("tr");
-            tr.className = "hover:bg-gray-50 transition-colors";
-            tr.innerHTML = `
-                            <td class="p-2">
-                                <input type="text" class="border border-gray-300 rounded-lg w-full p-2 text-sm" placeholder="Nombre" value="${row.nombre || ''}" onchange="updateDisentRow(${row.id}, 'nombre', this.value)">
-                            </td>
-                            <td class="p-2">
-                                <input type="text" class="border border-gray-300 rounded-lg w-full p-2 text-sm" placeholder="Documento" value="${row.documento || ''}" onchange="updateDisentRow(${row.id}, 'documento', this.value)">
-                            </td>
-                            <td class="p-2">
-                                <input type="text" class="border border-gray-300 rounded-lg w-full p-2 text-sm" placeholder="Rol" value="${row.rol || ''}" onchange="updateDisentRow(${row.id}, 'rol', this.value)">
-                            </td>
-                            <td class="p-2">
-                                <input type="text" class="border border-gray-300 rounded-lg w-full p-2 text-sm" placeholder="Motivo" value="${row.motivo || ''}" onchange="updateDisentRow(${row.id}, 'motivo', this.value)">
-                            </td>
-                            <td class="p-2 text-center">
-                                <button type="button" class="btn-icon destructive" onclick="removeDisentRow(${row.id})" ${disentRows.length === 1 ? "disabled" : ""} title="Eliminar fila">
-                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
-                                    </svg>
-                                </button>
-                            </td>
-                        `;
-            tableBody.appendChild(tr);
-        });
-
-        console.log('Tabla disentimiento renderizada. Filas en DOM:', tableBody.children.length);
-    }
-
-    function addDisentRow() {
-        disentRows.push({
-            id: disentIdCounter++,
-            nombre: '',
-            documento: '',
-            rol: '',
-            motivo: ''
-        });
-        renderDesktopViewDisentimiento();
-        guardarDisentimientoEnHidden();
-    }
-
-    function removeDisentRow(id) {
-        if (disentRows.length === 1) return;
-        disentRows = disentRows.filter(row => row.id !== id);
-        renderDesktopViewDisentimiento();
-        guardarDisentimientoEnHidden();
-    }
-
-    function updateDisentRow(id, field, value) {
-        const idx = disentRows.findIndex(row => row.id === id);
-        if (idx !== -1) {
-            disentRows[idx][field] = value;
-            guardarDisentimientoEnHidden();
-        }
-    }
-
-    function guardarDisentimientoEnHidden() {
-        const hidden = document.getElementById('disentimiento_hidden');
-        if (hidden) {
-            // Guardar todas las filas excepto las completamente vacías (excepto la primera fila)
-            const toSave = disentRows
-                .filter((row, idx) => {
-                    // La primera fila siempre se mantiene para el formulario, pero no se guarda si está vacía
-                    if (idx === 0 && !row.nombre && !row.documento && !row.rol && !row.motivo) {
-                        return false;
-                    }
-                    // El resto de filas se guardan si tienen algún dato
-                    return row.nombre || row.documento || row.rol || row.motivo;
-                })
-                .map(row => ({
-                    nombre: row.nombre || '',
-                    documento: row.documento || '',
-                    rol: row.rol || '',
-                    motivo: row.motivo || ''
-                }));
-
-            hidden.value = JSON.stringify(toSave);
-            console.log('Disentimiento guardado:', toSave);
-        }
-    }
-
-    function inicializarDisentimientoDesdeHidden() {
-        const hidden = document.getElementById('disentimiento_hidden');
-        console.log('Campo disentimiento encontrado:', hidden);
-        console.log('Valor del campo:', hidden ? hidden.value : 'No existe el campo');
-
-        let deserializados = [];
-        if (hidden && hidden.value && hidden.value.trim() !== '') {
-            try {
-                const datos = JSON.parse(hidden.value);
-                console.log('Datos disentimiento parseados:', datos);
-                if (Array.isArray(datos) && datos.length > 0) {
-                    deserializados = datos.map(row => ({
-                        ...row,
-                        id: disentIdCounter++
-                    }));
-                    console.log('Datos disentimiento cargados correctamente:', deserializados);
-                }
-            } catch (e) {
-                console.error('Error al parsear disentimiento:', e);
-            }
-        }
-
-        // SIEMPRE crear una fila vacía al inicio para que el usuario llene
-        const filaVacia = {
-            id: disentIdCounter++,
-            nombre: '',
-            documento: '',
-            rol: '',
-            motivo: ''
-        };
-
-        // Si hay datos guardados, agregarlos DESPUÉS de la fila vacía
-        if (deserializados.length > 0) {
-            disentRows = [filaVacia, ...deserializados];
-            console.log('Fila vacía disentimiento creada + datos existentes. Total filas:', disentRows.length);
-        } else {
-            // Si no hay datos, solo la fila vacía
-            disentRows = [filaVacia];
-            console.log('Solo fila vacía disentimiento creada.');
-        }
-
-        renderDesktopViewDisentimiento();
-    }
-
-    // Inicializar tabla disentimiento al cargar la página
-    inicializarDisentimientoDesdeHidden();
-
-    // Configurar event listeners para botones de disentimiento
-    const addBtnDisent = document.getElementById('addRowBtnDisentimiento');
-    if (addBtnDisent) {
-        addBtnDisent.addEventListener('click', addDisentRow);
-    }
-
-    const removeBtnDisent = document.getElementById('removeLastBtnDisentimiento');
-    if (removeBtnDisent) {
-        removeBtnDisent.addEventListener('click', () => {
-            if (disentRows.length > 1) {
-                disentRows.pop();
-                renderDesktopViewDisentimiento();
-                guardarDisentimientoEnHidden();
-            }
-        });
     }
 </script>

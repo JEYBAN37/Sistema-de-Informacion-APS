@@ -258,7 +258,6 @@ $optionCanalizacion =
         // Educación
         '24.Educación para la salud | Primeros auxilios psicologicos |0.5' => 'Primeros auxilios psicologicos',
         '24.Educación para la salud | Activacion de ruta por sospecha de violencias |1' => 'Activacion de ruta por sospecha de violencias',
-        '25.Ninguno |0' => 'Ninguno',
         '25.Tramite de autorización de servicios de salud |0.3' => 'Tramite de autorización de servicios de salud',
 
         '18.Atención para el cuidado preconcepcional |0.1' => 'Atención para el cuidado preconcepcional',
@@ -320,7 +319,7 @@ $estadoOption = [
 <?php
 echo $this->Form->input('fechaRegistro', [
     'type' => 'hidden',
-    'value' => date('Y-m-d')
+    'value' => date('Y-m-d H:i:s'),
 ]);
 ?>
 
