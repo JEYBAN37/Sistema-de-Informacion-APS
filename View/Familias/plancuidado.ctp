@@ -585,11 +585,15 @@
                             </tr>
                             <tr class="bg-gray-100">
                                 <td colspan="2" class="border border-gray-300 font-semibold p-2">Situaciones Priorizadas</td>
-                                <td colspan="7" class="border border-gray-300 p-2"><?php echo h($actividad['situacionesPriorizadas']); ?></td>
+                                <td colspan="7" class="border border-gray-300 p-2">
+                                    <?php echo $this->Html->div(null, $actividad['situacionesPriorizadas'], ['escape' => false]); ?>
+                                </td>
                             </tr>
                             <tr>
-                                <td colspan="2" class="border border-gray-300 font-semibold p-2">Logros Alcanzados</td>
-                                <td colspan="7" class="border border-gray-300 p-2"><?php echo h($actividad['logrosAlcanzados']); ?></td>
+                                <td colspan="2" class="border border-gray-300 font-semibold p-2">Logros por Alcanzar</td>
+                                <td colspan="7" class="border border-gray-300 p-2">
+                                    <?php echo $this->Html->div(null, $actividad['logrosAlcanzados'], ['escape' => false]); ?>
+                                </td>
                             </tr>
                             <tr class="bg-gray-100">
                                 <td colspan="2" class="border border-gray-300 font-semibold p-2">Responsable Familiar</td>
