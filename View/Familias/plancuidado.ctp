@@ -15,6 +15,21 @@
 
 
 <div class="flex max-w-6xl mx-auto text-center mb-8 gap-4">
+    <button title="Regresar a la familia" class="flex items-center space-x-2 bg-teal-600 text-white px-4 py-2 rounded hover:bg-teal-700" onclick="window.location.href='<?php echo $this->Html->url(array('controller' => 'familias', 'action' => 'view', $familia['Familia']['id'])); ?>'">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-printer-icon lucide-printer">
+            <path d="m12 19-7-7 7-7" />
+            <path d="M19 12H5" />
+        </svg>
+    </button>
+
+
+    <button title="Editar Plan de Cuidado" class="flex items-center space-x-2 bg-teal-600 text-white px-4 py-2 rounded hover:bg-teal-700" onclick="window.location.href='<?php echo $this->Html->url(array('controller' => 'familias', 'action' => 'view', $familia['Familia']['id'])); ?>'">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-printer-icon lucide-printer">
+            <path d="M12 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
+            <path d="M18.375 2.625a1 1 0 0 1 3 3l-9.013 9.014a2 2 0 0 1-.853.505l-2.873.84a.5.5 0 0 1-.62-.62l.84-2.873a2 2 0 0 1 .506-.852z" />
+        </svg>
+    </button>
+
     <button title="Imprimir" type="button" id="btn-print" class="flex items-center space-x-2 bg-teal-600 text-white px-4 py-2 rounded hover:bg-teal-700">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-printer-icon lucide-printer">
             <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2" />
@@ -23,13 +38,6 @@
         </svg>
     </button>
 
-
-    <button title="Regresar a la familia" class="flex items-center space-x-2 bg-teal-600 text-white px-4 py-2 rounded hover:bg-teal-700" onclick="window.location.href='<?php echo $this->Html->url(array('controller' => 'familias', 'action' => 'view', $familia['Familia']['id'])); ?>'">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-printer-icon lucide-printer">
-            <path d="m12 19-7-7 7-7" />
-            <path d="M19 12H5" />
-        </svg>
-    </button>
 </div>
 
 
@@ -326,42 +334,42 @@
                         <td colspan="3" class="border border-gray-300 p-2">
                             <?php
 
-                                $canalizacionRaw = $familia['Observacion'][0]['menoresriegosalud'];
+                            $canalizacionRaw = $familia['Observacion'][0]['menoresriegosalud'];
 
-                                $riesgosalud = [
-                                    '0.1' => 'Ninguno',
-                                    '5.1' => 'Menor con Riesgo desnutrición',
-                                    '5.2' => 'Menor sin esquema de vacunación completo',
-                                    '3.3' => 'Menor con Signos de peligro EDA o IRA',
-                                    '2.1' => 'Menor sin valoraciones de PYM',
-                                    '1' => 'Persona joven/adulto sin valoraciones de PYM',
-                                    '5.4' => 'Gestante sin control',
-                                    '4.5' => 'Embarazo de alto riesgo',
-                                    '1.01' => 'Persona con enfermedad crónica con control',
-                                    '5.6' => 'Persona con enfermedad crónica sin control',
-                                    '4.1' => 'Persona Sintomatico respiratorio o de piel',
-                                    '3' => 'Persona con enferemedad sin manejo',
-                                    '3.4' => 'Persona con afectación de salud mental',
+                            $riesgosalud = [
+                                '0.1' => 'Ninguno',
+                                '5.1' => 'Menor con Riesgo desnutrición',
+                                '5.2' => 'Menor sin esquema de vacunación completo',
+                                '3.3' => 'Menor con Signos de peligro EDA o IRA',
+                                '2.1' => 'Menor sin valoraciones de PYM',
+                                '1' => 'Persona joven/adulto sin valoraciones de PYM',
+                                '5.4' => 'Gestante sin control',
+                                '4.5' => 'Embarazo de alto riesgo',
+                                '1.01' => 'Persona con enfermedad crónica con control',
+                                '5.6' => 'Persona con enfermedad crónica sin control',
+                                '4.1' => 'Persona Sintomatico respiratorio o de piel',
+                                '3' => 'Persona con enferemedad sin manejo',
+                                '3.4' => 'Persona con afectación de salud mental',
 
-                                ];
+                            ];
 
-                                $items = !empty($canalizacionRaw) 
-                                ? array_filter(array_map('trim', explode(',', $canalizacionRaw))) 
+                            $items = !empty($canalizacionRaw)
+                                ? array_filter(array_map('trim', explode(',', $canalizacionRaw)))
                                 : [];
 
-                                if (!empty($items)) {
-                                    echo '<ul class="list-disc list-inside space-y-1">';
-                                    foreach ($items as $parte) {
-                                        // Buscamos la etiqueta, si no existe mostramos el código original
-                                        $label = isset($riesgosalud[$parte]) ? $riesgosalud[$parte] : "Actualizar Campo";
-                                        
-                                        echo '<li>' . h($label) . '</li>';
-                                    }
-                                    echo '</ul>';
-                                } else {
-                                    // 3. Caso para cuando no hay datos o la cadena solo tenía comas/espacios
-                                    echo '<span class="text-gray-500 italic">' . h('Sin registros de vulnerabilidad') . '</span>';
+                            if (!empty($items)) {
+                                echo '<ul class="list-disc list-inside space-y-1">';
+                                foreach ($items as $parte) {
+                                    // Buscamos la etiqueta, si no existe mostramos el código original
+                                    $label = isset($riesgosalud[$parte]) ? $riesgosalud[$parte] : "Actualizar Campo";
+
+                                    echo '<li>' . h($label) . '</li>';
                                 }
+                                echo '</ul>';
+                            } else {
+                                // 3. Caso para cuando no hay datos o la cadena solo tenía comas/espacios
+                                echo '<span class="text-gray-500 italic">' . h('Sin registros de vulnerabilidad') . '</span>';
+                            }
                             ?>
 
                         </td>
@@ -393,7 +401,7 @@
                                 foreach ($items as $parte) {
                                     // Buscamos la etiqueta, si no existe mostramos el código original
                                     $label = isset($riesgovulnerabilidad[$parte]) ? $riesgovulnerabilidad[$parte] : "Actualizar Campo";
-                                    
+
                                     echo '<li>' . h($label) . '</li>';
                                 }
                                 echo '</ul>';
@@ -445,23 +453,23 @@
                                 'Entorno familiar seguro y libre de violencia' => 'Entorno familiar seguro y libre de violencia',
                             ];
 
-                             $items = !empty($canalizacionRaw) 
-                                ? array_filter(array_map('trim', explode(',', $canalizacionRaw))) 
+                            $items = !empty($canalizacionRaw)
+                                ? array_filter(array_map('trim', explode(',', $canalizacionRaw)))
                                 : [];
 
-                                if (!empty($items)) {
-                                    echo '<ul class="list-disc list-inside space-y-1">';
-                                    foreach ($items as $parte) {
-                                        // Buscamos la etiqueta, si no existe mostramos el código original
-                                        $label = isset($fortalezas[$parte]) ? $fortalezas[$parte] : "Actualizar Campo";
-                                        
-                                        echo '<li>' . h($label) . '</li>';
-                                    }
-                                    echo '</ul>';
-                                } else {
-                                    // 3. Caso para cuando no hay datos o la cadena solo tenía comas/espacios
-                                    echo '<span class="text-gray-500 italic">' . h('Sin registros de vulnerabilidad') . '</span>';
+                            if (!empty($items)) {
+                                echo '<ul class="list-disc list-inside space-y-1">';
+                                foreach ($items as $parte) {
+                                    // Buscamos la etiqueta, si no existe mostramos el código original
+                                    $label = isset($fortalezas[$parte]) ? $fortalezas[$parte] : "Actualizar Campo";
+
+                                    echo '<li>' . h($label) . '</li>';
                                 }
+                                echo '</ul>';
+                            } else {
+                                // 3. Caso para cuando no hay datos o la cadena solo tenía comas/espacios
+                                echo '<span class="text-gray-500 italic">' . h('Sin registros de vulnerabilidad') . '</span>';
+                            }
                             ?>
                         </td>
                     </tr>
@@ -577,11 +585,15 @@
                             </tr>
                             <tr class="bg-gray-100">
                                 <td colspan="2" class="border border-gray-300 font-semibold p-2">Situaciones Priorizadas</td>
-                                <td colspan="7" class="border border-gray-300 p-2"><?php echo h($actividad['situacionesPriorizadas']); ?></td>
+                                <td colspan="7" class="border border-gray-300 p-2">
+                                    <?php echo $this->Html->div(null, $actividad['situacionesPriorizadas'], ['escape' => false]); ?>
+                                </td>
                             </tr>
                             <tr>
-                                <td colspan="2" class="border border-gray-300 font-semibold p-2">Logros Alcanzados</td>
-                                <td colspan="7" class="border border-gray-300 p-2"><?php echo h($actividad['logrosAlcanzados']); ?></td>
+                                <td colspan="2" class="border border-gray-300 font-semibold p-2">Logros por Alcanzar</td>
+                                <td colspan="7" class="border border-gray-300 p-2">
+                                    <?php echo $this->Html->div(null, $actividad['logrosAlcanzados'], ['escape' => false]); ?>
+                                </td>
                             </tr>
                             <tr class="bg-gray-100">
                                 <td colspan="2" class="border border-gray-300 font-semibold p-2">Responsable Familiar</td>
@@ -675,12 +687,12 @@
                     </tr>
                     <tr class="bg-gray-100">
                         <td colspan="9" class="border border-gray-300 p-2">
-                            Yo, <strong><?php echo h($familia['Observacion'][0]['firmaplancuidado']); ?></strong>, 
-                            confirmo que he recibido información adecuada sobre el Plan de Cuidado Integral Primario Familiar, 
-                            comprendo los objetivos y las intervenciones propuestas, consiento y me comprometo a la 
-                            implementación del plan con mi familia, y junto a las Institución Prestadora de Servicios 
+                            Yo, <strong><?php echo h($familia['Observacion'][0]['firmaplancuidado']); ?></strong>,
+                            confirmo que he recibido información adecuada sobre el Plan de Cuidado Integral Primario Familiar,
+                            comprendo los objetivos y las intervenciones propuestas, consiento y me comprometo a la
+                            implementación del plan con mi familia, y junto a las Institución Prestadora de Servicios
                             de Salud PASTO SALUD ESE, con el MINISTERIO DE SALUD Y PROTECCIÓN SOCIAL Y CON COLOMBIA.
-                        </td>                  
+                        </td>
                     </tr>
                     <tr>
                         <td colspan="9" class="border border-gray-300 p-2">
@@ -823,6 +835,31 @@
     </div>
 </div>
 
+<div class="flex max-w-6xl mx-auto text-center mb-8 gap-4 mt-8">
+    <button title="Regresar a la familia" class="flex items-center space-x-2 bg-teal-600 text-white px-4 py-2 rounded hover:bg-teal-700" onclick="window.location.href='<?php echo $this->Html->url(array('controller' => 'familias', 'action' => 'view', $familia['Familia']['id'])); ?>'">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-printer-icon lucide-printer">
+            <path d="m12 19-7-7 7-7" />
+            <path d="M19 12H5" />
+        </svg>
+    </button>
+
+
+    <button title="Editar Plan de Cuidado" class="flex items-center space-x-2 bg-teal-600 text-white px-4 py-2 rounded hover:bg-teal-700" onclick="window.location.href='<?php echo $this->Html->url(array('controller' => 'familias', 'action' => 'view', $familia['Familia']['id'])); ?>'">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-printer-icon lucide-printer">
+            <path d="M12 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
+            <path d="M18.375 2.625a1 1 0 0 1 3 3l-9.013 9.014a2 2 0 0 1-.853.505l-2.873.84a.5.5 0 0 1-.62-.62l.84-2.873a2 2 0 0 1 .506-.852z" />
+        </svg>
+    </button>
+
+    <button title="Imprimir" type="button" id="btn-print" class="flex items-center space-x-2 bg-teal-600 text-white px-4 py-2 rounded hover:bg-teal-700">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-printer-icon lucide-printer">
+            <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2" />
+            <path d="M6 9V3a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v6" />
+            <rect x="6" y="14" width="12" height="8" rx="1" />
+        </svg>
+    </button>
+
+</div>
 <script type="text/javascript">
     document.addEventListener("DOMContentLoaded", function() {
         var btn = document.getElementById('btn-print');
