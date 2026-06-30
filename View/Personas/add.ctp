@@ -317,7 +317,7 @@ $estadoOption = [
 </div>
 
 <?php
-echo $this->Form->input('fechaRegistro', [
+echo $this->Form->input('fecharegistro', [
     'type' => 'hidden',
     'value' => date('Y-m-d H:i:s'),
 ]);
