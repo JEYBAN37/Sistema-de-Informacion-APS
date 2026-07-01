@@ -269,11 +269,8 @@ class PersonasController extends AppController
             $this->request->data['Persona']['caracterizacionaps'] = 'Caracterizar';
 			
 			
-
-			
             
         } 
-
 		//debug($this->request->data);
 			if ($personaExistente) {
 				// El usuario existe: Asignamos el ID para que CakePHP haga un UPDATE en lugar de INSERT
@@ -288,7 +285,7 @@ class PersonasController extends AppController
 
 			// Fijar la fecha en el servidor evita depender del valor oculto enviado por el navegador.
 			$this->request->data['Persona']['fecharegistro'] = date('Y-m-d H:i:s');
-			debug($this->request->data);
+
 			// 2. Guardar los datos (ya sea nuevo o actualización)
 			if ($this->Persona->save($this->request->data)) {
 				$this->Session->setFlash(__('Registro guardado con éxito. Edad calculada: ' . $edad . ' años.'));
