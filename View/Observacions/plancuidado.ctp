@@ -389,7 +389,7 @@
                             <li><strong>ID familia:</strong> ${data.id_familia}</li>
                             <li><strong>ID observacion:</strong> ${data.id_observacion}</li>
                             <li><strong>Plan de cuidado:</strong> ${data.plancuidado && data.plancuidado.trim() !== '' ? `<a href="<?php echo $this->Html->url(['controller' => 'Familias', 'action' => 'plancuidado', '__ID__']); ?>".replace('__ID__', data.id_familia)\" class="text-teal-600 hover:text-teal-800 underline">Ver Plan</a>` : '<span class="text-gray-400">No disponible</span>'}</li>
-                            <li><strong>Familiograma:</strong> ${data.familiograma && data.familiograma.trim() !== '' ? `<a class="text-teal-600 hover:text-teal-800 underline" href="<?php echo $this->Html->url('/'); ?>files/observacion/familiograma/${data.dirfamiliograma}/${data.familiograma}" target="_blank">Descargar</a>` : '<span class="text-gray-400">No disponible</span>'}</li>
+                            <li><strong>Familiograma:</strong> ${data.familiograma && data.familiograma.trim() !== '' ? `<a class="text-teal-600 hover:text-teal-800 underline" href="${data.familiograma}" target="_blank">Descargar</a>` : '<span class="text-gray-400">No disponible</span>'}</li>
                             <li><strong>Responsable:</strong> ${data.responsable}</li>
                             <li><strong>Fecha:</strong> ${(() => {
                                 const f = data.fecha;
@@ -511,7 +511,7 @@
                             if (!data || data.trim() === '') {
                                 return '<span class="text-gray-400">No disponible</span>';
                             }
-                            const fileUrl = `<?php echo $this->Html->url('/'); ?>files/observacion/familiograma/${row.dirfamiliograma}/${data}`;
+                            const fileUrl = `${row.dirfamiliograma}`;
                             return `<a href="${fileUrl}" target="_blank" class="text-teal-600 hover:text-teal-800 underline font-medium">Descargar</a>`;
                         }
                     },

@@ -40,17 +40,6 @@
                 <path d="m16 19 2 2 4-4" />
             </svg>
         </button>
-
-        <?php 
-
-        if ($responsable == $sociambiental['Sociambiental']['responsable_id'] ) : ?>
-            <form method="post" action="<?php echo $this->Html->url(['controller' => 'Sociambientals', 'action' => 'delete', $sociambiental['Sociambiental']['id']]); ?>" onsubmit="return confirm('¿Está seguro/a de eliminar este registro? Esta acción no se puede deshacer.');" style="display:inline;">
-                <?php echo $this->Form->hidden('_method', ['value' => 'POST']); ?>
-                <button title="Eliminar Ficha" type="submit" class="flex items-center w-38 space-x-2 bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700">
-                    <i class="fas fa-trash-alt text-xl"></i>
-                </button>
-            </form>
-        <?php endif; ?>
     </div>
     <!-- Document Container -->
     <div class="max-w-6xl mx-auto bg-white overflow-hidden mt-4 sm:mt-4 p-4 shadow-2xl rounded-xl" id="print-area">
@@ -191,10 +180,7 @@
                                                 <div class="hidden absolute left-0 mt-2 w-32 bg-white border border-gray-200 rounded shadow-lg z-50 menu-options">
                                                     <a href="<?php echo $this->Html->url(['controller' => 'Familias', 'action' => 'edit', $familia['Familia']['id']]); ?>"
                                                         class="block px-4 py-2 text-gray-700 hover:bg-gray-100 text-sm">Editar</a>
-                                                    <form method="post" action="<?php echo $this->Html->url(['controller' => 'Familias', 'action' => 'delete', $familia['Familia']['id'], $familia['Familia']['id']]); ?>" onsubmit="return confirm('<?php echo __('¿Está seguro/a de eliminar el registro con ID# %s?', $familia['Familia']['id']); ?>');">
-                                                        <?php echo $this->Form->hidden('_method', ['value' => 'POST']); ?>
-                                                        <button type="submit" class="w-full text-left px-4 py-2 text-red-600 hover:bg-gray-100 text-sm">Borrar</button>
-                                                    </form>
+                                                    
                                                 </div>
                                             </div>
                                         </td>

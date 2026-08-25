@@ -15,6 +15,23 @@
 
 
 <div class="flex max-w-6xl mx-auto text-center mb-8 gap-4">
+    <button title="Regresar a la familia" class="flex items-center space-x-2 bg-teal-600 text-white px-4 py-2 rounded hover:bg-teal-700" onclick="window.location.href='<?php echo $this->Html->url(array('controller' => 'familias', 'action' => 'view', $familia['Familia']['id'])); ?>'">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-printer-icon lucide-printer">
+            <path d="m12 19-7-7 7-7" />
+            <path d="M19 12H5" />
+        </svg>
+    </button>
+
+
+
+
+    <button title="Editar Plan de Cuidado" class="flex items-center space-x-2 bg-teal-600 text-white px-4 py-2 rounded hover:bg-teal-700" onclick="window.location.href='<?php echo $this->Html->url(array('controller' => 'Observacions', 'action' => 'findByFamiliaId', $familia['Familia']['id'])); ?>'">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-printer-icon lucide-printer">
+            <path d="M12 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
+            <path d="M18.375 2.625a1 1 0 0 1 3 3l-9.013 9.014a2 2 0 0 1-.853.505l-2.873.84a.5.5 0 0 1-.62-.62l.84-2.873a2 2 0 0 1 .506-.852z" />
+        </svg>
+    </button>
+
     <button title="Imprimir" type="button" id="btn-print" class="flex items-center space-x-2 bg-teal-600 text-white px-4 py-2 rounded hover:bg-teal-700">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-printer-icon lucide-printer">
             <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2" />
@@ -23,13 +40,6 @@
         </svg>
     </button>
 
-
-    <button title="Regresar a la familia" class="flex items-center space-x-2 bg-teal-600 text-white px-4 py-2 rounded hover:bg-teal-700" onclick="window.location.href='<?php echo $this->Html->url(array('controller' => 'familias', 'action' => 'view', $familia['Familia']['id'])); ?>'">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-printer-icon lucide-printer">
-            <path d="m12 19-7-7 7-7" />
-            <path d="M19 12H5" />
-        </svg>
-    </button>
 </div>
 
 
@@ -306,6 +316,168 @@
                 </tbody>
             </table>
 
+            <table class="w-full border border-gray-300 text-sm text-gray-800">
+                <tbody>
+                    <!-- Encabezado con logo y datos -->
+                    <tr>
+                        <td colspan="9" class="border border-gray-300 font-semibold text-center p-2">
+                            RESUMEN DE FICHA FAMILIAR
+                        </td>
+                    </tr>
+                    <tr class="bg-gray-100">
+                        <td colspan="1" class="border border-gray-300 font-semibold p-2 text-center">Resultado Ecomapa</td>
+                        <td colspan="3" class="border border-gray-300 p-2"><?php echo h($familia['Observacion'][0]['resultadoEcomapa']); ?></td>
+                        <td colspan="1" class="border border-gray-300 font-semibold p-2 text-center">Resultado Familiograma</td>
+                        <td colspan="4" class="border border-gray-300 p-2"><?php echo h($familia['Observacion'][0]['resultadoFamiliograma']); ?>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="1" class="border border-gray-300 font-semibold p-2 text-center">Se identificó riesgos en salud</td>
+                        <td colspan="3" class="border border-gray-300 p-2">
+                            <?php
+
+                            $canalizacionRaw = $familia['Observacion'][0]['menoresriegosalud'];
+
+                            $riesgosalud = [
+                                '0.1' => 'Ninguno',
+                                '5.1' => 'Menor con Riesgo desnutrición',
+                                '5.2' => 'Menor sin esquema de vacunación completo',
+                                '3.3' => 'Menor con Signos de peligro EDA o IRA',
+                                '2.1' => 'Menor sin valoraciones de PYM',
+                                '1' => 'Persona joven/adulto sin valoraciones de PYM',
+                                '5.4' => 'Gestante sin control',
+                                '4.5' => 'Embarazo de alto riesgo',
+                                '1.01' => 'Persona con enfermedad crónica con control',
+                                '5.6' => 'Persona con enfermedad crónica sin control',
+                                '4.1' => 'Persona Sintomatico respiratorio o de piel',
+                                '3' => 'Persona con enferemedad sin manejo',
+                                '3.4' => 'Persona con afectación de salud mental',
+
+                            ];
+
+                            $items = !empty($canalizacionRaw)
+                                ? array_filter(array_map('trim', explode(',', $canalizacionRaw)))
+                                : [];
+
+                            if (!empty($items)) {
+                                echo '<ul class="list-disc list-inside space-y-1">';
+                                foreach ($items as $parte) {
+                                    // Buscamos la etiqueta, si no existe mostramos el código original
+                                    $label = isset($riesgosalud[$parte]) ? $riesgosalud[$parte] : "Actualizar Campo";
+
+                                    echo '<li>' . h($label) . '</li>';
+                                }
+                                echo '</ul>';
+                            } else {
+                                // 3. Caso para cuando no hay datos o la cadena solo tenía comas/espacios
+                                echo '<span class="text-gray-500 italic">' . h('Sin registros de vulnerabilidad') . '</span>';
+                            }
+                            ?>
+
+                        </td>
+                        <td colspan="1" class="border border-gray-300 font-semibold p-2 text-center">Se identificó algún riesgo de vulnerabilidad</td>
+                        <td colspan="4" class="border border-gray-300 p-2">
+                            <?php
+
+                            $canalizacionRaw = $familia['Observacion'][0]['riesgovulnerabilidad'];
+                            // 1. Convertimos a array, limpiamos espacios y eliminamos elementos vacíos de una vez
+                            $items = !empty($canalizacionRaw) ? array_filter(array_map('trim', explode(',', $canalizacionRaw))) : [];
+
+                            $riesgovulnerabilidad = [
+                                '0.1'  => 'Ninguna',
+                                '2.0'  => 'Persona con discapacidad sin cuidador',
+                                '2.1'  => 'Menor sin estudiar',
+                                '1.3'  => 'Población Especial en riesgo',
+                                '2.4'  => 'Persona sin afiliación a salud',
+                                '1.2'  => 'Persona con consumo SPA',
+                                '2.01' => 'Sospecha de violencia intrafamiliar',
+                                '1.02' => 'Vivienda precaria',
+                                '1.03' => 'Cuidador con sobrecarga',
+                                '1.04' => 'Disfunción famliliar',
+                                '1.05' => 'Relaciones familiares tensas o estresantes'
+                            ];
+
+                            // 2. Verificamos si el array final tiene datos
+                            if (!empty($items)) {
+                                echo '<ul class="list-disc list-inside space-y-1">';
+                                foreach ($items as $parte) {
+                                    // Buscamos la etiqueta, si no existe mostramos el código original
+                                    $label = isset($riesgovulnerabilidad[$parte]) ? $riesgovulnerabilidad[$parte] : "Actualizar Campo";
+
+                                    echo '<li>' . h($label) . '</li>';
+                                }
+                                echo '</ul>';
+                            } else {
+                                // 3. Caso para cuando no hay datos o la cadena solo tenía comas/espacios
+                                echo '<span class="text-gray-500 italic">' . h('Sin registros de vulnerabilidad') . '</span>';
+                            }
+                            ?>
+                        </td>
+                    </tr>
+                    <tr class="bg-gray-100">
+                        <td colspan="1" class="border border-gray-300 font-semibold p-2 text-center">Valoración de riesgo familia</td>
+                        <td colspan="3" class="border border-gray-300 p-2">
+                            <?php
+                            $puntuacionFamilia = isset($familia['Observacion'][0]['puntuacionfamilia'])
+                                ? $familia['Observacion'][0]['puntuacionfamilia']
+                                : '';
+                            echo h($puntuacionFamilia !== '' ? $puntuacionFamilia : 'Campo vacío');
+                            ?>
+                        </td>
+                        <td colspan="1" class="border border-gray-300 font-semibold p-2 text-center">Clasificación de la familia</td>
+                        <td colspan="4" class="border border-gray-300 p-2">
+                            <?php
+                            $puntuacionFamilia = isset($familia['Observacion'][0]['valoracionfamilia'])
+                                ? $familia['Observacion'][0]['valoracionfamilia']
+                                : '';
+                            echo h($puntuacionFamilia !== '' ? $puntuacionFamilia : 'Campo vacío');
+                            ?>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="1" class="border border-gray-300 font-semibold p-2 text-center">Fortalezas de la familia</td>
+                        <td colspan="8" class="border border-gray-300 p-2">
+                            <?php
+                            $canalizacionRaw = $familia['Observacion'][0]['fortalezas'];
+
+                            $fortalezas = [
+                                'Vivienda adecuada y segura' => 'Vivienda adecuada y segura',
+                                'Acceso a servicios básicos (agua alcantarillado luz gas)' => 'Acceso a servicios básicos (agua alcantarillado luz gas)',
+                                'Buena salud física y mental de los miembros' => 'Buena salud física y mental de los miembros',
+                                'Relaciones familiares afectuosas y respetuosas' => 'Relaciones familiares afectuosas y respetuosas',
+                                'Apoyo emocional entre los miembros' => 'Apoyo emocional entre los miembros',
+                                'Participación activa en la comunidad' => 'Participación activa en la comunidad',
+                                'Estabilidad económica' => 'Estabilidad económica',
+                                'Acceso a educación y formación' => 'Acceso a educación y formación',
+                                'Habilidades de resolución de conflictos' => 'Habilidades de resolución de conflictos',
+                                'Red de apoyo social sólida' => 'Red de apoyo social sólida',
+                                'Prácticas saludables de alimentación y ejercicio' => 'Prácticas saludables de alimentación y ejercicio',
+                                'Entorno familiar seguro y libre de violencia' => 'Entorno familiar seguro y libre de violencia',
+                            ];
+
+                            $items = !empty($canalizacionRaw)
+                                ? array_filter(array_map('trim', explode(',', $canalizacionRaw)))
+                                : [];
+
+                            if (!empty($items)) {
+                                echo '<ul class="list-disc list-inside space-y-1">';
+                                foreach ($items as $parte) {
+                                    // Buscamos la etiqueta, si no existe mostramos el código original
+                                    $label = isset($fortalezas[$parte]) ? $fortalezas[$parte] : "Actualizar Campo";
+
+                                    echo '<li>' . h($label) . '</li>';
+                                }
+                                echo '</ul>';
+                            } else {
+                                // 3. Caso para cuando no hay datos o la cadena solo tenía comas/espacios
+                                echo '<span class="text-gray-500 italic">' . h('Sin registros de vulnerabilidad') . '</span>';
+                            }
+                            ?>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
             <table class="w-full border border-gray-300 text-sm text-gray-800 mt-12">
                 <tbody>
                     <tr>
@@ -318,16 +490,16 @@
                         <td colspan="2" class="border border-gray-300 font-semibold p-2 text-center">Objetivo a corto plazo</td>
                         <td colspan="7" class="border border-gray-300 p-2">
                             <?php
-                            echo $this->Html->div('observacionplancuidado-tema', $familia['Observacion'][0]['objetivocortoplazo'], ['escape' => false]); 
+                            echo $this->Html->div('observacionplancuidado-tema', $familia['Observacion'][0]['objetivocortoplazo'], ['escape' => false]);
                             ?>
-                            
+
                         </td>
                     </tr>
                     <tr class="bg-gray-100">
                         <td colspan="2" class="border border-gray-300 font-semibold p-2 text-center">Objetivo a largo plazo</td>
                         <td colspan="7" class="border border-gray-300 p-2">
                             <?php
-                            echo $this->Html->div('observacionplancuidado-tema', $familia['Observacion'][0]['objetivolargoplazo'], ['escape' => false]); 
+                            echo $this->Html->div('observacionplancuidado-tema', $familia['Observacion'][0]['objetivolargoplazo'], ['escape' => false]);
                             ?>
                         </td>
                     </tr>
@@ -415,11 +587,15 @@
                             </tr>
                             <tr class="bg-gray-100">
                                 <td colspan="2" class="border border-gray-300 font-semibold p-2">Situaciones Priorizadas</td>
-                                <td colspan="7" class="border border-gray-300 p-2"><?php echo h($actividad['situacionesPriorizadas']); ?></td>
+                                <td colspan="7" class="border border-gray-300 p-2">
+                                    <?php echo $this->Html->div(null, $actividad['situacionesPriorizadas'], ['escape' => false]); ?>
+                                </td>
                             </tr>
                             <tr>
-                                <td colspan="2" class="border border-gray-300 font-semibold p-2">Logros Alcanzados</td>
-                                <td colspan="7" class="border border-gray-300 p-2"><?php echo h($actividad['logrosAlcanzados']); ?></td>
+                                <td colspan="2" class="border border-gray-300 font-semibold p-2">Logros por Alcanzar</td>
+                                <td colspan="7" class="border border-gray-300 p-2">
+                                    <?php echo $this->Html->div(null, $actividad['logrosAlcanzados'], ['escape' => false]); ?>
+                                </td>
                             </tr>
                             <tr class="bg-gray-100">
                                 <td colspan="2" class="border border-gray-300 font-semibold p-2">Responsable Familiar</td>
@@ -513,7 +689,11 @@
                     </tr>
                     <tr class="bg-gray-100">
                         <td colspan="9" class="border border-gray-300 p-2">
-                            Yo, ____________________________________, confirmo que he recibido información adecuada sobre el Plan de Cuidado Integral Primario Familiar, comprendo los objetivos y las intervenciones propuestas, consiento y me comprometo a la implementación del plan con mi familia, y junto a las Institución Prestadora de Servicios de Salud PASTO SALUD ESE, con el MINISTERIO DE SALUD Y PROTECCIÓN SOCIAL Y CON COLOMBIA.
+                            Yo, <strong><?php echo h($familia['Observacion'][0]['firmaplancuidado']); ?></strong>,
+                            confirmo que he recibido información adecuada sobre el Plan de Cuidado Integral Primario Familiar,
+                            comprendo los objetivos y las intervenciones propuestas, consiento y me comprometo a la
+                            implementación del plan con mi familia, y junto a las Institución Prestadora de Servicios
+                            de Salud PASTO SALUD ESE, con el MINISTERIO DE SALUD Y PROTECCIÓN SOCIAL Y CON COLOMBIA.
                         </td>
                     </tr>
                     <tr>
@@ -657,6 +837,31 @@
     </div>
 </div>
 
+<div class="flex max-w-6xl mx-auto text-center mb-8 gap-4 mt-8">
+    <button title="Regresar a la familia" class="flex items-center space-x-2 bg-teal-600 text-white px-4 py-2 rounded hover:bg-teal-700" onclick="window.location.href='<?php echo $this->Html->url(array('controller' => 'familias', 'action' => 'view', $familia['Familia']['id'])); ?>'">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-printer-icon lucide-printer">
+            <path d="m12 19-7-7 7-7" />
+            <path d="M19 12H5" />
+        </svg>
+    </button>
+
+
+    <button title="Editar Plan de Cuidado" class="flex items-center space-x-2 bg-teal-600 text-white px-4 py-2 rounded hover:bg-teal-700" onclick="window.location.href='<?php echo $this->Html->url(array('controller' => 'familias', 'action' => 'view', $familia['Familia']['id'])); ?>'">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-printer-icon lucide-printer">
+            <path d="M12 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
+            <path d="M18.375 2.625a1 1 0 0 1 3 3l-9.013 9.014a2 2 0 0 1-.853.505l-2.873.84a.5.5 0 0 1-.62-.62l.84-2.873a2 2 0 0 1 .506-.852z" />
+        </svg>
+    </button>
+
+    <button title="Imprimir" type="button" id="btn-print" class="flex items-center space-x-2 bg-teal-600 text-white px-4 py-2 rounded hover:bg-teal-700">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-printer-icon lucide-printer">
+            <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2" />
+            <path d="M6 9V3a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v6" />
+            <rect x="6" y="14" width="12" height="8" rx="1" />
+        </svg>
+    </button>
+
+</div>
 <script type="text/javascript">
     document.addEventListener("DOMContentLoaded", function() {
         var btn = document.getElementById('btn-print');

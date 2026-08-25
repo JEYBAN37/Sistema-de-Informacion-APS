@@ -1,5 +1,7 @@
 <?php $this->layout = 'default_familia';
 
+
+
 $hasPlan = false;
 $hasObservation = false;
 if (!empty($familia['Observacion']) && is_array($familia['Observacion'])) {
@@ -51,7 +53,7 @@ $planUrl = $this->Html->url(['controller' => 'Observacions', 'action' => 'addane
             </svg>
         </button>
 
-        <!--<button title="Ver detalles de familia" type="button" onclick="window.location.href='<?php /*echo $this->Html->url(['action' => 'view', $familia['Familia']['id']]); */?>/*'"
+        <!--<button title="Ver detalles de familia" type="button" onclick="window.location.href='<?php /*echo $this->Html->url(['action' => 'view', $familia['Familia']['id']]); */ ?>/*'"
             class="flex items-center w-38 space-x-2 bg-teal-600 text-white px-4 py-2 rounded hover:bg-teal-700">
             <i class="fa-solid fa-info text-2xl px-2"></i>
         </button>-->
@@ -70,6 +72,7 @@ $planUrl = $this->Html->url(['controller' => 'Observacions', 'action' => 'addane
                 class=" flex items-center w-38 space-x-2 bg-teal-600 text-white px-4 py-2 rounded hover:bg-teal-700">
                 <i class="fa-solid fa-book-medical text-xl px-2"></i>
             </button>
+
         <?php
         endif;
         ?>
@@ -83,6 +86,29 @@ $planUrl = $this->Html->url(['controller' => 'Observacions', 'action' => 'addane
             onclick="if (this.dataset.hasPlan === '1') { window.location.href = this.dataset.url; } else { alert('No hay plan de cuidado asociado a esta familia. Por favor, agregue una observación con plan de cuidado primero.'); }">
             <i class="fa-solid fa-hands-holding-child text-xl px-2"></i>
         </button>
+
+        <?php
+        if ($familia['Observacion'][0]['dirplancuidado']) :
+        ?>
+            <button
+                title="Editar Plan de Cuidado" type="button"
+                onclick="window.location.href='<?php echo $this->Html->url(['controller' => 'Observacions', 'action' => 'add_plancuidado/' . $familia['Observacion'][0]['id']]); ?>'"
+                class=" flex items-center w-38 space-x-2 bg-teal-600 text-white px-4 py-2 rounded hover:bg-teal-700">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-notebook-tabs-icon lucide-notebook-tabs">
+                    <path d="M2 6h4" />
+                    <path d="M2 10h4" />
+                    <path d="M2 14h4" />
+                    <path d="M2 18h4" />
+                    <rect width="16" height="20" x="4" y="2" rx="2" />
+                    <path d="M15 2v20" />
+                    <path d="M15 7h5" />
+                    <path d="M15 12h5" />
+                    <path d="M15 17h5" />
+                </svg>
+            </button>
+        <?php
+        endif;
+        ?>
     </div>
 
     <!-- Document Container -->
@@ -361,10 +387,6 @@ $planUrl = $this->Html->url(['controller' => 'Observacions', 'action' => 'addane
 
                                                     <a href="<?php echo $this->Html->url(['controller' => 'Observacions', 'action' => 'edit', $observacion['id']]); ?>"
                                                         class="block px-4 py-2 text-gray-700 hover:bg-gray-100 text-sm">Editar Observacion</a>
-                                                    <form method="post" action="<?php echo $this->Html->url(['controller' => 'Observacions', 'action' => 'delete', $observacion['id'], $observacion['id']]); ?>" onsubmit="return confirm('<?php echo __('¿Está seguro/a de eliminar el registro con ID# %s?', $observacion['id']); ?>');">
-                                                        <?php echo $this->Form->hidden('_method', ['value' => 'POST']); ?>
-                                                        <button type="submit" class="w-full text-left px-4 py-2 text-red-600 hover:bg-gray-100 text-sm">Borrar</button>
-                                                    </form>
                                                 </div>
                                             </div>
                                         </td>
@@ -379,11 +401,14 @@ $planUrl = $this->Html->url(['controller' => 'Observacions', 'action' => 'addane
 
                                     <tr>
                                         <td colspan="1" class=" border border-gray-300 font-semibold p-2 text-center text-sm text-gray-700">Observacion</td>
-                                        <td colspan="2" class="border border-gray-300 p-2 font-semibold text-sm"><?php echo $observacion['observacion']; ?></td>
-                                        <td colspan="1" class=" border border-gray-300 font-semibold p-2 text-center text-sm text-gray-700">Valoracion de la Familia</td>
-                                        <td colspan="3" class="border border-gray-300 p-2 text-sm text-gray-700"><?php echo $observacion['valoracionfamilia']; ?></td>
+                                        <td colspan="8" class="border border-gray-300 p-2 font-semibold text-sm"><?php echo $observacion['observacion']; ?></td>
+                                        
                                     </tr>
                                     <tr class="mt-4 bg-gray-100 ">
+                                        <td colspan="1" class=" border border-gray-300 font-semibold p-2 text-center text-sm text-gray-700">Valoracion de la Familia</td>
+                                        <td colspan="8" class="border border-gray-300 p-2 text-sm text-gray-700"><?php echo $observacion['valoracionfamilia']; ?></td>
+                                    </tr>
+                                    <tr >
                                         <td colspan="1" class=" border border-gray-300 font-semibold p-2 text-center text-sm text-gray-700">Canalizaciones</td>
                                         <td colspan="2" class="border border-gray-300 p-2 font-bold text-sm">
                                             <?php echo $observacion['canalizacionuno']; ?>
@@ -395,12 +420,12 @@ $planUrl = $this->Html->url(['controller' => 'Observacions', 'action' => 'addane
 
                                     </tr>
 
-                                    <tr>
+                                    <tr class="mt-4 bg-gray-100 ">
                                         <td colspan="1" class=" border border-gray-300 font-semibold p-2 text-center text-sm text-gray-700">Familiograma</td>
                                         <td colspan="2" class="border border-gray-300 p-2 font-bold text-sm"><?php if (!empty($observacion['dirfamiliograma'])) {
                                                                                                                     echo $this->Html->link(
-                                                                                                                        h($observacion['resultadoFamiliograma']),
-                                                                                                                        '../files/observacion/familiograma/' . $observacion['dirfamiliograma'] . '/' . $observacion['familiograma'],
+                                                                                                                        'Ver Familiograma',
+                                                                                                                        $linkFamiliograma,
                                                                                                                         ['target' => '_blank', 'class' => 'underline text-blue-700 hover:text-blue-900']
                                                                                                                     );
                                                                                                                 } else {
@@ -416,7 +441,7 @@ $planUrl = $this->Html->url(['controller' => 'Observacions', 'action' => 'addane
                                                                                                                     if (!empty($observacion['dirplancuidado'])) {
                                                                                                                         echo $this->Html->link(
                                                                                                                             ($observacion['plancuidado']),
-                                                                                                                            '../files/observacion/plancuidado/' . $observacion['dirplancuidado'] . '/' . $observacion['plancuidado'],
+                                                                                                                            $link,
                                                                                                                             ['target' => '_blank', 'class' => 'underline text-blue-700 hover:text-blue-900']
                                                                                                                         );
                                                                                                                     } else {

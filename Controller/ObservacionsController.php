@@ -213,12 +213,13 @@ class ObservacionsController extends AppController
 				'Observacion.valoracionfamilia',
 				'Observacion.date',
 				'Observacion.dirplancuidado',
-				'Observacion.dirfamiliograma',	
+				'Observacion.dirfamiliograma',
 				'Observacion.familiograma',
 				'Ubicacion.microterritorio',
 				'Observacion.responsables',
 				'Responsable.nombres',
 				'Sociambiental.apellidosfamilia',
+				'Observacion.base_anterior',
 			),
 			'joins' => $joins,
 			'group' => $group,
@@ -249,7 +250,13 @@ class ObservacionsController extends AppController
 				'microterritorio' => $row['Ubicacion']['microterritorio'],
 				'responsable' => $row['Responsable']['nombres'],
 				'plancuidado' => $row['Observacion']['dirplancuidado'],
-				'dirfamiliograma' => $row['Observacion']['dirfamiliograma'],
+				'dirfamiliograma' => $this->sendViewFamiliograma(
+					isset($row['Observacion']['dirfamiliograma']) ? $row['Observacion']['dirfamiliograma'] : null,
+					isset($row['Observacion']['familiograma']) ? $row['Observacion']['familiograma'] : null,
+					isset($row['Observacion']['base_anterior']) ? $row['Observacion']['base_anterior'] : null,
+					isset($row['Observacion']['date']) ? $row['Observacion']['date'] : null,
+					isset($row['Observacion']['id']) ? $row['Observacion']['id'] : null
+				),
 				'familiograma' => $row['Observacion']['familiograma'],
 			);
 		}
@@ -275,7 +282,19 @@ class ObservacionsController extends AppController
 
 	public function add()
 	{
+		$this->set($this->_getCatalogosObservacion());
 		if ($this->request->is(array('post'))) {
+
+			$existe = $this->Observacion->hasAny(array(
+				'Observacion.familia_id' => $this->request->data['Observacion']['familia_id'],
+				'Observacion.date' => date('Y-m-d')
+			));
+
+			if ($existe) {
+				$this->Session->setFlash('Ya existe una observación registrada hoy para esta familia.', 'flash_custom', array('class' => 'error'));
+				return $this->redirect(array('action' => 'index'));
+			}
+
 			if ($this->Observacion->save($this->request->data)) {
 
 				$this->loadHistorial(array(
@@ -314,8 +333,38 @@ class ObservacionsController extends AppController
 		}
 	}
 
+	public function findByFamiliaId($familiaId = null)
+	{
+		$options = array(
+			'conditions' => array('Observacion.familia_id' => $familiaId),
+			'order' => array('Observacion.date DESC'),
+			'fields' => array(
+				'Observacion.id'
+			),
+			'recursive' => -1
+		);
+
+
+		$idObservacion = $this->Observacion->find('first', $options);
+
+		if (!$idObservacion) {
+			$this->Session->setFlash('No se encontró ninguna observación para la familia especificada realilzar plan de cuidado.', 'flash_custom', array('class' => 'error', 'title' => 'Error al cargar el registro'));
+			return $this->redirect(array(
+				'controller' => 'Familias',
+				'action' => 'view/' . $familiaId,
+			));
+		}
+
+
+		return $this->redirect(array(
+			'controller' => 'Observacions',
+			'action' => 'add_plancuidado/' . $idObservacion['Observacion']['id'],
+		));
+	}
+
 	public function add_plancuidado($id = null)
 	{
+		$this->set($this->_getCatalogosObservacion());
 		$this->loadModel('Juventudadulto');
 
 		if (!$this->Observacion->exists($id)) {
@@ -324,6 +373,7 @@ class ObservacionsController extends AppController
 
 		if ($this->request->is(array('post', 'put'))) {
 			// Guardar copia de los datos originales antes de intentar guardar
+			$this->request->data['Observacion']['id'] = $id;
 			$datosOriginales = $this->request->data;
 
 			// El Model's beforeSave se encarga de convertir los arrays a strings
@@ -338,8 +388,12 @@ class ObservacionsController extends AppController
 					)
 				));
 
-				$this->Session->setFlash('Registro se guardó con éxito, continuar con la firma del Plan de Cuidado', 'flash_custom', array('class' => 'success', 'title' => 'El registro se ha completado correctamente'));					//return $this->redirect(array('action' => 'index'));
-				return $this->redirect(array('controller' => 'familias', 'action' => 'view', $this->request->data["Observacion"]["familia_id"]));
+				$this->Session->setFlash('Registro se guardó con éxito, continuar con la firma del Plan de Cuidado', 'flash_custom', array('class' => 'success', 'title' => 'El registro se ha completado correctamente'));
+				if ($this->request->data['btn'] == 'familia') {
+					return $this->redirect(array('controller' => 'familias', 'action' => 'view', $this->request->data["Observacion"]["familia_id"]));
+				} else {
+					return $this->redirect(array('controller' => 'familias', 'action' => 'plancuidado', $this->request->data["Observacion"]["familia_id"]));
+				}
 			} else {
 				// Si hay error, restaurar los datos originales (sin modificaciones de beforeSave)
 				// para que se muestren en la vista tal como los envió el usuario
@@ -387,7 +441,8 @@ class ObservacionsController extends AppController
 				  Juventudadulto.primerapellido, " ",
 				   Juventudadulto.segundoapellido) AS nombre_completo',
 				'Juventudadulto.fechanac',
-				'Juventudadulto.gestacion'
+				'Juventudadulto.gestacion',
+				'Juventudadulto.canalizacionuno',
 
 			)
 		));
@@ -469,6 +524,13 @@ class ObservacionsController extends AppController
 		$this->request->data = $this->Observacion->tranformData(
 			$this->Observacion->find('first', $options)
 		);
+
+		$this->set('link', $this->sendViewPlanCuidado(
+			isset($this->request->data['Observacion']['dirplancuidado']) ? $this->request->data['Observacion']['dirplancuidado'] : null,
+			isset($this->request->data['Observacion']['plancuidado']) ? $this->request->data['Observacion']['plancuidado'] : null,
+			isset($this->request->data['Observacion']['base_anterior']) ? $this->request->data['Observacion']['base_anterior'] : null,
+			isset($this->request->data['Observacion']['date']) ? $this->request->data['Observacion']['date'] : null
+		));
 	}
 
 
@@ -496,6 +558,8 @@ class ObservacionsController extends AppController
 			if (empty($this->request->data['Observacion']['familiograma']['name'])) {
 				unset($this->request->data['Observacion']['familiograma']);
 			}
+
+			$this->request->data['Observacion']['id'] = $id;
 
 			// 👇 DEJAR A UploadBehavior HACER SU TRABAJO (NO mover archivo manualmente)
 			if ($this->Observacion->save($this->request->data)) {
@@ -536,6 +600,14 @@ class ObservacionsController extends AppController
 
 		$this->request->data = $this->Observacion->tranformData($observacion);
 
+		$this->set('linkFamiliograma', $this->sendViewFamiliograma(
+			isset($observacion['Observacion']['dirfamiliograma']) ? $observacion['Observacion']['dirfamiliograma'] : null,
+			isset($observacion['Observacion']['familiograma']) ? $observacion['Observacion']['familiograma'] : null,
+			isset($observacion['Observacion']['base_anterior']) ? $observacion['Observacion']['base_anterior'] : null,
+			isset($observacion['Observacion']['fecha']) ? $observacion['Observacion']['fecha'] : null,
+			isset($observacion['Observacion']['id']) ? $observacion['Observacion']['id'] : null
+		));
+
 		$this->set(compact('familias', 'responsables'));
 	}
 
@@ -571,5 +643,69 @@ class ObservacionsController extends AppController
 
 		// Redirigir al controller "familias" y a la acción "view" con el familia_id
 		return $this->redirect(array('controller' => 'familias', 'action' => 'view', $familiaId));
+	}
+
+	private function _getCatalogosObservacion()
+	{
+		return [
+			'riesgosalud' => [
+				'0.1' => 'Ninguno',
+				'5.1' => 'Menor con Riesgo desnutrición',
+				'5.2' => 'Menor sin esquema de vacunación completo',
+				'3.3' => 'Menor con Signos de peligro EDA o IRA',
+				'2.1' => 'Menor sin valoraciones de PYM',
+				'1' => 'Persona joven/adulto sin valoraciones de PYM',
+				'5.4' => 'Gestante sin control',
+				'4.5' => 'Embarazo de alto riesgo',
+				'1.01' => 'Persona con enfermedad crónica con control',
+				'5.6' => 'Persona con enfermedad crónica sin control',
+				'4.1' => 'Persona Sintomatico respiratorio o de piel',
+				'3' => 'Persona con enferemedad sin manejo',
+				'3.4' => 'Persona con afectación de salud mental',
+			],
+			'riesgovulnerabilidad' => [
+				'0.1' => 'Ninguna',
+				'2.0' => 'Persona con discapacidad sin cuidador',
+				'2.1' => 'Menor sin estudiar',
+				'1.3' => 'Población Especial en riesgo',
+				'2.4' => 'Persona sin afiliación a salud',
+				'1.2' => 'Persona con consumo SPA',
+				'2.01' => 'Sospecha de violencia intrafamiliar',
+				'1.02' => 'Vivienda precaria',
+				'1.03' => 'Cuidador con sobrecarga',
+				'1.04' => 'Disfunción famliliar',
+				'1.05' => 'Relaciones familiares tensas o estresantes'
+			],
+			'fortalezas' => [
+				'Vivienda adecuada y segura' => 'Vivienda adecuada y segura',
+				'Acceso a servicios básicos (agua,alcantarillado, luz, gas)' => 'Acceso a servicios básicos (agua, luz, gas)',
+				'Buena salud física y mental de los miembros' => 'Buena salud física y mental de los miembros',
+				'Relaciones familiares afectuosas y respetuosas' => 'Relaciones familiares afectuosas y respetuosas',
+				'Apoyo emocional entre los miembros' => 'Apoyo emocional entre los miembros',
+				'Participación activa en la comunidad' => 'Participación activa en la comunidad',
+				'Estabilidad económica' => 'Estabilidad económica',
+				'Acceso a educación y formación' => 'Acceso a educación y formación',
+				'Habilidades de resolución de conflictos' => 'Habilidades de resolución de conflictos',
+				'Red de apoyo social sólida' => 'Red de apoyo social sólida',
+				'Prácticas saludables de alimentación y ejercicio' => 'Prácticas saludables de alimentación y ejercicio',
+				'Entorno familiar seguro y libre de violencia' => 'Entorno familiar seguro y libre de violencia',
+			],
+			'entornoAfectado' => [
+				'Hogar'   => 'Hogar',
+				'Comunitario'   => 'Comunitario',
+				'Educativo' => 'Educativo'
+			],
+			'actividadesDesarrollar' => [
+				'manejo y seguimiento a riesgos en salud' => 'Manejo y seguimiento a riesgos en salud',
+				'Atenciones,intervenciones individuales RIAS' => 'Atenciones/intervenciones individuales RIAS',
+				'Derivación servicios salud especializados' => 'Derivación servicios salud especializados',
+				'Apoyo Psicosocial' => 'Apoyo Psicosocial',
+				'AcompañamientoAJUSTAR familiar' => 'Acompañamiento familiar',
+				'Gestión recursos comunitarios' => 'Gestión recursos comunitarios',
+				'Educación para la Salud' => 'Educación en Salud',
+				'Información en Salud' => 'Información en Salud',
+				'Intervenciones Colectivas' => 'Intervenciones Colectivas',
+			]
+		];
 	}
 }

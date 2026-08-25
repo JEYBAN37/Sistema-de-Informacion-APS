@@ -903,6 +903,15 @@ $optionTiposViolencia = [
     'Sospecha Abondono_Negligencia |0.3' => 'Falta de atención a necesidades básicas(alimentación, salud, educación)',
 ];
 
+$opcionCanalizacionComplementaria = [
+    'Consulta de morbilidad' => 'Consulta de morbilidad',
+    'Consulta de crónicos' => 'Consulta de crónicos',
+    'Consulta Pediatrica' => 'Consulta Pediátrica',
+    'Consulta Ginecologica' => 'Consulta Ginecológica',
+    'Consulta por Medicina Interna' => 'Consulta por Medicina Interna',
+    'Consulta Psiquiatrica' => 'Consulta Psiquiátrica',
+];
+
 $optionCanalizacion =
     [
         '0.No |0' => 'No se requiere canalización',
@@ -1000,7 +1009,31 @@ echo $this->Form->input('fechaRegistro', [
 
         </div>
 
+        <div class="col-span-2 md:col-span-1 text-md font-semibold mt-4 mb-6 md:mr-4">
+            <div class="flex items-center mb-4">
+                <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">0</span>
+                <label for="nombre" class="font-semibold">Familia</label>
+                <p class="text-red-600">*</p>
+            </div>
+
+            <p class="text-gray-500 text-sm mb-2">Ingrese el ID de la familia a la que pertenece la persona. Este ID debe ser único y corresponde a la familia registrada en el sistema.</p>
+            <?php
+            echo $this->Form->input('familia_id', [
+                'label' => false,
+                'class' => 'border border-gray-300 rounded-lg w-full p-2 focus:outline-none  focus:ring-1 focus:ring-blue-500 focus:border-blue-500 borde azul  mt-2 font-semibold text-gray-700  text-sm focus:text-gray-900',
+                'error' => false,
+                'type' => 'text'
+            ]);
+
+            if (!empty($this->Form->error('familia_id'))) {
+                echo '<div class="text-red-600 text-md mt-1 font-semibold">' . $this->Form->error('familia_id') . '</div>';
+            }
+            ?>
+        </div>
+
         <div class="grid grid-cols-1 md:grid-cols-2">
+
+
 
             <!-- Tipo de Documento -->
             <div class="col-span-2 md:col-span-1 text-md font-semibold mt-4 mb-6 md:mr-4">
@@ -3005,6 +3038,32 @@ echo $this->Form->input('fechaRegistro', [
                 ?>
             </div>
 
+            <!-- canalización  -->
+            <div class="col-span-2 md:col-span-1 text-md font-semibold my-6 mr-4">
+                <div class="flex items-center mb-4">
+                    <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">1</span>
+                    <label for="canalizacionuno" class="font-semibold">Canalización Complementaria</label>
+                    <p class="text-red-600">*</p>
+
+                </div>
+                <?php
+                echo $this->Form->input('canalizacion_complementaria', [
+                    'type' => 'select',
+                    'label' => false,
+                    'multiple' => true,
+                    'empty' => false,
+                    'options' => $opcionCanalizacionComplementaria,
+                    'class' => 'w-full',
+                    'id' => 'canalizacion_complementaria',
+                    'error' => false,
+
+                ]);
+                if (!empty($this->Form->error('canalizacion_complementaria'))) {
+                    echo '<div class="text-red-600 text-md mt-1 font-semibold">' . $this->Form->error('canalizacion_complementaria') . '</div>';
+                }
+                ?>
+            </div>
+
             <!-- Objetivos específicos -->
             <div class="col-span-2 text-md font-semibold my-6">
                 <div class="flex items-center mb-4">
@@ -3504,6 +3563,20 @@ echo $this->Form->input('fechaRegistro', [
         });
 
         const choices_canalizacionuno = new Choices("#canalizacionuno", {
+            searchEnabled: true,
+            searchChoices: true,
+            removeItemButton: true, // Permite eliminar seleccionados
+            itemSelectText: '',
+            shouldSort: false,
+            searchPlaceholderValue: "Escriba para filtrar...",
+            maxItemCount: 3, // Límite a 3 items
+            removeItems: true, // Permite quitar seleccionados
+            duplicateItemsAllowed: false,
+            placeholder: true,
+            placeholderValue: "Seleccione canalización...",
+        });
+
+        const choices_canalizacion = new Choices("#canalizacion_complementaria", {
             searchEnabled: true,
             searchChoices: true,
             removeItemButton: true, // Permite eliminar seleccionados

@@ -12,7 +12,7 @@ class Canalizacion extends AppModel
 {
 
 	public $virtualFields = array(
-		'enlace' => 'CONCAT(Canalizacion.tipo," ",Canalizacion.nombre, " ", Canalizacion.enlaceuno)'
+		'enlace' => 'CONCAT(Canalizacion.tipo," ",Canalizacion.nombre)'
 	);
 	public $displayField = 'enlace';
 	/**
@@ -72,6 +72,19 @@ class Canalizacion extends AppModel
 		),
 		'Primerainfancia' => array(
 			'className' => 'Primerainfancia',
+			'foreignKey' => 'canalizacion_id',
+			'dependent' => false,
+			'conditions' => '',
+			'fields' => '',
+			'order' => '',
+			'limit' => '',
+			'offset' => '',
+			'exclusive' => '',
+			'finderQuery' => '',
+			'counterQuery' => ''
+		),
+			'Persona' => array(
+			'className' => 'Persona',
 			'foreignKey' => 'canalizacion_id',
 			'dependent' => false,
 			'conditions' => '',

@@ -47,7 +47,7 @@ echo $this->Form->input('fecha', [
 
         </div>
 
-        
+
 
         <div class="grid grid-cols-1 md:grid-cols-2">
 
@@ -444,9 +444,17 @@ echo $this->Form->input('fecha', [
                     <?php if (!empty($this->request->data['Observacion']['familiograma'])): ?>
                         <div class="block w-full text-sm text-gray-700 border border-gray-300 rounded-lg cursor-pointer bg-white focus:outline-none focus:ring-2 focus:ring-blue-400 p-3 file:mr-4 file:py-6 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
                             Archivo actual:
-                            <a href="<?php echo $this->webroot . 'files/Observacion/familiograma/' . $this->request->data['Observacion']['dirfamiliograma'] . '/' . $this->request->data['Observacion']['familiograma']; ?>" target="_blank" class="text-blue-600 underline ml-2">
-                                <?php echo $this->request->data['Observacion']['familiograma']; ?>
-                            </a>
+                            <?php
+                            if (!empty($this->request->data['Observacion']['dirfamiliograma'])) {
+                                echo $this->Html->link(
+                                    ($this->request->data['Observacion']['familiograma']),
+                                    $linkFamiliograma,
+                                    ['target' => '_blank', 'class' => 'underline text-blue-700 hover:text-blue-900']
+                                );
+                            } else {
+                                echo '<span class="text-gray-400 italic">Sin familiograma</span>';
+                            }
+                            ?>
                         </div>
                     <?php endif; ?>
                 </div>
@@ -484,6 +492,10 @@ echo $this->Form->input('fecha', [
 </div>
 
 <script type="text/javascript">
+    $('form').submit(function() {
+        $(this).find('button[type=submit]').prop('disabled', true).text('Guardando...');
+    });
+
     async function validarTamanioSoporte() {
         const auxFile = document.getElementById('ProcesoregistroAnexo');
         if (!auxFile || !auxFile.files || !auxFile.files[0]) return;

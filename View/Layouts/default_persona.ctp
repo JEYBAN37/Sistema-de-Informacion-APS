@@ -13,7 +13,7 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
     <?php echo $this->Html->charset(); ?>
     <meta name="description" content="">
     <meta name="author" content="">
-    <title>APS - Ficha Familiar</title>
+    <title>APS - Gestión de Personas</title>
     <?php
 
     echo $this->Html->meta('icon');
@@ -57,6 +57,42 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
+
+    <style>
+        /* Optimización para tablas con muchas columnas */
+        main#mainContent {
+            padding: 1rem 0.5rem;
+        }
+
+        @media (min-width: 768px) {
+            main#mainContent {
+                padding: 1.5rem 1rem;
+            }
+        }
+
+        /* Scroll horizontal suave para tablas */
+        .table-wrapper {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        table {
+            min-width: 100%;
+        }
+
+        th, td {
+            padding: 0.5rem 0.75rem !important;
+            white-space: nowrap;
+        }
+
+        /* Hacer más compacto en mobile */
+        @media (max-width: 640px) {
+            th, td {
+                padding: 0.375rem 0.5rem !important;
+                font-size: 0.75rem;
+            }
+        }
+    </style>
 </head>
 <style>
     /* transición suave para submenús */
@@ -95,7 +131,7 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
                 <div class="flex items-center gap-2">
                     <img class=" object-cover" alt="dataHome.alt"
                         src="<?php echo $this->webroot; ?>/img/aps_v2025/logo.svg" />
-                    <a href='<?php echo $this->Html->url(['controller' => 'Familias', 'action' => 'index']); ?>'>
+                    <a href='<?php echo $this->Html->url(['controller' => 'Personas', 'action' => 'index']); ?>'>
                         <h2
                             class="text-2xl md:text-4xl font-bold text-slate-800 leading-tight text-transparent bg-clip-text bg-gradient-to-r from-teal-600 to-cyan-600">
                             APS
@@ -114,7 +150,7 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
 
                 <!-- Botón admin solo si grupoUsuario == 1 -->
                 <button v-if="grupoUsuario === '1'" type="button" class="p-0 bg-transparent border-none"
-                    aria-label="Ir a Administrador" href="<?php echo $this->Html->url(['controller' => 'Familias', 'action' => 'index']); ?>">
+                    aria-label="Ir a Administrador" href="<?php echo $this->Html->url(['controller' => 'Personas', 'action' => 'index']); ?>">
                     <img class="w-50 h-10 object-cover cursor-pointer" alt="Logo Colombia"
                         src="<?php echo $this->webroot; ?>/img/aps_v2025/logo_colombia.png" />
                 </button>
@@ -129,7 +165,7 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
             class="fixed top-[75px] left-3 z-50 md:hidden
                        w-10 h-10 flex items-center justify-center
                        bg-white shadow-lg rounded-lg border
-                       text-gray-700 hover:bg-gray-100 
+                       text-gray-700 hover:bg-gray-100
                        transition-all duration-300">
             <svg id="mobileMenuIcon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <line x1="4" x2="20" y1="12" y2="12" />
@@ -152,7 +188,7 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
                     <div class="mb-6 pl-2 mt-8  md:mt-0">
                         <h1 id="nombreUsuario" class="text-sm font-semibold"><?php echo
                                                                                 $nombreUsuario = isset($_SESSION['Auth']['User']['nombre_responsable']) ? mb_strtoupper($_SESSION['Auth']['User']['nombre_responsable'], 'UTF-8') : '';
-                                                                                ?></h1>
+                                                                        ?></h1>
                         <p id="rolUsuario" class="text-sm text-[#5DD395]">Encuestador</p>
                     </div>
 
@@ -162,15 +198,17 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
                         <div class="menu-item" data-id="dashboard">
                             <button
                                 type="button"
-                                data-href='<?php echo $this->Html->url(['controller' => 'Familias', 'action' => 'index']); ?>'
+                                data-href='<?php echo $this->Html->url(['controller' => 'Personas', 'action' => 'index']); ?>'
                                 class="trigger flex items-center justify-between w-full p-2 hover:bg-gray-50 rounded-lg cursor-pointer group focus:outline-none">
                                 <div class="flex items-center gap-3">
-                                    <svg class="text-teal-600" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-book-heart-icon lucide-book-heart">
-                                        <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H19a1 1 0 0 1 1 1v18a1 1 0 0 1-1 1H6.5a1 1 0 0 1 0-5H20" />
-                                        <path d="M8.62 9.8A2.25 2.25 0 1 1 12 6.836a2.25 2.25 0 1 1 3.38 2.966l-2.626 2.856a.998.998 0 0 1-1.507 0z" />
+                                    <svg class="text-teal-600" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-users-icon lucide-users">
+                                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                                        <circle cx="9" cy="7" r="4" />
+                                        <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+                                        <path d="M16 3.13a4 4 0 0 1 0 7.75" />
                                     </svg>
                                     <span class="label font-normal text-sm text-gray-600 group-hover:text-teal-600">
-                                        Tus Caracterizaciones
+                                        Personas Registradas
                                     </span>
                                 </div>
                             </button>
@@ -182,7 +220,7 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
                                 class="trigger flex items-center justify-between w-full p-2 hover:bg-gray-50 hover:text-teal-600 rounded-lg cursor-pointer group focus:outline-none">
                                 <div class="flex items-center gap-3">
                                     <svg class="text-teal-600" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-house-heart-icon lucide-house-heart">
-                                        <path d="M8.62 13.8A2.25 2.25 0 1 1 12 10.836a2.25 2.25 0 1 1 3.38 2.966l-2.626 2.856a.998.998 0 0 1-1.507 0z" />
+                                        <path d="M8.62 13.8A2.25 2.25 0 1 1 12 10.836a2.25 2.25 0 0 1 3.38 2.966l-2.626 2.856a.998.998 0 0 1-1.507 0z" />
                                         <path d="M3 10a2 2 0 0 1 .709-1.528l7-6a2 2 0 0 1 2.582 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
                                     </svg>
                                     <span class="label font-normal text-sm text-gray-600 group-hover:text-teal-600">
@@ -281,35 +319,6 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
                             </div>
                         </div>
 
-
-                        <div class="menu-item" data-id="config" data-has-arrow="true">
-                            <button type="button"
-                                class="trigger flex items-center justify-between w-full p-2 hover:bg-gray-50 rounded-lg cursor-pointer group focus:outline-none">
-                                <div class="flex items-center gap-3">
-                                    <svg class="text-teal-600" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-bandage-icon lucide-bandage">
-                                        <circle cx="10" cy="8" r="5" />
-                                        <path d="M2 21a8 8 0 0 1 10.434-7.62" />
-                                        <circle cx="18" cy="18" r="3" />
-                                        <path d="m22 22-1.9-1.9" />
-                                    </svg>
-                                    <span class="label font-normal text-sm text-gray-600 group-hover:text-teal-600">
-                                        Personas
-                                    </span>
-                                </div>
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                                    stroke="currentColor" class="arrow size-3.5 text-gray-400 group-hover:text-teal-600">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
-                                </svg>
-                            </button>
-                            <div class="submenu ml-8 mt-1 space-y-1">
-                                <button
-                                    class="subitem block w-full text-left text-[13px] text-gray-500 hover:text-teal-600 hover:bg-gray-100 rounded p-1 cursor-pointer"
-                                    data-href="<?php echo $this->Html->url(['controller' => 'Personas', 'action' => 'index']); ?>">
-                                    Consultar Personas PIC
-                                </button>
-                            </div>
-                        </div>
-
                         <div class="menu-item" data-id="dashboard">
                             <button
                                 type="button"
@@ -353,7 +362,7 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
         </div>
 
         <!-- Contenido principal -->
-        <main id="mainContent" class="flex-1 p-6 md:ml-[280px] transition-all duration-300">
+        <main id="mainContent" class="flex-1 p-2 md:ml-[280px] transition-all duration-300 overflow-x-hidden">
             <?php echo $this->Session->flash(); ?>
             <div class="relative z-10">
                 <?php echo $this->fetch('content'); ?>
@@ -420,8 +429,7 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
                 sidebar.classList.add('hidden');
                 mainContent.classList.remove('md:ml-[280px]');
                 sidebarContainer.classList.remove('w-[300px]');
-                sidebarContainer.classList.remove('md:w-[300px]');
-                sidebarContainer.classList.add('w-[30px]');
+                sidebarContainer.classList.add('w-[10px]');
                 desktopArrow.style.transform = 'rotate(180deg)';
             }
         }
@@ -585,3 +593,4 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
         }
     }
 </script>
+

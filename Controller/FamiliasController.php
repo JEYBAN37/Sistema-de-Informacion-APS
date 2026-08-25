@@ -138,7 +138,7 @@ class FamiliasController extends AppController
 					'fields' => array('nombres')
 				),
 				'Observacion' => array(
-					'fields' => array('id', 'observacion', 'valoracionfamilia', 'canalizacionuno', 'resultadoFamiliograma', 'resultadoEcomapa', 'dirplancuidado', 'dirfamiliograma', 'fecha', 'familiograma', 'firmaplancuidado', 'plancuidado')
+					'fields' => array('id', 'observacion', 'valoracionfamilia', 'canalizacionuno', 'resultadoFamiliograma', 'resultadoEcomapa', 'dirplancuidado', 'dirfamiliograma', 'fecha', 'familiograma', 'firmaplancuidado', 'plancuidado', 'date', 'base_anterior')
 				)
 			)
 		));
@@ -164,8 +164,25 @@ class FamiliasController extends AppController
 		);
 
 		$this->set('familia', $ficha);
+
+		$this->set('link', $this->sendViewPlanCuidado(
+			isset($ficha['Observacion'][0]['dirplancuidado']) ? $ficha['Observacion'][0]['dirplancuidado'] : null,
+			isset($ficha['Observacion'][0]['plancuidado']) ? $ficha['Observacion'][0]['plancuidado'] : null,
+			isset($ficha['Observacion'][0]['base_anterior']) ? $ficha['Observacion'][0]['base_anterior'] : null,
+			isset($ficha['Observacion'][0]['date']) ? $ficha['Observacion'][0]['date'] : null
+		));
+
+		$this->set('linkFamiliograma', $this->sendViewFamiliograma(
+			isset($ficha['Observacion'][0]['dirfamiliograma']) ? $ficha['Observacion'][0]['dirfamiliograma'] : null,
+			isset($ficha['Observacion'][0]['familiograma']) ? $ficha['Observacion'][0]['familiograma'] : null,
+			isset($ficha['Observacion'][0]['base_anterior']) ? $ficha['Observacion'][0]['base_anterior'] : null,
+			isset($ficha['Observacion'][0]['fecha']) ? $ficha['Observacion'][0]['fecha'] : null,
+			isset($ficha['Observacion'][0]['id']) ? $ficha['Observacion'][0]['id'] : null
+		));
 	}
 
+
+	
 	public function plancuidado($id = null)
 	{
 		if (!$this->Familia->exists($id)) {
@@ -241,7 +258,7 @@ class FamiliasController extends AppController
 						'responsables',
 						'actividaddesarrollar',
 						'disentimiento',
-						'objetivocortoplazoresultados'
+						'objetivocortoplazoresultados',
 					)
 				)
 			)
