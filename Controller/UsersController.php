@@ -45,7 +45,7 @@ class UsersController extends AppController
 
                     $responsableId = $this->Responsable->find('first', [
                         'conditions' => ['Responsable.numero' => $r['User']['username']],
-                        'fields' => ['Responsable.id', 'Responsable.nombres'],
+                        'fields' => ['Responsable.id', 'Responsable.nombres', 'Responsable.contrato'],
                         'recursive' => -1
                     ]);
 
@@ -54,20 +54,25 @@ class UsersController extends AppController
                         'password' => $r["User"]["password"],
                         'group_id' => $r["User"]["group_id"],
                         'responsable_id' => isset($responsableId['Responsable']['id']) ? $responsableId['Responsable']['id'] : 169,
+                        'contrato' => isset($responsableId['Responsable']['contrato']) ? $responsableId['Responsable']['contrato'] : null,
                         'nombre_responsable' => isset($responsableId['Responsable']['nombres']) ? $responsableId['Responsable']['nombres'] : 'LECTOR SISTEMA',
                     ];
 
+                    if ($auxUser["contrato"] === 'SUSPENDIDO') {
+                        $this->Session->setFlash('Su contrato se encuentra suspendido, por favor comuníquese con el administrador del sistema.', 'flash_custom', array('class' => 'error', 'title' => 'Acceso denegado'));
+                        return $this->redirect(array('controller' => 'Users', 'action' => 'login'));
+                    }
 
                     $this->Auth->login($auxUser);
                     if ($this->Session->read('Auth.User')) {
                         $this->Session->setFlash('Acceso exitoso, bienvenido', 'flash_custom',     array('class' => 'success', 'title' => 'El registro se ha completado correctamente'));
 
-                        return $this->redirect( array('controller' => 'Familias', 'action' => 'index'));
+                        return $this->redirect(array('controller' => 'Familias', 'action' => 'index'));
                     }
                 } else {
                     $this->Session->setFlash('Por favor verifique sus credenciales', 'flash_custom', array('class' => 'error', 'title' => 'Error al iniciar sesión'));
                 }
-            } 
+            }
 
             $this->layout = 'login';
         }
@@ -98,6 +103,138 @@ class UsersController extends AppController
         parent::beforeFilter();
         $this->Auth->allow();
     }
+
+
+    public function registerAll()
+    {
+        $this->autoRender = false;
+        $this->response->type('json');
+
+        try {
+            if (!$this->request->is('post')) {
+                $this->response->statusCode(405);
+                echo json_encode([
+                    'status' => 'error',
+                    'message' => 'Método no permitido'
+                ]);
+                return;
+            }
+
+            $data = $this->request->input('json_decode', true);
+
+            if (empty($data['usuarios']) || !is_array($data['usuarios'])) {
+                $this->response->statusCode(400);
+                echo json_encode([
+                    'status' => 'error',
+                    'message' => 'Datos JSON inválidos o lista de usuarios vacía'
+                ]);
+                return;
+            }
+
+            // 1. Extraer cédulas para consultar existencias
+            $cedulasUsuarios = array_map(function ($usuario) {
+                return trim($usuario['cedula']);
+            }, $data['usuarios']);
+
+            // 2. Buscar usuarios existentes por cédula (User.username)
+            $usuariosExistentes = $this->User->find('list', [
+                'conditions' => ['User.username' => $cedulasUsuarios],
+                'fields' => ['User.username', 'User.id']
+            ]);
+
+            $procesados = [];
+
+            // 3. Cargar el modelo Responsable si no está enlazado automáticamente
+            if (!isset($this->Responsable)) {
+                $this->loadModel('Responsable');
+            }
+
+            foreach ($data['usuarios'] as $usuarioData) {
+                $cedula = trim($usuarioData['cedula']);
+                $existe = array_key_exists($cedula, $usuariosExistentes);
+
+                // Reiniciar estados de los modelos
+                $this->User->create();
+                $this->Responsable->create();
+
+                // Preparar datos para el modelo User
+                $datosUser = [
+                    'username' => $cedula,
+                    'nombre'    => isset($usuarioData['nombre']) ? strtoupper(trim($usuarioData['nombre'])) : null,
+                    'nivel'     => 'D', // Nivel por defecto
+                    'password' => 'Cc' . $cedula,
+                    'group_id'  => 3, // Grupo por defecto
+                ];
+
+                 // borrar de usuarios 
+                 if ($usuarioData['estado'] === 'N') {
+                    // Si el usuario existe, eliminarlo
+                    if ($existe) {
+                        $this->User->delete($usuariosExistentes[$cedula]);
+                        $procesados[] = [
+                            'cedula' => $cedula,
+                            'accion' => 'eliminado'
+                        ];
+                    }
+                    continue; // Saltar al siguiente usuario
+                }
+
+                // Si existe, asignamos el ID para hacer UPDATE en User
+                if ($existe) {
+                    $datosUser['id'] = $usuariosExistentes[$cedula];
+                }
+
+                // Guardar o Actualizar Usuario
+                if ($this->User->save($datosUser)) {
+
+                    // Preparar datos para el modelo Responsable
+                    $datosResponsable = [
+                        'nombres'          => isset($usuarioData['nombre']) ? strtoupper(trim($usuarioData['nombre'])) : null,
+                        'tipodoc'          => 'CC',
+                        'numero'           => $cedula,
+                        'celular'         => isset($usuarioData['telefono']) ? $usuarioData['telefono'] : null,
+                        'correo'           => isset($usuarioData['correo']) ? $usuarioData['correo'] : null,
+                        'profesion'        => isset($usuarioData['perfil']) ? $usuarioData['perfil'] : null,
+                        'contrato'         => isset($usuarioData['contrato']) ? $usuarioData['contrato'] : null,
+                        'nodo'             => isset($usuarioData['red']) ? $usuarioData['red'] : null,
+                        'ebs'               => isset($usuarioData['ebs']) ? $usuarioData['ebs'] : 'PENDIENTE',
+                    ];
+
+                    // Buscar si ya existe un registro de Responsable asociado al user_id
+                    $responsableExistente = $this->Responsable->find('first', [
+                        'conditions' => ['Responsable.numero' => $cedula],
+                        'fields' => ['Responsable.id'],
+                        'recursive' => -1
+                    ]);
+                    if ($responsableExistente) {
+                        $datosResponsable['id'] = $responsableExistente['Responsable']['id'];
+                    }
+
+                    // Guardar o Actualizar Responsable
+                    $this->Responsable->save($datosResponsable);
+
+                    $procesados[] = [
+                        'cedula' => $cedula,
+                        'accion' => $existe ? 'actualizado' : 'creado'
+                    ];
+                }
+            }
+
+            $this->response->statusCode(200);
+            echo json_encode([
+                'status' => 'success',
+                'message' => 'Usuarios y responsables procesados correctamente',
+                'data' => $procesados
+            ]);
+        } catch (Exception $e) {
+            $this->response->statusCode(500);
+            echo json_encode([
+                'status' => 'error',
+                'message' => 'Error interno del servidor: ' . $e->getMessage()
+            ]);
+        }
+    }
+    
 
     /**
      * Inicializa las reglas de ACL del sistema.

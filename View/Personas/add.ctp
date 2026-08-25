@@ -10,8 +10,7 @@
 <div id="consentModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-40"
     style="display: flex;">
     <div class="bg-white rounded-xl shadow-2xl max-w-lg w-full p-8 relative">
-        <button type="button" class="absolute top-4 right-4 text-gray-400 hover:text-gray-700 text-2xl font-bold"
-            onclick="window.location.href='<?php echo $this->Html->url(['controller' => 'Familias', 'action' => 'index']); ?>'">×</button>
+
         <h3 class="text-2xl font-semibold mb-4 text-center text-teal-600">Consentimiento informado</h3>
         <div class="mb-6 text-gray-700 text-justify">
             <p class="text-gray-700 text-justify">
@@ -287,6 +286,11 @@ $estadoOption = [
     'Resuelta por equipo EBS' => 'Resuelta por equipo EBS',
     'Resuelta por equipo PIC' => 'Resuelta por equipo PIC',
     'No Efectiva' => 'No efectiva',
+    'No se logra Comunicación'=>'No se logra Comunicación',
+    'Se birnda orientación de otros servicios'=>'Se birnda orientación de otros servicios',
+    'Canalización no aplica'=>'Canalización no aplica',
+    'Personas al dia con RPYM' => 'Pesonas al dia con RPYM',
+    'Persona sin interes de asistir'=>'Persona sin interes de asistir'
 
 ];
 

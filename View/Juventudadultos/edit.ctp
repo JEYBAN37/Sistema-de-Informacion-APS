@@ -904,12 +904,12 @@ $optionTiposViolencia = [
 ];
 
 $opcionCanalizacionComplementaria = [
-   'Consulta de morbilidad' => 'Consulta de morbilidad',
-   'Consulta de crónicos' => 'Consulta de crónicos',
-   'Consulta Pediatrica' => 'Consulta Pediátrica',
-   'Consulta Ginecologica' => 'Consulta Ginecológica',
-   'Consulta por Medicina Interna' => 'Consulta por Medicina Interna',
-   'Consulta Psiquiatrica' => 'Consulta Psiquiátrica',
+    'Consulta de morbilidad' => 'Consulta de morbilidad',
+    'Consulta de crónicos' => 'Consulta de crónicos',
+    'Consulta Pediatrica' => 'Consulta Pediátrica',
+    'Consulta Ginecologica' => 'Consulta Ginecológica',
+    'Consulta por Medicina Interna' => 'Consulta por Medicina Interna',
+    'Consulta Psiquiatrica' => 'Consulta Psiquiátrica',
 ];
 
 $optionCanalizacion =
@@ -1009,7 +1009,31 @@ echo $this->Form->input('fechaRegistro', [
 
         </div>
 
+        <div class="col-span-2 md:col-span-1 text-md font-semibold mt-4 mb-6 md:mr-4">
+            <div class="flex items-center mb-4">
+                <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">0</span>
+                <label for="nombre" class="font-semibold">Familia</label>
+                <p class="text-red-600">*</p>
+            </div>
+
+            <p class="text-gray-500 text-sm mb-2">Ingrese el ID de la familia a la que pertenece la persona. Este ID debe ser único y corresponde a la familia registrada en el sistema.</p>
+            <?php
+            echo $this->Form->input('familia_id', [
+                'label' => false,
+                'class' => 'border border-gray-300 rounded-lg w-full p-2 focus:outline-none  focus:ring-1 focus:ring-blue-500 focus:border-blue-500 borde azul  mt-2 font-semibold text-gray-700  text-sm focus:text-gray-900',
+                'error' => false,
+                'type' => 'text'
+            ]);
+
+            if (!empty($this->Form->error('familia_id'))) {
+                echo '<div class="text-red-600 text-md mt-1 font-semibold">' . $this->Form->error('familia_id') . '</div>';
+            }
+            ?>
+        </div>
+
         <div class="grid grid-cols-1 md:grid-cols-2">
+
+
 
             <!-- Tipo de Documento -->
             <div class="col-span-2 md:col-span-1 text-md font-semibold mt-4 mb-6 md:mr-4">
@@ -3018,7 +3042,7 @@ echo $this->Form->input('fechaRegistro', [
             <div class="col-span-2 md:col-span-1 text-md font-semibold my-6 mr-4">
                 <div class="flex items-center mb-4">
                     <span class="mr-2 px-2 rounded-lg bg-green-200 text-md font-semibold">1</span>
-                    <label for="canalizacionuno" class="font-semibold">Canalización</label>
+                    <label for="canalizacionuno" class="font-semibold">Canalización Complementaria</label>
                     <p class="text-red-600">*</p>
 
                 </div>
