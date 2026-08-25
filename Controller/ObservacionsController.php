@@ -333,6 +333,35 @@ class ObservacionsController extends AppController
 		}
 	}
 
+	public function findByFamiliaId($familiaId = null)
+	{
+		$options = array(
+			'conditions' => array('Observacion.familia_id' => $familiaId),
+			'order' => array('Observacion.date DESC'),
+			'fields' => array(
+				'Observacion.id'
+			),
+			'recursive' => -1
+		);
+
+
+		$idObservacion = $this->Observacion->find('first', $options);
+
+		if (!$idObservacion) {
+			$this->Session->setFlash('No se encontró ninguna observación para la familia especificada realilzar plan de cuidado.', 'flash_custom', array('class' => 'error', 'title' => 'Error al cargar el registro'));
+			return $this->redirect(array(
+				'controller' => 'Familias',
+				'action' => 'view/' . $familiaId,
+			));
+		}
+
+
+		return $this->redirect(array(
+			'controller' => 'Observacions',
+			'action' => 'add_plancuidado/' . $idObservacion['Observacion']['id'],
+		));
+	}
+
 	public function add_plancuidado($id = null)
 	{
 		$this->set($this->_getCatalogosObservacion());
@@ -359,7 +388,7 @@ class ObservacionsController extends AppController
 					)
 				));
 
-				$this->Session->setFlash('Registro se guardó con éxito, continuar con la firma del Plan de Cuidado', 'flash_custom', array('class' => 'success', 'title' => 'El registro se ha completado correctamente'));		
+				$this->Session->setFlash('Registro se guardó con éxito, continuar con la firma del Plan de Cuidado', 'flash_custom', array('class' => 'success', 'title' => 'El registro se ha completado correctamente'));
 				if ($this->request->data['btn'] == 'familia') {
 					return $this->redirect(array('controller' => 'familias', 'action' => 'view', $this->request->data["Observacion"]["familia_id"]));
 				} else {

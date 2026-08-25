@@ -49,9 +49,9 @@ class JuventudadultosController extends AppController
 			'fields' => array(
 				'Juventudadulto.*',
 				'Canalizacion.nombre',
-				
+
 			),
-		
+
 		);
 		$juventudadulto = $this->Juventudadulto->find('first', $options);
 		$this->set('juventudadulto', $juventudadulto);
@@ -80,69 +80,67 @@ class JuventudadultosController extends AppController
 					)
 				));
 
-		$personaExistente = $this->Persona->find('first', array(
-			'conditions' => array('Persona.numerodoc' => $this->request->data['Juventudadulto']['numerodoc']),
-			'fields' => array('Persona.id')
-		));
+				$personaExistente = $this->Persona->find('first', array(
+					'conditions' => array('Persona.numerodoc' => $this->request->data['Juventudadulto']['numerodoc']),
+					'fields' => array('Persona.id')
+				));
 
-		// 2. Mapeamos los datos del formulario al formato de Persona
-		$persona = array(
-			'Persona' => array(
-				'juventudadulto_id' => $this->Juventudadulto->id,
-				'familia_id' => $id_familia,
-				'primernombre' => $this->request->data['Juventudadulto']['primernombre'],
-				'segundonombre' => $this->request->data['Juventudadulto']['segundonombre'],
-				'primerapellido' => $this->request->data['Juventudadulto']['primerapellido'],
-				'segundoapellido' => $this->request->data['Juventudadulto']['segundoapellido'],
-				'tipodocumento' => $this->request->data['Juventudadulto']['tipodocumento'],
-				'numerodoc' => $this->request->data['Juventudadulto']['numerodoc'],
-				'fechanac' => $this->request->data['Juventudadulto']['fechanac'],
-				'regimen' => $this->request->data['Juventudadulto']['regimen'],
-				'discapacidad' => $this->request->data['Juventudadulto']['discapacidad'],
-				'condicioncronica' => $this->request->data['Juventudadulto']['condicioncronica'],
-				'canalizacionuno' => $this->request->data['Juventudadulto']['canalizacionuno'],
-				'canalizacion_id' => $this->request->data['Juventudadulto']['canalizacion_id'],
-				'sociambiental_id'  => $this->request->data['Juventudadulto']['sociambiental_id'],
-				'sexo' => $this->request->data['Juventudadulto']['sexo'],
-				'responsable_id' => $this->userCurrent(),
-			)
-		);
+				// 2. Mapeamos los datos del formulario al formato de Persona
+				$persona = array(
+					'Persona' => array(
+						'juventudadulto_id' => $this->Juventudadulto->id,
+						'familia_id' => $id_familia,
+						'primernombre' => $this->request->data['Juventudadulto']['primernombre'],
+						'segundonombre' => $this->request->data['Juventudadulto']['segundonombre'],
+						'primerapellido' => $this->request->data['Juventudadulto']['primerapellido'],
+						'segundoapellido' => $this->request->data['Juventudadulto']['segundoapellido'],
+						'tipodocumento' => $this->request->data['Juventudadulto']['tipodocumento'],
+						'numerodoc' => $this->request->data['Juventudadulto']['numerodoc'],
+						'fechanac' => $this->request->data['Juventudadulto']['fechanac'],
+						'regimen' => $this->request->data['Juventudadulto']['regimen'],
+						'discapacidad' => $this->request->data['Juventudadulto']['discapacidad'],
+						'condicioncronica' => $this->request->data['Juventudadulto']['condicioncronica'],
+						'canalizacionuno' => $this->request->data['Juventudadulto']['canalizacionuno'],
+						'canalizacion_id' => $this->request->data['Juventudadulto']['canalizacion_id'],
+						'sociambiental_id'  => $this->request->data['Juventudadulto']['sociambiental_id'],
+						'sexo' => $this->request->data['Juventudadulto']['sexo'],
+						'responsable_id' => $this->userCurrent(),
+					)
+				);
 
-		// 3. Lógica de Update o Create
-		if ($personaExistente) {
-			// Si existe, extraemos el ID exacto y lo ponemos en el array de datos
-			$persona['Persona']['id'] = $personaExistente['Persona']['id'];
-		} else {
-			// Si no existe, preparamos el modelo para un registro nuevo
-			$this->Persona->create();
-		}
-				if($this->Persona->save($persona))
-					{
+				// 3. Lógica de Update o Create
+				if ($personaExistente) {
+					// Si existe, extraemos el ID exacto y lo ponemos en el array de datos
+					$persona['Persona']['id'] = $personaExistente['Persona']['id'];
+				} else {
+					// Si no existe, preparamos el modelo para un registro nuevo
+					$this->Persona->create();
+				}
+				if ($this->Persona->save($persona)) {
 					if (isset($this->request->data['btn']) && $this->request->data['btn'] == 'Guardar y agregar integrante') {
-					$this->Session->setFlash('Registro de familia se guradado con exito, continuar con informacion del siguiente integrante', 'flash_custom', array('class' => 'success', 'title' => 'El registro se ha completado correctamente'));
-					// Asegurar que no quede data previa en el siguiente formulario
-					$this->request->data = array();
-					return $this->redirect(array(
-						'controller' => 'Juventudadultos',
-						'action' => 'add',
-						'?' => array('familia' => $id_familia)
-					));
-				}
+						$this->Session->setFlash('Registro de familia se guradado con exito, continuar con informacion del siguiente integrante', 'flash_custom', array('class' => 'success', 'title' => 'El registro se ha completado correctamente'));
+						// Asegurar que no quede data previa en el siguiente formulario
+						$this->request->data = array();
+						return $this->redirect(array(
+							'controller' => 'Juventudadultos',
+							'action' => 'add',
+							'?' => array('familia' => $id_familia)
+						));
+					}
 
-				if (isset($this->request->data['btn']) && $this->request->data['btn'] == 'Guardar') {
-					$this->Session->setFlash('Registro de familia se guradado con exito, continuar con informacion del siguiente integrante', 'flash_custom', array('class' => 'success', 'title' => 'El registro se ha completado correctamente'));
+					if (isset($this->request->data['btn']) && $this->request->data['btn'] == 'Guardar') {
+						$this->Session->setFlash('Registro de familia se guradado con exito, continuar con informacion del siguiente integrante', 'flash_custom', array('class' => 'success', 'title' => 'El registro se ha completado correctamente'));
 
-					return $this->redirect(array(
-						'controller' => 'Familias',
-						'action' => 'view/' . $id_familia,
-						'?' => array('familia' => $id_familia)
-					));
-				}
+						return $this->redirect(array(
+							'controller' => 'Familias',
+							'action' => 'view/' . $id_familia,
+							'?' => array('familia' => $id_familia)
+						));
+					}
 				} else {
 					// Manejo de error si el registro de Persona no se guarda
 					$this->Session->setFlash('El registro de Persona no fue guardado correctamente pórque ya existe.', 'flash_custom', array('class' => 'error', 'title' => 'Error al guardar el registro'));
 				}
-
 			} else {
 				$this->Session->setFlash('El registro no fue guardado o esta pendiente un campo del formulario', 'flash_custom', array('class' => 'error', 'title' => 'Error al guardar el registro'));
 			}
@@ -169,6 +167,31 @@ class JuventudadultosController extends AppController
 
 
 		if ($this->request->is(array('post', 'put'))) {
+
+			if (!empty($this->request->data['Juventudadulto']['familia_id'])) {
+				$familiaId = $this->request->data['Juventudadulto']['familia_id'];
+
+				// Cargar el modelo Familia explícitamente si no está en $uses
+				if (!isset($this->Familia)) {
+					$this->loadModel('Familia');
+				}
+
+				$idFamiliaExistente = $this->Familia->find('first', array(
+					'conditions' => array('Familia.id' => $familiaId),
+					'fields' => array('Familia.id')
+				)); 
+
+				if (empty($idFamiliaExistente)) {
+					$this->Session->setFlash(
+						'La familia no existe',
+						'flash_custom',
+						array('class' => 'error', 'title' => 'Error al cargar el registro')
+					);
+					 return;
+			 
+				}
+			}
+
 			if ($this->Juventudadulto->save($this->request->data)) {
 
 				$this->loadHistorial(array(
@@ -200,6 +223,23 @@ class JuventudadultosController extends AppController
 
 		$canalizaciones = $this->Juventudadulto->Canalizacion->find('list');
 		$this->set(compact('canalizaciones'));
+	}
+
+
+
+	public function foundCedulaforRedirecEdit($cedula = null)
+	{
+		$this->Juventudadulto->recursive = 0;
+		$options = array('conditions' => array('Juventudadulto.numerodoc' => $cedula));
+		$juventudadulto = $this->Juventudadulto->find('first', $options);
+
+		if (!empty($juventudadulto)) {
+			$cedula = $juventudadulto['Juventudadulto']['id'];
+			return $this->redirect(array('controller' => 'Juventudadultos', 'action' => 'edit', $cedula));
+		} else {
+			$this->Session->setFlash('No se encontró la persona con la cédula proporcionada.', 'flash_custom', array('class' => 'error', 'title' => 'Error al buscar la persona'));
+			return $this->redirect(array('controller' => 'Familias', 'action' => 'index'));
+		}
 	}
 
 	/**

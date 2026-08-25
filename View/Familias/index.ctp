@@ -40,16 +40,16 @@
             </button>
 
             <!-- Agregar Familia Card -->
-            <button onclick="toFamilia()" class="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 p-8 border-2 border-transparent hover:border-cyan-500 transform hover:-translate-y-1">
+            <button onclick="toJuventudadulto()" class="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 p-8 border-2 border-transparent hover:border-cyan-500 transform hover:-translate-y-1">
                 <div class="flex flex-col items-center text-center gap-4">
                     <div class="bg-gradient-to-br from-cyan-100 to-blue-100 p-6 rounded-2xl group-hover:scale-110 transition-transform duration-300">
                         <i class="fas fa-users text-cyan-600 text-5xl"></i>
                     </div>
                     <h3 class="text-2xl font-bold text-slate-800 group-hover:text-cyan-600 transition-colors">
-                        Agregar Familia
+                        Persona
                     </h3>
                     <p class="text-slate-600 text-sm">
-                        Registra una nueva familia en el sistema
+                        Actualiza la informacion de la persona caracterizada, canalizacion y seguimiento
                     </p>
                     <div class="mt-2 flex items-center gap-2 text-cyan-600 font-semibold opacity-0 group-hover:opacity-100 transition-opacity">
                         <span>Comenzar</span>
@@ -61,16 +61,16 @@
 
         <div class="grid md:grid-cols-2 gap-6 mb-8">
             <!-- Agregar Vivienda Card -->
-            <button onclick="toNovedad()" class="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 p-8 border-2 border-transparent hover:border-teal-500 transform hover:-translate-y-1">
+            <button onclick="toPlan()" class="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 p-8 border-2 border-transparent hover:border-teal-500 transform hover:-translate-y-1">
                 <div class="flex flex-col items-center text-center gap-4">
                     <div class="bg-gradient-to-br from-green-100 to-green-100 p-6 rounded-2xl group-hover:scale-110 transition-transform duration-300">
                         <i class="fa-solid fa-house-medical-circle-xmark text-green-600 text-5xl"></i>
                     </div>
                     <h3 class="text-2xl font-bold text-slate-800 group-hover:text-teal-600 transition-colors">
-                        Agregar Novedad
+                        Seguimiento al Plan de Cuidado
                     </h3>
                     <p class="text-slate-600 text-sm">
-                        Registra una nueva novedad en el sistema
+                        Registra información de seguimiento familiar, atenciones y plan de cuidado
                     </p>
                     <div class="mt-2 flex items-center gap-2 text-teal-600 font-semibold opacity-0 group-hover:opacity-100 transition-opacity">
                         <span>Comenzar</span>
@@ -338,34 +338,49 @@
             }
         }
 
-        function toFamilia() {
+        function toJuventudadulto() {
             // Solicita al usuario el ID de vivienda
-            const input = prompt('Ingrese el ID de vivienda para crear la familia (ej: 123):');
+            const input = prompt('Ingrese la cédula de la persona:');
             if (input === null) return; // usuario canceló
 
-            const idVivienda = input.trim();
-            if (idVivienda === '') {
+            const idPersona = input.trim();
+            if (idPersona === '') {
                 alert('Debe ingresar un ID de vivienda para continuar.');
                 return;
             }
 
             // Validación básica: permitir solo números, pero dar opción si no es numérico
-            if (!/^\d+$/.test(idVivienda)) {
+            if (!/^\d+$/.test(idPersona)) {
                 if (!confirm('El ID ingresado no parece numérico. ¿Desea continuar de todos modos?')) {
                     return;
                 }
             }
 
-            if (confirm('¿Está seguro de crear la familia con ID de vivienda ' + idVivienda + '?')) {
-                // Redirige a la acción add pasando el ID como segmento de URL
-                window.location.href = '<?php echo $this->Html->url(['controller' => 'Familias', 'action' => 'add']); ?>/' + idVivienda;
-            }
+            // Redirige a la acción add pasando el ID como segmento de URL
+            window.location.href = '<?php echo $this->Html->url(['controller' => 'Juventudadultos', 'action' => 'foundCedulaforRedirecEdit']); ?>/' + idPersona;
+
         }
 
-        function toNovedad() {
-            if (confirm('¿Está seguro de realizar esta acción?')) {
-                window.location.href = '<?php echo $this->Html->url(['controller' => 'visitasnegadas', 'action' => 'add']); ?>';
+        function toPlan() {
+            // Solicita al usuario el ID de vivienda
+            const input = prompt('Ingrese el ID de la Familia:');
+            if (input === null) return; // usuario canceló
+
+            const idFamilia = input.trim();
+            if (idFamilia === '') {
+                alert('Debe ingresar un ID de familia para continuar.');
+                return;
             }
+
+            // Validación básica: permitir solo números, pero dar opción si no es numérico
+            if (!/^\d+$/.test(idFamilia)) {
+                if (!confirm('El ID ingresado no parece numérico. ¿Desea continuar de todos modos?')) {
+                    return;
+                }
+            }
+
+            // Redirige a la acción add pasando el ID como segmento de URL
+            window.location.href = '<?php echo $this->Html->url(['controller' => 'Observacions', 'action' => 'findByFamiliaId']); ?>/' + idFamilia;
         }
 
         $(function() {
@@ -565,9 +580,9 @@
                     },
                     {
                         data: "sociambiental_id",
-                            render: function(data) {
-                                return `<a href="${URL_view_sociambiental.replace('__ID__', data)}" class="text-teal-600 hover:underline">${data}</a>`;
-                            },
+                        render: function(data) {
+                            return `<a href="${URL_view_sociambiental.replace('__ID__', data)}" class="text-teal-600 hover:underline">${data}</a>`;
+                        },
                         name: "sociambiental_id"
                     },
                     {
