@@ -158,14 +158,13 @@ class UsersController extends AppController
                 $cmd = "start /B \"\" \"{$phpExe}\" \"{$consolePath}\" -working \"{$appPath}\" user_process processBatch \"{$filePathClean}\" > \"{$logPath}\" 2>&1";
                 pclose(popen($cmd, "r"));
             } else {
+                // --- ENTORNO PRODUCCIÓN (Mochahost / Linux) ---
                 $projectPath = rtrim(APP, DS);
                 $logPath     = $batchDir . 'shell_output.log';
-                $phpExe      = '/usr/bin/php';
-                $cakeScript  = $projectPath . '/Console/cake.php';
 
-                // Ejecutamos php directamente sobre cake.php indicando el directorio de trabajo (-working)
-                // y definiendo el entorno no interactivo (< /dev/null)
-                $cmd = "cd {$projectPath} && nohup {$phpExe} \"{$cakeScript}\" -working \"{$projectPath}\" user_process processBatch \"{$filePath}\" < /dev/null > \"{$logPath}\" 2>&1 &";
+                // Definimos explícitamente PATH y SHELL en el comando para que nohup y suPHP
+                // reconozcan el entorno de consola sin fallar en ShellDispatcher.
+                $cmd = "cd {$projectPath} && PATH=/usr/local/bin:/usr/bin:/bin SHELL=/bin/bash nohup ./Console/cake user_process processBatch \"{$filePath}\" < /dev/null > \"{$logPath}\" 2>&1 &";
 
                 if (function_exists('shell_exec')) {
                     shell_exec($cmd);
