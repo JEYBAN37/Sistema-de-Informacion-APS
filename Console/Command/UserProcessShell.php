@@ -32,95 +32,86 @@ class UserProcessShell extends AppShell
             $db = $this->User->getDataSource();
             $db->fullDebug = false;
 
-            // Procesar en bloques de 200 para no sobrecargar el colector de basura
-            $chunkSize = 200;
-            $chunks = array_chunk($usuarios, $chunkSize);
-            unset($usuarios); // Liberar el arreglo principal original de la memoria
+            // Desvincular todas las relaciones de los modelos para evitar cargas adicionales en RAM
+            $this->User->unbindModel(['hasMany' => ['*'], 'belongsTo' => ['*'], 'hasOne' => ['*']], false);
+            $this->Responsable->unbindModel(['hasMany' => ['*'], 'belongsTo' => ['*'], 'hasOne' => ['*']], false);
 
-            $procesados = 0;
+            $i = 0;
+            while (!empty($usuarios)) {
+                // Extraer el primer elemento reduciendo la memoria del arreglo en cada paso
+                $usuarioData = array_shift($usuarios);
+                $i++;
 
-            foreach ($chunks as $chunkIndex => $lote) {
-                foreach ($lote as $usuarioData) {
-                    $procesados++;
-
-                    if (empty($usuarioData['cedula'])) {
-                        continue;
-                    }
-
-                    $cedula = trim($usuarioData['cedula']);
-
-                    // 1. Buscar ID de usuario existente (sin traer relaciones)
-                    $userExistente = $this->User->find('first', [
-                        'conditions' => ['User.username' => $cedula],
-                        'fields'     => ['User.id'],
-                        'recursive'  => -1
-                    ]);
-
-                    $userId = !empty($userExistente['User']['id']) ? $userExistente['User']['id'] : null;
-
-                    // Eliminar si estado = 'N'
-                    if (isset($usuarioData['estado']) && $usuarioData['estado'] === 'N') {
-                        if ($userId) {
-                            $this->User->delete($userId);
-                        }
-                        continue;
-                    }
-
-                    // 2. Guardar / Actualizar User
-                    $this->User->create();
-                    $datosUser = [
-                        'username' => $cedula,
-                        'nombre'   => isset($usuarioData['nombre']) ? strtoupper(trim($usuarioData['nombre'])) : null,
-                        'nivel'    => 'D',
-                        'password' => 'Cc' . $cedula,
-                        'group_id' => 3,
-                    ];
-
-                    if ($userId) {
-                        $datosUser['id'] = $userId;
-                    }
-
-                    if ($this->User->save($datosUser, false)) { // false para ignorar validaciones pesadas si no son requeridas
-                        // 3. Guardar / Actualizar Responsable
-                        $datosResponsable = [
-                            'nombres'   => isset($usuarioData['nombre']) ? strtoupper(trim($usuarioData['nombre'])) : null,
-                            'tipodoc'   => 'CC',
-                            'numero'    => $cedula,
-                            'celular'   => isset($usuarioData['telefono']) ? $usuarioData['telefono'] : null,
-                            'correo'    => isset($usuarioData['correo']) ? $usuarioData['correo'] : null,
-                            'profesion' => isset($usuarioData['perfil']) ? $usuarioData['perfil'] : null,
-                            'contrato'  => isset($usuarioData['contrato']) ? $usuarioData['contrato'] : null,
-                            'nodo'      => isset($usuarioData['red']) ? $usuarioData['red'] : null,
-                            'ebs'       => isset($usuarioData['ebs']) ? $usuarioData['ebs'] : 'PENDIENTE',
-                        ];
-
-                        $respExistente = $this->Responsable->find('first', [
-                            'conditions' => ['Responsable.numero' => $cedula],
-                            'fields'     => ['Responsable.id'],
-                            'recursive'  => -1
-                        ]);
-
-                        if (!empty($respExistente['Responsable']['id'])) {
-                            $datosResponsable['id'] = $respExistente['Responsable']['id'];
-                        }
-
-                        $this->Responsable->create();
-                        $this->Responsable->save($datosResponsable, false);
-                    }
+                if (empty($usuarioData['cedula'])) {
+                    continue;
                 }
 
-                // --- LIBERACIÓN DE MEMORIA RÍGIDA AL FINAL DE CADA BLOQUE ---
-                $db->getLog(false, true); // Vaciar log de consultas SQL acumuladas
+                $cedula = trim($usuarioData['cedula']);
 
-                // Limpiar cachés internas del ORM de CakePHP
-                ClassRegistry::flush();
-                $this->User = ClassRegistry::init('User');
-                $this->Responsable = ClassRegistry::init('Responsable');
+                // Consulta nativa directa sin hidratar objetos del ORM
+                $resUser = $db->fetchAll(
+                    "SELECT id FROM users WHERE username = ? LIMIT 1",
+                    [$cedula]
+                );
+                $userId = !empty($resUser[0]['users']['id']) ? $resUser[0]['users']['id'] : null;
 
-                // Forzar al motor de PHP a recolectar basura y liberar memoria RAM
-                gc_collect_cycles();
+                // Eliminar usuario si estado = 'N'
+                if (isset($usuarioData['estado']) && $usuarioData['estado'] === 'N') {
+                    if ($userId) {
+                        $this->User->delete($userId, false);
+                    }
+                    continue;
+                }
 
-                $this->out("Procesados $procesados de $total registros... (RAM en uso: " . round(memory_get_usage() / 1024 / 1024, 2) . " MB)");
+                // Guardar / Actualizar User
+                $datosUser = [
+                    'username' => $cedula,
+                    'nombre'   => isset($usuarioData['nombre']) ? strtoupper(trim($usuarioData['nombre'])) : null,
+                    'nivel'    => 'D',
+                    'password' => 'Cc' . $cedula,
+                    'group_id' => 3,
+                ];
+
+                if ($userId) {
+                    $datosUser['id'] = $userId;
+                }
+
+                $this->User->create();
+                if ($this->User->save($datosUser, false)) {
+                    // Consulta nativa directa para Responsable
+                    $resResp = $db->fetchAll(
+                        "SELECT id FROM responsables WHERE numero = ? LIMIT 1",
+                        [$cedula]
+                    );
+                    $respId = !empty($resResp[0]['responsables']['id']) ? $resResp[0]['responsables']['id'] : null;
+
+                    $datosResponsable = [
+                        'nombres'   => isset($usuarioData['nombre']) ? strtoupper(trim($usuarioData['nombre'])) : null,
+                        'tipodoc'   => 'CC',
+                        'numero'    => $cedula,
+                        'celular'   => isset($usuarioData['telefono']) ? $usuarioData['telefono'] : null,
+                        'correo'    => isset($usuarioData['correo']) ? $usuarioData['correo'] : null,
+                        'profesion' => isset($usuarioData['perfil']) ? $usuarioData['perfil'] : null,
+                        'contrato'  => isset($usuarioData['contrato']) ? $usuarioData['contrato'] : null,
+                        'nodo'      => isset($usuarioData['red']) ? $usuarioData['red'] : null,
+                        'ebs'       => isset($usuarioData['ebs']) ? $usuarioData['ebs'] : 'PENDIENTE',
+                    ];
+
+                    if ($respId) {
+                        $datosResponsable['id'] = $respId;
+                    }
+
+                    $this->Responsable->create();
+                    $this->Responsable->save($datosResponsable, false);
+                }
+
+                // Limpieza periódica cada 100 registros
+                if ($i % 100 === 0) {
+                    $db->getLog(false, true); // Vaciar histórico de consultas
+                    ClassRegistry::flush();   // Liberar caché interna de modelos
+                    gc_collect_cycles();       // Forzar liberación de RAM por PHP
+                    $this->out("Procesados $i de $total registros... (RAM: " . round(memory_get_usage() / 1024 / 1024, 2) . " MB)");
+                }
             }
 
             $this->out("PROCESO COMPLETADO EXITOSAMENTE.");
