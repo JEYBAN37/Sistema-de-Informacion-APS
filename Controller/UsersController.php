@@ -161,9 +161,12 @@ class UsersController extends AppController
                 // --- ENTORNO PRODUCCIÓN (Mochahost / Linux) ---
                 $projectPath = rtrim(APP, DS);
                 $logPath     = $batchDir . 'shell_output.log';
+                $phpExe      = '/usr/bin/php';
+                $consolePath = $projectPath . '/Console/cake';
 
-                // Usar el binario nativo ./Console/cake que ya comprobamos en la terminal
-                $cmd = "cd {$projectPath} && nohup ./Console/cake user_process processBatch \"{$filePath}\" > \"{$logPath}\" 2>&1 &";
+                // Invocación asíncrona robusta para servidores Web (CGI / suPHP / Apache)
+                // Redirige stdin desde /dev/null y stdout/stderr hacia el log para desacoplar el proceso
+                $cmd = "cd {$projectPath} && nohup {$phpExe} {$consolePath} user_process processBatch \"{$filePath}\" < /dev/null> \"{$logPath}\" 2>&1 &";
 
                 if (function_exists('shell_exec')) {
                     shell_exec($cmd);
