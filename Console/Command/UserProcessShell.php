@@ -9,7 +9,6 @@ class UserProcessShell extends AppShell
     {
         ini_set('memory_limit', '1024M');
         set_time_limit(0);
-        Configure::write('debug', 0);
 
         $filePath = !empty($this->args[0]) ? $this->args[0] : null;
 
@@ -23,39 +22,48 @@ class UserProcessShell extends AppShell
             $usuarios = json_decode($rawContent, true);
 
             if (empty($usuarios) || !is_array($usuarios)) {
-                $this->out("ERROR: El JSON esta vacio o con formato invalido.");
+                $this->out("ERROR: El JSON está vacío o con formato inválido.");
                 return;
             }
 
-            $db = $this->User->getDataSource();
+            $this->out("Iniciando procesamiento de " . count($usuarios) . " registros...");
 
-            // CRÍTICO: Desactivar el registro interno de consultas SQL para liberar memoria
+            $db = $this->User->getDataSource();
             $db->fullDebug = false;
 
-            // Extraer cédulas
-            $cedulasUsuarios = array_map(function ($u) {
-                return trim($u['cedula']);
-            }, $usuarios);
+            // 1. Extraer todas las cédulas para consultas masivas
+            $cedulasUsuarios = array_filter(array_map(function ($u) {
+                return isset($u['cedula']) ? trim($u['cedula']) : null;
+            }, $usuarios));
 
+            // 2. Pre-cargar Usuarios existentes
             $usuariosExistentes = $this->User->find('list', [
                 'conditions' => ['User.username' => $cedulasUsuarios],
                 'fields'     => ['User.username', 'User.id'],
                 'recursive'  => -1
             ]);
 
+            // 3. Pre-cargar Responsables existentes (Evita hacer find en cada iteración)
+            $responsablesExistentes = $this->Responsable->find('list', [
+                'conditions' => ['Responsable.numero' => $cedulasUsuarios],
+                'fields'     => ['Responsable.numero', 'Responsable.id'],
+                'recursive'  => -1
+            ]);
+
             foreach ($usuarios as $index => $usuarioData) {
                 if (empty($usuarioData['cedula'])) {
-                    $this->out("SKIP: Registro sin cedula en indice " . $index);
+                    $this->out("SKIP: Registro sin cédula en índice " . $index);
                     continue;
                 }
 
                 $cedula = trim($usuarioData['cedula']);
-                $existe = array_key_exists($cedula, $usuariosExistentes);
+                $existeUser = array_key_exists($cedula, $usuariosExistentes);
 
                 // Eliminar usuario si estado = 'N'
                 if (isset($usuarioData['estado']) && $usuarioData['estado'] === 'N') {
-                    if ($existe) {
+                    if ($existeUser) {
                         $this->User->delete($usuariosExistentes[$cedula]);
+                        $this->out("ELIMINADO: Usuario $cedula");
                     }
                     continue;
                 }
@@ -70,7 +78,7 @@ class UserProcessShell extends AppShell
                     'group_id' => 3,
                 ];
 
-                if ($existe) {
+                if ($existeUser) {
                     $datosUser['id'] = $usuariosExistentes[$cedula];
                 }
 
@@ -89,14 +97,8 @@ class UserProcessShell extends AppShell
                         'ebs'       => isset($usuarioData['ebs']) ? $usuarioData['ebs'] : 'PENDIENTE',
                     ];
 
-                    $responsableExistente = $this->Responsable->find('first', [
-                        'conditions' => ['Responsable.numero' => $cedula],
-                        'fields'     => ['Responsable.id'],
-                        'recursive'  => -1
-                    ]);
-
-                    if ($responsableExistente) {
-                        $datosResponsable['id'] = $responsableExistente['Responsable']['id'];
+                    if (array_key_exists($cedula, $responsablesExistentes)) {
+                        $datosResponsable['id'] = $responsablesExistentes[$cedula];
                     }
 
                     if (!$this->Responsable->save($datosResponsable)) {
@@ -106,15 +108,15 @@ class UserProcessShell extends AppShell
                     $this->out("ERROR SAVE USER ($cedula): " . json_encode($this->User->validationErrors));
                 }
 
-                // Método seguro en CakePHP 2.x para reiniciar los registros de consultas en RAM
-                if ($index % 50 === 0) {
+                if ($index > 0 && $index % 50 === 0) {
                     $db->getLog(false, true);
+                    $this->out("Procesados $index registros...");
                 }
             }
 
             $this->out("PROCESO COMPLETADO EXITOSAMENTE.");
         } catch (Exception $e) {
-            $this->out("EXCEPCION FATAL: " . $e->getMessage() . " en la linea " . $e->getLine());
+            $this->out("EXCEPCION FATAL: " . $e->getMessage() . " en la línea " . $e->getLine());
         } finally {
             if (file_exists($filePath)) {
                 @chmod($filePath, 0777);
