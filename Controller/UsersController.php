@@ -149,19 +149,28 @@ class UsersController extends AppController
             $isWindows = (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN');
 
             if ($isWindows) {
-                // --- ENTORNO LOCAL (XAMPP / Windows) ---
+                // --- ENTORNO LOCAL (Windows / XAMPP) ---
                 $phpExe = 'C:\xampp\php\php.exe';
+                $consolePath = ROOT . DS . 'Console' . DS . 'cake.php';
+                $appPath = rtrim(APP, DS);
+                $logPath = $batchDir . 'shell_output.log';
                 $filePathClean = str_replace('/', DS, $filePath);
 
-                $cmd = "start /B \"\" \"{$phpExe}\" \"{$consolePath}\" -app \"{$appPath}\" user_process processBatch \"{$filePathClean}\" > \"{$logPath}\" 2>&1";
+                $cmd = "start /B \"\" \"{$phpExe}\" \"{$consolePath}\" -working \"{$appPath}\" user_process processBatch \"{$filePathClean}\" > \"{$logPath}\" 2>&1";
                 pclose(popen($cmd, "r"));
             } else {
-                // --- ENTORNO PRODUCCIÓN (Mochahost / Linux cPanel) ---
-                // Intenta detectar la ruta de PHP del sistema o usa la estándar de cPanel
-                $phpExe = file_exists('/usr/local/bin/php') ? '/usr/local/bin/php' : 'php';
+                // --- ENTORNO PRODUCCIÓN (Mochahost / Linux) ---
+                // Nos posicionamos en la raíz del proyecto y ejecutamos el ejecutable nativo
+                $projectPath = rtrim(APP, DS);
+                $logPath     = $batchDir . 'shell_output.log';
 
-                $cmd = "nohup {$phpExe} \"{$consolePath}\" -app \"{$appPath}\" user_process processBatch \"{$filePath}\" > \"{$logPath}\" 2>&1 &";
-                exec($cmd);
+                $cmd = "cd {$projectPath} && nohup ./Console/cake user_process processBatch \"{$filePath}\" > \"{$logPath}\" 2>&1 &";
+
+                if (function_exists('shell_exec')) {
+                    shell_exec($cmd);
+                } else {
+                    exec($cmd);
+                }
             }
 
             $this->response->statusCode(202);
