@@ -79,7 +79,10 @@ class UserProcessShell extends AppShell
                 if ($userId) {
                     $stmtUpdateUser->execute([$nombre, $userId]);
                 } else {
-                    $stmtInsertUser->execute([$cedula, $nombre, 'Cc' . $cedula]);
+                    // Generar la contraseña con MD5
+                    $passwordMD5 = md5('Cc' . $cedula);
+
+                    $stmtInsertUser->execute([$cedula, $nombre, $passwordMD5]);
                     $userId = $pdo->lastInsertId();
                 }
 
