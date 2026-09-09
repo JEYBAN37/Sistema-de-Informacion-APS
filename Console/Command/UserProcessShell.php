@@ -27,18 +27,25 @@ class UserProcessShell extends AppShell
             }
 
             $total = count($usuarios);
-            $this->out("Iniciando procesamiento de $total registros...");
+            $this->out("Iniciando procesamiento nativo de $total registros...");
 
+            // Obtener la conexión PDO pura de PHP (evita la sobrecarga de Mysql.php)
             $db = $this->User->getDataSource();
-            $db->fullDebug = false;
+            $pdo = $db->getConnection();
 
-            // Desvincular todas las relaciones de los modelos para evitar cargas adicionales en RAM
-            $this->User->unbindModel(['hasMany' => ['*'], 'belongsTo' => ['*'], 'hasOne' => ['*']], false);
-            $this->Responsable->unbindModel(['hasMany' => ['*'], 'belongsTo' => ['*'], 'hasOne' => ['*']], false);
+            // Preparar Sentencias SQL Directas
+            $stmtFindUser = $pdo->prepare("SELECT id FROM users WHERE username = ? LIMIT 1");
+            $stmtDeleteUser = $pdo->prepare("DELETE FROM users WHERE id = ?");
+            $stmtInsertUser = $pdo->prepare("INSERT INTO users (username, nombre, nivel, password, group_id) VALUES (?, ?, 'D', ?, 3)");
+            $stmtUpdateUser = $pdo->prepare("UPDATE users SET nombre = ? WHERE id = ?");
+
+            $stmtFindResp = $pdo->prepare("SELECT id FROM responsables WHERE numero = ? LIMIT 1");
+            $stmtInsertResp = $pdo->prepare("INSERT INTO responsables (nombres, tipodoc, numero, celular, correo, profesion, contrato, nodo, ebs) VALUES (?, 'CC', ?, ?, ?, ?, ?, ?, ?)");
+            $stmtUpdateResp = $pdo->prepare("UPDATE responsables SET nombres = ?, celular = ?, correo = ?, profesion = ?, contrato = ?, nodo = ?, ebs = ? WHERE id = ?");
 
             $i = 0;
             while (!empty($usuarios)) {
-                // Extraer el primer elemento reduciendo la memoria del arreglo en cada paso
+                // array_shift elimina el elemento procesado y libera RAM progresivamente
                 $usuarioData = array_shift($usuarios);
                 $i++;
 
@@ -47,69 +54,49 @@ class UserProcessShell extends AppShell
                 }
 
                 $cedula = trim($usuarioData['cedula']);
+                $nombre = isset($usuarioData['nombre']) ? strtoupper(trim($usuarioData['nombre'])) : null;
+                $telefono = isset($usuarioData['telefono']) ? $usuarioData['telefono'] : null;
+                $correo = isset($usuarioData['correo']) ? $usuarioData['correo'] : null;
+                $perfil = isset($usuarioData['perfil']) ? $usuarioData['perfil'] : null;
+                $contrato = isset($usuarioData['contrato']) ? $usuarioData['contrato'] : null;
+                $red = isset($usuarioData['red']) ? $usuarioData['red'] : null;
+                $ebs = isset($usuarioData['ebs']) ? $usuarioData['ebs'] : 'PENDIENTE';
 
-                // Consulta nativa directa sin hidratar objetos del ORM
-                $resUser = $db->fetchAll(
-                    "SELECT id FROM users WHERE username = ? LIMIT 1",
-                    [$cedula]
-                );
-                $userId = !empty($resUser[0]['users']['id']) ? $resUser[0]['users']['id'] : null;
+                // 1. Verificar si el usuario existe
+                $stmtFindUser->execute([$cedula]);
+                $user = $stmtFindUser->fetch(PDO::FETCH_ASSOC);
+                $userId = $user ? $user['id'] : null;
 
-                // Eliminar usuario si estado = 'N'
+                // Si estado = 'N', eliminar
                 if (isset($usuarioData['estado']) && $usuarioData['estado'] === 'N') {
                     if ($userId) {
-                        $this->User->delete($userId, false);
+                        $stmtDeleteUser->execute([$userId]);
                     }
                     continue;
                 }
 
-                // Guardar / Actualizar User
-                $datosUser = [
-                    'username' => $cedula,
-                    'nombre'   => isset($usuarioData['nombre']) ? strtoupper(trim($usuarioData['nombre'])) : null,
-                    'nivel'    => 'D',
-                    'password' => 'Cc' . $cedula,
-                    'group_id' => 3,
-                ];
-
+                // 2. Insertar o Actualizar Usuario
                 if ($userId) {
-                    $datosUser['id'] = $userId;
+                    $stmtUpdateUser->execute([$nombre, $userId]);
+                } else {
+                    $stmtInsertUser->execute([$cedula, $nombre, 'Cc' . $cedula]);
+                    $userId = $pdo->lastInsertId();
                 }
 
-                $this->User->create();
-                if ($this->User->save($datosUser, false)) {
-                    // Consulta nativa directa para Responsable
-                    $resResp = $db->fetchAll(
-                        "SELECT id FROM responsables WHERE numero = ? LIMIT 1",
-                        [$cedula]
-                    );
-                    $respId = !empty($resResp[0]['responsables']['id']) ? $resResp[0]['responsables']['id'] : null;
+                // 3. Insertar o Actualizar Responsable
+                $stmtFindResp->execute([$cedula]);
+                $resp = $stmtFindResp->fetch(PDO::FETCH_ASSOC);
+                $respId = $resp ? $resp['id'] : null;
 
-                    $datosResponsable = [
-                        'nombres'   => isset($usuarioData['nombre']) ? strtoupper(trim($usuarioData['nombre'])) : null,
-                        'tipodoc'   => 'CC',
-                        'numero'    => $cedula,
-                        'celular'   => isset($usuarioData['telefono']) ? $usuarioData['telefono'] : null,
-                        'correo'    => isset($usuarioData['correo']) ? $usuarioData['correo'] : null,
-                        'profesion' => isset($usuarioData['perfil']) ? $usuarioData['perfil'] : null,
-                        'contrato'  => isset($usuarioData['contrato']) ? $usuarioData['contrato'] : null,
-                        'nodo'      => isset($usuarioData['red']) ? $usuarioData['red'] : null,
-                        'ebs'       => isset($usuarioData['ebs']) ? $usuarioData['ebs'] : 'PENDIENTE',
-                    ];
-
-                    if ($respId) {
-                        $datosResponsable['id'] = $respId;
-                    }
-
-                    $this->Responsable->create();
-                    $this->Responsable->save($datosResponsable, false);
+                if ($respId) {
+                    $stmtUpdateResp->execute([$nombre, $telefono, $correo, $perfil, $contrato, $red, $ebs, $respId]);
+                } else {
+                    $stmtInsertResp->execute([$nombre, $cedula, $telefono, $correo, $perfil, $contrato, $red, $ebs]);
                 }
 
-                // Limpieza periódica cada 100 registros
-                if ($i % 100 === 0) {
-                    $db->getLog(false, true); // Vaciar histórico de consultas
-                    ClassRegistry::flush();   // Liberar caché interna de modelos
-                    gc_collect_cycles();       // Forzar liberación de RAM por PHP
+                // Liberación periódica de la basura de PHP
+                if ($i % 500 === 0) {
+                    gc_collect_cycles();
                     $this->out("Procesados $i de $total registros... (RAM: " . round(memory_get_usage() / 1024 / 1024, 2) . " MB)");
                 }
             }
