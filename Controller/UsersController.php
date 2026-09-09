@@ -1,6 +1,6 @@
 <?php
 
-
+App::uses('CakeResque', 'CakeResque.Lib');
 class UsersController extends AppController
 {
     //put your code here
@@ -105,6 +105,8 @@ class UsersController extends AppController
     }
 
 
+
+
     public function registerAll()
     {
         $this->autoRender = false;
@@ -113,10 +115,7 @@ class UsersController extends AppController
         try {
             if (!$this->request->is('post')) {
                 $this->response->statusCode(405);
-                echo json_encode([
-                    'status' => 'error',
-                    'message' => 'Método no permitido'
-                ]);
+                echo json_encode(['status' => 'error', 'message' => 'Método no permitido']);
                 return;
             }
 
@@ -124,117 +123,60 @@ class UsersController extends AppController
 
             if (empty($data['usuarios']) || !is_array($data['usuarios'])) {
                 $this->response->statusCode(400);
-                echo json_encode([
-                    'status' => 'error',
-                    'message' => 'Datos JSON inválidos o lista de usuarios vacía'
-                ]);
+                echo json_encode(['status' => 'error', 'message' => 'Datos JSON inválidos o lista vacía']);
                 return;
             }
 
-            // 1. Extraer cédulas para consultar existencias
-            $cedulasUsuarios = array_map(function ($usuario) {
-                return trim($usuario['cedula']);
-            }, $data['usuarios']);
+            // Generar identificador único de lote
+            $jobId = uniqid('batch_', true);
 
-            // 2. Buscar usuarios existentes por cédula (User.username)
-            $usuariosExistentes = $this->User->find('list', [
-                'conditions' => ['User.username' => $cedulasUsuarios],
-                'fields' => ['User.username', 'User.id']
-            ]);
-
-            $procesados = [];
-
-            // 3. Cargar el modelo Responsable si no está enlazado automáticamente
-            if (!isset($this->Responsable)) {
-                $this->loadModel('Responsable');
+            // Crear directorio temporal si no existe
+            $batchDir = TMP . 'batches' . DS;
+            if (!is_dir($batchDir)) {
+                mkdir($batchDir, 0777, true);
             }
 
-            foreach ($data['usuarios'] as $usuarioData) {
-                $cedula = trim($usuarioData['cedula']);
-                $existe = array_key_exists($cedula, $usuariosExistentes);
+            // Guardar el payload JSON en un archivo temporal
+            $filePath = $batchDir . $jobId . '.json';
+            file_put_contents($filePath, json_encode($data['usuarios']));
 
-                // Reiniciar estados de los modelos
-                $this->User->create();
-                $this->Responsable->create();
+            // Rutas base universales para CakePHP 2.x
+            $consolePath = ROOT . DS . 'lib' . DS . 'Cake' . DS . 'Console' . DS . 'cake.php';
+            $logPath = TMP . 'batches' . DS . 'shell_output.log';
+            $appPath = rtrim(APP, DS);
 
-                // Preparar datos para el modelo User
-                $datosUser = [
-                    'username' => $cedula,
-                    'nombre'    => isset($usuarioData['nombre']) ? strtoupper(trim($usuarioData['nombre'])) : null,
-                    'nivel'     => 'D', // Nivel por defecto
-                    'password' => 'Cc' . $cedula,
-                    'group_id'  => 3, // Grupo por defecto
-                ];
+            // Detección del Entorno / Sistema Operativo
+            $isWindows = (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN');
 
-                 // borrar de usuarios 
-                 if ($usuarioData['estado'] === 'N') {
-                    // Si el usuario existe, eliminarlo
-                    if ($existe) {
-                        $this->User->delete($usuariosExistentes[$cedula]);
-                        $procesados[] = [
-                            'cedula' => $cedula,
-                            'accion' => 'eliminado'
-                        ];
-                    }
-                    continue; // Saltar al siguiente usuario
-                }
+            if ($isWindows) {
+                // --- ENTORNO LOCAL (XAMPP / Windows) ---
+                $phpExe = 'C:\xampp\php\php.exe';
+                $filePathClean = str_replace('/', DS, $filePath);
 
-                // Si existe, asignamos el ID para hacer UPDATE en User
-                if ($existe) {
-                    $datosUser['id'] = $usuariosExistentes[$cedula];
-                }
+                $cmd = "start /B \"\" \"{$phpExe}\" \"{$consolePath}\" -app \"{$appPath}\" user_process processBatch \"{$filePathClean}\" > \"{$logPath}\" 2>&1";
+                pclose(popen($cmd, "r"));
+            } else {
+                // --- ENTORNO PRODUCCIÓN (Mochahost / Linux cPanel) ---
+                // Intenta detectar la ruta de PHP del sistema o usa la estándar de cPanel
+                $phpExe = file_exists('/usr/local/bin/php') ? '/usr/local/bin/php' : 'php';
 
-                // Guardar o Actualizar Usuario
-                if ($this->User->save($datosUser)) {
-
-                    // Preparar datos para el modelo Responsable
-                    $datosResponsable = [
-                        'nombres'          => isset($usuarioData['nombre']) ? strtoupper(trim($usuarioData['nombre'])) : null,
-                        'tipodoc'          => 'CC',
-                        'numero'           => $cedula,
-                        'celular'         => isset($usuarioData['telefono']) ? $usuarioData['telefono'] : null,
-                        'correo'           => isset($usuarioData['correo']) ? $usuarioData['correo'] : null,
-                        'profesion'        => isset($usuarioData['perfil']) ? $usuarioData['perfil'] : null,
-                        'contrato'         => isset($usuarioData['contrato']) ? $usuarioData['contrato'] : null,
-                        'nodo'             => isset($usuarioData['red']) ? $usuarioData['red'] : null,
-                        'ebs'               => isset($usuarioData['ebs']) ? $usuarioData['ebs'] : 'PENDIENTE',
-                    ];
-
-                    // Buscar si ya existe un registro de Responsable asociado al user_id
-                    $responsableExistente = $this->Responsable->find('first', [
-                        'conditions' => ['Responsable.numero' => $cedula],
-                        'fields' => ['Responsable.id'],
-                        'recursive' => -1
-                    ]);
-                    if ($responsableExistente) {
-                        $datosResponsable['id'] = $responsableExistente['Responsable']['id'];
-                    }
-
-                    // Guardar o Actualizar Responsable
-                    $this->Responsable->save($datosResponsable);
-
-                    $procesados[] = [
-                        'cedula' => $cedula,
-                        'accion' => $existe ? 'actualizado' : 'creado'
-                    ];
-                }
+                $cmd = "nohup {$phpExe} \"{$consolePath}\" -app \"{$appPath}\" user_process processBatch \"{$filePath}\" > \"{$logPath}\" 2>&1 &";
+                exec($cmd);
             }
 
-            $this->response->statusCode(200);
+            $this->response->statusCode(202);
             echo json_encode([
                 'status' => 'success',
-                'message' => 'Usuarios y responsables procesados correctamente',
-                'data' => $procesados
+                'message' => 'El lote de usuarios se ha enviado a procesar en segundo plano.',
+                'job_id' => $jobId,
+                'total_registros' => count($data['usuarios'])
             ]);
         } catch (Exception $e) {
             $this->response->statusCode(500);
-            echo json_encode([
-                'status' => 'error',
-                'message' => 'Error interno del servidor: ' . $e->getMessage()
-            ]);
+            echo json_encode(['status' => 'error', 'message' => $e->getMessage()]);
         }
     }
-    
+
 
     /**
      * Inicializa las reglas de ACL del sistema.
