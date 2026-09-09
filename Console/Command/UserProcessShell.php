@@ -9,13 +9,12 @@ class UserProcessShell extends AppShell
     {
         ini_set('memory_limit', '1024M');
         set_time_limit(0);
-
-        // Desactivar temporalmente el nivel de log en runtime para ahorrar memoria extra
         Configure::write('debug', 0);
 
         $filePath = !empty($this->args[0]) ? $this->args[0] : null;
 
         if (!$filePath || !file_exists($filePath)) {
+            $this->out("ERROR: Archivo no proporcionado o no existe: " . $filePath);
             return;
         }
 
@@ -24,10 +23,14 @@ class UserProcessShell extends AppShell
             $usuarios = json_decode($rawContent, true);
 
             if (empty($usuarios) || !is_array($usuarios)) {
+                $this->out("ERROR: El JSON esta vacio o con formato invalido.");
                 return;
             }
 
             $db = $this->User->getDataSource();
+
+            // CRÍTICO: Desactivar el registro interno de consultas SQL para liberar memoria
+            $db->fullDebug = false;
 
             // Extraer cédulas
             $cedulasUsuarios = array_map(function ($u) {
@@ -41,6 +44,11 @@ class UserProcessShell extends AppShell
             ]);
 
             foreach ($usuarios as $index => $usuarioData) {
+                if (empty($usuarioData['cedula'])) {
+                    $this->out("SKIP: Registro sin cedula en indice " . $index);
+                    continue;
+                }
+
                 $cedula = trim($usuarioData['cedula']);
                 $existe = array_key_exists($cedula, $usuariosExistentes);
 
@@ -52,7 +60,7 @@ class UserProcessShell extends AppShell
                     continue;
                 }
 
-                // Guardar/Actualizar User
+                // Guardar / Actualizar User
                 $this->User->create();
                 $datosUser = [
                     'username' => $cedula,
@@ -67,7 +75,7 @@ class UserProcessShell extends AppShell
                 }
 
                 if ($this->User->save($datosUser)) {
-                    // Guardar/Actualizar Responsable
+                    // Guardar / Actualizar Responsable
                     $this->Responsable->create();
                     $datosResponsable = [
                         'nombres'   => isset($usuarioData['nombre']) ? strtoupper(trim($usuarioData['nombre'])) : null,
@@ -91,24 +99,26 @@ class UserProcessShell extends AppShell
                         $datosResponsable['id'] = $responsableExistente['Responsable']['id'];
                     }
 
-                    $this->Responsable->save($datosResponsable);
+                    if (!$this->Responsable->save($datosResponsable)) {
+                        $this->out("ERROR SAVE RESPONSABLE ($cedula): " . json_encode($this->Responsable->validationErrors));
+                    }
+                } else {
+                    $this->out("ERROR SAVE USER ($cedula): " . json_encode($this->User->validationErrors));
                 }
 
-                // Vaciar cache SQL de CakePHP periódicamente
-                if ($index % 20 === 0) {
-                    $db->_queriesCnt = 0;
-                    $db->_queriesTime = 0;
-                    $db->_queriesLog = [];
+                // Método seguro en CakePHP 2.x para reiniciar los registros de consultas en RAM
+                if ($index % 50 === 0) {
+                    $db->getLog(false, true);
                 }
             }
+
+            $this->out("PROCESO COMPLETADO EXITOSAMENTE.");
         } catch (Exception $e) {
-            $this->out('Error en ejecucion: ' . $e->getMessage());
+            $this->out("EXCEPCION FATAL: " . $e->getMessage() . " en la linea " . $e->getLine());
         } finally {
-            // Se ejecuta SIEMPRE (incluso si ocurre un error dentro de la iteracion)
             if (file_exists($filePath)) {
-                @chmod($filePath, 0777); // Otorga permisos absolutos antes de borrar
+                @chmod($filePath, 0777);
                 if (!@unlink($filePath)) {
-                    // Si no logra borrarlo, limpia el contenido para dejarlo en 0 bytes
                     file_put_contents($filePath, '');
                 }
             }
