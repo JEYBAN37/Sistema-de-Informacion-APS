@@ -115,16 +115,20 @@ class UsersController extends AppController
         try {
             if (!$this->request->is('post')) {
                 $this->response->statusCode(405);
-                echo json_encode(['status' => 'error', 'message' => 'Método no permitido']);
-                return;
+                return $this->response->body(json_encode([
+                    'status' => 'error',
+                    'message' => 'Método no permitido'
+                ]));
             }
 
             $data = $this->request->input('json_decode', true);
 
             if (empty($data['usuarios']) || !is_array($data['usuarios'])) {
                 $this->response->statusCode(400);
-                echo json_encode(['status' => 'error', 'message' => 'Datos JSON inválidos o lista vacía']);
-                return;
+                return $this->response->body(json_encode([
+                    'status' => 'error',
+                    'message' => 'Datos JSON inválidos o lista vacía'
+                ]));
             }
 
             // Generar identificador único de lote
@@ -139,11 +143,6 @@ class UsersController extends AppController
             // Guardar el payload JSON en un archivo temporal
             $filePath = $batchDir . $jobId . '.json';
             file_put_contents($filePath, json_encode($data['usuarios']));
-
-            // Rutas base universales para CakePHP 2.x
-            $consolePath = ROOT . DS . 'lib' . DS . 'Cake' . DS . 'Console' . DS . 'cake.php';
-            $logPath = TMP . 'batches' . DS . 'shell_output.log';
-            $appPath = rtrim(APP, DS);
 
             // Detección del Entorno / Sistema Operativo
             $isWindows = (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN');
@@ -160,11 +159,12 @@ class UsersController extends AppController
                 pclose(popen($cmd, "r"));
             } else {
                 // --- ENTORNO PRODUCCIÓN (Mochahost / Linux) ---
-                // Nos posicionamos en la raíz del proyecto y ejecutamos el ejecutable nativo
                 $projectPath = rtrim(APP, DS);
                 $logPath     = $batchDir . 'shell_output.log';
+                $phpExe      = '/usr/bin/php';
 
-                $cmd = "cd {$projectPath} && nohup ./Console/cake user_process processBatch \"{$filePath}\" > \"{$logPath}\" 2>&1 &";
+                // Invocación explícita mediante el intérprete PHP de CLI
+                $cmd = "cd {$projectPath} && nohup {$phpExe} Console/cake.php -working \"{$projectPath}\" user_process processBatch \"{$filePath}\" > \"{$logPath}\" 2>&1 &";
 
                 if (function_exists('shell_exec')) {
                     shell_exec($cmd);
@@ -174,15 +174,18 @@ class UsersController extends AppController
             }
 
             $this->response->statusCode(202);
-            echo json_encode([
+            return $this->response->body(json_encode([
                 'status' => 'success',
                 'message' => 'El lote de usuarios se ha enviado a procesar en segundo plano.',
                 'job_id' => $jobId,
                 'total_registros' => count($data['usuarios'])
-            ]);
+            ]));
         } catch (Exception $e) {
             $this->response->statusCode(500);
-            echo json_encode(['status' => 'error', 'message' => $e->getMessage()]);
+            return $this->response->body(json_encode([
+                'status' => 'error',
+                'message' => $e->getMessage()
+            ]));
         }
     }
 
