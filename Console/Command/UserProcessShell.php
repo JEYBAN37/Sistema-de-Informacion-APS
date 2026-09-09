@@ -26,29 +26,11 @@ class UserProcessShell extends AppShell
                 return;
             }
 
-            $this->out("Iniciando procesamiento de " . count($usuarios) . " registros...");
+            $total = count($usuarios);
+            $this->out("Iniciando procesamiento de $total registros...");
 
             $db = $this->User->getDataSource();
             $db->fullDebug = false;
-
-            // 1. Extraer todas las cédulas para consultas masivas
-            $cedulasUsuarios = array_filter(array_map(function ($u) {
-                return isset($u['cedula']) ? trim($u['cedula']) : null;
-            }, $usuarios));
-
-            // 2. Pre-cargar Usuarios existentes
-            $usuariosExistentes = $this->User->find('list', [
-                'conditions' => ['User.username' => $cedulasUsuarios],
-                'fields'     => ['User.username', 'User.id'],
-                'recursive'  => -1
-            ]);
-
-            // 3. Pre-cargar Responsables existentes (Evita hacer find en cada iteración)
-            $responsablesExistentes = $this->Responsable->find('list', [
-                'conditions' => ['Responsable.numero' => $cedulasUsuarios],
-                'fields'     => ['Responsable.numero', 'Responsable.id'],
-                'recursive'  => -1
-            ]);
 
             foreach ($usuarios as $index => $usuarioData) {
                 if (empty($usuarioData['cedula'])) {
@@ -57,12 +39,20 @@ class UserProcessShell extends AppShell
                 }
 
                 $cedula = trim($usuarioData['cedula']);
-                $existeUser = array_key_exists($cedula, $usuariosExistentes);
+
+                // Buscar ID de usuario existente usando consulta liviana
+                $userExistente = $this->User->find('first', [
+                    'conditions' => ['User.username' => $cedula],
+                    'fields'     => ['User.id'],
+                    'recursive'  => -1
+                ]);
+
+                $userId = !empty($userExistente['User']['id']) ? $userExistente['User']['id'] : null;
 
                 // Eliminar usuario si estado = 'N'
                 if (isset($usuarioData['estado']) && $usuarioData['estado'] === 'N') {
-                    if ($existeUser) {
-                        $this->User->delete($usuariosExistentes[$cedula]);
+                    if ($userId) {
+                        $this->User->delete($userId);
                         $this->out("ELIMINADO: Usuario $cedula");
                     }
                     continue;
@@ -78,13 +68,12 @@ class UserProcessShell extends AppShell
                     'group_id' => 3,
                 ];
 
-                if ($existeUser) {
-                    $datosUser['id'] = $usuariosExistentes[$cedula];
+                if ($userId) {
+                    $datosUser['id'] = $userId;
                 }
 
                 if ($this->User->save($datosUser)) {
-                    // Guardar / Actualizar Responsable
-                    $this->Responsable->create();
+                    // Datos para el Modelo Responsable
                     $datosResponsable = [
                         'nombres'   => isset($usuarioData['nombre']) ? strtoupper(trim($usuarioData['nombre'])) : null,
                         'tipodoc'   => 'CC',
@@ -97,10 +86,18 @@ class UserProcessShell extends AppShell
                         'ebs'       => isset($usuarioData['ebs']) ? $usuarioData['ebs'] : 'PENDIENTE',
                     ];
 
-                    if (array_key_exists($cedula, $responsablesExistentes)) {
-                        $datosResponsable['id'] = $responsablesExistentes[$cedula];
+                    // Buscar ID de Responsable existente de forma directa
+                    $respExistente = $this->Responsable->find('first', [
+                        'conditions' => ['Responsable.numero' => $cedula],
+                        'fields'     => ['Responsable.id'],
+                        'recursive'  => -1
+                    ]);
+
+                    if (!empty($respExistente['Responsable']['id'])) {
+                        $datosResponsable['id'] = $respExistente['Responsable']['id'];
                     }
 
+                    $this->Responsable->create();
                     if (!$this->Responsable->save($datosResponsable)) {
                         $this->out("ERROR SAVE RESPONSABLE ($cedula): " . json_encode($this->Responsable->validationErrors));
                     }
@@ -108,9 +105,12 @@ class UserProcessShell extends AppShell
                     $this->out("ERROR SAVE USER ($cedula): " . json_encode($this->User->validationErrors));
                 }
 
-                if ($index > 0 && $index % 50 === 0) {
-                    $db->getLog(false, true);
-                    $this->out("Procesados $index registros...");
+                // Liberar memoria RAM en cada ciclo
+                unset($userExistente, $respExistente, $datosUser, $datosResponsable);
+
+                if ($index > 0 && $index % 100 === 0) {
+                    $db->getLog(false, true); // Vaciar log SQL de la RAM
+                    $this->out("Procesados $index de $total registros...");
                 }
             }
 
