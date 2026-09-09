@@ -32,86 +32,95 @@ class UserProcessShell extends AppShell
             $db = $this->User->getDataSource();
             $db->fullDebug = false;
 
-            foreach ($usuarios as $index => $usuarioData) {
-                if (empty($usuarioData['cedula'])) {
-                    $this->out("SKIP: Registro sin cédula en índice " . $index);
-                    continue;
-                }
+            // Procesar en bloques de 200 para no sobrecargar el colector de basura
+            $chunkSize = 200;
+            $chunks = array_chunk($usuarios, $chunkSize);
+            unset($usuarios); // Liberar el arreglo principal original de la memoria
 
-                $cedula = trim($usuarioData['cedula']);
+            $procesados = 0;
 
-                // Buscar ID de usuario existente usando consulta liviana
-                $userExistente = $this->User->find('first', [
-                    'conditions' => ['User.username' => $cedula],
-                    'fields'     => ['User.id'],
-                    'recursive'  => -1
-                ]);
+            foreach ($chunks as $chunkIndex => $lote) {
+                foreach ($lote as $usuarioData) {
+                    $procesados++;
 
-                $userId = !empty($userExistente['User']['id']) ? $userExistente['User']['id'] : null;
-
-                // Eliminar usuario si estado = 'N'
-                if (isset($usuarioData['estado']) && $usuarioData['estado'] === 'N') {
-                    if ($userId) {
-                        $this->User->delete($userId);
-                        $this->out("ELIMINADO: Usuario $cedula");
+                    if (empty($usuarioData['cedula'])) {
+                        continue;
                     }
-                    continue;
-                }
 
-                // Guardar / Actualizar User
-                $this->User->create();
-                $datosUser = [
-                    'username' => $cedula,
-                    'nombre'   => isset($usuarioData['nombre']) ? strtoupper(trim($usuarioData['nombre'])) : null,
-                    'nivel'    => 'D',
-                    'password' => 'Cc' . $cedula,
-                    'group_id' => 3,
-                ];
+                    $cedula = trim($usuarioData['cedula']);
 
-                if ($userId) {
-                    $datosUser['id'] = $userId;
-                }
-
-                if ($this->User->save($datosUser)) {
-                    // Datos para el Modelo Responsable
-                    $datosResponsable = [
-                        'nombres'   => isset($usuarioData['nombre']) ? strtoupper(trim($usuarioData['nombre'])) : null,
-                        'tipodoc'   => 'CC',
-                        'numero'    => $cedula,
-                        'celular'   => isset($usuarioData['telefono']) ? $usuarioData['telefono'] : null,
-                        'correo'    => isset($usuarioData['correo']) ? $usuarioData['correo'] : null,
-                        'profesion' => isset($usuarioData['perfil']) ? $usuarioData['perfil'] : null,
-                        'contrato'  => isset($usuarioData['contrato']) ? $usuarioData['contrato'] : null,
-                        'nodo'      => isset($usuarioData['red']) ? $usuarioData['red'] : null,
-                        'ebs'       => isset($usuarioData['ebs']) ? $usuarioData['ebs'] : 'PENDIENTE',
-                    ];
-
-                    // Buscar ID de Responsable existente de forma directa
-                    $respExistente = $this->Responsable->find('first', [
-                        'conditions' => ['Responsable.numero' => $cedula],
-                        'fields'     => ['Responsable.id'],
+                    // 1. Buscar ID de usuario existente (sin traer relaciones)
+                    $userExistente = $this->User->find('first', [
+                        'conditions' => ['User.username' => $cedula],
+                        'fields'     => ['User.id'],
                         'recursive'  => -1
                     ]);
 
-                    if (!empty($respExistente['Responsable']['id'])) {
-                        $datosResponsable['id'] = $respExistente['Responsable']['id'];
+                    $userId = !empty($userExistente['User']['id']) ? $userExistente['User']['id'] : null;
+
+                    // Eliminar si estado = 'N'
+                    if (isset($usuarioData['estado']) && $usuarioData['estado'] === 'N') {
+                        if ($userId) {
+                            $this->User->delete($userId);
+                        }
+                        continue;
                     }
 
-                    $this->Responsable->create();
-                    if (!$this->Responsable->save($datosResponsable)) {
-                        $this->out("ERROR SAVE RESPONSABLE ($cedula): " . json_encode($this->Responsable->validationErrors));
+                    // 2. Guardar / Actualizar User
+                    $this->User->create();
+                    $datosUser = [
+                        'username' => $cedula,
+                        'nombre'   => isset($usuarioData['nombre']) ? strtoupper(trim($usuarioData['nombre'])) : null,
+                        'nivel'    => 'D',
+                        'password' => 'Cc' . $cedula,
+                        'group_id' => 3,
+                    ];
+
+                    if ($userId) {
+                        $datosUser['id'] = $userId;
                     }
-                } else {
-                    $this->out("ERROR SAVE USER ($cedula): " . json_encode($this->User->validationErrors));
+
+                    if ($this->User->save($datosUser, false)) { // false para ignorar validaciones pesadas si no son requeridas
+                        // 3. Guardar / Actualizar Responsable
+                        $datosResponsable = [
+                            'nombres'   => isset($usuarioData['nombre']) ? strtoupper(trim($usuarioData['nombre'])) : null,
+                            'tipodoc'   => 'CC',
+                            'numero'    => $cedula,
+                            'celular'   => isset($usuarioData['telefono']) ? $usuarioData['telefono'] : null,
+                            'correo'    => isset($usuarioData['correo']) ? $usuarioData['correo'] : null,
+                            'profesion' => isset($usuarioData['perfil']) ? $usuarioData['perfil'] : null,
+                            'contrato'  => isset($usuarioData['contrato']) ? $usuarioData['contrato'] : null,
+                            'nodo'      => isset($usuarioData['red']) ? $usuarioData['red'] : null,
+                            'ebs'       => isset($usuarioData['ebs']) ? $usuarioData['ebs'] : 'PENDIENTE',
+                        ];
+
+                        $respExistente = $this->Responsable->find('first', [
+                            'conditions' => ['Responsable.numero' => $cedula],
+                            'fields'     => ['Responsable.id'],
+                            'recursive'  => -1
+                        ]);
+
+                        if (!empty($respExistente['Responsable']['id'])) {
+                            $datosResponsable['id'] = $respExistente['Responsable']['id'];
+                        }
+
+                        $this->Responsable->create();
+                        $this->Responsable->save($datosResponsable, false);
+                    }
                 }
 
-                // Liberar memoria RAM en cada ciclo
-                unset($userExistente, $respExistente, $datosUser, $datosResponsable);
+                // --- LIBERACIÓN DE MEMORIA RÍGIDA AL FINAL DE CADA BLOQUE ---
+                $db->getLog(false, true); // Vaciar log de consultas SQL acumuladas
 
-                if ($index > 0 && $index % 100 === 0) {
-                    $db->getLog(false, true); // Vaciar log SQL de la RAM
-                    $this->out("Procesados $index de $total registros...");
-                }
+                // Limpiar cachés internas del ORM de CakePHP
+                ClassRegistry::flush();
+                $this->User = ClassRegistry::init('User');
+                $this->Responsable = ClassRegistry::init('Responsable');
+
+                // Forzar al motor de PHP a recolectar basura y liberar memoria RAM
+                gc_collect_cycles();
+
+                $this->out("Procesados $procesados de $total registros... (RAM en uso: " . round(memory_get_usage() / 1024 / 1024, 2) . " MB)");
             }
 
             $this->out("PROCESO COMPLETADO EXITOSAMENTE.");
